@@ -1,0 +1,5 @@
+package Potato
+
+checks Requirement {
+   trlc:len(text) >= 10, warning "this is a bit short", text
+}
