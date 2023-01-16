@@ -1,0 +1,182 @@
+#!/usr/bin/env python3
+#
+# lobster_report - Generate LOBSTER tracability report (in JSON form)
+# Copyright (C) 2022 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public
+# License along with this program. If not, see
+# <https://www.gnu.org/licenses/>.
+
+import os
+import argparse
+import collections
+import json
+
+from lobster.report import errors, model
+from lobster.config import parser
+
+
+def integrate(mh, stab, level, kind, source):
+    if kind == "requirements":
+        items, refs = \
+            model.Requirement_Item.parse(mh, source["file"])
+    elif kind == "implementation":
+        items, refs = \
+            model.Implementation_Item.parse(mh, source["file"])
+    else:
+        assert kind == "activity"
+        items, refs = \
+            model.Activity_Item.parse(mh, source["file"])
+
+    ok = True
+    for item_name, item in items.items():
+        if item_name in stab:
+            mh.error(item.source,
+                     "duplicate definition, previous definition in %s" %
+                     stab[item_name].source,
+                     fatal=False)
+            ok = False
+        else:
+            stab[item_name] = item
+            item.set_level(level)
+
+    for ref_source, ref_target in refs:
+        assert ref_source in stab
+        if ref_target not in stab:
+            mh.error(stab[ref_source].source,
+                     "unknown link target %s (from %s)" % (ref_target,
+                                                           ref_source),
+                     fatal=False)
+            ok = False
+        else:
+            stab[ref_source].trace_up(ref_target)
+            stab[ref_target].trace_down(ref_source)
+
+        # TODO: check if you're allowed to link
+
+    if not ok:
+        mh.error(errors.Source_Reference(file_name=source["file"]),
+                 "aborting processing due to previous errors")
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--out",
+                    default="report.lobster")
+    options = ap.parse_args()
+
+    if os.path.isfile(options.out):
+        os.unlink(options.out)
+
+    mh = errors.Message_Handler()
+
+    cfg_file = "lobster.conf"
+
+    try:
+        config = parser.load(mh, cfg_file)
+    except errors.LOBSTER_Error:
+        print("%s: error loading LOBSTER config file" % cfg_file)
+        print("%s: aborting further processing" % cfg_file)
+        return 1
+
+    stab = collections.OrderedDict()
+
+    try:
+        for level in config.values():
+            for source in level["source"]:
+                integrate(mh, stab, level["name"], level["kind"], source)
+    except errors.LOBSTER_Error:
+        print("%s: aborting further processing" % cfg_file)
+        return 1
+
+    levels = []
+    levels_map = {}
+    ok_items = {}
+
+    # Set up skeleton report (the big sections)
+    for level_config in config.values():
+        level = {
+            "name"     : level_config["name"],
+            "kind"     : level_config["kind"],
+            "items"    : [],
+            "coverage" : None
+        }
+        levels.append(level)
+        levels_map[level_config["name"]] = level
+        ok_items[level_config["name"]] = 0
+
+    # Resolve tracing status of all items
+    for item in stab.values():
+        item.resolve_status(config, stab)
+        if item.tracing_status == model.Tracing_Status.OK:
+            ok_items[item.level] += 1
+
+    # Add items to the report
+    for item in stab.values():
+        level = levels_map[item.level]
+        level["items"].append(item.to_report_json())
+
+    # Compute final coverage
+    for level in levels:
+        if level["items"]:
+            level["coverage"] = \
+                float(100 * ok_items[level["name"]]) / \
+                float(len(level["items"]))
+        else:
+            level["coverage"] = 100.0
+
+    # Create software tracability matrix
+    stm = []
+    for impl_level in (level for level in config.values()
+                       if level["kind"] == "implementation"):
+        for impl_item in (item for item in stab.values()
+                          if item.level == impl_level["name"]):
+            stm_entry = {level["name"] : set()
+                         for level in config.values()}
+            stm_entry[impl_item.level] = set([impl_item.name])
+
+            wp = set(impl_item.ref_up)
+            while wp:
+                item = stab[wp.pop()]
+                stm_entry[item.level].add(item.name)
+                wp |= set(item.ref_down)
+
+            wp = set(impl_item.ref_up)
+            while wp:
+                item = stab[wp.pop()]
+                stm_entry[item.level].add(item.name)
+                wp |= set(item.ref_up)
+
+            stm_entry = {k : list(sorted(v))
+                         for k, v in stm_entry.items()}
+
+            stm.append(stm_entry)
+
+    report = {
+        "schema"    : "lobster-report",
+        "version"   : 1,
+        "generator" : "lobster_report",
+        "levels"    : levels,
+        "policy"    : config,
+        "matrix"    : stm,
+    }
+
+    with open(options.out, "w", encoding="UTF-8") as fd:
+        json.dump(report, fd, indent=4)
+        print("LOBSTER report written to %s" % options.out)
+
+    return 0
+
+
+if __name__ == "__main__":
+    main()

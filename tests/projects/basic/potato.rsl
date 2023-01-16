@@ -1,0 +1,7 @@
+package Potato
+
+type Requirement
+{
+   text     String
+   trace_cb Integer
+}
