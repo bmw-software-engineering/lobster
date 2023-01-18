@@ -9,7 +9,11 @@ This repository contains the prototype for LOBSTER, which is a key
 ingredient to make TRCL more useful.
 
 It has tools to extract tracing tags from a variety of sources,
-combine them and produce a tracing report.
+combine them and produce a tracing report. You can look at a [canned
+example](https://bmw-software-engineering.github.io/lobster/example_report.html)
+from [the
+testsuite](https://github.com/bmw-software-engineering/lobster/tree/main/tests/projects/basic),
+which combines a variety of languages and tools into a single report.
 
 ## Supported inputs
 
