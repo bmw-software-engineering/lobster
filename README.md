@@ -54,7 +54,7 @@ There are futher formats planned:
 
 It is easy to expand the languages and activities supported by LOBSTER
 by adding new tracing tools, as long as they create data in the
-[common interchange](doc/schemas.md) format for LOBSTER.
+[common interchange](docs/schemas.md) format for LOBSTER.
 
 ## Copyright & License information
 
