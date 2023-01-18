@@ -22,14 +22,8 @@ The following inputs are supported:
   * requires Python TRLC package
 * `lobster_python`: Requirements written in TRLC
   * requires PyPI package `libcst`
-
-## Yet unreleased inputs
-
-These inputs are working but have not yet been open sourced:
-
 * `lobster_cpp`: C and C++ code (via a custom clang-tidy check)
-
-We plan to do this before 2023-01-31.
+  * requires you to build clang-tidy from https://github.com/bmw-software-engineering/llvm-project
 
 ## Planned inputs
 
@@ -71,6 +65,12 @@ Affero General Public License, Version 3](LICENSE.md).
 Several LOBSTER tools rely on other tools to process data and extract
 tracing tags. These tools are run-time (but not link or program)
 dependencies. Their copyright and license is as follows:
+
+* `lobster_cpp` uses a custom `clang-tidy` check to extract tracing
+  information. `clang-tidy` is part of the [LLVM
+  project](https://llvm.org) and is licensed under the [Apache
+  License, Version 2.0, with LLVM
+  exception](https://llvm.org/LICENSE.txt).
 
 * `lobster_matlab` uses `mh_trace` to extract tracing
   information. `mh_trace` is part of the [MISS_HIT
