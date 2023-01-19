@@ -44,12 +44,12 @@ objects. Each requirement object has this structure:
 }
 ```
 
-* _kind_ is a free text string describing what kind of requirement
+* *kind* is a free text string describing what kind of requirement
   this is. For example "functional requirement".
-* _text_ is a copy or a summary of the requirement text.
-* _framework_ is the data source, for example "codeBeamer" or "TRLC".
-* _source_ is a pointer to the requirement
-* _tags_ is a list of text strings pointing to other items tracked by
+* *text* is a copy or a summary of the requirement text.
+* *framework* is the data source, for example "codeBeamer" or "TRLC".
+* *source* is a pointer to the requirement
+* *tags* is a list of text strings pointing to other items tracked by
   LOBSTER.
 
 ## Implementation
@@ -68,16 +68,41 @@ objects. Each implementation object has this structure:
 }
 ```
 
-* _kind_ is a free text string describing the entity. For example
+* *kind* is a free text string describing the entity. For example
   "function", "method", "named number", "class".
-* _language_ is a free text string indicating the implementation
+* *language* is a free text string indicating the implementation
   language. For example "Ada", "C++", or "Python".
-* _source_ is a pointer to the declaration or body of the item, as is
+* *source* is a pointer to the declaration or body of the item, as is
   most appropriate for the language. For example in C++ bodies make
   more sense as you can have multiple declarations, but in Ada
   pointing to the specification makes more sense.
-* _tags_ is a list of text strings pointing to other items tracked by
+* *tags* is a list of text strings pointing to other items tracked by
   LOBSTER.
+
+### Version 2
+
+Same as version 1, but includes fields for justifications:
+
+```
+{
+   "kind"               : STRING,
+   "language"           : STRING,
+   "source"             : SOURCE_REF,
+   "tags"               : LIST OF UID STRINGS
+   "justification"      : LIST OF STRINGS
+   "justification_up"   : LIST OF STRINGS
+   "justification_down" : LIST OF STRINGS
+}
+```
+
+Additional fields over version 1:
+
+* *justification* list of reasons why this item is not linked to
+  anything (up or down)
+* *justification_up* list of reasons why this item is not linked to
+  something above it in the tracing policy
+* *justification_down* list of reasons why this item is not linked to
+  something below it in the tracing policy
 
 ## Activity
 
@@ -95,23 +120,23 @@ activity object has this structure:
 }
 ```
 
-* _kind_ is the type of activity. Generally, it is free text, but the
+* *kind* is the type of activity. Generally, it is free text, but the
   following kinds have special meaning:
-  * _test_ an executable test, test activities are described below
-* _framework_ a free text string that describes where the activity
+  * *test* an executable test, test activities are described below
+* *framework* a free text string that describes where the activity
   takes place. For example "GTest", "SMTLIB Model", or "Hand-written
   analysis".
-* _source_ is a pointer to the artefact or test case.
-* _tags_ is a list of text strings pointing to other items tracked by
+* *source* is a pointer to the artefact or test case.
+* *tags* is a list of text strings pointing to other items tracked by
   LOBSTER.
 
 Test activities can (but are not required to) have another mapping for
 "status" describing the test status. If set it can be one of the
 following:
 
-* _ok_ if the test was run and no problems were found
-* _fail_ if the test was run and it failed
-* _not run_ if the test was not run for any reason
+* *ok* if the test was run and no problems were found
+* *fail* if the test was run and it failed
+* *not run* if the test was not run for any reason
 
 ## Report
 

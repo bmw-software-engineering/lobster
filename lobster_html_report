@@ -144,7 +144,15 @@ def write_item_tracing(doc, xref, item):
             doc.add_line("<li>%s</li>" % xref_item(xref, ref))
         doc.add_line("</ul>")
         doc.add_line("</div>")
-    if item["tracing_messages"] or item["tracing_status"] != "OK":
+
+    if item["tracing_status"] == "JUSTIFIED":
+        doc.add_line("<div>Justifications:")
+        doc.add_line("<ul>")
+        for msg in item["just_global"] + item["just_up"] + item["just_down"]:
+            doc.add_line("<li>%s</li>" % html.escape(msg))
+        doc.add_line("</ul>")
+        doc.add_line("</div>")
+    elif item["tracing_messages"] or item["tracing_status"] != "OK":
         doc.add_line("<div>Issues:")
         doc.add_line("<ul>")
         doc.add_line("<li>tracing status: %s</li>" % item["tracing_status"])
@@ -264,7 +272,7 @@ def write_html(fd, xref, levels, policy, stm):
     )
 
     # Item styles
-    doc.style[".item-ok, .item-partial, .item-missing"] = {
+    doc.style[".item-ok, .item-partial, .item-missing, .item-justified"] = {
         "border"        : "1px solid black",
         "border-radius" : "0.5em",
         "margin-top"    : "0.4em",
@@ -272,10 +280,14 @@ def write_html(fd, xref, levels, policy, stm):
     }
     doc.style[".item-ok:target, "
               ".item-partial:target, "
-              ".item-missing:target"] = {
+              ".item-missing:target, "
+              ".item-justified:target"] = {
         "border" : "3px solid black",
     }
-    doc.style[".subtle-ok, .subtle-partial, .subtle-missing"] = {
+    doc.style[".subtle-ok, "
+              ".subtle-partial, "
+              ".subtle-missing, "
+              ".subtle-justified"] = {
         "padding-left"  : "0.2em",
     }
     doc.style[".item-ok"] = {
@@ -287,6 +299,9 @@ def write_html(fd, xref, levels, policy, stm):
     doc.style[".item-missing"] = {
         "background-color" : "#fee",
     }
+    doc.style[".item-justified"] = {
+        "background-color" : "#eee",
+    }
     doc.style[".subtle-ok"] = {
         "border-left" : "0.2em solid #8f8",
     }
@@ -295,6 +310,9 @@ def write_html(fd, xref, levels, policy, stm):
     }
     doc.style[".subtle-missing"] = {
         "border-left" : "0.2em solid #f88",
+    }
+    doc.style[".subtle-justified"] = {
+        "border-left" : "0.2em solid #888",
     }
     doc.style[".item-name"] = {
         "font-size" : "125%",

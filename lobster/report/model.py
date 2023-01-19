@@ -54,7 +54,7 @@ def open_lobster_file(mh, file_name):
 
     versions_supported = {
         "req" : set([1]),
-        "imp" : set([1]),
+        "imp" : set([1, 2]),
         "act" : set([1]),
     }
 
@@ -71,7 +71,7 @@ def open_lobster_file(mh, file_name):
                  " only %s is supported"
                  % (version,
                     schema,
-                    " or ".join(sorted(versions_supported[schema]))))
+                    " or ".join(sorted(map(str, versions_supported[schema])))))
 
     if "data" not in data or \
        not isinstance(data["data"], dict):
@@ -105,6 +105,9 @@ class Item:
         self.level          = None
         self.messages       = []
         self.tracing_status = None
+        self.just_global    = []
+        self.just_up        = []
+        self.just_down      = []
 
     def trace_up(self, target):
         self.ref_up.append(target)
@@ -116,6 +119,18 @@ class Item:
         assert isinstance(level, str)
         self.level = level
 
+    def justify(self, reason):
+        assert isinstance(reason, str)
+        self.just_global.append(reason)
+
+    def justify_up(self, reason):
+        assert isinstance(reason, str)
+        self.just_up.append(reason)
+
+    def justify_down(self, reason):
+        assert isinstance(reason, str)
+        self.just_down.append(reason)
+
     def to_report_json(self):
         return {
             "name"             : self.name,
@@ -124,18 +139,23 @@ class Item:
             "ref_down"         : self.ref_down,
             "tracing_status"   : self.tracing_status.name,
             "tracing_messages" : self.messages,
+            "just_global"      : self.just_global,
+            "just_up"          : self.just_up,
+            "just_down"        : self.just_down,
         }
 
     def resolve_status(self, config, stab):
         assert self.level in config
         level = config[self.level]
 
-        has_up_ref   = len(self.ref_up) > 0
-        has_down_ref = len(self.ref_down) > 0
+        has_up_ref    = len(self.ref_up) > 0
+        has_down_ref  = len(self.ref_down) > 0
+        has_just_up   = len(self.just_up) > 0 or len(self.just_global) > 0
+        has_just_down = len(self.just_down) > 0 or len(self.just_global) > 0
 
         ok_up = True
         if level["needs_tracing_up"]:
-            if not has_up_ref:
+            if not has_up_ref and not has_just_up:
                 ok_up = False
                 self.messages.append("missing up reference")
 
@@ -147,13 +167,17 @@ class Item:
             for ref in self.ref_down:
                 has_trace[stab[ref].level] = True
             for chain in level["breakdown_requirements"]:
-                if not any(has_trace[src] for src in chain):
+                if not any(has_trace[src] for src in chain) and \
+                   not has_just_down:
                     ok_down = False
                     self.messages.append("missing reference to %s" %
                                          " or ".join(sorted(chain)))
 
         if ok_up and ok_down:
-            self.tracing_status = Tracing_Status.OK
+            if has_just_up or has_just_down:
+                self.tracing_status = Tracing_Status.JUSTIFIED
+            else:
+                self.tracing_status = Tracing_Status.OK
         elif (ok_up or ok_down) and \
              level["needs_tracing_up"] and \
              level["needs_tracing_down"]:
@@ -268,6 +292,15 @@ class Implementation_Item(Item):
                     language = data["language"])
                 for tag in data["tags"]:
                     references.append((item_name, tag))
+                if "justification" in data:
+                    for reason in data["justification"]:
+                        items[item_name].justify(reason)
+                if "justification_up" in data:
+                    for reason in data["justification_up"]:
+                        items[item_name].justify_up(reason)
+                if "justification_down" in data:
+                    for reason in data["justification_down"]:
+                        items[item_name].justify_down(reason)
         except Exception:
             mh.error(Source_Reference(file_name = file_name),
                      "malformed data")
