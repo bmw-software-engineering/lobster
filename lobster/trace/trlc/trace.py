@@ -25,6 +25,7 @@ import json
 
 from trlc.errors import Message_Handler, TRLC_Error
 from trlc.trlc import Source_Manager
+from trlc.ast import Package
 
 
 def main():
@@ -61,20 +62,23 @@ def main():
 
     db = {}
 
-    for obj in stab.iter_record_objects():
-        py_obj = obj.to_python_dict()
-        item = {
-            "kind"      : obj.e_typ.name,
-            "text"      : py_obj["text"],
-            "framework" : "TRLC",
-            "source"    : {"file" : obj.location.file_name,
-                           "line" : obj.location.line_no},
-            "tags"      : [],
-        }
-        for tagname in options.tags:
-            if tagname in py_obj and py_obj[tagname]:
-                item["tags"].append(py_obj[tagname])
-        db[obj.name] = item
+    for pkg in stab.table.values():
+        if not isinstance(pkg, Package):
+            continue
+        for obj in pkg.symbols.iter_record_objects():
+            py_obj = obj.to_python_dict()
+            item = {
+                "kind"      : obj.e_typ.name,
+                "text"      : py_obj["text"],
+                "framework" : "TRLC",
+                "source"    : {"file" : obj.location.file_name,
+                               "line" : obj.location.line_no},
+                "tags"      : [],
+            }
+            for tagname in options.tags:
+                if tagname in py_obj and py_obj[tagname]:
+                    item["tags"].append(str(py_obj[tagname]))
+            db[pkg.name + "." + obj.name] = item
 
     db = {"schema"    : "lobster-req-trace",
           "generator" : "lobster_trlc",

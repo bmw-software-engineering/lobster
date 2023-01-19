@@ -1,4 +1,4 @@
-package Potato
+package example
 
 Requirement req_implication
 {
