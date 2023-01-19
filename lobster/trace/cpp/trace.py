@@ -112,6 +112,10 @@ def main():
                    r"%s %s traces to +(.+) +" % (KIND_PATTERN,
                                                  NAME_PATTERN) +
                    SUFFIX)
+        RE_JUST = (PREFIX + " " +
+                   r"%s %s exempt from tracing: +(.+) +" % (KIND_PATTERN,
+                                                            NAME_PATTERN) +
+                   SUFFIX)
 
         match = re.match(RE_NOTAGS, line)
         if match:
@@ -120,11 +124,37 @@ def main():
             line_nr = int(line_nr)
             function_name = "%s:%u" % (function_name, line_nr)
             assert function_name not in db
-            db[function_name] = {"source"   : {"file" : filename,
-                                               "line" : line_nr},
-                                 "language" : "C/C++",
-                                 "kind"     : kind,
-                                 "tags"     : []}
+            db[function_name] = {"source" : {"file" : filename,
+                                             "line" : line_nr},
+                                 "language"           : "C/C++",
+                                 "kind"               : kind,
+                                 "tags"               : [],
+                                 "justification"      : [],
+                                 "justification_up"   : [],
+                                 "justification_down" : []}
+
+            continue
+
+        match = re.match(RE_JUST, line)
+        if match:
+            filename, line_nr, kind, function_name, reason = match.groups()
+            filename = os.path.relpath(filename, prefix)
+            line_nr = int(line_nr)
+            function_name = "%s:%u" % (function_name, line_nr)
+            if function_name not in db:
+                db[function_name] = {"source" : {"file" : filename,
+                                                 "line" : line_nr},
+                                     "language"           : "C/C++",
+                                     "kind"               : kind,
+                                     "tags"               : [],
+                                     "justification"      : [],
+                                     "justification_up"   : [reason],
+                                     "justification_down" : []}
+            else:
+                assert db[function_name]["source"]["file"] == filename
+                assert db[function_name]["source"]["line"] == line_nr
+                db[function_name]["justification_up"].append(reason)
+
             continue
 
         match = re.match(RE_TAGS, line)
@@ -134,11 +164,14 @@ def main():
             line_nr = int(line_nr)
             function_name = "%s:%u" % (function_name, line_nr)
             if function_name not in db:
-                db[function_name] = {"source"   : {"file" : filename,
-                                                   "line" : line_nr},
-                                     "language" : "C/C++",
-                                     "kind"     : kind,
-                                     "tags"     : [tag]}
+                db[function_name] = {"source" : {"file" : filename,
+                                                 "line" : line_nr},
+                                     "language"           : "C/C++",
+                                     "kind"               : kind,
+                                     "tags"               : [tag],
+                                     "justification"      : [],
+                                     "justification_up"   : [],
+                                     "justification_down" : []}
             else:
                 assert db[function_name]["source"]["file"] == filename
                 assert db[function_name]["source"]["line"] == line_nr
@@ -152,7 +185,7 @@ def main():
 
     db = {"schema"    : "lobster-imp-trace",
           "generator" : "lobster_cpp",
-          "version"   : 1,
+          "version"   : 2,
           "data"      : db}
 
     if options.out:
