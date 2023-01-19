@@ -34,6 +34,10 @@ def main():
                     metavar="FILE|DIR")
     ap.add_argument("--out",
                     default=None)
+    ap.add_argument("--tags",
+                    nargs="+",
+                    default=[],
+                    metavar="TRLC attribute name")
 
     options = ap.parse_args()
 
@@ -65,8 +69,11 @@ def main():
             "framework" : "TRLC",
             "source"    : {"file" : obj.location.file_name,
                            "line" : obj.location.line_no},
-            "tags"      : [str(py_obj["trace_cb"])],
+            "tags"      : [],
         }
+        for tagname in options.tags:
+            if tagname in py_obj and py_obj[tagname]:
+                item["tags"].append(py_obj[tagname])
         db[obj.name] = item
 
     db = {"schema"    : "lobster-req-trace",
