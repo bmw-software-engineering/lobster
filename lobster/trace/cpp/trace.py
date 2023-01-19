@@ -100,7 +100,7 @@ def main():
 
         FILE_LINE_PATTERN = r"(.*):(\d+):\d+:"
         KIND_PATTERN = r"(function|main function|method)"
-        NAME_PATTERN = r"([a-zA-Z0-9_:]+)"
+        NAME_PATTERN = r"([a-zA-Z0-9_:~]+)"
         PREFIX = "^%s warning:" % FILE_LINE_PATTERN
         SUFFIX = r"\[lobster-tracing\]$"
 
