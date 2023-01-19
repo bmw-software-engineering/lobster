@@ -118,7 +118,8 @@ def main():
     # Resolve tracing status of all items
     for item in stab.values():
         item.resolve_status(config, stab)
-        if item.tracing_status == model.Tracing_Status.OK:
+        if item.tracing_status in (model.Tracing_Status.OK,
+                                   model.Tracing_Status.JUSTIFIED):
             ok_items[item.level] += 1
 
     # Add items to the report
