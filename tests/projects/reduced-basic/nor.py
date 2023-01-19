@@ -4,7 +4,7 @@ import potatolib
 
 class Example:
     def nor(a, b):
-        # lobster-trace: req_nor
+        # lobster-trace: example.req_nor
         assert isinstance(a, bool)
         assert isinstance(b, bool)
 

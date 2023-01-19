@@ -1,4 +1,4 @@
 function rv = nand(a, b)
-  %| pragma Tag("req_nand");
+  %| pragma Tag("example.req_nand");
   rv = ~ (a && b);
 end

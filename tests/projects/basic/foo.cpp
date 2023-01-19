@@ -2,7 +2,7 @@
 
 int implication(int x, int y)
 {
-  // lobster-trace: req_implication
+  // lobster-trace: example.req_implication
   return (x == 0) || (y != 0);
 }
 
