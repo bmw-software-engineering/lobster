@@ -18,7 +18,8 @@ mcode.lobster: nand.m nand_test.m
 
 pycode.lobster: nor.py
 	@../../../lobster_python *.py \
-		--out="pycode.lobster"
+		--out="pycode.lobster" \
+		--parse-decorator trlc_reference requirement
 
 software-requirements.lobster: potato.rsl potato.check potato.trlc
 	@../../../lobster_trlc *.rsl *.check *.trlc \
