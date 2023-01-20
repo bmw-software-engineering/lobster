@@ -39,8 +39,8 @@ class Source_Reference:
             assert isinstance(json, dict)
             assert file_name is None
             assert line_no is None
-            self.ref_kind = json.get("ref", "file")
-            self.precise  = json.get("precise", True)
+            self.ref_kind   = json.get("ref", "file")
+            self.is_precise = json.get("precise", True)
             assert self.ref_kind in ("file", "codeBeamer")
 
             if self.ref_kind == "file":
