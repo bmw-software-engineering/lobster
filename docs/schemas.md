@@ -165,6 +165,12 @@ following:
 * *fail* if the test was run and it failed
 * *not run* if the test was not run for any reason
 
+If the status is not explicitly set, then LOBSTER will assume it is
+"ok". This makes sense because in a modern workflow you should have
+pre-commit checks in your repo that block a commit where the tests
+fail (hence we don't need to explicitly get the test status in LOBSTER
+since it must always be OK).
+
 ## Report
 
 The report schema is currently internal to LOBSTER.

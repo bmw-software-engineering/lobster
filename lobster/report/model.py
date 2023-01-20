@@ -358,7 +358,7 @@ class Activity_Item(Item):
                     source    = Source_Reference(json=data["source"]),
                     kind      = data["kind"],
                     framework = data["framework"],
-                    status    = data["status"])
+                    status    = data.get("status", "ok"))
                 for tag in data["tags"]:
                     references.append((item_name, tag))
         except Exception:
