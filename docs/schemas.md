@@ -27,6 +27,33 @@ Each LOBSTER JSON file shares the following common structure:
 Some schemas may add additional top-level items, but these four are
 always present.
 
+### Source References
+
+A SOURCE_REF is an object with varying forms. Two fields are always
+the same:
+
+```
+{
+   "ref"     : REF_KIND,
+   "precise" : BOOLEAN
+}
+```
+
+Based on the value of *ref* this object takes different
+forms. Currently defined are:
+
+```
+{
+   "ref"     : "file",
+   "precise" : BOOLEAN,
+   "file"    : STRING,
+   "line"    : INTEGER,
+}
+```
+
+If *precise* is `true`, then a *line* number must be provided. If
+*precise* is `false` then the *line* number may be `null`.
+
 ## Requirements
 
 ### Version 1
