@@ -61,7 +61,7 @@ def main():
                     base = "%s:%u: " % (item["source"]["file"],
                                         item["source"]["line"])
                 else:
-                    base = "%: " % item["source"]["file"]
+                    base = "%s: " % item["source"]["file"]
             else:
                 assert False
 
