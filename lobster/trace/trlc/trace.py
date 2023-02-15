@@ -35,6 +35,10 @@ def main():
                     metavar="FILE|DIR")
     ap.add_argument("--out",
                     default=None)
+    ap.add_argument("--descriptions",
+                    nargs="+",
+                    default=["text"],
+                    metavar="TRLC attribute name")
     ap.add_argument("--tags",
                     nargs="+",
                     default=[],
@@ -67,9 +71,25 @@ def main():
             continue
         for obj in pkg.symbols.iter_record_objects():
             py_obj = obj.to_python_dict()
+            text = []
+            for attr_name in options.descriptions:
+                if attr_name not in py_obj:
+                    continue
+                if isinstance(py_obj[attr_name], str):
+                    text.append(py_obj[attr_name])
+                elif isinstance(py_obj[attr_name], list):
+                    for text_item in py_obj[attr_name]:
+                        text.append(text_item)
+            if text:
+                text = "\n".join(text)
+            else:
+                text = None
+
             item = {
                 "kind"      : obj.e_typ.name,
-                "text"      : py_obj["text"],
+                "name"      : "%s (%s)" % (obj.name.replace("_", " "),
+                                           pkg.name),
+                "text"      : text,
                 "framework" : "TRLC",
                 "source"    : {"file" : obj.location.file_name,
                                "line" : obj.location.line_no},
@@ -82,7 +102,7 @@ def main():
 
     db = {"schema"    : "lobster-req-trace",
           "generator" : "lobster_trlc",
-          "version"   : 1,
+          "version"   : 2,
           "data"      : db}
 
     if options.out:

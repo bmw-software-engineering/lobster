@@ -53,7 +53,7 @@ def open_lobster_file(mh, file_name):
         schema = data["schema"].split("-", 2)[1]
 
     versions_supported = {
-        "req" : set([1]),
+        "req" : set([1, 2]),
         "imp" : set([1, 2]),
         "act" : set([1]),
     }
@@ -200,13 +200,18 @@ class Requirement_Item(Item):
         super().__init__(name, source)
         assert isinstance(kind, str)
         assert isinstance(framework, str)
-        self.kind      = kind
-        self.framework = framework
-        self.text      = None
+        self.kind        = kind
+        self.framework   = framework
+        self.human_name  = None
+        self.text        = None
 
     def set_text(self, text):
         assert isinstance(text, str)
         self.text = text.strip()
+
+    def set_name(self, name):
+        assert isinstance(name, str)
+        self.human_name = name.strip()
 
     def __repr__(self):
         return "Requirement_Item(%s, %s, %s)" % (self.name,
@@ -216,10 +221,12 @@ class Requirement_Item(Item):
     def to_report_json(self):
         rv = super().to_report_json()
         rv.update({
-            "class"     : "requirement",
-            "framework" : self.framework,
-            "kind"      : self.kind,
-            "text"      : self.text,
+            "class"      : "requirement",
+            "framework"  : self.framework,
+            "kind"       : self.kind,
+            "name"       : self.name,
+            "human_name" : self.human_name,
+            "text"       : self.text,
         })
         return rv
 
@@ -243,8 +250,10 @@ class Requirement_Item(Item):
                     source    = Source_Reference(json=data["source"]),
                     kind      = data["kind"],
                     framework = data["framework"])
-                if "text" in data:
+                if "text" in data and data["text"] is not None:
                     items[item_name].set_text(data["text"])
+                if "name" in data:
+                    items[item_name].set_name(data["name"])
                 for tag in data["tags"]:
                     references.append((item_name, tag))
         except Exception:
@@ -279,13 +288,10 @@ class Implementation_Item(Item):
         return rv
 
     @classmethod
-    def parse(cls, mh, file_name):
+    def parse_data(cls, mh, file_name, data):
         assert isinstance(mh, Message_Handler)
-        assert os.path.isfile(file_name)
-        assert file_name.endswith(".lobster")
         items = {}
         references = []
-        data = open_lobster_file(mh, file_name)
         if data["schema"] not in ("lobster-imp-trace",):
             mh.error(Source_Location(file_name = file_name),
                      "schema must be lobster-impl-trace, found %s instead" %
@@ -314,6 +320,13 @@ class Implementation_Item(Item):
                      "malformed data")
 
         return items, references
+
+    @classmethod
+    def parse(cls, mh, file_name):
+        assert isinstance(mh, Message_Handler)
+        assert os.path.isfile(file_name)
+        assert file_name.endswith(".lobster")
+        return cls.parse_data(mh, file_name, open_lobster_file(mh, file_name))
 
 
 class Activity_Item(Item):
