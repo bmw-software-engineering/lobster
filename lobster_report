@@ -53,11 +53,7 @@ def integrate(mh, stab, level, kind, source):
     for ref_source, ref_target in refs:
         assert ref_source in stab
         if ref_target not in stab:
-            mh.error(stab[ref_source].source,
-                     "unknown link target %s (from %s)" % (ref_target,
-                                                           ref_source),
-                     fatal=False)
-            ok = False
+            stab[ref_source].error("unknown link target %s" % ref_target)
         else:
             stab[ref_source].trace_up(ref_target)
             stab[ref_target].trace_down(ref_source)

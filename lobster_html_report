@@ -370,6 +370,7 @@ def write_html(fd, xref, levels, policy, stm):
 
     # Menu & Navigation
     doc.navbar.add_link("Overview", "#overview")
+    doc.navbar.add_link("Issues", "#issues")
     menu = doc.navbar.add_dropdown("Detailed report")
     for level in levels:
         menu.add_link(level["name"], "#" + name_hash(level["name"]))
@@ -399,6 +400,18 @@ def write_html(fd, xref, levels, policy, stm):
               "include the tracing policy visualisation")
         print("> please install Graphviz (https://graphviz.org)")
     doc.add_line('</div>')
+
+    doc.add_heading(2, "Issues", "issues")
+    doc.add_line("<ul>")
+    for level in levels:
+        for item in level["items"]:
+            if item["tracing_status"] not in ("OK", "JUSTIFIED"):
+                for message in item["tracing_messages"]:
+                    doc.add_line("<li>%s: %s</li>" %
+                                 (xref_item(xref, item["name"]),
+                                  message))
+
+    doc.add_line("</ul>")
 
     doc.add_heading(2, "Detailed report", "detailed-report")
     for kind, title in [("requirements",

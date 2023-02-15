@@ -108,6 +108,12 @@ class Item:
         self.just_global    = []
         self.just_up        = []
         self.just_down      = []
+        self.has_error      = False
+
+    def error(self, message):
+        assert isinstance(message, str)
+        self.messages.append(message)
+        self.has_error = True
 
     def trace_up(self, target):
         self.ref_up.append(target)
@@ -173,7 +179,9 @@ class Item:
                     self.messages.append("missing reference to %s" %
                                          " or ".join(sorted(chain)))
 
-        if ok_up and ok_down:
+        if self.has_error:
+            self.tracing_status = Tracing_Status.MISSING
+        elif ok_up and ok_down:
             if has_just_up or has_just_down:
                 self.tracing_status = Tracing_Status.JUSTIFIED
             else:
