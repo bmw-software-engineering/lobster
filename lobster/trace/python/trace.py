@@ -75,7 +75,8 @@ class Lobster_Visitor(cst.CSTVisitor):
 
             assert self.options["dec_arg_name"] in dec_args
 
-            starting_tags.append(str(dec_args[self.options["dec_arg_name"]]))
+            starting_tags.append(self.options["prefix"] +
+                                 str(dec_args[self.options["dec_arg_name"]]))
 
         uids = []
         for s_name, s_node in self.scope_stack:
@@ -156,6 +157,9 @@ def main():
                     action="store_true",
                     default=False,
                     help="don't multi-thread")
+    ap.add_argument("--decorator-tag-prefix",
+                    default=None,
+                    help="prefix tags from decorators with this string and a colon")
     ap.add_argument("--parse-decorator",
                     nargs=2,
                     metavar="DECORATOR_NAME ARGUMENT_NAME",
@@ -164,7 +168,6 @@ def main():
                     default=False,
                     action="store_true",
                     help="only trace functions with tags")
-
 
     options = ap.parse_args()
 
@@ -192,6 +195,9 @@ def main():
         "decorator"        : options.parse_decorator[0],
         "dec_arg_name"     : options.parse_decorator[1],
         "exclude_untagged" : options.only_tagged_functions,
+        "prefix"           : (options.decorator_tag_prefix + ":"
+                              if options.decorator_tag_prefix
+                              else ""),
     }
 
     fn = functools.partial(process_file, options=context)
