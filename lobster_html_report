@@ -52,6 +52,7 @@ def xref_item(xref, name, anchor=False, brief=False):
     assert isinstance(xref, dict)
     assert isinstance(name, str)
     data = xref[name]
+    human_name = data.get("human_name", name)
 
     if brief:
         rv = ""
@@ -73,7 +74,7 @@ def xref_item(xref, name, anchor=False, brief=False):
     else:
         rv += "<a href='#%s'>" % name_hash(name)
 
-    rv += html.escape(name)
+    rv += html.escape(human_name)
 
     rv += "</a>"
 
@@ -101,17 +102,17 @@ def write_item_box_begin(doc, xref, item):
                           item["source"]["line"]))
         else:
             doc.add_line('%s' % item["source"]["file"])
-    elif item["source"]["ref"] == "codeBeamer":
-        issue_link = "%s/issue/%u%s" % \
-            (CB_ROOT,
+    elif item["source"]["ref"] == "codebeamer":
+        issue_link = "%s/cb/issue/%u%s" % \
+            (item["source"]["instance"],
              item["source"]["item"],
              (""
               if item["source"]["version"] == "HEAD"
               else "?version=%u" % item["source"]["version"]))
-        tracker_link = "%s/tracker/%u" % (CB_ROOT,
-                                          item["source"]["tracker"])
+        tracker_link = "%s/cb/tracker/%u" % (item["source"]["instance"],
+                                             item["source"]["tracker"])
 
-        doc.add_line('<a href="%s">codeBeamer item %u</a> '
+        doc.add_line('<a href="%s">codebeamer item %u</a> '
                      '(on tracker %s <a href="%s">%u</a>)' %
                      (issue_link,
                       item["source"]["item"],
@@ -428,7 +429,7 @@ def write_html(fd, xref, levels, policy, stm):
             if level["items"]:
                 for item in level["items"]:
                     write_item_box_begin(doc, xref, item)
-                    if kind == "requirements":
+                    if kind == "requirements" and item["text"] is not None:
                         doc.add_line('<div class="attribute">')
                         doc.add_line("<blockquote>%s</blockquote>" %
                                      html.escape(item["text"]))

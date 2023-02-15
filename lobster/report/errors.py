@@ -41,7 +41,7 @@ class Source_Reference:
             assert line_no is None
             self.ref_kind   = json.get("ref", "file")
             self.is_precise = json.get("precise", True)
-            assert self.ref_kind in ("file", "codeBeamer")
+            assert self.ref_kind in ("file", "codebeamer")
 
             if self.ref_kind == "file":
                 self.target = {
@@ -49,10 +49,12 @@ class Source_Reference:
                     "line" : json["line"],
                 }
             else:
+                assert self.ref_kind == "codebeamer"
                 self.target = {
-                    "tracker" : json["tracker"],
-                    "item"    : json["item"],
-                    "version" : json.get("version", "HEAD"),
+                    "instance" : json["instance"],
+                    "tracker"  : json["tracker"],
+                    "item"     : json["item"],
+                    "version"  : json.get("version", "HEAD"),
                 }
 
     def to_report_json(self):
@@ -68,8 +70,8 @@ class Source_Reference:
             else:
                 return "%s:%s" % (self.target["file"], self.target["line"])
         else:
-            assert self.ref_kind == "codeBeamer"
-            return "codeBeamer item %u" % self.target["item"]
+            assert self.ref_kind == "codebeamer"
+            return "codebeamer item %u" % self.target["item"]
 
 
 class LOBSTER_Error(Exception):

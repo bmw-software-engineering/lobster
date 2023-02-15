@@ -40,7 +40,11 @@ the same:
 ```
 
 Based on the value of *ref* this object takes different
-forms. Currently defined are:
+forms.
+
+#### File references
+
+File references look like this:
 
 ```
 {
@@ -53,6 +57,31 @@ forms. Currently defined are:
 
 If *precise* is `true`, then a *line* number must be provided. If
 *precise* is `false` then the *line* number may be `null`.
+
+#### codebeamer references
+
+References to the proprietary codebeamer tool look like this:
+
+```
+{
+   "ref"     : "codebeamer",
+   "instance" : STRING,
+   "tracker"  : INTEGER,
+   "item"     : INTEGER,
+   "version"  : INTEGER
+}
+```
+
+The *instance* refers to the root codebeamer URL, *tracker* to the
+tracker that contains the item, and *item* is the numeric id
+itself. References to codebeamer objects are always precise, and so
+the *precise* value should be omitted or `true`.
+
+Note: we are considering to retire this kind of reference as it is too
+specific, and replace with a "online" reference that consists out of a
+tool indicator (e.g. codebeamer) and a url. A design goal of LOBSTER
+is after all that adding support for a new tool doesn't require a
+change in LOBSTER itself.
 
 ## Requirements
 
@@ -78,6 +107,28 @@ objects. Each requirement object has this structure:
 * *source* is a pointer to the requirement
 * *tags* is a list of text strings pointing to other items tracked by
   LOBSTER.
+
+### Version 2
+
+As version 1, but with an additional *name* field.
+
+```
+{
+   "kind"      : STRING,
+   "name"      : STRING,
+   "text"      : STRING,
+   "framework" : STRING,
+   "source"    : SOURCE_REF,
+   "tags"      : LIST OF UID STRINGS
+}
+```
+
+The *name* field is a short summary of the requirement; this is
+especially useful if the underlying system's unique identifiers are
+something not intended for human consumption like hexdigits
+(e.g. SystemWeaver) or digits (e.g. codebeamer, DOORS).
+
+The *text* field is now optional and could be `null`.
 
 ## Implementation
 
