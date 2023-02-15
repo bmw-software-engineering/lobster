@@ -27,9 +27,7 @@ import tempfile
 from lobster.report import errors, assets, report
 from lobster.html import htmldoc
 
-CB_ROOT = "https://codebeamer.bmwgroup.net/cb"
-LOBSTER_GH = ("https://cc-github.bmwgroup.net/" +
-              "florianschanda/open-tracing-framework")
+LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
 
 
 def is_dot_available():
