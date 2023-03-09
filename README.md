@@ -46,6 +46,8 @@ You can generate a report linking everything together with `lobster_report`.
 The report is in JSON, but you can generate more readable versions of it
 with additional tools:
 
+* `lobster_online_report`: Preprocess a JSON report to contain github
+  references instead of local file references
 * `lobster_html_report`: Generate a HTML report
 * `lobster_ci_report`: Generate a compiler-message like output, useful for CI
 

@@ -2,6 +2,7 @@ CLANG_TIDY:=../../../../llvm-project/build/bin/clang-tidy
 
 html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
 	@../../../lobster_report
+	@../../../lobster_online_report
 	@../../../lobster_html_report
 	@../../../lobster_ci_report | tee ci_report
 

@@ -124,8 +124,11 @@ class Github_Reference(Location):
         self.line     = line
 
     def to_string(self):
-        return "%s:%u" % (self.filename,
-                          self.line)
+        if self.line:
+            return "%s:%u" % (self.filename,
+                              self.line)
+        else:
+            return self.filename
 
     def to_html(self):
         file_ref = self.filename
