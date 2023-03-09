@@ -22,7 +22,8 @@ import os.path
 import collections
 
 import lobster.config.lexer as lexer
-import lobster.report.errors as errors
+import lobster.errors as errors
+import lobster.location as location
 
 
 class Parser:
@@ -60,7 +61,7 @@ class Parser:
             self.advance()
         elif self.nt is None:
             self.error(
-                errors.Source_Reference(file_name = self.lexer.file_name),
+                errors.File_Reference(filename = self.lexer.file_name),
                 "expected %s, found EOF" % kind)
         elif value is None:
             self.error(self.nt.loc,

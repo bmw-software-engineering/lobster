@@ -1,21 +1,23 @@
 {
-    "data": {
-        "12345": {
+    "data": [
+        {
+	    "tag"  : "req 12345@42",
             "kind" : "functional requirement",
 	    "name" : "LOBSTER demo",
 	    "text" : "Provide a nice demonstration of LOBSTER through four examples",
 	    "framework" : "codebeamer",
-            "source": {
-	        "ref"      : "codebeamer",
-		"instance" : "https://potato.kitten",
+            "location": {
+	        "kind"     : "codebeamer",
+		"cb_root"  : "https://potato.kitten",
                 "tracker"  : 12345,
                 "item"     : 666,
-		"version"  : "HEAD"
+		"version"  : 42,
+		"name"     : "LOBSTER demo"
             },
             "tags": []
-        }
-    },
+	}
+    ],
     "generator": "hand crafted",
     "schema": "lobster-req-trace",
-    "version": 2
+    "version": 3
 }

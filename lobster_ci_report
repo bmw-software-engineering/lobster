@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
-# lobster_ci_report - Write LOBSTER issued on the command-line
-# Copyright (C) 2022 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# lobster_ci_report - Visualise LOBSTER issues for CI
+# Copyright (C) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -20,12 +20,10 @@
 import sys
 import os.path
 import argparse
-import html
-import subprocess
-import hashlib
-import tempfile
 
-from lobster.report import errors, assets, report
+from lobster.report import Report
+from lobster.items import Tracing_Status
+
 
 def main():
     ap = argparse.ArgumentParser()
@@ -34,43 +32,29 @@ def main():
                     default="report.lobster")
     options = ap.parse_args()
 
-    mh = errors.Message_Handler()
-
     if not os.path.isfile(options.lobster_report):
         if options.lobster_report == "report.lobster":
             ap.error("specify report file")
         else:
             ap.error("%s is not a file" % options.lobster_report)
 
-    try:
-        data = report.load(mh, options.lobster_report)
-    except errors.LOBSTER_Error:
+    report = Report()
+    report.load_report(options.lobster_report)
+
+    for uid in sorted(report.items):
+        item = report.items[uid]
+        if item.tracing_status not in (Tracing_Status.OK,
+                                       Tracing_Status.JUSTIFIED):
+            for message in item.messages:
+                report.mh.error(item.location,
+                                message,
+                                fatal = False)
+
+    if report.mh.errors:
         return 1
+    else:
+        return 0
 
-    ok = True
-    for level in data["levels"]:
-        for item in level["items"]:
-            if item["tracing_status"] in ("OK", "JUSTIFIED"):
-                continue
-
-            ok = False
-
-            base = ""
-            if item["source"]["ref"] == "file":
-                if item["source"]["precise"]:
-                    base = "%s:%u: " % (item["source"]["file"],
-                                        item["source"]["line"])
-                else:
-                    base = "%s: " % item["source"]["file"]
-            else:
-                assert False
-
-            base += "tracing error on %s: " % item["name"]
-
-            for message in item["tracing_messages"]:
-                print(base + message)
-
-    return 0 if ok else 1
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -2,7 +2,8 @@ CLANG_TIDY:=../../../../llvm-project/build/bin/clang-tidy
 
 html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster
 	@../../../lobster_report
-	@../../../lobster_html_report report.lobster
+	@../../../lobster_html_report
+	@../../../lobster_ci_report | tee ci_report
 
 cppcode.lobster: foo.h foo.cpp
 	@../../../lobster_cpp foo.cpp foo.h --out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
@@ -24,4 +25,4 @@ pycode.lobster: nor.py
 software-requirements.lobster: potato.rsl potato.check potato.trlc
 	@../../../lobster_trlc *.rsl *.check *.trlc \
 		--out="software-requirements.lobster" \
-		--tags="trace_cb"
+		--cb-tags="trace_cb"

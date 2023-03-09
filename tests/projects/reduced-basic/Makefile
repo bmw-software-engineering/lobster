@@ -14,4 +14,4 @@ pycode.lobster: nor.py
 software-requirements.lobster: potato.rsl potato.check potato.trlc
 	@../../../lobster_trlc *.rsl *.check *.trlc \
 		--out="software-requirements.lobster" \
-		--tags="trace_cb"
+		--cb-tags="trace_cb"

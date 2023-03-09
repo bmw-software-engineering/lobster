@@ -19,7 +19,7 @@
 
 import html
 
-from lobster.report import assets
+from lobster.html import assets
 
 NAVBAR_STICKY_SCRIPT = """
 window.onscroll = function() {stickyNavbar()};
@@ -268,7 +268,7 @@ class Document:
                                                 text,
                                                 level))
         else:
-            self.body.append('<h%u><a name="%s">%s</a></h%u>' %
+            self.body.append('<h%u id="sec-%s">%s</h%u>' %
                              (level,
                               anchor,
                               text,

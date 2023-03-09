@@ -6,7 +6,7 @@ Each LOBSTER JSON file shares the following common structure:
 
 ```
 {
-    "data"      : OBJECT or LIST,
+    "data"      : LIST,
     "generator" : STRING,
     "schema"    : STRING,
     "version"   : INTEGER
@@ -29,18 +29,15 @@ always present.
 
 ### Source References
 
-A SOURCE_REF is an object with varying forms. Two fields are always
-the same:
+A SOURCE_REF is an object with varying forms. One field is always present:
 
 ```
 {
-   "ref"     : REF_KIND,
-   "precise" : BOOLEAN
+   "kind"    : REF_KIND,
 }
 ```
 
-Based on the value of *ref* this object takes different
-forms.
+Based on the value of *kind* this object takes different forms.
 
 #### File references
 
@@ -48,15 +45,33 @@ File references look like this:
 
 ```
 {
-   "ref"     : "file",
-   "precise" : BOOLEAN,
-   "file"    : STRING,
-   "line"    : INTEGER,
+   "kind"   : "file",
+   "file"   : STRING,
+   "line"   : INTEGER or null,
+   "column" : INTEGER or null
 }
 ```
 
-If *precise* is `true`, then a *line* number must be provided. If
-*precise* is `false` then the *line* number may be `null`.
+#### Github references
+
+References to github look like this:
+
+```
+{
+   "kind"     : "github",
+   "gh_root"  : STRING,
+   "gh_repo"  : STRING,
+   "commit"   : STRING,
+   "filename" : INTEGER,
+   "line"     : INTEGER or null
+}
+```
+
+The *gh_root* is the github instance, for example
+`https://github.com`. The *gh_repo* is the combination of user and
+repo, for example `bmw-software-engineering/trlc`. The *commit* is
+either a SHA or a branch/tag name, for example `main`. Finally
+*filename* and *line* has the usual meaning.
 
 #### codebeamer references
 
@@ -64,18 +79,20 @@ References to the proprietary codebeamer tool look like this:
 
 ```
 {
-   "ref"     : "codebeamer",
-   "instance" : STRING,
+   "kind"     : "codebeamer",
+   "cb_root"  : STRING,
    "tracker"  : INTEGER,
    "item"     : INTEGER,
-   "version"  : INTEGER
+   "version"  : INTEGER or null,
+   "name"     : STRING
 }
 ```
 
-The *instance* refers to the root codebeamer URL, *tracker* to the
-tracker that contains the item, and *item* is the numeric id
-itself. References to codebeamer objects are always precise, and so
-the *precise* value should be omitted or `true`.
+The *cb_root* refers to the root codebeamer URL (everything up to, but
+excluding, the `/cb/`), *tracker* to the tracker that contains the
+item, and *item* is the numeric id itself. The *version* if specified,
+references a specific version, otherwise the reference is to the
+HEAD. Finally *name* is the short human-readable name of the item.
 
 Note: we are considering to retire this kind of reference as it is too
 specific, and replace with a "online" reference that consists out of a
@@ -83,130 +100,132 @@ tool indicator (e.g. codebeamer) and a url. A design goal of LOBSTER
 is after all that adding support for a new tool doesn't require a
 change in LOBSTER itself.
 
+## Items
+
+All items (requirements, implementation, and activities) share a few
+basic properties.
+
+### Version 1-2
+
+Deprecated.
+
+### Version 3
+
+```
+  "tag":         TRACING_TAG,
+  "location":    SOURCE_REF,
+  "name":        STRING,
+  "refs":        LIST-OF-TRACING_TAG
+  "just_up":     LIST-OF-STRING,
+  "just_down":   LIST-OF-STRING,
+  "just_global": LIST-OF-STRING
+```
+
+The `TRACING_TAG` is right now a string that matches this regex:
+
+```regex
+[a-z]+ [^ @]+(@[a-z0-9]+)?
+```
+
+The first letter group is a namespace for the tag, e.g. `req` (for all
+requirements) or e.g. `cpp` (for C++ code). The next letter group is
+the actual tag name e.g. `example.requirement` or `12345`; and the
+final optional group is a version. Some examples:
+
+* `req example.requirement` TRLC requirement example.requirement
+* `req 12345@42` codebeamer requirement 12345 at version 42
+* `cpp kitten::foo` C++ function foo (in namespace kitten)
+
+In the future we may make this an object.
+
+The *name* is a more human readable name, which doesn't have to be
+unique. For the names for the three examples above might be:
+
+* `requirement` (just the trlc identifier)
+* `requirement` (the actual title for item 12345 in cb)
+* `foo` (just the function name)
+
+The three justification lists *just_up*, *just_down*, and
+*just_global* collect justification reasons why a link might be
+missing. Generally you just use *just_up* since we link up; but in
+some cases we might have to justify "from the top down". The global
+justifications are both up and down, and should be used very
+sparingly.
+
+The *refs* is a list of `TRACING_TAG` referencing other items in
+lobster this item should trace *up* to.
+
 ## Requirements
 
-### Version 1
+### Version 1-2
 
-The _data_ is an object mapping unique names to requirement
-objects. Each requirement object has this structure:
+Deprecated.
+
+### Version 3
+
+Requirements are items, with the following additional fields:
 
 ```
 {
-   "kind"      : STRING,
-   "text"      : STRING,
-   "framework" : STRING,
-   "source"    : SOURCE_REF,
-   "tags"      : LIST OF UID STRINGS
+   << the common item fields >>
+   "framework" : STRING
+   "kind"      : STRING
+   "text"      : STRING or null
 }
 ```
 
+* *framework* is the data source, for example "codebeamer" or "TRLC".
 * *kind* is a free text string describing what kind of requirement
   this is. For example "functional requirement".
-* *text* is a copy or a summary of the requirement text.
-* *framework* is the data source, for example "codeBeamer" or "TRLC".
-* *source* is a pointer to the requirement
-* *tags* is a list of text strings pointing to other items tracked by
-  LOBSTER.
-
-### Version 2
-
-As version 1, but with an additional *name* field.
-
-```
-{
-   "kind"      : STRING,
-   "name"      : STRING,
-   "text"      : STRING,
-   "framework" : STRING,
-   "source"    : SOURCE_REF,
-   "tags"      : LIST OF UID STRINGS
-}
-```
-
-The *name* field is a short summary of the requirement; this is
-especially useful if the underlying system's unique identifiers are
-something not intended for human consumption like hexdigits
-(e.g. SystemWeaver) or digits (e.g. codebeamer, DOORS).
-
-The *text* field is now optional and could be `null`.
+* *text* is an optional copy or a summary of the requirement text.
 
 ## Implementation
 
-### Version 1
+### Version 1-2
 
-The _data_ is an object mapping unique names to implementation
-objects. Each implementation object has this structure:
+Deprecated.
+
+### Version 3
+
+Implementation are items, with the following additional fields:
 
 ```
 {
-   "kind"     : STRING,
-   "language" : STRING,
-   "source"   : SOURCE_REF,
-   "tags"     : LIST OF UID STRINGS
+   << the common item fields >>
+   "language" : STRING
+   "kind"     : STRING
 }
 ```
 
-* *kind* is a free text string describing the entity. For example
-  "function", "method", "named number", "class".
 * *language* is a free text string indicating the implementation
   language. For example "Ada", "C++", or "Python".
-* *source* is a pointer to the declaration or body of the item, as is
-  most appropriate for the language. For example in C++ bodies make
-  more sense as you can have multiple declarations, but in Ada
-  pointing to the specification makes more sense.
-* *tags* is a list of text strings pointing to other items tracked by
-  LOBSTER.
-
-### Version 2
-
-Same as version 1, but includes fields for justifications:
-
-```
-{
-   "kind"               : STRING,
-   "language"           : STRING,
-   "source"             : SOURCE_REF,
-   "tags"               : LIST OF UID STRINGS
-   "justification"      : LIST OF STRINGS
-   "justification_up"   : LIST OF STRINGS
-   "justification_down" : LIST OF STRINGS
-}
-```
-
-Additional fields over version 1:
-
-* *justification* list of reasons why this item is not linked to
-  anything (up or down)
-* *justification_up* list of reasons why this item is not linked to
-  something above it in the tracing policy
-* *justification_down* list of reasons why this item is not linked to
-  something below it in the tracing policy
+* *kind* is a free text string describing the entity. For example
+  "function", "method", "named number", "class".
 
 ## Activity
 
-### Version 1
+### Version 1-2
 
-The _data_ is an object mapping unique names to activity objects. Each
-activity object has this structure:
+Deprecated.
+
+### Version 3
+
+Activity are items, with the following additional fields:
 
 ```
 {
-   "kind"      : STRING,
-   "framework" : STRING,
-   "source"    : SOURCE_REF,
-   "tags"      : LIST OF UID STRINGS
+   << the common item fields >>
+   "framework" : STRING
+   "kind"      : STRING
+   "status"    : STRING or null
 }
 ```
 
-* *kind* is the type of activity. Generally, it is free text, but the
-  following kinds have special meaning:
-  * *test* an executable test, test activities are described below
 * *framework* a free text string that describes where the activity
   takes place. For example "GTest", "SMTLIB Model", or "Hand-written
   analysis".
-* *source* is a pointer to the artefact or test case.
-* *tags* is a list of text strings pointing to other items tracked by
-  LOBSTER.
+* *kind* is the type of activity. Generally, it is free text, but the
+  following kinds have special meaning:
 
 Test activities can (but are not required to) have another mapping for
 "status" describing the test status. If set it can be one of the

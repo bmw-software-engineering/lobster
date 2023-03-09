@@ -28,16 +28,16 @@ h2 {
 .content {
   padding: 0.5em;
 }
-.item-ok, .item-partial, .item-missing {
+.item-ok, .item-partial, .item-missing, .item-justified {
   border: 1px solid black;
   border-radius: 0.5em;
   margin-top: 0.4em;
   padding: 0.25em;
 }
-.item-ok:target, .item-partial:target, .item-missing:target {
+.item-ok:target, .item-partial:target, .item-missing:target, .item-justified:target {
   border: 3px solid black;
 }
-.subtle-ok, .subtle-partial, .subtle-missing {
+.subtle-ok, .subtle-partial, .subtle-missing, .subtle-justified {
   padding-left: 0.2em;
 }
 .item-ok {
@@ -49,6 +49,9 @@ h2 {
 .item-missing {
   background-color: #fee;
 }
+.item-justified {
+  background-color: #eee;
+}
 .subtle-ok {
   border-left: 0.2em solid #8f8;
 }
@@ -57,6 +60,9 @@ h2 {
 }
 .subtle-missing {
   border-left: 0.2em solid #f88;
+}
+.subtle-justified {
+  border-left: 0.2em solid #888;
 }
 .item-name {
   font-size: 125%;
@@ -188,30 +194,30 @@ blockquote {
 <div class="subtitle">Lightweight Open BMW Software Tracability Evidence Report</div>
 </div>
 <div id="navbar">
-<a href="#overview">Overview</a>
+<a href="#sec-overview">Overview</a>
+<a href="#sec-issues">Issues</a>
 <div class="dropdown">
 <button class="dropbtn">Detailed report<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
 <div class="dropdown-content">
-<a href="#419cfc02b324dc7d8faefa90ed608fb0">System Requirements</a>
-<a href="#9d273bd32c1fceb91b7d6a4d40e98bdd">Software Requirements</a>
-<a href="#ca0dbad92a874b2f69b549293387925e">Code</a>
-<a href="#840c3e13412933b0e3f7394f4c7fecb0">Verification Test</a>
+<a href="#sec-419cfc02b324dc7d8faefa90ed608fb0">System Requirements</a>
+<a href="#sec-9d273bd32c1fceb91b7d6a4d40e98bdd">Software Requirements</a>
+<a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a>
+<a href="#sec-840c3e13412933b0e3f7394f4c7fecb0">Verification Test</a>
 </div>
 </div>
-<a href="#matrix">Software Traceability Matrix</a>
 <div class="navbar-right">
 <div class="dropdown">
 <button class="dropbtn">LOBSTER<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
 <div class="dropdown-content">
-<a href="https://cc-github.bmwgroup.net/florianschanda/open-tracing-framework/blob/main/README.md"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> Documentation</a>
-<a href="https://cc-github.bmwgroup.net/florianschanda/open-tracing-framework/blob/main/LICENSE.md"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> License</a>
-<a href="https://cc-github.bmwgroup.net/florianschanda/open-tracing-framework"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> Source</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> Documentation</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> License</a>
+<a href="https://github.com/bmw-software-engineering/lobster"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> Source</a>
 </div>
 </div>
 </div>
 </div>
 <div class="htmlbody">
-<h2><a name="overview">Overview</a></h2>
+<h2 id="sec-overview">Overview</h2>
 <div class="content">
 <div class="columns">
 <div class="column">
@@ -244,8 +250,8 @@ blockquote {
 <td><a href="#ca0dbad92a874b2f69b549293387925e">Code</a></td>
 <td>
 <div class="progress-bar">
-<div class="bar" style="width:75.000000%;">
-75.0%
+<div class="bar" style="width:71.428571%;">
+71.4%
 </div>
 </div>
 </td>
@@ -328,36 +334,50 @@ blockquote {
 </div>
 </div>
 </div>
-<h2><a name="detailed-report">Detailed report</a></h2>
+<h2 id="sec-issues">Issues</h2>
+<div class="content">
+<ul>
+<li>TRLC Requirement <a href='#item-5c0948f96e743a0c3ab3c14ecac0f5d10609f324'>example req xor</a>: missing reference to Code</li>
+<li>TRLC Requirement <a href='#item-5c0948f96e743a0c3ab3c14ecac0f5d10609f324'>example req xor</a>: missing reference to Verification Test</li>
+<li>TRLC Requirement <a href='#item-714c0c22dee57a69c9425cff0c0bd4ca9ebe5d1f'>example req nor</a>: missing reference to Verification Test</li>
+<li>C/C++ Function <a href='#item-a59e5952bd9a2f7bb8592b7645968e08f73a9037'>exclusive_or</a>: missing up reference</li>
+<li>C/C++ Function <a href='#item-1fcf699056a4c10fafba408751855a62d76a2fc2'>potato</a>: unknown tracing target req example.doesnt_exist</li>
+<li>C/C++ Function <a href='#item-1fcf699056a4c10fafba408751855a62d76a2fc2'>potato</a>: missing up reference</li>
+</ul>
+</div>
+<h2 id="sec-detailed-report">Detailed report</h2>
 <div class="content">
 <h3>Requirements and Specification</h3>
-<h4><a name="419cfc02b324dc7d8faefa90ed608fb0">System Requirements</a></h4>
-<div class="item-ok" id="827ccb0eea8a706c4c34a16891f84e7b">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> codeBeamer Functional requirement <a name='827ccb0eea8a706c4c34a16891f84e7b'>12345</a></div>
+<h4 id="sec-419cfc02b324dc7d8faefa90ed608fb0">System Requirements</h4>
+<!-- begin item req 12345 -->
+<div class="item-ok" id="item-d499f1e2ff6c8662012d4c4bfe35060a5eda7b6c">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> codebeamer Functional requirement LOBSTER demo</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="https://codebeamer.bmwgroup.net/cb/issue/666">codeBeamer item 666</a> (on tracker <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> <a href="https://codebeamer.bmwgroup.net/cb/tracker/12345">12345</a>)
+<a href="https://potato.kitten/cb/tracker/12345?selectedItemId=666&forceDocumentViewLayout=true">codebeamer item 'LOBSTER demo'</a>
 </div>
 <div class="attribute">
-<blockquote>provide a nice demonstration of ORTF</blockquote>
+<blockquote>Provide a nice demonstration of LOBSTER through four examples</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
 <ul>
-<li>TRLC Requirement <a href='#82d2d435d50f20f6ae1ba4cad24e7290'>req_implication</a></li>
-<li>TRLC Requirement <a href='#d3b039927e8569ed26f7a76f9a33501c'>req_nand</a></li>
-<li>TRLC Requirement <a href='#212f3cdb562cb01a9466889a9d4ee144'>req_nor</a></li>
-<li>TRLC Requirement <a href='#5f2351ccc4a21d6081785bc3bf4abde6'>req_xor</a></li>
+<li>TRLC Requirement <a href='#item-1bb1a5e571e24eebc94d2572ab385ee34e338995'>example req implication</a></li>
+<li>TRLC Requirement <a href='#item-5c0948f96e743a0c3ab3c14ecac0f5d10609f324'>example req xor</a></li>
+<li>TRLC Requirement <a href='#item-3e885dd2f9f061dedab93f44634897ace7f770c8'>example req nand</a></li>
+<li>TRLC Requirement <a href='#item-714c0c22dee57a69c9425cff0c0bd4ca9ebe5d1f'>example req nor</a></li>
 </ul>
 </div>
 </div>
 </div>
-<h4><a name="9d273bd32c1fceb91b7d6a4d40e98bdd">Software Requirements</a></h4>
-<div class="item-ok" id="82d2d435d50f20f6ae1ba4cad24e7290">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> TRLC Requirement <a name='82d2d435d50f20f6ae1ba4cad24e7290'>req_implication</a></div>
+<!-- end item -->
+<h4 id="sec-9d273bd32c1fceb91b7d6a4d40e98bdd">Software Requirements</h4>
+<!-- begin item req example.req_implication -->
+<div class="item-ok" id="item-1bb1a5e571e24eebc94d2572ab385ee34e338995">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> TRLC Requirement example req implication</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="potato.trlc">potato.trlc line 3</a>
+<a href="potato.trlc">potato.trlc</a>
 </div>
 <div class="attribute">
 <blockquote>provide a utility function for logical implication</blockquote>
@@ -365,73 +385,24 @@ blockquote {
 <div class="attribute">
 <div>Traces to:
 <ul>
-<li>C/C++ Function <a href='#7fa22c9bbfcc8f10b0c11ea0c6f08d9f'>implication:3</a></li>
-<li>GTest Test <a href='#f413a527abd6c5a9301067994fac637e'>ImplicationTest BasicTest</a></li>
+<li>C/C++ Function <a href='#item-306ea2c9ccbbbc7157c8ff00b3e0381919969d52'>implication</a></li>
+<li>GoogleTest Test <a href='#item-0c9dd74b464f7be6456f3d14e144ba8b116dc9b3'>ImplicationTest:BasicTest</a></li>
 </ul>
 </div>
 <div>Derived from:
 <ul>
-<li>codeBeamer Functional requirement <a href='#827ccb0eea8a706c4c34a16891f84e7b'>12345</a></li>
+<li>codebeamer Functional requirement <a href='#item-d499f1e2ff6c8662012d4c4bfe35060a5eda7b6c'>LOBSTER demo</a></li>
 </ul>
 </div>
 </div>
 </div>
-<div class="item-ok" id="d3b039927e8569ed26f7a76f9a33501c">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> TRLC Requirement <a name='d3b039927e8569ed26f7a76f9a33501c'>req_nand</a></div>
+<!-- end item -->
+<!-- begin item req example.req_xor -->
+<div class="item-partial" id="item-5c0948f96e743a0c3ab3c14ecac0f5d10609f324">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> TRLC Requirement example req xor</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="potato.trlc">potato.trlc line 15</a>
-</div>
-<div class="attribute">
-<blockquote>provide a utility function for logical negated and</blockquote>
-</div>
-<div class="attribute">
-<div>Traces to:
-<ul>
-<li>MATLAB Function <a href='#c657344463ff1b32bf1ad9bbdb3ef20b'>nand</a></li>
-<li>MATLAB Test <a href='#9b4cb4e395b8d1bcd877edf173f2c352'>nand_test::test_1</a></li>
-</ul>
-</div>
-<div>Derived from:
-<ul>
-<li>codeBeamer Functional requirement <a href='#827ccb0eea8a706c4c34a16891f84e7b'>12345</a></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="item-partial" id="212f3cdb562cb01a9466889a9d4ee144">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> TRLC Requirement <a name='212f3cdb562cb01a9466889a9d4ee144'>req_nor</a></div>
-<div class="attribute">Source: 
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="potato.trlc">potato.trlc line 21</a>
-</div>
-<div class="attribute">
-<blockquote>provide a utility function for logical negated or</blockquote>
-</div>
-<div class="attribute">
-<div>Traces to:
-<ul>
-<li>Python Method <a href='#8bc774bd0fa68e0b026322c7c5180e35'>Example::nor</a></li>
-</ul>
-</div>
-<div>Derived from:
-<ul>
-<li>codeBeamer Functional requirement <a href='#827ccb0eea8a706c4c34a16891f84e7b'>12345</a></li>
-</ul>
-</div>
-<div>Issues:
-<ul>
-<li>tracing status: PARTIAL</li>
-<li>missing reference to Verification Test</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="item-partial" id="5f2351ccc4a21d6081785bc3bf4abde6">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> TRLC Requirement <a name='5f2351ccc4a21d6081785bc3bf4abde6'>req_xor</a></div>
-<div class="attribute">Source: 
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="potato.trlc">potato.trlc line 9</a>
+<a href="potato.trlc">potato.trlc</a>
 </div>
 <div class="attribute">
 <blockquote>provide a utility function for logical exclusive or</blockquote>
@@ -439,174 +410,222 @@ blockquote {
 <div class="attribute">
 <div>Derived from:
 <ul>
-<li>codeBeamer Functional requirement <a href='#827ccb0eea8a706c4c34a16891f84e7b'>12345</a></li>
+<li>codebeamer Functional requirement <a href='#item-d499f1e2ff6c8662012d4c4bfe35060a5eda7b6c'>LOBSTER demo</a></li>
 </ul>
 </div>
 <div>Issues:
 <ul>
-<li>tracing status: PARTIAL</li>
 <li>missing reference to Code</li>
 <li>missing reference to Verification Test</li>
 </ul>
 </div>
 </div>
 </div>
-<h3>Implementation</h3>
-<h4><a name="ca0dbad92a874b2f69b549293387925e">Code</a></h4>
-<div class="item-missing" id="34b8249a04e199371f59016d413926c1">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> C/C++ Function <a name='34b8249a04e199371f59016d413926c1'>exclusive_or:9</a></div>
+<!-- end item -->
+<!-- begin item req example.req_nand -->
+<div class="item-ok" id="item-3e885dd2f9f061dedab93f44634897ace7f770c8">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> TRLC Requirement example req nand</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="foo.cpp">foo.cpp line 9</a>
+<a href="potato.trlc">potato.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>provide a utility function for logical negated and</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>MATLAB Function <a href='#item-05717df9b8ee784715376855d7afeabeaa6cd1f5'>nand</a></li>
+<li>MATLAB Test <a href='#item-39288653f9b39978deae407a61549f53151857b7'>nand_test::test_1</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>codebeamer Functional requirement <a href='#item-d499f1e2ff6c8662012d4c4bfe35060a5eda7b6c'>LOBSTER demo</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req example.req_nor -->
+<div class="item-partial" id="item-714c0c22dee57a69c9425cff0c0bd4ca9ebe5d1f">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> TRLC Requirement example req nor</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href="potato.trlc">potato.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>provide a utility function for logical negated or</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-6dc5418031850ed4bbf52d97f78c81199ab5f068'>helper_function</a></li>
+<li>Python Method <a href='#item-dc019e62552200763ab509346f91f22b9ac5bf22'>nor</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>codebeamer Functional requirement <a href='#item-d499f1e2ff6c8662012d4c4bfe35060a5eda7b6c'>LOBSTER demo</a></li>
+</ul>
+</div>
+<div>Issues:
+<ul>
+<li>missing reference to Verification Test</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h3>Implementation</h3>
+<h4 id="sec-ca0dbad92a874b2f69b549293387925e">Code</h4>
+<!-- begin item cpp foo.cpp:implication:3 -->
+<div class="item-ok" id="item-306ea2c9ccbbbc7157c8ff00b3e0381919969d52">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> C/C++ Function implication</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href="foo.cpp">foo.cpp</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Requirement <a href='#item-1bb1a5e571e24eebc94d2572ab385ee34e338995'>example req implication</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item cpp foo.cpp:exclusive_or:9 -->
+<div class="item-missing" id="item-a59e5952bd9a2f7bb8592b7645968e08f73a9037">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> C/C++ Function exclusive_or</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href="foo.cpp">foo.cpp</a>
 </div>
 <div class="attribute">
 <div>Issues:
 <ul>
-<li>tracing status: MISSING</li>
 <li>missing up reference</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="item-ok" id="7fa22c9bbfcc8f10b0c11ea0c6f08d9f">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> C/C++ Function <a name='7fa22c9bbfcc8f10b0c11ea0c6f08d9f'>implication:3</a></div>
+<!-- end item -->
+<!-- begin item cpp foo.cpp:potato:14 -->
+<div class="item-missing" id="item-1fcf699056a4c10fafba408751855a62d76a2fc2">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> C/C++ Function potato</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="foo.cpp">foo.cpp line 3</a>
+<a href="foo.cpp">foo.cpp</a>
 </div>
 <div class="attribute">
-<div>Derived from:
+<div>Issues:
 <ul>
-<li>TRLC Requirement <a href='#82d2d435d50f20f6ae1ba4cad24e7290'>req_implication</a></li>
+<li>unknown tracing target req example.doesnt_exist</li>
+<li>missing up reference</li>
 </ul>
 </div>
 </div>
 </div>
-<div class="item-ok" id="c657344463ff1b32bf1ad9bbdb3ef20b">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> MATLAB Function <a name='c657344463ff1b32bf1ad9bbdb3ef20b'>nand</a></div>
+<!-- end item -->
+<!-- begin item matlab nand -->
+<div class="item-ok" id="item-05717df9b8ee784715376855d7afeabeaa6cd1f5">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> MATLAB Function nand</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="nand.m">nand.m line 1</a>
+<a href="nand.m">nand.m</a>
 </div>
 <div class="attribute">
 <div>Derived from:
 <ul>
-<li>TRLC Requirement <a href='#d3b039927e8569ed26f7a76f9a33501c'>req_nand</a></li>
+<li>TRLC Requirement <a href='#item-3e885dd2f9f061dedab93f44634897ace7f770c8'>example req nand</a></li>
 </ul>
 </div>
 </div>
 </div>
-<div class="item-ok" id="8bc774bd0fa68e0b026322c7c5180e35">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> Python Method <a name='8bc774bd0fa68e0b026322c7c5180e35'>Example::nor</a></div>
+<!-- end item -->
+<!-- begin item python Example::helper_function -->
+<div class="item-ok" id="item-6dc5418031850ed4bbf52d97f78c81199ab5f068">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> Python Method helper_function</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="nor.py">nor.py line 6</a>
+<a href="nor.py">nor.py</a>
 </div>
 <div class="attribute">
 <div>Derived from:
 <ul>
-<li>TRLC Requirement <a href='#212f3cdb562cb01a9466889a9d4ee144'>req_nor</a></li>
+<li>TRLC Requirement <a href='#item-714c0c22dee57a69c9425cff0c0bd4ca9ebe5d1f'>example req nor</a></li>
 </ul>
 </div>
 </div>
 </div>
+<!-- end item -->
+<!-- begin item python Example::nor -->
+<div class="item-ok" id="item-dc019e62552200763ab509346f91f22b9ac5bf22">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> Python Method nor</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href="nor.py">nor.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Requirement <a href='#item-714c0c22dee57a69c9425cff0c0bd4ca9ebe5d1f'>example req nor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python trlc_reference -->
+<div class="item-justified" id="item-1c80f4c8e06b170dcd433311c9770b2fbd541410">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> Python Function trlc_reference</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href="nor.py">nor.py</a>
+</div>
+<div class="attribute">
+<div>Justifications:
+<ul>
+<li>helper function</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
 <h3>Verification and Validation</h3>
-<h4><a name="840c3e13412933b0e3f7394f4c7fecb0">Verification Test</a></h4>
-<div class="item-ok" id="f413a527abd6c5a9301067994fac637e">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> GTest Test <a name='f413a527abd6c5a9301067994fac637e'>ImplicationTest BasicTest</a></div>
+<h4 id="sec-840c3e13412933b0e3f7394f4c7fecb0">Verification Test</h4>
+<!-- begin item gtest ImplicationTest:BasicTest -->
+<div class="item-ok" id="item-0c9dd74b464f7be6456f3d14e144ba8b116dc9b3">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> GoogleTest Test ImplicationTest:BasicTest</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="test.cpp">test.cpp line 7</a>
+<a href="test.cpp">test.cpp</a>
 </div>
 <div class="attribute">
 <div>Derived from:
 <ul>
-<li>TRLC Requirement <a href='#82d2d435d50f20f6ae1ba4cad24e7290'>req_implication</a></li>
+<li>TRLC Requirement <a href='#item-1bb1a5e571e24eebc94d2572ab385ee34e338995'>example req implication</a></li>
 </ul>
 </div>
 </div>
 </div>
-<div class="item-ok" id="9b4cb4e395b8d1bcd877edf173f2c352">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> MATLAB Test <a name='9b4cb4e395b8d1bcd877edf173f2c352'>nand_test::test_1</a></div>
+<!-- end item -->
+<!-- begin item matlab nand_test::test_1 -->
+<div class="item-ok" id="item-39288653f9b39978deae407a61549f53151857b7">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> MATLAB Test nand_test::test_1</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="nand_test.m">nand_test.m line 3</a>
+<a href="nand_test.m">nand_test.m</a>
 </div>
 <div class="attribute">
 <div>Derived from:
 <ul>
-<li>TRLC Requirement <a href='#d3b039927e8569ed26f7a76f9a33501c'>req_nand</a></li>
+<li>TRLC Requirement <a href='#item-3e885dd2f9f061dedab93f44634897ace7f770c8'>example req nand</a></li>
 </ul>
 </div>
 </div>
 </div>
-</div>
-<h2><a name="matrix">Software traceability matrix</a></h2>
-<div class="content">
-<table width="100%">
-<thead>
-<tr>
-<td>System Requirements</td>
-<td>Software Requirements</td>
-<td>Code</td>
-<td>Verification Test</td>
-</tr>
-</thead>
-<tbody>
-<tr class="alt">
-<td>
-</td>
-<td>
-</td>
-<td>
-<div class="subtle-missing">C/C++ Function <a href='#34b8249a04e199371f59016d413926c1'>exclusive_or:9</a></div>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<div class="subtle-ok"><a href='#827ccb0eea8a706c4c34a16891f84e7b'>12345</a></div>
-</td>
-<td>
-<div class="subtle-ok"><a href='#82d2d435d50f20f6ae1ba4cad24e7290'>req_implication</a></div>
-</td>
-<td>
-<div class="subtle-ok">C/C++ Function <a href='#7fa22c9bbfcc8f10b0c11ea0c6f08d9f'>implication:3</a></div>
-</td>
-<td>
-<div class="subtle-ok"><a href='#f413a527abd6c5a9301067994fac637e'>ImplicationTest BasicTest</a></div>
-</td>
-</tr>
-<tr class="alt">
-<td>
-<div class="subtle-ok"><a href='#827ccb0eea8a706c4c34a16891f84e7b'>12345</a></div>
-</td>
-<td>
-<div class="subtle-ok"><a href='#d3b039927e8569ed26f7a76f9a33501c'>req_nand</a></div>
-</td>
-<td>
-<div class="subtle-ok">MATLAB Function <a href='#c657344463ff1b32bf1ad9bbdb3ef20b'>nand</a></div>
-</td>
-<td>
-<div class="subtle-ok"><a href='#9b4cb4e395b8d1bcd877edf173f2c352'>nand_test::test_1</a></div>
-</td>
-</tr>
-<tr>
-<td>
-<div class="subtle-ok"><a href='#827ccb0eea8a706c4c34a16891f84e7b'>12345</a></div>
-</td>
-<td>
-<div class="subtle-partial"><a href='#212f3cdb562cb01a9466889a9d4ee144'>req_nor</a></div>
-</td>
-<td>
-<div class="subtle-ok">Python Method <a href='#8bc774bd0fa68e0b026322c7c5180e35'>Example::nor</a></div>
-</td>
-<td>
-</td>
-</tr>
-</tbody>
-</table>
+<!-- end item -->
 </div>
 </div>
 <script>

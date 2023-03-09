@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_html_report - Visualise LOBSTER report in HTML
-# Copyright (C) 2022 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2022-2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -24,8 +24,10 @@ import subprocess
 import hashlib
 import tempfile
 
-from lobster.report import errors, assets, report
-from lobster.html import htmldoc
+from lobster.html import htmldoc, assets
+from lobster.report import Report
+from lobster.items import (Tracing_Status, Item,
+                           Requirement, Implementation, Activity)
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
 
@@ -48,131 +50,71 @@ def name_hash(name):
     return hobj.hexdigest()
 
 
-def xref_item(xref, name, anchor=False, brief=False):
-    assert isinstance(xref, dict)
-    assert isinstance(name, str)
-    data = xref[name]
-    human_name = data.get("human_name", name)
+# def write_stm(doc, xref, levels, stm):
+#     assert isinstance(doc, htmldoc.Document)
+
+#     doc.add_line('<table width="100%">')
+#     doc.add_line("<thead>")
+#     doc.add_line("<tr>")
+#     for level in levels:
+#         doc.add_line("<td>%s</td>" % html.escape(level["name"]))
+#     doc.add_line("</tr>")
+#     doc.add_line("</thead>")
+#     doc.add_line("<tbody>")
+#     for n, row in enumerate(stm):
+#         if n % 2:
+#             doc.add_line("<tr>")
+#         else:
+#             doc.add_line('<tr class="alt">')
+#         for level in levels:
+#             doc.add_line("<td>")
+#             for item_name in row[level["name"]]:
+#                 doc.add_line(
+#                     '<div class="subtle-%s">%s</div>' %
+#                     (xref[item_name]["tracing_status"].lower(),
+#                      xref_item(xref, item_name,
+#                                brief = level["kind"] != "implementation")))
+#             doc.add_line("</td>")
+#         doc.add_line("</tr>")
+#     doc.add_line("</tbody>")
+#     doc.add_line("</table>")
+
+
+def xref_item(item, link=True, brief=False):
+    assert isinstance(item, Item)
+    assert isinstance(link, bool)
+    assert isinstance(brief, bool)
 
     if brief:
         rv = ""
+    elif isinstance(item, Requirement):
+        rv = html.escape(item.framework + " " +
+                         item.kind.capitalize())
+    elif isinstance(item, Implementation):
+        rv = html.escape(item.language + " " +
+                         item.kind.capitalize())
     else:
-        if data["class"] == "requirement":
-            rv = html.escape(data["framework"] + " " +
-                             data["kind"].capitalize())
-        elif data["class"] == "implementation":
-            rv = html.escape(data["language"] + " " +
-                             data["kind"].capitalize())
-        else:
-            assert data["class"] == "activity"
-            rv = html.escape(data["framework"] + " " +
-                             data["kind"].capitalize())
+        assert isinstance(item, Activity)
+        rv = html.escape(item.framework + " " +
+                         item.kind.capitalize())
+    if not brief:
         rv += " "
 
-    if anchor:
-        rv += "<a name='%s'>" % name_hash(name)
+    if link:
+        rv += "<a href='#item-%s'>%s</a>" % (item.tag.hash(),
+                                             item.name)
     else:
-        rv += "<a href='#%s'>" % name_hash(name)
-
-    rv += html.escape(human_name)
-
-    rv += "</a>"
+        rv += "%s" % item.name
 
     return rv
 
 
-def write_item_box_begin(doc, xref, item):
+def create_policy_diagram(doc, report):
     assert isinstance(doc, htmldoc.Document)
-
-    doc.add_line('<div class="item-%s" id="%s">' %
-                 (item["tracing_status"].lower(),
-                  name_hash(item["name"])))
-    doc.add_line('<div class="item-name">%s %s</div>' %
-                 (assets.SVG_CHECK_SQUARE
-                  if item["tracing_status"] == "OK"
-                  else assets.SVG_ALERT_TRIANGLE,
-                  xref_item(xref, item["name"], anchor=True)))
-    doc.add_line('<div class="attribute">Source: ')
-    doc.add_line(assets.SVG_EXTERNAL_LINK)
-    if item["source"]["ref"] == "file":
-        if item["source"].get("precise", True):
-            doc.add_line('<a href="%s">%s line %u</a>' %
-                         (item["source"]["file"],
-                          item["source"]["file"],
-                          item["source"]["line"]))
-        else:
-            doc.add_line('%s' % item["source"]["file"])
-    elif item["source"]["ref"] == "codebeamer":
-        issue_link = "%s/cb/issue/%u%s" % \
-            (item["source"]["instance"],
-             item["source"]["item"],
-             (""
-              if item["source"]["version"] == "HEAD"
-              else "?version=%u" % item["source"]["version"]))
-        tracker_link = "%s/cb/tracker/%u" % (item["source"]["instance"],
-                                             item["source"]["tracker"])
-
-        doc.add_line('<a href="%s">codebeamer item %u</a> '
-                     '(on tracker %s <a href="%s">%u</a>)' %
-                     (issue_link,
-                      item["source"]["item"],
-                      assets.SVG_EXTERNAL_LINK,
-                      tracker_link,
-                      item["source"]["tracker"]))
-    else:
-        assert False
-
-    doc.add_line("</div>")
-
-
-def write_item_tracing(doc, xref, item):
-    assert isinstance(doc, htmldoc.Document)
-
-    doc.add_line('<div class="attribute">')
-    if item["ref_down"]:
-        doc.add_line("<div>Traces to:")
-        doc.add_line("<ul>")
-        for ref in item["ref_down"]:
-            doc.add_line("<li>%s</li>" % xref_item(xref, ref))
-        doc.add_line("</ul>")
-        doc.add_line("</div>")
-    if item["ref_up"]:
-        doc.add_line("<div>Derived from:")
-        doc.add_line("<ul>")
-        for ref in item["ref_up"]:
-            doc.add_line("<li>%s</li>" % xref_item(xref, ref))
-        doc.add_line("</ul>")
-        doc.add_line("</div>")
-
-    if item["tracing_status"] == "JUSTIFIED":
-        doc.add_line("<div>Justifications:")
-        doc.add_line("<ul>")
-        for msg in item["just_global"] + item["just_up"] + item["just_down"]:
-            doc.add_line("<li>%s</li>" % html.escape(msg))
-        doc.add_line("</ul>")
-        doc.add_line("</div>")
-    elif item["tracing_messages"] or item["tracing_status"] != "OK":
-        doc.add_line("<div>Issues:")
-        doc.add_line("<ul>")
-        doc.add_line("<li>tracing status: %s</li>" % item["tracing_status"])
-        for msg in item["tracing_messages"]:
-            doc.add_line("<li>%s</li>" % html.escape(msg))
-        doc.add_line("</ul>")
-        doc.add_line("</div>")
-
-    doc.add_line("</div>")
-
-
-def write_item_box_end(doc):
-    assert isinstance(doc, htmldoc.Document)
-    doc.add_line("</div>")
-
-
-def create_policy_diagram(doc, policy):
-    assert isinstance(doc, htmldoc.Document)
+    assert isinstance(report, Report)
 
     graph = 'digraph "LOBSTER Tracing Policy" {\n'
-    for level in policy.values():
+    for level in report.config.values():
         if level["kind"] == "requirements":
             style = 'shape=box, style=rounded'
         elif level["kind"] == "implementation":
@@ -187,7 +129,7 @@ def create_policy_diagram(doc, policy):
              level["name"],
              style)
 
-    for level in policy.values():
+    for level in report.config.values():
         source = name_hash(level["name"])
         for target in map(name_hash, level["traces"]):
             # Not a mistake; we want to show the tracing down, whereas
@@ -197,7 +139,7 @@ def create_policy_diagram(doc, policy):
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         graph_name = os.path.join(tmp_dir, "graph.dot")
-        with open(graph_name, "w") as tmp_fd:
+        with open(graph_name, "w", encoding="UTF-8") as tmp_fd:
             tmp_fd.write(graph)
         svg = subprocess.run(["dot", "-Tsvg", graph_name],
                              stdout=subprocess.PIPE,
@@ -210,14 +152,16 @@ def create_policy_diagram(doc, policy):
         doc.add_line(line)
 
 
-def create_item_coverage(doc, levels):
+def create_item_coverage(doc, report):
     assert isinstance(doc, htmldoc.Document)
+    assert isinstance(report, Report)
 
     doc.add_line("<table>")
     doc.add_line("<thead><tr><td>Category</td><td>Coverage</td></tr><thead>")
     doc.add_line("<tbody>")
     doc.add_line("</tbody>")
-    for level in levels:
+    for level in report.config.values():
+        coverage = report.coverage[level["name"]]["coverage"]
         doc.add_line("<tr>")
         doc.add_line('<td><a href="#%s">%s</a></td>' %
                      (name_hash(level["name"]),
@@ -225,8 +169,8 @@ def create_item_coverage(doc, levels):
         doc.add_line("<td>")
         doc.add_line('<div class="progress-bar">')
         doc.add_line('<div class="bar" style="width:%f%%;">' %
-                     level["coverage"])
-        doc.add_line("%.1f%%" % level["coverage"])
+                     coverage)
+        doc.add_line("%.1f%%" % coverage)
         doc.add_line("</div>")
         doc.add_line("</div>")
         doc.add_line("</td>")
@@ -234,37 +178,78 @@ def create_item_coverage(doc, levels):
     doc.add_line("</table>")
 
 
-def write_stm(doc, xref, levels, stm):
+def write_item_box_begin(doc, item):
     assert isinstance(doc, htmldoc.Document)
+    assert isinstance(item, Item)
 
-    doc.add_line('<table width="100%">')
-    doc.add_line("<thead>")
-    doc.add_line("<tr>")
-    for level in levels:
-        doc.add_line("<td>%s</td>" % html.escape(level["name"]))
-    doc.add_line("</tr>")
-    doc.add_line("</thead>")
-    doc.add_line("<tbody>")
-    for n, row in enumerate(stm):
-        if n % 2:
-            doc.add_line("<tr>")
-        else:
-            doc.add_line('<tr class="alt">')
-        for level in levels:
-            doc.add_line("<td>")
-            for item_name in row[level["name"]]:
-                doc.add_line(
-                    '<div class="subtle-%s">%s</div>' %
-                    (xref[item_name]["tracing_status"].lower(),
-                     xref_item(xref, item_name,
-                               brief = level["kind"] != "implementation")))
-            doc.add_line("</td>")
-        doc.add_line("</tr>")
-    doc.add_line("</tbody>")
-    doc.add_line("</table>")
+    doc.add_line('<!-- begin item %s -->' % html.escape(item.tag.key()))
+
+    doc.add_line('<div class="item-%s" id="item-%s">' %
+                 (item.tracing_status.name.lower(),
+                  item.tag.hash()))
+
+    doc.add_line('<div class="item-name">%s %s</div>' %
+                 (assets.SVG_CHECK_SQUARE
+                  if item.tracing_status in (Tracing_Status.OK,
+                                             Tracing_Status.JUSTIFIED)
+                  else assets.SVG_ALERT_TRIANGLE,
+                  xref_item(item, link=False)))
+
+    doc.add_line('<div class="attribute">Source: ')
+    doc.add_line(assets.SVG_EXTERNAL_LINK)
+    doc.add_line(item.location.to_html())
+    doc.add_line("</div>")
 
 
-def write_html(fd, xref, levels, policy, stm):
+def write_item_tracing(doc, report, item):
+    assert isinstance(doc, htmldoc.Document)
+    assert isinstance(report, Report)
+    assert isinstance(item, Item)
+
+    doc.add_line('<div class="attribute">')
+    if item.ref_down:
+        doc.add_line("<div>Traces to:")
+        doc.add_line("<ul>")
+        for ref in item.ref_down:
+            doc.add_line("<li>%s</li>" % xref_item(report.items[ref.key()]))
+        doc.add_line("</ul>")
+        doc.add_line("</div>")
+    if item.ref_up:
+        doc.add_line("<div>Derived from:")
+        doc.add_line("<ul>")
+        for ref in item.ref_up:
+            doc.add_line("<li>%s</li>" % xref_item(report.items[ref.key()]))
+        doc.add_line("</ul>")
+        doc.add_line("</div>")
+
+    if item.tracing_status == Tracing_Status.JUSTIFIED:
+        doc.add_line("<div>Justifications:")
+        doc.add_line("<ul>")
+        for msg in item.just_global + item.just_up + item.just_down:
+            doc.add_line("<li>%s</li>" % html.escape(msg))
+        doc.add_line("</ul>")
+        doc.add_line("</div>")
+
+    if item.messages:
+        doc.add_line("<div>Issues:")
+        doc.add_line("<ul>")
+        for msg in item.messages:
+            doc.add_line("<li>%s</li>" % html.escape(msg))
+        doc.add_line("</ul>")
+        doc.add_line("</div>")
+
+    doc.add_line("</div>")
+
+
+def write_item_box_end(doc):
+    assert isinstance(doc, htmldoc.Document)
+    doc.add_line("</div>")
+    doc.add_line('<!-- end item -->')
+
+
+def write_html(fd, report):
+    assert isinstance(report, Report)
+
     doc = htmldoc.Document(
         "L.O.B.S.T.E.R.",
         "Lightweight Open BMW Software Tracability Evidence Report"
@@ -367,13 +352,13 @@ def write_html(fd, xref, levels, policy, stm):
         "border-radius"    : "5px",
     }
 
-    # Menu & Navigation
-    doc.navbar.add_link("Overview", "#overview")
-    doc.navbar.add_link("Issues", "#issues")
+    ### Menu & Navigation
+    doc.navbar.add_link("Overview", "#sec-overview")
+    doc.navbar.add_link("Issues", "#sec-issues")
     menu = doc.navbar.add_dropdown("Detailed report")
-    for level in levels:
-        menu.add_link(level["name"], "#" + name_hash(level["name"]))
-    doc.navbar.add_link("Software Traceability Matrix", "#matrix")
+    for level in report.config.values():
+        menu.add_link(level["name"], "#sec-" + name_hash(level["name"]))
+    # doc.navbar.add_link("Software Traceability Matrix", "#matrix")
     menu = doc.navbar.add_dropdown("LOBSTER", "right")
     menu.add_link("Documentation",
                   "%s/blob/main/README.md" % LOBSTER_GH)
@@ -381,18 +366,17 @@ def write_html(fd, xref, levels, policy, stm):
                   "%s/blob/main/LICENSE.md" % LOBSTER_GH)
     menu.add_link("Source", LOBSTER_GH)
 
-    # Content
+    ### Summary (Coverage & Policy)
     doc.add_heading(2, "Overview", "overview")
-
     doc.add_line('<div class="columns">')
     doc.add_line('<div class="column">')
     doc.add_heading(3, "Coverage")
-    create_item_coverage(doc, levels)
+    create_item_coverage(doc, report)
     doc.add_line('</div>')
     if is_dot_available():
         doc.add_line('<div class="column">')
         doc.add_heading(3, "Tracing policy")
-        create_policy_diagram(doc, policy)
+        create_policy_diagram(doc, report)
         doc.add_line('</div>')
     else:
         print("warning: dot utility not found, report will not "
@@ -400,19 +384,31 @@ def write_html(fd, xref, levels, policy, stm):
         print("> please install Graphviz (https://graphviz.org)")
     doc.add_line('</div>')
 
+    ### Issues
     doc.add_heading(2, "Issues", "issues")
-    doc.add_line("<ul>")
-    for level in levels:
-        for item in level["items"]:
-            if item["tracing_status"] not in ("OK", "JUSTIFIED"):
-                for message in item["tracing_messages"]:
-                    doc.add_line("<li>%s: %s</li>" %
-                                 (xref_item(xref, item["name"]),
-                                  message))
+    has_issues = False
+    for item in report.items.values():
+        if item.tracing_status not in (Tracing_Status.OK,
+                                       Tracing_Status.JUSTIFIED):
+            for message in item.messages:
+                if not has_issues:
+                    has_issues = True
+                    doc.add_line("<ul>")
+                doc.add_line("<li>%s: %s</li>" %
+                             (xref_item(item),
+                              message))
+    if has_issues:
+        doc.add_line("</ul>")
+    else:
+        doc.add_line("<div>No tracability issues found.</div>")
 
-    doc.add_line("</ul>")
-
+    ### Report
     doc.add_heading(2, "Detailed report", "detailed-report")
+    items_by_level = {}
+    for level in report.config:
+        items_by_level[level] = [item
+                                 for item in report.items.values()
+                                 if item.level == level]
     for kind, title in [("requirements",
                          "Requirements and Specification"),
                         ("implementation",
@@ -420,28 +416,29 @@ def write_html(fd, xref, levels, policy, stm):
                         ("activity",
                          "Verification and Validation")]:
         doc.add_heading(3, title)
-        for level in levels:
+        for level in report.config.values():
             if level["kind"] != kind:
                 continue
             doc.add_heading(4,
                             html.escape(level["name"]),
                             name_hash(level["name"]))
-            if level["items"]:
-                for item in level["items"]:
-                    write_item_box_begin(doc, xref, item)
-                    if kind == "requirements" and item["text"] is not None:
+
+            if items_by_level[level["name"]]:
+                for item in items_by_level[level["name"]]:
+                    write_item_box_begin(doc, item)
+                    if isinstance(item, Requirement) and item.text:
                         doc.add_line('<div class="attribute">')
                         doc.add_line("<blockquote>%s</blockquote>" %
-                                     html.escape(item["text"]))
+                                     html.escape(item.text))
                         doc.add_line('</div>')
-
-                    write_item_tracing(doc, xref, item)
+                    write_item_tracing(doc, report, item)
                     write_item_box_end(doc)
             else:
                 doc.add_line("No items recorded at this level.")
 
-    doc.add_heading(2, "Software traceability matrix", "matrix")
-    write_stm(doc, xref, levels, stm)
+    ### STM
+    # doc.add_heading(2, "Software traceability matrix", "matrix")
+    # write_stm(doc, xref, levels, stm)
 
     fd.write(doc.render() + "\n")
 
@@ -455,25 +452,18 @@ def main():
                     default="lobster_report.html")
     options = ap.parse_args()
 
-    mh = errors.Message_Handler()
-
     if not os.path.isfile(options.lobster_report):
         if options.lobster_report == "report.lobster":
             ap.error("specify report file")
         else:
             ap.error("%s is not a file" % options.lobster_report)
 
-    try:
-        data = report.load(mh, options.lobster_report)
-    except errors.LOBSTER_Error:
-        return 1
+    report = Report()
+    report.load_report(options.lobster_report)
 
     with open(options.out, "w", encoding="UTF-8") as fd:
         write_html(fd     = fd,
-                   xref   = data["xref"],
-                   levels = data["levels"],
-                   policy = data["policy"],
-                   stm    = data["matrix"])
+                   report = report)
         print("LOBSTER HTML report written to %s" % options.out)
 
 
