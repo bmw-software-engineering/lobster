@@ -3,4 +3,3 @@ foo.cpp:14: lobster error: unknown tracing target req example.doesnt_exist
 foo.cpp:14: lobster error: missing up reference
 potato.trlc:21:13: lobster error: missing reference to Verification Test
 potato.trlc:9:13: lobster error: missing reference to Code
-potato.trlc:9:13: lobster error: missing reference to Verification Test

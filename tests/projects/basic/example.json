@@ -1,0 +1,12 @@
+[
+    {"name"        : "XOR Test 1",
+     "values"      : [false, false],
+     "expectation" : false,
+     "tags"        : "example.req_xor"},
+
+    {"name"        : "XOR Test 2",
+     "values"      : [false, true],
+     "expectation" : true,
+     "tags"        : "example.req_xor"}
+
+]
