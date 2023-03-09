@@ -1,19 +1,23 @@
 {
-    "data": {
-        "12345": {
-            "kind": "functional requirement",
-	    "text": "provide a nice demonstration of ORTF",
-	    "framework" : "codeBeamer",
-            "source": {
-	        "ref" : "codeBeamer",
-                "tracker": 12345,
-                "item" : 666,
-		"version" : "HEAD"
+    "data": [
+        {
+	    "tag"  : "req 12345@42",
+            "kind" : "functional requirement",
+	    "name" : "LOBSTER demo",
+	    "text" : "Provide a nice demonstration of LOBSTER through four examples",
+	    "framework" : "codebeamer",
+            "location": {
+	        "kind"     : "codebeamer",
+		"cb_root"  : "https://potato.kitten",
+                "tracker"  : 12345,
+                "item"     : 666,
+		"version"  : 42,
+		"name"     : "LOBSTER demo"
             },
             "tags": []
-        }
-    },
+	}
+    ],
     "generator": "hand crafted",
     "schema": "lobster-req-trace",
-    "version": 1
+    "version": 3
 }

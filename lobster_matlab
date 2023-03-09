@@ -17,6 +17,71 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-from lobster.trace.matlab import trace
+import sys
+import argparse
+import subprocess
+import json
 
-trace.main()
+from lobster.items import Tracing_Tag, Implementation, Activity
+from lobster.location import File_Reference
+from lobster.io import lobster_write
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("files",
+                    nargs="+",
+                    metavar="FILE|DIR")
+    ap.add_argument("--code-out",
+                    default=None)
+    ap.add_argument("--test-out",
+                    default=None)
+
+    options = ap.parse_args()
+
+    rv = subprocess.run([sys.executable,
+                         "-m", "miss_hit.mh_trace"] +
+                        options.files,
+                        encoding="UTF-8",
+                        check=False)
+
+    if rv.returncode != 0:
+        return 1
+
+    with open("mh_trace.json", "r", encoding="UTF-8") as fd:
+        data = json.load(fd)
+
+    db_code = []
+    db_test = []
+    for function_name, function in data.items():
+        tag = Tracing_Tag("matlab", function_name)
+        loc = File_Reference(function["source"]["filename"],
+                             function["source"]["line"])
+
+        if function["test"]:
+            item = Activity(tag, loc,
+                            "MATLAB", "test", "unknown")
+            db_test.append(item)
+        else:
+            item = Implementation(tag, loc,
+                                  "MATLAB", "function", function_name)
+            db_code.append(item)
+
+        for ref in function["tags"]:
+            item.add_tracing_target(Tracing_Tag("req", ref))
+
+    if options.code_out:
+        with open(options.code_out, "w", encoding="UTF-8") as fd:
+            lobster_write(fd, Implementation, "lobster_matlab", db_code)
+        print("Written output for %u items to %s" % (len(db_code),
+                                                     options.code_out))
+
+    if options.test_out:
+        with open(options.test_out, "w", encoding="UTF-8") as fd:
+            lobster_write(fd, Activity, "lobster_matlab", db_test)
+        print("Written output for %u items to %s" % (len(db_test),
+                                                     options.test_out))
+
+
+if __name__ == "__main__":
+    sys.exit(main())

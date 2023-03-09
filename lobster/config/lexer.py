@@ -20,7 +20,8 @@
 import sys
 import os.path
 
-import lobster.report.errors as errors
+import lobster.errors as errors
+import lobster.location as location
 
 
 class Token:
@@ -70,8 +71,8 @@ class Lexer:
             self.nc = None
 
     def error(self, message):
-        loc = errors.Source_Reference(file_name = self.file_name,
-                                      line_no   = self.line_nr)
+        loc = location.File_Reference(filename = self.file_name,
+                                      line     = self.line_nr)
         self.mh.lex_error(loc, message)
 
     def token(self):
@@ -119,8 +120,8 @@ class Lexer:
         return Token(
             kind = kind,
             text = self.content[t_start : t_end + 1],
-            loc  = errors.Source_Reference(file_name = self.file_name,
-                                           line_no   = self.line_nr))
+            loc  = location.File_Reference(filename = self.file_name,
+                                           line     = self.line_nr))
 
 
 def sanity_test():

@@ -17,37 +17,19 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-import sys
-import argparse
-
-from lobster.exceptions import LOBSTER_Exception
-from lobster.errors import LOBSTER_Error
-from lobster.report import Report
+from pprint import pprint
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--lobster-config",
-                    metavar="FILE",
-                    default="lobster.conf")
+class LOBSTER_Exception(Exception):
+    def __init__(self, message, data=None):
+        super().__init__()
+        assert isinstance(message, str)
+        self.message  = message
+        self.data     = data
 
-    options = ap.parse_args()
-
-    report = Report()
-
-    try:
-        report.parse_config(options.lobster_config)
-    except LOBSTER_Error:
-        print("lobster: aborting due to earlier errors.")
-        return 1
-    except LOBSTER_Exception as err:
-        print("lobster: aborting due to earlier errors.")
-        print("lobster: Additional data for debugging:")
-        err.dump()
-        return 1
-
-    report.write_report("report.lobster")
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+    def dump(self):
+        print("LOBSTER Error: %s" % self.message)
+        if self.data:
+            print("-" * 60)
+            pprint(self.data)
+            print("-" * 60)

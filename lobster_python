@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_python - Extract Python tracing tags for LOBSTER
-# Copyright (C) 2022 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2022-2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -17,7 +17,234 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-from lobster.trace.python import trace
+import sys
+import argparse
+import os.path
+import multiprocessing
+import functools
+
+from libcst.metadata import PositionProvider
+import libcst as cst
+
+from lobster.items import Tracing_Tag, Implementation
+from lobster.location import File_Reference
+from lobster.io import lobster_write
+
+LOBSTER_TRACE_PREFIX = "# lobster-trace: "
+LOBSTER_JUST_PREFIX = "# lobster-exclude: "
+
+
+def parse_value(val):
+    if isinstance(val, cst.SimpleString):
+        return val.value[1:-1]
+    else:
+        return str(val.value)
+
+
+class Lobster_Visitor(cst.CSTVisitor):
+    METADATA_DEPENDENCIES = (PositionProvider,)
+
+    def __init__(self, file_name, db, options):
+        super().__init__()
+        assert os.path.isfile(file_name)
+        assert isinstance(db, dict)
+        self.scope_stack      = []
+        self.file_name        = file_name
+        self.db               = db
+
+        self.current_class    = None
+        self.current_function = None
+        self.current_uid      = None
+
+        self.namespace        = options["namespace"]
+        self.exclude_untagged = options["exclude_untagged"]
+
+        self.decorator_name   = options["decorator"]
+        self.dec_arg_name     = options["dec_arg_name"]
+        self.dec_arg_version  = options["dec_arg_version"]
+
+    def visit_ClassDef(self, node):
+        self.scope_stack.append((node.name.value, node))
+
+    def visit_FunctionDef(self, node):
+        self.scope_stack.append((node.name.value, node))
+
+        # Skip nested functions, we do not consider them. Only the
+        # outer function is a traceable item, since generally that is
+        # the only thing that is also a testable item.
+        if self.current_function is not None:
+            return
+
+        uids = []
+        for s_name, s_node in self.scope_stack:
+            uids.append(s_name)
+            if isinstance(s_node, cst.FunctionDef):
+                self.current_function = s_node
+                break
+            else:
+                self.current_class = s_node
+        assert len(uids) >= 1
+        self.current_uid = "::".join(uids)
+
+        line = self.get_metadata(PositionProvider,
+                                 self.current_function).start.line
+
+        self.db[self.current_uid] = Implementation(
+            tag      = Tracing_Tag("python", self.current_uid),
+            location = File_Reference(self.file_name, line),
+            language = "Python",
+            kind     = "method" if self.current_class else "function",
+            name     = node.name.value)
+
+        # Parse decorators
+        for dec in node.decorators:
+            if isinstance(dec.decorator, (cst.Name, cst.Attribute)):
+                continue
+            else:
+                assert isinstance(dec.decorator, cst.Call)
+                dec_name = dec.decorator.func.value
+                if dec_name != self.decorator_name:
+                    continue
+                dec_args = {arg.keyword.value: parse_value(arg.value)
+                            for arg in dec.decorator.args}
+
+            # TODO: Better error messages if these assumptions are
+            # violated
+            assert self.dec_arg_name in dec_args
+            if self.dec_arg_version:
+                assert self.dec_arg_version in dec_args
+
+            self.db[self.current_uid].add_tracing_target(
+                Tracing_Tag(self.namespace,
+                            dec_args[self.dec_arg_name],
+                            dec_args.get(self.dec_arg_version, None)))
+
+    def leave_FunctionDef(self, original_node):
+        self.scope_stack.pop()
+        if original_node == self.current_function:
+            self.current_function = None
+            self.current_uid      = None
+
+    def leave_ClassDef(self, original_node):
+        self.scope_stack.pop()
+        if original_node == self.current_class:
+            self.current_class = None
+
+    def visit_Comment(self, node):
+        if self.current_function is None:
+            return
+
+        item = self.db[self.current_uid]
+
+        if node.value.startswith(LOBSTER_TRACE_PREFIX):
+            tag = node.value[len(LOBSTER_TRACE_PREFIX):].strip()
+            item.add_tracing_target(Tracing_Tag.from_text(self.namespace,
+                                                          tag))
+
+        elif node.value.startswith(LOBSTER_JUST_PREFIX):
+            reason = node.value[len(LOBSTER_JUST_PREFIX):].strip()
+            item.just_up.append(reason)
+
+
+def process_file(file_name, options):
+    assert isinstance(file_name, str)
+    assert isinstance(options, dict)
+
+    db = {}
+    with open(file_name, "r", encoding="UTF-8") as fd:
+        ast = cst.parse_module(fd.read())
+    ast = cst.MetadataWrapper(ast)
+    ast.visit(Lobster_Visitor(file_name, db, options))
+
+    if options["exclude_untagged"]:
+        # pylint: disable=consider-using-dict-items
+        kill_list = [name
+                     for name in db
+                     if not db[name].unresolved_references]
+        for key in kill_list:
+            del db[key]
+
+    return db
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("files",
+                    nargs="+",
+                    metavar="FILE|DIR")
+    ap.add_argument("--out",
+                    default=None)
+    ap.add_argument("--single",
+                    action="store_true",
+                    default=False,
+                    help="don't multi-thread")
+    ap.add_argument("--only-tagged-functions",
+                    default=False,
+                    action="store_true",
+                    help="only trace functions with tags")
+    grp = ap.add_mutually_exclusive_group()
+    grp.add_argument("--parse-decorator",
+                     nargs=2,
+                     metavar=("DECORATOR", "NAME_ARG"),
+                     default=(None, None))
+    grp.add_argument("--parse-versioned-decorator",
+                     nargs=3,
+                     metavar=("DECORATOR", "NAME_ARG", "VERSION_ARG"),
+                     default=(None, None, None))
+
+    options = ap.parse_args()
+
+    file_list = []
+    for item in options.files:
+        if os.path.isfile(item):
+            file_list.append(item)
+        elif os.path.isdir(item):
+            for path, _, files in os.walk(item):
+                for filename in files:
+                    _, ext = os.path.splitext(filename)
+                    if ext == ".py":
+                        file_list.append(os.path.join(path, filename))
+        else:
+            ap.error("%s is not a file or directory" % item)
+
+    context = {
+        "decorator"        : None,
+        "dec_arg_name"     : None,
+        "dec_arg_version"  : None,
+        "exclude_untagged" : options.only_tagged_functions,
+        "namespace"        : "req",
+    }
+
+    if options.parse_decorator[0] is not None:
+        context["decorator"]    = options.parse_decorator[0]
+        context["dec_arg_name"] = options.parse_decorator[1]
+    elif options.parse_versioned_decorator[0] is not None:
+        context["decorator"]       = options.parse_versioned_decorator[0]
+        context["dec_arg_name"]    = options.parse_versioned_decorator[1]
+        context["dec_arg_version"] = options.parse_versioned_decorator[2]
+
+    pfun = functools.partial(process_file, options=context)
+    db = {}
+
+    if options.single:
+        for file_name in file_list:
+            db.update(pfun(file_name))
+    else:
+        with multiprocessing.Pool() as pool:
+            for fragment in pool.imap_unordered(pfun, file_list):
+                db.update(fragment)
+
+    if options.out:
+        with open(options.out, "w", encoding="UTF-8") as fd:
+            lobster_write(fd, Implementation, "lobster_python",
+                          [db[key] for key in sorted(db)])
+        print("Written output for %u items to %s" % (len(db),
+                                                     options.out))
+    else:
+        lobster_write(sys.stdout, Implementation, "lobster_python",
+                      [db[key] for key in sorted(db)])
+        print()
+
 
 if __name__ == "__main__":
-    trace.main()
+    sys.exit(main())
