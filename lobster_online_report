@@ -17,6 +17,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import re
 import sys
 import os
 import argparse
@@ -36,6 +37,9 @@ def main():
     ap.add_argument("--commit",
                     help="commit SHA or branch/tag, by default main",
                     default="main")
+    ap.add_argument("--repo-root",
+                    help="override git repository root",
+                    default=None)
     options = ap.parse_args()
 
     if not os.path.isfile(options.lobster_report):
@@ -44,15 +48,20 @@ def main():
         else:
             ap.error("%s is not a file" % options.lobster_report)
 
-    repo_root = os.getcwd()
-    while True:
-        if os.path.isdir(os.path.join(repo_root, ".git")):
-            break
-        new_root = os.path.dirname(repo_root)
-        if new_root == repo_root:
-            print("error: could not find .git directory")
-            return 1
-        repo_root = new_root
+    if options.repo_root:
+        repo_root = os.path.abspath(os.path.expanduser(options.repo_root))
+        if not os.path.isdir(os.path.join(repo_root, ".git")):
+            ap.error("cannot find .git directory in %s" % options.repo_root)
+    else:
+        repo_root = os.getcwd()
+        while True:
+            if os.path.isdir(os.path.join(repo_root, ".git")):
+                break
+            new_root = os.path.dirname(repo_root)
+            if new_root == repo_root:
+                print("error: could not find .git directory")
+                return 1
+            repo_root = new_root
 
     git_config = configparser.ConfigParser()
     git_config.read(os.path.join(repo_root, ".git", "config"))
@@ -62,9 +71,15 @@ def main():
 
     gh_root = git_config['remote "origin"']["url"]
     assert gh_root.endswith(".git")
-    gh_root = gh_root[:-4]
 
-    rel_path = os.path.relpath(os.getcwd(), repo_root)
+    if gh_root.startswith("http"):
+        gh_root = gh_root[:-4]
+    else:
+        match = re.match("^(.*)@(.*):(.*)\.git$", gh_root)
+        if match is None:
+            print("could not understand git origin %s" % gh_root)
+        gh_root = "https://%s/%s" % (match.group(2),
+                                     match.group(3))
 
     report = Report()
     report.load_report(options.lobster_report)
@@ -75,7 +90,9 @@ def main():
             loc = Github_Reference(
                 gh_root  = gh_root,
                 commit   = options.commit,
-                filename = os.path.join(rel_path, item.location.filename),
+                filename = os.path.relpath(
+                    os.path.abspath(item.location.filename),
+                    repo_root),
                 line     = item.location.line)
             item.location = loc
 
