@@ -85,8 +85,8 @@ class File_Reference(Location):
         return rv
 
     def to_html(self):
-        return '<a href="%s">%s</a>' % (self.filename,
-                                        self.filename)
+        return '<a href="%s" target="_blank">%s</a>' % (self.filename,
+                                                        self.filename)
 
     def to_json(self):
         return {"kind"   : "file",
@@ -135,10 +135,11 @@ class Github_Reference(Location):
         if self.line:
             file_ref += "#L%u" % self.line
 
-        return '<a href="%s/blob/%s/%s">%s</a>' % (self.gh_root,
-                                                   self.commit,
-                                                   file_ref,
-                                                   self.to_string())
+        return '<a href="%s/blob/%s/%s" target="_blank">%s</a>' % (
+            self.gh_root,
+            self.commit,
+            file_ref,
+            self.to_string())
 
     def to_json(self):
         return {"kind"    : "github",
@@ -177,15 +178,21 @@ class Codebeamer_Reference(Location):
 
     def to_string(self):
         if self.name:
-            return "codebeamer item '%s'" % self.name
+            return "cb item %u '%s'" % (self.item, self.name)
         else:
-            return "codebeamer item %u" % self.item
+            return "cb item %u" % self.item
 
     def to_html(self):
         url = self.cb_root
-        url += "/cb/tracker/%u" % self.tracker
-        url += "?selectedItemId=%u&forceDocumentViewLayout=true" % self.item
-        return '<a href="%s">%s</a>' % (url, self.to_string())
+        # This is supposed to open the document view, but it doesn't
+        # always work.
+        #url += "/cb/tracker/%u" % self.tracker
+        #url += "?view_id=-11&selectedItemId=%u" % self.item
+        #url += "&forceDocumentViewLayout=true"
+
+        # We can just open the item directly
+        url += "/cb/issue/%u" % self.item
+        return '<a href="%s" target="_blank">%s</a>' % (url, self.to_string())
 
     def to_json(self):
         return {"kind"    : "codebeamer",
