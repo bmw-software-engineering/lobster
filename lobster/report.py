@@ -55,10 +55,24 @@ class Report:
                     src_item.error("unknown tracing target %s" % dst_tag.key())
                     continue
                 dst_item = self.items[dst_tag.key()]
-                # TODO: Compare versions here
                 # TODO: Check if policy allows this link
                 src_item.ref_up.append(dst_tag)
                 dst_item.ref_down.append(src_item.tag)
+
+                # Check versions match, if specified
+                if dst_tag.version is not None:
+                    if dst_item.tag.version is None:
+                        src_item.error("tracing destination %s is unversioned"
+                                       % dst_tag.key())
+                    elif dst_tag.version != dst_item.tag.version:
+                        src_item.error("tracing destination %s has version %s"
+                                       " (expected %s)" %
+                                       (dst_tag.key(),
+                                        dst_item.tag.version,
+                                        dst_tag.version))
+
+
+
 
         # Compute status and coverage for items
         self.coverage = {level: {"items"    : 0,
