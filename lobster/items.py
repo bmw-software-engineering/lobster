@@ -29,6 +29,7 @@ class Tracing_Tag:
         assert isinstance(namespace, str) and " " not in namespace
         assert isinstance(tag, str) and " " not in tag
         assert version is None or isinstance(version, (str, int))
+        assert not isinstance(version, str) or version != "None"
 
         self.namespace = namespace
         self.tag       = tag

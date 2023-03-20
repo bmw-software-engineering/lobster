@@ -38,7 +38,10 @@ def parse_value(val):
     if isinstance(val, cst.SimpleString):
         return val.value[1:-1]
     else:
-        return str(val.value)
+        rv = str(val.value)
+        if rv == "None":
+            rv = None
+        return rv
 
 
 class Lobster_Visitor(cst.CSTVisitor):
