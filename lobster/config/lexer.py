@@ -99,6 +99,8 @@ class Lexer:
             kind = "C_KET"
         elif self.cc == ":":
             kind = "COLON"
+        elif self.cc == ",":
+            kind = "COMMA"
         elif self.cc == ";":
             kind = "SEMI"
         elif self.cc == '"':
@@ -110,10 +112,10 @@ class Lexer:
                     self.error("unterminated string")
         elif self.cc.isalpha():
             kind = "KEYWORD"
-            while self.nc.isalpha():
+            while self.nc.isalpha() or self.nc == "_":
                 self.advance()
         else:
-            self.error("unexpected character: '%s'")
+            self.error("unexpected character: '%s'" % self.cc)
 
         t_end = self.lexpos
 

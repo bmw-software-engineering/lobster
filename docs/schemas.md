@@ -33,7 +33,7 @@ A SOURCE_REF is an object with varying forms. One field is always present:
 
 ```
 {
-   "kind"    : REF_KIND,
+   "kind" : REF_KIND,
 }
 ```
 
@@ -178,6 +178,21 @@ Requirements are items, with the following additional fields:
 * *kind* is a free text string describing what kind of requirement
   this is. For example "functional requirement".
 * *text* is an optional copy or a summary of the requirement text.
+
+### Version 4
+
+As above, but adds one new field:
+
+```
+{
+   << version 3 fields >>
+   "status" : STRING or null
+}
+```
+
+* *status* indicates the state of a requirement. This is used by some
+  proprietary tools; and lobster can check that the status is one of
+  the permitted ones.
 
 ## Implementation
 

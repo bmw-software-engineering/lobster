@@ -426,6 +426,10 @@ def write_html(fd, report):
             if items_by_level[level["name"]]:
                 for item in items_by_level[level["name"]]:
                     write_item_box_begin(doc, item)
+                    if isinstance(item, Requirement) and item.status:
+                        doc.add_line('<div class="attribute">')
+                        doc.add_line("Status: %s" % html.escape(item.status))
+                        doc.add_line('</div>')
                     if isinstance(item, Requirement) and item.text:
                         doc.add_line('<div class="attribute">')
                         doc.add_line("<blockquote>%s</blockquote>" %

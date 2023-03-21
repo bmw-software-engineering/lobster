@@ -101,12 +101,18 @@ def to_lobster(cb_config, cb_item):
     assert isinstance(cb_config, dict)
     assert isinstance(cb_item, dict) and "id" in cb_item
 
+    # This looks like it's business logic, maybe we should make this
+    # configurable?
+
     if "type" in cb_item:
-        # This looks like it's business logic, maybe we should make
-        # this configurable?
         kind = cb_item["type"].get("name", "codebeamer item")
     else:
         kind = "codebeamer item"
+
+    if "status" in cb_item:
+        status = cb_item["status"].get("name", None)
+    else:
+        status = None
 
     # TODO: Parse item text
 
@@ -122,7 +128,8 @@ def to_lobster(cb_config, cb_item):
         framework = "codebeamer",
         kind      = kind,
         name      = cb_item["name"],
-        text      = None)
+        text      = None,
+        status    = status)
 
 
 def import_tagged(mh, cb_config, items_to_import):

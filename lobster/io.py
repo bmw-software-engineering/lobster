@@ -35,24 +35,28 @@ def lobster_write(fd, kind, generator, items):
     assert all(isinstance(item, kind) for item in items)
 
     if kind is Requirement:
-        schema = "lobster-req-trace"
+        schema  = "lobster-req-trace"
+        version = 4
     elif kind is Implementation:
-        schema = "lobster-imp-trace"
+        schema  = "lobster-imp-trace"
+        version = 3
     else:
-        schema = "lobster-act-trace"
+        schema  = "lobster-act-trace"
+        version = 3
 
     data = {"data"      : list(x.to_json() for x in items),
             "generator" : generator,
             "schema"    : schema,
-            "version"   : 3}
+            "version"   : version}
     json.dump(data, fd, indent=2)
 
 
-def lobster_read(mh, filename, level, items):
+def lobster_read(mh, filename, level, items, source_info=None):
     assert isinstance(mh, Message_Handler)
     assert isinstance(filename, str)
     assert isinstance(level, str)
     assert os.path.isfile(filename)
+    assert isinstance(source_info, dict) or source_info is None
 
     loc = File_Reference(filename)
 
@@ -85,7 +89,7 @@ def lobster_read(mh, filename, level, items):
 
     # Validate indicated schema
     supported_schema = {
-        "lobster-req-trace" : set([3]),
+        "lobster-req-trace" : set([3, 4]),
         "lobster-imp-trace" : set([3]),
         "lobster-act-trace" : set([3]),
     }
@@ -104,10 +108,14 @@ def lobster_read(mh, filename, level, items):
             item = Implementation.from_json(level, raw, data["version"])
         else:
             item = Activity.from_json(level, raw, data["version"])
+
         if item.tag.key() in items:
             mh.error(item.location,
                      "duplicate definition, "
                      "previously defined at %s" %
                      items[item.tag.key()].location.to_string())
+
+        if source_info is not None:
+            item.perform_source_checks(source_info)
 
         items[item.tag.key()] = item
