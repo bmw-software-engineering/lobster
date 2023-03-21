@@ -119,6 +119,9 @@ class Item(metaclass=ABCMeta):
         assert isinstance(target, Tracing_Tag)
         self.unresolved_references.append(target)
 
+    def perform_source_checks(self, source_info):
+        assert isinstance(source_info, dict)
+
     def determine_status(self, config, stab):
         assert self.level in config
         assert self.tag.key() in stab
@@ -129,12 +132,14 @@ class Item(metaclass=ABCMeta):
         has_just_up   = len(self.just_up) > 0 or len(self.just_global) > 0
         has_just_down = len(self.just_down) > 0 or len(self.just_global) > 0
 
+        # Check up references
         ok_up = True
         if level["needs_tracing_up"]:
             if not has_up_ref and not has_just_up:
                 ok_up = False
                 self.messages.append("missing up reference")
 
+        # Check set of down references
         ok_down = True
         if level["needs_tracing_down"]:
             has_trace = {name : False
@@ -149,6 +154,7 @@ class Item(metaclass=ABCMeta):
                     self.messages.append("missing reference to %s" %
                                          " or ".join(sorted(chain)))
 
+        # Set status
         if self.has_error:
             self.tracing_status = Tracing_Status.MISSING
         elif ok_up and ok_down:
@@ -166,7 +172,7 @@ class Item(metaclass=ABCMeta):
     def additional_data_from_json(self, level, data, schema_version):
         assert isinstance(level, str)
         assert isinstance(data, dict)
-        assert schema_version == 3
+        assert schema_version >= 3
 
         self.set_level(level)
         for ref in data.get("refs", []):
@@ -204,37 +210,50 @@ class Item(metaclass=ABCMeta):
 
 
 class Requirement(Item):
-    def __init__(self, tag, location, framework, kind, name, text):
+    def __init__(self, tag, location, framework, kind, name,
+                 text=None, status=None):
         super().__init__(tag, location)
         assert isinstance(framework, str)
         assert isinstance(kind, str)
         assert isinstance(name, str)
         assert isinstance(text, str) or text is None
+        assert isinstance(status, str) or status is None
 
         self.framework = framework
         self.kind      = kind
         self.name      = name
         self.text      = text
+        self.status    = status
 
     def to_json(self):
         rv = super().to_json()
         rv["framework"] = self.framework
         rv["kind"]      = self.kind
         rv["text"]      = self.text
+        rv["status"]    = self.status
         return rv
+
+    def perform_source_checks(self, source_info):
+        assert isinstance(source_info, dict)
+        if source_info["valid_status"]:
+            if self.status not in source_info["valid_status"]:
+                self.error("status is %s, expected %s" %
+                           (self.status,
+                            " or ".join(sorted(source_info["valid_status"]))))
 
     @classmethod
     def from_json(cls, level, data, schema_version):
         assert isinstance(level, str)
         assert isinstance(data, dict)
-        assert schema_version == 3
+        assert schema_version in (3, 4)
 
         item = Requirement(tag       = Tracing_Tag.from_json(data["tag"]),
                            location  = Location.from_json(data["location"]),
                            framework = data["framework"],
                            kind      = data["kind"],
                            name      = data["name"],
-                           text      = data["text"])
+                           text      = data.get("text", None),
+                           status    = data.get("status", None))
         item.additional_data_from_json(level, data, schema_version)
 
         return item

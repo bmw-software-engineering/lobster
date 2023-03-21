@@ -45,7 +45,8 @@ class Report:
         # Load requested files
         for level in self.config:
             for source in self.config[level]["source"]:
-                lobster_read(self.mh, source["file"], level, self.items)
+                lobster_read(self.mh, source["file"], level, self.items,
+                             source)
 
         # Resolve references
         for src_item in self.items.values():
@@ -70,9 +71,6 @@ class Report:
                                        (dst_tag.key(),
                                         dst_item.tag.version,
                                         dst_tag.version))
-
-
-
 
         # Compute status and coverage for items
         self.coverage = {level: {"items"    : 0,
