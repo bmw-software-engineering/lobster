@@ -14,10 +14,11 @@
 		"version"  : 42,
 		"name"     : "LOBSTER demo"
             },
+	    "status" : "Potato",
             "tags": []
 	}
     ],
     "generator": "hand crafted",
     "schema": "lobster-req-trace",
-    "version": 3
+    "version": 4
 }
