@@ -122,7 +122,7 @@ def create_policy_diagram(doc, report):
         else:
             assert level["kind"] == "activity"
             style = 'shape=hexagon'
-        style += ', href="#%s"' % name_hash(level["name"])
+        style += ', href="#sec-%s"' % name_hash(level["name"])
 
         graph += '  n_%s [label="%s", %s];\n' % \
             (name_hash(level["name"]),
@@ -163,7 +163,7 @@ def create_item_coverage(doc, report):
     for level in report.config.values():
         coverage = report.coverage[level["name"]]["coverage"]
         doc.add_line("<tr>")
-        doc.add_line('<td><a href="#%s">%s</a></td>' %
+        doc.add_line('<td><a href="#sec-%s">%s</a></td>' %
                      (name_hash(level["name"]),
                       html.escape(level["name"])))
         doc.add_line("<td>")
