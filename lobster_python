@@ -44,20 +44,147 @@ def parse_value(val):
         return rv
 
 
+class Python_Traceable_Node:
+    def __init__(self, location, name, kind):
+        assert isinstance(location, File_Reference)
+        assert isinstance(name, str)
+        assert isinstance(kind, str)
+        self.location = location
+        self.name     = name
+        self.kind     = kind
+        self.parent   = None
+        self.children = []
+        self.tags     = []
+        self.just     = []
+
+    def register_tag(self, tag):
+        assert isinstance(tag, Tracing_Tag)
+        self.tags.append(tag)
+
+    def register_justification(self, justification):
+        assert isinstance(justification, str)
+        self.just.append(justification)
+
+    def set_parent(self, node):
+        assert isinstance(node, Python_Traceable_Node)
+        node.children.append(self)
+        self.parent = node
+
+    def to_json(self):
+        return {"kind"     : self.kind,
+                "name"     : self.name,
+                "tags"     : [x.to_json() for x in self.tags],
+                "just"     : self.just,
+                "children" : [x.to_json() for x in self.children]}
+
+    def to_lobster(self, items):
+        assert isinstance(items, list)
+        assert False
+
+    def fqn(self):
+        if self.parent:
+            rv = self.parent.fqn() + "::"
+        else:
+            rv = ""
+        rv += self.name
+        return rv
+
+    def lobster_tag(self):
+        return Tracing_Tag("python", self.fqn())
+
+
+class Python_Module(Python_Traceable_Node):
+    def __init__(self, location, name):
+        super().__init__(location, name, "Module")
+
+    def to_lobster(self, items):
+        assert isinstance(items, list)
+        for node in self.children:
+            node.to_lobster(items)
+
+
+class Python_Class(Python_Traceable_Node):
+    def __init__(self, location, name):
+        super().__init__(location, name, "Class")
+
+    def to_lobster(self, items):
+        assert isinstance(items, list)
+        # If all functions in the class have a tag, then this class
+        # doesn't require tracing, as everything in it is. First lets
+        # generate the tracing for the items.
+        # TODO
+        class_contents = []
+        for node in self.children:
+            node.to_lobster(class_contents)
+        for item in class_contents:
+            pass
+        items += class_contents
+
+        l_item = Implementation(tag      = Tracing_Tag("python",
+                                                       self.fqn()),
+                                location = self.location,
+                                language = "Python",
+                                kind     = self.kind,
+                                name     = self.name)
+        for tag in self.tags:
+            l_item.add_tracing_target(tag)
+        l_item.just_up += self.just
+        items.append(l_item)
+
+
+class Python_Function(Python_Traceable_Node):
+    def __init__(self, location, name):
+        super().__init__(location, name, "Function")
+
+    def set_parent(self, node):
+        assert isinstance(node, Python_Traceable_Node)
+        node.children.append(self)
+        self.parent = node
+        if isinstance(node, Python_Class):
+            self.kind = "Method"
+
+    def to_lobster(self, items):
+        assert isinstance(items, list)
+
+        l_item = Implementation(tag      = Tracing_Tag("python",
+                                                       self.fqn()),
+                                location = self.location,
+                                language = "Python",
+                                kind     = self.kind,
+                                name     = self.name)
+        for tag in self.tags:
+            l_item.add_tracing_target(tag)
+        l_item.just_up += self.just
+
+        # Any children of functions are not testable units. Their
+        # tracing tags contribute to ours, but otherwise they don't
+        # appear.
+        nested_items = []
+        for node in self.children:
+            node.to_lobster(nested_items)
+        for item in nested_items:
+            # TODO: Warn about useless nested justifications
+            # Merge tracing tags
+            for tag in item.unresolved_references:
+                l_item.add_tracing_target(tag)
+
+        items.append(l_item)
+
+
 class Lobster_Visitor(cst.CSTVisitor):
     METADATA_DEPENDENCIES = (PositionProvider,)
 
-    def __init__(self, file_name, db, options):
+    def __init__(self, file_name, options):
         super().__init__()
         assert os.path.isfile(file_name)
-        assert isinstance(db, dict)
-        self.scope_stack      = []
-        self.file_name        = file_name
-        self.db               = db
+        self.file_name = file_name
 
-        self.current_class    = None
-        self.current_function = None
-        self.current_uid      = None
+        self.module = Python_Module(
+            File_Reference(file_name),
+            os.path.basename(file_name).replace(".py", ""))
+
+        self.current_node = None
+        self.stack        = [self.module]
 
         self.namespace        = options["namespace"]
         self.exclude_untagged = options["exclude_untagged"]
@@ -66,41 +193,8 @@ class Lobster_Visitor(cst.CSTVisitor):
         self.dec_arg_name     = options["dec_arg_name"]
         self.dec_arg_version  = options["dec_arg_version"]
 
-    def visit_ClassDef(self, node):
-        self.scope_stack.append((node.name.value, node))
-
-    def visit_FunctionDef(self, node):
-        self.scope_stack.append((node.name.value, node))
-
-        # Skip nested functions, we do not consider them. Only the
-        # outer function is a traceable item, since generally that is
-        # the only thing that is also a testable item.
-        if self.current_function is not None:
-            return
-
-        uids = []
-        for s_name, s_node in self.scope_stack:
-            uids.append(s_name)
-            if isinstance(s_node, cst.FunctionDef):
-                self.current_function = s_node
-                break
-            else:
-                self.current_class = s_node
-        assert len(uids) >= 1
-        self.current_uid = "::".join(uids)
-
-        line = self.get_metadata(PositionProvider,
-                                 self.current_function).start.line
-
-        self.db[self.current_uid] = Implementation(
-            tag      = Tracing_Tag("python", self.current_uid),
-            location = File_Reference(self.file_name, line),
-            language = "Python",
-            kind     = "method" if self.current_class else "function",
-            name     = node.name.value)
-
-        # Parse decorators
-        for dec in node.decorators:
+    def parse_decorators(self, decorators):
+        for dec in decorators:
             if isinstance(dec.decorator, (cst.Name, cst.Attribute)):
                 continue
             else:
@@ -116,58 +210,70 @@ class Lobster_Visitor(cst.CSTVisitor):
             assert self.dec_arg_name in dec_args
             if self.dec_arg_version:
                 assert self.dec_arg_version in dec_args
+                tag = Tracing_Tag(self.namespace,
+                                  dec_args[self.dec_arg_name],
+                                  dec_args.get(self.dec_arg_version, None))
+            else:
+                tag = Tracing_Tag(self.namespace,
+                                  dec_args[self.dec_arg_name])
 
-            self.db[self.current_uid].add_tracing_target(
-                Tracing_Tag(self.namespace,
-                            dec_args[self.dec_arg_name],
-                            dec_args.get(self.dec_arg_version, None)))
+            self.current_node.register_tag(tag)
+
+    def visit_ClassDef(self, node):
+        line = self.get_metadata(PositionProvider, node).start.line
+        loc = File_Reference(self.file_name, line)
+        t_item = Python_Class(loc, node.name.value)
+        t_item.set_parent(self.stack[-1])
+        self.stack.append(t_item)
+        self.current_node = t_item
+        self.parse_decorators(node.decorators)
+
+    def visit_FunctionDef(self, node):
+        line = self.get_metadata(PositionProvider, node).start.line
+        loc = File_Reference(self.file_name, line)
+        t_item = Python_Function(loc, node.name.value)
+        t_item.set_parent(self.stack[-1])
+        self.stack.append(t_item)
+        self.current_node = t_item
+        self.parse_decorators(node.decorators)
 
     def leave_FunctionDef(self, original_node):
-        self.scope_stack.pop()
-        if original_node == self.current_function:
-            self.current_function = None
-            self.current_uid      = None
+        self.stack.pop()
+        self.current_node = self.stack[-1]
 
     def leave_ClassDef(self, original_node):
-        self.scope_stack.pop()
-        if original_node == self.current_class:
-            self.current_class = None
+        self.stack.pop()
+        self.current_node = self.stack[-1]
 
     def visit_Comment(self, node):
-        if self.current_function is None:
-            return
-
-        item = self.db[self.current_uid]
-
         if node.value.startswith(LOBSTER_TRACE_PREFIX):
             tag = node.value[len(LOBSTER_TRACE_PREFIX):].strip()
-            item.add_tracing_target(Tracing_Tag.from_text(self.namespace,
-                                                          tag))
+            self.current_node.register_tag(
+                Tracing_Tag.from_text(self.namespace,
+                                      tag))
 
         elif node.value.startswith(LOBSTER_JUST_PREFIX):
             reason = node.value[len(LOBSTER_JUST_PREFIX):].strip()
-            item.just_up.append(reason)
+            self.current_node.register_justification(reason)
 
 
 def process_file(file_name, options):
     assert isinstance(file_name, str)
     assert isinstance(options, dict)
 
-    db = {}
     with open(file_name, "r", encoding="UTF-8") as fd:
         ast = cst.parse_module(fd.read())
     ast = cst.MetadataWrapper(ast)
-    ast.visit(Lobster_Visitor(file_name, db, options))
+    visitor = Lobster_Visitor(file_name, options)
+    ast.visit(visitor)
+
+    items = []
+    visitor.module.to_lobster(items)
 
     if options["exclude_untagged"]:
-        # pylint: disable=consider-using-dict-items
-        kill_list = [name
-                     for name in db
-                     if not db[name].unresolved_references]
-        for key in kill_list:
-            del db[key]
+        items = [item for item in items if item.unresolved_references]
 
-    return db
+    return items
 
 
 def main():
@@ -227,25 +333,24 @@ def main():
         context["dec_arg_version"] = options.parse_versioned_decorator[2]
 
     pfun = functools.partial(process_file, options=context)
-    db = {}
+    items = []
 
     if options.single:
         for file_name in file_list:
-            db.update(pfun(file_name))
+            items += pfun(file_name)
     else:
         with multiprocessing.Pool() as pool:
             for fragment in pool.imap_unordered(pfun, file_list):
-                db.update(fragment)
+                items += fragment
 
     if options.out:
         with open(options.out, "w", encoding="UTF-8") as fd:
-            lobster_write(fd, Implementation, "lobster_python",
-                          [db[key] for key in sorted(db)])
-        print("Written output for %u items to %s" % (len(db),
+            lobster_write(fd, Implementation, "lobster_python", items)
+            fd.write("\n")
+        print("Written output for %u items to %s" % (len(items),
                                                      options.out))
     else:
-        lobster_write(sys.stdout, Implementation, "lobster_python",
-                      [db[key] for key in sorted(db)])
+        lobster_write(sys.stdout, Implementation, "lobster_python", items)
         print()
 
 
