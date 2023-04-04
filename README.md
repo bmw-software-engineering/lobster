@@ -15,6 +15,15 @@ from [the
 testsuite](https://github.com/bmw-software-engineering/lobster/tree/main/tests/projects/basic),
 which combines a variety of languages and tools into a single report.
 
+## Documentation
+
+* Writing [configuration files](docs/config_files.md) for LOBSTER.
+* It is easy to expand the languages and activities supported by
+  LOBSTER by adding new tracing tools, as long as they create data in
+  the [common interchange format](docs/schemas.md) for LOBSTER.
+
+(More to come...)
+
 ## Supported inputs
 
 The following inputs are supported:
@@ -29,11 +38,15 @@ The following inputs are supported:
 * `lobster_cpp`: C and C++ code (via a custom clang-tidy check)
   * requires you to build clang-tidy from https://github.com/bmw-software-engineering/llvm-project
 
+## Partially supported inputs
+
+* `lobster_codebeamer`: Requirements from codeBeamer (only some use
+  cases supported right now)
+
 ## Planned inputs
 
 The following inputs are planned but not implemeted yet:
 
-* `lobster_codebeamer`: Requirements from codeBeamer
 * `lobster_java`: Java code
 * `lobster_kotlin`: Kotlin code
 * `lobster_ada`: Ada and SPARK code (via libadalang)
@@ -55,12 +68,6 @@ There are futher formats planned:
 
 * `lobster_pdf_report`: Generate a PDF report
 * `lobster_markdown_report`: Generate a Markdown report
-
-## Data interchange
-
-It is easy to expand the languages and activities supported by LOBSTER
-by adding new tracing tools, as long as they create data in the
-[common interchange](docs/schemas.md) format for LOBSTER.
 
 ## Copyright & License information
 
