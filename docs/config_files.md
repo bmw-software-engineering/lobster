@@ -49,7 +49,7 @@ We expect to add other `with` properties in the future.
 
 The `trace to` attribute declares the expected tracing link. This
 declares that the items in this level are expected to be linked to
-items from from that level. It is possible to have more than one level
+items from that level. It is possible to have more than one level
 mentioned here (but it probably makes no sense).
 
 For example, here we declare that requirements are the top-level
