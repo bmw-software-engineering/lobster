@@ -22,14 +22,14 @@ example:
   we configure lobster that there is a requirements level
   "Requirements" and an activity level "ReqBased Tests" and we wish to
   link items of the latter to the former.
-  ![Simple Tracing Policy][simple.svg]
+  ![Simple Tracing Policy](simple.svg)
 
 * We want to use LOBSTER in a more complete way: we have high-level
   requirements that are broken down into low-level requirements; and
   these are both implemented and tested. Separately we perform some
   high-level user-acceptance tests that should be traced to the
   high-level requirements, but not the low-level ones.
-  ![Complex Tracing Policy][advanced.svg]
+  ![Complex Tracing Policy](advanced.svg)
 
 LOBSTER does not contain any built-in logic, so that you can set it up
 the way you want.
