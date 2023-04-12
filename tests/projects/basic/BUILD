@@ -5,7 +5,8 @@ cc_library(
 
 cc_test(
     name = "foo_test",
-    srcs = ["test.cpp", "lobster.h"],
+    srcs = ["test.cpp"],
     deps = ["@com_google_googletest//:gtest_main",
-            "foofunc"]
+            "foofunc",
+	    "//support/gtest:lobster_gtest"]
 )
