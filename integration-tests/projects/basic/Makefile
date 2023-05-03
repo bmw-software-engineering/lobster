@@ -17,7 +17,6 @@ html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requiremen
 	@lobster-ci-report | tee ci_report.reference_output
 
 cppcode.lobster: foo.h foo.cpp
-	echo $(PYTHONPATH)
 	@lobster-cpp foo.cpp foo.h \
 		--out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
 
