@@ -2,7 +2,7 @@
 
 ## Changelog
 
-### 0.9.1-dev
+### 0.9.1
 
 * First PyPI release of several packages
 
