@@ -1,0 +1,8 @@
+integration-tests/projects/basic/foo.cpp:9: lobster error: missing up reference
+integration-tests/projects/basic/foo.cpp:14: lobster error: unknown tracing target req example.doesnt_exist
+integration-tests/projects/basic/foo.cpp:14: lobster error: missing up reference
+integration-tests/projects/basic/nor.py:11: lobster error: missing up reference
+integration-tests/projects/basic/nor.py:5: lobster error: missing up reference
+cb item 666 'LOBSTER demo': lobster error: status is Potato, expected Valid
+integration-tests/projects/basic/potato.trlc:21: lobster error: missing reference to Verification Test
+integration-tests/projects/basic/potato.trlc:9: lobster error: missing reference to Code
