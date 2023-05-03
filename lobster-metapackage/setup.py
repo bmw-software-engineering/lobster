@@ -40,6 +40,7 @@ packages = ["bmw-lobster-core>=%s" % version.LOBSTER_VERSION]
 for dirname in glob.glob("../lobster-tool-*"):
     packages.append("bmw-%s>=%s" % (os.path.basename(dirname),
                                     version.LOBSTER_VERSION))
+packages.append("miss-hit>=0.9.38")
 
 setuptools.setup(
     name="bmw-lobster",
