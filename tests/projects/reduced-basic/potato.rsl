@@ -1,7 +1,0 @@
-package example
-
-type Requirement
-{
-   text     String
-   trace_cb Integer
-}

@@ -1,0 +1,534 @@
+{
+  "schema": "lobster-report",
+  "version": 2,
+  "generator": "lobster_report",
+  "levels": [
+    {
+      "name": "System Requirements",
+      "kind": "requirements",
+      "items": [
+        {
+          "tag": "req 12345@42",
+          "location": {
+            "kind": "codebeamer",
+            "cb_root": "https://potato.kitten",
+            "tracker": 12345,
+            "item": 666,
+            "version": 42,
+            "name": "LOBSTER demo"
+          },
+          "name": "LOBSTER demo",
+          "messages": [
+            "status is Potato, expected Valid"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [],
+          "ref_down": [
+            "req example.req_implication",
+            "req example.req_xor",
+            "req example.req_nand",
+            "req example.req_nor"
+          ],
+          "tracing_status": "MISSING",
+          "framework": "codebeamer",
+          "kind": "functional requirement",
+          "text": "Provide a nice demonstration of LOBSTER through four examples",
+          "status": "Potato"
+        }
+      ],
+      "coverage": 0.0
+    },
+    {
+      "name": "Software Requirements",
+      "kind": "requirements",
+      "items": [
+        {
+          "tag": "req example.req_implication",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/potato.trlc",
+            "line": 3
+          },
+          "name": "example req implication",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req 12345"
+          ],
+          "ref_down": [
+            "cpp foo.cpp:implication:3",
+            "gtest ImplicationTest:BasicTest"
+          ],
+          "tracing_status": "OK",
+          "framework": "TRLC",
+          "kind": "Requirement",
+          "text": "provide a utility function for logical implication",
+          "status": null
+        },
+        {
+          "tag": "req example.req_xor",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/potato.trlc",
+            "line": 9
+          },
+          "name": "example req xor",
+          "messages": [
+            "missing reference to Code"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req 12345"
+          ],
+          "ref_down": [
+            "json example_0",
+            "json example_1"
+          ],
+          "tracing_status": "PARTIAL",
+          "framework": "TRLC",
+          "kind": "Requirement",
+          "text": "provide a utility function for logical exclusive or",
+          "status": null
+        },
+        {
+          "tag": "req example.req_nand",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/potato.trlc",
+            "line": 15
+          },
+          "name": "example req nand",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req 12345"
+          ],
+          "ref_down": [
+            "matlab nand",
+            "matlab nand_test::test_1"
+          ],
+          "tracing_status": "OK",
+          "framework": "TRLC",
+          "kind": "Requirement",
+          "text": "provide a utility function for logical negated and",
+          "status": null
+        },
+        {
+          "tag": "req example.req_nor",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/potato.trlc",
+            "line": 21
+          },
+          "name": "example req nor",
+          "messages": [
+            "missing reference to Verification Test"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req 12345"
+          ],
+          "ref_down": [
+            "python nor::Example::helper_function",
+            "python nor::Example::nor"
+          ],
+          "tracing_status": "PARTIAL",
+          "framework": "TRLC",
+          "kind": "Requirement",
+          "text": "provide a utility function for logical negated or",
+          "status": null
+        }
+      ],
+      "coverage": 50.0
+    },
+    {
+      "name": "Code",
+      "kind": "implementation",
+      "items": [
+        {
+          "tag": "cpp foo.cpp:implication:3",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/foo.cpp",
+            "line": 3
+          },
+          "name": "implication",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req example.req_implication"
+          ],
+          "ref_down": [],
+          "tracing_status": "OK",
+          "language": "C/C++",
+          "kind": "function"
+        },
+        {
+          "tag": "cpp foo.cpp:exclusive_or:9",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/foo.cpp",
+            "line": 9
+          },
+          "name": "exclusive_or",
+          "messages": [
+            "missing up reference"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "MISSING",
+          "language": "C/C++",
+          "kind": "function"
+        },
+        {
+          "tag": "cpp foo.cpp:potato:14",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/foo.cpp",
+            "line": 14
+          },
+          "name": "potato",
+          "messages": [
+            "unknown tracing target req example.doesnt_exist",
+            "missing up reference"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "MISSING",
+          "language": "C/C++",
+          "kind": "function"
+        },
+        {
+          "tag": "matlab nand",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/nand.m",
+            "line": 1
+          },
+          "name": "nand",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req example.req_nand"
+          ],
+          "ref_down": [],
+          "tracing_status": "OK",
+          "language": "MATLAB",
+          "kind": "Function"
+        },
+        {
+          "tag": "python nor::trlc_reference",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/nor.py",
+            "line": 5
+          },
+          "name": "trlc_reference",
+          "messages": [
+            "missing up reference"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "MISSING",
+          "language": "Python",
+          "kind": "Function"
+        },
+        {
+          "tag": "python nor::Example::helper_function",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/nor.py",
+            "line": 13
+          },
+          "name": "helper_function",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req example.req_nor"
+          ],
+          "ref_down": [],
+          "tracing_status": "OK",
+          "language": "Python",
+          "kind": "Method"
+        },
+        {
+          "tag": "python nor::Example::nor",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/nor.py",
+            "line": 17
+          },
+          "name": "nor",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req example.req_nor"
+          ],
+          "ref_down": [],
+          "tracing_status": "OK",
+          "language": "Python",
+          "kind": "Method"
+        },
+        {
+          "tag": "python nor::Example",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/nor.py",
+            "line": 11
+          },
+          "name": "Example",
+          "messages": [
+            "missing up reference"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "MISSING",
+          "language": "Python",
+          "kind": "Class"
+        }
+      ],
+      "coverage": 50.0
+    },
+    {
+      "name": "Verification Test",
+      "kind": "activity",
+      "items": [
+        {
+          "tag": "gtest ImplicationTest:BasicTest",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/test.cpp",
+            "line": 7
+          },
+          "name": "ImplicationTest:BasicTest",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req example.req_implication"
+          ],
+          "ref_down": [],
+          "tracing_status": "OK",
+          "framework": "GoogleTest",
+          "kind": "test",
+          "status": "ok"
+        },
+        {
+          "tag": "matlab nand_test::test_1",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/nand_test.m",
+            "line": 3
+          },
+          "name": "nand_test::test_1",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req example.req_nand"
+          ],
+          "ref_down": [],
+          "tracing_status": "OK",
+          "framework": "MATLAB",
+          "kind": "Test",
+          "status": null
+        },
+        {
+          "tag": "json example_0",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/example.json",
+            "line": null
+          },
+          "name": "example_0",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req example.req_xor"
+          ],
+          "ref_down": [],
+          "tracing_status": "OK",
+          "framework": "JSON",
+          "kind": "test",
+          "status": null
+        },
+        {
+          "tag": "json example_1",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/example.json",
+            "line": null
+          },
+          "name": "example_1",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req example.req_xor"
+          ],
+          "ref_down": [],
+          "tracing_status": "OK",
+          "framework": "JSON",
+          "kind": "test",
+          "status": null
+        }
+      ],
+      "coverage": 100.0
+    }
+  ],
+  "policy": {
+    "System Requirements": {
+      "name": "System Requirements",
+      "kind": "requirements",
+      "traces": [],
+      "source": [
+        {
+          "file": "system-requirements.lobster",
+          "filters": [],
+          "valid_status": [
+            "Valid"
+          ]
+        }
+      ],
+      "needs_tracing_up": false,
+      "needs_tracing_down": true,
+      "breakdown_requirements": [
+        [
+          "Software Requirements"
+        ]
+      ]
+    },
+    "Software Requirements": {
+      "name": "Software Requirements",
+      "kind": "requirements",
+      "traces": [
+        "System Requirements"
+      ],
+      "source": [
+        {
+          "file": "software-requirements.lobster",
+          "filters": [],
+          "valid_status": []
+        }
+      ],
+      "needs_tracing_up": true,
+      "needs_tracing_down": true,
+      "breakdown_requirements": [
+        [
+          "Code"
+        ],
+        [
+          "Verification Test"
+        ]
+      ]
+    },
+    "Code": {
+      "name": "Code",
+      "kind": "implementation",
+      "traces": [
+        "Software Requirements"
+      ],
+      "source": [
+        {
+          "file": "cppcode.lobster",
+          "filters": []
+        },
+        {
+          "file": "mcode.lobster",
+          "filters": []
+        },
+        {
+          "file": "pycode.lobster",
+          "filters": []
+        }
+      ],
+      "needs_tracing_up": true,
+      "needs_tracing_down": false,
+      "breakdown_requirements": []
+    },
+    "Verification Test": {
+      "name": "Verification Test",
+      "kind": "activity",
+      "traces": [
+        "Software Requirements"
+      ],
+      "source": [
+        {
+          "file": "gtests.lobster",
+          "filters": []
+        },
+        {
+          "file": "mtests.lobster",
+          "filters": []
+        },
+        {
+          "file": "json.lobster",
+          "filters": []
+        }
+      ],
+      "needs_tracing_up": true,
+      "needs_tracing_down": false,
+      "breakdown_requirements": []
+    }
+  },
+  "matrix": []
+}

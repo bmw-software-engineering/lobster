@@ -1,3 +1,9 @@
 *~
 *.pyc
 bazel-*
+
+*.egg-info
+build
+dist
+
+test_install
