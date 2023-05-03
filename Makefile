@@ -1,3 +1,5 @@
+PYTHONPATH:=lobster-core
+
 lint: style
 	@python3 -m pylint --rcfile=pylint3.cfg \
 		--reports=no lobster-* \
@@ -21,3 +23,16 @@ packages:
 
 test: packages
 	make -C integration-tests/projects/basic
+
+upload_main: packages
+	python3 -m twine upload --repository pypi lobster-*/dist/*
+
+remove_dev:
+	python3 -m util.release
+
+github_release:
+	git push
+	python3 -m util.github_release
+
+bump:
+	python3 -m util.bump_version_post_release
