@@ -1,4 +1,4 @@
-PYTHONPATH:=lobster-core
+export PYTHONPATH=lobster-core
 
 lint: style
 	@python3 -m pylint --rcfile=pylint3.cfg \
