@@ -28,7 +28,7 @@ $ pip3 install bmw-lobster
 
 The following requirements frameworks are supported:
 
-* [TRLC](work-inprogress) (only some use cases supported right now)
+* [TRLC](work-in-progress) (only some use cases supported right now)
 * [Codebeamer](lobster-tool-codebeamer) (only some use cases supported
   right now)
 
