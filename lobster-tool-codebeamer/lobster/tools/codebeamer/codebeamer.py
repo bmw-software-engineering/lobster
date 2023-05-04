@@ -39,31 +39,32 @@
 import os
 import sys
 import argparse
-import json
 
 from copy import copy
+
+import requests
 
 from lobster.items import Tracing_Tag, Requirement
 from lobster.location import Codebeamer_Reference
 from lobster.errors import Message_Handler, LOBSTER_Error
 from lobster.io import lobster_read, lobster_write
 
-import requests
-
 
 def query_cb_single(cb_config, url):
     assert isinstance(cb_config, dict)
     assert isinstance(url, str)
 
-    r = requests.get(url, auth=(cb_config["user"],
-                                cb_config["pass"]))
-    if r.status_code != 200:
+    result = requests.get(url,
+                          auth=(cb_config["user"],
+                                cb_config["pass"]),
+                          timeout=10.0)
+    if result.status_code != 200:
         print("Could not fetch %s" % url)
-        print("Status = %u" % r.status_code)
-        print(r.text)
+        print("Status = %u" % result.status_code)
+        print(result.text)
         sys.exit(1)
 
-    return r.json()
+    return result.json()
 
 
 def get_single_item(cb_config, item_id):
@@ -152,8 +153,8 @@ def import_tagged(mh, cb_config, items_to_import):
             rv.append(l_item)
 
         else:
-            print("Attempting to fetch %u items from %u" % (len(work_list),
-                                                            tracker_id))
+            print("Attempting to fetch %u items from %s" %
+                  (len(work_list), tracker_id))
             cb_items = get_many_items_maybe(cb_config, tracker_id, work_list)
 
             for cb_item in cb_items:

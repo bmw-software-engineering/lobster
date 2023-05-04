@@ -116,8 +116,6 @@ class Python_Class(Python_Traceable_Node):
         class_contents = []
         for node in self.children:
             node.to_lobster(class_contents)
-        for item in class_contents:
-            pass
         items += class_contents
 
         l_item = Implementation(tag      = Tracing_Tag("python",

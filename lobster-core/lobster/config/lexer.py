@@ -20,8 +20,8 @@
 import sys
 import os.path
 
-import lobster.errors as errors
-import lobster.location as location
+from lobster import errors
+from lobster import location
 
 
 class Token:
@@ -51,7 +51,7 @@ class Lexer:
         self.file_name = file_name
         self.mh        = mh
 
-        with open(file_name, "r") as fd:
+        with open(file_name, "r", encoding="UTF-8") as fd:
             self.content = fd.read()
             self.length  = len(self.content)
 

@@ -257,7 +257,7 @@ class Document:
     def add_heading(self, level, text, anchor=None):
         assert isinstance(level, int)
         assert isinstance(text, str)
-        assert level >= 2 and level <= 7
+        assert 2 <= level <= 7
         assert anchor is None or isinstance(anchor, str)
 
         if level == 2 and self.body:

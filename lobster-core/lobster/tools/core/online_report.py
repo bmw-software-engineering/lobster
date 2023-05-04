@@ -23,8 +23,6 @@ import os
 import argparse
 import configparser
 
-from lobster.exceptions import LOBSTER_Exception
-from lobster.errors import LOBSTER_Error
 from lobster.report import Report
 from lobster.location import File_Reference, Github_Reference
 
