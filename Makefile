@@ -19,7 +19,7 @@ packages:
 	make -C lobster-tool-gtest
 	make -C lobster-tool-python
 	make -C lobster-metapackage
-	pip3 install --prefix test_install lobster-*/dist/*.whl trlc
+	PYTHONPATH= pip3 install --prefix test_install lobster-*/dist/*.whl trlc
 
 test: packages
 	make -C integration-tests/projects/basic
