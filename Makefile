@@ -3,7 +3,7 @@ export PYTHONPATH=lobster-core
 lint: style
 	@python3 -m pylint --rcfile=pylint3.cfg \
 		--reports=no lobster-* \
-		--ignore=setup.py \
+		--ignore=setup.py,assets.py \
 		--ignore-paths=lobster-.*/build
 
 style:

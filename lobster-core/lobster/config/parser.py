@@ -21,9 +21,9 @@ import sys
 import os.path
 import collections
 
-import lobster.config.lexer as lexer
-import lobster.errors as errors
-import lobster.location as location
+from lobster.config import lexer
+from lobster import errors
+from lobster import location
 
 
 class Parser:
@@ -61,7 +61,7 @@ class Parser:
             self.advance()
         elif self.nt is None:
             self.error(
-                errors.File_Reference(filename = self.lexer.file_name),
+                location.File_Reference(filename = self.lexer.file_name),
                 "expected %s, found EOF" % kind)
         elif value is None:
             self.error(self.nt.loc,
@@ -71,6 +71,9 @@ class Parser:
         else:
             self.error(self.nt.loc,
                        "expected %s, found %s" % (value, self.nt.value()))
+
+    def warning(self, loc, message):
+        self.lexer.mh.warning(loc, message)
 
     def error(self, loc, message):
         self.lexer.mh.error(loc, message)
@@ -209,8 +212,8 @@ class Parser:
 
 
 def load(mh, file_name):
-    p = Parser(mh, file_name)
-    ast = p.parse()
+    parser = Parser(mh, file_name)
+    ast = parser.parse()
 
     # Resolve requires links now
     for item in ast.values():
@@ -218,15 +221,15 @@ def load(mh, file_name):
         if len(item["raw_trace_requirements"]) > 0:
             for chain in item["raw_trace_requirements"]:
                 new_chain = []
-                for t in chain:
-                    if t.value() not in ast:
-                        mh.error(t.loc, "unknown level %s" % t.value())
-                    if item["name"] not in ast[t.value()]["traces"]:
-                        mh.error(t.loc,
+                for tok in chain:
+                    if tok.value() not in ast:
+                        mh.error(tok.loc, "unknown level %s" % tok.value())
+                    if item["name"] not in ast[tok.value()]["traces"]:
+                        mh.error(tok.loc,
                                  "%s cannot trace to %s items" %
-                                 (t.value(),
+                                 (tok.value(),
                                   item["name"]))
-                    new_chain.append(t.value())
+                    new_chain.append(tok.value())
                 item["breakdown_requirements"].append(new_chain)
         else:
             for src in ast.values():
