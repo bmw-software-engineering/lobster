@@ -42,7 +42,7 @@ software-requirements.lobster: potato.rsl potato.check potato.trlc
 		--cb-tags="trace_cb"
 
 json.lobster: example.json
-	@$(LOBSTER_WIP)/lobster_json example.json \
+	@lobster-json example.json \
 		--name-attribute "name" \
 		--tag-attribute "tags" \
 		--out="json.lobster"

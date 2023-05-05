@@ -29,21 +29,21 @@ $ pip3 install bmw-lobster
 The following requirements frameworks are supported:
 
 * [TRLC](work-in-progress) (only some use cases supported right now)
-* [Codebeamer](lobster-tool-codebeamer) (only some use cases supported
-  right now)
+* [Codebeamer](packages/lobster-tool-codebeamer/README.md) (only some
+  use cases supported right now)
 
 The following programming languages are supported:
 
-* [C/C++](lobster-tool-cpp)
-* [Python3](lobster-tool-python)
+* [C/C++](packages/lobster-tool-cpp/README.md)
+* [Python3](packages/lobster-tool-python/README.md)
 * [SIMULINK and MATLAB](https://misshit.org) using the 3rd-party tool
   MISS_HIT; supports both code and tests
 
 The following verification and miscellaneous frameworks are supported:
 
-* [GoogleTest](lobster-tool-gtest)
-* [JSON](work-in-progress) useful if your test framework is encoded in
-  JSON
+* [GoogleTest](packages/lobster-tool-gtest/README.md)
+* [JSON](packages/lobster-tool-json/README.md) useful if your test
+  framework is encoded in JSON
 
 ## Documentation
 
@@ -64,6 +64,7 @@ The individual packages that `bmw-lobster` depends on are:
 * `bmw-lobster-tool-gtest` (for GoogleTest tests)
 * `bmw-lobster-tool-python` (for Python3 code)
 * `bmw-lobster-tool-beamer` (for requirements in Codebeamer)
+* `bmw-lobster-tool-json` (for activities in JSON)
 * `miss_hit` (for MATLAB/Octave code or Simulink models)
 
 ## Planned inputs
