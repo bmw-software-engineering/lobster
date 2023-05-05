@@ -17,6 +17,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import os
 import sys
 import argparse
 
@@ -33,6 +34,10 @@ def main():
 
     options = ap.parse_args()
 
+    if not os.path.isfile(options.lobster_config):
+        print("error: cannot read config file '%s'" % options.lobster_config)
+        return 0
+
     report = Report()
 
     try:
@@ -47,6 +52,7 @@ def main():
         return 1
 
     report.write_report("report.lobster")
+    return 0
 
 
 if __name__ == "__main__":
