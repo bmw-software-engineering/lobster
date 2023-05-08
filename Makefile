@@ -21,6 +21,7 @@ packages:
 	git clean -xdf
 	make lobster/html/assets.py
 	make -C packages/lobster-core
+	make -C packages/lobster-tool-trlc
 	make -C packages/lobster-tool-codebeamer
 	make -C packages/lobster-tool-cpp
 	make -C packages/lobster-tool-gtest
@@ -30,6 +31,11 @@ packages:
 	PYTHONPATH= \
 		pip3 install --prefix test_install \
 		packages/*/dist/*.whl trlc
+
+integration_tests: packages
+	(cd integration-tests/projects/basic; make)
+
+test: integration_tests
 
 upload_main: packages
 	python3 -m twine upload --repository pypi packages/*/dist/*
