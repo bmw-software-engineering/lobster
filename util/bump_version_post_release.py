@@ -28,7 +28,7 @@ release += 1
 
 # Bump version and update version.py
 
-VERSION_FILE = os.path.join("lobster-core", "lobster", "version.py")
+VERSION_FILE = os.path.join("lobster", "version.py")
 
 tmp = ""
 with open(VERSION_FILE, "r") as fd:
@@ -52,5 +52,5 @@ util.changelog.add_new_section(LOBSTER_VERSION)
 
 # Assemble commit
 
-os.system("git add CHANGELOG.md lobster-core/lobster/version.py ")
+os.system("git add CHANGELOG.md lobster/version.py ")
 os.system('git commit -m "Bump version to %s after release"' % LOBSTER_VERSION)
