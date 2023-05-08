@@ -1,7 +1,28 @@
 package example
 
+tuple Codebeamer_Id {
+  item Integer
+  separator @
+  version optional Integer
+}
+
 type Requirement
 {
-   text     String
-   trace_cb Integer
+  text String
+}
+
+type Information
+{
+  text String
+}
+
+type Tagged_Requirement extends Requirement
+{
+  extra_text optional String
+  trace_cb optional Codebeamer_Id [1 .. *]
+}
+
+type Linked_Requirement extends Requirement
+{
+  trace_trlc optional Requirement [1 .. *]
 }

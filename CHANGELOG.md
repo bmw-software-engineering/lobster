@@ -5,6 +5,9 @@
 
 ### 0.9.2-dev
 
+* New tool [lobster-trlc](packages/lobster-tool-trlc/README.md) to
+  extract [TRLC
+  requirements](https://github.com/bmw-software-engineering/trlc).
 
 * New tool [lobster-json](packages/lobster-tool-json/README.md) to
   extract data from JSON files representing verification activities.

@@ -1,25 +1,36 @@
 package example
 
-Requirement req_implication
+Tagged_Requirement req_implication
 {
    text = "provide a utility function for logical implication"
-   trace_cb = 12345
+   trace_cb = [12345]
 }
 
-Requirement req_xor
+Tagged_Requirement req_xor
 {
    text = "provide a utility function for logical exclusive or"
-   trace_cb = 12345
+   trace_cb = [12345@5]
 }
 
-Requirement req_nand
+Tagged_Requirement req_nand
 {
-   text = "provide a utility function for logical negated and"
-   trace_cb = 12345
+  text = "provide a utility function for logical negated and"
+  extra_text = "potato"
+  trace_cb = [12345@42]
 }
 
 Requirement req_nor
 {
    text = "provide a utility function for logical negated or"
-   trace_cb = 12345
+}
+
+Information potato
+{
+   text = "this is just here for fun"
+}
+
+Linked_Requirement req_important
+{
+  text = "this is important"
+  trace_trlc = [req_nor, req_nand]
 }
