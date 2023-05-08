@@ -27,7 +27,7 @@ import util.changelog
 # Update version.py to remove the -dev (or if given) use a different
 # version number.
 
-VERSION_FILE = os.path.join("lobster-core", "lobster", "version.py")
+VERSION_FILE = os.path.join("lobster", "version.py")
 
 tmp = ""
 with open(VERSION_FILE, "r") as fd:
@@ -49,5 +49,5 @@ util.changelog.set_current_title(LOBSTER_VERSION)
 
 # Commit & tag
 
-os.system("git add CHANGELOG.md lobster-core/lobster/version.py")
+os.system("git add CHANGELOG.md lobster/version.py")
 os.system('git commit -m "LOBSTER Release %s"' % LOBSTER_VERSION)
