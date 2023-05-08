@@ -49,3 +49,11 @@ github_release:
 
 bump:
 	python3 -m util.bump_version_post_release
+
+full_release:
+	make remove_dev
+	git push
+	make upload_main
+	make github_release
+	make bump
+	git push
