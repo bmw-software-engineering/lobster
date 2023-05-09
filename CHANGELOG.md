@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.9.3-dev
+### 0.9.3
 
 * Fix copy/deepcopy bug in `lobster-trlc` where bogus error messages
   could be created for extensions of types using tuples.
