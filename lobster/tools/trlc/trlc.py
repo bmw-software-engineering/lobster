@@ -21,7 +21,7 @@ import os
 import re
 import argparse
 
-from copy import deepcopy
+from copy import copy
 from pprint import pprint
 
 from trlc.trlc import Source_Manager
@@ -40,11 +40,11 @@ class Config_Parser(Parser_Base):
         assert isinstance(mh, Message_Handler)
         assert os.path.isfile(file_name)
         assert isinstance(stab, ast.Symbol_Table)
-        super().__init__(mh          = mh,
-                         lexer       = TRLC_Lexer(mh, file_name),
-                         eoc_name    = "end of file",
-                         token_kinds = Token.KIND,
-                         keywords    = TRLC_Lexer.KEYWORDS)
+        super().__init__(mh        = mh,
+                         lexer     = TRLC_Lexer(mh, file_name),
+                         eoc_name  = "end of file",
+                         token_map = Token.KIND,
+                         keywords  = TRLC_Lexer.KEYWORDS)
         self.stab       = stab
         self.tree       = {}
         self.entries    = {}
@@ -185,7 +185,16 @@ class Config_Parser(Parser_Base):
                                                          tag_field))
 
         for n_extension in self.tree[n_typ]:
-            self.build_config(n_extension, deepcopy(self.config[n_typ]))
+            new_context = {
+                "trace" : self.config[n_typ]["trace"],
+
+                "description_fields" :
+                copy(self.config[n_typ]["description_fields"]),
+
+                "tag_fields" :
+                copy(self.config[n_typ]["tag_fields"]),
+            }
+            self.build_config(n_extension, new_context)
 
     def parse_record_type(self, n_typ):
         assert isinstance(n_typ, ast.Record_Type)
@@ -320,7 +329,7 @@ def main():
                     default="lobster-trlc.conf")
     ap.add_argument("--out",
                     help=("name of output file, "
-                          "by default %(default)"),
+                          "by default %(default)s"),
                     default="trlc.lobster")
     ap.add_argument("items",
                     nargs="*",
