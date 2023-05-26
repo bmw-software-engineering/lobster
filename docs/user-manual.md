@@ -19,7 +19,7 @@ relate to each other; stored in different "databases". Sometimes this
 is very literal (e.g. with proprietary requirements tools like
 codeBeamer), but often we just mean "somewhere in git".
 
-To show tracability, first we configure LOBSTER with our aims. For
+To show traceability, first we configure LOBSTER with our aims. For
 example:
 
 * We want to use LOBSTER in the classic automotive case: we have a

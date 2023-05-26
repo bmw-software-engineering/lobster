@@ -252,7 +252,7 @@ def write_html(fd, report):
 
     doc = htmldoc.Document(
         "L.O.B.S.T.E.R.",
-        "Lightweight Open BMW Software Tracability Evidence Report"
+        "Lightweight Open BMW Software Traceability Evidence Report"
     )
 
     # Item styles
@@ -400,7 +400,7 @@ def write_html(fd, report):
     if has_issues:
         doc.add_line("</ul>")
     else:
-        doc.add_line("<div>No tracability issues found.</div>")
+        doc.add_line("<div>No traceability issues found.</div>")
 
     ### Report
     doc.add_heading(2, "Detailed report", "detailed-report")
