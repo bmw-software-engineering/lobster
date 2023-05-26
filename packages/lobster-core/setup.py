@@ -39,7 +39,7 @@ setuptools.setup(
     version=version.LOBSTER_VERSION,
     author="Bayerische Motoren Werke Aktiengesellschaft (BMW AG)",
     author_email="florian.schanda@bmw.de",
-    description="Lightweight Open BMW Software Tracability Evidence Report",
+    description="Lightweight Open BMW Software Traceability Evidence Report",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=project_urls["Source Code"],

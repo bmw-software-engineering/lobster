@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# LOBSTER - Lightweight Open BMW Software Tracability Evidence Report
+# LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
 # Copyright (C) 2022-2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
