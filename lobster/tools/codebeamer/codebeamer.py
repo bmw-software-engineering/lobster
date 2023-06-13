@@ -99,6 +99,40 @@ def get_many_items_maybe(cb_config, tracker_id, item_ids):
     return rv
 
 
+def get_query(mh, cb_config, query_id):
+    assert isinstance(mh, Message_Handler)
+    assert isinstance(cb_config, dict)
+    assert isinstance(query_id, int)
+    rv = []
+    page_id = 1
+    total_items = None
+
+    while total_items is None or len(rv) < total_items:
+        print("Fetching page %u of query..." % page_id)
+        data = query_cb_single(cb_config,
+                               "%s/query/%u/page/%u?pagesize=100" %
+                               (cb_config["base"],
+                                query_id,
+                                page_id))
+        assert len(data) == 1
+        data = data["trackerItems"]
+
+        assert page_id == data["page"]
+        if page_id == 1:
+            total_items = data["total"]
+        else:
+            assert total_items == data["total"]
+
+        rv += [to_lobster(cb_config, cb_item)
+               for cb_item in data["items"]]
+
+        page_id += 1
+
+    assert total_items == len(rv)
+
+    return rv
+
+
 def to_lobster(cb_config, cb_item):
     assert isinstance(cb_config, dict)
     assert isinstance(cb_item, dict) and "id" in cb_item
@@ -175,6 +209,9 @@ def main():
     modes.add_argument("--import-tagged",
                        metavar="LOBSTER_FILE",
                        default=None)
+    modes.add_argument("--import-query",
+                       metavar="CB_QUERY_ID",
+                       default=None)
 
     ap.add_argument("--cb-root", default=os.environ.get("CB_ROOT", None))
     ap.add_argument("--cb-user", default=os.environ.get("CB_USERNAME", None))
@@ -219,6 +256,14 @@ def main():
                 except ValueError:
                     pass
 
+    elif options.import_query:
+        try:
+            query_id = int(options.import_query)
+        except ValueError:
+            ap.error("query-id must be an integer")
+        if query_id < 1:
+            ap.error("query-id must be a positive")
+
     cb_config = {
         "root" : options.cb_root,
         "base" : "%s/cb/rest" % options.cb_root,
@@ -227,7 +272,10 @@ def main():
     }
 
     try:
-        items = import_tagged(mh, cb_config, items_to_import)
+        if options.import_tagged:
+            items = import_tagged(mh, cb_config, items_to_import)
+        elif options.import_query:
+            items = get_query(mh, cb_config, query_id)
     except LOBSTER_Error:
         return 1
 
@@ -237,6 +285,8 @@ def main():
     else:
         with open(options.out, "w", encoding="UTF-8") as fd:
             lobster_write(fd, Requirement, "lobster_codebeamer", items)
+        print("Written %u requirements to %s" % (len(items),
+                                                 options.out))
 
     return 0
 
