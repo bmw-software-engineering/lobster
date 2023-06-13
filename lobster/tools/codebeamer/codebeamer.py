@@ -109,13 +109,20 @@ def get_query(mh, cb_config, query_id):
 
     while total_items is None or len(rv) < total_items:
         print("Fetching page %u of query..." % page_id)
-        data = query_cb_single(cb_config,
-                               "%s/query/%u/page/%u?pagesize=100" %
-                               (cb_config["base"],
-                                query_id,
-                                page_id))
+        url = "%s/query/%u/page/%u?pagesize=100" % \
+            (cb_config["base"],
+             query_id,
+             page_id)
+        data = query_cb_single(cb_config, url)
         assert len(data) == 1
         data = data["trackerItems"]
+
+        if page_id == 1 and len(data["items"]) == 0:
+            print("This query doesn't generate items. Please check:")
+            print(" * is the number actually correct?")
+            print(" * do you have permissions to access it?")
+            print("You can try to access %s manually to check" % url)
+            sys.exit(1)
 
         assert page_id == data["page"]
         if page_id == 1:
