@@ -5,7 +5,8 @@
 
 ### 0.9.5-dev
 
-
+* `lobster-codebeamer` now issues better error messages if you made a
+  mistake in the query id.
 
 ### 0.9.4
 
