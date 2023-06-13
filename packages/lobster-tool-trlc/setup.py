@@ -48,7 +48,7 @@ setuptools.setup(
     packages=["lobster.tools.trlc"],
     install_requires=[
         "bmw-lobster-core>=%s" % version.LOBSTER_VERSION,
-        "trlc>=1.1.4"
+        "trlc>=1.1.5"
     ],
     python_requires=">=3.7, <4",
     classifiers=[
