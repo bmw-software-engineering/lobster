@@ -107,7 +107,8 @@ as integration tests, HIL tests, etc.)
 
 ### codeBeamer
 
-* lobster_codebeamer: DOCUMENTATION TODO
+* [lobster_codebeamer](manual-lobster_codebeamer.md): for tracing to
+  codebeamer requirements.
 
 ### C / C++
 
