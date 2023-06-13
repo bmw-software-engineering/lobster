@@ -5,7 +5,7 @@
 
 ### 0.9.4-dev
 
-
+* `lobster-codebeamer` can now directly import codebeamer Queries.
 
 ### 0.9.3
 
