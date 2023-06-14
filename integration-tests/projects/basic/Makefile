@@ -14,6 +14,7 @@ html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requiremen
 	@lobster-online-report
 	@cp report.lobster report.reference_output
 	@lobster-html-report
+	@cp lobster_report.html ../../../docs/example_report.html
 	@lobster-ci-report | tee ci_report.reference_output
 
 cppcode.lobster: foo.h foo.cpp
