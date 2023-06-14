@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.9.5-dev
+### 0.9.5
 
 * `lobster-codebeamer` now issues better error messages if you made a
   mistake in the query id.
