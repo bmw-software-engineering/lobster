@@ -8,6 +8,12 @@
 * `lobster-codebeamer` now issues better error messages if you made a
   mistake in the query id.
 
+* `lobster-gtest` now deals with older versions of googletest which do
+  not embedd file name into the XML output. These locations are either
+  guessed or simply made into `<unknown source>`. Traced tests using
+  the macro provided always include a file/line number; this issue
+  only affects untraced tests.
+
 ### 0.9.4
 
 * `lobster-codebeamer` can now directly import codebeamer Queries.

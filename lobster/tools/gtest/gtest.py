@@ -23,7 +23,7 @@ import os.path
 import xml.etree.ElementTree as ET
 
 from lobster.items import Tracing_Tag, Activity
-from lobster.location import File_Reference
+from lobster.location import Void_Reference, File_Reference
 from lobster.io import lobster_write
 
 
@@ -80,8 +80,10 @@ def main():
                 test_executed = testcase.attrib["status"] == "run"
                 test_ok       = True
                 test_tags     = []
-                source_file   = testcase.attrib["file"]
-                source_line   = int(testcase.attrib["line"])
+                source_file   = testcase.attrib.get("file", None)
+                source_line   = int(testcase.attrib["line"]) \
+                    if "line" in testcase.attrib \
+                    else None
                 for props in testcase:
                     if props.tag == "failure":
                         test_ok = False
@@ -102,6 +104,8 @@ def main():
                     test_source = File_Reference(
                         filename = list(c_files_rel[source_file])[0],
                         line     = source_line)
+                elif source_file is None:
+                    test_source = Void_Reference()
                 else:
                     test_source = File_Reference(
                         filename = source_file,
@@ -133,7 +137,7 @@ def main():
         print("Written output for %u items to %s" % (len(items),
                                                      options.out))
     else:
-        lobster_write(fd, Activity, "lobster_gtest", items)
+        lobster_write(sys.stdout, Activity, "lobster_gtest", items)
         print()
 
 

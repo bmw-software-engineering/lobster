@@ -100,6 +100,17 @@ tool indicator (e.g. codebeamer) and a url. A design goal of LOBSTER
 is after all that adding support for a new tool doesn't require a
 change in LOBSTER itself.
 
+#### Void references
+
+A void reference can be used if an item cannot be given a proper
+location or link, for whatever reason.
+
+```
+{
+   "kind" : "void",
+}
+```
+
 ## Items
 
 All items (requirements, implementation, and activities) share a few

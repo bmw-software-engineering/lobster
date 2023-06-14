@@ -19,6 +19,8 @@
 
 from abc import ABCMeta, abstractmethod
 
+import html
+
 from lobster.exceptions import LOBSTER_Exception
 
 
@@ -51,6 +53,8 @@ class Location(metaclass=ABCMeta):
                 return Github_Reference.from_json(json)
             elif json["kind"] == "codebeamer":
                 return Codebeamer_Reference.from_json(json)
+            elif json["kind"] == "void":
+                return Void_Reference.from_json(json)
             else:
                 raise LOBSTER_Exception("unknown location kind %s" %
                                         json["kind"])
@@ -62,6 +66,26 @@ class Location(metaclass=ABCMeta):
             raise LOBSTER_Exception(
                 "malformed %s location data" % json["kind"],
                 json) from err
+
+
+class Void_Reference(Location):
+    def __init__(self):
+        pass
+
+    def to_string(self):
+        return "<unknown location>"
+
+    def to_html(self):
+        return html.escape(self.to_string())
+
+    def to_json(self):
+        return {"kind": "void"}
+
+    @classmethod
+    def from_json(cls, json):
+        assert isinstance(json, dict)
+        assert json["kind"] == "void"
+        return Void_Reference()
 
 
 class File_Reference(Location):
