@@ -1,0 +1,68 @@
+digraph "LOBSTER_DataFlow" {
+
+graph [rankdir=LR];
+
+c_sources [shape=none, label=".c/.cpp/.h"];
+c_build [shape=none, label="CFLAGS/CXXFLAGS"]
+lobster_cpp;
+c_sources -> lobster_cpp;
+c_build -> lobster_cpp;
+
+googletest;
+
+c_sources -> googletest;
+c_build -> googletest;
+
+gtest_log [shape=none, label=".xml"];
+
+googletest -> gtest_log;
+
+lobster_gtest;
+gtest_log -> lobster_gtest;
+
+
+m_sources [shape=none, label=".slx/.m"];
+mh_conf [shape=none, label="miss_hit.cfg"];
+mh_trace;
+m_sources -> mh_trace;
+mh_conf -> mh_trace;
+
+trlc_sources [shape=none, label=".rsl/.check/.trlc"];
+trlc_conf [shape=none, label="lobster-trlc.conf"];
+lobster_trlc;
+trlc_sources -> lobster_trlc;
+trlc_conf -> lobster_trlc;
+
+cb_instance [shape=none, label="codebeamer"];
+cb_query [shape=none, label="query id"];
+lobster_codebeamer;
+cb_instance -> lobster_codebeamer;
+cb_query -> lobster_codebeamer;
+
+py_sources [shape=none, label=".py"];
+lobster_python;
+py_sources -> lobster_python;
+
+
+
+lobster_report;
+lobster_conf [shape=none, label="lobster.conf"];
+lobster_conf -> lobster_report [label=".lobster"];
+lobster_cpp -> lobster_report [label=".lobster"];
+mh_trace -> lobster_report [label=".lobster"];
+lobster_trlc -> lobster_report [label=".lobster"];
+lobster_codebeamer -> lobster_report [label=".lobster"];
+lobster_python -> lobster_report [label=".lobster"];
+lobster_gtest -> lobster_report [label=".lobster"];
+
+report_lobster [shape=none, label="report.lobster"];
+lobster_report -> report_lobster;
+
+lobster_html_report;
+lobster_ci_report;
+
+report_lobster -> lobster_html_report;
+report_lobster -> lobster_ci_report;
+
+
+}
