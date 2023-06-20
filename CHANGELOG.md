@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.9.6-dev
+### 0.9.6
 
 * `lobster-report` now has an `--out` option, to bring it in line with
   the other tools
