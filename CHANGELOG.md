@@ -5,7 +5,8 @@
 
 ### 0.9.6-dev
 
-
+* `lobster-report` now has an `--out` option, to bring it in line with
+  the other tools
 
 ### 0.9.5
 
