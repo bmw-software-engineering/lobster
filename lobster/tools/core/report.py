@@ -31,12 +31,21 @@ def main():
     ap.add_argument("--lobster-config",
                     metavar="FILE",
                     default="lobster.conf")
+    ap.add_argument("--out",
+                    metavar="FILE",
+                    default="report.lobster")
 
     options = ap.parse_args()
 
     if not os.path.isfile(options.lobster_config):
         print("error: cannot read config file '%s'" % options.lobster_config)
-        return 0
+        return 1
+
+    if os.path.exists(options.out) and not os.path.isfile(options.out):
+        print("error: cannot write to '%s'" % options.out)
+        print("error: '%s' exists and is not a file" % options.out)
+        return 1
+
 
     report = Report()
 
@@ -51,7 +60,7 @@ def main():
         err.dump()
         return 1
 
-    report.write_report("report.lobster")
+    report.write_report(options.out)
     return 0
 
 
