@@ -111,9 +111,10 @@ def lobster_read(mh, filename, level, items, source_info=None):
 
         if item.tag.key() in items:
             mh.error(item.location,
-                     "duplicate definition, "
+                     "duplicate definition of %s, "
                      "previously defined at %s" %
-                     items[item.tag.key()].location.to_string())
+                     (item.tag.key(),
+                      items[item.tag.key()].location.to_string()))
 
         if source_info is not None:
             item.perform_source_checks(source_info)
