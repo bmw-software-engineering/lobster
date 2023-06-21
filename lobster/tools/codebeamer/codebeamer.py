@@ -39,6 +39,7 @@
 import os
 import sys
 import argparse
+import netrc
 
 from copy import copy
 
@@ -228,11 +229,32 @@ def main():
 
     mh = Message_Handler()
 
-    if options.cb_root is None:
+    cb_config = {
+        "root" : options.cb_root,
+        "base" : "%s/cb/rest" % options.cb_root,
+        "user" : options.cb_user,
+        "pass" : options.cb_pass,
+    }
+
+    if cb_config["root"] is None:
         ap.error("please set CB_ROOT or use --cb-root")
-    if options.cb_user is None:
+
+    if not cb_config["root"].startswith("https://"):
+        ap.error("codebeamer root %s must start with https://")
+
+    if cb_config["user"] is None or cb_config["pass"] is None:
+        netrc_file = os.path.join(os.path.expanduser("~"),
+                                  ".netrc")
+        if os.path.isfile(netrc_file):
+            netrc_config = netrc.netrc()
+            auth = netrc_config.authenticators(cb_config["root"][8:])
+            if auth is not None:
+                print("using .netrc login for %s" % cb_config["root"])
+                cb_config["user"], _, cb_config["pass"] = auth
+
+    if cb_config["user"] is None:
         ap.error("please set CB_USERNAME or use --cb-user")
-    if options.cb_pass is None:
+    if cb_config["pass"] is None:
         ap.error("please set CB_PASSWORD or use --cb-pass")
 
     items_to_import = set()
@@ -270,13 +292,6 @@ def main():
             ap.error("query-id must be an integer")
         if query_id < 1:
             ap.error("query-id must be a positive")
-
-    cb_config = {
-        "root" : options.cb_root,
-        "base" : "%s/cb/rest" % options.cb_root,
-        "user" : options.cb_user,
-        "pass" : options.cb_pass,
-    }
 
     try:
         if options.import_tagged:

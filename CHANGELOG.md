@@ -5,7 +5,9 @@
 
 ### 0.9.7-dev
 
-
+* `lobster-codebeamer` now also consults the `~/.netrc` file, if
+  present, as an alternative to providing authentication in the
+  environment or command-line.
 
 ### 0.9.6
 

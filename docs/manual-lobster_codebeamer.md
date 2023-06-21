@@ -10,20 +10,27 @@ imported. However we do plan to also import item text eventually.
 You will need a working codebeamer instance, and your user needs to
 have API access.
 
-Create three environment variables:
+Create some environment variables:
 
 * `CB_ROOT` URL to point to the root codebeamer instance, this is
   everything up to but excluding the `/cb` part of the url. For
   example if https://codebeamer.com/cb/wiki/117612 is a valid wiki
   page, then you would set `CB_ROOT` to `https://codebeamer.com`.
 
+  You can also specify this on the command-line using `--cb-root`.
+
+You then need to provide authentication. You can do this with two more
+envionment variables:
+
 * `CB_USERNAME` to your username for authenticating with the API
 
 * `CB_PASSWORD` to your (plaintext) password for authenticating with
   the API
 
+Or, you can put a section into your `~/.netrc` file.
+
 These can also be supplied on the command-line, but configuring
-environment variables is the recommended approach.
+through environment variables or `.netrc` is the recommended approach.
 
 ## Use-cases
 
