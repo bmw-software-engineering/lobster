@@ -213,7 +213,7 @@ def import_tagged(mh, cb_config, items_to_import):
 def main():
     ap = argparse.ArgumentParser()
 
-    modes = ap.add_mutually_exclusive_group()
+    modes = ap.add_mutually_exclusive_group(required=True)
     modes.add_argument("--import-tagged",
                        metavar="LOBSTER_FILE",
                        default=None)
