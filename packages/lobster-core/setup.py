@@ -48,6 +48,7 @@ setuptools.setup(
     packages=["lobster",
               "lobster.config",
               "lobster.html",
+              "lobster.tools",
               "lobster.tools.core"],
     install_requires=[],
     python_requires=">=3.7, <4",
