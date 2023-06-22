@@ -9,6 +9,9 @@
   present, as an alternative to providing authentication in the
   environment or command-line.
 
+* Fix missing `__init__.py` files for the packages `lobster.tools`,
+  `lobster.tools.trlc`, and `lobster.tools.json`.
+
 ### 0.9.6
 
 * `lobster-report` now has an `--out` option, to bring it in line with
