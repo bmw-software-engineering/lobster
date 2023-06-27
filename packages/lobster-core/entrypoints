@@ -1,0 +1,4 @@
+lobster-report = lobster.tools.core.report:main
+lobster-html-report = lobster.tools.core.html_report:main
+lobster-online-report = lobster.tools.core.online_report:main
+lobster-ci-report = lobster.tools.core.ci_report:main

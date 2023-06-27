@@ -16,6 +16,10 @@ with open("requirements", "r") as fd:
     package_requirements = [line
                             for line in fd.read().splitlines()
                             if line.strip()]
+with open("entrypoints", "r") as fd:
+    entrypoints = [line
+                   for line in fd.read().splitlines()
+                   if line.strip()]
 
 # For the readme to look right on PyPI we need to translate any
 # relative links to absolute links to github.
@@ -66,11 +70,6 @@ setuptools.setup(
         "Topic :: Software Development",
     ],
     entry_points={
-        "console_scripts": [
-            "lobster-report = lobster.tools.core.report:main",
-            "lobster-html-report = lobster.tools.core.html_report:main",
-            "lobster-online-report = lobster.tools.core.online_report:main",
-            "lobster-ci-report = lobster.tools.core.ci_report:main",
-        ],
+        "console_scripts": entrypoints
     },
 )
