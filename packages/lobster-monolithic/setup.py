@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
+import os
 import re
 import sys
 import setuptools
+import glob
 
 from lobster import version
 
@@ -12,15 +14,20 @@ gh_project = "bmw-software-engineering/lobster"
 with open("README.md", "r") as fd:
     long_description = fd.read()
 
-with open("requirements", "r") as fd:
-    package_requirements = [line
-                            for line in fd.read().splitlines()
-                            if line.strip()]
-package_requirements.append("bmw-lobster-core>=%s" % version.LOBSTER_VERSION)
-with open("entrypoints", "r") as fd:
-    entrypoints = [line
-                   for line in fd.read().splitlines()
-                   if line.strip()]
+package_requirements = []
+entrypoints = []
+for path, _, files in os.walk(".."):
+    for filename in files:
+        if filename == "requirements":
+            with open(os.path.join(path, filename), "r") as fd:
+                package_requirements += [line
+                                         for line in fd.read().splitlines()
+                                         if line.strip()]
+        elif filename == "entrypoints":
+            with open(os.path.join(path, filename), "r") as fd:
+                entrypoints += [line
+                                for line in fd.read().splitlines()
+                                if line.strip()]
 
 # For the readme to look right on PyPI we need to translate any
 # relative links to absolute links to github.
@@ -45,17 +52,17 @@ project_urls = {
 }
 
 setuptools.setup(
-    name="bmw-lobster-tool-codebeamer",
+    name="bmw-lobster-monolithic",
     version=version.LOBSTER_VERSION,
     author="Bayerische Motoren Werke Aktiengesellschaft (BMW AG)",
     author_email="florian.schanda@bmw.de",
-    description="LOBSTER Tool for Codebeamer",
+    description="Monolithic package for all LOBSTER Tools",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=project_urls["Source Code"],
     project_urls=project_urls,
     license="GNU Affero General Public License v3",
-    packages=["lobster.tools.codebeamer"],
+    packages=setuptools.find_packages(),
     install_requires=package_requirements,
     python_requires=">=3.7, <4",
     classifiers=[
@@ -67,6 +74,6 @@ setuptools.setup(
         "Topic :: Software Development",
     ],
     entry_points={
-        "console_scripts": entrypoints,
+        "console_scripts": entrypoints
     },
 )

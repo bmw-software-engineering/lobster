@@ -17,6 +17,11 @@ LOBSTER packages as a convenience:
 * [bmw-lobster-tool-trlc](https://pypi.org/project/bmw-lobster-tool-trlc)
 * [miss_hit](https://pypi.org/project/miss_hit)
 
+Note there is also a monolithic wheel
+[bmw-lobster-monolithic](https://pypi.org/project/bmw-lobster-monolithic),
+which may be interesting for people who wish to integrate into bazel,
+as `py_wheel` cannot deal with overlapping installs.
+
 ## Copyright & License information
 
 The copyright holder of LOBSTER is the Bayerische Motoren Werke

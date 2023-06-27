@@ -5,7 +5,12 @@
 
 ### 0.9.8-dev
 
-
+* There is now also a monolithic wheel available
+  `bmw-lobster-monolithic` which installs the same things as
+  `bmw-lobster`. It is *not recommended* to use this package, unless
+  you want to integrate with bazel. The reason for this is that
+  `py_wheel` does not deal well with overlapping installs, and so
+  having a single wheel is preferable.
 
 ### 0.9.7
 

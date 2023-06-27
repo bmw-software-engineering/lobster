@@ -28,9 +28,15 @@ packages:
 	make -C packages/lobster-tool-json
 	make -C packages/lobster-tool-python
 	make -C packages/lobster-metapackage
+	make -C packages/lobster-monolithic
 	PYTHONPATH= \
 		pip3 install --prefix test_install \
-		packages/*/dist/*.whl trlc
+		packages/*/dist/*.whl
+	PYTHONPATH= \
+		pip3 install --prefix test_install_monolithic \
+		packages/lobster-monolithic/meta_dist/*.whl
+	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
+	diff -Naur test_install/bin test_install_monolithic/bin
 
 integration_tests: packages
 	(cd integration-tests/projects/basic; make)
@@ -39,6 +45,7 @@ test: integration_tests
 
 upload_main: packages
 	python3 -m twine upload --repository pypi packages/*/dist/*
+	python3 -m twine upload --repository pypi packages/*/meta_dist/*
 
 remove_dev:
 	python3 -m util.release

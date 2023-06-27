@@ -17,6 +17,10 @@ with open("requirements", "r") as fd:
                             for line in fd.read().splitlines()
                             if line.strip()]
 package_requirements.append("bmw-lobster-core>=%s" % version.LOBSTER_VERSION)
+with open("entrypoints", "r") as fd:
+    entrypoints = [line
+                   for line in fd.read().splitlines()
+                   if line.strip()]
 
 # For the readme to look right on PyPI we need to translate any
 # relative links to absolute links to github.
@@ -63,8 +67,6 @@ setuptools.setup(
         "Topic :: Software Development",
     ],
     entry_points={
-        "console_scripts": [
-            "lobster-trlc = lobster.tools.trlc.trlc:main",
-        ],
+        "console_scripts": entrypoints,
     },
 )
