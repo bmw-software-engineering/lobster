@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.9.8-dev
+### 0.9.8
 
 * There is now also a monolithic wheel available
   `bmw-lobster-monolithic` which installs the same things as
