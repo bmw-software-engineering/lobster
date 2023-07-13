@@ -26,6 +26,10 @@ import tempfile
 
 from lobster.html import htmldoc, assets
 from lobster.report import Report
+from lobster.location import (Void_Reference,
+                              File_Reference,
+                              Github_Reference,
+                              Codebeamer_Reference)
 from lobster.items import (Tracing_Status, Item,
                            Requirement, Implementation, Activity)
 
@@ -404,6 +408,7 @@ def write_html(fd, report):
         doc.add_line("<div>No traceability issues found.</div>")
 
     ### Report
+    file_heading = None
     doc.add_heading(2, "Detailed report", "detailed-report")
     items_by_level = {}
     for level in report.config:
@@ -423,10 +428,24 @@ def write_html(fd, report):
             doc.add_heading(4,
                             html.escape(level["name"]),
                             name_hash(level["name"]))
-
             if items_by_level[level["name"]]:
                 for item in sorted(items_by_level[level["name"]],
                                    key = lambda x: x.location.sorting_key()):
+                    if isinstance(item.location, Void_Reference):
+                        new_file_heading = "Unknown"
+                    elif isinstance(item.location, (File_Reference,
+                                                    Github_Reference)):
+                        new_file_heading = item.location.filename
+                    elif isinstance(item.location, Codebeamer_Reference):
+                        new_file_heading = "Codebeamer %s, tracker %u" % \
+                            (item.location.cb_root,
+                             item.location.tracker)
+                    else:  # pragma: no cover
+                        assert False
+                    if new_file_heading != file_heading:
+                        file_heading = new_file_heading
+                        doc.add_heading(5, html.escape(file_heading))
+
                     write_item_box_begin(doc, item)
                     if isinstance(item, Requirement) and item.status:
                         doc.add_line('<div class="attribute">')
