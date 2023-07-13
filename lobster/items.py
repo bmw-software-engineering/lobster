@@ -96,6 +96,7 @@ class Item(metaclass=ABCMeta):
         self.ref_up   = []
         self.ref_down = []
 
+        self.unresolved_references_cache = set()
         self.unresolved_references = []
 
         self.messages    = []
@@ -117,7 +118,11 @@ class Item(metaclass=ABCMeta):
 
     def add_tracing_target(self, target):
         assert isinstance(target, Tracing_Tag)
+        if target.key() in self.unresolved_references_cache:
+            return
+
         self.unresolved_references.append(target)
+        self.unresolved_references_cache.add(target.key())
 
     def perform_source_checks(self, source_info):
         assert isinstance(source_info, dict)
