@@ -5,7 +5,7 @@
 
 ### 0.9.9-dev
 
-
+* In the HTML report, items are now sorted in a meaningful way.
 
 ### 0.9.8
 

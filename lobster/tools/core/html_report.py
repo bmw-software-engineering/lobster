@@ -387,7 +387,8 @@ def write_html(fd, report):
     ### Issues
     doc.add_heading(2, "Issues", "issues")
     has_issues = False
-    for item in report.items.values():
+    for item in sorted(report.items.values(),
+                       key = lambda x: x.location.sorting_key()):
         if item.tracing_status not in (Tracing_Status.OK,
                                        Tracing_Status.JUSTIFIED):
             for message in item.messages:
@@ -424,7 +425,8 @@ def write_html(fd, report):
                             name_hash(level["name"]))
 
             if items_by_level[level["name"]]:
-                for item in items_by_level[level["name"]]:
+                for item in sorted(items_by_level[level["name"]],
+                                   key = lambda x: x.location.sorting_key()):
                     write_item_box_begin(doc, item)
                     if isinstance(item, Requirement) and item.status:
                         doc.add_line('<div class="attribute">')

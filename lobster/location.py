@@ -26,6 +26,10 @@ from lobster.exceptions import LOBSTER_Exception
 
 class Location(metaclass=ABCMeta):
     @abstractmethod
+    def sorting_key(self):
+        pass
+
+    @abstractmethod
     def to_string(self):
         pass
 
@@ -72,6 +76,9 @@ class Void_Reference(Location):
     def __init__(self):
         pass
 
+    def sorting_key(self):
+        return tuple()
+
     def to_string(self):
         return "<unknown location>"
 
@@ -99,6 +106,9 @@ class File_Reference(Location):
         self.filename = filename
         self.line     = line
         self.column   = column
+
+    def sorting_key(self):
+        return (self.filename, self.line, self.column)
 
     def to_string(self):
         rv = self.filename
@@ -146,6 +156,9 @@ class Github_Reference(Location):
         self.commit   = commit
         self.filename = filename
         self.line     = line
+
+    def sorting_key(self):
+        return (self.filename, self.line)
 
     def to_string(self):
         if self.line:
@@ -199,6 +212,9 @@ class Codebeamer_Reference(Location):
         self.item     = item
         self.version  = version
         self.name     = name
+
+    def sorting_key(self):
+        return (self.cb_root, self.tracker, self.item)
 
     def to_string(self):
         if self.name:
