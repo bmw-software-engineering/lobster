@@ -46,7 +46,6 @@ def main():
         print("error: '%s' exists and is not a file" % options.out)
         return 1
 
-
     report = Report()
 
     try:

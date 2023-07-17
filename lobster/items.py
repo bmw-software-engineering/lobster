@@ -27,7 +27,7 @@ from lobster.location import Location
 class Tracing_Tag:
     def __init__(self, namespace, tag, version=None):
         assert isinstance(namespace, str) and " " not in namespace
-        assert isinstance(tag, str) and " " not in tag
+        assert isinstance(tag, str)
         assert version is None or isinstance(version, (str, int))
         assert not isinstance(version, str) or version != "None"
 

@@ -166,8 +166,7 @@
           },
           "name": "req_xor",
           "messages": [
-            "tracing destination req 12345 has version 42 (expected 5)",
-            "missing reference to Code"
+            "tracing destination req 12345 has version 42 (expected 5)"
           ],
           "just_up": [],
           "just_down": [],
@@ -176,6 +175,7 @@
             "req 12345@5"
           ],
           "ref_down": [
+            "simulink exclusive_or/My_Exclusive_Or",
             "json example_0",
             "json example_1"
           ],
@@ -278,6 +278,68 @@
           "kind": "Function"
         },
         {
+          "tag": "matlab fcn",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/exclusive_or.slx",
+            "line": 1
+          },
+          "name": "fcn",
+          "messages": [
+            "missing up reference"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "MISSING",
+          "language": "MATLAB",
+          "kind": "Function"
+        },
+        {
+          "tag": "simulink exclusive_or",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/exclusive_or.slx",
+            "line": null
+          },
+          "name": "exclusive_or",
+          "messages": [
+            "missing up reference"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "MISSING",
+          "language": "Simulink",
+          "kind": "Block"
+        },
+        {
+          "tag": "simulink exclusive_or/My_Exclusive_Or",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/exclusive_or.slx",
+            "line": null
+          },
+          "name": "exclusive_or/My Exclusive Or",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req example.req_xor"
+          ],
+          "ref_down": [],
+          "tracing_status": "OK",
+          "language": "Simulink",
+          "kind": "Block"
+        },
+        {
           "tag": "python nor::trlc_reference",
           "location": {
             "kind": "github",
@@ -362,7 +424,7 @@
           "kind": "Class"
         }
       ],
-      "coverage": 50.0
+      "coverage": 45.45454545454545
     },
     {
       "name": "Verification Test",

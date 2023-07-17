@@ -7,6 +7,10 @@
 
 * In the HTML report, items are now sorted in a meaningful way.
 
+* A Tracing_Tag can now have spaces in the name, but still not in the
+  namespace. This fixes a few Simulink issues where spaces in names
+  are quite common.
+
 ### 0.9.8
 
 * There is now also a monolithic wheel available
