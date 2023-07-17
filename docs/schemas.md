@@ -135,7 +135,7 @@ Deprecated.
 The `TRACING_TAG` is right now a string that matches this regex:
 
 ```regex
-[a-z]+ [^ @]+(@[a-z0-9]+)?
+[a-z]+ .+
 ```
 
 The first letter group is a namespace for the tag, e.g. `req` (for all

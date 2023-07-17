@@ -27,8 +27,8 @@ gtests.lobster: foo.h foo.cpp test.cpp
 		--out="gtests.lobster"
 	sed -i s/$(THIS_TEST_ESCAPED)\\///g gtests.lobster
 
-mcode.lobster: nand.m nand_test.m
-	@mh_trace *.m \
+mcode.lobster: nand.m nand_test.m exclusive_or.slx
+	@mh_trace *.m *.slx \
 		--out-imp="mcode.lobster" \
 		--out-act="mtests.lobster"
 

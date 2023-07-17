@@ -108,7 +108,13 @@ class File_Reference(Location):
         self.column   = column
 
     def sorting_key(self):
-        return (self.filename, self.line, self.column)
+        if self.line is not None:
+            if self.column is not None:
+                return (self.filename, self.line, self.column)
+            else:
+                return (self.filename, self.line)
+        else:
+            return (self.filename,)
 
     def to_string(self):
         rv = self.filename
@@ -158,7 +164,10 @@ class Github_Reference(Location):
         self.line     = line
 
     def sorting_key(self):
-        return (self.filename, self.line)
+        if self.line is not None:
+            return (self.filename, self.line)
+        else:
+            return (self.filename,)
 
     def to_string(self):
         if self.line:
