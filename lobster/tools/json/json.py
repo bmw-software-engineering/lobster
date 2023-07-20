@@ -21,13 +21,14 @@ import sys
 import os
 import argparse
 import json
+from pprint import pprint
 
 from lobster.items import Tracing_Tag, Activity
 from lobster.io import lobster_write
 from lobster.location import File_Reference
 
 
-def fetch_values(filename, data, name):
+def fetch_values(filename, data, name, optional=False):
     chain = name.split(".")
 
     ptr = data
@@ -36,19 +37,26 @@ def fetch_values(filename, data, name):
         current.append(attr)
         if attr in ptr:
             ptr = ptr[attr]
+        elif optional:
+            return []
         else:
+            pprint(data)
             print("%s: error: object does not contain %s" %
                   (filename, ".".join(current)))
-            return None
+            sys.exit(1)
         if not isinstance(ptr, dict):
             print("%s: error: %s is not an object" %
                   (filename, ".".join("current")))
-            return None
+            sys.exit(1)
 
     if chain[-1] not in ptr:
-        print("%s: error: object does not contain attribute %s" %
-              (filename, chain[-1]))
-        return None
+        if optional:
+            return []
+        else:
+            pprint(data)
+            print("%s: error: object does not contain attribute %s" %
+                  (filename, chain[-1]))
+            sys.exit(1)
 
     ptr = ptr[chain[-1]]
     tags = []
@@ -59,15 +67,27 @@ def fetch_values(filename, data, name):
             elif isinstance(tag, int):
                 tags.append(str(tag))
             else:
-                print("%s: error: tag %s is neither string nor integer" %
-                      (filename, tag))
+                pprint(data)
+                print("%s: error: member %s is neither string nor integer" %
+                      (filename, name))
+                sys.exit(1)
     elif isinstance(ptr, str):
+        ptr = ptr.strip()
+        if not ptr:
+            pprint(data)
+            print("%s: error: member %s is the empty string" %
+                  (filename, name))
+            sys.exit(1)
         tags.append(ptr)
     elif isinstance(ptr, int):
         tags.append(str(ptr))
+    elif ptr is None:
+        pass
     else:
-        print("%s: error: tag %s is neither string nor integer" %
-              (filename, tag))
+        pprint(data)
+        print("%s: error: member %s is neither string nor integer" %
+              (filename, name))
+        sys.exit(1)
 
     return tags
 
@@ -75,6 +95,7 @@ def fetch_values(filename, data, name):
 def process_dict(db, filename, item_kind, data,
                  tag_attr,
                  name_attr,
+                 just_attr,
                  include_path_in_name,
                  sequence):
     assert isinstance(sequence, int) or sequence is None
@@ -119,9 +140,16 @@ def process_dict(db, filename, item_kind, data,
     if short_name is not None:
         db[name].name = short_name
 
+    if just_attr is not None:
+        justifications = fetch_values(filename, data, just_attr,
+                                      optional = True)
+        if justifications:
+            for just in justifications:
+                db[name].just_up.append(just)
+
 
 def process(db, filename, item_kind,
-            tag_attr, name_attr, include_path_in_name):
+            tag_attr, name_attr, just_attr, include_path_in_name):
     assert isinstance(db, dict)
     assert os.path.isfile(filename)
     assert isinstance(tag_attr, str)
@@ -135,6 +163,7 @@ def process(db, filename, item_kind,
         process_dict(db, filename, item_kind, data,
                      tag_attr,
                      name_attr,
+                     just_attr,
                      include_path_in_name,
                      None)
     elif isinstance(data, list):
@@ -142,6 +171,7 @@ def process(db, filename, item_kind,
             process_dict(db, filename, item_kind, item,
                          tag_attr,
                          name_attr,
+                         just_attr,
                          include_path_in_name,
                          n)
     else:
@@ -157,6 +187,8 @@ def main():
                     required=True)
     ap.add_argument("--name-attribute",
                     help="attribute indicating the name of the activity")
+    ap.add_argument("--justification-attribute",
+                    help="attribute indicating why this item is not linked")
     ap.add_argument("--include-path-in-name",
                     help="when synthesising names, include the total path",
                     default=False,
@@ -180,6 +212,7 @@ def main():
             process(db, path, options.item_kind,
                     options.tag_attribute,
                     options.name_attribute,
+                    options.justification_attribute,
                     options.include_path_in_name)
         elif os.path.isdir(path):
             for prefix, _, files in os.walk(path):
@@ -190,6 +223,7 @@ def main():
                                 options.item_kind,
                                 options.tag_attribute,
                                 options.name_attribute,
+                                options.justification_attribute,
                                 options.include_path_in_name)
         else:
             ap.error("%s is not a file or directory" % path)

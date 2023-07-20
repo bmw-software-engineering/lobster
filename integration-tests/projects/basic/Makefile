@@ -45,4 +45,5 @@ json.lobster: example.json
 	@lobster-json example.json \
 		--name-attribute "name" \
 		--tag-attribute "tags" \
+		--justification-attribute "justification" \
 		--out="json.lobster"

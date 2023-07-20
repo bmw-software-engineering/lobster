@@ -278,7 +278,7 @@
           "kind": "Function"
         },
         {
-          "tag": "matlab fcn",
+          "tag": "matlab exclusive_or/MATLAB Function",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -286,7 +286,7 @@
             "file": "integration-tests/projects/basic/exclusive_or.slx",
             "line": 1
           },
-          "name": "fcn",
+          "name": "exclusive_or/MATLAB Function",
           "messages": [
             "missing up reference"
           ],
@@ -518,6 +518,27 @@
           ],
           "ref_down": [],
           "tracing_status": "OK",
+          "framework": "JSON",
+          "kind": "test",
+          "status": null
+        },
+        {
+          "tag": "json example_2",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/example.json",
+            "line": null
+          },
+          "name": "example_2",
+          "messages": [],
+          "just_up": [
+            "Unlinked on purpose"
+          ],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "JUSTIFIED",
           "framework": "JSON",
           "kind": "test",
           "status": null
