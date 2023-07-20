@@ -101,17 +101,33 @@ class Config_Parser(Parser_Base):
         for tag_namespace, tag_field in config["tag_fields"]:
             if item_data[tag_field.name] is None:
                 continue
-            if isinstance(tag_field.n_typ, ast.Array_Type):
+            elif isinstance(tag_field.n_typ, ast.Array_Type):
                 for element in item_data[tag_field.name]:
                     text = self.generate_text(tag_field.n_typ.element_type,
                                               element)
                     tag = Tracing_Tag.from_text(tag_namespace, text)
                     rv.add_tracing_target(tag)
             else:
-                text = self.generate_text(tag_field.n_typ.element_type,
+                text = self.generate_text(tag_field.n_typ,
                                           item_data[tag_field.name])
                 tag = Tracing_Tag.from_text(tag_namespace, text)
                 rv.add_tracing_target(tag)
+
+        for lst, name in ((rv.just_up, "just_up"),
+                          (rv.just_down, "just_down"),
+                          (rv.just_global, "just_global")):
+            for just_field in config[name + "_fields"]:
+                if item_data[just_field.name] is None:
+                    continue
+                elif isinstance(just_field.n_typ, ast.Array_Type):
+                    for element in item_data[just_field.name]:
+                        text = self.generate_text(just_field.n_typ.element_type,
+                                                  element)
+                        lst.append(text)
+                else:
+                    text = self.generate_text(just_field.n_typ,
+                                              item_data[just_field.name])
+                    lst.append(text)
 
         return rv
 
@@ -166,6 +182,9 @@ class Config_Parser(Parser_Base):
                 "trace"              : False,
                 "description_fields" : [],
                 "tag_fields"         : [],
+                "just_up_fields"     : [],
+                "just_down_fields"   : [],
+                "just_global_fields" : [],
             }
 
             self.build_config(n_typ, context)
@@ -177,9 +196,14 @@ class Config_Parser(Parser_Base):
         self.config[n_typ] = config
         if n_typ in self.entries:
             self.config[n_typ]["trace"] = True
-            for new_field in self.entries[n_typ]["description_fields"]:
-                if new_field not in self.config[n_typ]["description_fields"]:
-                    self.config[n_typ]["description_fields"].append(new_field)
+            for field in ("description",
+                          "just_up",
+                          "just_down",
+                          "just_global"):
+                ctx_name = "%s_fields" % field
+                for new_field in self.entries[n_typ][ctx_name]:
+                    if new_field not in self.config[n_typ][ctx_name]:
+                        self.config[n_typ][ctx_name].append(new_field)
             for tag_namespace, tag_field in self.entries[n_typ]["tag_fields"]:
                 self.config[n_typ]["tag_fields"].append((tag_namespace,
                                                          tag_field))
@@ -190,6 +214,15 @@ class Config_Parser(Parser_Base):
 
                 "description_fields" :
                 copy(self.config[n_typ]["description_fields"]),
+
+                "just_up_fields" :
+                copy(self.config[n_typ]["just_up_fields"]),
+
+                "just_down_fields" :
+                copy(self.config[n_typ]["just_down_fields"]),
+
+                "just_global_fields" :
+                copy(self.config[n_typ]["just_global_fields"]),
 
                 "tag_fields" :
                 copy(self.config[n_typ]["tag_fields"]),
@@ -206,20 +239,27 @@ class Config_Parser(Parser_Base):
             self.entries[n_typ] = {
                 "description_fields" : [],
                 "tag_fields"         : [],
+                "just_up_fields"     : [],
+                "just_down_fields"   : [],
+                "just_global_fields" : [],
             }
 
         self.match("C_BRA")
 
         while self.peek("IDENTIFIER"):
             self.match("IDENTIFIER")
-            if self.ct.value == "description":
+            if self.ct.value in ("description",
+                                 "just_up",
+                                 "just_down",
+                                 "just_global"):
+                field = self.ct.value
                 self.match("ASSIGN")
                 self.match("IDENTIFIER")
                 n_comp = n_typ.components.lookup(
                     mh                = self.lexer.mh,
                     referencing_token = self.ct,
                     required_subclass = ast.Composite_Component)
-                self.entries[n_typ]["description_fields"].append(n_comp)
+                self.entries[n_typ]["%s_fields" % field].append(n_comp)
             elif self.ct.value == "tags":
                 if self.peek("STRING"):
                     self.match("STRING")
@@ -235,8 +275,9 @@ class Config_Parser(Parser_Base):
                 self.entries[n_typ]["tag_fields"].append((tag_namespace,
                                                           n_comp))
             else:
-                self.lexer.mh.error(self.ct.location,
-                                    "expected description|tags")
+                self.lexer.mh.error(
+                    self.ct.location,
+                    "expected description|tags|just_up|just_down|just_global")
 
         self.match("C_KET")
 
