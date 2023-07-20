@@ -71,13 +71,37 @@
           "status": null
         },
         {
+          "tag": "req example.req_implies",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/potato.trlc",
+            "line": 27
+          },
+          "name": "req_implies",
+          "messages": [],
+          "just_up": [
+            "not needed"
+          ],
+          "just_down": [
+            "also not needed"
+          ],
+          "just_global": [],
+          "tracing_status": "JUSTIFIED",
+          "framework": "TRLC",
+          "kind": "Requirement",
+          "text": "provide a utility function for logical implication",
+          "status": null
+        },
+        {
           "tag": "req example.req_important",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/basic/potato.trlc",
-            "line": 32
+            "line": 39
           },
           "name": "req_important",
           "messages": [
@@ -186,7 +210,7 @@
           "status": null
         }
       ],
-      "coverage": 40.0
+      "coverage": 50.0
     },
     {
       "name": "Code",

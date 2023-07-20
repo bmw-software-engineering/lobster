@@ -24,6 +24,13 @@ Requirement req_nor
    text = "provide a utility function for logical negated or"
 }
 
+Requirement req_implies
+{
+  text = "provide a utility function for logical implication"
+  just_up = "not needed"
+  just_down = "also not needed"
+}
+
 Information potato
 {
    text = "this is just here for fun"

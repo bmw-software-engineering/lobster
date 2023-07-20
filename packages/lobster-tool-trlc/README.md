@@ -66,6 +66,40 @@ fully manages to apply. When a value is `null`, then and it'd be used
 not apply and we move to the next, and so on. When none apply an error
 is created.
 
+If you need to justify requirements not being linked or implemented,
+then you can also defined up to three extra fields (using `just_up`,
+`just_down`, and `just_global`) that should carry this
+information. For example:
+
+```trlc
+type Requirement {
+   text String
+   unimplemented_justification optional String
+}
+```
+
+With this config file:
+
+```plain
+example.Requirement {
+   description = text
+   just_down   = unimplemented_justification
+}
+```
+
+The meaning of "up" is along the usual direction of tracing tags. For
+example putting this in a software requirement means it is not linked
+to a system requirement. The meaning of "down" is against the usual
+direction of tracing tags. For example putting this in a software
+requirement means it is either not implemented or not tested.
+
+As you can see the down justification is much more imprecise than an
+up justification. You should only use them if there is no other way to
+attach this justification on the actual offending object.
+
+Finally the "global" justification is a catch all: it just means no
+tracing policy will be validated at all when considering this object.
+
 ## Tools
 
 * `lobster-trlc`: Extrat requirements from TRLC.

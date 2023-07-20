@@ -5,7 +5,10 @@
 
 ### 0.9.10-dev
 
+* Expose justification mechanism for JSON files (up only).
 
+* Expose justification mechanism for TRLC files (up, down, and
+  global).
 
 ### 0.9.9
 

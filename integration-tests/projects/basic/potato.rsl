@@ -8,7 +8,9 @@ tuple Codebeamer_Id {
 
 type Requirement
 {
-  text String
+  text               String
+  just_up   optional String
+  just_down optional String
 }
 
 type Information
