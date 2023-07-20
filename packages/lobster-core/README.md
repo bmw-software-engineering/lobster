@@ -23,7 +23,8 @@ with additional tools:
 
 The copyright holder of LOBSTER is the Bayerische Motoren Werke
 Aktiengesellschaft (BMW AG), and LOBSTER is published under the [GNU
-Affero General Public License, Version 3](../LICENSE.md).
+Affero General Public License, Version
+3](https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md).
 
 Several LOBSTER tools rely on other tools to process data and extract
 tracing tags. These tools are run-time (but not link or program)
