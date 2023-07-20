@@ -32,7 +32,8 @@ imported. However we do plan to also import item text eventually.
 
 The copyright holder of LOBSTER is the Bayerische Motoren Werke
 Aktiengesellschaft (BMW AG), and LOBSTER is published under the [GNU
-Affero General Public License, Version 3](../LICENSE.md).
+Affero General Public License, Version
+3](https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md).
 
 This tool has no actual dependency on, or with, Codebeamer. It just
 talks the API as described here: https://codebeamer.com/cb/wiki/117612

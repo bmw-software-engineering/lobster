@@ -15,4 +15,5 @@ be interesting for people who wish to integrate into bazel, as
 
 The copyright holder of LOBSTER is the Bayerische Motoren Werke
 Aktiengesellschaft (BMW AG), and LOBSTER is published under the [GNU
-Affero General Public License, Version 3](../LICENSE.md).
+Affero General Public License, Version
+3](https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md).
