@@ -1,3 +1,4 @@
+SYSTEM_PYTHONPATH:=$(PYTHONPATH)
 export LOBSTER_ROOT=$(PWD)
 export PYTHONPATH=$(LOBSTER_ROOT)
 
@@ -7,7 +8,8 @@ lobster/html/assets.py: $(ASSETS) util/mkassets.py
 	util/mkassets.py lobster/html/assets.py $(ASSETS)
 
 lint: style
-	@python3 -m pylint --rcfile=pylint3.cfg \
+	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
+	python3 -m pylint --rcfile=pylint3.cfg \
 		--reports=no \
 		--ignore=assets.py \
 		lobster
