@@ -48,8 +48,8 @@ Here we have a list of three tests. You can configure the
 ```bash
 $ lobster-json --name-attribute "name" \
                --tag-attribute "tags" \
-			   --justification-attribute "justification" \
-			   FILENAME
+               --justification-attribute "justification" \
+               FILENAME
 ```
 
 The name attribute is optional. If your test files do not contain
@@ -67,13 +67,13 @@ your test objects instead look like this:
 ```json
 [
     {"meta" : {"name" : "XOR Test 1",
-	           "asil" : "B",
-			   "req"  : "example.req_xor"},
-	 "test" : {"inputs" : [false, false],
-	           "expect" : false}
-	},
+               "asil" : "B",
+               "req"  : "example.req_xor"},
+     "test" : {"inputs" : [false, false],
+               "expect" : false}
+    },
 
-	...
+    ...
 ```
 
 Then you can get to the data like so:
@@ -81,8 +81,8 @@ Then you can get to the data like so:
 ```bash
 $ lobster-json --name-attribute "meta.name" \
                --tag-attribute "meta.req" \
-			   --justification-attribute "meta.just" \
-			   FILENAME
+               --justification-attribute "meta.just" \
+               FILENAME
 ```
 
 Note: This tool is pretty limited. For the obvious cases it works
