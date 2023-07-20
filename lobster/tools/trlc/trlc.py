@@ -22,7 +22,6 @@ import re
 import argparse
 
 from copy import copy
-from pprint import pprint
 
 from trlc.trlc import Source_Manager
 from trlc.lexer import TRLC_Lexer, Token
@@ -121,8 +120,9 @@ class Config_Parser(Parser_Base):
                     continue
                 elif isinstance(just_field.n_typ, ast.Array_Type):
                     for element in item_data[just_field.name]:
-                        text = self.generate_text(just_field.n_typ.element_type,
-                                                  element)
+                        text = self.generate_text(
+                            just_field.n_typ.element_type,
+                            element)
                         lst.append(text)
                 else:
                     text = self.generate_text(just_field.n_typ,
