@@ -83,7 +83,7 @@ class Python_Traceable_Node:
 
     def fqn(self):
         if self.parent:
-            rv = self.parent.fqn() + "::"
+            rv = self.parent.fqn() + "."
         else:
             rv = ""
         rv += self.name
@@ -139,7 +139,10 @@ class Python_Function(Python_Traceable_Node):
         node.children.append(self)
         self.parent = node
         if isinstance(node, Python_Class):
-            self.kind = "Method"
+            if self.name == "__init__":
+                self.kind = "Constructor"
+            else:
+                self.kind = "Method"
 
     def to_lobster(self, items):
         assert isinstance(items, list)
@@ -149,7 +152,7 @@ class Python_Function(Python_Traceable_Node):
                                 location = self.location,
                                 language = "Python",
                                 kind     = self.kind,
-                                name     = self.name)
+                                name     = self.fqn())
         for tag in self.tags:
             l_item.add_tracing_target(tag)
         l_item.just_up += self.just
