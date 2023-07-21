@@ -84,7 +84,8 @@ def main():
 
     for item in report.items.values():
         if isinstance(item.location, File_Reference):
-            assert os.path.isfile(item.location.filename)
+            assert os.path.isdir(item.location.filename) or \
+                os.path.isfile(item.location.filename)
             loc = Github_Reference(
                 gh_root  = gh_root,
                 commit   = options.commit,
@@ -93,6 +94,7 @@ def main():
                     repo_root),
                 line     = item.location.line)
             item.location = loc
+
 
     report.write_report(options.lobster_report)
     print("LOBSTER report %s changed to use online references" %
