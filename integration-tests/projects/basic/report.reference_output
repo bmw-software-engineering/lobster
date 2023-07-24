@@ -170,8 +170,8 @@
           "ref_up": [],
           "ref_down": [
             "req example.req_important",
-            "python nor::Example::helper_function",
-            "python nor::Example::nor"
+            "python nor.Example.helper_function",
+            "python nor.Example.nor"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -364,7 +364,7 @@
           "kind": "Block"
         },
         {
-          "tag": "python nor::trlc_reference",
+          "tag": "python nor.trlc_reference",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -372,7 +372,7 @@
             "file": "integration-tests/projects/basic/nor.py",
             "line": 5
           },
-          "name": "trlc_reference",
+          "name": "nor.trlc_reference",
           "messages": [
             "missing up reference"
           ],
@@ -384,7 +384,7 @@
           "kind": "Function"
         },
         {
-          "tag": "python nor::Example::helper_function",
+          "tag": "python nor.Example.helper_function",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -392,7 +392,7 @@
             "file": "integration-tests/projects/basic/nor.py",
             "line": 13
           },
-          "name": "helper_function",
+          "name": "nor.Example.helper_function",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -406,7 +406,7 @@
           "kind": "Method"
         },
         {
-          "tag": "python nor::Example::nor",
+          "tag": "python nor.Example.nor",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -414,7 +414,7 @@
             "file": "integration-tests/projects/basic/nor.py",
             "line": 17
           },
-          "name": "nor",
+          "name": "nor.Example.nor",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -428,7 +428,7 @@
           "kind": "Method"
         },
         {
-          "tag": "python nor::Example",
+          "tag": "python nor.Example",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
