@@ -89,26 +89,6 @@ blockquote {
   padding-left: 0.4em;
   margin-left: 0.5em;
 }
-.progress-bar {
-  width: 20em;
-  background-color: #aaa;
-  border-left: 1px solid #888;
-  border-top: 1px solid #888;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  padding: 0;
-  margin: 0.25em;
-  border-radius: 5px;
-}
-.progress-bar .bar {
-  background-color: #009ada;
-  color: white;
-  margin: 0;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-  text-align: center;
-  border-radius: 5px;
-}
 #navbar {
   overflow: hidden;
   background-color: #009ada;
@@ -223,48 +203,58 @@ blockquote {
 <div class="column">
 <h3>Coverage</h3>
 <table>
-<thead><tr><td>Category</td><td>Coverage</td></tr><thead>
+<thead><tr>
+<td>Category</td>
+<td>Ratio</td>
+<td>Coverage</td>
+<td>OK Items</td>
+<td>Total Items</td>
+</tr><thead>
 <tbody>
 </tbody>
 <tr>
 <td><a href="#sec-419cfc02b324dc7d8faefa90ed608fb0">System Requirements</a></td>
+<td>0.0%</td>
 <td>
-<div class="progress-bar">
-<div class="bar" style="width:0.000000%;">
-0.0%
-</div>
-</div>
+<progress value="0" max="1">
+0.00%
+</progress>
 </td>
+<td align="right">0</td>
+<td align="right">1</td>
 </tr>
 <tr>
 <td><a href="#sec-9d273bd32c1fceb91b7d6a4d40e98bdd">Software Requirements</a></td>
+<td>50.0%</td>
 <td>
-<div class="progress-bar">
-<div class="bar" style="width:50.000000%;">
-50.0%
-</div>
-</div>
+<progress value="3" max="6">
+50.00%
+</progress>
 </td>
+<td align="right">3</td>
+<td align="right">6</td>
 </tr>
 <tr>
 <td><a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a></td>
+<td>45.5%</td>
 <td>
-<div class="progress-bar">
-<div class="bar" style="width:45.454545%;">
-45.5%
-</div>
-</div>
+<progress value="5" max="11">
+45.45%
+</progress>
 </td>
+<td align="right">5</td>
+<td align="right">11</td>
 </tr>
 <tr>
 <td><a href="#sec-840c3e13412933b0e3f7394f4c7fecb0">Verification Test</a></td>
+<td>100.0%</td>
 <td>
-<div class="progress-bar">
-<div class="bar" style="width:100.000000%;">
-100.0%
-</div>
-</div>
+<progress value="5" max="5">
+100.00%
+</progress>
 </td>
+<td align="right">5</td>
+<td align="right">5</td>
 </tr>
 </table>
 </div>
@@ -343,8 +333,8 @@ blockquote {
 <li>C/C++ Function <a href='#item-a59e5952bd9a2f7bb8592b7645968e08f73a9037'>exclusive_or</a>: missing up reference</li>
 <li>C/C++ Function <a href='#item-1fcf699056a4c10fafba408751855a62d76a2fc2'>potato</a>: unknown tracing target req example.doesnt_exist</li>
 <li>C/C++ Function <a href='#item-1fcf699056a4c10fafba408751855a62d76a2fc2'>potato</a>: missing up reference</li>
-<li>Python Function <a href='#item-6b363276d3f1928f414d7e1ba79ece5380f6e213'>trlc_reference</a>: missing up reference</li>
-<li>Python Class <a href='#item-88811c4730a28b4a9f52751d7339361c647c3743'>Example</a>: missing up reference</li>
+<li>Python Function <a href='#item-716e7482019e79473ec2b20555b90c6183ef62a2'>nor.trlc_reference</a>: missing up reference</li>
+<li>Python Class <a href='#item-40f9403e943ba8922eff8382a64552eaee96b05d'>Example</a>: missing up reference</li>
 <li>TRLC Tagged_requirement <a href='#item-5c0948f96e743a0c3ab3c14ecac0f5d10609f324'>req_xor</a>: tracing destination req 12345 has version 42 (expected 5)</li>
 <li>TRLC Requirement <a href='#item-714c0c22dee57a69c9425cff0c0bd4ca9ebe5d1f'>req_nor</a>: missing up reference</li>
 <li>TRLC Requirement <a href='#item-714c0c22dee57a69c9425cff0c0bd4ca9ebe5d1f'>req_nor</a>: missing reference to Verification Test</li>
@@ -486,8 +476,8 @@ extra_text: potato</blockquote>
 <div>Traces to:
 <ul>
 <li>TRLC Linked_requirement <a href='#item-fbfa01aa359da14836c3fe53cd7363bfb1ffb782'>req_important</a></li>
-<li>Python Method <a href='#item-c94e14bbad15014f8413564fe5bfd2df792ed193'>helper_function</a></li>
-<li>Python Method <a href='#item-b08d4d8a64e8a80426a1d6b9193418bdd9394eef'>nor</a></li>
+<li>Python Method <a href='#item-44aca84976176f453e178bdd3323e7e9813dcebe'>nor.Example.helper_function</a></li>
+<li>Python Method <a href='#item-4fe151cfc168f08ff6bc308291ecbee34309b652'>nor.Example.nor</a></li>
 </ul>
 </div>
 <div>Issues:
@@ -664,9 +654,9 @@ extra_text: potato</blockquote>
 </div>
 <!-- end item -->
 <h5>integration-tests/projects/basic/nor.py</h5>
-<!-- begin item python nor::trlc_reference -->
-<div class="item-missing" id="item-6b363276d3f1928f414d7e1ba79ece5380f6e213">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Python Function trlc_reference</div>
+<!-- begin item python nor.trlc_reference -->
+<div class="item-missing" id="item-716e7482019e79473ec2b20555b90c6183ef62a2">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Python Function nor.trlc_reference</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
 <a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/nor.py#L5" target="_blank">integration-tests/projects/basic/nor.py:5</a>
@@ -680,8 +670,8 @@ extra_text: potato</blockquote>
 </div>
 </div>
 <!-- end item -->
-<!-- begin item python nor::Example -->
-<div class="item-missing" id="item-88811c4730a28b4a9f52751d7339361c647c3743">
+<!-- begin item python nor.Example -->
+<div class="item-missing" id="item-40f9403e943ba8922eff8382a64552eaee96b05d">
 <div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Python Class Example</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
@@ -696,9 +686,9 @@ extra_text: potato</blockquote>
 </div>
 </div>
 <!-- end item -->
-<!-- begin item python nor::Example::helper_function -->
-<div class="item-ok" id="item-c94e14bbad15014f8413564fe5bfd2df792ed193">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> Python Method helper_function</div>
+<!-- begin item python nor.Example.helper_function -->
+<div class="item-ok" id="item-44aca84976176f453e178bdd3323e7e9813dcebe">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> Python Method nor.Example.helper_function</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
 <a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/nor.py#L13" target="_blank">integration-tests/projects/basic/nor.py:13</a>
@@ -712,9 +702,9 @@ extra_text: potato</blockquote>
 </div>
 </div>
 <!-- end item -->
-<!-- begin item python nor::Example::nor -->
-<div class="item-ok" id="item-b08d4d8a64e8a80426a1d6b9193418bdd9394eef">
-<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> Python Method nor</div>
+<!-- begin item python nor.Example.nor -->
+<div class="item-ok" id="item-4fe151cfc168f08ff6bc308291ecbee34309b652">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> Python Method nor.Example.nor</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
 <a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/nor.py#L17" target="_blank">integration-tests/projects/basic/nor.py:17</a>

@@ -161,23 +161,30 @@ def create_item_coverage(doc, report):
     assert isinstance(report, Report)
 
     doc.add_line("<table>")
-    doc.add_line("<thead><tr><td>Category</td><td>Coverage</td></tr><thead>")
+    doc.add_line("<thead><tr>")
+    doc.add_line("<td>Category</td>")
+    doc.add_line("<td>Ratio</td>")
+    doc.add_line("<td>Coverage</td>")
+    doc.add_line("<td>OK Items</td>")
+    doc.add_line("<td>Total Items</td>")
+    doc.add_line("</tr><thead>")
     doc.add_line("<tbody>")
     doc.add_line("</tbody>")
     for level in report.config.values():
-        coverage = report.coverage[level["name"]]["coverage"]
+        data = report.coverage[level["name"]]
         doc.add_line("<tr>")
         doc.add_line('<td><a href="#sec-%s">%s</a></td>' %
                      (name_hash(level["name"]),
                       html.escape(level["name"])))
+        doc.add_line("<td>%.1f%%</td>" % data["coverage"])
         doc.add_line("<td>")
-        doc.add_line('<div class="progress-bar">')
-        doc.add_line('<div class="bar" style="width:%f%%;">' %
-                     coverage)
-        doc.add_line("%.1f%%" % coverage)
-        doc.add_line("</div>")
-        doc.add_line("</div>")
+        doc.add_line('<progress value="%u" max="%u">' %
+                     (data["ok"], data["items"]))
+        doc.add_line("%.2f%%" % data["coverage"])
+        doc.add_line('</progress>')
         doc.add_line("</td>")
+        doc.add_line('<td align="right">%u</td>' % data["ok"])
+        doc.add_line('<td align="right">%u</td>' % data["items"])
         doc.add_line("</tr>")
     doc.add_line("</table>")
 
@@ -332,28 +339,6 @@ def write_html(fd, report):
         "border-left"  : "0.2em solid gray",
         "padding-left" : "0.4em",
         "margin-left"  : "0.5em",
-    }
-
-    # Progress bars
-    doc.style[".progress-bar"] = {
-        "width"            : "20em",
-        "background-color" : "#aaa",
-        "border-left"      : "1px solid #888",
-        "border-top"       : "1px solid #888",
-        "border-right"     : "1px solid #ccc",
-        "border-bottom"    : "1px solid #ccc",
-        "padding"          : "0",
-        "margin"           : "0.25em",
-        "border-radius"    : "5px",
-    }
-    doc.style[".progress-bar .bar"] = {
-        "background-color" : doc.primary_color,
-        "color"            : "white",
-        "margin"           : "0",
-        "padding-top"      : "0.2em",
-        "padding-bottom"   : "0.2em",
-        "text-align"       : "center",
-        "border-radius"    : "5px",
     }
 
     ### Menu & Navigation
