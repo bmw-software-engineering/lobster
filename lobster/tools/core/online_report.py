@@ -95,7 +95,6 @@ def main():
                 line     = item.location.line)
             item.location = loc
 
-
     report.write_report(options.lobster_report)
     print("LOBSTER report %s changed to use online references" %
           options.lobster_report)
