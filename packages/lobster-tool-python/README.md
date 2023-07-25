@@ -12,6 +12,43 @@ code.
 
 * `lobster-python`: Extrat requirements from Python3 code
 
+## Usage
+
+This tool supports both Python code and PyUnit unit tests.
+
+For either code or tests you can embedd tracing tags like this:
+
+```python
+   def potato(self):
+      # lobster-trace: something.example
+	  return "potato"
+```
+
+You can add justifications as well:
+
+```python
+   def potato(self):
+      # lobster-exclude: a very good reason is here
+	  return "potato"
+```
+
+
+For normal code the usage is:
+
+```bash
+lobster-python FILES_OR_DIRS
+```
+
+For pyunit the usage is:
+
+```bash
+lobster-python --activity FILES_OR_DIRS
+```
+
+For pyunit the tool automatically ignore any class function that is
+not explicitly a test (i.e. you don't need to manually exclude your
+setup or tear down code, only individual tests will be included).
+
 ## Copyright & License information
 
 The copyright holder of LOBSTER is the Bayerische Motoren Werke

@@ -12,6 +12,8 @@
 
 * Improve stats display in HTML report.
 
+* The `lobster-python` tool now has special support for PyUnit tests.
+
 ### 0.9.9
 
 * In the HTML report, items are now sorted in a meaningful way.

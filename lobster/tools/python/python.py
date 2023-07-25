@@ -26,7 +26,7 @@ import functools
 from libcst.metadata import PositionProvider
 import libcst as cst
 
-from lobster.items import Tracing_Tag, Implementation
+from lobster.items import Tracing_Tag, Implementation, Activity
 from lobster.location import File_Reference
 from lobster.io import lobster_write
 
@@ -77,7 +77,8 @@ class Python_Traceable_Node:
                 "just"     : self.just,
                 "children" : [x.to_json() for x in self.children]}
 
-    def to_lobster(self, items):
+    def to_lobster(self, schema, items):
+        assert schema is Implementation or schema is Activity
         assert isinstance(items, list)
         assert False
 
@@ -97,17 +98,19 @@ class Python_Module(Python_Traceable_Node):
     def __init__(self, location, name):
         super().__init__(location, name, "Module")
 
-    def to_lobster(self, items):
+    def to_lobster(self, schema, items):
+        assert schema is Implementation or schema is Activity
         assert isinstance(items, list)
         for node in self.children:
-            node.to_lobster(items)
+            node.to_lobster(schema, items)
 
 
 class Python_Class(Python_Traceable_Node):
     def __init__(self, location, name):
         super().__init__(location, name, "Class")
 
-    def to_lobster(self, items):
+    def to_lobster(self, schema, items):
+        assert schema is Implementation or schema is Activity
         assert isinstance(items, list)
         # If all functions in the class have a tag, then this class
         # doesn't require tracing, as everything in it is. First lets
@@ -115,15 +118,19 @@ class Python_Class(Python_Traceable_Node):
         # TODO
         class_contents = []
         for node in self.children:
-            node.to_lobster(class_contents)
+            node.to_lobster(schema, class_contents)
         items += class_contents
 
-        l_item = Implementation(tag      = Tracing_Tag("python",
-                                                       self.fqn()),
-                                location = self.location,
-                                language = "Python",
-                                kind     = self.kind,
-                                name     = self.name)
+        if schema is Implementation:
+            l_item = Implementation(tag      = Tracing_Tag("python",
+                                                           self.fqn()),
+                                    location = self.location,
+                                    language = "Python",
+                                    kind     = self.kind,
+                                    name     = self.name)
+        else:
+            return
+
         for tag in self.tags:
             l_item.add_tracing_target(tag)
         l_item.just_up += self.just
@@ -144,15 +151,26 @@ class Python_Function(Python_Traceable_Node):
             else:
                 self.kind = "Method"
 
-    def to_lobster(self, items):
+    def to_lobster(self, schema, items):
+        assert schema is Implementation or schema is Activity
         assert isinstance(items, list)
 
-        l_item = Implementation(tag      = Tracing_Tag("python",
-                                                       self.fqn()),
-                                location = self.location,
-                                language = "Python",
-                                kind     = self.kind,
-                                name     = self.fqn())
+        if schema is Implementation:
+            l_item = Implementation(tag      = Tracing_Tag("python",
+                                                           self.fqn()),
+                                    location = self.location,
+                                    language = "Python",
+                                    kind     = self.kind,
+                                    name     = self.fqn())
+        else:
+            if not self.name.startswith("test"):
+                return
+            l_item = Activity(tag = Tracing_Tag("pyunit",
+                                                self.fqn()),
+                              location  = self.location,
+                              framework = "PyUnit",
+                              kind      = "Test")
+
         for tag in self.tags:
             l_item.add_tracing_target(tag)
         l_item.just_up += self.just
@@ -162,7 +180,7 @@ class Python_Function(Python_Traceable_Node):
         # appear.
         nested_items = []
         for node in self.children:
-            node.to_lobster(nested_items)
+            node.to_lobster(schema, nested_items)
         for item in nested_items:
             # TODO: Warn about useless nested justifications
             # Merge tracing tags
@@ -184,6 +202,7 @@ class Lobster_Visitor(cst.CSTVisitor):
             File_Reference(file_name),
             os.path.basename(file_name).replace(".py", ""))
 
+        self.activity     = options["activity"]
         self.current_node = None
         self.stack        = [self.module]
 
@@ -269,7 +288,10 @@ def process_file(file_name, options):
     ast.visit(visitor)
 
     items = []
-    visitor.module.to_lobster(items)
+    if options["activity"]:
+        visitor.module.to_lobster(Activity, items)
+    else:
+        visitor.module.to_lobster(Implementation, items)
 
     if options["exclude_untagged"]:
         items = [item for item in items if item.unresolved_references]
@@ -282,6 +304,11 @@ def main():
     ap.add_argument("files",
                     nargs="+",
                     metavar="FILE|DIR")
+    ap.add_argument("--activity",
+                    action="store_true",
+                    default=False,
+                    help=("generate activity traces (tests) instead of"
+                          " an implementation trace"))
     ap.add_argument("--out",
                     default=None)
     ap.add_argument("--single",
@@ -318,6 +345,7 @@ def main():
             ap.error("%s is not a file or directory" % item)
 
     context = {
+        "activity"         : options.activity,
         "decorator"        : None,
         "dec_arg_name"     : None,
         "dec_arg_version"  : None,
@@ -344,14 +372,19 @@ def main():
             for fragment in pool.imap_unordered(pfun, file_list):
                 items += fragment
 
+    if options.activity:
+        schema = Activity
+    else:
+        schema = Implementation
+
     if options.out:
         with open(options.out, "w", encoding="UTF-8") as fd:
-            lobster_write(fd, Implementation, "lobster_python", items)
+            lobster_write(fd, schema, "lobster_python", items)
             fd.write("\n")
         print("Written output for %u items to %s" % (len(items),
                                                      options.out))
     else:
-        lobster_write(sys.stdout, Implementation, "lobster_python", items)
+        lobster_write(sys.stdout, schema, "lobster_python", items)
         print()
 
 
