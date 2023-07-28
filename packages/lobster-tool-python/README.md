@@ -32,6 +32,10 @@ You can add justifications as well:
 	  return "potato"
 ```
 
+For classes you have a choice on how you trace them: you either
+annotate the class itself, or each individual method. If you choose to
+annotate the class itself, then you will get warnings for each method
+with an annotation.
 
 For normal code the usage is:
 

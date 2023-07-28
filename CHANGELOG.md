@@ -18,6 +18,9 @@
 
 * The `lobster-python` tool now has special support for PyUnit tests.
 
+* The `lobster-python` tool now has two ways to annotate classes:
+  either the entire class, or each individual method.
+
 ### 0.9.9
 
 * In the HTML report, items are now sorted in a meaningful way.
