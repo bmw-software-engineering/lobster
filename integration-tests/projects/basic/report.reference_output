@@ -373,13 +373,13 @@
             "line": 5
           },
           "name": "nor.trlc_reference",
-          "messages": [
-            "missing up reference"
+          "messages": [],
+          "just_up": [
+            "helper function"
           ],
-          "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
+          "tracing_status": "JUSTIFIED",
           "language": "Python",
           "kind": "Function"
         },
@@ -426,29 +426,9 @@
           "tracing_status": "OK",
           "language": "Python",
           "kind": "Method"
-        },
-        {
-          "tag": "python nor.Example",
-          "location": {
-            "kind": "github",
-            "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
-            "file": "integration-tests/projects/basic/nor.py",
-            "line": 11
-          },
-          "name": "Example",
-          "messages": [
-            "missing up reference"
-          ],
-          "just_up": [],
-          "just_down": [],
-          "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "Python",
-          "kind": "Class"
         }
       ],
-      "coverage": 45.45454545454545
+      "coverage": 60.0
     },
     {
       "name": "Verification Test",

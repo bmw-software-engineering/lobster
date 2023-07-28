@@ -93,6 +93,20 @@ class Python_Traceable_Node:
     def lobster_tag(self):
         return Tracing_Tag("python", self.fqn())
 
+    def warn_ignored(self, reason):
+        for tag in self.tags:
+            print("%s: warning: ignored tag %s because "
+                  "%s already has annotations" %
+                  (self.location.to_string(),
+                   tag,
+                   reason))
+        for just in self.just:
+            print("%s: warning: ignored justification '%s' because "
+                  "%s already has annotations" %
+                  (self.location.to_string(),
+                   just,
+                   reason))
+
 
 class Python_Module(Python_Traceable_Node):
     def __init__(self, location, name):
@@ -112,29 +126,47 @@ class Python_Class(Python_Traceable_Node):
     def to_lobster(self, schema, items):
         assert schema is Implementation or schema is Activity
         assert isinstance(items, list)
-        # If all functions in the class have a tag, then this class
-        # doesn't require tracing, as everything in it is. First lets
-        # generate the tracing for the items.
-        # TODO
+        # Classes are dealt with a bit differently. If you add a tag
+        # or justification to a class, then children are ignored, and
+        # we trace to the class.
+        #
+        # Alternatively, can leave out the tag and instead trace to
+        # each child.
+
+        # First get child items
         class_contents = []
         for node in self.children:
             node.to_lobster(schema, class_contents)
-        items += class_contents
 
-        if schema is Implementation:
-            l_item = Implementation(tag      = Tracing_Tag("python",
-                                                           self.fqn()),
-                                    location = self.location,
-                                    language = "Python",
-                                    kind     = self.kind,
-                                    name     = self.name)
-        else:
+        # If we're extracting pyunit items, then we always ignore
+        # classes.
+        if schema is Activity:
+            items += class_contents
             return
 
-        for tag in self.tags:
-            l_item.add_tracing_target(tag)
-        l_item.just_up += self.just
-        items.append(l_item)
+        l_item = Implementation(tag      = Tracing_Tag("python",
+                                                       self.fqn()),
+                                location = self.location,
+                                language = "Python",
+                                kind     = self.kind,
+                                name     = self.name)
+
+        # If we have tags or justifications on the class itself, we
+        # give precedence to that.
+        if self.tags or self.just:
+            for tag in self.tags:
+                l_item.add_tracing_target(tag)
+            l_item.just_up += self.just
+
+            for c_item in self.children:
+                c_item.warn_ignored(self.name)
+
+            items.append(l_item)
+            return
+
+        # Otherwise, we ignore the class and instead trace to each
+        # child
+        items += class_contents
 
 
 class Python_Function(Python_Traceable_Node):
@@ -266,15 +298,24 @@ class Lobster_Visitor(cst.CSTVisitor):
         self.current_node = self.stack[-1]
 
     def visit_Comment(self, node):
+        line = self.get_metadata(PositionProvider, node).start.line
+        # For some reason the comment in a class is associated with
+        # its constructor. We can check if it preceeds it (by line),
+        # and so associate it with the enclosing item.
+        if self.current_node and self.current_node.location.line > line:
+            actual = self.current_node.parent
+        else:
+            actual = self.current_node
+
         if node.value.startswith(LOBSTER_TRACE_PREFIX):
             tag = node.value[len(LOBSTER_TRACE_PREFIX):].strip()
-            self.current_node.register_tag(
+            actual.register_tag(
                 Tracing_Tag.from_text(self.namespace,
                                       tag))
 
         elif node.value.startswith(LOBSTER_JUST_PREFIX):
             reason = node.value[len(LOBSTER_JUST_PREFIX):].strip()
-            self.current_node.register_justification(reason)
+            actual.register_justification(reason)
 
 
 def process_file(file_name, options):
