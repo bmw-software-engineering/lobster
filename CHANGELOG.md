@@ -7,6 +7,11 @@
 
 * The `lobster-online-report` now supports submodules.
 
+* The `lobster-python` is now less fragile and continues processing
+  other files in the face of encoding or python parse errors.
+
+* Fixed a crash in `lobster-python` for comments at module level.
+
 ### 0.9.10
 
 * Expose justification mechanism for JSON files (up only).

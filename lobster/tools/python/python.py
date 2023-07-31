@@ -302,7 +302,9 @@ class Lobster_Visitor(cst.CSTVisitor):
         # For some reason the comment in a class is associated with
         # its constructor. We can check if it preceeds it (by line),
         # and so associate it with the enclosing item.
-        if self.current_node and self.current_node.location.line > line:
+        if self.current_node and \
+           self.current_node.location.line and \
+           self.current_node.location.line > line:
             actual = self.current_node.parent
         else:
             actual = self.current_node
@@ -319,25 +321,40 @@ class Lobster_Visitor(cst.CSTVisitor):
 
 
 def process_file(file_name, options):
+    # pylint: disable=protected-access
     assert isinstance(file_name, str)
     assert isinstance(options, dict)
 
-    with open(file_name, "r", encoding="UTF-8") as fd:
-        ast = cst.parse_module(fd.read())
-    ast = cst.MetadataWrapper(ast)
-    visitor = Lobster_Visitor(file_name, options)
-    ast.visit(visitor)
-
     items = []
-    if options["activity"]:
-        visitor.module.to_lobster(Activity, items)
-    else:
-        visitor.module.to_lobster(Implementation, items)
+    try:
+        with open(file_name, "r", encoding="UTF-8") as fd:
+            ast = cst.parse_module(fd.read())
 
-    if options["exclude_untagged"]:
-        items = [item for item in items if item.unresolved_references]
+        ast = cst.MetadataWrapper(ast)
+        visitor = Lobster_Visitor(file_name, options)
+        ast.visit(visitor)
 
-    return items
+        if options["activity"]:
+            visitor.module.to_lobster(Activity, items)
+        else:
+            visitor.module.to_lobster(Implementation, items)
+
+        if options["exclude_untagged"]:
+            items = [item for item in items if item.unresolved_references]
+
+        return True, items
+
+    except cst._exceptions.ParserSyntaxError as exc:
+        print(file_name, exc.message)
+        return False, []
+
+    except UnicodeDecodeError as exc:
+        print(file_name, str(exc))
+        return False, []
+
+    except Exception as exc:
+        print("Unspecified issue in file: %s" % file_name)
+        raise
 
 
 def main():
@@ -404,14 +421,18 @@ def main():
 
     pfun = functools.partial(process_file, options=context)
     items = []
+    ok    = True
 
     if options.single:
         for file_name in file_list:
-            items += pfun(file_name)
+            new_ok, new_items = pfun(file_name)
+            ok    &= new_ok
+            items += new_items
     else:
         with multiprocessing.Pool() as pool:
-            for fragment in pool.imap_unordered(pfun, file_list):
-                items += fragment
+            for new_ok, new_items in pool.imap_unordered(pfun, file_list):
+                ok    &= new_ok
+                items += new_items
 
     if options.activity:
         schema = Activity
@@ -427,6 +448,12 @@ def main():
     else:
         lobster_write(sys.stdout, schema, "lobster_python", items)
         print()
+
+    if ok:
+        return 0
+    else:
+        print("Note: Earlier parse errors make actual output unreliable")
+        return 1
 
 
 if __name__ == "__main__":
