@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.9.10-dev
+### 0.9.10
 
 * Expose justification mechanism for JSON files (up only).
 
