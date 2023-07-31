@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.9.11-dev
+### 0.9.11
 
 * The `lobster-online-report` now supports submodules.
 
