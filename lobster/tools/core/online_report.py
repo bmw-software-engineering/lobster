@@ -22,9 +22,31 @@ import sys
 import os
 import argparse
 import configparser
+import subprocess
 
 from lobster.report import Report
 from lobster.location import File_Reference, Github_Reference
+
+
+class Parse_Error(Exception):
+    pass
+
+
+def parse_git_root(cfg):
+    gh_root = cfg["url"]
+    if not gh_root.endswith(".git"):
+        gh_root += ".git"
+
+    if gh_root.startswith("http"):
+        gh_root = gh_root[:-4]
+    else:
+        match = re.match(r"^(.*)@(.*):(.*)\.git$", gh_root)
+        if match is None:
+            raise Parse_Error("could not understand git origin %s" % gh_root)
+        gh_root = "https://%s/%s" % (match.group(2),
+                                     match.group(3))
+
+    return gh_root
 
 
 def main():
@@ -67,17 +89,28 @@ def main():
         print("error: could not find remote \"origin\" in git config")
         return 1
 
-    gh_root = git_config['remote "origin"']["url"]
-    assert gh_root.endswith(".git")
+    git_m_config = configparser.ConfigParser()
+    if os.path.isfile(os.path.join(repo_root, ".gitmodules")):
+        git_m_config.read(os.path.join(repo_root, ".gitmodules"))
 
-    if gh_root.startswith("http"):
-        gh_root = gh_root[:-4]
-    else:
-        match = re.match(r"^(.*)@(.*):(.*)\.git$", gh_root)
-        if match is None:
-            print("could not understand git origin %s" % gh_root)
-        gh_root = "https://%s/%s" % (match.group(2),
-                                     match.group(3))
+    gh_submodule_roots = {}
+    gh_submodule_sha = {}
+    for item in git_config:
+        if item == 'remote "origin"':
+            gh_root = parse_git_root(git_config[item])
+        elif item.startswith('submodule "'):
+            assert re.match('submodule "(.*?)"', item)
+            sm_dir = git_m_config[item]["path"]
+            gh_submodule_roots[sm_dir] = parse_git_root(git_config[item])
+            _, _, sha, _ = subprocess.run(
+                ["git",
+                 "ls-tree",
+                 "HEAD",
+                 sm_dir],
+                check          = True,
+                capture_output = True,
+                encoding       = "UTF-8").stdout.split()
+            gh_submodule_sha[sm_dir] = sha
 
     report = Report()
     report.load_report(options.lobster_report)
@@ -86,12 +119,24 @@ def main():
         if isinstance(item.location, File_Reference):
             assert os.path.isdir(item.location.filename) or \
                 os.path.isfile(item.location.filename)
+
+            rel_path_from_root = os.path.relpath(item.location.filename,
+                                                 repo_root)
+            actual_repo = gh_root
+            actual_sha  = options.commit
+            actual_path = rel_path_from_root
+            # pylint: disable=consider-using-dict-items
+            for prefix in gh_submodule_roots:
+                if rel_path_from_root.startswith(prefix):
+                    actual_repo = gh_submodule_roots[prefix]
+                    actual_sha  = gh_submodule_sha[prefix]
+                    actual_path = rel_path_from_root[len(prefix) + 1:]
+                    break
+
             loc = Github_Reference(
-                gh_root  = gh_root,
-                commit   = options.commit,
-                filename = os.path.relpath(
-                    os.path.abspath(item.location.filename),
-                    repo_root),
+                gh_root  = actual_repo,
+                commit   = actual_sha,
+                filename = actual_path,
                 line     = item.location.line)
             item.location = loc
 
