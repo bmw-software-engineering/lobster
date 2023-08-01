@@ -61,8 +61,7 @@ class Config_Parser(Parser_Base):
                     else:
                         self.tree[n_typ.parent].add(n_typ)
 
-    def generate_lobster_object(self, n_pkg, n_obj):
-        assert isinstance(n_pkg, ast.Package)
+    def generate_lobster_object(self, n_obj):
         assert isinstance(n_obj, ast.Record_Object)
         assert n_obj.n_typ in self.config
 
@@ -72,7 +71,7 @@ class Config_Parser(Parser_Base):
             return None
 
         item_tag = Tracing_Tag(namespace = "req",
-                               tag       = n_pkg.name + "." + n_obj.name,
+                               tag       = n_obj.fully_qualified_name(),
                                version   = None)
 
         item_loc = File_Reference(filename = n_obj.location.file_name,
@@ -94,7 +93,7 @@ class Config_Parser(Parser_Base):
                          location  = item_loc,
                          framework = "TRLC",
                          kind      = n_obj.n_typ.name,
-                         name      = n_obj.name,
+                         name      = n_obj.fully_qualified_name(),
                          text      = item_text if item_text else None)
 
         for tag_namespace, tag_field in config["tag_fields"]:
@@ -424,14 +423,13 @@ def main():
         return 1
 
     items = []
-    for n_pkg in stab.values(ast.Package):
-        for n_obj in n_pkg.symbols.values(ast.Record_Object):
-            try:
-                item = config_parser.generate_lobster_object(n_pkg, n_obj)
-                if item:
-                    items.append(item)
-            except TRLC_Error:
-                ok = False
+    for n_obj in stab.iter_record_objects():
+        try:
+            item = config_parser.generate_lobster_object(n_obj)
+            if item:
+                items.append(item)
+        except TRLC_Error:
+            ok = False
 
     if not ok:
         print("lobster-trlc: aborting due to error during extraction")
