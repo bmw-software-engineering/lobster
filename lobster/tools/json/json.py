@@ -46,7 +46,7 @@ def fetch_values(filename, data, name, optional=False):
             sys.exit(1)
         if not isinstance(ptr, dict):
             print("%s: error: %s is not an object" %
-                  (filename, ".".join("current")))
+                  (filename, ".".join(current)))
             sys.exit(1)
 
     if chain[-1] not in ptr:
