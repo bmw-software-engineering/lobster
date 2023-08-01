@@ -5,7 +5,8 @@
 
 ### 0.9.12-dev
 
-
+* The `lobster-trlc` tool now include the TRLC package in the
+  requirement's name.
 
 ### 0.9.11
 

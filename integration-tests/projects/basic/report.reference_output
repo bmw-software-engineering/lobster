@@ -27,8 +27,8 @@
           "ref_up": [],
           "ref_down": [
             "req example.req_implication",
-            "req example.req_nand",
-            "req example.req_xor"
+            "req example.req_xor",
+            "req example.req_nand"
           ],
           "tracing_status": "MISSING",
           "framework": "codebeamer",
@@ -52,7 +52,7 @@
             "file": "integration-tests/projects/basic/potato.trlc",
             "line": 3
           },
-          "name": "req_implication",
+          "name": "example.req_implication",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -71,55 +71,33 @@
           "status": null
         },
         {
-          "tag": "req example.req_implies",
+          "tag": "req example.req_xor",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/basic/potato.trlc",
-            "line": 27
+            "line": 9
           },
-          "name": "req_implies",
-          "messages": [],
-          "just_up": [
-            "not needed"
-          ],
-          "just_down": [
-            "also not needed"
-          ],
-          "just_global": [],
-          "tracing_status": "JUSTIFIED",
-          "framework": "TRLC",
-          "kind": "Requirement",
-          "text": "provide a utility function for logical implication",
-          "status": null
-        },
-        {
-          "tag": "req example.req_important",
-          "location": {
-            "kind": "github",
-            "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
-            "file": "integration-tests/projects/basic/potato.trlc",
-            "line": 39
-          },
-          "name": "req_important",
+          "name": "example.req_xor",
           "messages": [
-            "missing reference to Code",
-            "missing reference to Verification Test"
+            "tracing destination req 12345 has version 42 (expected 5)"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nand",
-            "req example.req_nor"
+            "req 12345@5"
           ],
-          "ref_down": [],
-          "tracing_status": "PARTIAL",
+          "ref_down": [
+            "simulink exclusive_or/My_Exclusive_Or",
+            "json example_0",
+            "json example_1"
+          ],
+          "tracing_status": "MISSING",
           "framework": "TRLC",
-          "kind": "Linked_Requirement",
-          "text": "this is important",
+          "kind": "Tagged_Requirement",
+          "text": "text: provide a utility function for logical exclusive or",
           "status": null
         },
         {
@@ -131,7 +109,7 @@
             "file": "integration-tests/projects/basic/potato.trlc",
             "line": 15
           },
-          "name": "req_nand",
+          "name": "example.req_nand",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -159,7 +137,7 @@
             "file": "integration-tests/projects/basic/potato.trlc",
             "line": 22
           },
-          "name": "req_nor",
+          "name": "example.req_nor",
           "messages": [
             "missing up reference",
             "missing reference to Verification Test"
@@ -180,33 +158,55 @@
           "status": null
         },
         {
-          "tag": "req example.req_xor",
+          "tag": "req example.req_implies",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/basic/potato.trlc",
-            "line": 9
+            "line": 27
           },
-          "name": "req_xor",
+          "name": "example.req_implies",
+          "messages": [],
+          "just_up": [
+            "not needed"
+          ],
+          "just_down": [
+            "also not needed"
+          ],
+          "just_global": [],
+          "tracing_status": "JUSTIFIED",
+          "framework": "TRLC",
+          "kind": "Requirement",
+          "text": "provide a utility function for logical implication",
+          "status": null
+        },
+        {
+          "tag": "req example.req_important",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/basic/potato.trlc",
+            "line": 39
+          },
+          "name": "example.req_important",
           "messages": [
-            "tracing destination req 12345 has version 42 (expected 5)"
+            "missing reference to Code",
+            "missing reference to Verification Test"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req 12345@5"
+            "req example.req_nand",
+            "req example.req_nor"
           ],
-          "ref_down": [
-            "simulink exclusive_or/My_Exclusive_Or",
-            "json example_0",
-            "json example_1"
-          ],
-          "tracing_status": "MISSING",
+          "ref_down": [],
+          "tracing_status": "PARTIAL",
           "framework": "TRLC",
-          "kind": "Tagged_Requirement",
-          "text": "text: provide a utility function for logical exclusive or",
+          "kind": "Linked_Requirement",
+          "text": "this is important",
           "status": null
         }
       ],
