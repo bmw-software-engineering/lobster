@@ -8,6 +8,15 @@
 * The `lobster-trlc` tool now include the TRLC package in the
   requirement's name.
 
+* Rewrote the `lobster-json` tool to be more robust.
+  * The `lobster-json` tool now uses a new, intended to be common,
+    interface for building lobster tools. These tools can now process
+    files in parallel, and also allow you to specify a file containing
+    a line-separated list of files to consider (if you can't specify
+    all the files you want to look at on the command-line).
+  * The `lobster-json` tool can now process json files where the
+    outermost item is an object.
+
 ### 0.9.11
 
 * The `lobster-online-report` now supports submodules.

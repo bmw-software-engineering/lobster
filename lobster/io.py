@@ -49,6 +49,7 @@ def lobster_write(fd, kind, generator, items):
             "schema"    : schema,
             "version"   : version}
     json.dump(data, fd, indent=2)
+    fd.write("\n")
 
 
 def lobster_read(mh, filename, level, items, source_info=None):
