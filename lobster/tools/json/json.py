@@ -18,222 +18,194 @@
 # <https://www.gnu.org/licenses/>.
 
 import sys
-import os
-import argparse
+import os.path
 import json
 from pprint import pprint
 
+from lobster.tool import LOBSTER_Per_File_Tool
 from lobster.items import Tracing_Tag, Activity
-from lobster.io import lobster_write
 from lobster.location import File_Reference
 
 
-def fetch_values(filename, data, name, optional=False):
-    chain = name.split(".")
+class Malformed_Input(Exception):
+    def __init__(self, msg, data):
+        super().__init__(msg)
+        self.msg  = msg
+        self.data = data
 
-    ptr = data
-    current = []
-    for attr in chain[:-1]:
-        current.append(attr)
-        if attr in ptr:
-            ptr = ptr[attr]
-        elif optional:
-            return []
+
+def get_item(root, path, required):
+    assert isinstance(path, str)
+    assert isinstance(required, bool)
+
+    if path == "":
+        return root
+
+    if "." in path:
+        field, tail = path.split(".", 1)
+    else:
+        field = path
+        tail  = ""
+
+    if isinstance(root, dict):
+        if field in root:
+            return get_item(root[field], tail, required)
+        elif required:
+            raise Malformed_Input("object does not contain %s" % field,
+                                  root)
         else:
-            pprint(data)
-            print("%s: error: object does not contain %s" %
-                  (filename, ".".join(current)))
-            sys.exit(1)
-        if not isinstance(ptr, dict):
-            print("%s: error: %s is not an object" %
-                  (filename, ".".join(current)))
-            sys.exit(1)
+            return None
 
-    if chain[-1] not in ptr:
-        if optional:
-            return []
-        else:
-            pprint(data)
-            print("%s: error: object does not contain attribute %s" %
-                  (filename, chain[-1]))
-            sys.exit(1)
+    elif required:
+        raise Malformed_Input("not an object", root)
 
-    ptr = ptr[chain[-1]]
-    tags = []
-    if isinstance(ptr, list):
-        for tag in ptr:
-            if isinstance(tag, str):
-                tags.append(tag)
-            elif isinstance(tag, int):
-                tags.append(str(tag))
-            else:
+    else:
+        return None
+
+
+def syn_test_name(file_name):
+    components = []
+    head = os.path.dirname(file_name)
+    while True:
+        head, tail = os.path.split(head)
+        components = [tail] + components
+        if not head:
+            break
+    components.append(os.path.basename(file_name).replace(".json", ""))
+    components = [item
+                  for item in components
+                  if item and item != "."]
+    return ".".join(components)
+
+
+class LOBSTER_Json(LOBSTER_Per_File_Tool):
+    def __init__(self):
+        super().__init__(
+            name        = "json",
+            description = "Extract tracing data from JSON files.",
+            extensions  = ["json"],
+            official    = True)
+        self.add_argument("--test-list",
+                          default = "",
+                          help    = ("Member name indicator resulting in a"
+                                     " list containing objects carrying test"
+                                     " data."))
+        self.add_argument("--name-attribute",
+                          default = None,
+                          help    = "Member name indicator for test name.")
+        self.add_argument("--tag-attribute",
+                          default  = None,
+                          required = True,
+                          help     = ("Member name indicator for test "
+                                      " tracing tags."))
+        self.add_argument("--justification-attribute",
+                          default  = None,
+                          help     = ("Member name indicator for "
+                                      " justifications."))
+
+    def process_tool_options(self, options, work_list):
+        self.schema = Activity
+        return True
+
+    @classmethod
+    def process(cls, options, file_name):
+        with open(file_name, "r", encoding="UTF-8") as fd:
+            data = json.load(fd)
+
+        # First we follow the test-list items to get the actual data
+        # we're interested in.
+        try:
+            data = get_item(root     = data,
+                            path     = options.test_list,
+                            required = True)
+        except Malformed_Input as err:
+            pprint(err.data)
+            print("%s: malformed input: %s" % (file_name, err.msg))
+            return False, []
+
+        # Ensure we actually have a list now
+        if not isinstance(data, list):
+            if options.test_list:
                 pprint(data)
-                print("%s: error: member %s is neither string nor integer" %
-                      (filename, name))
-                sys.exit(1)
-    elif isinstance(ptr, str):
-        ptr = ptr.strip()
-        if not ptr:
-            pprint(data)
-            print("%s: error: member %s is the empty string" %
-                  (filename, name))
-            sys.exit(1)
-        tags.append(ptr)
-    elif isinstance(ptr, int):
-        tags.append(str(ptr))
-    elif ptr is None:
-        pass
-    else:
-        pprint(data)
-        print("%s: error: member %s is neither string nor integer" %
-              (filename, name))
-        sys.exit(1)
+                print("%s: item described by %s is not a list" %
+                      (file_name, options.test_list))
+            else:
+                print("%s: top-level item is not a list. use --test-list "
+                      "to select a suitable list" % file_name)
+            return False, []
 
-    return tags
+        # Convert individual items
+        items = []
+        ok    = True
+        for item_id, item in enumerate(data, 1):
+            try:
+                if options.name_attribute:
+                    item_name = get_item(root     = item,
+                                         path     = options.name_attribute,
+                                         required = True)
+                else:
+                    item_name = "%s.%u" % (syn_test_name(file_name),
+                                           item_id)
+                if not isinstance(item_name, str):
+                    raise Malformed_Input("name is not a string",
+                                          item_name)
 
+                item_tags = get_item(root     = item,
+                                     path     = options.tag_attribute,
+                                     required = False)
+                if isinstance(item_tags, list):
+                    pass
+                elif isinstance(item_tags, str):
+                    item_tags = [item_tags]
+                elif item_tags is None:
+                    item_tags = []
+                else:
+                    raise Malformed_Input("tags are not a string or list",
+                                          item_name)
 
-def process_dict(db, filename, item_kind, data,
-                 tag_attr,
-                 name_attr,
-                 just_attr,
-                 include_path_in_name,
-                 sequence):
-    assert isinstance(sequence, int) or sequence is None
+                if options.justification_attribute:
+                    item_just = get_item(
+                        root     = item,
+                        path     = options.justification_attribute,
+                        required = False)
+                else:
+                    item_just = []
+                if isinstance(item_just, list):
+                    pass
+                elif isinstance(item_just, str):
+                    item_just = [item_just]
+                elif item_just is None:
+                    item_just = []
+                else:
+                    raise Malformed_Input("justification is not a string"
+                                          " or list",
+                                          item_just)
 
-    # Get human name
-    if name_attr is not None:
-        short_name = fetch_values(filename, data, name_attr)
-        if not short_name:
-            return
-        elif len(short_name) != 1:
-            print("%s: error: only a single name can be given (%s)" %
-                  (filename, " or ".join(short_name)))
-        short_name = short_name[0]
-    else:
-        short_name = None
+                l_item = Activity(
+                    tag       = Tracing_Tag(namespace = "json",
+                                            tag       = item_name),
+                    location  = File_Reference(file_name),
+                    framework = "JSON",
+                    kind      = "Test Vector")
+                for tag in item_tags:
+                    l_item.add_tracing_target(
+                        Tracing_Tag(namespace = "req",
+                                    tag       = tag))
+                for just_up in item_just:
+                    l_item.just_up.append(just_up)
 
-    # Make a name based on filename
-    if not include_path_in_name:
-        base = os.path.basename(filename)
-    else:
-        base = filename
-    base = base.replace("\\", "/").strip("./").replace(".json", "")
-    parts = base.replace(" ", "_").split("/")
-    name = ".".join(parts)
-    if sequence is not None:
-        name += "_%u" % sequence
+                items.append(l_item)
+            except Malformed_Input as err:
+                pprint(err.data)
+                print("%s: malformed input: %s" % (file_name, err.msg))
+                ok = False
 
-    tags = fetch_values(filename, data, tag_attr)
-    if tags is None:
-        return
-
-    if name in db:
-        print("%s: error: duplicate object %s" % (filename, name))
-        return
-
-    db[name] = Activity(tag       = Tracing_Tag("json", name),
-                        location  = File_Reference(os.path.relpath(filename)),
-                        framework = "JSON",
-                        kind      = item_kind)
-    for tag in tags:
-        db[name].add_tracing_target(Tracing_Tag("req", tag))
-    if short_name is not None:
-        db[name].name = short_name
-
-    if just_attr is not None:
-        justifications = fetch_values(filename, data, just_attr,
-                                      optional = True)
-        if justifications:
-            for just in justifications:
-                db[name].just_up.append(just)
-
-
-def process(db, filename, item_kind,
-            tag_attr, name_attr, just_attr, include_path_in_name):
-    assert isinstance(db, dict)
-    assert os.path.isfile(filename)
-    assert isinstance(tag_attr, str)
-    assert isinstance(name_attr, str) or name_attr is None
-    assert isinstance(include_path_in_name, bool)
-
-    with open(filename, "r", encoding="UTF-8") as fd:
-        data = json.load(fd)
-
-    if isinstance(data, dict):
-        process_dict(db, filename, item_kind, data,
-                     tag_attr,
-                     name_attr,
-                     just_attr,
-                     include_path_in_name,
-                     None)
-    elif isinstance(data, list):
-        for n, item in enumerate(data):
-            process_dict(db, filename, item_kind, item,
-                         tag_attr,
-                         name_attr,
-                         just_attr,
-                         include_path_in_name,
-                         n)
-    else:
-        print("%s: error: top level value is not an array or object" %
-              filename)
+        return ok, items
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--tag-attribute",
-                    help=("attribute indicating the tag(s) of the "
-                          "top-level json object"),
-                    required=True)
-    ap.add_argument("--name-attribute",
-                    help="attribute indicating the name of the activity")
-    ap.add_argument("--justification-attribute",
-                    help="attribute indicating why this item is not linked")
-    ap.add_argument("--include-path-in-name",
-                    help="when synthesising names, include the total path",
-                    default=False,
-                    action="store_true")
-    ap.add_argument("--out",
-                    help="write to this file instead of stdout")
-    ap.add_argument("--item-kind",
-                    help="item kind (by default 'test')",
-                    default="test")
-    ap.add_argument("paths",
-                    metavar="FILE|DIR",
-                    nargs="+",
-                    help="process these files or directories")
-
-    options = ap.parse_args()
-
-    db = {}
-
-    for path in options.paths:
-        if os.path.isfile(path):
-            process(db, path, options.item_kind,
-                    options.tag_attribute,
-                    options.name_attribute,
-                    options.justification_attribute,
-                    options.include_path_in_name)
-        elif os.path.isdir(path):
-            for prefix, _, files in os.walk(path):
-                for filename in files:
-                    if filename.endswith(".json"):
-                        process(db,
-                                os.path.join(prefix, filename),
-                                options.item_kind,
-                                options.tag_attribute,
-                                options.name_attribute,
-                                options.justification_attribute,
-                                options.include_path_in_name)
-        else:
-            ap.error("%s is not a file or directory" % path)
-
-    if options.out:
-        with open(options.out, "w", encoding="UTF-8") as fd:
-            lobster_write(fd, Activity, "lobster_json", db.values())
-    else:
-        lobster_write(sys.stdout, Activity, "lobster_json", db.values())
-        print()
+    tool = LOBSTER_Json()
+    return tool.execute()
 
 
 if __name__ == "__main__":

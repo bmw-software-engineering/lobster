@@ -85,6 +85,24 @@ $ lobster-json --name-attribute "meta.name" \
                FILENAME
 ```
 
+Finally, if your list of tests is nested more deeply in an object, you
+can use the `--test-list` flag to identify where it is. For example:
+
+```json
+{ "kind"    : "tests",
+  "vectors" : [
+    {"meta" : {"name" : "XOR Test 1",
+               "asil" : "B",
+               "req"  : "example.req_xor"},
+     "test" : {"inputs" : [false, false],
+               "expect" : false}
+    },
+
+    ...
+```
+
+Then you can use `--test-list=vectors` to identify the correct list.
+
 Note: This tool is pretty limited. For the obvious cases it works
 pretty well, but if you have a more complex test definition in JSON
 then you will need to write your own adaptor [using the documented

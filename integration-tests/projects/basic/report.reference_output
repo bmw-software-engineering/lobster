@@ -91,8 +91,8 @@
           ],
           "ref_down": [
             "simulink exclusive_or/My_Exclusive_Or",
-            "json example_0",
-            "json example_1"
+            "json XOR Test 1",
+            "json XOR Test 2"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -481,7 +481,7 @@
           "status": null
         },
         {
-          "tag": "json example_0",
+          "tag": "json XOR Test 1",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -489,7 +489,7 @@
             "file": "integration-tests/projects/basic/example.json",
             "line": null
           },
-          "name": "example_0",
+          "name": "XOR Test 1",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -500,11 +500,11 @@
           "ref_down": [],
           "tracing_status": "OK",
           "framework": "JSON",
-          "kind": "test",
+          "kind": "Test Vector",
           "status": null
         },
         {
-          "tag": "json example_1",
+          "tag": "json XOR Test 2",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -512,7 +512,7 @@
             "file": "integration-tests/projects/basic/example.json",
             "line": null
           },
-          "name": "example_1",
+          "name": "XOR Test 2",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -523,11 +523,11 @@
           "ref_down": [],
           "tracing_status": "OK",
           "framework": "JSON",
-          "kind": "test",
+          "kind": "Test Vector",
           "status": null
         },
         {
-          "tag": "json example_2",
+          "tag": "json Potato Test 1",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -535,7 +535,7 @@
             "file": "integration-tests/projects/basic/example.json",
             "line": null
           },
-          "name": "example_2",
+          "name": "Potato Test 1",
           "messages": [],
           "just_up": [
             "Unlinked on purpose"
@@ -544,7 +544,7 @@
           "just_global": [],
           "tracing_status": "JUSTIFIED",
           "framework": "JSON",
-          "kind": "test",
+          "kind": "Test Vector",
           "status": null
         }
       ],
