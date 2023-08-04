@@ -5,7 +5,7 @@
 
 ### 0.9.12-dev
 
-* The `lobster-trlc` tool now include the TRLC package in the
+* The `lobster-trlc` tool now includes the TRLC package in the
   requirement's name.
 
 * Rewrote the `lobster-json` tool to be more robust.
@@ -16,6 +16,9 @@
     all the files you want to look at on the command-line).
   * The `lobster-json` tool can now process json files where the
     outermost item is an object.
+  * Removed `--include-path-in-name` flag as it is now the default for
+    `lobster-json`.
+  * Removed `--item-kind` flag (we always generate activities now).
 
 ### 0.9.11
 
