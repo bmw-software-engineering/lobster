@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.9.12-dev
+### 0.9.12
 
 * The `lobster-trlc` tool now includes the TRLC package in the
   requirement's name.
