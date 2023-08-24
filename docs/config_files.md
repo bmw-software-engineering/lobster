@@ -143,25 +143,26 @@ requirements "System Requirements" {
 
 requirements "Software Requirements" {
    source: "trlc.lobster";
+   trace to: "System Requirements";
 }
 
 implementation "Code" {
    source: "cpptrace.lobster";
-   trace to: "Software Requirements"
+   trace to: "Software Requirements";
 }
 
 activity "Unit Tests" {
    source: "gtest_unit.lobster";
-   trace to: "Software Requirements"
+   trace to: "Software Requirements";
 }
 
 activity "Integration Tests" {
    source: "gtest_int.lobster";
-   trace to: "System Requirements"
+   trace to: "System Requirements";
 }
 
 activity "Analysis" {
    source: "analysis.lobster";
-   trace to: "System Requirements"
+   trace to: "System Requirements";
 }
 ```
