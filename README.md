@@ -8,12 +8,12 @@ such as ISO 26262.
 This repository contains the prototype for LOBSTER, which is a key
 ingredient to make TRCL more useful.
 
-It has tools to extract tracing tags from a variety of sources,
-combine them and produce a tracing report. You can look at a [canned
-example](https://bmw-software-engineering.github.io/lobster/example_report.html)
-from [the
-testsuite](integration-tests/projects/basic),
-which combines a variety of languages and tools into a single report.
+It has tools to extract tracing tags from a variety of sources combine
+them and produce a tracing report. The [the TRLC tracing
+report](https://bmw-software-engineering.github.io/trlc/tracing.html)
+from the [TRLC
+Project](https://github.com/bmw-software-engineering/trlc/) is a
+reasonable example of what is possible.
 
 ## Installing
 
