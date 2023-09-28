@@ -58,7 +58,8 @@ def query_cb_single(cb_config, url):
     result = requests.get(url,
                           auth=(cb_config["user"],
                                 cb_config["pass"]),
-                          timeout=10.0)
+                          timeout=10.0,
+                          verify=cb_config["verify_ssl"])
     if result.status_code != 200:
         print("Could not fetch %s" % url)
         print("Status = %u" % result.status_code)
@@ -221,6 +222,11 @@ def main():
                        metavar="CB_QUERY_ID",
                        default=None)
 
+    ap.add_argument("--ignore-ssl-errors",
+                    action="store_true",
+                    default=False,
+                    help="ignore ssl errors and accept any certificate")
+
     ap.add_argument("--cb-root", default=os.environ.get("CB_ROOT", None))
     ap.add_argument("--cb-user", default=os.environ.get("CB_USERNAME", None))
     ap.add_argument("--cb-pass", default=os.environ.get("CB_PASSWORD", None))
@@ -230,10 +236,11 @@ def main():
     mh = Message_Handler()
 
     cb_config = {
-        "root" : options.cb_root,
-        "base" : "%s/cb/rest" % options.cb_root,
-        "user" : options.cb_user,
-        "pass" : options.cb_pass,
+        "root"       : options.cb_root,
+        "base"       : "%s/cb/rest" % options.cb_root,
+        "user"       : options.cb_user,
+        "pass"       : options.cb_pass,
+        "verify_ssl" : not options.ignore_ssl_errors,
     }
 
     if cb_config["root"] is None:
