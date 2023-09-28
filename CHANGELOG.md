@@ -5,13 +5,14 @@
 
 ### 0.9.14-dev
 
-
+* The `lobster-codebeamer` tool has a new option `--ignore-ssl-errors`
+  which can be used to ignore certificate validation errors.
 
 ### 0.9.13
 
-* The `lobster-json` can now deal with singleton tests (i.e. in places
-  where a list of tests is expected, a single test object is now also
-  allowed).
+* The `lobster-json` tool can now deal with singleton tests (i.e. in
+  places where a list of tests is expected, a single test object is
+  now also allowed).
 
 ### 0.9.12
 
