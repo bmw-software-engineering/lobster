@@ -125,14 +125,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
 
         # Ensure we actually have a list now
         if not isinstance(data, list):
-            if options.test_list:
-                pprint(data)
-                print("%s: item described by %s is not a list" %
-                      (file_name, options.test_list))
-            else:
-                print("%s: top-level item is not a list. use --test-list "
-                      "to select a suitable list" % file_name)
-            return False, []
+            data = [data]
 
         # Convert individual items
         items = []

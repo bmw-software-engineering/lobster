@@ -1,0 +1,9 @@
+// --tag-attribute=tags --name-attribute=name
+{
+    "actual" : {
+	"name"   : "Single_1",
+	"tags"   : "example.req",
+	"inputs" : [1, 2, 3],
+	"expect" : 42
+    }
+}
