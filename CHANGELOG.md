@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.9.14-dev
+### 0.9.14
 
 * The `lobster-codebeamer` tool has a new option `--ignore-ssl-errors`
   which can be used to ignore certificate validation errors.
