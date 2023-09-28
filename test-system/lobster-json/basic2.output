@@ -1,16 +1,16 @@
-lobster-json: wrote 6 items to basic.lobster
+lobster-json: wrote 6 items to basic2.lobster
 ==========
 {
   "data": [
     {
-      "tag": "json Test_1",
+      "tag": "json basic2.1",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./basic2.json",
         "line": null,
         "column": null
       },
-      "name": "Test_1",
+      "name": "basic2.1",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -23,14 +23,14 @@ lobster-json: wrote 6 items to basic.lobster
       "status": null
     },
     {
-      "tag": "json Test_2",
+      "tag": "json basic2.2",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./basic2.json",
         "line": null,
         "column": null
       },
-      "name": "Test_2",
+      "name": "basic2.2",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -40,14 +40,14 @@ lobster-json: wrote 6 items to basic.lobster
       "status": null
     },
     {
-      "tag": "json Test_3",
+      "tag": "json basic2.3",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./basic2.json",
         "line": null,
         "column": null
       },
-      "name": "Test_3",
+      "name": "basic2.3",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -61,14 +61,14 @@ lobster-json: wrote 6 items to basic.lobster
       "status": null
     },
     {
-      "tag": "json Test_4",
+      "tag": "json basic2.4",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./basic2.json",
         "line": null,
         "column": null
       },
-      "name": "Test_4",
+      "name": "basic2.4",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -78,14 +78,14 @@ lobster-json: wrote 6 items to basic.lobster
       "status": null
     },
     {
-      "tag": "json Test_5",
+      "tag": "json basic2.5",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./basic2.json",
         "line": null,
         "column": null
       },
-      "name": "Test_5",
+      "name": "basic2.5",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -98,14 +98,14 @@ lobster-json: wrote 6 items to basic.lobster
       "status": null
     },
     {
-      "tag": "json Test_6",
+      "tag": "json basic2.6",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./basic2.json",
         "line": null,
         "column": null
       },
-      "name": "Test_6",
+      "name": "basic2.6",
       "messages": [],
       "just_up": [],
       "just_down": [],

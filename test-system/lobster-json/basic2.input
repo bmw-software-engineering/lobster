@@ -1,4 +1,4 @@
-// --tag-attribute=tags --name-attribute=name
+// --tag-attribute=tags
 [
     {
 	"name"   : "Test_1",

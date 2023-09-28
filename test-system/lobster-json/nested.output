@@ -1,4 +1,4 @@
-lobster-json: wrote 6 items to basic.lobster
+lobster-json: wrote 6 items to nested.lobster
 ==========
 {
   "data": [
@@ -6,7 +6,7 @@ lobster-json: wrote 6 items to basic.lobster
       "tag": "json Test_1",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./nested.json",
         "line": null,
         "column": null
       },
@@ -26,7 +26,7 @@ lobster-json: wrote 6 items to basic.lobster
       "tag": "json Test_2",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./nested.json",
         "line": null,
         "column": null
       },
@@ -43,7 +43,7 @@ lobster-json: wrote 6 items to basic.lobster
       "tag": "json Test_3",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./nested.json",
         "line": null,
         "column": null
       },
@@ -64,7 +64,7 @@ lobster-json: wrote 6 items to basic.lobster
       "tag": "json Test_4",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./nested.json",
         "line": null,
         "column": null
       },
@@ -81,7 +81,7 @@ lobster-json: wrote 6 items to basic.lobster
       "tag": "json Test_5",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./nested.json",
         "line": null,
         "column": null
       },
@@ -101,7 +101,7 @@ lobster-json: wrote 6 items to basic.lobster
       "tag": "json Test_6",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./nested.json",
         "line": null,
         "column": null
       },
