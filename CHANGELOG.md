@@ -5,7 +5,9 @@
 
 ### 0.9.13-dev
 
-
+* The `lobster-json` can now deal with singleton tests (i.e. in places
+  where a list of tests is expected, a single test object is now also
+  allowed).
 
 ### 0.9.12
 
