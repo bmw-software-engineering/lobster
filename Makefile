@@ -43,7 +43,10 @@ packages:
 integration_tests: packages
 	(cd integration-tests/projects/basic; make)
 
-test: integration_tests
+system_tests:
+	make -B -C test-system/lobster-json
+
+test: integration_tests system_tests
 
 upload_main: packages
 	python3 -m twine upload --repository pypi packages/*/dist/*
