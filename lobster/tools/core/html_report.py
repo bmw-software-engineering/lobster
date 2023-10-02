@@ -438,8 +438,9 @@ def write_html(fd, report):
                         doc.add_line('</div>')
                     if isinstance(item, Requirement) and item.text:
                         doc.add_line('<div class="attribute">')
-                        doc.add_line("<blockquote>%s</blockquote>" %
-                                     html.escape(item.text))
+                        doc.add_line(
+                            "<blockquote>%s</blockquote>" %
+                            html.escape(item.text).replace("\n", "<br>"))
                         doc.add_line('</div>')
                     write_item_tracing(doc, report, item)
                     write_item_box_end(doc)
