@@ -5,7 +5,8 @@
 
 ### 0.9.15-dev
 
-
+* The `lobster-html-report` tool now respects line-breaks in item
+  descriptions.
 
 ### 0.9.14
 
