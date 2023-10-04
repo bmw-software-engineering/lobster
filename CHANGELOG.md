@@ -8,6 +8,10 @@
 * The `lobster-html-report` tool now respects line-breaks in item
   descriptions.
 
+* The `lobster-python` tool now also includes the module name if you
+  trace to a class, similar to how the module name is included if you
+  trace to a function or method.
+
 ### 0.9.14
 
 * The `lobster-codebeamer` tool has a new option `--ignore-ssl-errors`
