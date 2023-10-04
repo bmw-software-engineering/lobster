@@ -149,7 +149,7 @@ class Python_Class(Python_Traceable_Node):
                                 location = self.location,
                                 language = "Python",
                                 kind     = self.kind,
-                                name     = self.name)
+                                name     = self.fqn())
 
         # If we have tags or justifications on the class itself, we
         # give precedence to that.
