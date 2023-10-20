@@ -55,11 +55,23 @@ def query_cb_single(cb_config, url):
     assert isinstance(cb_config, dict)
     assert isinstance(url, str)
 
-    result = requests.get(url,
-                          auth=(cb_config["user"],
-                                cb_config["pass"]),
-                          timeout=10.0,
-                          verify=cb_config["verify_ssl"])
+    try:
+        result = requests.get(url,
+                              auth=(cb_config["user"],
+                                    cb_config["pass"]),
+                              timeout=cb_config["timeout"],
+                              verify=cb_config["verify_ssl"])
+    except requests.exceptions.ReadTimeout:
+        print("Timeout when fetching %s" % url)
+        print("You can either:")
+        print("* increase the timeout with --timeout")
+        print("* decrease the query size with --query-size")
+        sys.exit(1)
+    except requests.exceptions.RequestException as err:
+        print("Could not fetch %s" % url)
+        print(err)
+        sys.exit(1)
+
     if result.status_code != 200:
         print("Could not fetch %s" % url)
         print("Status = %u" % result.status_code)
@@ -111,10 +123,11 @@ def get_query(mh, cb_config, query_id):
 
     while total_items is None or len(rv) < total_items:
         print("Fetching page %u of query..." % page_id)
-        url = "%s/query/%u/page/%u?pagesize=100" % \
+        url = "%s/query/%u/page/%u?pagesize=%u" % \
             (cb_config["base"],
              query_id,
-             page_id)
+             page_id,
+             cb_config["page_size"])
         data = query_cb_single(cb_config, url)
         assert len(data) == 1
         data = data["trackerItems"]
@@ -161,7 +174,14 @@ def to_lobster(cb_config, cb_item):
 
     # TODO: Parse item text
 
-    return Requirement(
+    # Get item name. Sometimes items do not have one, in which case we
+    # come up with one.
+    if "name" in cb_item:
+        item_name = cb_item["name"]
+    else:
+        item_name = "Unnamed item %u" % cb_item["id"]
+
+    req = Requirement(
         tag       = Tracing_Tag(namespace = "req",
                                 tag       = str(cb_item["id"]),
                                 version   = cb_item["version"]),
@@ -169,12 +189,17 @@ def to_lobster(cb_config, cb_item):
                                          tracker = cb_item["tracker"]["id"],
                                          item    = cb_item["id"],
                                          version = cb_item["version"],
-                                         name    = cb_item["name"]),
+                                         name    = item_name),
         framework = "codebeamer",
         kind      = kind,
-        name      = cb_item["name"],
+        name      = item_name,
         text      = None,
         status    = status)
+
+    if "name" not in cb_item:
+        req.error("Item lacks a summary text")
+
+    return req
 
 
 def import_tagged(mh, cb_config, items_to_import):
@@ -227,6 +252,16 @@ def main():
                     default=False,
                     help="ignore ssl errors and accept any certificate")
 
+    ap.add_argument("--query-size",
+                    type=int,
+                    default=100,
+                    help=("Fetch this many cb items at once (by default 100),"
+                          " reduce if you get too many timeouts."))
+    ap.add_argument("--timeout",
+                    type=int,
+                    default=30,
+                    help="Timeout in s (by default 30) for each REST call.")
+
     ap.add_argument("--cb-root", default=os.environ.get("CB_ROOT", None))
     ap.add_argument("--cb-user", default=os.environ.get("CB_USERNAME", None))
     ap.add_argument("--cb-pass", default=os.environ.get("CB_PASSWORD", None))
@@ -241,6 +276,8 @@ def main():
         "user"       : options.cb_user,
         "pass"       : options.cb_pass,
         "verify_ssl" : not options.ignore_ssl_errors,
+        "page_size"  : options.query_size,
+        "timeout"    : options.timeout,
     }
 
     if cb_config["root"] is None:

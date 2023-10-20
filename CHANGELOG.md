@@ -12,6 +12,18 @@
   trace to a class, similar to how the module name is included if you
   trace to a function or method.
 
+* Improve error reporting of `lobster-codebeamer`, you should get way
+  fewer raw exceptions and instead more helpful messages.
+
+* Add two new parameters to `lobster-codebeamer` if your codebeamer
+  instance is painfully slow: `--timeout` to increase the timeout for
+  each REST query and `--query-size` to limit how many items are
+  attempted to be fetched at once.
+
+* Add support for items without a summary. They are now named
+  something like "Unnamed item 12345". These items will show up as
+  problematic in the tracing report.
+
 ### 0.9.14
 
 * The `lobster-codebeamer` tool has a new option `--ignore-ssl-errors`
