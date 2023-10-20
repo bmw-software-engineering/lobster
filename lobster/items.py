@@ -133,9 +133,10 @@ class Item(metaclass=ABCMeta):
 
         level = config[self.level]
 
-        has_up_ref    = len(self.ref_up) > 0
-        has_just_up   = len(self.just_up) > 0 or len(self.just_global) > 0
-        has_just_down = len(self.just_down) > 0 or len(self.just_global) > 0
+        has_up_ref      = len(self.ref_up) > 0
+        has_just_up     = len(self.just_up) > 0 or len(self.just_global) > 0
+        has_just_down   = len(self.just_down) > 0 or len(self.just_global) > 0
+        has_init_errors = len(self.messages) > 0
 
         # Check up references
         ok_up = True
@@ -173,6 +174,10 @@ class Item(metaclass=ABCMeta):
             self.tracing_status = Tracing_Status.PARTIAL
         else:
             self.tracing_status = Tracing_Status.MISSING
+
+        # Overwrite status if there are initial errors
+        if self.tracing_status == Tracing_Status.OK and has_init_errors:
+            self.tracing_status = Tracing_Status.PARTIAL
 
     def additional_data_from_json(self, level, data, schema_version):
         assert isinstance(level, str)
