@@ -2,11 +2,18 @@
 
 ## Changelog
 
-
 ### 0.9.16-dev
 
 * Fix infinite loop in `lobster-json` on Windows when given absolute
   paths.
+
+* The `lobster-python` tool now also supports decorators with `.` in
+  their name.
+
+* The `lobster-python` tool now adds any tags on the test class to all
+  tests in that class (in `--activity` mode only).
+
+* The `lobster-python` tool now supports lists of tags in decorators.
 
 ### 0.9.15
 

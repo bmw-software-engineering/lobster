@@ -45,11 +45,12 @@ integration_tests: packages
 
 system_tests:
 	make -B -C test-system/lobster-json
+	make -B -C test-system/lobster-python
 
 unit_tests:
 	python3 -m unittest discover -s test-unit -v
 
-test: integration_tests system_tests
+test: integration_tests system_tests unit_tests
 
 upload_main: packages
 	python3 -m twine upload --repository pypi packages/*/dist/*
