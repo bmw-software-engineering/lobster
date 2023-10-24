@@ -37,6 +37,9 @@ LOBSTER_JUST_PREFIX = "# lobster-exclude: "
 def parse_value(val):
     if isinstance(val, cst.SimpleString):
         return val.value[1:-1]
+    elif isinstance(val, cst.List):
+        return [parse_value(item.value)
+                for item in val.elements]
     else:
         rv = str(val.value)
         if rv == "None":
@@ -139,8 +142,11 @@ class Python_Class(Python_Traceable_Node):
             node.to_lobster(schema, class_contents)
 
         # If we're extracting pyunit items, then we always ignore
-        # classes.
+        # classes, but we do add our tags to all the tests.
         if schema is Activity:
+            for item in class_contents:
+                for tag in self.tags:
+                    item.add_tracing_target(tag)
             items += class_contents
             return
 
@@ -245,17 +251,28 @@ class Lobster_Visitor(cst.CSTVisitor):
         self.dec_arg_name     = options["dec_arg_name"]
         self.dec_arg_version  = options["dec_arg_version"]
 
+    def parse_dotted_name(self, name):
+        if isinstance(name, cst.Call):
+            return self.parse_dotted_name(name.func)
+        elif isinstance(name, cst.Name):
+            return name.value
+        elif isinstance(name, cst.Attribute):
+            # value -- prefix
+            # attr  -- postfix
+            return "%s.%s" % (self.parse_dotted_name(name.value),
+                              self.parse_dotted_name(name.attr))
+        else:
+            return None
+
     def parse_decorators(self, decorators):
         for dec in decorators:
-            if isinstance(dec.decorator, (cst.Name, cst.Attribute)):
+            dec_name = self.parse_dotted_name(dec.decorator)
+            if dec_name is None:
                 continue
-            else:
-                assert isinstance(dec.decorator, cst.Call)
-                dec_name = dec.decorator.func.value
-                if dec_name != self.decorator_name:
-                    continue
-                dec_args = {arg.keyword.value: parse_value(arg.value)
-                            for arg in dec.decorator.args}
+            if dec_name != self.decorator_name:
+                continue
+            dec_args = {arg.keyword.value: parse_value(arg.value)
+                        for arg in dec.decorator.args}
 
             # TODO: Better error messages if these assumptions are
             # violated
@@ -265,11 +282,17 @@ class Lobster_Visitor(cst.CSTVisitor):
                 tag = Tracing_Tag(self.namespace,
                                   dec_args[self.dec_arg_name],
                                   dec_args.get(self.dec_arg_version, None))
+                self.current_node.register_tag(tag)
+
+            elif isinstance(dec_args[self.dec_arg_name], list):
+                for item in dec_args[self.dec_arg_name]:
+                    tag = Tracing_Tag(self.namespace, item)
+                self.current_node.register_tag(tag)
+
             else:
                 tag = Tracing_Tag(self.namespace,
                                   dec_args[self.dec_arg_name])
-
-            self.current_node.register_tag(tag)
+                self.current_node.register_tag(tag)
 
     def visit_ClassDef(self, node):
         line = self.get_metadata(PositionProvider, node).start.line
