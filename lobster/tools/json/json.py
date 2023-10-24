@@ -20,6 +20,7 @@
 import sys
 import os.path
 import json
+from pathlib import PurePath
 from pprint import pprint
 
 from lobster.tool import LOBSTER_Per_File_Tool
@@ -64,17 +65,15 @@ def get_item(root, path, required):
 
 
 def syn_test_name(file_name):
-    components = []
-    head = os.path.dirname(file_name)
-    while True:
-        head, tail = os.path.split(head)
-        components = [tail] + components
-        if not head:
-            break
-    components.append(os.path.basename(file_name).replace(".json", ""))
+    assert isinstance(file_name, PurePath)
+    if file_name.is_absolute():
+        components = list(file_name.parts)[1:-1]
+    else:
+        components = list(file_name.parts)[:-1]
+    components.append(file_name.name.replace(".json", ""))
     components = [item
                   for item in components
-                  if item and item != "."]
+                  if item and item not in (".", "..")]
     return ".".join(components)
 
 
@@ -137,7 +136,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
                                          path     = options.name_attribute,
                                          required = True)
                 else:
-                    item_name = "%s.%u" % (syn_test_name(file_name),
+                    item_name = "%s.%u" % (syn_test_name(PurePath(file_name)),
                                            item_id)
                 if not isinstance(item_name, str):
                     raise Malformed_Input("name is not a string",
