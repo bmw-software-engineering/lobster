@@ -5,7 +5,8 @@
 
 ### 0.9.16-dev
 
-
+* Fix infinite loop in `lobster-json` on Windows when given absolute
+  paths.
 
 ### 0.9.15
 

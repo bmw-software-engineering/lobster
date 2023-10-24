@@ -46,6 +46,9 @@ integration_tests: packages
 system_tests:
 	make -B -C test-system/lobster-json
 
+unit_tests:
+	python3 -m unittest discover -s test-unit -v
+
 test: integration_tests system_tests
 
 upload_main: packages
