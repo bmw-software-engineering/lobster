@@ -24,9 +24,9 @@
   each REST query and `--query-size` to limit how many items are
   attempted to be fetched at once.
 
-* Add support for items without a summary. They are now named
-  something like "Unnamed item 12345". These items will show up as
-  problematic in the tracing report.
+* Add support for codebeamer items without a summary. They are now
+  named something like "Unnamed item 12345". These items will show up
+  as problematic in the tracing report.
 
 ### 0.9.14
 
