@@ -58,11 +58,17 @@ lobster_gtest -> lobster_report [label=".lobster"];
 report_lobster [shape=none, label="report.lobster"];
 lobster_report -> report_lobster;
 
+report_lobster_online [shape=none, label="report.lobster"];
+lobster_online_report;
+report_lobster -> lobster_online_report;
+lobster_online_report -> report_lobster_online;
+
 lobster_html_report;
 lobster_ci_report;
 
 report_lobster -> lobster_html_report;
 report_lobster -> lobster_ci_report;
-
+report_lobster_online -> lobster_html_report;
+report_lobster_online -> lobster_ci_report;
 
 }
