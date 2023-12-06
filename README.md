@@ -9,7 +9,7 @@ This repository contains the prototype for LOBSTER, which is a key
 ingredient to make TRCL more useful.
 
 It has tools to extract tracing tags from a variety of sources combine
-them and produce a tracing report. The [the TRLC tracing
+them and produce a tracing report. The [TRLC tracing
 report](https://bmw-software-engineering.github.io/trlc/tracing.html)
 from the [TRLC
 Project](https://github.com/bmw-software-engineering/trlc/) is a
