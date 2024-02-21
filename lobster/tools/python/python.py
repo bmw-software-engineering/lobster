@@ -141,7 +141,7 @@ class Python_Class(Python_Traceable_Node):
         for node in self.children:
             node.to_lobster(schema, class_contents)
 
-        # If we're extracting pyunit items, then we always ignore
+        # If we're extracting pyunit/unittest items, then we always ignore
         # classes, but we do add our tags to all the tests.
         if schema is Activity:
             for item in class_contents:
