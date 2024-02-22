@@ -140,6 +140,11 @@ class Parser:
                             source_info["filters"].append(("prefix",
                                                            self.ct.value()))
 
+                        if self.ct.value() == "kind":
+                            self.match("STRING")
+                            source_info["filters"].append(("kind",
+                                                           self.ct.value()))
+
                         elif self.ct.value() == "valid_status":
                             if level_kind != "requirements":
                                 self.error(self.ct.loc,
