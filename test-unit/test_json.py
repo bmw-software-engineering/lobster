@@ -1,5 +1,4 @@
 import unittest
-import re
 from pathlib import PurePosixPath, PureWindowsPath
 
 from lobster.tools.json import json
