@@ -175,7 +175,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
 
                 l_item = Activity(
                     tag       = Tracing_Tag(namespace = "json",
-                                            tag       = "%s.%s" % (file_name.replace("/", "."), item_name)),
+                                            tag       = item_name),
                     location  = File_Reference(file_name),
                     framework = "JSON",
                     kind      = "Test Vector")
