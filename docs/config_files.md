@@ -34,6 +34,14 @@ The `source` attribute assigns a LOBSTER file to contribute to this
 level. There is some extra information you can supply with the `with`
 keyword.
 
+Using `with kind <string>` allows to filter items with `kind` in the 
+LOBSTER source file. For TRLC requirements the kind attribute in the 
+LOBSTER source file corresponds to the TRLC requirements type.
+
+Using `with prefix <string>` allows to filter items with a certain
+prefix in the `tag` attribute in the LOBSTER source file. For TRLC 
+requirements the tag attribute corresponds to the requiremet name.
+
 Specifically for requirements you can say:
 
 ```
@@ -42,8 +50,6 @@ requirements "Requirements" {
      valid_status {"Valid", "Approved"};
 }
 ```
-
-We expect to add other `with` properties in the future.
 
 #### trace to
 
