@@ -42,6 +42,7 @@ packages:
 
 integration_tests: packages
 	(cd integration-tests/projects/basic; make)
+	(cd integration-tests/projects/filter; make)
 
 system_tests:
 	make -B -C test-system/lobster-json
