@@ -5,6 +5,10 @@
 
 ### 0.9.17-dev
 
+* Adds a simplified version of the `lobster-cpp` tool, called
+  `lobster-cpp_raw`. This tool does not have any dependendies unlike 
+  `lobster-cpp`. It is also less accurate, but might be useful in 
+  some cases.
 
 ### 0.9.16
 

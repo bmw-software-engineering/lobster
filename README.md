@@ -28,7 +28,7 @@ $ pip3 install bmw-lobster
 
 The following requirements frameworks are supported:
 
-* [TRLC](work-in-progress) (only some use cases supported right now)
+* [TRLC](packages/lobster-tool-trlc/README.md) (only some use cases supported right now)
 * [Codebeamer](packages/lobster-tool-codebeamer/README.md) (only some
   use cases supported right now)
 
@@ -61,6 +61,7 @@ The individual packages that `bmw-lobster` depends on are:
 * `bmw-lobster-core` the core API and various report generators. All
   other tools depend on this.
 * `bmw-lobster-tool-cpp` (for C/C++ code)
+* `bmw-lobster-tool-cpp_raw` (for C/C++ code) -> simple version, without the clang-tidy hack
 * `bmw-lobster-tool-gtest` (for GoogleTest tests)
 * `bmw-lobster-tool-python` (for Python3 code)
 * `bmw-lobster-tool-beamer` (for requirements in Codebeamer)
