@@ -140,7 +140,7 @@ class Parser:
                             source_info["filters"].append(("prefix",
                                                            self.ct.value()))
 
-                        if self.ct.value() == "kind":
+                        elif self.ct.value() == "kind":
                             self.match("STRING")
                             source_info["filters"].append(("kind",
                                                            self.ct.value()))
