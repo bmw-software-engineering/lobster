@@ -40,37 +40,37 @@ packages:
 	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
 	diff -Naur test_install/bin test_install_monolithic/bin
 
-integration_tests: packages
+integration-tests: packages
 	(cd integration-tests/projects/basic; make)
 	(cd integration-tests/projects/filter; make)
 
-system_tests:
+system-tests:
 	make -B -C test-system/lobster-json
 	make -B -C test-system/lobster-python
 
-unit_tests:
+unit-tests:
 	python3 -m unittest discover -s test-unit -v
 
-test: integration_tests system_tests unit_tests
+test: integration-tests system-tests unit-tests
 
-upload_main: packages
+upload-main: packages
 	python3 -m twine upload --repository pypi packages/*/dist/*
 	python3 -m twine upload --repository pypi packages/*/meta_dist/*
 
-remove_dev:
+remove-dev:
 	python3 -m util.release
 
-github_release:
+github-release:
 	git push
 	python3 -m util.github_release
 
 bump:
 	python3 -m util.bump_version_post_release
 
-full_release:
-	make remove_dev
+full-release:
+	make remove-dev
 	git push
-	make upload_main
-	make github_release
+	make upload-main
+	make github-release
 	make bump
 	git push
