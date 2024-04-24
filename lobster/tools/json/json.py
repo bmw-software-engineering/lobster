@@ -18,7 +18,6 @@
 # <https://www.gnu.org/licenses/>.
 
 import sys
-import os.path
 import json
 from pathlib import PurePath
 from pprint import pprint

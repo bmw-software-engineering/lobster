@@ -1,0 +1,3 @@
+trlc>=1.2.2
+requests>=2.31.0
+libcst>=1.1.0
