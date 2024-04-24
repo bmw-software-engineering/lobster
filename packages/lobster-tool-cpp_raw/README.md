@@ -15,9 +15,10 @@ placed in a comment line directly above the function declaration.
 
 ## Tools
 
-* `lobster-cpp_raw`: Extract requirements from C/C++ code using a
+* `lobster-cpp_raw`: Extract requirements from C/C++ code using
   a simple text extracting algorithm and a regex to identify
-  function declarations.
+  function declarations. Use this tool if you are not able to
+  provide the clang tidy version needed for the superior `lobster-cpp` tool.
 
 ## Copyright & License information
 
