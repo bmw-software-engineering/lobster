@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_cpp_raw - Extract C/C++ tracing tags for LOBSTER
-# Copyright (C) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2024 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
