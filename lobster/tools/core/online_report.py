@@ -122,6 +122,7 @@ def main():
 
             rel_path_from_root = os.path.relpath(item.location.filename,
                                                  repo_root)
+            # pylint: disable=possibly-used-before-assignment
             actual_repo = gh_root
             actual_sha  = options.commit
             actual_path = rel_path_from_root
