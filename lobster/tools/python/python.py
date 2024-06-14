@@ -90,7 +90,11 @@ class Python_Traceable_Node:
             rv = self.parent.fqn() + "."
         else:
             rv = ""
-        rv += self.name
+        if self.location.line is not None and \
+          isinstance(self, Python_Function):
+            rv += f"{self.name}:{str(self.location.line)}"
+        else:
+            rv += self.name
         return rv
 
     def lobster_tag(self):
