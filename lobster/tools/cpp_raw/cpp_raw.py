@@ -83,14 +83,15 @@ def write_to_file(options: Namespace, data: Dict[str, Implementation]) -> None:
         print("Written output for %u items to %s" % (len(data), options.out))
 
 
-def find_lobster_traces(all_lines: List[str]) -> List[Tuple[re.Match, int]]:
+def find_lobster_traces(all_lines: List[str]) -> List[Tuple[List[str], int]]:
     matches = []
     i = 0
     while i < len(all_lines):
         line = all_lines[i]
-        match = re.search(r'lobster-trace:\s*(\w+\.\w+)', line)
+        match = re.search(r'lobster-trace:\s*(.*)', line)
         if match:
-            matches.append((match, i))
+            items = match.group(1).split(',')
+            matches.append(([item.strip() for item in items], i))
         i += 1
     return matches
 
@@ -119,7 +120,7 @@ def find_all_function_decl(file_content: str) -> List[Tuple[re.Match, int]]:
 
 def create_raw_entry(data: Dict[str, Implementation], file_name: str,
                      name: str, line_number: int) -> Tracing_Tag:
-    tag = Tracing_Tag("cpp", f"{file_name}::{name}::{line_number}")
+    tag = Tracing_Tag("cpp", f"{file_name}:{name}:{line_number}")
     loc = File_Reference(file_name, line_number)
     data[tag.key()] = Implementation(
         tag      = tag,
@@ -130,7 +131,7 @@ def create_raw_entry(data: Dict[str, Implementation], file_name: str,
     return tag
 
 
-def create_entry(match: Tuple[re.Match, int],
+def create_entry(match: Tuple[List[str], int],
                  data: Dict[str, Implementation],
                  all_lines: List[str], file: TextIOWrapper,
                  tag_type: str) -> Tracing_Tag:
@@ -144,11 +145,12 @@ def create_entry(match: Tuple[re.Match, int],
     return create_raw_entry(data, file.name, name, function_line + 1)
 
 
-def create_trace_entry(match: Tuple[re.Match, int],
+def create_trace_entry(match: Tuple[List[str], int],
                        data: Dict[str, Implementation],
                        all_lines: List[str], file: TextIOWrapper) -> None:
     tag = create_entry(match, data, all_lines, file, "lobster-trace")
-    data[tag.key()].add_tracing_target(Tracing_Tag("req", match[0].group(1)))
+    for req in match[0]:
+        data[tag.key()].add_tracing_target(Tracing_Tag("req", req))
 
 
 def create_exclude_entry(match: Tuple[re.Match, int],
