@@ -410,6 +410,7 @@ def main():
             ok = False
     if ok:
         stab = sm.process()
+    # pylint: disable=possibly-used-before-assignment
     if not ok or stab is None:
         print("lobster-trlc: aborting due to earlier error")
         return 1
