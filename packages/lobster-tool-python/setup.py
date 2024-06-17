@@ -48,7 +48,7 @@ setuptools.setup(
     name="bmw-lobster-tool-python",
     version=version.LOBSTER_VERSION,
     author="Bayerische Motoren Werke Aktiengesellschaft (BMW AG)",
-    author_email="florian.schanda@bmw.de",
+    author_email="philipp.wullstein-kammler@bmw.de",
     description="LOBSTER Tool for Python3",
     long_description=long_description,
     long_description_content_type="text/markdown",
