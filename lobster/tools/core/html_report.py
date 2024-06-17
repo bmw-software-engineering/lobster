@@ -36,9 +36,9 @@ from lobster.items import (Tracing_Status, Item,
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
 
 
-def is_dot_available():
+def is_dot_available(dot):
     try:
-        subprocess.run(["dot", "-V"],
+        subprocess.run([dot if dot else "dot", "-V"],
                        stdout=subprocess.PIPE,
                        stderr=subprocess.PIPE,
                        encoding="UTF-8",
@@ -113,7 +113,7 @@ def xref_item(item, link=True, brief=False):
     return rv
 
 
-def create_policy_diagram(doc, report):
+def create_policy_diagram(doc, report, dot):
     assert isinstance(doc, htmldoc.Document)
     assert isinstance(report, Report)
 
@@ -145,7 +145,7 @@ def create_policy_diagram(doc, report):
         graph_name = os.path.join(tmp_dir, "graph.dot")
         with open(graph_name, "w", encoding="UTF-8") as tmp_fd:
             tmp_fd.write(graph)
-        svg = subprocess.run(["dot", "-Tsvg", graph_name],
+        svg = subprocess.run([dot if dot else "dot", "-Tsvg", graph_name],
                              stdout=subprocess.PIPE,
                              encoding="UTF-8",
                              check=True)
@@ -258,7 +258,7 @@ def write_item_box_end(doc):
     doc.add_line('<!-- end item -->')
 
 
-def write_html(fd, report):
+def write_html(fd, report, dot):
     assert isinstance(report, Report)
 
     doc = htmldoc.Document(
@@ -362,10 +362,10 @@ def write_html(fd, report):
     doc.add_heading(3, "Coverage")
     create_item_coverage(doc, report)
     doc.add_line('</div>')
-    if is_dot_available():
+    if is_dot_available(dot):
         doc.add_line('<div class="column">')
         doc.add_heading(3, "Tracing policy")
-        create_policy_diagram(doc, report)
+        create_policy_diagram(doc, report, dot)
         doc.add_line('</div>')
     else:
         print("warning: dot utility not found, report will not "
@@ -461,6 +461,10 @@ def main():
                     default="report.lobster")
     ap.add_argument("--out",
                     default="lobster_report.html")
+    ap.add_argument("--dot",
+                    help="path to dot utility (https://graphviz.org), \
+                    by default expected in PATH",
+                    default=None)
     options = ap.parse_args()
 
     if not os.path.isfile(options.lobster_report):
@@ -474,7 +478,8 @@ def main():
 
     with open(options.out, "w", encoding="UTF-8") as fd:
         write_html(fd     = fd,
-                   report = report)
+                   report = report,
+                   dot = options.dot)
         print("LOBSTER HTML report written to %s" % options.out)
 
 
