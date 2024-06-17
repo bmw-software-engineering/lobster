@@ -462,7 +462,8 @@ def main():
     ap.add_argument("--out",
                     default="lobster_report.html")
     ap.add_argument("--dot",
-                    help="path to dot utility, by default expected in PATH",
+                    help="path to dot utility (https://graphviz.org), \
+                    by default expected in PATH",
                     default=None)
     options = ap.parse_args()
 
