@@ -1,0 +1,5 @@
+BAZEL_LOGS_NAME = "bazel_logs.tar.gz"
+TEST_LOGS_NAME = "bazel_test_log.txt"
+TAR_LOGS_NAME = "testlogs/test_log.txt"
+JOB_OUTPUT_NAME = "job-output.txt"
+ZUUL_MANIFEST_NAME = "zuul-manifest.json"
