@@ -22,6 +22,36 @@ future.
 * `lobster-cpp`: Extract requirements from C/C++ code using a
   clang-tidy hack
 
+## Usage
+
+This tool supports C/C++ code.
+
+For this you can embedd tracing tags like this:
+
+```cpp
+#include <string>
+class Potato {
+public:
+    std::string potato() {
+        // lobster-trace: something.example
+        return "potato";
+    }
+};
+```
+
+You can add justifications as well:
+
+```cpp
+#include <string>
+class Potato {
+public:
+    std::string potato() {
+        // lobster-exclude: Reason to justify the exlude
+        return "potato";
+    }
+};
+```
+
 ## Copyright & License information
 
 The copyright holder of LOBSTER is the Bayerische Motoren Werke
