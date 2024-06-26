@@ -5,6 +5,13 @@
 
 ### 0.9.17-dev
 
+* The `lobster-html-report` tool now supports argument `--dot` to specify
+  the path to the graphviz dot utility instead of expecting it in PATH
+
+* The `lobster-online-report` tool now supports argument `--out` to specify 
+  the output file instead of editing the input report
+
+* Adds `with kind` and `with prefix` functionality in lobster.conf files
 
 ### 0.9.16
 
