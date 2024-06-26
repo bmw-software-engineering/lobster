@@ -164,7 +164,7 @@ def main():
                     kind     = kind,
                     name     = function_name)
 
-            db[tag.key].just_up.append(reason)
+            db[tag.key()].just_up.append(reason)
 
             continue
 
