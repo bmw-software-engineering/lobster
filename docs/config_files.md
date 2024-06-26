@@ -40,7 +40,7 @@ LOBSTER source file corresponds to the TRLC requirements type.
 
 Using `with prefix <string>` allows to filter items with a certain
 prefix in the `tag` attribute in the LOBSTER source file. For TRLC 
-requirements the tag attribute corresponds to the requiremet name.
+requirements the tag attribute corresponds to the requirement name.
 
 Specifically for requirements you can say:
 
