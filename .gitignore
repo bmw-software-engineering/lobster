@@ -12,3 +12,5 @@ test_install_monolithic
 lobster/tools/cpp_parser/_bazel_*
 .idea/
 test-unit/_bazel_*
+_bazel_*
+adp.lobster

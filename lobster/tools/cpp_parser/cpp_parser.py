@@ -46,7 +46,8 @@ def main():
             for path, _, files in os.walk(item):
                 for filename in files:
                     _, ext = os.path.splitext(filename)
-                    if ext in (".cpp", ".cc", ".c", ".h"):
+                    # if ext in (".cpp", ".cc", ".c", ".h"):
+                    if ext in [".cpp"]:
                         file_list.append(os.path.join(path, filename))
         else:
             ap.error("%s is not a file or directory" % item)
@@ -75,7 +76,7 @@ def main():
         tag = Tracing_Tag("cpp", function_uid)
         loc = File_Reference(filename, line_nr)
         kind = 'Function'
-        ref = tracking_id
+        ref = tracking_id.replace("CB-#", "")
 
         if tag.key() not in db:
             db[tag.key()] = Implementation(
@@ -84,16 +85,16 @@ def main():
                 language = "C/C++",
                 kind     = kind,
                 name     = function_name)
-
-        db[tag.key()].add_tracing_target(Tracing_Tag("req", ref))
+        if 'Missing' not in ref:
+            db[tag.key()].add_tracing_target(Tracing_Tag("req", ref))
 
     if options.out:
         with open(options.out, "w", encoding="UTF-8") as fd:
-            lobster_write(fd, Implementation, "lobster_xxx_cpp", db.values())
+            lobster_write(fd, Implementation, "lobster_cpp_parser", db.values())
         print("Written output for %u items to %s" % (len(db), options.out))
 
     else:
-        lobster_write(sys.stdout, Implementation, "lobster_xxx_cpp", db.values())
+        lobster_write(sys.stdout, Implementation, "lobster_cpp_parser", db.values())
         print()
 
 
