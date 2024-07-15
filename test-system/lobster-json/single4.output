@@ -3,14 +3,14 @@ lobster-json: wrote 1 items to single4.lobster
 {
   "data": [
     {
-      "tag": "json single4.1",
+      "tag": "json ./single4.json:single4.1",
       "location": {
         "kind": "file",
         "file": "./single4.json",
         "line": null,
         "column": null
       },
-      "name": "single4.1",
+      "name": "./single4.json:single4.1",
       "messages": [],
       "just_up": [],
       "just_down": [],
