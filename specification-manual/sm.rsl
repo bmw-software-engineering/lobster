@@ -1,0 +1,41 @@
+package SM
+
+type Versioning {
+  major Integer
+  minor Integer
+}
+
+type Text {
+  text            optional String
+  bullets         optional String [2 .. *]  
+}
+
+type Terminal extends Text {
+  def      String
+  examples String [1 .. *]
+}
+
+type Grammar extends Text {
+  bnf String
+}
+
+enum Kind {
+  Static
+  Dynamic
+}
+
+final type Note extends Text {
+  freeze untraced_reason = "Non-normative text"
+}
+
+abstract type Semantics extends Text {
+  kind Kind
+}
+
+type Static_Semantics extends Semantics {
+  freeze kind = Kind.Static
+}
+
+type Dynamic_Semantics extends Semantics {
+  freeze kind = Kind.Dynamic
+}
