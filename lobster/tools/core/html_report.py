@@ -286,16 +286,16 @@ def write_html(fd, report, dot):
         "padding-left"  : "0.2em",
     }
     doc.style[".item-ok"] = {
-        "background-color" : "#F6E2C2",
+        "background-color" : "#b2e1b2",
     }
     doc.style[".item-partial"] = {
         "background-color" : "#ffe",
     }
     doc.style[".item-missing"] = {
-        "background-color" : "#E5C2F6",
+        "background-color" : "#ffb2ff",
     }
     doc.style[".item-justified"] = {
-        "background-color" : "#AEC3F9",
+        "background-color" : "#eee",
     }
     doc.style[".subtle-ok"] = {
         "border-left" : "0.2em solid #8f8",
