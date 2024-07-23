@@ -5,37 +5,34 @@ type Versioning {
   minor Integer
 }
 
-type Text {
-  text            optional String
-  bullets         optional String [2 .. *]  
+type Requirements {
+  requirements    String
+  bullets         optional String [1 .. *]  
 }
 
-type Terminal extends Text {
-  def      String
+type Information{
+  information     optional String
+  defination      String
   examples String [1 .. *]
 }
 
-type Grammar extends Text {
-  bnf String
-}
-
-enum Kind {
-  Static
-  Dynamic
-}
-
-final type Note extends Text {
+final type Note extends Requirements {
   freeze untraced_reason = "Non-normative text"
 }
 
-abstract type Semantics extends Text {
-  kind Kind
+enum Key {
+  Static
+  }
+
+abstract type Definition extends Requirements {
+  key Key
 }
 
-type Static_Semantics extends Semantics {
-  freeze kind = Kind.Static
+type Static_Defination extends Definition {
+  freeze key = Key.Static
 }
 
-type Dynamic_Semantics extends Semantics {
-  freeze kind = Kind.Dynamic
-}
+
+
+
+
