@@ -9,7 +9,7 @@ This package contains a tool and helper header for GoogleTest.
 
 ## Tools
 
-* `lobster-gtest`: Extrat tracing data from GoogleTest XML files
+* `lobster-gtest`: Extract tracing data from GoogleTest XML files
 
 * [lobster_gtest.h](../../support/gtest/include/lobster_gtest.h): A
   public domain header with a C/C++ macro to embed tracing tags or
