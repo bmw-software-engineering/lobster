@@ -24,6 +24,13 @@ class LobsterCppParserTests(unittest.TestCase):
         self.assertIsNotNone(requirement_details)
         self.assertIsInstance(requirement_details, list)
 
+    def test_fetch_requirement_details_second(self):
+        parser = ParserForRequirements()
+        test_files = parser.get_target_test_files()
+        requirement_details = parser.fetch_requirement_details_for_test_files(test_files)
+        self.assertIsNotNone(requirement_details)
+        self.assertIsInstance(requirement_details, list)
+
     def test_test_case_parsing(self):
         """
         Verify that the test case parsing is working correctly
@@ -73,6 +80,7 @@ class LobsterCppParserTests(unittest.TestCase):
             {"suite": "RequirementByTest1", "test_name": "RequiredByWithAt", "req_by": ["FOO0::BAR0"]},
             {"suite": "RequirementByTest1", "test_name": "MultipleRequiredByCommaSeparated", "req_by": ["FOO0::BAR0", "FOO1::BAR1"]},
             {"suite": "RequirementByTest1", "test_name": "MultipleRequiredByAsComments", "req_by": ["FOO0::BAR0", "FOO1::BAR1", "FOO2::BAR2", "FOO3::BAR3", "FOO4::BAR4", "FOO5::BAR5", "FOO6::BAR6", "FOO7::BAR7", "FOO8::BAR8"]},
+            {"suite": "RequirementByTest2", "test_name": "RequiredByWithNewLines", "req_by": ["FOO0::BAR0", "FOO1::BAR1", "FOO2::BAR2", "FOO3::BAR3", "FOO4::BAR4", "FOO5::BAR5", "FOO6::BAR6", "FOO7::BAR7", "FOO8::BAR8"]},
             # Verify that the testmethods tag is correctly parsed
             {"suite": "TestMethodsTagTest", "test_name": "TestMethod", "testmethods": ["TM_REQUIREMENT"]},
             {"suite": "TestMethodsTagTest2", "test_name": "TestMethodAsCommentsSpaceSeparated", "testmethods": ["TM_PAIRWISE", "TM_BOUNDARY"]},
@@ -87,12 +95,12 @@ class LobsterCppParserTests(unittest.TestCase):
             {"suite": "VersionTagTest", "test_name": "MoreRequirementsThanVersions", "version": ["28", "28"], "req": ["CB-#0815", "CB-#0816"]},
             {"suite": "VersionTagTest", "test_name": "VersionSpaceSeparated", "version": ["28", "99"], "req": ["CB-#123", "CB-#456"]},
             # Verify that all at once is correctly parsed
-            {"suite": "AllTogetherTest", "test_name": "ImplementationMultipleLines", "docu_start": 194, "docu_end": 201, "def_start": 202, "def_end": 204, "version": ["42", "2"], "test": "foo", "brief": "this test tests something", "req": ["CB-#0815", "CB-#0816"], "req_by": ["FOO0::BAR0"], "testmethods": ["TM_BOUNDARY", "TM_REQUIREMENT"]}
+            {"suite": "AllTogetherTest", "test_name": "ImplementationMultipleLines", "docu_start": 207, "docu_end": 214, "def_start": 215, "def_end": 217, "version": ["42", "2"], "test": "foo", "brief": "this test tests something", "req": ["CB-#0815", "CB-#0816"], "req_by": ["FOO0::BAR0"], "testmethods": ["TM_BOUNDARY", "TM_REQUIREMENT"]}
         ]
         # fmt: on
 
         test_cases = ParserForRequirements.collect_test_cases(test_file)
-        self.assertEqual(len(test_cases), 44)
+        self.assertEqual(len(test_cases), 45)
 
         for i in range(0, len(expect)):
             self.assertEqual(test_cases[i].file_name, test_file)
