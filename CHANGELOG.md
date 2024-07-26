@@ -5,6 +5,8 @@
 
 ### 0.9.17-dev
 
+* The `lobster-codebeamer` tool now uses codebeamer api v3
+
 * The `lobster-html-report` tool now supports argument `--dot` to specify
   the path to the graphviz dot utility instead of expecting it in PATH
 
