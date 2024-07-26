@@ -142,6 +142,19 @@ TEST(RequirementByTest1, MultipleRequiredByCommaSeparated) {}
  */
 TEST(RequirementByTest1, MultipleRequiredByAsComments) {}
 
+/// @test lorem ipsum
+/// @requiredby FOO0::BAR0,
+///             FOO1::BAR1,
+/// 			FOO2::BAR2,
+///             FOO3::BAR3,
+///             FOO4::BAR4,
+/// 			FOO5::BAR5,
+///             FOO6::BAR6,
+///             FOO7::BAR7,
+/// 			FOO8::BAR8
+///
+TEST(RequirementByTest2, RequiredByWithNewLines) {}
+
 /** ensure testmethods are parsed correctly */
 
 /// @testmethods TM_REQUIREMENT
