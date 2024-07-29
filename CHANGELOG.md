@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.9.17-dev
+### 0.9.17
 
 * The `lobster-html-report` tool now supports argument `--dot` to specify
   the path to the graphviz dot utility instead of expecting it in PATH
