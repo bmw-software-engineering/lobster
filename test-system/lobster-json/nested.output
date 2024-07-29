@@ -3,14 +3,14 @@ lobster-json: wrote 6 items to nested.lobster
 {
   "data": [
     {
-      "tag": "json Test_1",
+      "tag": "json ./nested.json:Test_1",
       "location": {
         "kind": "file",
         "file": "./nested.json",
         "line": null,
         "column": null
       },
-      "name": "Test_1",
+      "name": "./nested.json:Test_1",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -23,14 +23,14 @@ lobster-json: wrote 6 items to nested.lobster
       "status": null
     },
     {
-      "tag": "json Test_2",
+      "tag": "json ./nested.json:Test_2",
       "location": {
         "kind": "file",
         "file": "./nested.json",
         "line": null,
         "column": null
       },
-      "name": "Test_2",
+      "name": "./nested.json:Test_2",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -40,14 +40,14 @@ lobster-json: wrote 6 items to nested.lobster
       "status": null
     },
     {
-      "tag": "json Test_3",
+      "tag": "json ./nested.json:Test_3",
       "location": {
         "kind": "file",
         "file": "./nested.json",
         "line": null,
         "column": null
       },
-      "name": "Test_3",
+      "name": "./nested.json:Test_3",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -61,14 +61,14 @@ lobster-json: wrote 6 items to nested.lobster
       "status": null
     },
     {
-      "tag": "json Test_4",
+      "tag": "json ./nested.json:Test_4",
       "location": {
         "kind": "file",
         "file": "./nested.json",
         "line": null,
         "column": null
       },
-      "name": "Test_4",
+      "name": "./nested.json:Test_4",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -78,14 +78,14 @@ lobster-json: wrote 6 items to nested.lobster
       "status": null
     },
     {
-      "tag": "json Test_5",
+      "tag": "json ./nested.json:Test_5",
       "location": {
         "kind": "file",
         "file": "./nested.json",
         "line": null,
         "column": null
       },
-      "name": "Test_5",
+      "name": "./nested.json:Test_5",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -98,14 +98,14 @@ lobster-json: wrote 6 items to nested.lobster
       "status": null
     },
     {
-      "tag": "json Test_6",
+      "tag": "json ./nested.json:Test_6",
       "location": {
         "kind": "file",
         "file": "./nested.json",
         "line": null,
         "column": null
       },
-      "name": "Test_6",
+      "name": "./nested.json:Test_6",
       "messages": [],
       "just_up": [],
       "just_down": [],
