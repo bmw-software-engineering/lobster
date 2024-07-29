@@ -19,6 +19,7 @@
 
 import os
 import re
+import sys
 import argparse
 
 from copy import copy
@@ -448,4 +449,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
