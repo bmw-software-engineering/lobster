@@ -5,6 +5,14 @@
 
 ### 0.9.17
 
+* The `lobster-python` tool now adds the line number to the function
+  identifier. This supports situations where different functions have
+  the same name
+
+* The `lobster-json` tool now adds the filename to the test identifier.
+  This allows to have multiple json elements with the same name in
+  different source files
+
 * The `lobster-html-report` tool now supports argument `--dot` to specify
   the path to the graphviz dot utility instead of expecting it in PATH
 
