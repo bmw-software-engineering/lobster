@@ -1,0 +1,38 @@
+package SM
+
+type Versioning {
+  major Integer
+  minor Integer
+}
+
+type Requirements {
+  requirements    String
+  bullets         optional String [1 .. *]  
+}
+
+type Information{
+  information     optional String
+  defination      String
+  examples String [1 .. *]
+}
+
+final type Note extends Requirements {
+  freeze untraced_reason = "Non-normative text"
+}
+
+enum Key {
+  Static
+  }
+
+abstract type Definition extends Requirements {
+  key Key
+}
+
+type Static_Defination extends Definition {
+  freeze key = Key.Static
+}
+
+
+
+
+
