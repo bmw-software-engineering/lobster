@@ -11,7 +11,7 @@
           "tag": "req sysreq_example.lobster_example",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/sysreq_example.trlc",
             "line": 4
@@ -36,7 +36,7 @@
           "tag": "req sysreq_example.req_implication",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/sysreq_example.trlc",
             "line": 11
@@ -60,7 +60,7 @@
           "tag": "req sysreq_example.req_xor",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/sysreq_example.trlc",
             "line": 19
@@ -91,7 +91,7 @@
           "tag": "req softreq_example.req_implication",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/softreq_example.trlc",
             "line": 5
@@ -107,8 +107,8 @@
           ],
           "ref_down": [
             "cpp foo.cpp:implication:3",
-            "json test_example.json.Implication Test 1",
-            "json test_example.json.Implication Test 2"
+            "json test_example.json:Implication Test 1",
+            "json test_example.json:Implication Test 2"
           ],
           "tracing_status": "OK",
           "framework": "TRLC",
@@ -120,7 +120,7 @@
           "tag": "req softreq_example.req_xor",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/softreq_example.trlc",
             "line": 17
@@ -136,10 +136,10 @@
           ],
           "ref_down": [
             "cpp foo.cpp:exclusive_or:9",
-            "json test_example.json.XOR Test 1",
-            "json test_example.json.XOR Test 2",
-            "json test_example.json.XOR Test 3",
-            "json test_example.json.XOR Test 4"
+            "json test_example.json:XOR Test 1",
+            "json test_example.json:XOR Test 2",
+            "json test_example.json:XOR Test 3",
+            "json test_example.json:XOR Test 4"
           ],
           "tracing_status": "OK",
           "framework": "TRLC",
@@ -158,7 +158,7 @@
           "tag": "cpp foo.cpp:implication:3",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/foo.cpp",
             "line": 3
@@ -180,7 +180,7 @@
           "tag": "cpp foo.cpp:exclusive_or:9",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/foo.cpp",
             "line": 9
@@ -206,15 +206,15 @@
       "kind": "activity",
       "items": [
         {
-          "tag": "json test_example.json.Implication Test 1",
+          "tag": "json test_example.json:Implication Test 1",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/test_example.json",
             "line": null
           },
-          "name": "test_example.json.Implication Test 1",
+          "name": "test_example.json:Implication Test 1",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -229,15 +229,15 @@
           "status": null
         },
         {
-          "tag": "json test_example.json.Implication Test 2",
+          "tag": "json test_example.json:Implication Test 2",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/test_example.json",
             "line": null
           },
-          "name": "test_example.json.Implication Test 2",
+          "name": "test_example.json:Implication Test 2",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -252,15 +252,15 @@
           "status": null
         },
         {
-          "tag": "json test_example.json.XOR Test 1",
+          "tag": "json test_example.json:XOR Test 1",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/test_example.json",
             "line": null
           },
-          "name": "test_example.json.XOR Test 1",
+          "name": "test_example.json:XOR Test 1",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -275,15 +275,15 @@
           "status": null
         },
         {
-          "tag": "json test_example.json.XOR Test 2",
+          "tag": "json test_example.json:XOR Test 2",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/test_example.json",
             "line": null
           },
-          "name": "test_example.json.XOR Test 2",
+          "name": "test_example.json:XOR Test 2",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -298,15 +298,15 @@
           "status": null
         },
         {
-          "tag": "json test_example.json.XOR Test 3",
+          "tag": "json test_example.json:XOR Test 3",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/test_example.json",
             "line": null
           },
-          "name": "test_example.json.XOR Test 3",
+          "name": "test_example.json:XOR Test 3",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -321,15 +321,15 @@
           "status": null
         },
         {
-          "tag": "json test_example.json.XOR Test 4",
+          "tag": "json test_example.json:XOR Test 4",
           "location": {
             "kind": "github",
-            "gh_root": "https://github_paulboegedev/paulboege/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
             "file": "integration-tests/projects/filter/test_example.json",
             "line": null
           },
-          "name": "test_example.json.XOR Test 4",
+          "name": "test_example.json:XOR Test 4",
           "messages": [],
           "just_up": [],
           "just_down": [],
