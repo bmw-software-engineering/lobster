@@ -5,6 +5,8 @@
 
 ### 0.9.17
 
+* The `lobster-codebeamer` tool now allows items without summary
+
 * The `lobster-python` tool now adds the line number to the function
   identifier. This supports situations where different functions have
   the same name
