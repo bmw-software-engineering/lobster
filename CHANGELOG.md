@@ -5,6 +5,9 @@
 
 ### 0.9.17
 
+* The `lobster-online-report` tool now works with config files located in 
+  main- and submodules of a repository
+
 * The `lobster-python` tool now adds the line number to the function
   identifier. This supports situations where different functions have
   the same name

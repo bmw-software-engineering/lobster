@@ -32,6 +32,48 @@ class Parse_Error(Exception):
     pass
 
 
+def is_git_main_module(path):
+    return os.path.isdir(os.path.join(path, ".git"))
+
+
+def find_repo_main_root(file_path):
+    file_path = os.path.abspath(file_path)
+
+    try:
+        # Get top-level directory
+        repo_root = subprocess.run(
+            ["git", "rev-parse", "--show-toplevel"],
+            check=True,
+            capture_output=True,
+            encoding="UTF-8",
+            cwd=os.path.dirname(file_path)
+        ).stdout.strip()
+
+        if is_git_main_module(repo_root):
+            return repo_root
+
+        # Get the root of superproject if the current
+        # repository is a Submodule
+        repo_root = subprocess.run(
+            ["git", "rev-parse", "--show-superproject-working-tree"],
+            check=True,
+            capture_output=True,
+            encoding="UTF-8",
+            cwd=os.path.dirname(file_path)
+        ).stdout.strip()
+
+        return repo_root if repo_root else os.getcwd()
+
+    except subprocess.CalledProcessError:
+        return os.getcwd()
+
+
+def path_starts_with_subpath(path, subpath):
+    path = os.path.normcase(path)
+    subpath = os.path.normcase(subpath)
+    return path.startswith(subpath)
+
+
 def parse_git_root(cfg):
     gh_root = cfg["url"]
     if not gh_root.endswith(".git"):
@@ -73,12 +115,12 @@ def main():
 
     if options.repo_root:
         repo_root = os.path.abspath(os.path.expanduser(options.repo_root))
-        if not os.path.isdir(os.path.join(repo_root, ".git")):
+        if not is_git_main_module(repo_root):
             ap.error("cannot find .git directory in %s" % options.repo_root)
     else:
-        repo_root = os.getcwd()
+        repo_root = find_repo_main_root(options.lobster_report)
         while True:
-            if os.path.isdir(os.path.join(repo_root, ".git")):
+            if is_git_main_module(repo_root):
                 break
             new_root = os.path.dirname(repo_root)
             if new_root == repo_root:
@@ -112,6 +154,7 @@ def main():
                  sm_dir],
                 check          = True,
                 capture_output = True,
+                cwd            = repo_root,
                 encoding       = "UTF-8").stdout.split()
             gh_submodule_sha[sm_dir] = sha
 
@@ -131,7 +174,7 @@ def main():
             actual_path = rel_path_from_root
             # pylint: disable=consider-using-dict-items
             for prefix in gh_submodule_roots:
-                if rel_path_from_root.startswith(prefix):
+                if path_starts_with_subpath(rel_path_from_root, prefix):
                     actual_repo = gh_submodule_roots[prefix]
                     actual_sha  = gh_submodule_sha[prefix]
                     actual_path = rel_path_from_root[len(prefix) + 1:]
