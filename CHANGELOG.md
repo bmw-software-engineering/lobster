@@ -2,6 +2,14 @@
 
 ## Changelog
 
+### 0.9.18-dev
+
+* The `lobster-codebeamer` tool now uses codebeamer api v3.
+  Please note that the api v3 returns the value "Unset" for a codebeamer
+  item status if the status is actually empty. The api v1 did not return
+  any value at all for an item with a missing status. This means that the
+  resulting lobster file will now contain "Unset" as status information,
+  too, instead of `Null`.
 
 ### 0.9.17
 
@@ -12,8 +20,6 @@
 * The `lobster-json` tool now adds the filename to the test identifier.
   This allows to have multiple json elements with the same name in
   different source files
-
-* The `lobster-codebeamer` tool now uses codebeamer api v3
 
 * The `lobster-html-report` tool now supports argument `--dot` to specify
   the path to the graphviz dot utility instead of expecting it in PATH

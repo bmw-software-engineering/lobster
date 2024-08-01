@@ -82,7 +82,8 @@ def query_cb_single(cb_config, url):
 def get_single_item(cb_config, item_id):
     assert isinstance(item_id, int) and item_id > 0
 
-    url = "%s/items/%u" % (cb_config["base"], item_id)
+    url = "%s/items/%u" % (cb_config["base"],
+                           item_id)
     data = query_cb_single(cb_config, url)
     return data
 
@@ -157,8 +158,9 @@ def to_lobster(cb_config, cb_item):
     # This looks like it's business logic, maybe we should make this
     # configurable?
 
-    if "typeName" in cb_item:
-        kind = cb_item["typeName"]
+    categories = cb_item.get("categories")
+    if categories:
+        kind = categories[0].get("name", "codebeamer item")
     else:
         kind = "codebeamer item"
 
@@ -201,7 +203,7 @@ def import_tagged(mh, cb_config, items_to_import):
     assert isinstance(mh, Message_Handler)
     assert isinstance(cb_config, dict)
     assert isinstance(items_to_import, set)
-    rv        = []
+    rv = []
 
     cb_items = get_many_items(cb_config, items_to_import)
     for cb_item in cb_items:

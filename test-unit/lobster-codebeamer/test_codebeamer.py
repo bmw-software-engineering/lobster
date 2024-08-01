@@ -9,7 +9,6 @@ list_of_compared_attributes = ['name', 'kind', 'status', 'just_down', 'just_up',
 
 
 class QueryCodebeamerTest(unittest.TestCase):
-
     def _assertListEqualByAttributes(self, list1, list2):
         self.assertEqual(len(list1), len(list2), "Lists length are not the same")
         for obj1, obj2 in zip(list1, list2):
@@ -63,7 +62,7 @@ class QueryCodebeamerTest(unittest.TestCase):
             {
                 'id': 24406947,
                 'name': 'Test name 1',
-                'typeName': 'Requirement',
+                'categories': [{'name': 'Folder'}],
                 'version': 7,
                 'status': {'name': 'status'},
                 'tracker': {'id': 123}
@@ -71,7 +70,7 @@ class QueryCodebeamerTest(unittest.TestCase):
             {
                 'id': 21747817,
                 'name': 'Test name 2',
-                'typeName': 'Requirement',
+                'categories': [{'name': 'Folder'}],
                 'version': 10,
                 'status': {'name': 'status'},
                 'tracker': {'id': 123}
