@@ -27,43 +27,46 @@ from lobster.io import lobster_write
 from lobster.tools.cpp_parser.parser.requirements_parser import ParserForRequirements
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("files",
-                    nargs="+",
-                    metavar="FILE|DIR")
-    ap.add_argument("--out",
-                    default=None,
-                    help="write output to this file; otherwise output to stdout")
+LOBSTER_GENERATOR = "lobster_cpp_doxygen"
 
-    options = ap.parse_args()
 
+def get_test_file_list(file_dir_list, extension_list):
     file_list = []
-    for item in options.files:
-        if os.path.isfile(item):
-            file_list.append(item)
-        elif os.path.isdir(item):
-            for path, _, files in os.walk(item):
+    errors = []
+
+    for file_dir_entry in file_dir_list:
+        if os.path.isfile(file_dir_entry):
+            file_list.append(file_dir_entry)
+        elif os.path.isdir(file_dir_entry):
+            for path, _, files in os.walk(file_dir_entry):
                 for filename in files:
                     _, ext = os.path.splitext(filename)
-                    # if ext in (".cpp", ".cc", ".c", ".h"):
-                    if ext in [".cpp"]:
+                    if ext in extension_list:
                         file_list.append(os.path.join(path, filename))
         else:
-            ap.error("%s is not a file or directory" % item)
+            errors.append(f'"{file_dir_entry}" is not a file or directory')
 
-    prefix = os.getcwd()
+    if len(file_list) == 0:
+        errors.append(f'"{file_dir_list}" does not contain any test file')
 
+    return file_list, errors
+
+
+def fetch_requirement_details_from_test_files(test_file_list) -> list:
     parser = ParserForRequirements()
-    requirement_details = parser.fetch_requirement_details_for_test_files(test_files=file_list)
+    requirement_details = parser.fetch_requirement_details_for_test_files(test_files=test_file_list)
+    return requirement_details
 
-    db = {}
+
+def create_lobster_implementations_dict_from_requirement_details(requirement_details) -> dict:
+    prefix = os.getcwd()
+    lobster_implementations_dict = {}
 
     for requirement_detail in requirement_details:
-        # get requirement detail properties delivered from parser
+        # get requirement detail properties delivered inside the requirement_details
         tracking_id: str = requirement_detail.get('tracking_id')
         function_name: str = requirement_detail.get('component')
-        test_desc: str = requirement_detail.get('test_desc')
+        # test_desc: str = requirement_detail.get('test_desc')
         file_name_with_line_number: str = requirement_detail.get('file_name')
 
         # convert into fitting parameters for Implementation
@@ -78,24 +81,74 @@ def main():
         kind = 'Function'
         ref = tracking_id.replace("CB-#", "")
 
-        if tag.key() not in db:
-            db[tag.key()] = Implementation(
-                tag      = tag,
-                location = loc,
-                language = "C/C++",
-                kind     = kind,
-                name     = function_name)
+        if tag.key() not in lobster_implementations_dict:
+            lobster_implementations_dict[tag.key()] = Implementation(
+                tag=tag,
+                location=loc,
+                language="C/C++",
+                kind=kind,
+                name=function_name)
         if 'Missing' not in ref:
-            db[tag.key()].add_tracing_target(Tracing_Tag("req", ref))
+            lobster_implementations_dict[tag.key()].add_tracing_target(Tracing_Tag("req", ref))
 
-    if options.out:
-        with open(options.out, "w", encoding="UTF-8") as fd:
-            lobster_write(fd, Implementation, "lobster_cpp_parser", db.values())
-        print("Written output for %u items to %s" % (len(db), options.out))
+    return lobster_implementations_dict
+
+
+def write_lobster_implementations_to_output(lobster_implementations_dict, output):
+    if output:
+        with open(output, "w", encoding="UTF-8") as output_file:
+            lobster_write(output_file, Implementation, LOBSTER_GENERATOR, lobster_implementations_dict.values())
+        item_count = len(lobster_implementations_dict)
+        print(f'Written output for {item_count} items to {output}')
 
     else:
-        lobster_write(sys.stdout, Implementation, "lobster_cpp_parser", db.values())
+        lobster_write(sys.stdout, Implementation, LOBSTER_GENERATOR, lobster_implementations_dict.values())
         print()
+
+
+def lobster_cpp_doxygen(file_dir_list, output):
+    test_file_list, error_list = \
+        get_test_file_list(
+            file_dir_list=file_dir_list,
+            extension_list=[".cpp", ".cc", ".c", ".h"]
+        )
+
+    if len(error_list) == 0:
+        requirement_details_list: list = \
+            fetch_requirement_details_from_test_files(
+                test_file_list=test_file_list
+            )
+
+        lobster_implementations_dict: dict = \
+            create_lobster_implementations_dict_from_requirement_details(
+                requirement_details=requirement_details_list
+            )
+
+        write_lobster_implementations_to_output(
+            lobster_implementations_dict=lobster_implementations_dict,
+            output=output)
+
+    return error_list
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("files",
+                    nargs="+",
+                    metavar="FILE|DIR")
+    ap.add_argument("--out",
+                    default=None,
+                    help="write output to this file; otherwise output to stdout")
+
+    options = ap.parse_args()
+    error_list = \
+        lobster_cpp_doxygen(
+            file_dir_list=options.files,
+            output=options.out
+        )
+
+    for error in error_list:
+        ap.error(error)
 
 
 if __name__ == "__main__":
