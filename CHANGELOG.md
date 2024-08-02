@@ -4,6 +4,9 @@
 
 ### 0.9.18-dev
 
+* The `lobster-online-report` tool now works with config files located in 
+  main- and submodules of a repository. This feature needs `git 1.7.8` or higher.
+
 * The `lobster-codebeamer` tool now uses codebeamer api v3.
   Please note that the api v3 returns the value "Unset" for a codebeamer
   item status if the status is actually empty. The api v1 did not return
@@ -11,14 +14,7 @@
   resulting lobster file will now contain "Unset" as status information,
   too, instead of `Null`.
 
-### 0.9.18-dev
-
-
-
 ### 0.9.17
-
-* The `lobster-online-report` tool now works with config files located in 
-  main- and submodules of a repository
 
 * The `lobster-python` tool now adds the line number to the function
   identifier. This supports situations where different functions have

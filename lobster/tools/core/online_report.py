@@ -36,36 +36,86 @@ def is_git_main_module(path):
     return os.path.isdir(os.path.join(path, ".git"))
 
 
+def is_dir_in_git_submodule(directory):
+    """
+    Checks if a given directory is nested inside a Git submodule.
+
+    Args:
+        directory (str): The path to the directory to check.
+
+    Returns:
+        bool: True if the directory is inside a Git submodule,
+        False otherwise.
+        str: The path to the superproject of submodule.
+    """
+    try:
+        # Check if the directory is part of a Git submodule
+        result = subprocess.run(['git',
+                                 'rev-parse',
+                                 '--show-superproject-working-tree'],
+                                cwd=directory,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                universal_newlines=True)
+        if result.returncode == 0 and result.stdout.strip():
+            return True, result.stdout.strip()
+        else:
+            return False, ''
+    except (subprocess.CalledProcessError, OSError):
+        return False, ''
+
+
+def is_dir_in_git_main_module(directory):
+    """
+    Checks if a given directory is nested inside a Git main module.
+
+    Args:
+        directory (str): The path to the directory to check.
+
+    Returns:
+        bool: True if the directory is inside a Git mainmodule,
+        False otherwise.
+        str: The path to the mainmodule.
+    """
+    try:
+        # Check if the directory is part of a Git main module
+        result = subprocess.run(['git',
+                                'rev-parse',
+                                '--show-toplevel'],
+                                cwd=directory,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                universal_newlines=True)
+        if result.returncode == 0 and result.stdout.strip():
+            return True, result.stdout.strip()
+        else:
+            return False, ''
+    except (subprocess.CalledProcessError, OSError):
+        return False, ''
+
+
 def find_repo_main_root(file_path):
+    """
+    Find the main root repository.
+
+    Args:
+        file_path (str): The path to the file to check.
+
+    Returns:
+        str: The path to the main root repository.
+    """
     file_path = os.path.abspath(file_path)
 
-    try:
-        # Get top-level directory
-        repo_root = subprocess.run(
-            ["git", "rev-parse", "--show-toplevel"],
-            check=True,
-            capture_output=True,
-            encoding="UTF-8",
-            cwd=os.path.dirname(file_path)
-        ).stdout.strip()
+    is_submodule, submodule_superproject_path = \
+        is_dir_in_git_submodule(os.path.dirname(file_path))
 
-        if is_git_main_module(repo_root):
-            return repo_root
+    if is_submodule:
+        return submodule_superproject_path
 
-        # Get the root of superproject if the current
-        # repository is a Submodule
-        repo_root = subprocess.run(
-            ["git", "rev-parse", "--show-superproject-working-tree"],
-            check=True,
-            capture_output=True,
-            encoding="UTF-8",
-            cwd=os.path.dirname(file_path)
-        ).stdout.strip()
+    is_mainmodule, mainmodule_path = \
+        is_dir_in_git_main_module(os.path.dirname(file_path))
 
-        return repo_root if repo_root else os.getcwd()
-
-    except subprocess.CalledProcessError:
-        return os.getcwd()
+    return mainmodule_path if is_mainmodule else os.getcwd()
 
 
 def path_starts_with_subpath(path, subpath):
