@@ -2,8 +2,8 @@ import os
 import unittest
 from pathlib import Path
 
-from lobster.tools.cpp_parser.cpp_parser import fetch_requirement_details_from_test_files, get_test_file_list, \
-    create_lobster_implementations_dict_from_requirement_details, write_lobster_implementations_to_output, \
+from lobster.tools.cpp_parser.cpp_parser import get_test_file_list, collect_test_cases_from_test_files, \
+    create_lobster_implementations_dict_from_test_cases, write_lobster_implementations_to_output, \
     LOBSTER_GENERATOR, lobster_cpp_doxygen
 
 from lobster.tools.cpp_parser.parser.requirements_parser import ParserForRequirements
@@ -11,7 +11,7 @@ from lobster.tools.cpp_parser.parser.requirements_parser import ParserForRequire
 
 class LobsterCppDoxygenTests(unittest.TestCase):
     def test_get_test_file_list(self):
-        test_case_file_dir = Path('./data')
+        test_case_file_dir = str(Path('./data'))
         file_dir_list = [test_case_file_dir]
         extension_list = [".cpp", ".cc", ".c", ".h"]
 
@@ -31,7 +31,7 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         self.assertEqual(0, len(error_list))
 
     def test_get_test_file_list_no_file_with_matching_extension(self):
-        test_case_file_dir = Path('./data')
+        test_case_file_dir = str(Path('./data'))
         file_dir_list = [test_case_file_dir]
         extension_list = [".xyz"]
 
@@ -48,10 +48,10 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         self.assertIsNotNone(error_list)
         self.assertIsInstance(error_list, list)
         self.assertEqual(1, len(error_list))
-        self.assertTrue('"data" does not contain any test file' in error_list)
+        self.assertTrue(f'"{file_dir_list}" does not contain any test file' in error_list)
 
     def test_get_test_file_list_not_existing_file_dir(self):
-        test_case_file_dir = Path('./not_existing')
+        test_case_file_dir = str(Path('./not_existing'))
         file_dir_list = [test_case_file_dir]
         extension_list = [".cpp", ".cc", ".c", ".h"]
 
@@ -69,10 +69,10 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         self.assertIsInstance(error_list, list)
         self.assertEqual(2, len(error_list))
         self.assertTrue('"not_existing" is not a file or directory' in error_list)
-        self.assertTrue('"not_existing" does not contain any test file' in error_list)
+        self.assertTrue(f'"{file_dir_list}" does not contain any test file' in error_list)
 
     def test_lobster_cpp_doxygen_single_file(self):
-        test_case_file_dir = Path('./data', 'test_case.cpp')
+        test_case_file_dir = str(Path('./data', 'test_case.cpp'))
         file_dir_list = [test_case_file_dir]
 
         output_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(test_case_file_dir)}'
@@ -99,7 +99,7 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         self.assertTrue(file_exists)
 
     def test_lobster_cpp_doxygen_single_directory(self):
-        test_case_file_dir = Path('./data')
+        test_case_file_dir = str(Path('./data'))
         file_dir_list = [test_case_file_dir]
 
         output_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(test_case_file_dir)}'
@@ -126,7 +126,7 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         self.assertTrue(file_exists)
 
     def test_lobster_cpp_doxygen_not_existing_file_dir(self):
-        test_case_file_dir = Path('./not_existing')
+        test_case_file_dir = str(Path('./not_existing'))
         file_dir_list = [test_case_file_dir]
 
         output_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(test_case_file_dir)}'
@@ -328,7 +328,7 @@ class LobsterCppDoxygenTests(unittest.TestCase):
                 )
 
     def test_lobster_cpp_doxygen_write_implementations_to_lobster_file(self):
-        test_case_file = Path('./data', 'test_case.cpp')
+        test_case_file = str(Path('./data', 'test_case.cpp'))
         file_dir_list = [test_case_file]
 
         output_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(test_case_file)}'
@@ -350,17 +350,17 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         self.assertIsNotNone(test_file_list)
         self.assertIsInstance(test_file_list, list)
 
-        requirement_details_list: list = \
-            fetch_requirement_details_from_test_files(
+        test_case_list = \
+            collect_test_cases_from_test_files(
                 test_file_list=test_file_list
             )
 
-        self.assertIsNotNone(requirement_details_list)
-        self.assertIsInstance(requirement_details_list, list)
+        self.assertIsNotNone(test_case_list)
+        self.assertIsInstance(test_case_list, list)
 
         lobster_implementations_dict: dict = \
-            create_lobster_implementations_dict_from_requirement_details(
-                requirement_details=requirement_details_list
+            create_lobster_implementations_dict_from_test_cases(
+                test_case_list=test_case_list
             )
 
         self.assertIsNotNone(lobster_implementations_dict)

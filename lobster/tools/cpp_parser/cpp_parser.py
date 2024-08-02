@@ -52,25 +52,21 @@ def get_test_file_list(file_dir_list, extension_list):
     return file_list, errors
 
 
-def fetch_requirement_details_from_test_files(test_file_list) -> list:
+def collect_test_cases_from_test_files(test_file_list) -> list:
     parser = ParserForRequirements()
-    requirement_details = parser.fetch_requirement_details_for_test_files(test_files=test_file_list)
-    return requirement_details
+    test_case_list = parser.collect_test_cases_for_test_files(test_files=test_file_list)
+    return test_case_list
 
 
-def create_lobster_implementations_dict_from_requirement_details(requirement_details) -> dict:
+def create_lobster_implementations_dict_from_test_cases(test_case_list) -> dict:
     prefix = os.getcwd()
     lobster_implementations_dict = {}
 
-    for requirement_detail in requirement_details:
-        # get requirement detail properties delivered inside the requirement_details
-        tracking_id: str = requirement_detail.get('tracking_id')
-        function_name: str = requirement_detail.get('component')
-        # test_desc: str = requirement_detail.get('test_desc')
-        file_name_with_line_number: str = requirement_detail.get('file_name')
-
-        # convert into fitting parameters for Implementation
-        file_name, line_nr = file_name_with_line_number.split("#L")
+    for test_case in test_case_list:
+        # get requirement detail properties from test_case
+        function_name: str = test_case.suite_name
+        file_name = test_case.file_name
+        line_nr = test_case.docu_start_line
         filename = os.path.relpath(file_name, prefix)
         line_nr = int(line_nr)
         function_uid = "%s:%s:%u" % (os.path.basename(filename),
@@ -79,7 +75,6 @@ def create_lobster_implementations_dict_from_requirement_details(requirement_det
         tag = Tracing_Tag("cpp", function_uid)
         loc = File_Reference(filename, line_nr)
         kind = 'Function'
-        ref = tracking_id.replace("CB-#", "")
 
         if tag.key() not in lobster_implementations_dict:
             lobster_implementations_dict[tag.key()] = Implementation(
@@ -88,8 +83,11 @@ def create_lobster_implementations_dict_from_requirement_details(requirement_det
                 language="C/C++",
                 kind=kind,
                 name=function_name)
-        if 'Missing' not in ref:
-            lobster_implementations_dict[tag.key()].add_tracing_target(Tracing_Tag("req", ref))
+
+        for requirement in test_case.requirements:
+            if 'Missing' not in requirement:
+                requirement = requirement.replace("CB-#", "")
+                lobster_implementations_dict[tag.key()].add_tracing_target(Tracing_Tag("req", requirement))
 
     return lobster_implementations_dict
 
@@ -114,14 +112,14 @@ def lobster_cpp_doxygen(file_dir_list, output):
         )
 
     if len(error_list) == 0:
-        requirement_details_list: list = \
-            fetch_requirement_details_from_test_files(
+        test_case_list = \
+            collect_test_cases_from_test_files(
                 test_file_list=test_file_list
-            )
+        )
 
         lobster_implementations_dict: dict = \
-            create_lobster_implementations_dict_from_requirement_details(
-                requirement_details=requirement_details_list
+            create_lobster_implementations_dict_from_test_cases(
+                test_case_list=test_case_list
             )
 
         write_lobster_implementations_to_output(

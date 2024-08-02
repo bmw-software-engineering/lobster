@@ -98,6 +98,28 @@ class ParserForRequirements:
                 details.extend(self.create_requirement_details_list(tc, file_gitlink_with_line))
         return details
 
+    def collect_test_cases_for_test_files(self, test_files: List[Path]) -> List:
+        """
+        Parse a list of source files for test cases
+
+        Parameters
+        ----------
+        test_files: List[Path]
+            Source files to parse
+
+        Returns
+        -------
+        List[TestCase]
+           List of parsed TestCase / BenchmarkTestCase
+        """
+        test_cases = []
+
+        for file in set(test_files):
+            file_test_cases = self.collect_test_cases(file)
+            test_cases.extend(file_test_cases)
+
+        return test_cases
+
     @staticmethod
     def collect_test_cases(file: Path) -> List[TestCase]:
         """
