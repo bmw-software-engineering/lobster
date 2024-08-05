@@ -193,9 +193,6 @@ def to_lobster(cb_config, cb_item):
         text      = None,
         status    = status)
 
-    if "name" not in cb_item:
-        req.error("Item lacks a summary text")
-
     return req
 
 
