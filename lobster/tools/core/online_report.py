@@ -56,7 +56,8 @@ def is_dir_in_git_submodule(directory):
                                 cwd=directory,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
-                                universal_newlines=True)
+                                universal_newlines=True,
+                                check=True)
         if result.returncode == 0 and result.stdout.strip():
             return True, result.stdout.strip()
         else:
@@ -79,13 +80,12 @@ def is_dir_in_git_main_module(directory):
     """
     try:
         # Check if the directory is part of a Git main module
-        result = subprocess.run(['git',
-                                'rev-parse',
-                                '--show-toplevel'],
+        result = subprocess.run(['git', 'rev-parse', '--show-toplevel'],
                                 cwd=directory,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
-                                universal_newlines=True)
+                                universal_newlines=True,
+                                check=True)
         if result.returncode == 0 and result.stdout.strip():
             return True, result.stdout.strip()
         else:
