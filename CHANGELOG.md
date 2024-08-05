@@ -4,8 +4,10 @@
 
 ### 0.9.18-dev
 
-* The `lobster-online-report` tool now works with config files located in 
+* The `lobster-online-report` tool now works with config files located in
   main- and submodules of a repository. This feature needs `git 1.7.8` or higher.
+
+* The `lobster-codebeamer` tool now allows items without summary
 
 * The `lobster-codebeamer` tool now uses codebeamer api v3.
   Please note that the api v3 returns the value "Unset" for a codebeamer
