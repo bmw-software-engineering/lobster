@@ -40,9 +40,7 @@ import os
 import sys
 import argparse
 import netrc
-
-from copy import copy
-
+from urllib.parse import quote
 import requests
 
 from lobster.items import Tracing_Tag, Requirement
@@ -84,27 +82,26 @@ def query_cb_single(cb_config, url):
 def get_single_item(cb_config, item_id):
     assert isinstance(item_id, int) and item_id > 0
 
-    url = "%s/item/%u" % (cb_config["base"],
-                          item_id)
+    url = "%s/items/%u" % (cb_config["base"],
+                           item_id)
     data = query_cb_single(cb_config, url)
     return data
 
 
-def get_many_items_maybe(cb_config, tracker_id, item_ids):
-    assert isinstance(tracker_id, int)
+def get_many_items(cb_config, item_ids):
     assert isinstance(item_ids, set)
 
     rv = []
 
-    base_url = "%s/tracker/%u/items/or/%s" % (
-        cb_config["base"],
-        tracker_id,
-        ";".join("id=%u" % item_id
-                 for item_id in item_ids))
     page_id = 1
+    query_string = quote(f"item.id IN "
+                         f"({','.join(str(item_id) for item_id in item_ids)})")
+
     while True:
-        data = query_cb_single(cb_config, "%s/page/%u" % (base_url,
-                                                          page_id))
+        base_url = "%s/items/query?page=%u&pageSize=%u&queryString=%s"\
+                   % (cb_config["base"], page_id,
+                      cb_config["page_size"], query_string)
+        data = query_cb_single(cb_config, base_url)
         rv += data["items"]
         if len(rv) == data["total"]:
             break
@@ -123,14 +120,13 @@ def get_query(mh, cb_config, query_id):
 
     while total_items is None or len(rv) < total_items:
         print("Fetching page %u of query..." % page_id)
-        url = "%s/query/%u/page/%u?pagesize=%u" % \
+        url = "%s/reports/%u/items?page=%u&pageSize=%u" % \
             (cb_config["base"],
              query_id,
              page_id,
              cb_config["page_size"])
         data = query_cb_single(cb_config, url)
-        assert len(data) == 1
-        data = data["trackerItems"]
+        assert len(data) == 4
 
         if page_id == 1 and len(data["items"]) == 0:
             print("This query doesn't generate items. Please check:")
@@ -145,7 +141,7 @@ def get_query(mh, cb_config, query_id):
         else:
             assert total_items == data["total"]
 
-        rv += [to_lobster(cb_config, cb_item)
+        rv += [to_lobster(cb_config, cb_item["item"])
                for cb_item in data["items"]]
 
         page_id += 1
@@ -162,8 +158,9 @@ def to_lobster(cb_config, cb_item):
     # This looks like it's business logic, maybe we should make this
     # configurable?
 
-    if "type" in cb_item:
-        kind = cb_item["type"].get("name", "codebeamer item")
+    categories = cb_item.get("categories")
+    if categories:
+        kind = categories[0].get("name", "codebeamer item")
     else:
         kind = "codebeamer item"
 
@@ -203,32 +200,12 @@ def import_tagged(mh, cb_config, items_to_import):
     assert isinstance(mh, Message_Handler)
     assert isinstance(cb_config, dict)
     assert isinstance(items_to_import, set)
-    work_list = copy(items_to_import)
-    rv        = []
+    rv = []
 
-    tracker_id = None
-    while work_list:
-        if tracker_id is None or len(work_list) < 3:
-            target = work_list.pop()
-            print("Fetching single item %u" % target)
-
-            cb_item    = get_single_item(cb_config, target)
-            l_item     = to_lobster(cb_config, cb_item)
-            tracker_id = l_item.location.tracker
-            rv.append(l_item)
-
-        else:
-            print("Attempting to fetch %u items from %s" %
-                  (len(work_list), tracker_id))
-            cb_items = get_many_items_maybe(cb_config, tracker_id, work_list)
-
-            for cb_item in cb_items:
-                l_item = to_lobster(cb_config, cb_item)
-                assert tracker_id == l_item.location.tracker
-                rv.append(l_item)
-                work_list.remove(l_item.location.item)
-
-            tracker_id = None
+    cb_items = get_many_items(cb_config, items_to_import)
+    for cb_item in cb_items:
+        l_item = to_lobster(cb_config, cb_item)
+        rv.append(l_item)
 
     return rv
 
@@ -269,7 +246,7 @@ def main():
 
     cb_config = {
         "root"       : options.cb_root,
-        "base"       : "%s/cb/rest" % options.cb_root,
+        "base"       : "%s/cb/api/v3" % options.cb_root,
         "user"       : options.cb_user,
         "pass"       : options.cb_pass,
         "verify_ssl" : not options.ignore_ssl_errors,
