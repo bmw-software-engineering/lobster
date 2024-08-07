@@ -63,7 +63,7 @@ For example, here we declare that requirements are the top-level
 requirements.
 
 ```
-implementation "Requirements" {
+requirements "Requirements" {
    source: "trlc.lobster";
 }
 
@@ -106,7 +106,7 @@ configuration can help here:
 
 
 ```
-implementation "Requirements" {
+requirements "Requirements" {
    source: "trlc.lobster";
    requires: "Code";
    requires: "Unit Test" or "Formal Proof";
@@ -115,6 +115,10 @@ implementation "Requirements" {
 
 Now an item is considered to be completely traced if it has both a
 link to code, and either a link to a test or a link to a proof.
+
+**Note:**
+Don't forget that the `trace to` configuration is always mandatory.
+You cannot build links with a configuration that uses only `requires`.
 
 # Examples
 
