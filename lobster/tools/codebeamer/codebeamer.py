@@ -218,7 +218,7 @@ def to_lobster(cb_config, cb_item):
     if cb_config.get('references'):
         for reference_name, displayed_chosen_names in (
                 cb_config['references'].items()):
-            if reference_name not in map_reference_name_to_function.keys():
+            if reference_name not in map_reference_name_to_function:
                 continue
 
             for displayed_name in displayed_chosen_names:
@@ -276,7 +276,7 @@ def parse_cb_config(file_name):
     supported_references = set(SUPPORTED_REFERENCES)
 
     if not provided_config_keys.issubset(supported_references):
-        raise Exception("The provided references are not supported! "
+        raise KeyError("The provided references are not supported! "
                         "supported referenes: '%s'" %
                         ', '.join(SUPPORTED_REFERENCES))
 
