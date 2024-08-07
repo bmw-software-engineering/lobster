@@ -37,14 +37,14 @@ LOBSTER_JUST_PREFIX = "# lobster-exclude: "
 func_name = []
 
 
-def count_elements_with_new(func_name):
+def count_elements_with_new(fun_name):
     # Use a Counter to count elements
     counts = Counter()
     elements_store = []
     tvalue = ""
     fname = ""
 
-    for element in func_name:
+    for element in fun_name:
         pattern = r"[.:]"
         separated_values = re.split(pattern, element)
         fname = separated_values[0]
