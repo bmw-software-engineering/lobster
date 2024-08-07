@@ -4,6 +4,8 @@
 
 ### 0.9.18-dev
 
+* The `lobster-codebeamer` tool now supports `refs` as an upstream reference
+
 * The `lobster-codebeamer` tool now allows items without summary
 
 * The `lobster-codebeamer` tool now uses codebeamer api v3.
