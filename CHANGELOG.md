@@ -4,6 +4,8 @@
 
 ### 0.9.18-dev
 
+* The `lobster-codebeamer` tool now supports `refs` as an upstream reference
+  
 * The `lobster-online-report` tool now works with config files located in
   main- and submodules of a repository. This feature needs `git 1.7.8` or higher.
 

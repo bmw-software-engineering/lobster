@@ -41,12 +41,34 @@ import sys
 import argparse
 import netrc
 from urllib.parse import quote
+from enum import Enum
+import json
 import requests
 
 from lobster.items import Tracing_Tag, Requirement
 from lobster.location import Codebeamer_Reference
 from lobster.errors import Message_Handler, LOBSTER_Error
 from lobster.io import lobster_read, lobster_write
+
+
+class References(Enum):
+    REFS = "refs"
+
+
+SUPPORTED_REFERENCES = [References.REFS.value]
+
+
+def add_refs_refrences(req, flat_values_list):
+    # refs
+    for value in flat_values_list:
+        if value.get("id"):
+            ref_id = value.get("id")
+            req.add_tracing_target(Tracing_Tag("req", str(ref_id)))
+
+
+map_reference_name_to_function = {
+    References.REFS.value: add_refs_refrences
+}
 
 
 def query_cb_single(cb_config, url):
@@ -193,6 +215,30 @@ def to_lobster(cb_config, cb_item):
         text      = None,
         status    = status)
 
+    if cb_config.get('references'):
+        for reference_name, displayed_chosen_names in (
+                cb_config['references'].items()):
+            if reference_name not in map_reference_name_to_function:
+                continue
+
+            for displayed_name in displayed_chosen_names:
+                if cb_item.get(displayed_name):
+                    flat_values_list = cb_item.get(displayed_name) if (
+                        isinstance(cb_item.get(displayed_name), list)) \
+                        else [cb_item.get(displayed_name)]
+                else:
+                    flat_values_list = (
+                        list(value for custom_field
+                             in cb_item["customFields"]
+                             if custom_field["name"] == displayed_name and
+                             custom_field.get("values")
+                             for value in custom_field["values"]))
+                if not flat_values_list:
+                    continue
+
+                (map_reference_name_to_function[reference_name]
+                 (req, flat_values_list))
+
     return req
 
 
@@ -210,6 +256,36 @@ def import_tagged(mh, cb_config, items_to_import):
     return rv
 
 
+def ensure_array_of_strings(instance):
+    if (isinstance(instance, list) and
+            all(isinstance(item, str)
+                for item in instance)):
+        return instance
+    else:
+        return [str(instance)]
+
+
+def parse_cb_config(file_name):
+    assert isinstance(file_name, str)
+    assert os.path.isfile(file_name)
+
+    with open(file_name, "r", encoding='utf-8') as file:
+        data = json.loads(file.read())
+
+    provided_config_keys = set(data.keys())
+    supported_references = set(SUPPORTED_REFERENCES)
+
+    if not provided_config_keys.issubset(supported_references):
+        raise KeyError("The provided references are not supported! "
+                        "supported referenes: '%s'" %
+                        ', '.join(SUPPORTED_REFERENCES))
+
+    json_config = {}
+    for key, value in data.items():
+        json_config[key] = ensure_array_of_strings(value)
+    return json_config
+
+
 def main():
     ap = argparse.ArgumentParser()
 
@@ -217,9 +293,16 @@ def main():
     modes.add_argument("--import-tagged",
                        metavar="LOBSTER_FILE",
                        default=None)
+
     modes.add_argument("--import-query",
                        metavar="CB_QUERY_ID",
                        default=None)
+
+    ap.add_argument("--config",
+                    help=("name of codebeamer "
+                          "config file, supported references: '%s'" %
+                          ', '.join(SUPPORTED_REFERENCES)),
+                    default=None)
 
     ap.add_argument("--ignore-ssl-errors",
                     action="store_true",
@@ -253,6 +336,12 @@ def main():
         "page_size"  : options.query_size,
         "timeout"    : options.timeout,
     }
+
+    if options.config:
+        if os.path.isfile(options.config):
+            cb_config["references"] = parse_cb_config(options.config)
+        else:
+            ap.error("cannot open config file '%s'" % options.config)
 
     if cb_config["root"] is None:
         ap.error("please set CB_ROOT or use --cb-root")
