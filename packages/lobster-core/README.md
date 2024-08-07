@@ -19,6 +19,10 @@ with additional tools:
 * `lobster-html-report`: Generate a HTML report
 * `lobster-ci-report`: Generate a compiler-message like output, useful for CI
 
+## Requirements
+* `lobster-online-report`: This tool needs `git 1.7.8` or higher to support 
+  git submodules
+
 ## Copyright & License information
 
 The copyright holder of LOBSTER is the Bayerische Motoren Werke
