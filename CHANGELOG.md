@@ -15,7 +15,7 @@
 
 ### 0.9.17
 
-* The `lobster-python` tool now adds the line number to the function
+* The `lobster-python` tool now adds the counter logic to the function
   identifier. This supports situations where different functions have
   the same name
 

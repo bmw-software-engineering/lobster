@@ -22,6 +22,8 @@ import argparse
 import os.path
 import multiprocessing
 import functools
+import re
+from collections import Counter
 
 from libcst.metadata import PositionProvider
 import libcst as cst
@@ -32,6 +34,31 @@ from lobster.io import lobster_write
 
 LOBSTER_TRACE_PREFIX = "# lobster-trace: "
 LOBSTER_JUST_PREFIX = "# lobster-exclude: "
+func_name = []
+
+
+def count_elements_with_new(func_name):
+    # Use a Counter to count elements
+    counts = Counter()
+    elements_store = []
+    tvalue = ""
+    fname = ""
+
+    for element in func_name:
+        pattern = r"[.:]"
+        separated_values = re.split(pattern, element)
+        fname = separated_values[0]
+        element = separated_values[1]
+        if counts[element] == 0:
+            counts[element] += 1
+            tvalue = fname + "." + element
+            elements_store.append(element)
+        else:
+            if element in elements_store:
+                tvalue = fname + "." + element + "-" + str(counts[element])
+
+        counts[element] += 1
+    return tvalue
 
 
 def parse_value(val):
@@ -197,13 +224,19 @@ class Python_Function(Python_Traceable_Node):
         assert schema is Implementation or schema is Activity
         assert isinstance(items, list)
 
+        func_name.append(self.fqn())
+        tagname = count_elements_with_new(func_name)
+        pattern = r"[-]"
+        val = re.split(pattern, tagname)
+        name_value = val[0]
+
         if schema is Implementation:
             l_item = Implementation(tag      = Tracing_Tag("python",
-                                                           self.fqn()),
+                                                           tagname),
                                     location = self.location,
                                     language = "Python",
                                     kind     = self.kind,
-                                    name     = self.fqn())
+                                    name     = name_value)
         else:
             if not self.name.startswith("test"):
                 return
