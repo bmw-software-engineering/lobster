@@ -32,13 +32,16 @@ from lobster.tools.cpp_doxygen.parser.requirements_parser import ParserForRequir
 class RequirementTypes(Enum):
     REQS = '@requirement'
     REQ_BY = '@required_by'
+    DEFECT = '@defect'
 
 
 LOBSTER_GENERATOR = "lobster_cpp_doxygen"
-SUPPORTED_REQUIREMENTS = [RequirementTypes.REQS.value, RequirementTypes.REQ_BY.value]
+SUPPORTED_REQUIREMENTS = [RequirementTypes.REQS.value, RequirementTypes.REQ_BY.value,
+                          RequirementTypes.DEFECT.value]
 map_test_type_to_key_name = {
     RequirementTypes.REQS.value : 'requirements',
     RequirementTypes.REQ_BY.value : 'required_by',
+    RequirementTypes.DEFECT.value: 'defect_tracking_ids',
 }
 
 

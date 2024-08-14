@@ -154,14 +154,14 @@ class TestCase:
             defect_tracking_cb_ids = self._get_require_tags(defect_found, REQUIREMENT_TAG)
             cb_list = sorted(
                 [
-                    '<a href="{1}/issue/{0}">{0}</a>'.format(defect_tracking_id.strip("CB-#"), config.codebeamer_url)
+                    defect_tracking_id.strip("CB-#")
                     for defect_tracking_id in defect_tracking_cb_ids
                 ]
             )
             defect_tracking_oct_ids = self._get_require_tags(defect_found, OCT_TAG)
             oct_list = sorted(
                 [
-                    '<a href="{1}/issue/{0}">{0}</a>'.format(defect_tracking_id.strip("OCT-#"), config.codebeamer_url)
+                    defect_tracking_id.strip("CB-#")
                     for defect_tracking_id in defect_tracking_oct_ids
                 ]
             )
