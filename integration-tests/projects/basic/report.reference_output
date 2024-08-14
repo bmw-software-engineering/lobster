@@ -91,8 +91,8 @@
           ],
           "ref_down": [
             "simulink exclusive_or/My_Exclusive_Or",
-            "json XOR Test 1",
-            "json XOR Test 2"
+            "json example.json:XOR Test 1",
+            "json example.json:XOR Test 2"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -481,7 +481,7 @@
           "status": null
         },
         {
-          "tag": "json XOR Test 1",
+          "tag": "json example.json:XOR Test 1",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -489,7 +489,7 @@
             "file": "integration-tests/projects/basic/example.json",
             "line": null
           },
-          "name": "XOR Test 1",
+          "name": "example.json:XOR Test 1",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -504,7 +504,7 @@
           "status": null
         },
         {
-          "tag": "json XOR Test 2",
+          "tag": "json example.json:XOR Test 2",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -512,7 +512,7 @@
             "file": "integration-tests/projects/basic/example.json",
             "line": null
           },
-          "name": "XOR Test 2",
+          "name": "example.json:XOR Test 2",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -527,7 +527,7 @@
           "status": null
         },
         {
-          "tag": "json Potato Test 1",
+          "tag": "json example.json:Potato Test 1",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -535,7 +535,7 @@
             "file": "integration-tests/projects/basic/example.json",
             "line": null
           },
-          "name": "Potato Test 1",
+          "name": "example.json:Potato Test 1",
           "messages": [],
           "just_up": [
             "Unlinked on purpose"

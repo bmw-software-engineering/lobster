@@ -40,7 +40,7 @@ LOBSTER source file corresponds to the TRLC requirements type.
 
 Using `with prefix <string>` allows to filter items with a certain
 prefix in the `tag` attribute in the LOBSTER source file. For TRLC 
-requirements the tag attribute corresponds to the requiremet name.
+requirements the tag attribute corresponds to the requirement name.
 
 Specifically for requirements you can say:
 
@@ -63,7 +63,7 @@ For example, here we declare that requirements are the top-level
 requirements.
 
 ```
-implementation "Requirements" {
+requirements "Requirements" {
    source: "trlc.lobster";
 }
 
@@ -106,7 +106,7 @@ configuration can help here:
 
 
 ```
-implementation "Requirements" {
+requirements "Requirements" {
    source: "trlc.lobster";
    requires: "Code";
    requires: "Unit Test" or "Formal Proof";
@@ -115,6 +115,10 @@ implementation "Requirements" {
 
 Now an item is considered to be completely traced if it has both a
 link to code, and either a link to a test or a link to a proof.
+
+**Note:**
+Don't forget that the `trace to` configuration is always mandatory.
+You cannot build links with a configuration that uses only `requires`.
 
 # Examples
 

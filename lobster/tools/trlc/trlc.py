@@ -19,6 +19,7 @@
 
 import os
 import re
+import sys
 import argparse
 
 from copy import copy
@@ -410,6 +411,7 @@ def main():
             ok = False
     if ok:
         stab = sm.process()
+    # pylint: disable=possibly-used-before-assignment
     if not ok or stab is None:
         print("lobster-trlc: aborting due to earlier error")
         return 1
@@ -447,4 +449,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

@@ -60,6 +60,9 @@ def main():
     ap.add_argument("--repo-root",
                     help="override git repository root",
                     default=None)
+    ap.add_argument("--out",
+                    help="output file, by default overwrite input",
+                    default=None)
     options = ap.parse_args()
 
     if not os.path.isfile(options.lobster_report):
@@ -122,6 +125,7 @@ def main():
 
             rel_path_from_root = os.path.relpath(item.location.filename,
                                                  repo_root)
+            # pylint: disable=possibly-used-before-assignment
             actual_repo = gh_root
             actual_sha  = options.commit
             actual_path = rel_path_from_root
@@ -140,9 +144,9 @@ def main():
                 line     = item.location.line)
             item.location = loc
 
-    report.write_report(options.lobster_report)
+    report.write_report(options.out if options.out else options.lobster_report)
     print("LOBSTER report %s changed to use online references" %
-          options.lobster_report)
+          options.out if options.out else options.lobster_report)
 
 
 if __name__ == "__main__":
