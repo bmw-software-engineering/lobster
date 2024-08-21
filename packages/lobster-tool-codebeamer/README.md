@@ -37,6 +37,14 @@ or
 }
 ```
 
+Is it also possible to define the codebeamer token in this file:
+```
+{
+"refs" : "cb-fieldname",
+"token" : "your cb-token"
+}
+```
+
 ## Usage
 
 There are two ways you can use this tool:

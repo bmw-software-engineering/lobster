@@ -4,6 +4,9 @@
 
 ### 0.9.18-dev
 
+* The `lobster-codebeamer` tool now uses an authentication token. 
+  Token can be added either in the config file or as an argument.
+
 * The `lobster-codebeamer` tool now supports `refs` as an upstream reference
   
 * The `lobster-online-report` tool now works with config files located in
