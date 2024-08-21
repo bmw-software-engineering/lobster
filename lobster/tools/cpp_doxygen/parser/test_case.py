@@ -1,54 +1,10 @@
 import logging
 import re
-from typing import Dict, List
+from typing import List
 
-from lobster.tools.cpp_doxygen.parser.tracing.tracing_runner import get_range_for_doxygen_comments, notracing_special_case
-from lobster.tools.cpp_doxygen.parser.config import config
-
-VALID_TEST_MACROS = [
-    "TEST",
-    "TEST_P",
-    "TEST_F",
-    "TYPED_TEST",
-    "TYPED_TEST_P",
-    "TYPED_TEST_SUITE",
-    "TEST_P_INSTANCE",
-    "TEST_F_INSTANCE",
-]
-
-VALID_TESTMETHODS = [
-    "TM_EQUIVALENCE",
-    "TM_PAIRWISE",
-    "TM_GUESSING",
-    "TM_BOUNDARY",
-    "TM_CONDITION",
-    "TM_REQUIREMENT",
-    "TM_TABLE",
-    "TM_BOUNDARY",
-]
-
-TEST_CASE_INTRO = re.compile(r"^\s*(" + "|".join(VALID_TEST_MACROS) + r")\s*\(")
-TEST_CASE_INFO = re.compile(
-    r"^\s*(" + "|".join(VALID_TEST_MACROS) + r")\s*\(\s*(?P<suite_name>\w+),\s*(?P<test_name>\w+)\)"
-)
-
-CODEBEAMER_LINK = config.codebeamer_url + "/issue/"
-REQUIREMENT = re.compile(r".*[@\\]requirement\s+([\s*/]*(((CB-#)|({}))\d+)\s*,?)+".format(CODEBEAMER_LINK))
-REQUIREMENT_TAG = r"(CB-#\d+)"
-REQUIREMENT_TAG_HTTP = r"([@\\]requirement(\s+(CB-#\d+\s+)*({}\d+\s*,?\s*/*\*?)+)+)".format(CODEBEAMER_LINK)
-REQUIREMENT_TAG_HTTP_NAMED = r"({}(?P<number>\d+))".format(CODEBEAMER_LINK)
-REQUIRED_BY = re.compile(r".*[@\\]requiredby\s+([\s*/]*(\w*::\w+),?\s*)+")
-REQUIRED_BY_TAG = r"(\w*::\w+)"
-DEFECT = re.compile(
-    r"(@defect\s+)(((?:(CB-#\d+)|(OCT-#\d+)),?\s*)+)" + r"(?:///|/)\s+(((?:(CB-#\d+)|(OCT-#\d+)),?\s)+)?"
-)
-BRIEF = re.compile(r"(@brief\s+)([^@]+)")
-VERSION = re.compile(r"(@version\s+)(\d+([,]? \d+)*)+")
-OCT_TAG = r"(OCT-#\d+)"
-TESTMETHODS = re.compile(r"(@testmethods\s+)([^@]+)")
-# unmatch whole testmethod if invalid method is used
-# TESTMETHODS = re.compile(r"(@testmethods\s+)((" + "|".join(VALID_TESTMETHODS) + ")([,]? (" + "|".join(VALID_TESTMETHODS) + "))*)+")
-TEST = re.compile(r"(@test\s+)([^@]+)")
+from lobster.tools.cpp_doxygen.parser.constants import CODEBEMAER_URL, NON_EXISTING_INFO, TEST_CASE_INFO, \
+    REQUIREMENT_TAG, REQUIREMENT_TAG_HTTP, REQUIRED_BY, REQUIREMENT, REQUIREMENT_TAG_HTTP_NAMED, REQUIRED_BY_TAG, \
+    OCT_TAG, TEST, BRIEF, TESTMETHODS, VALID_TESTMETHODS, VERSION, TEST_CASE_INTRO, DEFECT
 
 
 class TestCase:
@@ -67,8 +23,8 @@ class TestCase:
 
     def __init__(self, file: str, lines: List[str], start_idx: int):
         self.file_name = file  # File_name where the test case is located
-        self.suite_name = config.non_existing_info  # TestSuite from TEST(TestSuite, TestName)
-        self.test_name = config.non_existing_info  # TestName from TEST(TestSuite, TestName)
+        self.suite_name = NON_EXISTING_INFO  # TestSuite from TEST(TestSuite, TestName)
+        self.test_name = NON_EXISTING_INFO  # TestName from TEST(TestSuite, TestName)
         self.docu_start_line = 1  # First line of the doxygen style doc for the test case
         self.docu_end_line = 1  # Last line of the doxygen style
         self.definition_start_line = (
@@ -100,7 +56,7 @@ class TestCase:
         src = "".join(src)
         self._set_test_and_suite_name(src)
 
-        self.docu_range = get_range_for_doxygen_comments(lines, start_idx)
+        self.docu_range = self.get_range_for_doxygen_comments(lines, start_idx)
         self.docu_start_line = self.docu_range[0] + 1
         self.docu_end_line = self.docu_range[1]
         self.definition_start_line = start_idx + 1
@@ -154,14 +110,14 @@ class TestCase:
             defect_tracking_cb_ids = self._get_require_tags(defect_found, REQUIREMENT_TAG)
             cb_list = sorted(
                 [
-                    '<a href="{1}/issue/{0}">{0}</a>'.format(defect_tracking_id.strip("CB-#"), config.codebeamer_url)
+                    '<a href="{1}/issue/{0}">{0}</a>'.format(defect_tracking_id.strip("CB-#"), CODEBEMAER_URL)
                     for defect_tracking_id in defect_tracking_cb_ids
                 ]
             )
             defect_tracking_oct_ids = self._get_require_tags(defect_found, OCT_TAG)
             oct_list = sorted(
                 [
-                    '<a href="{1}/issue/{0}">{0}</a>'.format(defect_tracking_id.strip("OCT-#"), config.codebeamer_url)
+                    '<a href="{1}/issue/{0}">{0}</a>'.format(defect_tracking_id.strip("OCT-#"), CODEBEMAER_URL)
                     for defect_tracking_id in defect_tracking_oct_ids
                 ]
             )
@@ -220,13 +176,6 @@ class TestCase:
             versions_list.append(last_value)
         return versions_list
 
-    def _add_text_attribute(self, pattern, init_value="") -> str:
-        field = init_value
-        found = pattern.search(self.docu_lines)
-        if found:
-            field = found.group(2)
-        return field
-
     def _add_multiline_attribute(self, pattern) -> str:
         field = ""
         found = pattern.search(self.docu_lines)
@@ -265,9 +214,9 @@ class TestCase:
 
     @staticmethod
     def is_special_case(lines, test_case) -> bool:
-        if notracing_special_case(lines, (test_case.docu_start_line - 1, test_case.docu_end_line)):
+        if TestCase.notracing_special_case(lines, (test_case.docu_start_line - 1, test_case.docu_end_line)):
             return True
-        elif test_case.suite_name == config.non_existing_info or test_case.test_name == config.non_existing_info:
+        elif test_case.suite_name == NON_EXISTING_INFO or test_case.test_name == NON_EXISTING_INFO:
             return True
 
         return False
@@ -360,24 +309,23 @@ class TestCase:
         return re.findall(filter_regex, match.group(0))
 
     @staticmethod
-    def _search_start_line(lines, start_idx):
-        comments = ["///", "//", "/*", "*"]
-        index_pointer = start_idx
-        while index_pointer < len(lines):
-            if any(x in lines[index_pointer] for x in comments):
-                index_pointer += 1
-            else:
-                break
-        start_idx = index_pointer
-        return start_idx
+    def notracing_special_case(lines, the_range):
+        notracing_tag = "NOTRACING"
+        return list(filter(lambda x: notracing_tag in x, lines[the_range[0]: the_range[1]]))
 
     @staticmethod
-    def _read_file(file):
-        try:
-            with open(file, "r", encoding="UTF-8", errors="ignore") as f:
-                lines = f.readlines()
+    def get_range_for_doxygen_comments(lines, index_of_test_definition):
+        comments = ["///", "//", "/*", "*"]
+        has_at_least_one_comment = True
+        index_pointer = index_of_test_definition - 1
+        while index_pointer > 0:
+            if any(x in lines[index_pointer] for x in comments):
+                index_pointer -= 1
+            else:
+                has_at_least_one_comment = False
+                break
+        start_index = index_pointer if has_at_least_one_comment else index_pointer + 1
+        doxygen_comments_line_range = (start_index, index_of_test_definition)
+        return doxygen_comments_line_range
 
-        except Exception as e:
-            logging.error(f"exception {e}")
-            lines = []
-        return lines
+

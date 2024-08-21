@@ -24,10 +24,8 @@ import os.path
 from lobster.items import Tracing_Tag, Implementation
 from lobster.location import File_Reference
 from lobster.io import lobster_write
+from lobster.tools.cpp_doxygen.parser.constants import LOBSTER_GENERATOR
 from lobster.tools.cpp_doxygen.parser.requirements_parser import ParserForRequirements
-
-
-LOBSTER_GENERATOR = "lobster_cpp_doxygen"
 
 
 def get_test_file_list(file_dir_list, extension_list):
