@@ -1,0 +1,1 @@
+lobster-cpp-doxygen = lobster.tools.cpp_doxygen.cpp_doxygen:main
