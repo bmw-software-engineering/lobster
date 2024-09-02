@@ -46,25 +46,19 @@ map_test_type_to_key_name = {
 def parse_cpp_config_file(file_name):
     assert isinstance(file_name, str)
     assert os.path.isfile(file_name)
-    swapped_config_data = {}
 
     with open(file_name, "r") as file:
-        org_config_data = json.loads(file.read())
+        config_data = json.loads(file.read())
 
-    provided_config_keys = set(org_config_data.keys())
-    supported_references = set(SUPPORTED_REQUIREMENTS)
+    provided_config_values_list = list(config_data.values())
+    supported_references = list(SUPPORTED_REQUIREMENTS)
 
-    if not provided_config_keys.issubset(supported_references):
-        raise Exception("The provided requirement types are not supported! "
-              "supported requirement types: '%s'" % ', '.join(SUPPORTED_REQUIREMENTS))
+    for provided_config_value in provided_config_values_list:
+        if not set(provided_config_value).issubset(supported_references):
+            raise Exception("The provided requirement types are not supported! "
+                  "supported requirement types: '%s'" % ', '.join(SUPPORTED_REQUIREMENTS))
 
-    for key, value in org_config_data.items():
-        if value in swapped_config_data:
-            swapped_config_data[value].append(key)
-        else:
-            swapped_config_data[value] = [key]
-
-    return swapped_config_data
+    return config_data
 
 
 def get_test_file_list(file_dir_list, extension_list):
