@@ -23,8 +23,10 @@ class LobsterCppDoxygenTests(unittest.TestCase):
 
         self.req_test_type = [RequirementTypes.REQS.value]
         self.req_by_test_type = [RequirementTypes.REQ_BY.value]
-        self.all_test_types = [RequirementTypes.REQS.value, RequirementTypes.REQ_BY.value]
-
+        self.all_markers_data = {
+			"markers": [RequirementTypes.REQS.value, RequirementTypes.REQ_BY.value],
+			"kind": "req"
+		}
         self.output_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(self.test_case_file_dir)}'
         self.output_file_name = self.output_file_name.replace('.', '_')
         self.output_file_name += '.lobster'
@@ -48,8 +50,8 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         self.assertEqual(2, len(cpp_output_config))
         self.assertTrue(self.componenttest_lobster_file in cpp_output_config)
         self.assertTrue(self.unittest_lobster_file in cpp_output_config)
-        self.assertEqual(1, len(cpp_output_config.get(self.componenttest_lobster_file)))
-        self.assertEqual(1, len(cpp_output_config.get(self.unittest_lobster_file)))
+        self.assertEqual(2, len(cpp_output_config.get(self.componenttest_lobster_file)))
+        self.assertEqual(2, len(cpp_output_config.get(self.unittest_lobster_file)))
 
     def test_parse_cpp_config_file_with_same_files(self):
         cpp_output_config = parse_cpp_config_file(self.test_config2_dir)
@@ -126,7 +128,14 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         file_exists = os.path.exists(self.output_file_name)
         self.assertFalse(file_exists)
 
-        output_config = {self.output_file_name: self.req_test_type}
+        output_config = {
+            self.output_file_name:
+                {
+                    "markers": self.req_test_type,
+                    "kind": "req"
+                }
+        }
+
 
         error_list = \
             lobster_cpp_doxygen(
@@ -150,8 +159,13 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         file_exists = os.path.exists(self.output_data_file_name)
         self.assertFalse(file_exists)
 
-        output_config = {self.output_data_file_name: self.req_test_type}
-
+        output_config = {
+            self.output_data_file_name:
+                {
+                    "markers": self.req_test_type,
+                    "kind": "req"
+                }
+        }
         error_list = \
             lobster_cpp_doxygen(
                 file_dir_list=file_dir_list,
@@ -173,7 +187,14 @@ class LobsterCppDoxygenTests(unittest.TestCase):
 
         file_exists = os.path.exists(self.output_fake_file_name)
         self.assertFalse(file_exists)
-        output_config = {self.output_fake_file_name: self.req_test_type}
+
+        output_config = {
+            self.output_fake_file_name:
+                {
+                    "markers":self.req_test_type,
+                    "kind": "req"
+                }
+        }
 
         error_list = \
             lobster_cpp_doxygen(
@@ -510,7 +531,7 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         lobster_implementations_dict: dict = \
             create_lobster_implementations_dict_from_test_cases(
                 test_case_list=test_case_list,
-                test_types=self.all_test_types
+                markers_data=self.all_markers_data
             )
 
         self.assertIsNotNone(lobster_implementations_dict)
