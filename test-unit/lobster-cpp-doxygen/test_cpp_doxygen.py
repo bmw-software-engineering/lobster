@@ -5,7 +5,7 @@ from pathlib import Path
 
 from lobster.tools.cpp_doxygen.cpp_doxygen import get_test_file_list, collect_test_cases_from_test_files, \
     create_lobster_implementations_dict_from_test_cases, write_lobster_implementations_to_output, \
-    LOBSTER_GENERATOR, lobster_cpp_doxygen, RequirementTypes, parse_cpp_config_file
+    LOBSTER_GENERATOR, lobster_cpp_doxygen, RequirementTypes, parse_cpp_config_file, MARKERS, KIND
 
 from lobster.tools.cpp_doxygen.parser.requirements_parser import ParserForRequirements
 
@@ -24,8 +24,8 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         self.req_test_type = [RequirementTypes.REQS.value]
         self.req_by_test_type = [RequirementTypes.REQ_BY.value]
         self.all_markers_data = {
-			"markers": [RequirementTypes.REQS.value, RequirementTypes.REQ_BY.value],
-			"kind": "req"
+			MARKERS: [RequirementTypes.REQS.value, RequirementTypes.REQ_BY.value],
+			KIND: "req"
 		}
         self.output_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(self.test_case_file_dir)}'
         self.output_file_name = self.output_file_name.replace('.', '_')
@@ -131,11 +131,10 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         output_config = {
             self.output_file_name:
                 {
-                    "markers": self.req_test_type,
-                    "kind": "req"
+                    MARKERS: self.req_test_type,
+                    KIND: "req"
                 }
         }
-
 
         error_list = \
             lobster_cpp_doxygen(
@@ -162,8 +161,8 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         output_config = {
             self.output_data_file_name:
                 {
-                    "markers": self.req_test_type,
-                    "kind": "req"
+                    MARKERS: self.req_test_type,
+                    KIND: "req"
                 }
         }
         error_list = \
@@ -191,8 +190,8 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         output_config = {
             self.output_fake_file_name:
                 {
-                    "markers":self.req_test_type,
-                    "kind": "req"
+                    MARKERS:self.req_test_type,
+                    KIND: "req"
                 }
         }
 
