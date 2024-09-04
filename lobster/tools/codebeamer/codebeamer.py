@@ -82,6 +82,26 @@ class BearerAuth(requests.auth.AuthBase):
         return r
 
 
+class References(Enum):
+    REFS = "refs"
+
+
+SUPPORTED_REFERENCES = [References.REFS.value]
+
+
+def add_refs_refrences(req, flat_values_list):
+    # refs
+    for value in flat_values_list:
+        if value.get("id"):
+            ref_id = value.get("id")
+            req.add_tracing_target(Tracing_Tag("req", str(ref_id)))
+
+
+map_reference_name_to_function = {
+    References.REFS.value: add_refs_refrences
+}
+
+
 def query_cb_single(cb_config, url):
     assert isinstance(cb_config, dict)
     assert isinstance(url, str)

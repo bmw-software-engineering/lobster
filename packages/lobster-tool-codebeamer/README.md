@@ -37,7 +37,7 @@ or
 }
 ```
 
-Is it also possible to define the codebeamer token in this file:
+It is also possible to define the codebeamer token in this file:
 ```
 {
 "refs" : "cb-fieldname",
