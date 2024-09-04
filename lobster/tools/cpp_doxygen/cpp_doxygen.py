@@ -29,6 +29,10 @@ from lobster.io import lobster_write
 from lobster.tools.cpp_doxygen.parser.constants import LOBSTER_GENERATOR
 from lobster.tools.cpp_doxygen.parser.requirements_parser import ParserForRequirements
 
+OUTPUT  = "output"
+MARKERS = "markers"
+KIND    = "kind"
+
 
 class RequirementTypes(Enum):
     REQS = '@requirement'
@@ -50,15 +54,26 @@ def parse_cpp_config_file(file_name):
     with open(file_name, "r") as file:
         config_data = json.loads(file.read())
 
-    provided_config_values_list = list(config_data.values())
-    supported_references = list(SUPPORTED_REQUIREMENTS)
+    if not config_data.get(OUTPUT):
+        raise Exception(f"Please follow the right structure of config "
+                        f"file! missing attribute {OUTPUT}")
 
-    for provided_config_value in provided_config_values_list:
-        if not set(provided_config_value).issubset(supported_references):
-            raise Exception("The provided requirement types are not supported! "
-                  "supported requirement types: '%s'" % ', '.join(SUPPORTED_REQUIREMENTS))
+    output_files_data = list(config_data.get(OUTPUT).values())
 
-    return config_data
+    provided_markers = []
+    for output_file_data in output_files_data:
+        if not output_file_data.get(MARKERS) or not output_file_data.get(KIND):
+            raise Exception(f"Please follow the right structure of config "
+                            f"file! missing attributes {MARKERS} or {KIND}")
+        provided_markers.append(output_file_data.get(MARKERS)[0])
+
+    supported_references = set(SUPPORTED_REQUIREMENTS)
+
+    if not set(provided_markers).issubset(supported_references):
+        raise Exception("The provided requirement types are not supported! "
+              "supported requirement types: '%s'" % ', '.join(SUPPORTED_REQUIREMENTS))
+
+    return config_data.get(OUTPUT)
 
 
 def get_test_file_list(file_dir_list, extension_list):
@@ -89,12 +104,11 @@ def collect_test_cases_from_test_files(test_file_list) -> list:
     return test_case_list
 
 
-def create_lobster_implementations_dict_from_test_cases(test_case_list, test_types) -> dict:
+def create_lobster_implementations_dict_from_test_cases(test_case_list, markers_data) -> dict:
     prefix = os.getcwd()
     lobster_implementations_dict = {}
 
     for test_case in test_case_list:
-        # get requirement detail properties from test_case
         function_name: str = test_case.suite_name
         file_name = test_case.file_name
         line_nr = test_case.docu_start_line
@@ -114,11 +128,12 @@ def create_lobster_implementations_dict_from_test_cases(test_case_list, test_typ
                 language="C/C++",
                 kind=kind,
                 name=function_name)
-        for test_type in test_types:
-            for test in getattr(test_case, map_test_type_to_key_name[test_type]):
+        for marker in markers_data.get(MARKERS):
+            for test in getattr(test_case, map_test_type_to_key_name[marker]):
                 if 'Missing' not in test:
                     test = test.replace("CB-#", "")
-                    lobster_implementations_dict[tag.key()].add_tracing_target(Tracing_Tag("req", test))
+                    lobster_implementations_dict[tag.key()].add_tracing_target\
+                        (Tracing_Tag(markers_data.get(KIND), test))
 
     return lobster_implementations_dict
 
@@ -147,11 +162,11 @@ def lobster_cpp_doxygen(file_dir_list, output_config):
             collect_test_cases_from_test_files(
                 test_file_list=test_file_list
         )
-        for output, test_types in output_config.items():
+        for output, markers_data in output_config.items():
             lobster_implementations_dict: dict = \
                 create_lobster_implementations_dict_from_test_cases(
                     test_case_list=test_case_list,
-                    test_types=test_types
+                    markers_data=markers_data
                 )
 
             write_lobster_implementations_to_output(
