@@ -17,15 +17,66 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import json
 import sys
 import argparse
 import os.path
+from enum import Enum
 
 from lobster.items import Tracing_Tag, Implementation
 from lobster.location import File_Reference
 from lobster.io import lobster_write
 from lobster.tools.cpp_doxygen.parser.constants import LOBSTER_GENERATOR
 from lobster.tools.cpp_doxygen.parser.requirements_parser import ParserForRequirements
+
+OUTPUT  = "output"
+MARKERS = "markers"
+KIND    = "kind"
+
+
+class RequirementTypes(Enum):
+    REQS = '@requirement'
+    REQ_BY = '@required_by'
+    DEFECT = '@defect'
+
+
+LOBSTER_GENERATOR = "lobster_cpp_doxygen"
+SUPPORTED_REQUIREMENTS = [RequirementTypes.REQS.value, RequirementTypes.REQ_BY.value,
+                          RequirementTypes.DEFECT.value]
+map_test_type_to_key_name = {
+    RequirementTypes.REQS.value : 'requirements',
+    RequirementTypes.REQ_BY.value : 'required_by',
+    RequirementTypes.DEFECT.value: 'defect_tracking_ids',
+}
+
+
+def parse_cpp_config_file(file_name):
+    assert isinstance(file_name, str)
+    assert os.path.isfile(file_name)
+
+    with open(file_name, "r") as file:
+        config_data = json.loads(file.read())
+
+    if not config_data.get(OUTPUT):
+        raise Exception(f"Please follow the right structure of config "
+                        f"file! missing attribute {OUTPUT}")
+
+    output_files_data = list(config_data.get(OUTPUT).values())
+
+    provided_markers = []
+    for output_file_data in output_files_data:
+        if not output_file_data.get(MARKERS) or not output_file_data.get(KIND):
+            raise Exception(f"Please follow the right structure of config "
+                            f"file! missing attributes {MARKERS} or {KIND}")
+        provided_markers.append(output_file_data.get(MARKERS)[0])
+
+    supported_references = set(SUPPORTED_REQUIREMENTS)
+
+    if not set(provided_markers).issubset(supported_references):
+        raise Exception("The provided requirement types are not supported! "
+              "supported requirement types: '%s'" % ', '.join(SUPPORTED_REQUIREMENTS))
+
+    return config_data.get(OUTPUT)
 
 
 def get_test_file_list(file_dir_list, extension_list):
@@ -56,12 +107,11 @@ def collect_test_cases_from_test_files(test_file_list) -> list:
     return test_case_list
 
 
-def create_lobster_implementations_dict_from_test_cases(test_case_list) -> dict:
+def create_lobster_implementations_dict_from_test_cases(test_case_list, markers_data) -> dict:
     prefix = os.getcwd()
     lobster_implementations_dict = {}
 
     for test_case in test_case_list:
-        # get requirement detail properties from test_case
         function_name: str = test_case.suite_name
         file_name = test_case.file_name
         line_nr = test_case.docu_start_line
@@ -81,11 +131,12 @@ def create_lobster_implementations_dict_from_test_cases(test_case_list) -> dict:
                 language="C/C++",
                 kind=kind,
                 name=function_name)
-
-        for requirement in test_case.requirements:
-            if 'Missing' not in requirement:
-                requirement = requirement.replace("CB-#", "")
-                lobster_implementations_dict[tag.key()].add_tracing_target(Tracing_Tag("req", requirement))
+        for marker in markers_data.get(MARKERS):
+            for test in getattr(test_case, map_test_type_to_key_name[marker]):
+                if 'Missing' not in test:
+                    test = test.replace("CB-#", "")
+                    lobster_implementations_dict[tag.key()].add_tracing_target\
+                        (Tracing_Tag(markers_data.get(KIND), test))
 
     return lobster_implementations_dict
 
@@ -102,7 +153,7 @@ def write_lobster_implementations_to_output(lobster_implementations_dict, output
         print()
 
 
-def lobster_cpp_doxygen(file_dir_list, output):
+def lobster_cpp_doxygen(file_dir_list, output_config):
     test_file_list, error_list = \
         get_test_file_list(
             file_dir_list=file_dir_list,
@@ -113,16 +164,17 @@ def lobster_cpp_doxygen(file_dir_list, output):
         test_case_list = \
             collect_test_cases_from_test_files(
                 test_file_list=test_file_list
-            )
+        )
+        for output, markers_data in output_config.items():
+            lobster_implementations_dict: dict = \
+                create_lobster_implementations_dict_from_test_cases(
+                    test_case_list=test_case_list,
+                    markers_data=markers_data
+                )
 
-        lobster_implementations_dict: dict = \
-            create_lobster_implementations_dict_from_test_cases(
-                test_case_list=test_case_list
-            )
-
-        write_lobster_implementations_to_output(
-            lobster_implementations_dict=lobster_implementations_dict,
-            output=output)
+            write_lobster_implementations_to_output(
+                lobster_implementations_dict=lobster_implementations_dict,
+                output=output)
 
     return error_list
 
@@ -132,15 +184,25 @@ def main():
     ap.add_argument("files",
                     nargs="+",
                     metavar="FILE|DIR")
-    ap.add_argument("--out",
-                    default=None,
-                    help="write output to this file; otherwise output to stdout")
+    ap.add_argument("--config-file",
+                    help="path of the config file, it consists of "
+                         "a requirement types as keys and "
+                         "output filenames as value",
+                    required=True,
+                    default=None)
 
     options = ap.parse_args()
+
+    if options.config_file:
+        if os.path.isfile(options.config_file):
+            cpp_output_config = parse_cpp_config_file(options.config_file)
+        else:
+            ap.error("cannot open config file '%s'" % options.config_file)
+
     error_list = \
         lobster_cpp_doxygen(
             file_dir_list=options.files,
-            output=options.out
+            output_config=cpp_output_config
         )
 
     for error in error_list:

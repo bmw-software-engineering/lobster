@@ -2,7 +2,7 @@ import logging
 import re
 from typing import List
 
-from lobster.tools.cpp_doxygen.parser.constants import CODEBEMAER_URL, NON_EXISTING_INFO, TEST_CASE_INFO, \
+from lobster.tools.cpp_doxygen.parser.constants import NON_EXISTING_INFO, TEST_CASE_INFO, \
     REQUIREMENT_TAG, REQUIREMENT_TAG_HTTP, REQUIRED_BY, REQUIREMENT, REQUIREMENT_TAG_HTTP_NAMED, REQUIRED_BY_TAG, \
     OCT_TAG, TEST, BRIEF, TESTMETHODS, VALID_TESTMETHODS, VERSION, TEST_CASE_INTRO, DEFECT
 
@@ -110,14 +110,14 @@ class TestCase:
             defect_tracking_cb_ids = self._get_require_tags(defect_found, REQUIREMENT_TAG)
             cb_list = sorted(
                 [
-                    '<a href="{1}/issue/{0}">{0}</a>'.format(defect_tracking_id.strip("CB-#"), CODEBEMAER_URL)
+                    defect_tracking_id.strip("CB-#")
                     for defect_tracking_id in defect_tracking_cb_ids
                 ]
             )
             defect_tracking_oct_ids = self._get_require_tags(defect_found, OCT_TAG)
             oct_list = sorted(
                 [
-                    '<a href="{1}/issue/{0}">{0}</a>'.format(defect_tracking_id.strip("OCT-#"), CODEBEMAER_URL)
+                    defect_tracking_id.strip("CB-#")
                     for defect_tracking_id in defect_tracking_oct_ids
                 ]
             )

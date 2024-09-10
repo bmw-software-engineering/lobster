@@ -1,18 +1,68 @@
+import json
 import os
 import unittest
 from pathlib import Path
 
 from lobster.tools.cpp_doxygen.cpp_doxygen import get_test_file_list, collect_test_cases_from_test_files, \
     create_lobster_implementations_dict_from_test_cases, write_lobster_implementations_to_output, \
-    LOBSTER_GENERATOR, lobster_cpp_doxygen
+    LOBSTER_GENERATOR, lobster_cpp_doxygen, RequirementTypes, parse_cpp_config_file, MARKERS, KIND
 
 from lobster.tools.cpp_doxygen.parser.requirements_parser import ParserForRequirements
 
 
 class LobsterCppDoxygenTests(unittest.TestCase):
+
+    def setUp(self):
+        self.unittest_lobster_file = 'unit_tests.lobster'
+        self.componenttest_lobster_file = 'component_tests.lobster'
+        self.test_fake_dir = str(Path('./not_existing'))
+        self.test_data_dir = str(Path('./data'))
+        self.test_case_file_dir = str(Path('./data', 'test_case.cpp'))
+        self.test_config1_dir = str(Path('./data', 'test_cpp1.config'))
+        self.test_config2_dir = str(Path('./data', 'test_cpp2.config'))
+
+        self.req_test_type = [RequirementTypes.REQS.value]
+        self.req_by_test_type = [RequirementTypes.REQ_BY.value]
+        self.all_markers_data = {
+			MARKERS: [RequirementTypes.REQS.value, RequirementTypes.REQ_BY.value],
+			KIND: "req"
+		}
+        self.output_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(self.test_case_file_dir)}'
+        self.output_file_name = self.output_file_name.replace('.', '_')
+        self.output_file_name += '.lobster'
+
+        self.output_fake_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(self.test_fake_dir)}'
+        self.output_fake_file_name = self.output_fake_file_name.replace('.', '_')
+        self.output_fake_file_name += '.lobster'
+
+        self.output_data_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(self.test_data_dir)}'
+        self.output_data_file_name = self.output_data_file_name.replace('.', '_')
+        self.output_data_file_name += '.lobster'
+
+        self.output_file_names = [self.output_file_name, self.output_fake_file_name,
+                                  self.output_data_file_name, self.unittest_lobster_file,
+                                  self.componenttest_lobster_file]
+
+    def test_parse_cpp_config_file_with_different_files(self):
+        cpp_output_config = parse_cpp_config_file(self.test_config1_dir)
+        self.assertIsNotNone(cpp_output_config)
+        self.assertIsInstance(cpp_output_config, dict)
+        self.assertEqual(2, len(cpp_output_config))
+        self.assertTrue(self.componenttest_lobster_file in cpp_output_config)
+        self.assertTrue(self.unittest_lobster_file in cpp_output_config)
+        self.assertEqual(2, len(cpp_output_config.get(self.componenttest_lobster_file)))
+        self.assertEqual(2, len(cpp_output_config.get(self.unittest_lobster_file)))
+
+    def test_parse_cpp_config_file_with_same_files(self):
+        cpp_output_config = parse_cpp_config_file(self.test_config2_dir)
+        self.assertIsNotNone(cpp_output_config)
+        self.assertIsInstance(cpp_output_config, dict)
+        self.assertEqual(1, len(cpp_output_config))
+        self.assertTrue(self.componenttest_lobster_file in cpp_output_config)
+        self.assertEqual(2, len(cpp_output_config.get(self.componenttest_lobster_file)))
+
     def test_get_test_file_list(self):
-        test_case_file_dir = str(Path('data'))
-        file_dir_list = [test_case_file_dir]
+        file_dir_list = [self.test_data_dir ]
         extension_list = [".cpp", ".cc", ".c", ".h"]
 
         test_file_list, error_list = \
@@ -31,8 +81,7 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         self.assertEqual(0, len(error_list))
 
     def test_get_test_file_list_no_file_with_matching_extension(self):
-        test_case_file_dir = str(Path('data'))
-        file_dir_list = [test_case_file_dir]
+        file_dir_list = [self.test_data_dir ]
         extension_list = [".xyz"]
 
         test_file_list, error_list = \
@@ -51,8 +100,7 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         self.assertTrue(f'"{file_dir_list}" does not contain any test file' in error_list)
 
     def test_get_test_file_list_not_existing_file_dir(self):
-        test_case_file_dir = str(Path('./not_existing'))
-        file_dir_list = [test_case_file_dir]
+        file_dir_list = [self.test_fake_dir]
         extension_list = [".cpp", ".cc", ".c", ".h"]
 
         test_file_list, error_list = \
@@ -72,85 +120,213 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         self.assertTrue(f'"{file_dir_list}" does not contain any test file' in error_list)
 
     def test_lobster_cpp_doxygen_single_file(self):
-        test_case_file_dir = str(Path('data', 'test_case.cpp'))
-        file_dir_list = [test_case_file_dir]
+        file_dir_list = [self.test_case_file_dir]
 
-        output_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(test_case_file_dir)}'
-        output_file_name = output_file_name.replace('.', '_')
-        output_file_name += '.lobster'
+        if os.path.exists(self.output_file_name):
+            os.remove(self.output_file_name)
 
-        if os.path.exists(output_file_name):
-            os.remove(output_file_name)
-
-        file_exists = os.path.exists(output_file_name)
+        file_exists = os.path.exists(self.output_file_name)
         self.assertFalse(file_exists)
+
+        output_config = {
+            self.output_file_name:
+                {
+                    MARKERS: self.req_test_type,
+                    KIND: "req"
+                }
+        }
 
         error_list = \
             lobster_cpp_doxygen(
                 file_dir_list=file_dir_list,
-                output=output_file_name
+                output_config=output_config
             )
 
         self.assertIsNotNone(error_list)
         self.assertIsInstance(error_list, list)
         self.assertEqual(0, len(error_list))
 
-        file_exists = os.path.exists(output_file_name)
+        file_exists = os.path.exists(self.output_file_name)
         self.assertTrue(file_exists)
 
     def test_lobster_cpp_doxygen_single_directory(self):
-        test_case_file_dir = str(Path('data'))
-        file_dir_list = [test_case_file_dir]
+        file_dir_list = [self.test_data_dir]
 
-        output_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(test_case_file_dir)}'
-        output_file_name = output_file_name.replace('.', '_')
-        output_file_name += '.lobster'
+        if os.path.exists(self.output_data_file_name):
+            os.remove(self.output_data_file_name)
 
-        if os.path.exists(output_file_name):
-            os.remove(output_file_name)
-
-        file_exists = os.path.exists(output_file_name)
+        file_exists = os.path.exists(self.output_data_file_name)
         self.assertFalse(file_exists)
 
+        output_config = {
+            self.output_data_file_name:
+                {
+                    MARKERS: self.req_test_type,
+                    KIND: "req"
+                }
+        }
         error_list = \
             lobster_cpp_doxygen(
                 file_dir_list=file_dir_list,
-                output=output_file_name
+                output_config=output_config
             )
 
         self.assertIsNotNone(error_list)
         self.assertIsInstance(error_list, list)
         self.assertEqual(0, len(error_list))
 
-        file_exists = os.path.exists(output_file_name)
+        file_exists = os.path.exists(self.output_data_file_name)
         self.assertTrue(file_exists)
 
     def test_lobster_cpp_doxygen_not_existing_file_dir(self):
-        test_case_file_dir = str(Path('./not_existing'))
-        file_dir_list = [test_case_file_dir]
+        file_dir_list = [self.test_fake_dir]
 
-        output_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(test_case_file_dir)}'
-        output_file_name = output_file_name.replace('.', '_')
-        output_file_name += '.lobster'
+        if os.path.exists(self.output_fake_file_name):
+            os.remove(self.output_fake_file_name)
 
-        if os.path.exists(output_file_name):
-            os.remove(output_file_name)
-
-        file_exists = os.path.exists(output_file_name)
+        file_exists = os.path.exists(self.output_fake_file_name)
         self.assertFalse(file_exists)
+
+        output_config = {
+            self.output_fake_file_name:
+                {
+                    MARKERS:self.req_test_type,
+                    KIND: "req"
+                }
+        }
 
         error_list = \
             lobster_cpp_doxygen(
                 file_dir_list=file_dir_list,
-                output=output_file_name
+                output_config=output_config
             )
 
         self.assertIsNotNone(error_list)
         self.assertIsInstance(error_list, list)
         self.assertEqual(2, len(error_list))
 
-        file_exists = os.path.exists(output_file_name)
+        file_exists = os.path.exists(self.output_fake_file_name)
         self.assertFalse(file_exists)
+
+    def test_lobster_cpp_doxygen_multiple_files(self):
+        file_dir_list = [self.test_case_file_dir]
+        cpp_output_config = parse_cpp_config_file(self.test_config1_dir)
+        error_list = \
+            lobster_cpp_doxygen(
+                file_dir_list=file_dir_list,
+                output_config=cpp_output_config
+            )
+        self.assertIsNotNone(error_list)
+        self.assertIsInstance(error_list, list)
+        self.assertEqual(0, len(error_list))
+        self.assertEqual(os.path.exists(self.unittest_lobster_file), True)
+        self.assertEqual(os.path.exists(self.componenttest_lobster_file), True)
+
+        with open(self.unittest_lobster_file, "r") as unittest_file:
+            unittest_file_data = json.loads(unittest_file.read())
+        with open(self.componenttest_lobster_file, "r") as componenttest_file:
+            componenttest_file_data = json.loads(componenttest_file.read())
+
+        expected_unittest_dicts = [
+            {
+              "tag": "cpp test_case.cpp:RequirementByTest1:130",
+              "location": {
+                "kind": "file",
+                "file": "data\\test_case.cpp",
+                "line": 130,
+                "column": None
+              },
+              "name": "RequirementByTest1",
+              "messages": [],
+              "just_up": [],
+              "just_down": [],
+              "just_global": [],
+              "refs": [
+                "req FOO0::BAR0",
+                "req FOO1::BAR1"
+              ],
+              "language": "C/C++",
+              "kind": "Function"
+            },
+            {
+                "tag": "cpp test_case.cpp:RequirementByTest1:135",
+                "location": {
+                    "kind": "file",
+                    "file": "data\\test_case.cpp",
+                    "line": 135,
+                    "column": None
+                },
+                "name": "RequirementByTest1",
+                "messages": [],
+                "just_up": [],
+                "just_down": [],
+                "just_global": [],
+                "refs": [
+                    "req FOO0::BAR0",
+                    "req FOO1::BAR1",
+                    "req FOO2::BAR2",
+                    "req FOO3::BAR3",
+                    "req FOO4::BAR4",
+                    "req FOO5::BAR5",
+                    "req FOO6::BAR6",
+                    "req FOO7::BAR7",
+                    "req FOO8::BAR8"
+                ],
+                "language": "C/C++",
+                "kind": "Function"
+            }
+        ]
+        expected_componenttest_dicts = [
+            {
+                "tag": "cpp test_case.cpp:RequirementTagTest1:70",
+                "location": {
+                    "kind": "file",
+                    "file": "data\\test_case.cpp",
+                    "line": 70,
+                    "column": None
+                },
+                "name": "RequirementTagTest1",
+                "messages": [],
+                "just_up": [],
+                "just_down": [],
+                "just_global": [],
+                "refs": [
+                    "req 0815",
+                    "req 0816"
+                ],
+                "language": "C/C++",
+                "kind": "Function"
+            },
+            {
+                "tag": "cpp test_case.cpp:RequirementTagTest1:75",
+                "location": {
+                    "kind": "file",
+                    "file": "data\\test_case.cpp",
+                    "line": 75,
+                    "column": None
+                },
+                "name": "RequirementTagTest1",
+                "messages": [],
+                "just_up": [],
+                "just_down": [],
+                "just_global": [],
+                "refs": [
+                    "req 0815",
+                    "req 0816",
+                    "req 0817",
+                    "req 0818",
+                    "req 0819",
+                    "req 0820"
+                ],
+                "language": "C/C++",
+                "kind": "Function"
+            }
+        ]
+
+        for expected_dict in expected_unittest_dicts:
+            self.assertTrue(expected_dict in unittest_file_data['data'])
+        for expected_dict in expected_componenttest_dicts:
+            self.assertTrue(expected_dict in componenttest_file_data['data'])
 
     def test_test_case_parsing(self):
         """
@@ -158,8 +334,6 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         The whole TestCase class is tested as one since the test_file contains all possible
         variant of an allowed test case implementation
         """
-        test_file = Path('data', 'test_case.cpp')
-
         # fmt: off
         expect = [
             # Verify that test macros, test suite, test name and documentation comments are correctly parsed
@@ -262,11 +436,11 @@ class LobsterCppDoxygenTests(unittest.TestCase):
         ]
         # fmt: on
 
-        test_cases = ParserForRequirements.collect_test_cases(test_file)
+        test_cases = ParserForRequirements.collect_test_cases(self.test_case_file_dir)
         self.assertEqual(len(test_cases), 45)
 
         for i in range(0, len(expect)):
-            self.assertEqual(test_cases[i].file_name, test_file)
+            self.assertEqual(test_cases[i].file_name, self.test_case_file_dir)
             self.assertEqual(test_cases[i].suite_name, expect[i]["suite"])
             self.assertEqual(test_cases[i].test_name, expect[i]["test_name"])
             if "docu_start" in expect[i]:
@@ -328,17 +502,12 @@ class LobsterCppDoxygenTests(unittest.TestCase):
                 )
 
     def test_lobster_cpp_doxygen_write_implementations_to_lobster_file(self):
-        test_case_file = str(Path('data', 'test_case.cpp'))
-        file_dir_list = [test_case_file]
+        file_dir_list = [self.test_case_file_dir]
 
-        output_file_name = f'{LOBSTER_GENERATOR}_{os.path.basename(test_case_file)}'
-        output_file_name = output_file_name.replace('.', '_')
-        output_file_name += '.lobster'
+        if os.path.exists(self.output_file_name):
+            os.remove(self.output_file_name)
 
-        if os.path.exists(output_file_name):
-            os.remove(output_file_name)
-
-        file_exists = os.path.exists(output_file_name)
+        file_exists = os.path.exists(self.output_file_name)
         self.assertFalse(file_exists)
 
         test_file_list, error_list = \
@@ -360,7 +529,8 @@ class LobsterCppDoxygenTests(unittest.TestCase):
 
         lobster_implementations_dict: dict = \
             create_lobster_implementations_dict_from_test_cases(
-                test_case_list=test_case_list
+                test_case_list=test_case_list,
+                markers_data=self.all_markers_data
             )
 
         self.assertIsNotNone(lobster_implementations_dict)
@@ -368,10 +538,15 @@ class LobsterCppDoxygenTests(unittest.TestCase):
 
         write_lobster_implementations_to_output(
             lobster_implementations_dict=lobster_implementations_dict,
-            output=output_file_name)
+            output=self.output_file_name)
 
-        file_exists = os.path.exists(output_file_name)
+        file_exists = os.path.exists(self.output_file_name)
         self.assertTrue(file_exists)
+
+    def tearDown(self):
+        for output_file in self.output_file_names:
+            if os.path.exists(output_file):
+                os.remove(output_file)
 
 
 if __name__ == '__main__':
