@@ -13,6 +13,9 @@
 
 * Adds `with kind` and `with prefix` functionality in lobster.conf files
 
+* The `lobster-html-report` tool now supports argument `--color-blind` to use
+  a color palette with a higher contrast for color blindness.
+
 ### 0.9.16
 
 * Fix infinite loop in `lobster-json` on Windows when given absolute
