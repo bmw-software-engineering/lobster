@@ -467,7 +467,7 @@ def main():
                     default=None)
     ap.add_argument("--color-blind",
                     action="store_true",
-                    help="Uses a color palette with a higher contrast for color blindness")
+                    help="Uses a color palette with a higher contrast.")
     options = ap.parse_args()
 
     if not os.path.isfile(options.lobster_report):
