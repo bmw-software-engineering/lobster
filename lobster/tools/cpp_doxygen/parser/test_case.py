@@ -1,4 +1,3 @@
-import logging
 import re
 from typing import List
 
@@ -157,8 +156,7 @@ class TestCase:
         for test_method in test_methods.split():
             if test_method in VALID_TESTMETHODS:
                 test_methods_list.append(test_method)
-            else:
-                logging.warning("@testmethod parsing error : " + test_method)
+
         return test_methods_list
 
     def _get_version_tag(self) -> List[int]:
