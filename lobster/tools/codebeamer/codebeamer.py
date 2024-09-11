@@ -40,15 +40,35 @@ import os
 import sys
 import argparse
 import netrc
-
-from copy import copy
-
+from urllib.parse import quote
+from enum import Enum
+import json
 import requests
 
 from lobster.items import Tracing_Tag, Requirement
 from lobster.location import Codebeamer_Reference
 from lobster.errors import Message_Handler, LOBSTER_Error
 from lobster.io import lobster_read, lobster_write
+
+
+class References(Enum):
+    REFS = "refs"
+
+
+SUPPORTED_REFERENCES = [References.REFS.value]
+
+
+def add_refs_refrences(req, flat_values_list):
+    # refs
+    for value in flat_values_list:
+        if value.get("id"):
+            ref_id = value.get("id")
+            req.add_tracing_target(Tracing_Tag("req", str(ref_id)))
+
+
+map_reference_name_to_function = {
+    References.REFS.value: add_refs_refrences
+}
 
 
 def query_cb_single(cb_config, url):
@@ -84,27 +104,26 @@ def query_cb_single(cb_config, url):
 def get_single_item(cb_config, item_id):
     assert isinstance(item_id, int) and item_id > 0
 
-    url = "%s/item/%u" % (cb_config["base"],
-                          item_id)
+    url = "%s/items/%u" % (cb_config["base"],
+                           item_id)
     data = query_cb_single(cb_config, url)
     return data
 
 
-def get_many_items_maybe(cb_config, tracker_id, item_ids):
-    assert isinstance(tracker_id, int)
+def get_many_items(cb_config, item_ids):
     assert isinstance(item_ids, set)
 
     rv = []
 
-    base_url = "%s/tracker/%u/items/or/%s" % (
-        cb_config["base"],
-        tracker_id,
-        ";".join("id=%u" % item_id
-                 for item_id in item_ids))
     page_id = 1
+    query_string = quote(f"item.id IN "
+                         f"({','.join(str(item_id) for item_id in item_ids)})")
+
     while True:
-        data = query_cb_single(cb_config, "%s/page/%u" % (base_url,
-                                                          page_id))
+        base_url = "%s/items/query?page=%u&pageSize=%u&queryString=%s"\
+                   % (cb_config["base"], page_id,
+                      cb_config["page_size"], query_string)
+        data = query_cb_single(cb_config, base_url)
         rv += data["items"]
         if len(rv) == data["total"]:
             break
@@ -123,14 +142,13 @@ def get_query(mh, cb_config, query_id):
 
     while total_items is None or len(rv) < total_items:
         print("Fetching page %u of query..." % page_id)
-        url = "%s/query/%u/page/%u?pagesize=%u" % \
+        url = "%s/reports/%u/items?page=%u&pageSize=%u" % \
             (cb_config["base"],
              query_id,
              page_id,
              cb_config["page_size"])
         data = query_cb_single(cb_config, url)
-        assert len(data) == 1
-        data = data["trackerItems"]
+        assert len(data) == 4
 
         if page_id == 1 and len(data["items"]) == 0:
             print("This query doesn't generate items. Please check:")
@@ -145,7 +163,7 @@ def get_query(mh, cb_config, query_id):
         else:
             assert total_items == data["total"]
 
-        rv += [to_lobster(cb_config, cb_item)
+        rv += [to_lobster(cb_config, cb_item["item"])
                for cb_item in data["items"]]
 
         page_id += 1
@@ -162,8 +180,9 @@ def to_lobster(cb_config, cb_item):
     # This looks like it's business logic, maybe we should make this
     # configurable?
 
-    if "type" in cb_item:
-        kind = cb_item["type"].get("name", "codebeamer item")
+    categories = cb_item.get("categories")
+    if categories:
+        kind = categories[0].get("name", "codebeamer item")
     else:
         kind = "codebeamer item"
 
@@ -196,8 +215,29 @@ def to_lobster(cb_config, cb_item):
         text      = None,
         status    = status)
 
-    if "name" not in cb_item:
-        req.error("Item lacks a summary text")
+    if cb_config.get('references'):
+        for reference_name, displayed_chosen_names in (
+                cb_config['references'].items()):
+            if reference_name not in map_reference_name_to_function:
+                continue
+
+            for displayed_name in displayed_chosen_names:
+                if cb_item.get(displayed_name):
+                    flat_values_list = cb_item.get(displayed_name) if (
+                        isinstance(cb_item.get(displayed_name), list)) \
+                        else [cb_item.get(displayed_name)]
+                else:
+                    flat_values_list = (
+                        list(value for custom_field
+                             in cb_item["customFields"]
+                             if custom_field["name"] == displayed_name and
+                             custom_field.get("values")
+                             for value in custom_field["values"]))
+                if not flat_values_list:
+                    continue
+
+                (map_reference_name_to_function[reference_name]
+                 (req, flat_values_list))
 
     return req
 
@@ -206,34 +246,44 @@ def import_tagged(mh, cb_config, items_to_import):
     assert isinstance(mh, Message_Handler)
     assert isinstance(cb_config, dict)
     assert isinstance(items_to_import, set)
-    work_list = copy(items_to_import)
-    rv        = []
+    rv = []
 
-    tracker_id = None
-    while work_list:
-        if tracker_id is None or len(work_list) < 3:
-            target = work_list.pop()
-            print("Fetching single item %u" % target)
-
-            cb_item    = get_single_item(cb_config, target)
-            l_item     = to_lobster(cb_config, cb_item)
-            tracker_id = l_item.location.tracker
-            rv.append(l_item)
-
-        else:
-            print("Attempting to fetch %u items from %s" %
-                  (len(work_list), tracker_id))
-            cb_items = get_many_items_maybe(cb_config, tracker_id, work_list)
-
-            for cb_item in cb_items:
-                l_item = to_lobster(cb_config, cb_item)
-                assert tracker_id == l_item.location.tracker
-                rv.append(l_item)
-                work_list.remove(l_item.location.item)
-
-            tracker_id = None
+    cb_items = get_many_items(cb_config, items_to_import)
+    for cb_item in cb_items:
+        l_item = to_lobster(cb_config, cb_item)
+        rv.append(l_item)
 
     return rv
+
+
+def ensure_array_of_strings(instance):
+    if (isinstance(instance, list) and
+            all(isinstance(item, str)
+                for item in instance)):
+        return instance
+    else:
+        return [str(instance)]
+
+
+def parse_cb_config(file_name):
+    assert isinstance(file_name, str)
+    assert os.path.isfile(file_name)
+
+    with open(file_name, "r", encoding='utf-8') as file:
+        data = json.loads(file.read())
+
+    provided_config_keys = set(data.keys())
+    supported_references = set(SUPPORTED_REFERENCES)
+
+    if not provided_config_keys.issubset(supported_references):
+        raise KeyError("The provided references are not supported! "
+                        "supported referenes: '%s'" %
+                        ', '.join(SUPPORTED_REFERENCES))
+
+    json_config = {}
+    for key, value in data.items():
+        json_config[key] = ensure_array_of_strings(value)
+    return json_config
 
 
 def main():
@@ -243,9 +293,16 @@ def main():
     modes.add_argument("--import-tagged",
                        metavar="LOBSTER_FILE",
                        default=None)
+
     modes.add_argument("--import-query",
                        metavar="CB_QUERY_ID",
                        default=None)
+
+    ap.add_argument("--config",
+                    help=("name of codebeamer "
+                          "config file, supported references: '%s'" %
+                          ', '.join(SUPPORTED_REFERENCES)),
+                    default=None)
 
     ap.add_argument("--ignore-ssl-errors",
                     action="store_true",
@@ -272,13 +329,19 @@ def main():
 
     cb_config = {
         "root"       : options.cb_root,
-        "base"       : "%s/cb/rest" % options.cb_root,
+        "base"       : "%s/cb/api/v3" % options.cb_root,
         "user"       : options.cb_user,
         "pass"       : options.cb_pass,
         "verify_ssl" : not options.ignore_ssl_errors,
         "page_size"  : options.query_size,
         "timeout"    : options.timeout,
     }
+
+    if options.config:
+        if os.path.isfile(options.config):
+            cb_config["references"] = parse_cb_config(options.config)
+        else:
+            ap.error("cannot open config file '%s'" % options.config)
 
     if cb_config["root"] is None:
         ap.error("please set CB_ROOT or use --cb-root")
