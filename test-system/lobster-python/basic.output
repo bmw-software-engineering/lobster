@@ -3,14 +3,14 @@ Written output for 3 items to basic.lobster
 {
   "data": [
     {
-      "tag": "python basic.trlc_reference:5",
+      "tag": "python basic.trlc_reference",
       "location": {
         "kind": "file",
         "file": "basic.py",
         "line": 5,
         "column": null
       },
-      "name": "basic.trlc_reference:5",
+      "name": "basic.trlc_reference",
       "messages": [],
       "just_up": [
         "helper function"
