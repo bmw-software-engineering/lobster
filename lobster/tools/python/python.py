@@ -37,28 +37,24 @@ LOBSTER_JUST_PREFIX = "# lobster-exclude: "
 func_name = []
 
 
-def count_elements_with_new(fun_name):
-    # Use a Counter to count elements
-    counts = Counter()
-    elements_store = []
-    tvalue = ""
-    fname = ""
+def count_occurence_of_last_function_from_function_name_list(function_names):
+    """
+    Function returns a function name(last function from the list of function_names)
+    and its occurence from the given list of function names
+    Example: function_names = ['hello.add:2', 'hello.sub:5', 'hello.add:8']
+             returns : hello.add-2
+    """
 
-    for element in fun_name:
-        pattern = r"[.:]"
-        separated_values = re.split(pattern, element)
-        fname = separated_values[0]
-        element = separated_values[1]
-        if counts[element] == 0:
-            counts[element] += 1
-            tvalue = fname + "." + element
-            elements_store.append(element)
-        else:
-            if element in elements_store:
-                tvalue = fname + "." + element + "-" + str(counts[element])
+    function_and_file_name = re.split(r"[.:]", function_names[-1])
+    filename = function_and_file_name[0]
+    last_function = function_and_file_name[1]
+    count = 0
+    for element in range(0, len(function_names)-1):
+        if re.split(r"[.:]", function_names[element])[1] == last_function:
+            count += 1
+    function_name = filename + "." + last_function + ("-" + str(count) if count > 0 else '')
 
-        counts[element] += 1
-    return tvalue
+    return function_name
 
 
 def parse_value(val):
@@ -225,7 +221,7 @@ class Python_Function(Python_Traceable_Node):
         assert isinstance(items, list)
 
         func_name.append(self.fqn())
-        tagname = count_elements_with_new(func_name)
+        tagname = count_occurence_of_last_function_from_function_name_list(func_name)
         pattern = r"[-]"
         val = re.split(pattern, tagname)
         name_value = val[0]
