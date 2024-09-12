@@ -3,14 +3,14 @@ Written output for 3 items to basic.lobster
 {
   "data": [
     {
-      "tag": "python basic.trlc_reference",
+      "tag": "python basic.trlc_reference:5",
       "location": {
         "kind": "file",
         "file": "basic.py",
         "line": 5,
         "column": null
       },
-      "name": "basic.trlc_reference",
+      "name": "basic.trlc_reference:5",
       "messages": [],
       "just_up": [
         "helper function"
@@ -21,14 +21,14 @@ Written output for 3 items to basic.lobster
       "kind": "Function"
     },
     {
-      "tag": "python basic.Example.helper_function",
+      "tag": "python basic.Example",
       "location": {
         "kind": "file",
         "file": "basic.py",
         "line": 13,
         "column": null
       },
-      "name": "basic.Example.helper_function",
+      "name": "basic.Example",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -40,14 +40,14 @@ Written output for 3 items to basic.lobster
       "kind": "Method"
     },
     {
-      "tag": "python basic.Example.nor",
+      "tag": "python basic.Example-1",
       "location": {
         "kind": "file",
         "file": "basic.py",
         "line": 17,
         "column": null
       },
-      "name": "basic.Example.nor",
+      "name": "basic.Example",
       "messages": [],
       "just_up": [],
       "just_down": [],
