@@ -23,7 +23,7 @@ import argparse
 import os.path
 from enum import Enum
 
-from lobster.items import Tracing_Tag, Implementation
+from lobster.items import Tracing_Tag, Implementation, Activity
 from lobster.location import File_Reference
 from lobster.io import lobster_write
 from lobster.tools.cpp_doxygen.parser.constants import LOBSTER_GENERATOR
@@ -214,12 +214,11 @@ def create_lobster_implementations_dict_from_test_cases(test_case_list: list, co
 
         if key not in lobster_implementations_dict.keys():
             lobster_implementations_dict[key] = \
-                Implementation(
+                Activity(
                     tag=tag,
                     location=loc,
-                    language=LANGUAGE_CPP,
-                    kind=KIND_FUNCTION,
-                    name=function_name
+                    framework="cpp_test",
+                    kind=KIND_FUNCTION
                 )
 
         for marker in config_dict.get(MARKERS):
@@ -255,12 +254,12 @@ def write_lobster_implementations_to_output(lobster_implementations_dict: dict, 
     """
     if output_file_name:
         with open(output_file_name, "w", encoding="UTF-8") as output_file:
-            lobster_write(output_file, Implementation, LOBSTER_GENERATOR, lobster_implementations_dict.values())
+            lobster_write(output_file, Activity, LOBSTER_GENERATOR, lobster_implementations_dict.values())
         item_count = len(lobster_implementations_dict)
         print(f'Written output for {item_count} items to {output_file_name}')
 
     else:
-        lobster_write(sys.stdout, Implementation, LOBSTER_GENERATOR, lobster_implementations_dict.values())
+        lobster_write(sys.stdout, Activity, LOBSTER_GENERATOR, lobster_implementations_dict.values())
         print()
 
 
