@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, MagicMock,create_autospec
+from unittest.mock import patch, MagicMock, create_autospec
 from lobster.items import Tracing_Tag, Tracing_Status, Item, Requirement, Implementation, Activity
 from hashlib import sha1
 from lobster.location import Location
@@ -13,7 +13,7 @@ class SetUp(unittest.TestCase):
     mock_text = "mock_text"
     mock_status = "active"
     mock_language = "mock_language"
-    mock_location = create_autospec(Location, instance=True)
+    mock_location = create_autospec(Location, instance = True)
     tracing_tag = Tracing_Tag(mock_namespace, mock_tag)    
     item = Item(tracing_tag, mock_location)
     requirement = Requirement(tracing_tag, mock_location, mock_framework, mock_kind, mock_name, mock_text, mock_status)

@@ -3,14 +3,14 @@ Written output for 2 items to pytest_mark.lobster
 {
   "data": [
     {
-      "tag": "pyunit pytest_mark.TestFrameServerProcessesStart.test_1:21",
+      "tag": "pyunit pytest_mark.TestFrameServerProcessesStart.test_1",
       "location": {
         "kind": "file",
         "file": "pytest_mark.py",
         "line": 21,
         "column": null
       },
-      "name": "pytest_mark.TestFrameServerProcessesStart.test_1:21",
+      "name": "pytest_mark.TestFrameServerProcessesStart.test_1",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -23,14 +23,14 @@ Written output for 2 items to pytest_mark.lobster
       "status": null
     },
     {
-      "tag": "pyunit pytest_mark.TestFrameServerProcessesStart.test_2:24",
+      "tag": "pyunit pytest_mark.TestFrameServerProcessesStart.test_2",
       "location": {
         "kind": "file",
         "file": "pytest_mark.py",
         "line": 24,
         "column": null
       },
-      "name": "pytest_mark.TestFrameServerProcessesStart.test_2:24",
+      "name": "pytest_mark.TestFrameServerProcessesStart.test_2",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -48,4 +48,3 @@ Written output for 2 items to pytest_mark.lobster
   "schema": "lobster-act-trace",
   "version": 3
 }
-
