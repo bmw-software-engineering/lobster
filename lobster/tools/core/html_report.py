@@ -258,7 +258,7 @@ def write_item_box_end(doc):
     doc.add_line('<!-- end item -->')
 
 
-def write_html(fd, report, dot, color_blind):
+def write_html(fd, report, dot, high_contrast):
     assert isinstance(report, Report)
 
     doc = htmldoc.Document(
@@ -286,13 +286,13 @@ def write_html(fd, report, dot, color_blind):
         "padding-left"  : "0.2em",
     }
     doc.style[".item-ok"] = {
-        "background-color" : "#b2e1b2" if color_blind else "#efe",
+        "background-color" : "#b2e1b2" if high_contrast else "#efe",
     }
     doc.style[".item-partial"] = {
         "background-color" : "#ffe",
     }
     doc.style[".item-missing"] = {
-        "background-color" : "#ffb2ff" if color_blind else "#fee",
+        "background-color" : "#ffb2ff" if high_contrast else "#fee",
     }
     doc.style[".item-justified"] = {
         "background-color" : "#eee",
@@ -483,7 +483,7 @@ def main():
         write_html(fd     = fd,
                    report = report,
                    dot = options.dot,
-                   color_blind = options.color_blind)
+                   high_contrast = options.high_contrast)
         print("LOBSTER HTML report written to %s" % options.out)
 
 
