@@ -42,7 +42,7 @@ MISSING = "Missing"
 
 class RequirementTypes(Enum):
     REQS = '@requirement'
-    REQ_BY = '@required_by'
+    REQ_BY = '@requiredby'
     DEFECT = '@defect'
 
 
@@ -198,6 +198,8 @@ def create_lobster_implementations_dict_from_test_cases(test_case_list: list, co
     """
     prefix = os.getcwd()
     lobster_implementations_dict = {}
+    lobster_implementations_reduced_dict = {}
+    implementation_with_tracing_target = []
 
     for test_case in test_case_list:
         function_name: str = test_case.suite_name
@@ -229,8 +231,14 @@ def create_lobster_implementations_dict_from_test_cases(test_case_list: list, co
                     test_case_marker_value = test_case_marker_value.replace(CB_PREFIX, "")
                     tracing_target = Tracing_Tag(config_dict.get(KIND), test_case_marker_value)
                     lobster_implementations_dict.get(key).add_tracing_target(tracing_target)
+                    if key not in implementation_with_tracing_target:
+                        implementation_with_tracing_target.append(key)
 
-    return lobster_implementations_dict
+    for key, lobster_implementation in lobster_implementations_dict.items():
+        if key in implementation_with_tracing_target:
+            lobster_implementations_reduced_dict[key] = lobster_implementation
+
+    return lobster_implementations_reduced_dict
 
 
 def write_lobster_implementations_to_output(lobster_implementations_dict: dict, output_file_name: str):
