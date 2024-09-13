@@ -465,7 +465,7 @@ def main():
                     help="path to dot utility (https://graphviz.org), \
                     by default expected in PATH",
                     default=None)
-    ap.add_argument("--color-blind",
+    ap.add_argument("--high-contrast",
                     action="store_true",
                     help="Uses a color palette with a higher contrast.")
     options = ap.parse_args()

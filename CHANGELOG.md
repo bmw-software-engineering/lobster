@@ -18,6 +18,9 @@
   resulting lobster file will now contain "Unset" as status information,
   too, instead of `Null`.
 
+* The `lobster-html-report` tool now supports argument `--high-contrast` to use
+  a color palette with a higher contrast for easier visualization.
+
 ### 0.9.17
 
 * The `lobster-python` tool now adds the line number to the function
@@ -35,9 +38,6 @@
   the output file instead of editing the input report
 
 * Adds `with kind` and `with prefix` functionality in lobster.conf files
-
-* The `lobster-html-report` tool now supports argument `--color-blind` to use
-  a color palette with a higher contrast for color blindness.
 
 ### 0.9.16
 
