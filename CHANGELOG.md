@@ -22,9 +22,8 @@
   resulting lobster file will now contain "Unset" as status information,
   too, instead of `Null`.
 
-* The `lobster-python` tool now adds the counter logic to the function
-  identifier. This supports situations where different functions have
-  the same name.
+* The `lobster-html-report` tool now supports argument `--high-contrast` to use
+  a color palette with a higher contrast for easier visualization.
 
 ### 0.9.17
 
