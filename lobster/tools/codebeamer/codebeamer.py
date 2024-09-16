@@ -50,6 +50,8 @@ from lobster.location import Codebeamer_Reference
 from lobster.errors import Message_Handler, LOBSTER_Error
 from lobster.io import lobster_read, lobster_write
 
+TOKEN = 'token'
+
 
 class References(Enum):
     REFS = "refs"
@@ -71,14 +73,28 @@ map_reference_name_to_function = {
 }
 
 
+class BearerAuth(requests.auth.AuthBase):
+    def __init__(self, token):
+        self.token = token
+
+    def __call__(self, r):
+        r.headers['Authorization'] = f'Bearer {self.token}'
+        return r
+
+
 def query_cb_single(cb_config, url):
     assert isinstance(cb_config, dict)
     assert isinstance(url, str)
 
     try:
+        if cb_config["token"]:
+            auth = BearerAuth(cb_config["token"])
+        else:
+            auth = (cb_config["user"],
+                    cb_config["pass"])
+
         result = requests.get(url,
-                              auth=(cb_config["user"],
-                                    cb_config["pass"]),
+                              auth=auth,
                               timeout=cb_config["timeout"],
                               verify=cb_config["verify_ssl"])
     except requests.exceptions.ReadTimeout:
@@ -272,6 +288,12 @@ def parse_cb_config(file_name):
     with open(file_name, "r", encoding='utf-8') as file:
         data = json.loads(file.read())
 
+    token = None
+    json_config = {}
+
+    if TOKEN in data:
+        token = data.pop(TOKEN)
+
     provided_config_keys = set(data.keys())
     supported_references = set(SUPPORTED_REFERENCES)
 
@@ -280,10 +302,9 @@ def parse_cb_config(file_name):
                         "supported referenes: '%s'" %
                         ', '.join(SUPPORTED_REFERENCES))
 
-    json_config = {}
     for key, value in data.items():
         json_config[key] = ensure_array_of_strings(value)
-    return json_config
+    return json_config, token
 
 
 def main():
@@ -322,6 +343,7 @@ def main():
     ap.add_argument("--cb-root", default=os.environ.get("CB_ROOT", None))
     ap.add_argument("--cb-user", default=os.environ.get("CB_USERNAME", None))
     ap.add_argument("--cb-pass", default=os.environ.get("CB_PASSWORD", None))
+    ap.add_argument("--cb-token", default=None)
     ap.add_argument("--out", default=None)
     options = ap.parse_args()
 
@@ -332,6 +354,7 @@ def main():
         "base"       : "%s/cb/api/v3" % options.cb_root,
         "user"       : options.cb_user,
         "pass"       : options.cb_pass,
+        "token"        : options.cb_token,
         "verify_ssl" : not options.ignore_ssl_errors,
         "page_size"  : options.query_size,
         "timeout"    : options.timeout,
@@ -339,7 +362,10 @@ def main():
 
     if options.config:
         if os.path.isfile(options.config):
-            cb_config["references"] = parse_cb_config(options.config)
+            cb_config["references"], config_token = (
+                parse_cb_config(options.config))
+            if not cb_config["token"] and config_token:
+                cb_config["token"] = config_token
         else:
             ap.error("cannot open config file '%s'" % options.config)
 
@@ -359,10 +385,10 @@ def main():
                 print("using .netrc login for %s" % cb_config["root"])
                 cb_config["user"], _, cb_config["pass"] = auth
 
-    if cb_config["user"] is None:
-        ap.error("please set CB_USERNAME or use --cb-user")
-    if cb_config["pass"] is None:
-        ap.error("please set CB_PASSWORD or use --cb-pass")
+    if (cb_config["token"] is None and
+            (cb_config["user"] is None or cb_config["pass"] is None)):
+        ap.error("please set --cb-token or add your token to the config-file"
+                 "or use --cb-user and --cb-pass")
 
     items_to_import = set()
 
