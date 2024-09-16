@@ -4,6 +4,15 @@
 
 ### 0.9.18-dev
 
+* The `lobster-python` tool adds the counter logic to the function
+  identifier. This improves the situations where different functions have
+  the same name. Line numbers are no longer used in the identifier.
+
+* The `lobster-codebeamer` tool now supports `refs` as an upstream reference
+  
+* The `lobster-online-report` tool now works with config files located in
+  main- and submodules of a repository. This feature needs `git 1.7.8` or higher.
+
 * The `lobster-codebeamer` tool now allows items without summary
 
 * The `lobster-codebeamer` tool now uses codebeamer api v3.
