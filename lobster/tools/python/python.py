@@ -22,6 +22,7 @@ import argparse
 import os.path
 import multiprocessing
 import functools
+import re
 
 from libcst.metadata import PositionProvider
 import libcst as cst
@@ -32,6 +33,28 @@ from lobster.io import lobster_write
 
 LOBSTER_TRACE_PREFIX = "# lobster-trace: "
 LOBSTER_JUST_PREFIX = "# lobster-exclude: "
+func_name = []
+
+
+def count_occurrence_of_last_function_from_function_name_list(function_names):
+    """
+    Function returns a function name
+    (last function from the list of function names)
+    and its occurrence from the given list of function names
+    Example: function_names = ['hello.add:2', 'hello.sub:5', 'hello.add:8']
+             returns : hello.add-2
+    """
+    function_and_file_name = re.split(r"[.:]", function_names[-1])
+    filename = function_and_file_name[0]
+    last_function = function_and_file_name[1]
+    count = 0
+    for element in range(0, len(function_names) - 1):
+        if re.split(r"[.:]", function_names[element])[1] == last_function:
+            count += 1
+    function_name = (filename + "." + last_function +
+                     ("-" + str(count) if count > 0 else ''))
+
+    return function_name
 
 
 def parse_value(val):
@@ -197,13 +220,21 @@ class Python_Function(Python_Traceable_Node):
         assert schema is Implementation or schema is Activity
         assert isinstance(items, list)
 
+        func_name.append(self.fqn())
+        tagname = count_occurrence_of_last_function_from_function_name_list(
+            func_name
+        )
+        pattern = r"[-]"
+        val = re.split(pattern, tagname)
+        name_value = val[0]
+
         if schema is Implementation:
             l_item = Implementation(tag      = Tracing_Tag("python",
-                                                           self.fqn()),
+                                                           tagname),
                                     location = self.location,
                                     language = "Python",
                                     kind     = self.kind,
-                                    name     = self.fqn())
+                                    name     = name_value)
         else:
             if not self.name.startswith("test"):
                 return
