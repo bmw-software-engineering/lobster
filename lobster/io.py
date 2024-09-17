@@ -125,9 +125,9 @@ def lobster_read(mh, filename, level, items, source_info=None):
         if all(filter_conditions):
             if item.tag.key() in items:
                 mh.error(item.location,
-                            "duplicate definition of %s, "
-                            "previously defined at %s" %
-                            (item.tag.key(),
-                                items[item.tag.key()].location.to_string()))
+                          "duplicate definition of %s, "
+                          "previously defined at %s" %
+                          (item.tag.key(),
+                           items[item.tag.key()].location.to_string()))
 
             items[item.tag.key()] = item

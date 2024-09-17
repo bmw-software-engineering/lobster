@@ -258,7 +258,7 @@ def write_item_box_end(doc):
     doc.add_line('<!-- end item -->')
 
 
-def write_html(fd, report, dot):
+def write_html(fd, report, dot, high_contrast):
     assert isinstance(report, Report)
 
     doc = htmldoc.Document(
@@ -286,13 +286,13 @@ def write_html(fd, report, dot):
         "padding-left"  : "0.2em",
     }
     doc.style[".item-ok"] = {
-        "background-color" : "#efe",
+        "background-color" : "#b2e1b2" if high_contrast else "#efe",
     }
     doc.style[".item-partial"] = {
         "background-color" : "#ffe",
     }
     doc.style[".item-missing"] = {
-        "background-color" : "#fee",
+        "background-color" : "#ffb2ff" if high_contrast else "#fee",
     }
     doc.style[".item-justified"] = {
         "background-color" : "#eee",
@@ -465,6 +465,9 @@ def main():
                     help="path to dot utility (https://graphviz.org), \
                     by default expected in PATH",
                     default=None)
+    ap.add_argument("--high-contrast",
+                    action="store_true",
+                    help="Uses a color palette with a higher contrast.")
     options = ap.parse_args()
 
     if not os.path.isfile(options.lobster_report):
@@ -479,7 +482,8 @@ def main():
     with open(options.out, "w", encoding="UTF-8") as fd:
         write_html(fd     = fd,
                    report = report,
-                   dot = options.dot)
+                   dot = options.dot,
+                   high_contrast = options.high_contrast)
         print("LOBSTER HTML report written to %s" % options.out)
 
 
