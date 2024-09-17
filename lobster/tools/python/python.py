@@ -51,8 +51,8 @@ def count_occurrence_of_last_function_from_function_name_list(function_names):
     for element in range(0, len(function_names) - 1):
         if re.split(r"[.:]", function_names[element])[1] == last_function:
             count += 1
-    function_name = (filename + "." + last_function 
-                     + ("-" + str(count) if count > 0 else ''))
+    function_name = (filename + "." + last_function +
+                     ("-" + str(count) if count > 0 else ''))
 
     return function_name
 
