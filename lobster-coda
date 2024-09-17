@@ -19,7 +19,7 @@
 
 import sys
 
-from lobster.tools.cpp_doxygen.cpp_doxygen import main
+from lobster.tools.coda.coda import main
 
 if __name__ == "__main__":
     sys.exit(main())

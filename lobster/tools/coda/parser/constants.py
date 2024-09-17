@@ -8,7 +8,7 @@ CODEBEMAER_URL = "https://codebeamer.bmwgroup.net/cb"
 
 NON_EXISTING_INFO = "---"
 
-LOBSTER_GENERATOR = "lobster_cpp_doxygen"
+LOBSTER_GENERATOR = "lobster_coda"
 
 VALID_TEST_MACROS = [
     "TEST",

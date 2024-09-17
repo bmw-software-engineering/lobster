@@ -45,7 +45,7 @@ project_urls = {
 }
 
 setuptools.setup(
-    name="bmw-lobster-tool-cpp_doxygen",
+    name="bmw-lobster-tool-coda",
     version=version.LOBSTER_VERSION,
     author="Bayerische Motoren Werke Aktiengesellschaft (BMW AG)",
     author_email="philipp.wullstein-kammler@bmw.de",
@@ -55,7 +55,7 @@ setuptools.setup(
     url=project_urls["Source Code"],
     project_urls=project_urls,
     license="GNU Affero General Public License v3",
-    packages=["lobster.tools.cpp_doxygen"],
+    packages=["lobster.tools.coda"],
     install_requires=package_requirements,
     python_requires=">=3.7, <4",
     classifiers=[

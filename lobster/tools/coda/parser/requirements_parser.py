@@ -5,7 +5,7 @@ import logging
 from pathlib import Path
 from typing import List
 
-from lobster.tools.cpp_doxygen.parser.test_case import TestCase
+from lobster.tools.coda.parser.test_case import TestCase
 
 
 class ParserForRequirements:

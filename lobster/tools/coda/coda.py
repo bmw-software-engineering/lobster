@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# lobster_cpp_doxygen - Extract C/C++ tracing tags from doxygen commands for LOBSTER
+# lobster_coda - Extract C/C++ tracing tags from commands for LOBSTER
 # Copyright (C) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,13 +21,14 @@ import json
 import sys
 import argparse
 import os.path
+from copy import copy
 from enum import Enum
 
-from lobster.items import Tracing_Tag, Implementation, Activity
+from lobster.items import Tracing_Tag, Activity
 from lobster.location import File_Reference
 from lobster.io import lobster_write
-from lobster.tools.cpp_doxygen.parser.constants import LOBSTER_GENERATOR
-from lobster.tools.cpp_doxygen.parser.requirements_parser import ParserForRequirements
+from lobster.tools.coda.parser.constants import LOBSTER_GENERATOR
+from lobster.tools.coda.parser.requirements_parser import ParserForRequirements
 
 OUTPUT  = "output"
 MARKERS = "markers"
@@ -35,6 +36,7 @@ KIND    = "kind"
 
 NAMESPACE_CPP = "cpp"
 LANGUAGE_CPP = "C/C++"
+FRAMEWORK_CPP_TEST = "cpp_test"
 KIND_FUNCTION = "Function"
 CB_PREFIX = "CB-#"
 MISSING = "Missing"
@@ -59,11 +61,11 @@ map_test_type_to_key_name = {
 }
 
 
-def parse_cpp_doxygen_config_file(file_name: str) -> dict:
+def parse_config_file(file_name: str) -> dict:
     """
-    Parse the configuration dictionary for cpp_doxygen from given config file.
+    Parse the configuration dictionary from given config file.
 
-    The configuration dictionary for cpp_doxygen must contain the OUTPUT key.
+    The configuration dictionary for coda must contain the OUTPUT key.
     Each output configuration dictionary contains a file name as key and
     a value dictionary containing the keys MARKERS and KIND.
     The supported values for the MARKERS list are specified in SUPPORTED_REQUIREMENTS.
@@ -71,12 +73,12 @@ def parse_cpp_doxygen_config_file(file_name: str) -> dict:
     Parameters
     ----------
     file_name : str
-        The file name of the cpp_doxygen config file.
+        The file name of the coda config file.
 
     Returns
     -------
     dict
-        The dictionary containing the configuration for cpp_doxygen.
+        The dictionary containing the configuration for coda.
 
     Raises
     ------
@@ -180,26 +182,38 @@ def collect_test_cases_from_test_files(test_file_list: list) -> list:
     return test_case_list
 
 
-def create_lobster_implementations_dict_from_test_cases(test_case_list: list, config_dict: dict) -> dict:
+def create_lobster_items_output_dict_from_test_cases(test_case_list: list, config_dict: dict) -> dict:
     """
-    Creates the lobster implementations dictionary for the given test cases.
+    Creates the lobster items dictionary for the given test cases grouped by configured output.
 
     Parameters
     ----------
     test_case_list : list
         The list of test cases.
     config_dict : dict
-        The configuration dictionary containing MARKERS and KIND values.
+        The configuration dictionary.
 
     Returns
     -------
     dict
-        Dictionary containing the lobster implementations for all test cases.
+         The lobster items dictionary for the given test cases grouped by configured output.
     """
     prefix = os.getcwd()
-    lobster_implementations_dict = {}
-    lobster_implementations_reduced_dict = {}
-    implementation_with_tracing_target = []
+    lobster_items_output_dict = {}
+
+    no_marker_output_file_name = ''
+    output_config: dict = config_dict.get(OUTPUT)
+    marker_output_config_dict = {}
+    for output_file_name, output_config_dict in output_config.items():
+        lobster_items_output_dict[output_file_name] = {}
+        marker_list = output_config_dict.get(MARKERS)
+        if isinstance(marker_list, list) and len(marker_list) >= 1:
+            marker_output_config_dict[output_file_name] = output_config_dict
+        else:
+            no_marker_output_file_name = output_file_name
+
+    if no_marker_output_file_name not in lobster_items_output_dict.keys():
+        lobster_items_output_dict[no_marker_output_file_name] = {}
 
     for test_case in test_case_list:
         function_name: str = test_case.suite_name
@@ -212,69 +226,79 @@ def create_lobster_implementations_dict_from_test_cases(test_case_list: list, co
         loc = File_Reference(file_name, line_nr)
         key = tag.key()
 
-        if key not in lobster_implementations_dict.keys():
-            lobster_implementations_dict[key] = \
-                Activity(
-                    tag=tag,
-                    location=loc,
-                    framework="cpp_test",
-                    kind=KIND_FUNCTION
-                )
+        activity = \
+            Activity(
+                tag=tag,
+                location=loc,
+                framework=FRAMEWORK_CPP_TEST,
+                kind=KIND_FUNCTION
+            )
 
-        for marker in config_dict.get(MARKERS):
-            if marker not in map_test_type_to_key_name.keys():
-                continue
+        contains_no_tracing_target = True
+        for output_file_name, output_config_dict in marker_output_config_dict.items():
+            tracing_target_list = []
+            tracing_target_kind = output_config_dict.get(KIND)
+            for marker in output_config_dict.get(MARKERS):
+                if marker not in map_test_type_to_key_name.keys():
+                    continue
 
-            for test_case_marker_value in getattr(test_case, map_test_type_to_key_name.get(marker)):
-                if MISSING not in test_case_marker_value:
-                    test_case_marker_value = test_case_marker_value.replace(CB_PREFIX, "")
-                    tracing_target = Tracing_Tag(config_dict.get(KIND), test_case_marker_value)
-                    lobster_implementations_dict.get(key).add_tracing_target(tracing_target)
-                    if key not in implementation_with_tracing_target:
-                        implementation_with_tracing_target.append(key)
+                for test_case_marker_value in getattr(test_case, map_test_type_to_key_name.get(marker)):
+                    if MISSING not in test_case_marker_value:
+                        test_case_marker_value = test_case_marker_value.replace(CB_PREFIX, "")
+                        tracing_target = Tracing_Tag(tracing_target_kind, test_case_marker_value)
+                        tracing_target_list.append(tracing_target)
 
-    for key, lobster_implementation in lobster_implementations_dict.items():
-        if key in implementation_with_tracing_target:
-            lobster_implementations_reduced_dict[key] = lobster_implementation
+            if len(tracing_target_list) >= 1:
+                contains_no_tracing_target = False
+                lobster_item = copy(activity)
+                for tracing_target in tracing_target_list:
+                    lobster_item.add_tracing_target(tracing_target)
 
-    return lobster_implementations_reduced_dict
+                lobster_items_output_dict.get(output_file_name)[key] = lobster_item
+
+        if contains_no_tracing_target:
+            lobster_items_output_dict.get(no_marker_output_file_name)[key] = activity
+
+    return lobster_items_output_dict
 
 
-def write_lobster_implementations_to_output(lobster_implementations_dict: dict, output_file_name: str):
+def write_lobster_items_output_dict(lobster_items_output_dict: dict):
     """
-    Write the lobster implementations dictionary to the configured output.
+    Write the lobster items to the output.
     If the output file name is empty everything is written to stdout.
 
     Parameters
     ----------
-    lobster_implementations_dict : dict
-        The dictionary containing the lobster implementations.
-    output_file_name : str
-        The output file name.
+    lobster_items_output_dict : dict
+        The lobster items dictionary grouped by output.
     """
-    if output_file_name:
-        with open(output_file_name, "w", encoding="UTF-8") as output_file:
-            lobster_write(output_file, Activity, LOBSTER_GENERATOR, lobster_implementations_dict.values())
-        item_count = len(lobster_implementations_dict)
-        print(f'Written output for {item_count} items to {output_file_name}')
+    for output_file_name, lobster_items in lobster_items_output_dict.items():
+        item_count = len(lobster_items)
+        if item_count <= 1:
+            continue
 
-    else:
-        lobster_write(sys.stdout, Activity, LOBSTER_GENERATOR, lobster_implementations_dict.values())
-        print()
+        if output_file_name:
+            with open(output_file_name, "w", encoding="UTF-8") as output_file:
+                lobster_write(output_file, Activity, LOBSTER_GENERATOR, lobster_items.values())
+            print(f'Written {item_count} lobster items to "{output_file_name}".')
+
+        else:
+            lobster_write(sys.stdout, Activity, LOBSTER_GENERATOR, lobster_items.values())
+            print(f'Written {item_count} lobster items to stdout.')
 
 
-def lobster_cpp_doxygen(file_dir_list: list, output_config: dict):
+def lobster_coda(file_dir_list: list, config_dict: dict):
     """
-    The main function to parse requirements from cpp doxygen comments
+    The main function to parse requirements from comments
     for the given list of files and/or directories and write the
-    created lobster implementations dictionary to the configured outputs.
+    created lobster dictionary to the configured outputs.
 
     Parameters
     ----------
     file_dir_list : list
         The list of files and/or directories to be parsed
-    output_config : dict
-        The output configuration dictionary
+    config_dict : dict
+        The configuration dictionary
     """
     test_file_list = \
         get_test_file_list(
@@ -287,22 +311,20 @@ def lobster_cpp_doxygen(file_dir_list: list, output_config: dict):
             test_file_list=test_file_list
         )
 
-    for output_file_name, output_config_dict in output_config.items():
-        lobster_implementations_dict: dict = \
-            create_lobster_implementations_dict_from_test_cases(
-                test_case_list=test_case_list,
-                config_dict=output_config_dict
-            )
+    lobster_items_output_dict: dict = \
+        create_lobster_items_output_dict_from_test_cases(
+            test_case_list=test_case_list,
+            config_dict=config_dict
+        )
 
-        write_lobster_implementations_to_output(
-            lobster_implementations_dict=lobster_implementations_dict,
-            output_file_name=output_file_name)
+    write_lobster_items_output_dict(
+        lobster_items_output_dict=lobster_items_output_dict
+    )
 
 
 def main():
     """
-    Main function to parse arguments, read cpp doxygen configuration and launch
-    lobster_cpp_doxygen.
+    Main function to parse arguments, read configuration and launch lobster_coda.
     """
     ap = argparse.ArgumentParser()
     ap.add_argument("files",
@@ -318,11 +340,11 @@ def main():
     options = ap.parse_args()
 
     try:
-        cpp_doxygen_config = parse_cpp_doxygen_config_file(options.config_file)
+        config_dict = parse_config_file(options.config_file)
 
-        lobster_cpp_doxygen(
+        lobster_coda(
             file_dir_list=options.files,
-            output_config=cpp_doxygen_config.get(OUTPUT)
+            config_dict=config_dict
         )
 
     except Exception as exception:

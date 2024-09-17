@@ -11,8 +11,8 @@ from the provided comments in cpp files
 
 ## Tools
 
-* `lobster-cpp-doxygen`: Extract requirements with dynamic refrences 
-  from C/C++ code.
+* `lobster-coda`: Extract requirements with dynamic refrences 
+  from comments.
 
 ## Usage
 

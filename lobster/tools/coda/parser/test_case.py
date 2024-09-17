@@ -1,7 +1,7 @@
 import re
 from typing import List
 
-from lobster.tools.cpp_doxygen.parser.constants import NON_EXISTING_INFO, TEST_CASE_INFO, \
+from lobster.tools.coda.parser.constants import NON_EXISTING_INFO, TEST_CASE_INFO, \
     REQUIREMENT_TAG, REQUIREMENT_TAG_HTTP, REQUIRED_BY, REQUIREMENT, REQUIREMENT_TAG_HTTP_NAMED, REQUIRED_BY_TAG, \
     OCT_TAG, TEST, BRIEF, TESTMETHODS, VALID_TESTMETHODS, VERSION, TEST_CASE_INTRO, DEFECT
 

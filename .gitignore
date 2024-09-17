@@ -9,8 +9,9 @@ meta_dist
 
 test_install
 test_install_monolithic
-lobster/tools/cpp_doxygen/_bazel_*
+lobster/tools/coda/_bazel_*
 .idea/
 test-unit/_bazel_*
 _bazel_*
 adp.lobster
+*.lobster
