@@ -45,11 +45,15 @@ integration-tests: packages
 	(cd integration-tests/projects/filter; make)
 
 system-tests:
-	make -B -C test-system/lobster-json
-	make -B -C test-system/lobster-python
+	mkdir -p docs
+	make -C test-system/lobster-json -B
+	make -C test-system/lobster-python -B
 
 unit-tests:
-	python3 -m unittest discover -s test-unit -v
+	coverage run -p \
+			--branch --rcfile=coverage.cfg \
+			--data-file .coverage \
+			-m unittest discover -s test-unit -v
 
 test: integration-tests system-tests unit-tests
 
@@ -74,3 +78,8 @@ full-release:
 	make github-release
 	make bump
 	git push
+
+coverage:
+	coverage combine -q
+	coverage html --rcfile=coverage.cfg
+	coverage report --rcfile=coverage.cfg --fail-under=94
