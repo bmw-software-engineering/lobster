@@ -65,3 +65,10 @@ jobs:
       - name: Executing system tests
         run: |
           make system-tests
+      - name: Coverage analysis
+        run: |
+          make coverage
+      - name: Check output files
+        if: always()
+        run: |
+          util/check_local_modifications.sh
