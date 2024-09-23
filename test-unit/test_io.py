@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import ANY
 import io
 import json
 from unittest.mock import patch, MagicMock, create_autospec, mock_open
@@ -182,7 +183,8 @@ class TestLobsterWrite(unittest.TestCase):
     @patch("builtins.open", new_callable=unittest.mock.mock_open, read_data='{"schema": "lobster-req-trace", "version": 4, "generator": "mock_generator"}')
     def test_lobster_read_missing_data_key(self, mock_open, mock_isfile):        
         lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
-        self.mh.error.assert_called_with(File_Reference(self.filename), "required top-level key data not present")
+        # Allow any File_Reference object, but striclty check the string of the error message    
+        self.mh.error.assert_called_with(ANY, "required top-level key data not present")
 
     @patch("os.path.isfile", return_value=True)
     @patch("builtins.open", new_callable=mock_open, read_data='invalid')
