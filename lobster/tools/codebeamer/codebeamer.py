@@ -76,6 +76,15 @@ class BearerAuth(requests.auth.AuthBase):
         r.headers['Authorization'] = f'Bearer {self.token}'
         return r
 
+class BearerAuth(requests.auth.AuthBase):
+    def __init__(self, token):
+        self.token = token
+
+    def __call__(self, r):
+        r.headers['Authorization'] = f'Bearer {self.token}'
+        return r
+
+
 def query_cb_single(cb_config, url):
     assert isinstance(cb_config, dict)
     assert isinstance(url, str)
@@ -356,7 +365,8 @@ def main():
 
     if options.config:
         if os.path.isfile(options.config):
-            cb_config["references"], config_token = parse_cb_config(options.config)
+            cb_config["references"], config_token = (
+                parse_cb_config(options.config))
             if not cb_config["token"] and config_token:
                 cb_config["token"] = config_token
         else:
