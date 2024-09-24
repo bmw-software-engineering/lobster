@@ -51,11 +51,15 @@ from lobster.errors import Message_Handler, LOBSTER_Error
 from lobster.io import lobster_read, lobster_write
 
 TOKEN = 'token'
+REFERENCES = 'references'
+
 
 class References(Enum):
     REFS = "refs"
 
+
 SUPPORTED_REFERENCES = [References.REFS.value]
+
 
 def add_refs_refrences(req, flat_values_list):
     # refs
@@ -69,12 +73,6 @@ map_reference_name_to_function = {
     References.REFS.value: add_refs_refrences
 }
 
-class BearerAuth(requests.auth.AuthBase):
-    def __init__(self, token):
-        self.token = token
-    def __call__(self, r):
-        r.headers['Authorization'] = f'Bearer {self.token}'
-        return r
 
 class BearerAuth(requests.auth.AuthBase):
     def __init__(self, token):
@@ -234,9 +232,9 @@ def to_lobster(cb_config, cb_item):
         text      = None,
         status    = status)
 
-    if cb_config.get('references'):
+    if cb_config.get(REFERENCES):
         for reference_name, displayed_chosen_names in (
-                cb_config['references'].items()):
+                cb_config[REFERENCES].items()):
             if reference_name not in map_reference_name_to_function:
                 continue
 
@@ -291,11 +289,10 @@ def parse_cb_config(file_name):
     with open(file_name, "r", encoding='utf-8') as file:
         data = json.loads(file.read())
 
-    token = None
-    json_config = {}
+    json_config = {REFERENCES: {}}
 
     if TOKEN in data:
-        token = data.pop(TOKEN)
+        json_config["token"] = data.pop(TOKEN)
 
     provided_config_keys = set(data.keys())
     supported_references = set(SUPPORTED_REFERENCES)
@@ -306,8 +303,9 @@ def parse_cb_config(file_name):
                         ', '.join(SUPPORTED_REFERENCES))
 
     for key, value in data.items():
-        json_config[key] = ensure_array_of_strings(value)
-    return json_config, token
+        json_config[REFERENCES][key] = ensure_array_of_strings(value)
+
+    return json_config
 
 
 def main():
@@ -357,7 +355,7 @@ def main():
         "base"       : "%s/cb/api/v3" % options.cb_root,
         "user"       : options.cb_user,
         "pass"       : options.cb_pass,
-        "token"        : options.cb_token,
+        "token"      : options.cb_token,
         "verify_ssl" : not options.ignore_ssl_errors,
         "page_size"  : options.query_size,
         "timeout"    : options.timeout,
@@ -365,10 +363,7 @@ def main():
 
     if options.config:
         if os.path.isfile(options.config):
-            cb_config["references"], config_token = (
-                parse_cb_config(options.config))
-            if not cb_config["token"] and config_token:
-                cb_config["token"] = config_token
+            cb_config.update(parse_cb_config(options.config))
         else:
             ap.error("cannot open config file '%s'" % options.config)
 
@@ -378,7 +373,8 @@ def main():
     if not cb_config["root"].startswith("https://"):
         ap.error("codebeamer root %s must start with https://")
 
-    if cb_config["user"] is None or cb_config["pass"] is None:
+    if (cb_config["token"] is None and
+            (cb_config["user"] is None or cb_config["pass"] is None)):
         netrc_file = os.path.join(os.path.expanduser("~"),
                                   ".netrc")
         if os.path.isfile(netrc_file):
