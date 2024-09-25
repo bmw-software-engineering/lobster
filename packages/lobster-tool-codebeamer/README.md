@@ -11,31 +11,48 @@ requirements management tool
 
 ## Tools
 
-* `lobster-codebeamer`: Extrat requirements from codebeamer.
+* `lobster-codebeamer`: Extract requirements from codebeamer.
 
 ## Configuration
-This tool works with an optional config file. In it you can declare which 
-codebeamer fields should be used as 'refs' reference in the codebeamer file.
 
-For the 'refs' reference in config file you can write:
+*   This tool works with an optional config file. In it you can declare which 
+    codebeamer fields should be used as 'refs' reference in the codebeamer file.
 
-```
-{
-"refs" : "cb-fieldname"
-}
-```
-or
-```
-{
-"refs" : ["cb-fieldname"]
-}
-```
-or
-```
-{
-"refs" : ["cb-fieldname1", "cb-fieldname2"]
-}
-```
+    For the 'refs' reference in config file you can write:
+
+    ```
+    {
+    "refs" : "cb-fieldname"
+    }
+    ```
+    or
+    ```
+    {
+    "refs" : ["cb-fieldname"]
+    }
+    ```
+    or
+    ```
+    {
+    "refs" : ["cb-fieldname1", "cb-fieldname2"]
+    }
+    ```
+
+* Schema (kind)
+
+  You can also specify the type of schema for the resulting output file. The supported values for the kind field are:
+  1. Activity: Sets the schema to lobster-act-trace.
+  2. Implementation: Sets the schema to lobster-imp-trace.
+  3. Requirement: Sets the schema to lobster-req-trace.
+
+  If the kind is not specified, the tool will default to Requirement, and the schema lobster-req-trace will be used.
+
+  Here’s an example configuration:
+  `json code:` {"kind": "Activity",  // Specifies schema
+                "refs": ["custom_ref_1", "custom_ref_2"]  // Specifies references
+               }
+
+  If an invalid kind is provided, the tool will raise an exception. Supported kind values are Activity, Implementation, and Requirement.
 
 ## Usage
 
@@ -49,6 +66,18 @@ There are two ways you can use this tool:
 
 * Configure the 'refs' upstream reference (this argument is optional)
 (using `--config`)
+
+* Additionally, you can specify the schema and references:
+
+  1. Specify the kind of trace to be generated (optional, defaults to Requirement)
+     using the --schema argument, or configure it in the config file.
+  2. Configure the 'refs' upstream reference (optional) using --config or
+     specify directly via command line.
+
+    * For example:
+    ``` codepython lobster_codebeamer.py --config lobster-codebeamer-config.json --schema "Activity" --references "custom_ref_1```
+
+       This command will extract activity traces (lobster-act-trace) with specified references.
 
 ## Limitations
 
