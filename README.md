@@ -67,6 +67,11 @@ The individual packages that `bmw-lobster` depends on are:
 * `bmw-lobster-tool-json` (for activities in JSON)
 * `miss_hit` (for MATLAB/Octave code or Simulink models)
 
+### For LOBSTER developers
+
+* [Requirements Coverage Report](https://bmw-software-engineering.github.io/lobster/tracing.html)
+* [Code Coverage Report](https://bmw-software-engineering.github.io/lobster/htmlcov/index.html)
+
 ## Planned inputs
 
 The following inputs are planned but not implemeted yet:
