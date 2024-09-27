@@ -86,3 +86,7 @@ coverage:
 
 test-ci: system-tests unit-tests coverage
 	util/check_local_modifications.sh
+
+docs:
+	rm -rf docs
+	mkdir docs
