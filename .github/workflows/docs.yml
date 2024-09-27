@@ -1,4 +1,4 @@
-name: Deploy coverage report content to Pages IO
+name: Deploy static content to Pages
 
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
           PYTHONPATH: "."
       - name: Building code coverage report
         run: |
-          make system-tests unit-tests
+          make system-tests
           make coverage
           mv htmlcov docs
       - name: Setup Pages
