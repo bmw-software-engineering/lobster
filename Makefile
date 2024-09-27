@@ -82,7 +82,7 @@ full-release:
 coverage:
 	coverage combine -q
 	coverage html --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=0
+	coverage report --rcfile=coverage.cfg --fail-under=57
 
 test-ci: system-tests unit-tests coverage
 	util/check_local_modifications.sh

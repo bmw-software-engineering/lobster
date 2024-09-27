@@ -46,7 +46,7 @@ jobs:
           PYTHONPATH: "."
       - name: Building code coverage report
         run: |
-          make system-tests
+          make system-tests unit-tests
           make coverage
           mv htmlcov docs
       - name: Setup Pages
