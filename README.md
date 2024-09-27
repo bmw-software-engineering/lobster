@@ -47,10 +47,10 @@ The following verification and miscellaneous frameworks are supported:
 
 ## Documentation
 
-* Writing [configuration files](docs/config_files.md) for LOBSTER.
+* Writing [configuration files](documentation/config_files.md) for LOBSTER.
 * It is easy to expand the languages and activities supported by
   LOBSTER by adding new tracing tools, as long as they create data in
-  the [common interchange format](docs/schemas.md) for LOBSTER.
+  the [common interchange format](documentation/schemas.md) for LOBSTER.
 
 (More to come...)
 
