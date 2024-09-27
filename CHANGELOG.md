@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### 1.0.0-dev
+
+* The `lobster-report` tool now supports optional "OR" in uplinks (`trace to`). In 
+  the `lobster.config` file the keyword `requires` has been changed to `trace from`.
+
 ### 0.9.18-dev
 
 * The `lobster-python` tool adds the counter logic to the function
