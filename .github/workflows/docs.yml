@@ -1,4 +1,4 @@
-name: Deploy coverage report content to Pages
+name: Deploy coverage report content to Pages IO
 
 on:
   push:
