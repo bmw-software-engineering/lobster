@@ -47,10 +47,10 @@ The following verification and miscellaneous frameworks are supported:
 
 ## Documentation
 
-* Writing [configuration files](docs/config_files.md) for LOBSTER.
+* Writing [configuration files](documentation/config_files.md) for LOBSTER.
 * It is easy to expand the languages and activities supported by
   LOBSTER by adding new tracing tools, as long as they create data in
-  the [common interchange format](docs/schemas.md) for LOBSTER.
+  the [common interchange format](documentation/schemas.md) for LOBSTER.
 
 (More to come...)
 
@@ -66,6 +66,10 @@ The individual packages that `bmw-lobster` depends on are:
 * `bmw-lobster-tool-beamer` (for requirements in Codebeamer)
 * `bmw-lobster-tool-json` (for activities in JSON)
 * `miss_hit` (for MATLAB/Octave code or Simulink models)
+
+### For LOBSTER developers
+
+* [Code Coverage Report](https://bmw-software-engineering.github.io/lobster/htmlcov/index.html)
 
 ## Planned inputs
 
