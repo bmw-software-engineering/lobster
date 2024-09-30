@@ -106,7 +106,7 @@ Then you can use `--test-list=vectors` to identify the correct list.
 Note: This tool is pretty limited. For the obvious cases it works
 pretty well, but if you have a more complex test definition in JSON
 then you will need to write your own adaptor [using the documented
-schema](https://github.com/bmw-software-engineering/lobster/blob/main/docs/schemas.md).
+schema](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/schemas.md).
 
 ## Copyright & License information
 
