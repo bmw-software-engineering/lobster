@@ -16,8 +16,9 @@ html_report.html: cppcode.lobster requirements.lobster lobster.conf json.lobster
 	@lobster-html-report
 
 cppcode.lobster: foo.h foo.cpp
-	@lobster-cpp foo.cpp foo.h \
-		--out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
+	@if [ -z "$(SKIP_CPP_TESTS)" ]; then \
+	  lobster-cpp foo.cpp foo.h --out="cppcode.lobster" --clang-tidy $(CLANG_TIDY); \
+	fi
 
 requirements.lobster: example.rsl softreq_example.trlc sysreq_example.trlc
 	@lobster-trlc example.rsl softreq_example.trlc sysreq_example.trlc\

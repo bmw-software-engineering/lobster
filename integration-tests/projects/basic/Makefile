@@ -18,8 +18,9 @@ html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requiremen
 	@lobster-ci-report | tee ci_report.reference_output
 
 cppcode.lobster: foo.h foo.cpp
-	@lobster-cpp foo.cpp foo.h \
-		--out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
+	@if [ -z "$(SKIP_CPP_TESTS)" ]; then \
+	  lobster-cpp foo.cpp foo.h --out="cppcode.lobster" --clang-tidy $(CLANG_TIDY); \
+	fi
 
 gtests.lobster: foo.h foo.cpp test.cpp
 	@bazel test foo_test --cxxopt='-std=c++14'
