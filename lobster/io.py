@@ -77,8 +77,7 @@ def lobster_read(mh, filename, level, items, source_info=None):
 
     for rkey in ("schema", "version", "generator", "data"):
         if rkey not in data:
-            mh.error(loc, "required top-level key %s not present" % rkey)
-            return  # Stop execution to avoid missing key error of next 'if'
+            mh.error(loc, "required top-levelkey %s not present" % rkey)
         if rkey == "data":
             if not isinstance(data[rkey], list):
                 mh.error(loc, "data is not an array")
