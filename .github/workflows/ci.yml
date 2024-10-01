@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   integration-tests:
-    name: CI Integration tests
+    name: Integration tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,9 +23,8 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip --break-system-packages
           python3 -m pip install -r requirements_dev.txt --break-system-packages
-          python3 -m pip install -r requirements.txt --break-system-packages
       - name: Run integration tests
         env:
-          SKIP_CPP_TESTS: true 
+          SKIP_CPP_TESTS: TRUE 
         run: |
           make integration-tests

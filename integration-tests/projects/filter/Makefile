@@ -10,20 +10,19 @@ THIS_TEST:=$(shell realpath --relative-to $(LOBSTER_ROOT) $(PWD))
 THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
 
 html_report.html: cppcode.lobster requirements.lobster lobster.conf json.lobster
-#	ifeq ($(SKIP_CPP_TESTS),TRUE)
-#		lobster-report --lobster-config lobster_ci.conf
-#	else
-#		lobster-report
-#	endif
-	@lobster-report --lobster-config lobster_ci.conf
+ifeq ($(SKIP_CPP_TESTS), TRUE)
+	lobster-report --lobster-config lobster_ci.conf
+else
+	lobster-report
+endif
 	@lobster-online-report
 	@cp report.lobster report.reference_output
 	@lobster-html-report
 
 cppcode.lobster: foo.h foo.cpp
-	@if [ -z "$(SKIP_CPP_TESTS)" ]; then \
-	  lobster-cpp foo.cpp foo.h --out="cppcode.lobster" --clang-tidy $(CLANG_TIDY); \
-	fi
+ifneq ($(SKIP_CPP_TESTS), TRUE)
+	lobster-cpp foo.cpp foo.h --out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
+endif
 
 requirements.lobster: example.rsl softreq_example.trlc sysreq_example.trlc
 	@lobster-trlc example.rsl softreq_example.trlc sysreq_example.trlc\
