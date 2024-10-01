@@ -1,14 +1,9 @@
 name: LOBSTER CI
 
 on:
-  push:
-    branches:
-      - main
-      - feature/eneable_integration_tests_ci  # Temporary for testing
   pull_request:
     branches:
       - main
-      - feature/eneable_integration_tests_ci  # Temporary for testing
 
 permissions:
   contents: read
