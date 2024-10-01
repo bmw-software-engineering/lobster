@@ -25,9 +25,7 @@ packages:
 	make -C packages/lobster-core
 	make -C packages/lobster-tool-trlc
 	make -C packages/lobster-tool-codebeamer
-	if [ -z "$(SKIP_CPP_TESTS)" ]; then \
-	  make -C packages/lobster-tool-cpp; \
-	fi
+	make -C packages/lobster-tool-cpp
 	make -C packages/lobster-tool-gtest
 	make -C packages/lobster-tool-json
 	make -C packages/lobster-tool-python
