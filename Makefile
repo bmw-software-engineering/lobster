@@ -31,21 +31,20 @@ packages:
 	make -C packages/lobster-tool-python
 	make -C packages/lobster-metapackage
 	make -C packages/lobster-monolithic
-    # Print the working directory and list files before installation
-	@echo "Working directory before first install: " && pwd
-	@echo "Contents of current directory: " && ls
+	echo "installs start"
 	PYTHONPATH= \
 		pip3 install --prefix test_install \
 		packages/*/dist/*.whl
-    # Print the working directory and list files after first installation
-	@echo "Working directory after first install: " && pwd
-	@echo "Contents of test_install/lib/python*: " && ls test_install/lib/python*/site-packages/lobster || echo "Lobster not found in test_install"
+	echo "install 1 complete"
 	PYTHONPATH= \
 		pip3 install --prefix test_install_monolithic \
 		packages/lobster-monolithic/meta_dist/*.whl
-    # Print the working directory and list files after 2nd installation
-	@echo "Working directory after second install: " && pwd
-	@echo "Contents of test_install_monolithic/lib/python*: " && ls test_install_monolithic/lib/python*/site-packages/lobster || echo "Lobster not found in test_install_monolithic"
+	echo "install 2 complete"
+	echo "Search for test_install:"
+	find test_install
+	echo "Search for test_install_monolithic:"
+	find test_install_monolithic
+	echo "End of search"
 	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
 	diff -Naur test_install/bin test_install_monolithic/bin
 
