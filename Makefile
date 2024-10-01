@@ -32,20 +32,20 @@ packages:
 	make -C packages/lobster-metapackage
 	make -C packages/lobster-monolithic
     # Print the working directory and list files before installation
-    @echo "Working directory before first install: " && pwd
-    @echo "Contents of pwd: "&& ls pwd
+	@echo "Working directory before first install: " && pwd
+	@echo "Contents of current directory: " && ls
 	PYTHONPATH= \
 		pip3 install --prefix test_install \
 		packages/*/dist/*.whl
     # Print the working directory and list files after first installation
-    @echo "Working directory after first install: " && pwd
-    @echo "Contents of test_install/lib/python*: " && ls test_install/lib/python*/site-packages/lobster || echo "Lobster not found in test_install"
+	@echo "Working directory after first install: " && pwd
+	@echo "Contents of test_install/lib/python*: " && ls test_install/lib/python*/site-packages/lobster || echo "Lobster not found in test_install"
 	PYTHONPATH= \
 		pip3 install --prefix test_install_monolithic \
 		packages/lobster-monolithic/meta_dist/*.whl
     # Print the working directory and list files after 2nd installation
-    @echo "Working directory after second install: " && pwd
-    @echo "Contents of test_install_monolithic/lib/python*: " && ls test_install_monolithic/lib/python*/site-packages/lobster || echo "Lobster not found in test_install_monolithic"
+	@echo "Working directory after second install: " && pwd
+	@echo "Contents of test_install_monolithic/lib/python*: " && ls test_install_monolithic/lib/python*/site-packages/lobster || echo "Lobster not found in test_install_monolithic"
 	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
 	diff -Naur test_install/bin test_install_monolithic/bin
 
