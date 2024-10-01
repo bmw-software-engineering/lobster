@@ -10,7 +10,11 @@ THIS_TEST:=$(shell realpath --relative-to $(LOBSTER_ROOT) $(PWD))
 THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
 
 html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
-	@lobster-report
+	@if [ -z "$(SKIP_CPP_TESTS];then \
+		lobster-report --lobster-config lobster_ci.conf
+	else \
+		lobster-report
+	fi
 	@lobster-online-report
 	@cp report.lobster report.reference_output
 	@lobster-html-report
