@@ -23,8 +23,6 @@ jobs:
           python3 -m pip install --upgrade pip --break-system-packages
           python3 -m pip install -r requirements_dev.txt --break-system-packages
       - name: Run integration tests
-        env:
-          SKIP_CPP_TESTS: TRUE 
         run: |
           make integration-tests
       - name: Setup tmate session
