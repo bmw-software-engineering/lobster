@@ -31,20 +31,16 @@ packages:
 	make -C packages/lobster-tool-python
 	make -C packages/lobster-metapackage
 	make -C packages/lobster-monolithic
-	echo "installs start"
 	PYTHONPATH= \
 		pip3 install --prefix test_install \
 		packages/*/dist/*.whl
-	echo "install 1 complete"
 	PYTHONPATH= \
 		pip3 install --prefix test_install_monolithic \
 		packages/lobster-monolithic/meta_dist/*.whl
-	echo "install 2 complete"
-	echo "Search for test_install:"
 	find test_install
-	echo "Search for test_install_monolithic:"
 	find test_install_monolithic
-	echo "End of search"
+	echo "Search test_install/lib & test_install_monolithic/lib -maxdepth 0"
+	find test_install/lib test_install_monolithic/lib -maxdepth 0
 	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
 	diff -Naur test_install/bin test_install_monolithic/bin
 
