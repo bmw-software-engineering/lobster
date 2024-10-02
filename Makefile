@@ -32,14 +32,11 @@ packages:
 	make -C packages/lobster-metapackage
 	make -C packages/lobster-monolithic
 	PYTHONPATH= \
-		pip3 install --prefix test_install \
+		pip3 install --target test_install \
 		packages/*/dist/*.whl
 	PYTHONPATH= \
-		pip3 install --prefix test_install_monolithic \
+		pip3 install --target test_install_monolithic \
 		packages/lobster-monolithic/meta_dist/*.whl
-	find test_install
-	find test_install_monolithic
-	echo "Search test_install/lib & test_install_monolithic/lib -maxdepth 0"
 	sudo find / -type d -name "lib" -path "*/test_install/*" 2>/dev/null
 	sudo find / -type d -name "lib" -path "*/test_install_monolithic/*" 2>/dev/null
 	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
