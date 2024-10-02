@@ -10,7 +10,7 @@ THIS_TEST:=$(shell realpath --relative-to $(LOBSTER_ROOT) $(PWD))
 THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
 
 html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
-ifeq ($(SKIP_CPP_TESTS), TRUE)
+ifeq ($(CI), true)
 	lobster-report --lobster-config lobster_ci.conf
 else
 	lobster-report
@@ -22,7 +22,7 @@ endif
 	@lobster-ci-report | tee ci_report.reference_output
 
 cppcode.lobster: foo.h foo.cpp
-ifneq ($(SKIP_CPP_TESTS), TRUE)
+ifneq ($(CI), true)
 	lobster-cpp foo.cpp foo.h --out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
 endif
 
