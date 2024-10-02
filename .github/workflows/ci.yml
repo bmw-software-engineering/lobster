@@ -23,3 +23,9 @@ jobs:
           SKIP_CPP_TESTS: TRUE 
         run: |
           make integration-tests
+      - name: Setup tmate session
+        if: failure()
+        timeout-minutes: 20
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
