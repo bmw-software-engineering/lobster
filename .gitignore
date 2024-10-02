@@ -9,3 +9,8 @@ meta_dist
 
 test_install
 test_install_monolithic
+
+# Project ignores
+.coverage*
+*.lobster
+*.html
