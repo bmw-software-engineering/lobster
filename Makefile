@@ -40,7 +40,8 @@ packages:
 	find test_install
 	find test_install_monolithic
 	echo "Search test_install/lib & test_install_monolithic/lib -maxdepth 0"
-	find test_install/lib test_install_monolithic/lib -maxdepth 0
+	sudo find / -type d -name "lib" -path "*/test_install/*" 2>/dev/null
+	sudo find / -type d -name "lib" -path "*/test_install_monolithic/*" 2>/dev/null
 	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
 	diff -Naur test_install/bin test_install_monolithic/bin
 
