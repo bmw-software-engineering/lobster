@@ -32,15 +32,25 @@ packages:
 	make -C packages/lobster-metapackage
 	make -C packages/lobster-monolithic
 	PYTHONPATH= \
-		pip3 install --target test_install \
+		pip3 install --prefix test_install \
 		packages/*/dist/*.whl
 	PYTHONPATH= \
-		pip3 install --target test_install_monolithic \
+		pip3 install --prefix test_install_monolithic \
 		packages/lobster-monolithic/meta_dist/*.whl
-	sudo find / -type d -name "lib" -path "*/test_install/*" 2>/dev/null
-	sudo find / -type d -name "lib" -path "*/test_install_monolithic/*" 2>/dev/null
-	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
-	diff -Naur test_install/bin test_install_monolithic/bin
+#	sudo find / -type d -name "lib" -path "*/test_install/*" 2>/dev/null
+#	sudo find / -type d -name "lib" -path "*/test_install_monolithic/*" 2>/dev/null
+ifeq ($(CI), true)
+		echo "I was in CI MODE"
+		TEST_INSTALL_PATH=test_install/local/lib
+		TEST_INSTALL_MONO_PATH=test_install_monolithic/local/lib
+else
+		echo "I was NOT in CI MODE"
+		TEST_INSTALL_PATH=test_install/lib
+		TEST_INSTALL_MONO_PATH=test_install_monolithic/lib
+endif
+
+	diff -Naur $(TEST_INSTALL_PATH)/python*/site-packages/lobster $(TEST_INSTALL_MONO_PATH)/python*/site-packages/lobster -x "*.pyc"
+	diff -Naur $(TEST_INSTALL_PATH)/bin $(TEST_INSTALL_MONO_PATH)/bin
 
 integration-tests: packages
 	(cd integration-tests/projects/basic; make)
