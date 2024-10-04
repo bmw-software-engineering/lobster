@@ -12,7 +12,6 @@ permissions:
 jobs:
   lint:
     name: PyLint
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +25,7 @@ jobs:
           make lint
   test:
     name: TestSuite
-    if: success()
+    needs: lint
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
@@ -74,6 +73,7 @@ jobs:
           util/check_local_modifications.sh
   integration-tests:
     name: Integration tests
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
