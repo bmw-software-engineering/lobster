@@ -85,9 +85,9 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
-      - name: Make assets
+      - name: Install graphviz
         run: |
-          make lobster/html/assets.py
+          sudo apt install graphviz
       - name: Run integration tests
         run: |
           make integration-tests
