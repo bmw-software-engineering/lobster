@@ -144,8 +144,8 @@
           "ref_up": [],
           "ref_down": [
             "req example.req_important",
-            "python nor.Example",
-            "python nor.Example-1"
+            "python nor.Example.helper_function",
+            "python nor.Example.nor"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -370,14 +370,14 @@
           "kind": "Function"
         },
         {
-          "tag": "python nor.Example",
+          "tag": "python nor.Example.helper_function",
           "location": {
             "kind": "file",
             "file": "nor.py",
             "line": 13,
             "column": null
           },
-          "name": "nor.Example",
+          "name": "nor.Example.helper_function",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -391,14 +391,14 @@
           "kind": "Method"
         },
         {
-          "tag": "python nor.Example-1",
+          "tag": "python nor.Example.nor",
           "location": {
             "kind": "file",
             "file": "nor.py",
             "line": 17,
             "column": null
           },
-          "name": "nor.Example",
+          "name": "nor.Example.nor",
           "messages": [],
           "just_up": [],
           "just_down": [],

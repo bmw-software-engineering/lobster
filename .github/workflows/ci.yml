@@ -85,6 +85,9 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
+      - name: Make assets
+        run: |
+          make lobster/html/assets.py
       - name: Run integration tests
         run: |
           make integration-tests
