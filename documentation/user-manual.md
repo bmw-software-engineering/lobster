@@ -86,7 +86,7 @@ item, checking:
 
 If all of these checks pass, then the item will be accepted, otherwise
 error messages will appear. Please refer to this [example
-report](../integration-tests/projects/basic/lobster_report.html) which illustrates these ideas.
+report](example_report.html) which illustrates these ideas.
 
 ## Configuring and running LOBSTER
 

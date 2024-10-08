@@ -225,25 +225,25 @@ blockquote {
 </tr>
 <tr>
 <td><a href="#sec-9d273bd32c1fceb91b7d6a4d40e98bdd">Software Requirements</a></td>
-<td>33.3%</td>
+<td>50.0%</td>
 <td>
-<progress value="2" max="6">
-33.33%
+<progress value="3" max="6">
+50.00%
 </progress>
 </td>
-<td align="right">2</td>
+<td align="right">3</td>
 <td align="right">6</td>
 </tr>
 <tr>
 <td><a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a></td>
-<td>71.4%</td>
+<td>60.0%</td>
 <td>
-<progress value="5" max="7">
-71.43%
+<progress value="6" max="10">
+60.00%
 </progress>
 </td>
-<td align="right">5</td>
-<td align="right">7</td>
+<td align="right">6</td>
+<td align="right">10</td>
 </tr>
 <tr>
 <td><a href="#sec-840c3e13412933b0e3f7394f4c7fecb0">Verification Test</a></td>
@@ -327,10 +327,12 @@ blockquote {
 <h2 id="sec-issues">Issues</h2>
 <div class="content">
 <ul>
+<li>codebeamer Functional requirement <a href='#item-d499f1e2ff6c8662012d4c4bfe35060a5eda7b6c'>LOBSTER demo</a>: status is Potato, expected Valid</li>
 <li>Simulink Block <a href='#item-f44a5e4c051c43e14dc1c71d4a3818a0b038597e'>exclusive_or</a>: missing up reference</li>
 <li>MATLAB Function <a href='#item-abac171105982dd5a053572a6f4d88ef30fbfc42'>exclusive_or/MATLAB Function</a>: missing up reference</li>
-<li>codebeamer Functional requirement <a href='#item-d499f1e2ff6c8662012d4c4bfe35060a5eda7b6c'>LOBSTER demo</a>: status is Potato, expected Valid</li>
-<li>TRLC Tagged_requirement <a href='#item-1bb1a5e571e24eebc94d2572ab385ee34e338995'>example.req_implication</a>: missing reference to Code</li>
+<li>C/C++ Function <a href='#item-a59e5952bd9a2f7bb8592b7645968e08f73a9037'>exclusive_or</a>: missing up reference</li>
+<li>C/C++ Function <a href='#item-1fcf699056a4c10fafba408751855a62d76a2fc2'>potato</a>: unknown tracing target req example.doesnt_exist</li>
+<li>C/C++ Function <a href='#item-1fcf699056a4c10fafba408751855a62d76a2fc2'>potato</a>: missing up reference</li>
 <li>TRLC Tagged_requirement <a href='#item-5c0948f96e743a0c3ab3c14ecac0f5d10609f324'>example.req_xor</a>: tracing destination req 12345 has version 42 (expected 5)</li>
 <li>TRLC Requirement <a href='#item-714c0c22dee57a69c9425cff0c0bd4ca9ebe5d1f'>example.req_nor</a>: missing up reference</li>
 <li>TRLC Requirement <a href='#item-714c0c22dee57a69c9425cff0c0bd4ca9ebe5d1f'>example.req_nor</a>: missing reference to Verification Test</li>
@@ -373,13 +375,13 @@ Status: Potato
 </div>
 <!-- end item -->
 <h4 id="sec-9d273bd32c1fceb91b7d6a4d40e98bdd">Software Requirements</h4>
-<h5>potato.trlc</h5>
+<h5>integration-tests/projects/basic/potato.trlc</h5>
 <!-- begin item req example.req_implication -->
-<div class="item-partial" id="item-1bb1a5e571e24eebc94d2572ab385ee34e338995">
-<div class="item-name"><svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg> TRLC Tagged_requirement example.req_implication</div>
+<div class="item-ok" id="item-1bb1a5e571e24eebc94d2572ab385ee34e338995">
+<div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> TRLC Tagged_requirement example.req_implication</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="potato.trlc" target="_blank">potato.trlc</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/potato.trlc#L3" target="_blank">integration-tests/projects/basic/potato.trlc:3</a>
 </div>
 <div class="attribute">
 <blockquote>text: provide a utility function for logical implication</blockquote>
@@ -387,17 +389,13 @@ Status: Potato
 <div class="attribute">
 <div>Traces to:
 <ul>
+<li>C/C++ Function <a href='#item-306ea2c9ccbbbc7157c8ff00b3e0381919969d52'>implication</a></li>
 <li>GoogleTest Test <a href='#item-0c9dd74b464f7be6456f3d14e144ba8b116dc9b3'>ImplicationTest:BasicTest</a></li>
 </ul>
 </div>
 <div>Derived from:
 <ul>
 <li>codebeamer Functional requirement <a href='#item-d499f1e2ff6c8662012d4c4bfe35060a5eda7b6c'>LOBSTER demo</a></li>
-</ul>
-</div>
-<div>Issues:
-<ul>
-<li>missing reference to Code</li>
 </ul>
 </div>
 </div>
@@ -408,7 +406,7 @@ Status: Potato
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg> TRLC Tagged_requirement example.req_xor</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="potato.trlc" target="_blank">potato.trlc</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/potato.trlc#L9" target="_blank">integration-tests/projects/basic/potato.trlc:9</a>
 </div>
 <div class="attribute">
 <blockquote>text: provide a utility function for logical exclusive or</blockquote>
@@ -439,7 +437,7 @@ Status: Potato
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> TRLC Tagged_requirement example.req_nand</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="potato.trlc" target="_blank">potato.trlc</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/potato.trlc#L15" target="_blank">integration-tests/projects/basic/potato.trlc:15</a>
 </div>
 <div class="attribute">
 <blockquote>text: provide a utility function for logical negated and<br><br>extra_text: potato</blockquote>
@@ -465,7 +463,7 @@ Status: Potato
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg> TRLC Requirement example.req_nor</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="potato.trlc" target="_blank">potato.trlc</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/potato.trlc#L22" target="_blank">integration-tests/projects/basic/potato.trlc:22</a>
 </div>
 <div class="attribute">
 <blockquote>provide a utility function for logical negated or</blockquote>
@@ -492,7 +490,7 @@ Status: Potato
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> TRLC Requirement example.req_implies</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="potato.trlc" target="_blank">potato.trlc</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/potato.trlc#L27" target="_blank">integration-tests/projects/basic/potato.trlc:27</a>
 </div>
 <div class="attribute">
 <blockquote>provide a utility function for logical implication</blockquote>
@@ -512,7 +510,7 @@ Status: Potato
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg> TRLC Linked_requirement example.req_important</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="potato.trlc" target="_blank">potato.trlc</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/potato.trlc#L39" target="_blank">integration-tests/projects/basic/potato.trlc:39</a>
 </div>
 <div class="attribute">
 <blockquote>this is important</blockquote>
@@ -535,13 +533,13 @@ Status: Potato
 <!-- end item -->
 <h3>Implementation</h3>
 <h4 id="sec-ca0dbad92a874b2f69b549293387925e">Code</h4>
-<h5>exclusive_or.slx</h5>
+<h5>integration-tests/projects/basic/exclusive_or.slx</h5>
 <!-- begin item simulink exclusive_or -->
 <div class="item-missing" id="item-f44a5e4c051c43e14dc1c71d4a3818a0b038597e">
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg> Simulink Block exclusive_or</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="exclusive_or.slx" target="_blank">exclusive_or.slx</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/exclusive_or.slx" target="_blank">integration-tests/projects/basic/exclusive_or.slx</a>
 </div>
 <div class="attribute">
 <div>Issues:
@@ -557,7 +555,7 @@ Status: Potato
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> Simulink Block exclusive_or/My Exclusive Or</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="exclusive_or.slx" target="_blank">exclusive_or.slx</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/exclusive_or.slx" target="_blank">integration-tests/projects/basic/exclusive_or.slx</a>
 </div>
 <div class="attribute">
 <div>Derived from:
@@ -573,7 +571,7 @@ Status: Potato
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg> MATLAB Function exclusive_or/MATLAB Function</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="exclusive_or.slx" target="_blank">exclusive_or.slx</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/exclusive_or.slx#L1" target="_blank">integration-tests/projects/basic/exclusive_or.slx:1</a>
 </div>
 <div class="attribute">
 <div>Issues:
@@ -584,13 +582,63 @@ Status: Potato
 </div>
 </div>
 <!-- end item -->
-<h5>nand.m</h5>
+<h5>integration-tests/projects/basic/foo.cpp</h5>
+<!-- begin item cpp foo.cpp:implication:3 -->
+<div class="item-ok" id="item-306ea2c9ccbbbc7157c8ff00b3e0381919969d52">
+<div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> C/C++ Function implication</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/foo.cpp#L3" target="_blank">integration-tests/projects/basic/foo.cpp:3</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Tagged_requirement <a href='#item-1bb1a5e571e24eebc94d2572ab385ee34e338995'>example.req_implication</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item cpp foo.cpp:exclusive_or:9 -->
+<div class="item-missing" id="item-a59e5952bd9a2f7bb8592b7645968e08f73a9037">
+<div class="item-name"><svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg> C/C++ Function exclusive_or</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/foo.cpp#L9" target="_blank">integration-tests/projects/basic/foo.cpp:9</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item cpp foo.cpp:potato:14 -->
+<div class="item-missing" id="item-1fcf699056a4c10fafba408751855a62d76a2fc2">
+<div class="item-name"><svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg> C/C++ Function potato</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/foo.cpp#L14" target="_blank">integration-tests/projects/basic/foo.cpp:14</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req example.doesnt_exist</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>integration-tests/projects/basic/nand.m</h5>
 <!-- begin item matlab nand -->
 <div class="item-ok" id="item-05717df9b8ee784715376855d7afeabeaa6cd1f5">
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> MATLAB Function nand</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="nand.m" target="_blank">nand.m</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/nand.m#L1" target="_blank">integration-tests/projects/basic/nand.m:1</a>
 </div>
 <div class="attribute">
 <div>Derived from:
@@ -601,13 +649,13 @@ Status: Potato
 </div>
 </div>
 <!-- end item -->
-<h5>nor.py</h5>
+<h5>integration-tests/projects/basic/nor.py</h5>
 <!-- begin item python nor.trlc_reference -->
 <div class="item-justified" id="item-716e7482019e79473ec2b20555b90c6183ef62a2">
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> Python Function nor.trlc_reference</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="nor.py" target="_blank">nor.py</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/nor.py#L5" target="_blank">integration-tests/projects/basic/nor.py:5</a>
 </div>
 <div class="attribute">
 <div>Justifications:
@@ -623,7 +671,7 @@ Status: Potato
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> Python Method nor.Example</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="nor.py" target="_blank">nor.py</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/nor.py#L13" target="_blank">integration-tests/projects/basic/nor.py:13</a>
 </div>
 <div class="attribute">
 <div>Derived from:
@@ -639,7 +687,7 @@ Status: Potato
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> Python Method nor.Example</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="nor.py" target="_blank">nor.py</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/nor.py#L17" target="_blank">integration-tests/projects/basic/nor.py:17</a>
 </div>
 <div class="attribute">
 <div>Derived from:
@@ -652,13 +700,13 @@ Status: Potato
 <!-- end item -->
 <h3>Verification and Validation</h3>
 <h4 id="sec-840c3e13412933b0e3f7394f4c7fecb0">Verification Test</h4>
-<h5>example.json</h5>
+<h5>integration-tests/projects/basic/example.json</h5>
 <!-- begin item json example.json:XOR Test 1 -->
 <div class="item-ok" id="item-2def120304660abe06791056ae3475223a985c2b">
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> JSON Test vector example.json:XOR Test 1</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="example.json" target="_blank">example.json</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/example.json" target="_blank">integration-tests/projects/basic/example.json</a>
 </div>
 <div class="attribute">
 <div>Derived from:
@@ -674,7 +722,7 @@ Status: Potato
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> JSON Test vector example.json:XOR Test 2</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="example.json" target="_blank">example.json</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/example.json" target="_blank">integration-tests/projects/basic/example.json</a>
 </div>
 <div class="attribute">
 <div>Derived from:
@@ -690,7 +738,7 @@ Status: Potato
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> JSON Test vector example.json:Potato Test 1</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="example.json" target="_blank">example.json</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/example.json" target="_blank">integration-tests/projects/basic/example.json</a>
 </div>
 <div class="attribute">
 <div>Justifications:
@@ -701,13 +749,13 @@ Status: Potato
 </div>
 </div>
 <!-- end item -->
-<h5>nand_test.m</h5>
+<h5>integration-tests/projects/basic/nand_test.m</h5>
 <!-- begin item matlab nand_test::test_1 -->
 <div class="item-ok" id="item-39288653f9b39978deae407a61549f53151857b7">
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> MATLAB Test nand_test::test_1</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="nand_test.m" target="_blank">nand_test.m</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/nand_test.m#L3" target="_blank">integration-tests/projects/basic/nand_test.m:3</a>
 </div>
 <div class="attribute">
 <div>Derived from:
@@ -718,13 +766,13 @@ Status: Potato
 </div>
 </div>
 <!-- end item -->
-<h5>test.cpp</h5>
+<h5>integration-tests/projects/basic/test.cpp</h5>
 <!-- begin item gtest ImplicationTest:BasicTest -->
 <div class="item-ok" id="item-0c9dd74b464f7be6456f3d14e144ba8b116dc9b3">
 <div class="item-name"><svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg> GoogleTest Test ImplicationTest:BasicTest</div>
 <div class="attribute">Source: 
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-<a href="test.cpp" target="_blank">test.cpp</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/integration-tests/projects/basic/test.cpp#L7" target="_blank">integration-tests/projects/basic/test.cpp:7</a>
 </div>
 <div class="attribute">
 <div>Derived from:

@@ -10,10 +10,11 @@
         {
           "tag": "req sysreq_example.lobster_example",
           "location": {
-            "kind": "file",
-            "file": "sysreq_example.trlc",
-            "line": 4,
-            "column": 28
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/filter/sysreq_example.trlc",
+            "line": 4
           },
           "name": "sysreq_example.lobster_example",
           "messages": [],
@@ -34,10 +35,11 @@
         {
           "tag": "req sysreq_example.req_implication",
           "location": {
-            "kind": "file",
-            "file": "sysreq_example.trlc",
-            "line": 11,
-            "column": 28
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/filter/sysreq_example.trlc",
+            "line": 11
           },
           "name": "sysreq_example.req_implication",
           "messages": [],
@@ -57,10 +59,11 @@
         {
           "tag": "req sysreq_example.req_xor",
           "location": {
-            "kind": "file",
-            "file": "sysreq_example.trlc",
-            "line": 19,
-            "column": 28
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/filter/sysreq_example.trlc",
+            "line": 19
           },
           "name": "sysreq_example.req_xor",
           "messages": [],
@@ -87,10 +90,11 @@
         {
           "tag": "req softreq_example.req_implication",
           "location": {
-            "kind": "file",
-            "file": "softreq_example.trlc",
-            "line": 5,
-            "column": 30
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/filter/softreq_example.trlc",
+            "line": 5
           },
           "name": "softreq_example.req_implication",
           "messages": [],
@@ -114,10 +118,11 @@
         {
           "tag": "req softreq_example.req_xor",
           "location": {
-            "kind": "file",
-            "file": "softreq_example.trlc",
-            "line": 17,
-            "column": 30
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/filter/softreq_example.trlc",
+            "line": 17
           },
           "name": "softreq_example.req_xor",
           "messages": [],
@@ -150,10 +155,11 @@
         {
           "tag": "json test_example.json:Implication Test 1",
           "location": {
-            "kind": "file",
-            "file": "test_example.json",
-            "line": null,
-            "column": null
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/filter/test_example.json",
+            "line": null
           },
           "name": "test_example.json:Implication Test 1",
           "messages": [],
@@ -172,10 +178,11 @@
         {
           "tag": "json test_example.json:Implication Test 2",
           "location": {
-            "kind": "file",
-            "file": "test_example.json",
-            "line": null,
-            "column": null
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/filter/test_example.json",
+            "line": null
           },
           "name": "test_example.json:Implication Test 2",
           "messages": [],
@@ -194,10 +201,11 @@
         {
           "tag": "json test_example.json:XOR Test 1",
           "location": {
-            "kind": "file",
-            "file": "test_example.json",
-            "line": null,
-            "column": null
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/filter/test_example.json",
+            "line": null
           },
           "name": "test_example.json:XOR Test 1",
           "messages": [],
@@ -216,10 +224,11 @@
         {
           "tag": "json test_example.json:XOR Test 2",
           "location": {
-            "kind": "file",
-            "file": "test_example.json",
-            "line": null,
-            "column": null
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/filter/test_example.json",
+            "line": null
           },
           "name": "test_example.json:XOR Test 2",
           "messages": [],
@@ -238,10 +247,11 @@
         {
           "tag": "json test_example.json:XOR Test 3",
           "location": {
-            "kind": "file",
-            "file": "test_example.json",
-            "line": null,
-            "column": null
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/filter/test_example.json",
+            "line": null
           },
           "name": "test_example.json:XOR Test 3",
           "messages": [],
@@ -260,10 +270,11 @@
         {
           "tag": "json test_example.json:XOR Test 4",
           "location": {
-            "kind": "file",
-            "file": "test_example.json",
-            "line": null,
-            "column": null
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "main",
+            "file": "integration-tests/projects/filter/test_example.json",
+            "line": null
           },
           "name": "test_example.json:XOR Test 4",
           "messages": [],
