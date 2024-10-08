@@ -70,6 +70,7 @@ The individual packages that `bmw-lobster` depends on are:
 ### For LOBSTER developers
 
 * [Code Coverage Report](https://bmw-software-engineering.github.io/lobster/htmlcov/index.html)
+* [Coding Guideline](CODING_GUIDELINE.md)
 
 ## Planned inputs
 
