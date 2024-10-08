@@ -10,16 +10,25 @@ THIS_TEST:=$(shell realpath --relative-to $(LOBSTER_ROOT) $(PWD))
 THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
 
 html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
-	@lobster-report
-	@lobster-online-report
-	@cp report.lobster report.reference_output
-	@lobster-html-report
-	@cp lobster_report.html ../../../documentation/example_report.html
-	@lobster-ci-report | tee ci_report.reference_output
+ifeq ($(CI), true)
+	lobster-report --lobster-config lobster_ci.conf
+	lobster-online-report
+	lobster-html-report
+	lobster-ci-report | tee ci_report_ci.reference_output
+	cp report.lobster report_ci.reference_output
+else
+	lobster-report
+	lobster-online-report
+	lobster-html-report
+	cp lobster_report.html ../../../documentation/example_report.html
+	lobster-ci-report | tee ci_report.reference_output
+	cp report.lobster report.reference_output
+endif
 
 cppcode.lobster: foo.h foo.cpp
-	@lobster-cpp foo.cpp foo.h \
-		--out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
+ifneq ($(CI), true)
+	lobster-cpp foo.cpp foo.h --out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
+endif
 
 gtests.lobster: foo.h foo.cpp test.cpp
 	@bazel test foo_test --cxxopt='-std=c++14'

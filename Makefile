@@ -29,6 +29,7 @@ packages:
 	make -C packages/lobster-tool-gtest
 	make -C packages/lobster-tool-json
 	make -C packages/lobster-tool-python
+	make -C packages/lobster-tool-cpptest
 	make -C packages/lobster-metapackage
 	make -C packages/lobster-monolithic
 	PYTHONPATH= \
