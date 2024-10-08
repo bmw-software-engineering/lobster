@@ -102,7 +102,6 @@
             "req sysreq_example.lobster_example"
           ],
           "ref_down": [
-            "cpp foo.cpp:implication:3",
             "json test_example.json:Implication Test 1",
             "json test_example.json:Implication Test 2"
           ],
@@ -130,7 +129,6 @@
             "req sysreq_example.lobster_example"
           ],
           "ref_down": [
-            "cpp foo.cpp:exclusive_or:9",
             "json test_example.json:XOR Test 1",
             "json test_example.json:XOR Test 2",
             "json test_example.json:XOR Test 3",
@@ -141,55 +139,6 @@
           "kind": "Software_Requirement",
           "text": "Implement a function with the signature \n   int exclusive_or(int x, int y)\nto compute the exclusive or (XOR) of its two integer arguments.\nThe function returns 1 when exactly one of the arguments is non-zero and 0 otherwise.",
           "status": null
-        }
-      ],
-      "coverage": 100.0
-    },
-    {
-      "name": "Code",
-      "kind": "implementation",
-      "items": [
-        {
-          "tag": "cpp foo.cpp:implication:3",
-          "location": {
-            "kind": "file",
-            "file": "foo.cpp",
-            "line": 3,
-            "column": null
-          },
-          "name": "implication",
-          "messages": [],
-          "just_up": [],
-          "just_down": [],
-          "just_global": [],
-          "ref_up": [
-            "req softreq_example.req_implication"
-          ],
-          "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
-        },
-        {
-          "tag": "cpp foo.cpp:exclusive_or:9",
-          "location": {
-            "kind": "file",
-            "file": "foo.cpp",
-            "line": 9,
-            "column": null
-          },
-          "name": "exclusive_or",
-          "messages": [],
-          "just_up": [],
-          "just_down": [],
-          "just_global": [],
-          "ref_up": [
-            "req softreq_example.req_xor"
-          ],
-          "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
         }
       ],
       "coverage": 100.0
@@ -381,28 +330,9 @@
       "needs_tracing_down": true,
       "breakdown_requirements": [
         [
-          "Code"
-        ],
-        [
           "Verification Test"
         ]
       ]
-    },
-    "Code": {
-      "name": "Code",
-      "kind": "implementation",
-      "traces": [
-        "Software Requirements"
-      ],
-      "source": [
-        {
-          "file": "cppcode.lobster",
-          "filters": []
-        }
-      ],
-      "needs_tracing_up": true,
-      "needs_tracing_down": false,
-      "breakdown_requirements": []
     },
     "Verification Test": {
       "name": "Verification Test",

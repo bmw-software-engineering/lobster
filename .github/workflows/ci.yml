@@ -83,8 +83,12 @@ jobs:
           python-version: "3.11"
       - name: Install dependencies
         run: |
-          python3 -m pip install --upgrade pip --break-system-packages
-          python3 -m pip install -r requirements_dev.txt --break-system-packages
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements_dev.txt
       - name: Run integration tests
         run: |
           make integration-tests
+      - name: Check output files
+        if: always()
+        run: |
+          util/check_local_modifications.sh

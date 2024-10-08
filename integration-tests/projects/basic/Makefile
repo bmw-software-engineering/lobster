@@ -12,14 +12,16 @@ THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
 html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
 ifeq ($(CI), true)
 	lobster-report --lobster-config lobster_ci.conf
+	lobster-html-report --out lobster_report_ci.html
+	lobster-ci-report | tee ci_report_ci.reference_output
+	cp report.lobster report_ci.reference_output
 else
 	lobster-report
+	lobster-html-report
+	lobster-ci-report | tee ci_report.reference_output
+	cp report.lobster report.reference_output
 endif
 	@lobster-online-report
-	@cp report.lobster report.reference_output
-	@lobster-html-report
-	@cp lobster_report.html ../../../documentation/example_report.html
-	@lobster-ci-report | tee ci_report.reference_output
 
 cppcode.lobster: foo.h foo.cpp
 ifneq ($(CI), true)
