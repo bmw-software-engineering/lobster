@@ -48,9 +48,7 @@ jobs:
         with:
           name: wheels
           path: dist
-          pattern: |
-            **/*.whl
-            **/*.gz
+          merge-multiple: true
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
