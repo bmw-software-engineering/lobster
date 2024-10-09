@@ -25,6 +25,8 @@ jobs:
           # - lobster-tool-json
           # - lobster-tool-python
           # - lobster-tool-trlc
+    outputs:
+      tool_wheels: ${{ matrix.tools }}-wheels
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python 3.9
@@ -57,7 +59,7 @@ jobs:
       - name: Download wheel files
         uses: actions/download-artifact@v3
         with:
-          name: ${{ matrix.tools }}-wheels
+          name: ${{ needs.package.outputs.tool_wheels }}
           path: dist
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
