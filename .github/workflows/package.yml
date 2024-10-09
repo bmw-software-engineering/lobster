@@ -23,11 +23,11 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --upgrade setuptools wheel requests twine
       - name: Publish to PyPI
-          env:
-            TWINE_USERNAME: __token__
-            TWINE_PASSWORD: ${{ secrets.PYPI_API_KEY }}
-          run: |
-            make upload-main
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_KEY }}
+        run: |
+          make upload-main
       - name: Archive wheel files
         uses: actions/upload-artifact@v3
         with:
