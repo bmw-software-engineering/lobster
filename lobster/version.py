@@ -17,7 +17,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-VERSION_TUPLE = (0, 9, 21)
+VERSION_TUPLE = (0, 9, 18)
 VERSION_SUFFIX = "dev"
 
 LOBSTER_VERSION = ("%u.%u.%u" % VERSION_TUPLE) + \
