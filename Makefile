@@ -59,8 +59,8 @@ unit-tests:
 test: integration-tests system-tests unit-tests
 
 upload-main: packages
-	python3 -m twine upload --repository pypi packages/*/dist/*
-	python3 -m twine upload --repository pypi packages/*/meta_dist/*
+	python3 -m twine upload --repository testpypi packages/*/dist/*
+	python3 -m twine upload --repository testpypi packages/*/meta_dist/*
 
 remove-dev:
 	python3 -m util.release
