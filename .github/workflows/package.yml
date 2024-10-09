@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.tools }}-wheels
-          path: "packages/${{ matrix.tools }}/dist/*.whl"  # Save the wheel files for later upload
+          path: "packages/${{ matrix.tools }}/dist/*.whl"
 
   upload-test:
     name: PyPI Upload
