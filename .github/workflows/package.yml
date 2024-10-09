@@ -12,21 +12,6 @@ jobs:
   package:
     name: Build
     runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        tools:
-          # - lobster-core
-          # - lobster-metapackage
-          # - lobster-monolithic
-          # - lobster-tool-codebeamer
-          - lobster-tool-cpp
-          - lobster-tool-cpptest
-          # - lobster-tool-gtest
-          # - lobster-tool-json
-          # - lobster-tool-python
-          # - lobster-tool-trlc
-    outputs:
-      tool_wheels: ${{ matrix.tools }}-wheels
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python 3.9
@@ -39,27 +24,30 @@ jobs:
           python -m pip install --upgrade setuptools wheel requests
       - name: Build Packages
         run: |
-          export LOBSTER_ROOT=$(pwd)
-          cd packages/${{ matrix.tools }}
-          make package
+          make packages
       - name: Archive wheel files
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.tools }}-wheels
-          path: "packages/${{ matrix.tools }}/dist/*.whl"
+          name: wheels
+          path: "packages/*/dist/*"
+      - name: Archive wheel files meta_dist
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels
+          path: "packages/*/meta_dist/*"
 
   upload-test:
     name: PyPI Upload
     needs: package
     runs-on: ubuntu-20.04
-    environment: release
+    environment: testpypi
     permissions:
       id-token: write
     steps:
       - name: Download wheel files
         uses: actions/download-artifact@v3
         with:
-          name: ${{ needs.package.outputs.tool_wheels }}
+          name: wheels
           path: dist
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
