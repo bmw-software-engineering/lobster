@@ -54,9 +54,9 @@ jobs:
         with:
           repository_url: https://test.pypi.org/legacy/
 
-     - name: Setup tmate session
-       if: failure()
-       timeout-minutes: 40
-       uses: mxschmitt/action-tmate@v3
-       with:
-           limit-access-to-actor: true
+      - name: Setup tmate session
+        if: failure()
+        timeout-minutes: 40
+        uses: mxschmitt/action-tmate@v3
+        with:
+            limit-access-to-actor: true
