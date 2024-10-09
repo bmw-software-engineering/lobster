@@ -38,6 +38,7 @@ jobs:
       - name: Build Packages
         run: |
           export LOBSTER_ROOT=$(pwd)
+          export PYTHONPATH=$PYTHONPATH:$LOBSTER_ROOT/lobster
           cd packages/${{ matrix.tools }}
           make package
       - name: Archive wheel files
