@@ -1,10 +1,10 @@
 import unittest
-from unittest.mock import patch, MagicMock,create_autospec
+from unittest.mock import patch, MagicMock, create_autospec
 from lobster.items import Tracing_Tag, Tracing_Status, Item, Requirement, Implementation, Activity
 from hashlib import sha1
 from lobster.location import Location
 
-class SetUp(unittest.TestCase):
+class SetUp(unittest.TestCase):    
     mock_namespace = "mock_namespace"
     mock_tag = "mock_tag"
     mock_framework = "mock_framework"
@@ -13,104 +13,43 @@ class SetUp(unittest.TestCase):
     mock_text = "mock_text"
     mock_status = "active"
     mock_language = "mock_language"
-    mock_location = create_autospec(Location, instance=True)
+    mock_location = create_autospec(Location, instance = True)
     tracing_tag = Tracing_Tag(mock_namespace, mock_tag)    
     item = Item(tracing_tag, mock_location)
     requirement = Requirement(tracing_tag, mock_location, mock_framework, mock_kind, mock_name, mock_text, mock_status)
     implementation = Implementation(tracing_tag, mock_location, mock_language, mock_kind, mock_name)
     activity = Activity(tracing_tag, mock_location, mock_framework, mock_kind)
+    
+    def set_location_data(self, location_type):
+        if location_type == "file":
+            location_data = {
+            "kind": location_type,
+            "file": "example.txt"
+        }
+        elif location_type == "github":
+            location_data = {
+                "kind": location_type,
+                "gh_root": "https://mysuperserver.com",
+                "commit": "commit string",
+                "file": "example.txt",
+                "line": 1
+            }
+        elif location_type == "codebeamer":
+            location_data = {
+                "kind": location_type,
+                "cb_root": "https://mysuperserver.com",
+                "tracker": 1,
+                "item": 1,
+                "version": 1,
+                "name": "name string"
+            }
+        elif location_type == "void":
+            location_data = {
+                "kind": location_type                        
+            }
+        return location_data
 
-    @patch("lobster.items.Tracing_Tag.from_json")
-    def setup_test_from_json(self, class_name, mock_from_json):
-        mock_level = "mock_level"
-        mock_schema_version = 3
-        mock_from_json.return_value = self.tracing_tag
-        for location_type in ["file", "github", "codebeamer", "void"]:
-            with self.subTest(location_type):
-                if location_type == "file":
-                    location_data = {
-                    "kind": location_type,
-                    "file": "example.txt"
-                }
-                elif location_type == "github":
-                    location_data = {
-                        "kind": location_type,
-                        "gh_root": "https://mysuperserver.com",
-                        "commit": "commit string",
-                        "file": "example.txt",
-                        "line": 1
-                    }
-                elif location_type == "codebeamer":
-                    location_data = {
-                        "kind": location_type,
-                        "cb_root": "https://mysuperserver.com",
-                        "tracker": 1,
-                        "item": 1,
-                        "version": 1,
-                        "name": "name string"
-                    }
-                elif location_type == "void":
-                    location_data = {
-                        "kind": location_type                        
-                    }                
-                if class_name == "TestActivity":
-                    mock_data = {
-                        "tag": self.tracing_tag,
-                        "location": location_data,
-                        "framework": "framework_data",
-                        "kind": "kind_data",
-                        "status": None
-                    }
-                    result = self.activity.from_json(mock_level, mock_data, mock_schema_version)
-                    self.assertEqual(result.tag, self.tracing_tag)
-                    self.assertEqual(result.framework, "framework_data")
-                    self.assertEqual(result.kind, "kind_data")
-                    self.assertEqual(result.status, None)
-                elif class_name == "TestImplementation":
-                    mock_data = {
-                        "tag": self.tracing_tag,
-                        "location": location_data,
-                        "language": "Python",
-                        "kind": "kind_data",
-                        "name": "name_data",                        
-                    }
-                    result = self.implementation.from_json(mock_level, mock_data, mock_schema_version)
-                    self.assertEqual(result.tag, self.tracing_tag)
-                    self.assertEqual(result.language, "Python")
-                    self.assertEqual(result.kind, "kind_data")
-                    self.assertEqual(result.name, "name_data")
-                elif class_name == "TestRequirement":
-                    mock_data = {
-                        "tag": self.tracing_tag,
-                        "location": location_data,
-                        "framework": "framework_data",
-                        "kind": "kind_data",
-                        "name": "name_data",
-                        "text": "text_data",
-                        "status": "status_data"
-                    }
-                    result = self.requirement.from_json(mock_level, mock_data, mock_schema_version)
-                    self.assertEqual(result.tag, self.tracing_tag)
-                    self.assertEqual(result.framework, "framework_data")
-                    self.assertEqual(result.kind, "kind_data")
-                    self.assertEqual(result.name, "name_data")
-                    self.assertEqual(result.text, "text_data")
-                    self.assertEqual(result.status, "status_data")
-                if location_type == "file":
-                    self.assertEqual(result.location.filename, location_data["file"])
-                elif location_type == "github":
-                    self.assertEqual(result.location.gh_root, location_data["gh_root"])
-                    self.assertEqual(result.location.commit, location_data["commit"])
-                    self.assertEqual(result.location.filename, location_data["file"])
-                    self.assertEqual(result.location.line, location_data["line"])
-                elif location_type == "codebeamer":
-                    self.assertEqual(result.location.cb_root, location_data["cb_root"])
-                    self.assertEqual(result.location.tracker, location_data["tracker"])
-                    self.assertEqual(result.location.item, location_data["item"])
-                    self.assertEqual(result.location.version, location_data["version"])
-                    self.assertEqual(result.location.name, location_data["name"])
-
-class TestTracingTag(unittest.TestCase):
+class TestTracingTag(unittest.TestCase):    
     def test_key(self):
         expected_key = "mock_namespace mock_tag"
         actual_key = SetUp.tracing_tag.key()
@@ -425,10 +364,44 @@ class TestRequirement(unittest.TestCase):
         with self.assertRaises(AssertionError):
             SetUp.requirement.perform_source_checks(invalid_source_info)
     
-    def test_from_json(self):
-        class_name = self.__class__.__name__
+    @patch("lobster.items.Tracing_Tag.from_json")
+    def test_from_json(self, mock_from_json):
+        mock_level = "mock_level"
+        mock_schema_version = 3
         setup = SetUp()
-        setup.setup_test_from_json(class_name)
+        mock_from_json.return_value = SetUp.tracing_tag
+        for location_type in ["file", "github", "codebeamer", "void"]:
+            with self.subTest(location_type):
+                location_data = setup.set_location_data(location_type)
+                mock_data = {
+                    "tag": SetUp.tracing_tag,
+                    "location": location_data,
+                    "framework": "framework_data",
+                    "kind": "kind_data",
+                    "name": "name_data",
+                    "text": "text_data",
+                    "status": "status_data"
+                }
+                result = setup.requirement.from_json(mock_level, mock_data, mock_schema_version)
+                self.assertEqual(result.tag, SetUp.tracing_tag)
+                self.assertEqual(result.framework, "framework_data")
+                self.assertEqual(result.kind, "kind_data")
+                self.assertEqual(result.name, "name_data")
+                self.assertEqual(result.text, "text_data")
+                self.assertEqual(result.status, "status_data")
+                if location_type == "file":
+                            self.assertEqual(result.location.filename, location_data["file"])
+                elif location_type == "github":
+                    self.assertEqual(result.location.gh_root, location_data["gh_root"])
+                    self.assertEqual(result.location.commit, location_data["commit"])
+                    self.assertEqual(result.location.filename, location_data["file"])
+                    self.assertEqual(result.location.line, location_data["line"])
+                elif location_type == "codebeamer":
+                    self.assertEqual(result.location.cb_root, location_data["cb_root"])
+                    self.assertEqual(result.location.tracker, location_data["tracker"])
+                    self.assertEqual(result.location.item, location_data["item"])
+                    self.assertEqual(result.location.version, location_data["version"])
+                    self.assertEqual(result.location.name, location_data["name"])
 
 class TestImplementation(unittest.TestCase):
     @patch("lobster.items.Item.to_json")
@@ -447,10 +420,40 @@ class TestImplementation(unittest.TestCase):
         mock_super_to_json.assert_called_once_with()
         self.assertEqual(result, expected_result)
     
-    def test_from_json(self):
-        class_name = self.__class__.__name__
+    @patch("lobster.items.Tracing_Tag.from_json")
+    def test_from_json(self, mock_from_json):
+        mock_level = "mock_level"
+        mock_schema_version = 3
         setup = SetUp()
-        setup.setup_test_from_json(class_name)
+        mock_from_json.return_value = SetUp.tracing_tag
+        for location_type in ["file", "github", "codebeamer", "void"]:
+            with self.subTest(location_type):                
+                location_data = setup.set_location_data(location_type)
+                mock_data = {
+                    "tag": SetUp.tracing_tag,
+                    "location": location_data,
+                    "language": "Python",
+                    "kind": "kind_data",
+                    "name": "name_data",                        
+                }
+                result = setup.implementation.from_json(mock_level, mock_data, mock_schema_version)
+                self.assertEqual(result.tag, SetUp.tracing_tag)
+                self.assertEqual(result.language, "Python")
+                self.assertEqual(result.kind, "kind_data")
+                self.assertEqual(result.name, "name_data")
+                if location_type == "file":
+                            self.assertEqual(result.location.filename, location_data["file"])
+                elif location_type == "github":
+                    self.assertEqual(result.location.gh_root, location_data["gh_root"])
+                    self.assertEqual(result.location.commit, location_data["commit"])
+                    self.assertEqual(result.location.filename, location_data["file"])
+                    self.assertEqual(result.location.line, location_data["line"])
+                elif location_type == "codebeamer":
+                    self.assertEqual(result.location.cb_root, location_data["cb_root"])
+                    self.assertEqual(result.location.tracker, location_data["tracker"])
+                    self.assertEqual(result.location.item, location_data["item"])
+                    self.assertEqual(result.location.version, location_data["version"])
+                    self.assertEqual(result.location.name, location_data["name"])
 
 class TestActivity(unittest.TestCase):
     @patch("lobster.items.Item.to_json")
@@ -470,10 +473,40 @@ class TestActivity(unittest.TestCase):
         mock_super_to_json.assert_called_once_with()
         self.assertEqual(result, expected_result)
 
-    def test_from_json(self):
-        class_name = self.__class__.__name__
+    @patch("lobster.items.Tracing_Tag.from_json")
+    def test_from_json(self, mock_from_json):
+        mock_level = "mock_level"
+        mock_schema_version = 3
         setup = SetUp()
-        setup.setup_test_from_json(class_name)
+        mock_from_json.return_value = setup.tracing_tag        
+        for location_type in ["file", "github", "codebeamer", "void"]:
+            with self.subTest(location_type):
+                location_data = setup.set_location_data(location_type)
+                mock_data = {
+                    "tag": setup.tracing_tag,
+                    "location": location_data,
+                    "framework": "framework_data",
+                    "kind": "kind_data",
+                    "status": None
+                }
+                result = setup.activity.from_json(mock_level, mock_data, mock_schema_version)
+                self.assertEqual(result.tag, setup.tracing_tag)
+                self.assertEqual(result.framework, "framework_data")
+                self.assertEqual(result.kind, "kind_data")
+                self.assertEqual(result.status, None)
+                if location_type == "file":
+                    self.assertEqual(result.location.filename, location_data["file"])
+                elif location_type == "github":
+                    self.assertEqual(result.location.gh_root, location_data["gh_root"])
+                    self.assertEqual(result.location.commit, location_data["commit"])
+                    self.assertEqual(result.location.filename, location_data["file"])
+                    self.assertEqual(result.location.line, location_data["line"])
+                elif location_type == "codebeamer":
+                    self.assertEqual(result.location.cb_root, location_data["cb_root"])
+                    self.assertEqual(result.location.tracker, location_data["tracker"])
+                    self.assertEqual(result.location.item, location_data["item"])
+                    self.assertEqual(result.location.version, location_data["version"])
+                    self.assertEqual(result.location.name, location_data["name"])
 
 if __name__ == '__main__':
     unittest.main()
