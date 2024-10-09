@@ -37,6 +37,7 @@ jobs:
           python -m pip install --upgrade setuptools wheel requests
       - name: Build Packages
         run: |
+          export LOBSTER_ROOT=$(pwd)
           cd packages/${{ matrix.tools }}
           make package
       - name: Archive wheel files
