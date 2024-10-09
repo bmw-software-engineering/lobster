@@ -1,0 +1,64 @@
+name: Lobster PyPI Packages
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+
+  package:
+    name: Build
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        tools:
+          # - lobster-core
+          # - lobster-metapackage
+          # - lobster-monolithic
+          # - lobster-tool-codebeamer
+          - lobster-tool-cpp
+          - lobster-tool-cpptest
+          # - lobster-tool-gtest
+          # - lobster-tool-json
+          # - lobster-tool-python
+          # - lobster-tool-trlc
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade setuptools wheel requests
+      - name: Build Packages
+        run: |
+          cd packages/${{ matrix.tools }}
+          make package
+      - name: Archive wheel files
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.tools }}-wheels
+          path: "packages/${{ matrix.tools }}/dist/*.whl"  # Save the wheel files for later upload
+
+  upload-test:
+    name: PyPI Upload
+    needs: package
+    runs-on: ubuntu-20.04
+    environment: release
+    permissions:
+      id-token: write
+    steps:
+      - name: Download wheel files
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.tools }}-wheels
+          path: dist
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository_url: https://test.pypi.org/legacy/

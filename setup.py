@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
 import re
-import sys
 import setuptools
-
 from lobster import version
 
 gh_root = "https://github.com"
@@ -11,16 +9,6 @@ gh_project = "DiFerMa/lobster"
 
 with open("README.md", "r") as fd:
     long_description = fd.read()
-
-with open("requirements", "r") as fd:
-    package_requirements = [line
-                            for line in fd.read().splitlines()
-                            if line.strip()]
-package_requirements.append("bmw-lobster-core>=%s" % version.LOBSTER_VERSION)
-with open("entrypoints", "r") as fd:
-    entrypoints = [line
-                   for line in fd.read().splitlines()
-                   if line.strip()]
 
 # For the readme to look right on PyPI we need to translate any
 # relative links to absolute links to github.
@@ -45,28 +33,31 @@ project_urls = {
 }
 
 setuptools.setup(
-    name="bmw-lobster-tool-cpptest",
+    name="LOBSTER",
     version=version.LOBSTER_VERSION,
     author="Bayerische Motoren Werke Aktiengesellschaft (BMW AG)",
     author_email="philipp.wullstein-kammler@bmw.de",
-    description="LOBSTER Tool for ISO C/C++",
+    description="The Lightweight Open BMW Software Traceability Evidence Report for requirements coverage.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=project_urls["Source Code"],
     project_urls=project_urls,
-    license="GNU Affero General Public License v3",
-    packages=["lobster.tools.cpptest"],
-    install_requires=package_requirements,
-    python_requires=">=3.7, <4",
+    license="GNU General Public License v3",
+    packages=setuptools.find_packages(),
+    install_requires="PyVCG[api]==1.0.7",
+    python_requires=">=3.8, <3.13",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+        "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Topic :: Documentation",
         "Topic :: Software Development",
     ],
+#  is this entry point correct?
     entry_points={
-        "console_scripts": entrypoints,
+        "console_scripts": [
+            "lobster = lobster.lobster:main",
+        ],
     },
 )
