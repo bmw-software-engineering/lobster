@@ -29,12 +29,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: wheels
-          path: "packages/*/dist/*"
-      - name: Archive wheel files meta_dist
-        uses: actions/upload-artifact@v3
-        with:
-          name: wheels
-          path: "packages/*/meta_dist/*"
+          path: |
+            "packages/*/dist/*.whl"
+            "packages/*/dist/*.gz"
+            "packages/*/meta_dist/*.whl"
+            "packages/*/meta_dist/*.gz"
 
   upload-test:
     name: PyPI Upload
