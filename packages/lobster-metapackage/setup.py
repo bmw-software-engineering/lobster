@@ -9,7 +9,7 @@ import glob
 from lobster import version
 
 gh_root = "https://github.com"
-gh_project = "DiFerMa/lobster"
+gh_project = "bmw-software-engineering/lobster"
 
 with open("README.md", "r") as fd:
     long_description = fd.read()
