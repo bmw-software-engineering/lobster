@@ -26,6 +26,7 @@ packages:
 	make -C packages/lobster-tool-trlc
 	make -C packages/lobster-tool-codebeamer
 	make -C packages/lobster-tool-cpp
+	make -C packages/lobster-tool-cpptest
 	make -C packages/lobster-tool-gtest
 	make -C packages/lobster-tool-json
 	make -C packages/lobster-tool-python

@@ -90,7 +90,7 @@ class TestCase:
         self.docu_lines = " ".join(self.docu_lines)
         self._set_base_attributes()
 
-    def _definition_end(self, lines, start_idx, char=["{", "}"]) -> int:
+    def _definition_end(self, lines, start_idx) -> int:
         """
         Function to find the last line of test case definition,
         i.e. the closing brace.
@@ -98,6 +98,7 @@ class TestCase:
         lines -- lines to parse
         start_idx -- index into lines where to start parsing
         """
+        char = ["{", "}"]
         nbraces = 0
         while start_idx < len(lines):
             for character in lines[start_idx]:
@@ -121,10 +122,10 @@ class TestCase:
 
     def _set_base_attributes(self) -> None:
         self._get_requirements_from_docu_lines(
-            self.constants.REQUIREMENT,
+            self.constants.requirement,
             self.constants.REQUIREMENT_TAG,
-            self.constants.REQUIREMENT_TAG_HTTP,
-            self.constants.REQUIREMENT_TAG_HTTP_NAMED
+            self.constants.requirement_tag_http,
+            self.constants.requirement_tag_http_named
         )
 
         self.required_by = self._get_require_tags(
@@ -238,6 +239,7 @@ class TestCase:
             return True
         return False
 
+    @staticmethod
     def has_no_macro_or_commented(lines, start_idx) -> bool:
         return TestCase.has_no_macro_or_commented_general(
             lines,
@@ -274,8 +276,8 @@ class TestCase:
                 (test_case.docu_start_line - 1, test_case.docu_end_line)
         ):
             return True
-        elif (test_case.suite_name == Constants.NON_EXISTING_INFO or
-              test_case.test_name == Constants.NON_EXISTING_INFO):
+        elif Constants.NON_EXISTING_INFO in (test_case.suite_name,
+                                             test_case.test_name):
             return True
 
         return False
@@ -342,7 +344,7 @@ class TestCase:
 
     @staticmethod
     def _add_new_requirement_to_requirement_list(
-            self,
+            testcase,
             requirement_uri,
             tag_http_named
     ):
@@ -366,8 +368,8 @@ class TestCase:
             requirement_number = (
                 requirement_number_dictionary.get("number"))
             requirement_cb = "CB-#" + requirement_number
-            if requirement_cb not in self.requirements:
-                self.requirements.append(requirement_cb)
+            if requirement_cb not in testcase.requirements:
+                testcase.requirements.append(requirement_cb)
 
     @staticmethod
     def _get_require_tags(match, filter_regex):
