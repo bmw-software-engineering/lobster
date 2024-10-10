@@ -54,12 +54,3 @@ jobs:
           find dist_download -type f -exec mv {} dist \;
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository_url: https://test.pypi.org/legacy/
-
-      - name: Setup tmate session
-        if: failure()
-        timeout-minutes: 40
-        uses: mxschmitt/action-tmate@v3
-        with:
-            limit-access-to-actor: true
