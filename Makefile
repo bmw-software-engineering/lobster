@@ -26,6 +26,7 @@ packages:
 	make -C packages/lobster-tool-trlc
 	make -C packages/lobster-tool-codebeamer
 	make -C packages/lobster-tool-cpp
+	make -C packages/lobster-tool-cpptest
 	make -C packages/lobster-tool-gtest
 	make -C packages/lobster-tool-json
 	make -C packages/lobster-tool-python
@@ -58,8 +59,8 @@ unit-tests:
 test: integration-tests system-tests unit-tests
 
 upload-main: packages
-	python3 -m twine upload --repository pypi packages/*/dist/*
-	python3 -m twine upload --repository pypi packages/*/meta_dist/*
+	python3 -m twine upload --repository testpypi packages/*/dist/*
+	python3 -m twine upload --repository testpypi packages/*/meta_dist/*
 
 remove-dev:
 	python3 -m util.release
@@ -74,7 +75,6 @@ bump:
 full-release:
 	make remove-dev
 	git push
-	make upload-main
 	make github-release
 	make bump
 	git push
