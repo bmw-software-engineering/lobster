@@ -54,12 +54,13 @@ TOKEN = 'token'
 REFERENCES = 'references'
 
 
-class References(Enum):
+class SupportedConfigKeys(Enum):
     REFS = "refs"
     SCHEMA = "schema"
 
-
-SUPPORTED_REFERENCES = [References.REFS.value, References.SCHEMA.value]
+    @classmethod
+    def as_set(cls) -> set:
+        return set([parameter.value for parameter in cls])
 
 
 def add_refs_refrences(req, flat_values_list):
@@ -71,7 +72,7 @@ def add_refs_refrences(req, flat_values_list):
 
 
 map_reference_name_to_function = {
-    References.REFS.value: add_refs_refrences
+    SupportedConfigKeys.REFS.value: add_refs_refrences
 }
 
 
@@ -332,12 +333,11 @@ def parse_cb_config(file_name):
         raise LOBSTER_Error(f"Unsupported SCHEMA '{schema}' provided in configuration.")
 
     provided_config_keys = set(data.keys())
-    supported_references = set(SUPPORTED_REFERENCES)
 
-    if not provided_config_keys.issubset(supported_references):
-        raise KeyError("The provided references are not supported! "
-                        "supported referenes: '%s'" %
-                        ', '.join(SUPPORTED_REFERENCES))
+    if not provided_config_keys.issubset(SupportedConfigKeys.as_set()):
+        raise KeyError("The provided config keys are not supported! "
+                       "supported keys: '%s'" %
+                       ', '.join(SupportedConfigKeys.as_set()))
 
     for key, value in data.items():
         json_config[REFERENCES][key] = ensure_array_of_strings(value)
@@ -364,7 +364,7 @@ def main():
     ap.add_argument("--config",
                     help=("name of codebeamer "
                           "config file, supported references: '%s'" %
-                          ', '.join(SUPPORTED_REFERENCES)),
+                          ', '.join(SupportedConfigKeys.as_set())),
                     default=None)
 
     ap.add_argument("--ignore-ssl-errors",
