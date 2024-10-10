@@ -4,15 +4,15 @@ import re
 class Constants:
     def __init__(self, codebeamer_url = ''):
 
-        self.CODEBEAMER_LINK = codebeamer_url + "/issue/"
-        self.REQUIREMENT = re.compile(r".*[@\\]requirement\s+"
+        self.codebeamer_link = codebeamer_url + "/issue/"
+        self.requirement = re.compile(r".*[@\\]requirement\s+"
                                       r"([\s*/]*(((CB-#)|({}))\d+)\s*,?)+"
-                                      .format(self.CODEBEAMER_LINK))
-        self.REQUIREMENT_TAG_HTTP = ((r"([@\\]requirement(\s+"
+                                      .format(self.codebeamer_link))
+        self.requirement_tag_http = ((r"([@\\]requirement(\s+"
                                       r"(CB-#\d+\s+)*({}\d+\s*,?\s*/*\*?)+)+)")
-                                     .format(self.CODEBEAMER_LINK))
-        self.REQUIREMENT_TAG_HTTP_NAMED = (r"({}(?P<number>\d+))"
-                                           .format(self.CODEBEAMER_LINK))
+                                     .format(self.codebeamer_link))
+        self.requirement_tag_http_named = (r"({}(?P<number>\d+))"
+                                           .format(self.codebeamer_link))
 
     NON_EXISTING_INFO = "---"
 
