@@ -239,6 +239,14 @@ class TestCase:
             return True
         return False
 
+    def has_no_macro_or_commented(self, lines, start_idx) -> bool:
+        return TestCase.has_no_macro_or_commented_general(
+            lines,
+            start_idx,
+            TestCase,
+            Constants.TEST_CASE_INTRO
+        )
+
     @staticmethod
     def has_no_macro_or_commented_general(lines,
                                           start_idx,
