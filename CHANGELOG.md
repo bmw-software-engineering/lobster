@@ -4,6 +4,14 @@
 
 ### 0.9.18-dev
 
+* Add support to `lobster-codebeamer` to generate output using the following schemas:
+  - requirement
+  - implementation
+  - activity
+
+  The user can select the schema with a command line flag,
+  or through the configuration file.
+
 * The `lobster-python` tool adds the counter logic to the function
   identifier. This improves the situations where different functions have
   the same name. Line numbers are no longer used in the identifier.
