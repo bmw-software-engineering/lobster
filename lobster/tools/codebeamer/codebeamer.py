@@ -179,11 +179,6 @@ def to_lobster(cb_config, cb_item):
     assert isinstance(cb_config, dict)
     assert isinstance(cb_item, dict) and "id" in cb_item
 
-    schema_map = {'implementation', 'requirement', 'activity'}
-    schema = cb_config.get("schema", "requirement").lower()
-    if schema not in schema_map:
-        raise LOBSTER_Error(f"Unsupported SCHEMA '{schema}' provided in configuration.")
- 
     # This looks like it's business logic, maybe we should make this
     # configurable?
 
@@ -207,46 +202,18 @@ def to_lobster(cb_config, cb_item):
     else:
         item_name = "Unnamed item %u" % cb_item["id"]
 
-    # Create common parameters for all kinds
-    common_params = {
-        'tag': Tracing_Tag(
-            namespace="req" if schema == 'requirement' else "imp" if schema == 'implementation' else "act",
-            tag=str(cb_item["id"]),
-            version=cb_item["version"]
-        ),
-        'location': Codebeamer_Reference(
-            cb_root=cb_config["root"],
-            tracker=cb_item["tracker"]["id"],
-            item=cb_item["id"],
-            version=cb_item["version"],
-            name=item_name
-        ),
-        'kind': kind
+    schema_map = {
+        'implementation': Implementation,
+        'requirement': Requirement,
+        'activity': Activity,
     }
+    schema = cb_config.get("schema", "requirement").lower()
+    if schema not in schema_map:
+        raise KeyError(f"Unsupported SCHEMA '{schema}' provided in configuration.")
+
     # Construct the appropriate object based on 'kind'
-
-    if schema == 'requirement':
-        req = Requirement(
-            **common_params,
-            framework="codebeamer",
-            text=None,
-            status=status,
-            name= item_name
-        )
-
-    elif schema == 'implementation':
-        req = Implementation(
-            **common_params,
-            language="python",
-            name= item_name,
-        )
-
-    else:  # 'activity'
-        req = Activity(
-            **common_params,
-            framework="codebeamer",
-            status=status
-        )
+    common_params = _create_common_params(schema_map[schema].NAMESPACE, cb_item, cb_config["root"], item_name, kind)
+    item = _create_lobster_item(schema_map[schema], common_params, item_name, status)
 
     if cb_config.get('references'):
         for reference_name, displayed_chosen_names in (
@@ -270,9 +237,55 @@ def to_lobster(cb_config, cb_item):
                     continue
 
                 (map_reference_name_to_function[reference_name]
-                 (req, flat_values_list))
+                 (item, flat_values_list))
 
-    return req
+    return item
+
+
+def _create_common_params(namespace: str, cb_item: dict, cb_root: str, item_name: str, kind: str):
+    # Create common parameters for all kinds
+    return {
+        'tag': Tracing_Tag(
+            namespace=namespace,
+            tag=str(cb_item["id"]),
+            version=cb_item["version"]
+        ),
+        'location': Codebeamer_Reference(
+            cb_root=cb_root,
+            tracker=cb_item["tracker"]["id"],
+            item=cb_item["id"],
+            version=cb_item["version"],
+            name=item_name
+        ),
+        'kind': kind
+    }
+
+
+def _create_lobster_item(schema_class, common_params, item_name, status):
+    if schema_class is Requirement:
+        return Requirement(
+            **common_params,
+            framework="codebeamer",
+            text=None,
+            status=status,
+            name= item_name
+        )
+
+    if schema_class is Implementation:
+        return Implementation(
+            **common_params,
+            language="python",
+            name= item_name,
+        )
+
+    if schema_class is Activity:
+        return Activity(
+            **common_params,
+            framework="codebeamer",
+            status=status
+        )
+
+    raise LOBSTER_Error(f"Unsupported SCHEMA!")
 
 
 def import_tagged(mh, cb_config, items_to_import):
