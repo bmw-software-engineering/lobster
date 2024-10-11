@@ -75,7 +75,6 @@ bump:
 full-release:
 	make remove-dev
 	git push
-	make upload-main
 	make github-release
 	make bump
 	git push

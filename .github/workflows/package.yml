@@ -1,0 +1,56 @@
+name: Lobster PyPI Packages
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+
+  package:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade setuptools wheel requests
+      - name: Build Packages
+        run: |
+          make packages
+      - name: Archive wheel files
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels
+          path: |
+            packages/*/dist/*.whl
+            packages/*/dist/*.gz
+            packages/*/meta_dist/*.whl
+            packages/*/meta_dist/*.gz
+
+  upload-test:
+    name: PyPI Upload
+    needs: package
+    runs-on: ubuntu-20.04
+    environment: release
+    permissions:
+      id-token: write
+    steps:
+      - name: Download wheel files
+        uses: actions/download-artifact@v4
+        with:
+          name: wheels
+          path: dist_download
+      - name: Get whl and gz files
+        run: |
+          mkdir dist;
+          find dist_download -type f -exec mv {} dist \;
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
