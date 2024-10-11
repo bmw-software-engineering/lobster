@@ -4,6 +4,9 @@
 
 ### 0.9.18-dev
 
+* The `lobster-codebeamer` tool now uses an authentication token. 
+  Token can be added either in the config file or as an argument.
+
 * The `lobster-python` tool adds the counter logic to the function
   identifier. This improves the situations where different functions have
   the same name. Line numbers are no longer used in the identifier.
