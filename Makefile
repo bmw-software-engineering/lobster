@@ -26,6 +26,7 @@ packages:
 	make -C packages/lobster-tool-trlc
 	make -C packages/lobster-tool-codebeamer
 	make -C packages/lobster-tool-cpp
+	make -C packages/lobster-tool-cpptest
 	make -C packages/lobster-tool-gtest
 	make -C packages/lobster-tool-json
 	make -C packages/lobster-tool-python
@@ -45,11 +46,15 @@ integration-tests: packages
 	(cd integration-tests/projects/filter; make)
 
 system-tests:
+	mkdir -p docs
 	make -B -C test-system/lobster-json
 	make -B -C test-system/lobster-python
 
 unit-tests:
-	python3 -m unittest discover -s test-unit -v
+	coverage run -p \
+			--branch --rcfile=coverage.cfg \
+			--data-file .coverage \
+			-m unittest discover -s test-unit -v
 
 test: integration-tests system-tests unit-tests
 
@@ -74,3 +79,15 @@ full-release:
 	make github-release
 	make bump
 	git push
+
+coverage:
+	coverage combine -q
+	coverage html --rcfile=coverage.cfg
+	coverage report --rcfile=coverage.cfg --fail-under=57
+
+test-ci: system-tests unit-tests coverage
+	util/check_local_modifications.sh
+
+docs:
+	rm -rf docs
+	mkdir docs

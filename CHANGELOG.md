@@ -7,6 +7,10 @@
 * The `lobster-codebeamer` tool now uses an authentication token. 
   Token can be added either in the config file or as an argument.
 
+* The `lobster-python` tool adds the counter logic to the function
+  identifier. This improves the situations where different functions have
+  the same name. Line numbers are no longer used in the identifier.
+
 * The `lobster-codebeamer` tool now supports `refs` as an upstream reference
   
 * The `lobster-online-report` tool now works with config files located in
@@ -20,6 +24,9 @@
   any value at all for an item with a missing status. This means that the
   resulting lobster file will now contain "Unset" as status information,
   too, instead of `Null`.
+
+* The `lobster-html-report` tool now supports argument `--high-contrast` to use
+  a color palette with a higher contrast for easier visualization.
 
 ### 0.9.17
 
