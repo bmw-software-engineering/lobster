@@ -500,7 +500,6 @@ def main():
     if options.out:
         with open(options.out, "w", encoding="UTF-8") as fd:
             lobster_write(fd, schema, "lobster_python", items)
-            fd.write("\n")
         print("Written output for %u items to %s" % (len(items),
                                                      options.out))
     else:
