@@ -62,8 +62,8 @@ class ParserForRequirements:
             with open(file, "r", encoding="UTF-8", errors="ignore") as f:
                 lines = f.readlines()
 
-        except Exception as e:
-            logging.error(f"exception {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logging.error("exception %s", e)
             return []
 
         test_cases = []
