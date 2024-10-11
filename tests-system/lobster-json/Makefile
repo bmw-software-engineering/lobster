@@ -5,7 +5,7 @@ TARGETS=$(addsuffix .output, $(basename $(wildcard *.input)))
 all: $(TARGETS)
 
 %.output: %.input
-	@tail +2 $< > $*.json
+	@tail -n +2 $< > $*.json
 	@touch $*.lobster
 	-@coverage run -p --rcfile=../../coverage.cfg --branch \
 		--data-file ../../.coverage \
