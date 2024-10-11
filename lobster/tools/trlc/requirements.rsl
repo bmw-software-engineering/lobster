@@ -1,0 +1,9 @@
+package trlc_req
+
+type Tool_Requirement {
+  description '''
+    The content of the requirement.
+    A tool requirement describes the behaviour of a lobster tool from the point of view of the user.
+    It does not describe implementation details.
+  ''' String
+}
