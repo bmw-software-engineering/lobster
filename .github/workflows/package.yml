@@ -39,7 +39,7 @@ jobs:
     name: PyPI Upload
     needs: package
     runs-on: ubuntu-20.04
-    environment: testpypi
+    environment: release
     permissions:
       id-token: write
     steps:
