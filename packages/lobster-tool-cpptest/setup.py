@@ -55,7 +55,7 @@ setuptools.setup(
     url=project_urls["Source Code"],
     project_urls=project_urls,
     license="GNU Affero General Public License v3",
-    packages=["lobster.tools.cpptest"],
+    packages=["lobster.tools.cpptest","lobster.tools.cpptest.parser"],
     install_requires=package_requirements,
     python_requires=">=3.7, <4",
     classifiers=[
