@@ -41,22 +41,28 @@ packages:
 	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
 	diff -Naur test_install/bin test_install_monolithic/bin
 
+clang-tidy:
+	cd .. && \
+	git clone https://github.com/bmw-software-engineering/llvm-project && \
+	cd llvm-project && \
+	cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra' -DCMAKE_BUILD_TYPE=Release && \
+	cmake --build build --target clang-tidy
+
 integration-tests: packages
-	(cd integration-tests/projects/basic; make)
-	(cd integration-tests/projects/filter; make)
+	(cd tests-integration/projects/basic; make)
+	(cd tests-integration/projects/filter; make)
+	rm -f MODULE.bazel MODULE.bazel.lock
 
 system-tests:
 	mkdir -p docs
-	make -B -C test-system/lobster-json
-	make -B -C test-system/lobster-python
+	make -B -C tests-system/lobster-json
+	make -B -C tests-system/lobster-python
 
 unit-tests:
 	coverage run -p \
 			--branch --rcfile=coverage.cfg \
 			--data-file .coverage \
-			-m unittest discover -s test-unit -v
-
-test: integration-tests system-tests unit-tests
+			-m unittest discover -s tests-unit -v
 
 upload-main: packages
 	python3 -m twine upload --repository pypi packages/*/dist/*
@@ -84,7 +90,12 @@ coverage:
 	coverage html --rcfile=coverage.cfg
 	coverage report --rcfile=coverage.cfg --fail-under=57
 
-test-ci: system-tests unit-tests coverage
+test: system-tests unit-tests
+	make coverage
+	util/check_local_modifications.sh
+
+test-all: integration-tests system-tests unit-tests
+	make coverage
 	util/check_local_modifications.sh
 
 docs:
