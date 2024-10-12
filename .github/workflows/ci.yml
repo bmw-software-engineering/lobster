@@ -90,12 +90,6 @@ jobs:
         name: Build clang-tidy
         run: |
           make clang-tidy
-      - name: Save cache
-        uses: actions/cache/save@v3
-        if: always()
-        with:
-          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
-          key: cache-clang-tidy
       - name: Run integration tests
         run: |
           make integration-tests
@@ -103,9 +97,3 @@ jobs:
         if: always()
         run: |
           util/check_local_modifications.sh
-      - name: Setup tmate session
-        if: failure()
-        timeout-minutes: 40
-        uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
