@@ -1,1 +1,0 @@
-lobster-gtest = lobster.tools.gtest.gtest:main

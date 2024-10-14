@@ -14,21 +14,6 @@ gh_project = "bmw-software-engineering/lobster"
 with open("README.md", "r") as fd:
     long_description = fd.read()
 
-package_requirements = []
-entrypoints = []
-for path, _, files in os.walk(".."):
-    for filename in files:
-        if filename == "requirements":
-            with open(os.path.join(path, filename), "r") as fd:
-                package_requirements += [line
-                                         for line in fd.read().splitlines()
-                                         if line.strip()]
-        elif filename == "entrypoints":
-            with open(os.path.join(path, filename), "r") as fd:
-                entrypoints += [line
-                                for line in fd.read().splitlines()
-                                if line.strip()]
-
 # For the readme to look right on PyPI we need to translate any
 # relative links to absolute links to github.
 fixes = []
@@ -63,7 +48,12 @@ setuptools.setup(
     project_urls=project_urls,
     license="GNU Affero General Public License v3",
     packages=setuptools.find_packages(),
-    install_requires=package_requirements,
+    install_requires=[
+        "miss-hit>=0.9.42",
+        "requests>=2.22", 
+        "libcst>=1.0.1",
+        "trlc>=1.2.2"
+    ],
     python_requires=">=3.7, <4",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -74,6 +64,18 @@ setuptools.setup(
         "Topic :: Software Development",
     ],
     entry_points={
-        "console_scripts": entrypoints
+        "console_scripts": [
+            "lobster-report=lobster.tools.core.report:main",
+            "lobster-html-report=lobster.tools.core.html_report:main",
+            "lobster-online-report=lobster.tools.core.online_report:main",
+            "lobster-ci-report=lobster.tools.core.ci_report:main",
+            "lobster-codebeamer = lobster.tools.codebeamer.codebeamer:main",
+            "lobster-python = lobster.tools.python.python:main",
+            "lobster-cpp = lobster.tools.cpp.cpp:main",
+            "lobster-cpptest = lobster.tools.cpptest.cpptest:main",
+            "lobster-gtest = lobster.tools.gtest.gtest:main",
+            "lobster-json = lobster.tools.json.json:main",
+            "lobster-trlc = lobster.tools.trlc.trlc:main"
+        ]
     },
 )
