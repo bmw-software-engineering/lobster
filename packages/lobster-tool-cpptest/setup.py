@@ -12,16 +12,6 @@ gh_project = "bmw-software-engineering/lobster"
 with open("README.md", "r") as fd:
     long_description = fd.read()
 
-with open("requirements", "r") as fd:
-    package_requirements = [line
-                            for line in fd.read().splitlines()
-                            if line.strip()]
-package_requirements.append("bmw-lobster-core>=%s" % version.LOBSTER_VERSION)
-with open("entrypoints", "r") as fd:
-    entrypoints = [line
-                   for line in fd.read().splitlines()
-                   if line.strip()]
-
 # For the readme to look right on PyPI we need to translate any
 # relative links to absolute links to github.
 fixes = []
@@ -55,8 +45,8 @@ setuptools.setup(
     url=project_urls["Source Code"],
     project_urls=project_urls,
     license="GNU Affero General Public License v3",
-    packages=["lobster.tools.cpptest","lobster.tools.cpptest.parser"],
-    install_requires=package_requirements,
+    packages=["lobster.tools.cpptest", "lobster.tools.cpptest.parser"],
+    install_requires=["bmw-lobster-core>=%s" % version.LOBSTER_VERSION],
     python_requires=">=3.7, <4",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -67,6 +57,6 @@ setuptools.setup(
         "Topic :: Software Development",
     ],
     entry_points={
-        "console_scripts": entrypoints,
+        "console_scripts": ["lobster-cpptest = lobster.tools.cpptest.cpptest:main"],
     },
 )
