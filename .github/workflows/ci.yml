@@ -90,6 +90,12 @@ jobs:
         name: Build clang-tidy
         run: |
           make clang-tidy
+      - if: ${{ steps.cache-clang-tidy.outputs.cache-hit != 'true' }}
+        name: Save cache
+        uses: actions/cache/save@v4
+        with:
+          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
+          key: cache-clang-tidy
       - name: Run integration tests
         run: |
           make integration-tests
