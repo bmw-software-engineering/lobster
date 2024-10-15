@@ -220,8 +220,6 @@ class Item(metaclass=ABCMeta):
 
 
 class Requirement(Item):
-    NAMESPACE = "req"
-
     def __init__(self, tag, location, framework, kind, name,
                  text=None, status=None):
         super().__init__(tag, location)
@@ -272,8 +270,6 @@ class Requirement(Item):
 
 
 class Implementation(Item):
-    NAMESPACE = "imp"
-
     def __init__(self, tag, location, language, kind, name):
         super().__init__(tag, location)
         assert isinstance(language, str)
@@ -307,8 +303,6 @@ class Implementation(Item):
 
 
 class Activity(Item):
-    NAMESPACE = "act"
-
     def __init__(self, tag, location, framework, kind, status=None):
         super().__init__(tag, location)
         assert isinstance(framework, str)
