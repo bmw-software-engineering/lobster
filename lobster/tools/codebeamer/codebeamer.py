@@ -174,7 +174,20 @@ def get_query(mh, cb_config, query_id):
 
     return rv
 
+def get_schema_config(cb_config):
+    schema_map = {
+        'requirement': {"namespace": "req", "class": Requirement},
+        'implementation': {"namespace": "imp", "class": Implementation},
+        'activity': {"namespace": "act", "class": Activity}
+    }
+    schema = cb_config.get("schema", "requirement").lower()
 
+    if schema not in schema_map:
+        raise KeyError(f"Unsupported SCHEMA '{schema}' provided in configuration.")
+
+    return schema_map[schema]
+
+ 
 def to_lobster(cb_config, cb_item):
     assert isinstance(cb_config, dict)
     assert isinstance(cb_item, dict) and "id" in cb_item
@@ -202,18 +215,11 @@ def to_lobster(cb_config, cb_item):
     else:
         item_name = "Unnamed item %u" % cb_item["id"]
 
-    schema_map = {
-        'implementation': Implementation,
-        'requirement': Requirement,
-        'activity': Activity,
-    }
-    schema = cb_config.get("schema", "requirement").lower()
-    if schema not in schema_map:
-        raise KeyError(f"Unsupported SCHEMA '{schema}' provided in configuration.")
+    schema_config = get_schema_config(cb_config)
 
     # Construct the appropriate object based on 'kind'
-    common_params = _create_common_params(schema_map[schema].NAMESPACE, cb_item, cb_config["root"], item_name, kind)
-    item = _create_lobster_item(schema_map[schema], common_params, item_name, status)
+    common_params = _create_common_params(schema_config["namespace"], cb_item, cb_config["root"], item_name, kind)
+    item = _create_lobster_item(schema_config["class"], common_params, item_name, status)
 
     if cb_config.get('references'):
         for reference_name, displayed_chosen_names in (
@@ -271,21 +277,19 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
             name= item_name
         )
 
-    if schema_class is Implementation:
+    elif schema_class is Implementation:
         return Implementation(
             **common_params,
             language="python",
             name= item_name,
         )
 
-    if schema_class is Activity:
+    else:
         return Activity(
             **common_params,
             framework="codebeamer",
             status=status
         )
-
-    raise LOBSTER_Error(f"Unsupported SCHEMA!")
 
 
 def import_tagged(mh, cb_config, items_to_import):
@@ -318,12 +322,8 @@ def parse_cb_config(file_name):
     with open(file_name, "r", encoding='utf-8') as file:
         data = json.loads(file.read())
 
-    schema = data.get("schema", "Requirement").lower()
-    schema_map = {'implementation', 'requirement', 'activity'}
-    if schema not in schema_map:
-        raise LOBSTER_Error(f"Unsupported SCHEMA '{schema}' provided in configuration.")
-
     provided_config_keys = set(data.keys())
+    schema = data.get("schema", "Requirement").lower()
 
     if not provided_config_keys.issubset(SupportedConfigKeys.as_set()):
         raise KeyError("The provided config keys are not supported! "
@@ -386,7 +386,7 @@ def main():
     mh = Message_Handler()
 
     cb_config = {
-        'schema'       : options.schema,
+        'schema'     : options.schema,
         "root"       : options.cb_root,
         "base"       : "%s/cb/api/v3" % options.cb_root,
         "user"       : options.cb_user,
@@ -468,16 +468,10 @@ def main():
     except LOBSTER_Error:
         return 1
 
-    schema_map = {
-    "requirement": Requirement,
-    "implementation": Implementation,
-    "activity": Activity
-    }
-
-    schema_obj = schema_map.get(cb_config["schema"].lower(), Requirement)
+    schema_config = get_schema_config(cb_config)
     output = sys.stdout if options.out is None else open(options.out, "w", encoding="UTF-8")
     with output as fd:
-        lobster_write(fd, schema_obj, "lobster_codebeamer", items)
+        lobster_write(fd, schema_config["class"], "lobster_codebeamer", items)
     if options.out:
         print(f"Written {len(items)} requirements to {options.out}")
 
