@@ -33,7 +33,8 @@ from lobster.tools.cpptest.parser.requirements_parser import \
 
 OUTPUT  = "output"
 CODEBEAMER_URL = "codebeamer_url"
-MARKERS = "markers"
+REGEX = "regex"
+REGEX_LIST = "regex_list"
 KIND    = "kind"
 
 NAMESPACE_CPP = "cpp"
@@ -42,26 +43,6 @@ FRAMEWORK_CPP_TEST = "cpptest"
 KIND_FUNCTION = "Function"
 CB_PREFIX = "CB-#"
 MISSING = "Missing"
-
-
-class RequirementTypes(Enum):
-    REQS = '@requirement'
-    REQ_BY = '@requiredby'
-    DEFECT = '@defect'
-
-
-SUPPORTED_REQUIREMENTS = [
-    RequirementTypes.REQS.value,
-    RequirementTypes.REQ_BY.value,
-    RequirementTypes.DEFECT.value
-]
-
-map_test_type_to_key_name = {
-    RequirementTypes.REQS.value: 'requirements',
-    RequirementTypes.REQ_BY.value: 'required_by',
-    RequirementTypes.DEFECT.value: 'defect_tracking_ids',
-}
-
 
 def parse_config_file(file_name: str) -> dict:
     """
@@ -103,26 +84,18 @@ def parse_config_file(file_name: str) -> dict:
                          f'"{CODEBEAMER_URL}"')
 
     output_config_dict = config_dict.get(OUTPUT)
+    config_dict[REGEX_LIST] = []
 
-    supported_markers = ', '.join(SUPPORTED_REQUIREMENTS)
     for output_file, output_file_config_dict in output_config_dict.items():
-        if MARKERS not in output_file_config_dict.keys():
+        if REGEX not in output_file_config_dict.keys():
             raise ValueError(f'Please follow the right config file structure! '
-                             f'Missing attribute "{MARKERS}" for output file '
+                             f'Missing attribute "{REGEX}" for output file '
                              f'"{output_file}"')
         if KIND not in output_file_config_dict.keys():
             raise ValueError(f'Please follow the right config file structure! '
                              f'Missing attribute "{KIND}" for output file '
                              f'"{output_file}"')
-
-        output_file_marker_list = output_file_config_dict.get(MARKERS)
-        for output_file_marker in output_file_marker_list:
-            if output_file_marker not in SUPPORTED_REQUIREMENTS:
-                raise ValueError(f'"{output_file_marker}" is not a supported '
-                                 f'"{MARKERS}" value '
-                                 f'for output file "{output_file}". '
-                                 f'Supported values are: '
-                                 f'"{supported_markers}"')
+        config_dict[REGEX_LIST] = list(set(config_dict[REGEX_LIST] + output_file_config_dict.get(REGEX, [])))
 
     return config_dict
 
@@ -177,6 +150,7 @@ def get_test_file_list(file_dir_list: list, extension_list: list) -> list:
 
 
 def collect_test_cases_from_test_files(test_file_list: list,
+                                       regex_list: list,
                                        codebeamer_url: str) -> list:
     """
     Collects the list of test cases from the given test files.
@@ -185,6 +159,7 @@ def collect_test_cases_from_test_files(test_file_list: list,
     ----------
     test_file_list : list
         The list of test files.
+    regex_list: list
     codebeamer_url: str
 
     Returns
@@ -192,17 +167,14 @@ def collect_test_cases_from_test_files(test_file_list: list,
     list
         The list of test cases.
     """
-    parser = ParserForRequirements()
-    test_case_list = parser.collect_test_cases_for_test_files(
-        test_files=test_file_list,
-        codebeamer_url = codebeamer_url
-    )
+    parser = ParserForRequirements(regex_list=regex_list, codebeamer_url = codebeamer_url)
+    test_case_list = parser.collect_test_cases_for_test_files(test_files=test_file_list)
     return test_case_list
 
 
 def create_lobster_items_output_dict_from_test_cases(
         test_case_list: list,
-        config_dict: dict) -> dict:
+        output_config: dict) -> dict:
     """
     Creates the lobster items dictionary for the given test cases grouped by
     configured output.
@@ -211,7 +183,7 @@ def create_lobster_items_output_dict_from_test_cases(
     ----------
     test_case_list : list
         The list of test cases.
-    config_dict : dict
+    output_config : dict
         The configuration dictionary.
 
     Returns
@@ -224,12 +196,11 @@ def create_lobster_items_output_dict_from_test_cases(
     lobster_items_output_dict = {}
 
     no_marker_output_file_name = ''
-    output_config: dict = config_dict.get(OUTPUT)
     marker_output_config_dict = {}
     for output_file_name, output_config_dict in output_config.items():
         lobster_items_output_dict[output_file_name] = {}
-        marker_list = output_config_dict.get(MARKERS)
-        if isinstance(marker_list, list) and len(marker_list) >= 1:
+        regex_list = output_config_dict.get(REGEX)
+        if isinstance(regex_list, list) and len(regex_list) >= 1:
             marker_output_config_dict[output_file_name] = output_config_dict
         else:
             no_marker_output_file_name = output_file_name
@@ -261,14 +232,10 @@ def create_lobster_items_output_dict_from_test_cases(
                 marker_output_config_dict.items()):
             tracing_target_list = []
             tracing_target_kind = output_config_dict.get(KIND)
-            for marker in output_config_dict.get(MARKERS):
-                if marker not in map_test_type_to_key_name:
-                    continue
+            for regex in output_config_dict.get(REGEX):
 
-                for test_case_marker_value in getattr(
-                        test_case,
-                        map_test_type_to_key_name.get(marker)
-                ):
+                for test_case_marker_value in (
+                        getattr(test_case, "custom_tags").get(regex)):
                     if MISSING not in test_case_marker_value:
                         test_case_marker_value = (
                             test_case_marker_value.replace(CB_PREFIX, ""))
@@ -353,13 +320,14 @@ def lobster_cpptest(file_dir_list: list, config_dict: dict):
     test_case_list = \
         collect_test_cases_from_test_files(
             test_file_list=test_file_list,
+            regex_list=config_dict.get(REGEX_LIST, []),
             codebeamer_url=config_dict.get(CODEBEAMER_URL, '')
         )
 
     lobster_items_output_dict: dict = \
         create_lobster_items_output_dict_from_test_cases(
             test_case_list=test_case_list,
-            config_dict=config_dict
+            output_config=config_dict.get(OUTPUT)
         )
 
     write_lobster_items_output_dict(

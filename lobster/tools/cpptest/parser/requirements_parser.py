@@ -10,10 +10,14 @@ from lobster.tools.cpptest.parser.test_case import TestCase
 
 
 class ParserForRequirements:
-    @staticmethod
+
+    def __init__(self, regex_list: list = [], codebeamer_url: str = ''):
+        self.regex_list = regex_list
+        self.codebeamer_url = codebeamer_url
+
     def collect_test_cases_for_test_files(
-            test_files: List[Path],
-            codebeamer_url: str = "",
+            self,
+            test_files: List[Path]
     ) -> List:
         """
         Parse a list of source files for test cases
@@ -22,7 +26,6 @@ class ParserForRequirements:
         ----------
         test_files: List[Path]
             Source files to parse
-        codebeamer_url: str
 
         Returns
         -------
@@ -33,15 +36,14 @@ class ParserForRequirements:
 
         for file in set(test_files):
             file_test_cases = (
-                ParserForRequirements.collect_test_cases(file, codebeamer_url))
+                self.collect_test_cases(file))
             test_cases.extend(file_test_cases)
 
         return test_cases
 
-    @staticmethod
     def collect_test_cases(
+            self,
             file: Path,
-            codebeamer_url: str = "",
     ) -> List[TestCase]:
         """
         Parse a source file for test cases
@@ -50,7 +52,6 @@ class ParserForRequirements:
         ----------
         file: Path
             Source file to parse
-        codebeamer_url: str
 
         Returns
         -------
@@ -69,7 +70,7 @@ class ParserForRequirements:
         test_cases = []
 
         for i in range(0, len(lines)):
-            test_case = TestCase.try_parse(file, lines, i, codebeamer_url)
+            test_case = TestCase.try_parse(file, lines, i, self.regex_list, self.codebeamer_url)
 
             if test_case:
                 test_cases.append(test_case)
