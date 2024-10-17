@@ -6,14 +6,15 @@ and requirements coverage, which is essential for meeting standards
 such as ISO 26262.
 
 This repository contains the prototype for LOBSTER, which is a key
-ingredient to make TRCL more useful.
+ingredient to make TRCL and other supported tools more useful.
 
-It has tools to extract tracing tags from a variety of sources combine
-them and produce a tracing report. The [TRLC tracing
+It has tools to extract tracing tags from a variety of code sources to
+combine them and produce a tracing report. The [TRLC tracing
 report](https://bmw-software-engineering.github.io/trlc/tracing.html)
 from the [TRLC
 Project](https://github.com/bmw-software-engineering/trlc/) is a
-reasonable example of what is possible.
+reasonable example of what is possible when lobster is used in combination
+with TRLC or any of the other supported tools.
 
 ## Installing
 
