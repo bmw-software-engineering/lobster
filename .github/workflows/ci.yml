@@ -13,13 +13,13 @@ jobs:
   lint:
     name: PyLint
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
         run: |
-          python3 -m pip install --upgrade pip --break-system-packages
-          python3 -m pip install -r requirements_dev.txt --break-system-packages
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements_dev.txt
           make lobster/html/assets.py
       - name: Executing linter
         run: |
@@ -29,7 +29,7 @@ jobs:
     if: success()
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        os: [ubuntu-24.04, windows-2022, macos-13, macos-14]
         py-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
         include:
           - os: macos-13
