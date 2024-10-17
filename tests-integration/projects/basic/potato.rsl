@@ -28,3 +28,7 @@ type Linked_Requirement extends Requirement
 {
   trace_trlc optional Requirement [1 .. *]
 }
+
+checks Requirement {
+   len(text) >= 10, warning "this is a bit short", text
+}

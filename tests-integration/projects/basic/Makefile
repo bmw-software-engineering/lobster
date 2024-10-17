@@ -36,8 +36,8 @@ pycode.lobster: nor.py
 		--out="pycode.lobster" \
 		--parse-decorator trlc_reference requirement
 
-software-requirements.lobster: potato.rsl potato.check potato.trlc
-	@lobster-trlc *.rsl *.check *.trlc \
+software-requirements.lobster: potato.rsl potato.trlc
+	@lobster-trlc *.rsl *.trlc \
 		--out="software-requirements.lobster"
 
 json.lobster: example.json
