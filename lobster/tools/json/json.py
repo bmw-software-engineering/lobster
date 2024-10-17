@@ -53,14 +53,11 @@ def get_item(root, path, required):
         elif required:
             raise Malformed_Input("object does not contain %s" % field,
                                   root)
-        else:
-            return None
+        return None
 
     elif required:
         raise Malformed_Input("not an object", root)
-
-    else:
-        return None
+    return None
 
 
 def syn_test_name(file_name):
@@ -107,15 +104,15 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
 
     @classmethod
     def process(cls, options, file_name):
-        with open(file_name, "r", encoding="UTF-8") as fd:
-            data = json.load(fd)
-
-        # First we follow the test-list items to get the actual data
-        # we're interested in.
         try:
+            with open(file_name, "r", encoding="UTF-8") as fd:
+                data = json.load(fd)
             data = get_item(root     = data,
                             path     = options.test_list,
                             required = True)
+        except UnicodeDecodeError as decode_error:
+            print("%s: File is not encoded in utf-8: %s" % (file_name, decode_error))
+            return False, []
         except Malformed_Input as err:
             pprint(err.data)
             print("%s: malformed input: %s" % (file_name, err.msg))
