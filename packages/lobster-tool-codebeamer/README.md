@@ -37,24 +37,32 @@ This tool works with an optional config file.
     }
     ```
 
-* Schema (kind)
+* Schema
 
-  You can also specify the type of schema for the resulting output file. The supported values for the kind field are:
+  You can also specify the type of schema for the resulting output file. The supported values for the schema field are:
   1. Activity: Sets the schema to lobster-act-trace.
   2. Implementation: Sets the schema to lobster-imp-trace.
   3. Requirement: Sets the schema to lobster-req-trace.
 
-  If the kind is not specified, the tool will default to Requirement, and the schema lobster-req-trace will be used.
+  If the schema is not specified, the tool will default to Requirement, and the schema lobster-req-trace will be used.
 
   Here’s an example configuration:
   ```json
   {
-    "kind": "Activity",  // Specifies schema
+    "schema": "Activity",  // Specifies schema
     "refs": ["cb-fieldname1", "cb-fieldname2"]  // Specifies references
   }
   ```
 
-  If an invalid kind is provided, the tool will raise an exception. Supported kind values are Activity, Implementation, and Requirement.
+  If an invalid schema is provided, the tool will raise an exception. Supported schema values are Activity, Implementation, and Requirement.
+
+## Command-Line Arguments and Configuration
+ 
+When running the tool, you can specify the `--schema` flag via the command line or set the `schema` value in
+the configuration file. **The configuration file will always take precedence over the command-line argument**.
+ 
+- **`--schema`**: The schema to be used (optional, overrides the config file if provided).
+- **Configuration file**: If `schema` is defined in the configuration file, it will be used, and the command-line `--schema` argument will be ignored.
 
 ## Usage
 
@@ -71,7 +79,7 @@ There are two ways you can use this tool:
 
 * Additionally, you can specify the schema and references:
 
-  1. Specify the kind of trace to be generated (optional, defaults to Requirement)
+  1. Specify the schema of trace to be generated (optional, defaults to Requirement)
      using the --schema argument, or configure it in the config file.
   2. Configure the 'refs' upstream reference (optional) using --config or
      specify directly via command line.

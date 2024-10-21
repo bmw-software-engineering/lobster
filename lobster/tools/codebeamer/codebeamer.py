@@ -191,11 +191,26 @@ def get_query(mh, cb_config, query_id):
 
     return rv
 
+
 def get_schema_config(cb_config):
+     """
+    The function returns a schema map based on the schema mentioned in the cb_config dictionary.
+    If there is no match, it raises a KeyError.
+ 
+    Positional arguments:
+    cb_config -- configuration dictionary containing the schema.
+ 
+    Returns:
+    A dictionary containing the namespace and class associated with the schema.
+
+    Raises:
+    KeyError -- if the provided schema is not supported.
+    """
+    
     schema_map = {
         'requirement': {"namespace": "req", "class": Requirement},
         'implementation': {"namespace": "imp", "class": Implementation},
-        'activity': {"namespace": "act", "class": Activity}
+        'activity': {"namespace": "act", "class": Activity},
     }
     schema = cb_config.get("schema", "requirement").lower()
 
@@ -266,7 +281,17 @@ def to_lobster(cb_config, cb_item):
 
 
 def _create_common_params(namespace: str, cb_item: dict, cb_root: str, item_name: str, kind: str):
-    # Create common parameters for all kinds
+    """
+    Creates and returns common parameters for a Codebeamer item.
+    Args:
+    namespace (str): Namespace for the tag.
+    cb_item (dict): Codebeamer item dictionary.
+    cb_root (str): Root URL or path of Codebeamer.
+    item_name (str): Name of the item.
+    kind (str): Type of the item.
+    Returns:
+    dict: Common parameters including tag, location, and kind.
+    """
     return {
         'tag': Tracing_Tag(
             namespace=namespace,
@@ -285,6 +310,16 @@ def _create_common_params(namespace: str, cb_item: dict, cb_root: str, item_name
 
 
 def _create_lobster_item(schema_class, common_params, item_name, status):
+    """
+    Creates and returns a Lobster item based on the schema class.
+    Args:
+    schema_class: Class of the schema (Requirement, Implementation, Activity).
+    common_params (dict): Common parameters for the item.
+    item_name (str): Name of the item.
+    status (str): Status of the item.
+    Returns:
+    Object: An instance of the schema class with the appropriate parameters.
+    """
     if schema_class is Requirement:
         return Requirement(
             **common_params,
@@ -390,6 +425,7 @@ def main():
                     default=100,
                     help=("Fetch this many cb items at once (by default 100),"
                           " reduce if you get too many timeouts."))
+                          
     ap.add_argument("--timeout",
                     type=int,
                     default=30,
@@ -397,8 +433,7 @@ def main():
 
     ap.add_argument("--schema",
                     default='requirement',
-                    help="Specify the output schema (Requirement, Implementation, Activity)."
-                    )
+                    help="Specify the output schema (Requirement, Implementation, Activity).")
 
     ap.add_argument("--cb-root", default=os.environ.get("CB_ROOT", None))
     ap.add_argument("--cb-user", default=os.environ.get("CB_USERNAME", None))

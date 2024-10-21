@@ -6,6 +6,7 @@ from lobster.tools.codebeamer.codebeamer import _create_common_params, _create_l
  
 class TestCreateFunctions(unittest.TestCase):
 
+
     def setUp(self):
         self.root_url = 'http://root_url'
         self.cb_item_template = {
@@ -13,6 +14,7 @@ class TestCreateFunctions(unittest.TestCase):
             'tracker': {'id': 123}
         }
  
+
     def generate_cb_item(self, item_id, name):
         """Generate a codebeamer item dictionary."""
         return {
@@ -20,6 +22,7 @@ class TestCreateFunctions(unittest.TestCase):
             **self.cb_item_template,
             'name': name
         }
+
  
     def generate_common_params(self, namespace, item_name, kind, expected_class):
         """Generate a test case for common params and lobster item creation."""
@@ -35,6 +38,7 @@ class TestCreateFunctions(unittest.TestCase):
             'kind' : kind
         }
 
+
     def  generate_test_case(self):
 
         return [
@@ -43,9 +47,11 @@ class TestCreateFunctions(unittest.TestCase):
             self.generate_common_params('act', 'Activity Item', 'activity', Activity),
             ]
 
-    def test_create_common_params(self):
 
+    def test_create_common_params(self):
+        
         test_cases = self.generate_test_case()
+
         for case in test_cases:
             with self.subTest(case=case):
                 
@@ -59,6 +65,7 @@ class TestCreateFunctions(unittest.TestCase):
                 self.assertEqual(case['common_params']['location'].name, case['location'].name)
                 self.assertEqual(case['common_params']['kind'], case['kind'])
  
+
     def test_create_lobster_item(self):
 
         test_cases = self.generate_test_case()
@@ -79,5 +86,3 @@ class TestCreateFunctions(unittest.TestCase):
  
 if __name__ == '__main__':
     unittest.main()
-
- 
