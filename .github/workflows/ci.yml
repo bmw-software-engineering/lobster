@@ -12,7 +12,6 @@ permissions:
 jobs:
   lint:
     name: PyLint
-    needs: test
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -68,7 +67,7 @@ jobs:
   integration-tests:
     name: Integration tests
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Install python version
@@ -103,3 +102,11 @@ jobs:
         if: always()
         run: |
           util/check_local_modifications.sh
+  failure:
+    name: Check all jobs
+    needs: integration-tests
+    if: ${{ failure() || cancelled() }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Failure
+        run: exit 1
