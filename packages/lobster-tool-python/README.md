@@ -66,6 +66,14 @@ Please note that the generated output json files always use `PyTest` as framewor
 }
 ```
 
+## Known Issues
+
+The resulting lobster file does not use the method names, but instead uses the class name together with an integer counter for consecutive methods.
+This only affects methods in a class.
+It does not affect functions.
+For details see see [issue 89](https://github.com/bmw-software-engineering/lobster/issues/89).
+It will be fixed with the next release.
+
 ## Copyright & License information
 
 The copyright holder of LOBSTER is the Bayerische Motoren Werke
