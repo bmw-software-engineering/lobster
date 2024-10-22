@@ -2,6 +2,10 @@
 
 ## Changelog
 
+
+### 1.0.0-dev
+
+
 ### 0.9.18
 
 * Added a new tool `lobster-cpptest` which can extract references
