@@ -45,10 +45,19 @@ def count_occurrence_of_last_function_from_function_name_list(function_names):
              returns : hello.add-2
     """
     function_and_file_name = re.split(r"[.:]", function_names[-1])
+    class_name_with_module = function_names[-1].split(':', 1)[0].split(".")
+
+    if len(class_name_with_module) == 3:
+        function_and_file_name[1] = class_name_with_module[1] + '.' + class_name_with_module[2]
+
     filename = function_and_file_name[0]
     last_function = function_and_file_name[1]
     count = 0
     for element in range(0, len(function_names) - 1):
+        class_name_with_function = function_names[element].split(':', 1)[0].split(".")
+        if len(class_name_with_function) == 3:
+            if last_function == class_name_with_function[1] + '.' + class_name_with_function[2]:
+                count += 1
         if re.split(r"[.:]", function_names[element])[1] == last_function:
             count += 1
     function_name = (filename + "." + last_function +
