@@ -2,7 +2,11 @@
 
 ## Changelog
 
-### 0.9.18-dev
+### 0.9.18
+
+* Added a new tool `lobster-cpptest` which can extract references
+  from C++ unit tests using various regex patterns.
+  The references must be provided in a format similar to Doxygen comments.
 
 * The `lobster-codebeamer` tool now uses an authentication token. 
   Token can be added either in the config file or as an argument.

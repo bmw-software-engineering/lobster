@@ -61,6 +61,7 @@ The individual packages that `bmw-lobster` depends on are:
 * `bmw-lobster-core` the core API and various report generators. All
   other tools depend on this.
 * `bmw-lobster-tool-cpp` (for C/C++ code)
+* `bmw-lobster-tool-cpptest` (for C/C++ code)
 * `bmw-lobster-tool-gtest` (for GoogleTest tests)
 * `bmw-lobster-tool-python` (for Python3 code)
 * `bmw-lobster-tool-beamer` (for requirements in Codebeamer)
