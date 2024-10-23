@@ -17,10 +17,11 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-VERSION_TUPLE = (1, 0, 0)
+VERSION_TUPLE = (0, 9, 19)
 VERSION_SUFFIX = "dev"
 
-LOBSTER_VERSION = ("%u.%u.%u" % VERSION_TUPLE) + \
-    ("-%s" % VERSION_SUFFIX if VERSION_SUFFIX else "")
+LOBSTER_VERSION = ("%u.%u.%u" % VERSION_TUPLE) + (
+    "-%s" % VERSION_SUFFIX if VERSION_SUFFIX else ""
+)
 
 FULL_NAME = "LOBSTER %s" % LOBSTER_VERSION
