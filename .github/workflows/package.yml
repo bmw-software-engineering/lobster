@@ -31,9 +31,7 @@ jobs:
           name: wheels
           path: |
             packages/*/dist/*.whl
-            packages/*/dist/*.gz
             packages/*/meta_dist/*.whl
-            packages/*/meta_dist/*.gz
 
   upload-test:
     name: PyPI Upload
