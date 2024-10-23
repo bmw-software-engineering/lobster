@@ -6,4 +6,4 @@ package:
 	cp -Rv $(LOBSTER_ROOT)/lobster/html lobster
 	cp $(LOBSTER_ROOT)/lobster/tools/*.py lobster/tools
 	cp -Rv $(LOBSTER_ROOT)/lobster/tools/core lobster/tools
-	@python3 -m build
+	@python3 -m build --wheel

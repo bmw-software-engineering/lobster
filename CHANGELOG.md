@@ -3,8 +3,9 @@
 ## Changelog
 
 
-### 1.0.0-dev
+### 0.9.19-dev
 
+* Fixes packaging of `bmw-lobster`.
 
 ### 0.9.18
 
