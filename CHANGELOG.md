@@ -13,8 +13,13 @@
   from C++ unit tests using various regex patterns.
   The references must be provided in a format similar to Doxygen comments.
 
-* The `lobster-codebeamer` tool now uses an authentication token. 
-  Token can be added either in the config file or as an argument.
+* Add support to `lobster-codebeamer` to generate output using the following schemas:
+  - requirement
+  - implementation
+  - activity
+
+  The user can select the schema with a command line flag,
+  or through the configuration file.
 
 * The `lobster-python` tool adds the counter logic to the function
   identifier. This improves the situations where different functions have
