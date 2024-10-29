@@ -45,7 +45,7 @@ from enum import Enum
 import json
 import requests
 
-from lobster.items import Tracing_Tag, Requirement
+from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
 from lobster.location import Codebeamer_Reference
 from lobster.errors import Message_Handler, LOBSTER_Error
 from lobster.io import lobster_read, lobster_write
@@ -54,11 +54,13 @@ TOKEN = 'token'
 REFERENCES = 'references'
 
 
-class References(Enum):
+class SupportedConfigKeys(Enum):
     REFS = "refs"
+    SCHEMA = "schema"
 
-
-SUPPORTED_REFERENCES = [References.REFS.value]
+    @classmethod
+    def as_set(cls) -> set:
+        return {parameter.value for parameter in cls}
 
 
 def add_refs_refrences(req, flat_values_list):
@@ -70,7 +72,7 @@ def add_refs_refrences(req, flat_values_list):
 
 
 map_reference_name_to_function = {
-    References.REFS.value: add_refs_refrences
+    SupportedConfigKeys.REFS.value: add_refs_refrences
 }
 
 
@@ -190,6 +192,35 @@ def get_query(mh, cb_config, query_id):
     return rv
 
 
+def get_schema_config(cb_config):
+    """
+    The function returns a schema map based on the schema mentioned
+    in the cb_config dictionary.
+
+    If there is no match, it raises a KeyError.
+
+    Positional arguments:
+    cb_config -- configuration dictionary containing the schema.
+
+    Returns:
+    A dictionary containing the namespace and class associated with the schema.
+
+    Raises:
+    KeyError -- if the provided schema is not supported.
+    """
+    schema_map = {
+        'requirement': {"namespace": "req", "class": Requirement},
+        'implementation': {"namespace": "imp", "class": Implementation},
+        'activity': {"namespace": "act", "class": Activity},
+    }
+    schema = cb_config.get("schema", "requirement").lower()
+
+    if schema not in schema_map:
+        raise KeyError(f"Unsupported SCHEMA '{schema}' provided in configuration.")
+
+    return schema_map[schema]
+
+
 def to_lobster(cb_config, cb_item):
     assert isinstance(cb_config, dict)
     assert isinstance(cb_item, dict) and "id" in cb_item
@@ -217,20 +248,15 @@ def to_lobster(cb_config, cb_item):
     else:
         item_name = "Unnamed item %u" % cb_item["id"]
 
-    req = Requirement(
-        tag       = Tracing_Tag(namespace = "req",
-                                tag       = str(cb_item["id"]),
-                                version   = cb_item["version"]),
-        location  = Codebeamer_Reference(cb_root = cb_config["root"],
-                                         tracker = cb_item["tracker"]["id"],
-                                         item    = cb_item["id"],
-                                         version = cb_item["version"],
-                                         name    = item_name),
-        framework = "codebeamer",
-        kind      = kind,
-        name      = item_name,
-        text      = None,
-        status    = status)
+    schema_config = get_schema_config(cb_config)
+
+    # Construct the appropriate object based on 'kind'
+    common_params = _create_common_params(
+        schema_config["namespace"], cb_item,
+        cb_config["root"], item_name, kind)
+    item = _create_lobster_item(
+        schema_config["class"],
+        common_params, item_name, status)
 
     if cb_config.get(REFERENCES):
         for reference_name, displayed_chosen_names in (
@@ -254,9 +280,74 @@ def to_lobster(cb_config, cb_item):
                     continue
 
                 (map_reference_name_to_function[reference_name]
-                 (req, flat_values_list))
+                 (item, flat_values_list))
 
-    return req
+    return item
+
+
+def _create_common_params(namespace: str, cb_item: dict, cb_root: str,
+                           item_name: str, kind: str):
+    """
+    Creates and returns common parameters for a Codebeamer item.
+    Args:
+    namespace (str): Namespace for the tag.
+    cb_item (dict): Codebeamer item dictionary.
+    cb_root (str): Root URL or path of Codebeamer.
+    item_name (str): Name of the item.
+    kind (str): Type of the item.
+    Returns:
+    dict: Common parameters including tag, location, and kind.
+    """
+    return {
+        'tag': Tracing_Tag(
+            namespace=namespace,
+            tag=str(cb_item["id"]),
+            version=cb_item["version"]
+        ),
+        'location': Codebeamer_Reference(
+            cb_root=cb_root,
+            tracker=cb_item["tracker"]["id"],
+            item=cb_item["id"],
+            version=cb_item["version"],
+            name=item_name
+        ),
+        'kind': kind
+    }
+
+
+def _create_lobster_item(schema_class, common_params, item_name, status):
+    """
+    Creates and returns a Lobster item based on the schema class.
+    Args:
+    schema_class: Class of the schema (Requirement, Implementation, Activity).
+    common_params (dict): Common parameters for the item.
+    item_name (str): Name of the item.
+    status (str): Status of the item.
+    Returns:
+    Object: An instance of the schema class with the appropriate parameters.
+    """
+    if schema_class is Requirement:
+        return Requirement(
+            **common_params,
+            framework="codebeamer",
+            text=None,
+            status=status,
+            name= item_name
+        )
+
+    elif schema_class is Implementation:
+        return Implementation(
+            **common_params,
+            language="python",
+            name= item_name,
+        )
+
+    else:
+        return Activity(
+            **common_params,
+            framework="codebeamer",
+            status=status
+        )
 
 
 def import_tagged(mh, cb_config, items_to_import):
@@ -295,15 +386,19 @@ def parse_cb_config(file_name):
         json_config["token"] = data.pop(TOKEN)
 
     provided_config_keys = set(data.keys())
-    supported_references = set(SUPPORTED_REFERENCES)
+    schema = data.get("schema", "Requirement").lower()
 
-    if not provided_config_keys.issubset(supported_references):
-        raise KeyError("The provided references are not supported! "
-                        "supported referenes: '%s'" %
-                        ', '.join(SUPPORTED_REFERENCES))
+    if not provided_config_keys.issubset(SupportedConfigKeys.as_set()):
+        raise KeyError("The provided config keys are not supported! "
+                       "supported keys: '%s'" %
+                       ', '.join(SupportedConfigKeys.as_set()))
 
     for key, value in data.items():
         json_config[REFERENCES][key] = ensure_array_of_strings(value)
+
+        json_config[key] = ensure_array_of_strings(value)
+
+    json_config["schema"] = schema
 
     return json_config
 
@@ -323,7 +418,7 @@ def main():
     ap.add_argument("--config",
                     help=("name of codebeamer "
                           "config file, supported references: '%s'" %
-                          ', '.join(SUPPORTED_REFERENCES)),
+                          ', '.join(SupportedConfigKeys.as_set())),
                     default=None)
 
     ap.add_argument("--ignore-ssl-errors",
@@ -336,10 +431,16 @@ def main():
                     default=100,
                     help=("Fetch this many cb items at once (by default 100),"
                           " reduce if you get too many timeouts."))
+
     ap.add_argument("--timeout",
                     type=int,
                     default=30,
                     help="Timeout in s (by default 30) for each REST call.")
+
+    ap.add_argument("--schema",
+                    default='requirement',
+                    help="Specify the output schema"
+                         "(Requirement, Implementation, Activity).")
 
     ap.add_argument("--cb-root", default=os.environ.get("CB_ROOT", None))
     ap.add_argument("--cb-user", default=os.environ.get("CB_USERNAME", None))
@@ -351,6 +452,7 @@ def main():
     mh = Message_Handler()
 
     cb_config = {
+        'schema'     : options.schema,
         "root"       : options.cb_root,
         "base"       : "%s/cb/api/v3" % options.cb_root,
         "user"       : options.cb_user,
@@ -433,14 +535,15 @@ def main():
     except LOBSTER_Error:
         return 1
 
+    schema_config = get_schema_config(cb_config)
+
     if options.out is None:
-        lobster_write(sys.stdout, Requirement, "lobster_codebeamer", items)
-        print()
+        with sys.stdout as fd:
+            lobster_write(fd, schema_config["class"], "lobster_codebeamer", items)
     else:
         with open(options.out, "w", encoding="UTF-8") as fd:
-            lobster_write(fd, Requirement, "lobster_codebeamer", items)
-        print("Written %u requirements to %s" % (len(items),
-                                                 options.out))
+            lobster_write(fd, schema_config["class"], "lobster_codebeamer", items)
+        print(f"Written {len(items)} requirements to {options.out}")
 
     return 0
 
