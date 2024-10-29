@@ -9,6 +9,14 @@
 
 ### 0.9.18
 
+* Add support to `lobster-codebeamer` to generate output using the following schemas:
+  - requirement
+  - implementation
+  - activity
+
+  The user can select the schema with a command line flag,
+  or through the configuration file.
+
 * Added a new tool `lobster-cpptest` which can extract references
   from C++ unit tests using various regex patterns.
   The references must be provided in a format similar to Doxygen comments.
