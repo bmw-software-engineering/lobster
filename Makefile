@@ -90,3 +90,42 @@ test-ci: system-tests unit-tests coverage
 docs:
 	rm -rf docs
 	mkdir docs
+	@-make tracing
+
+tracing: report.lobster
+	mkdir -p docs
+	make lobster/html/assets.py
+	lobster-html-report report.lobster --out=docs/tracing.html
+	lobster-ci-report report.lobster
+	@read -p "$@ finished" input
+
+report.lobster: lobster/tools/lobster.conf \
+                code.lobster \
+				unit-tests.lobster \
+				requirements.lobster \
+				system-tests.lobster
+	lobster-report \
+		--lobster-config=lobster/tools/lobster.conf \
+		--out=report.lobster
+	lobster-online-report report.lobster
+	@read -p "$@ finished" input
+
+requirements.lobster: lobster/tools/trlc/requirements.trlc \
+                      lobster/tools/requirements.rsl
+	lobster-trlc \
+		--config-file=lobster/tools/lobster-trlc.conf \
+		--out requirements.lobster
+	@read -p "$@ finished" input
+
+code.lobster: $(wildcard lobster/tools/trlc/*.py)
+	lobster-python --out code.lobster lobster/tools/trlc
+	@read -p "$@ finished" input
+
+unit-tests.lobster: $(wildcard test-unit/lobster-trlc/*.py)
+	lobster-python --activity --out unit-tests.lobster test-unit/lobster-trlc
+	@read -p "$@ finished" input
+
+system-tests.lobster: $(wildcard test-system/*/*.rsl) \
+                      $(wildcard test-system/*/*.trlc) \
+                      $(wildcard test-system/*/tracing)
+	python3 test-system/lobster-trlc/lobster-trlc-system-test.py
