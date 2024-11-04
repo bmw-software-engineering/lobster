@@ -110,7 +110,7 @@ report.lobster: lobster/tools/lobster.conf \
 
 requirements.lobster: lobster/tools/trlc/requirements.trlc \
                       lobster/tools/requirements.rsl
-	./lobster-trlc \
+	./lobster-trlc lobster/tools/trlc lobster/tools/requirements.rsl \
 		--config-file=lobster/tools/lobster-trlc.conf \
 		--out requirements.lobster
 

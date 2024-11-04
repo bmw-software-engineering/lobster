@@ -73,6 +73,21 @@ The individual packages that `bmw-lobster` depends on are:
 * [Code Coverage Report](https://bmw-software-engineering.github.io/lobster/htmlcov/index.html)
 * [Coding Guideline](CODING_GUIDELINE.md)
 
+#### Requirements Coverage 
+
+Here are the links to the individual html requirements coverage reports:
+
+* [Requirement Coverage Report TRLC](https://bmw-software-engineering.github.io/lobster/tracing.html)
+* [Requirement Coverage Report Python]()
+* [Requirement Coverage Report json]()
+* [Requirement Coverage Report gtest]()
+* [Requirement Coverage Report cpptest]()
+* [Requirement Coverage Report cpp]()
+* [Requirement Coverage Report core]()
+* [Requirement Coverage Report codebeamer]()
+
+> **Note:** Not all reports are ready yet. Some links will not work, as they are still **WIP**. They will be updated once available.
+
 ## Planned inputs
 
 The following inputs are planned but not implemeted yet:

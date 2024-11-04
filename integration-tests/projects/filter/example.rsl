@@ -1,4 +1,4 @@
-package exampletwo
+package example
 
 type System_Requirement
 {
