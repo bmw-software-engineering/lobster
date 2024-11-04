@@ -368,7 +368,7 @@ def main():
                     help=("name of lobster-trlc config file, "
                           "by default %(default)s"),
                     default="lobster-trlc.conf")
-    # lobster-trace: trlc_req.OUTPUT_FILE
+    # lobster-trace: trlc_req.Output_File
     ap.add_argument("--out",
                     help=("name of output file, "
                           "by default %(default)s"),
@@ -439,7 +439,7 @@ def main():
         return 1
 
     with open(options.out, "w", encoding="UTF-8") as fd:
-        # lobster-trace: trlc_req.OUTPUT_FILE
+        # lobster-trace: trlc_req.Output_File
         lobster_write(fd        = fd,
                       kind      = Requirement,
                       generator = "lobster-trlc",

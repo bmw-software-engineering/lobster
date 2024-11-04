@@ -37,8 +37,10 @@ jobs:
           python-version: "3.9"
       - name: Install dependencies
         run: |
+          sudo apt-get install -y graphviz
           python -m pip install --upgrade pip
           pip install -r requirements_dev.txt
+          echo "$GITHUB_WORKSPACE" >> $GITHUB_PATH
       - name: Generate docs
         run: |
           make docs
