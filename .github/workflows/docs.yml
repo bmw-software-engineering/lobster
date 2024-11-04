@@ -57,7 +57,6 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
       - name: Setup tmate session
-        if: failure()
         timeout-minutes: 20
         uses: mxschmitt/action-tmate@v3
         with:
