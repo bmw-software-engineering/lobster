@@ -176,15 +176,15 @@ def create_item_coverage(doc, report):
         doc.add_line('<td><a href="#sec-%s">%s</a></td>' %
                      (name_hash(level["name"]),
                       html.escape(level["name"])))
-        doc.add_line("<td>%.1f%%</td>" % data["coverage"])
+        doc.add_line("<td>%.1f%%</td>" % data.coverage)
         doc.add_line("<td>")
         doc.add_line('<progress value="%u" max="%u">' %
-                     (data["ok"], data["items"]))
-        doc.add_line("%.2f%%" % data["coverage"])
+                     (data.ok, data.items))
+        doc.add_line("%.2f%%" % data.coverage)
         doc.add_line('</progress>')
         doc.add_line("</td>")
-        doc.add_line('<td align="right">%u</td>' % data["ok"])
-        doc.add_line('<td align="right">%u</td>' % data["items"])
+        doc.add_line('<td align="right">%u</td>' % data.ok)
+        doc.add_line('<td align="right">%u</td>' % data.items)
         doc.add_line("</tr>")
     doc.add_line("</table>")
 
@@ -199,15 +199,15 @@ def write_item_box_begin(doc, item):
                  (item.tracing_status.name.lower(),
                   item.tag.hash()))
 
-    doc.add_line('<div class="item-name">%s %s</div>' %
-                 (assets.SVG_CHECK_SQUARE
-                  if item.tracing_status in (Tracing_Status.OK,
-                                             Tracing_Status.JUSTIFIED)
-                  else assets.SVG_ALERT_TRIANGLE,
-                  xref_item(item, link=False)))
+    # doc.add_line('<div class="item-name">%s %s</div>' %
+    #              (assets.SVG_CHECK_SQUARE
+    #               if item.tracing_status in (Tracing_Status.OK,
+    #                                          Tracing_Status.JUSTIFIED)
+    #               else assets.SVG_ALERT_TRIANGLE,
+    #               xref_item(item, link=False)))
 
     doc.add_line('<div class="attribute">Source: ')
-    doc.add_line(assets.SVG_EXTERNAL_LINK)
+    # doc.add_line(assets.SVG_EXTERNAL_LINK)
     doc.add_line(item.location.to_html())
     doc.add_line("</div>")
 
