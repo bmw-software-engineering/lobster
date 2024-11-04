@@ -95,7 +95,7 @@ docs:
 tracing: report.lobster
 	mkdir -p docs
 	make lobster/html/assets.py
-	./lobster-html-report report.lobster --out=docs/tracing.html
+	lobster-html-report report.lobster --out=docs/tracing.html
 	./lobster-ci-report report.lobster
 
 report.lobster: lobster/tools/lobster.conf \
