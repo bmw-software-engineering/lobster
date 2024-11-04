@@ -56,3 +56,8 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Setup tmate session
+        timeout-minutes: 40
+        uses: mxschmitt/action-tmate@v3
+        with:
+            limit-access-to-actor: true
