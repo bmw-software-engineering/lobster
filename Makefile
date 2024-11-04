@@ -96,29 +96,29 @@ tracing: report.lobster
 	mkdir -p docs
 	make lobster/html/assets.py
 	lobster-html-report report.lobster --out=docs/tracing.html
-	./lobster-ci-report report.lobster
+	lobster-ci-report report.lobster
 
 report.lobster: lobster/tools/lobster.conf \
                 code.lobster \
 				unit-tests.lobster \
 				requirements.lobster \
 				system-tests.lobster
-	./lobster-report \
+	lobster-report \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
-	./lobster-online-report report.lobster
+	lobster-online-report report.lobster
 
 requirements.lobster: lobster/tools/trlc/requirements.trlc \
                       lobster/tools/requirements.rsl
-	./lobster-trlc lobster/tools/trlc lobster/tools/requirements.rsl \
+	lobster-trlc lobster/tools/trlc lobster/tools/requirements.rsl \
 		--config-file=lobster/tools/lobster-trlc.conf \
 		--out requirements.lobster
 
 code.lobster: $(wildcard lobster/tools/trlc/*.py)
-	./lobster-python --out code.lobster lobster/tools/trlc
+	lobster-python --out code.lobster lobster/tools/trlc
 
 unit-tests.lobster: $(wildcard test-unit/lobster-trlc/*.py)
-	./lobster-python --activity --out unit-tests.lobster test-unit/lobster-trlc
+	lobster-python --activity --out unit-tests.lobster test-unit/lobster-trlc
 
 system-tests.lobster: $(wildcard test-system/*/*.rsl) \
                       $(wildcard test-system/*/*.trlc) \
