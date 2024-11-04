@@ -135,3 +135,8 @@ system-tests.lobster: $(wildcard tests-system/*/*.rsl) \
                       $(wildcard tests-system/*/*.trlc) \
                       $(wildcard tests-system/*/tracing)
 	python3 tests-system/lobster-trlc/lobster-trlc-system-test.py
+
+TOOL_FOLDERS := $(shell find ./lobster/tools -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+ 
+list-tool-folders:
+	@echo $(TOOL_FOLDERS)
