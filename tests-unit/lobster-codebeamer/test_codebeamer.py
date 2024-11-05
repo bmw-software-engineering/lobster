@@ -55,6 +55,7 @@ class QueryCodebeamerTest(unittest.TestCase):
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_import_tagged(self, mock_get):
+        # lobster-trace: trlc_req.Dummy_Requirement_Unit_Test
         _mh = Message_Handler()
         _item_ids = {24406947, 21747817}
         _cb_config = {'root': 'https://test.com/', 'base': 'https://test.com/base', 'page_size': 100}

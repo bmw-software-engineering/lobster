@@ -455,6 +455,7 @@ def write_html(fd, report, dot, high_contrast):
 
 
 def main():
+    # lobster-trace: trlc_req.Dummy_Requirement_Core
     ap = argparse.ArgumentParser()
     ap.add_argument("lobster_report",
                     nargs="?",

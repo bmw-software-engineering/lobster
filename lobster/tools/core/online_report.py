@@ -142,6 +142,7 @@ def parse_git_root(cfg):
 
 
 def main():
+    # lobster-trace: trlc_req.Dummy_Requirement_Core
     ap = argparse.ArgumentParser()
     ap.add_argument("lobster_report",
                     nargs="?",

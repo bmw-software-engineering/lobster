@@ -98,11 +98,6 @@ test-all: integration-tests system-tests unit-tests
 	make coverage
 	util/check_local_modifications.sh
 
-docs:
-	rm -rf docs
-	mkdir docs
-	@-make tracing
-
 tracing: report.lobster
 	mkdir -p docs
 	make lobster/html/assets.py
@@ -137,6 +132,57 @@ system-tests.lobster: $(wildcard tests-system/*/*.rsl) \
 	python3 tests-system/lobster-trlc/lobster-trlc-system-test.py
 
 TOOL_FOLDERS := $(shell find ./lobster/tools -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+ # TOOL_FOLDERS = python core gtest cpptest trlc cpp json codebeamer
+ # __pycache__ folder how to handle? TBD
+
+docs: clean-docs $(patsubst %, tracing-tools-%, $(TOOL_FOLDERS))
  
-list-tool-folders:
-	@echo $(TOOL_FOLDERS)
+clean-docs:
+	rm -rf docs
+ 
+tracing-tools-%: tracing-% clean-lobster
+	@echo "Finished processing tool: $*"
+
+tracing-%: report.lobster-%
+	mkdir -p docs
+	make lobster/html/assets.py
+	lobster-html-report report.lobster-$* --out=docs/tracing-$*.html
+	lobster-ci-report report.lobster-$*
+
+report.lobster-%: lobster/tools/lobster.conf \
+                  code.lobster-% \
+                  unit-tests.lobster-% \
+                  requirements.lobster-% \
+                  system-tests.lobster-%
+	lobster-report \
+		--lobster-config=lobster/tools/lobster.conf \
+		--out=report.lobster
+	lobster-online-report report.lobster
+
+requirements.lobster-%: lobster/tools/%/requirements.trlc \
+                        lobster/tools/requirements.rsl
+	lobster-trlc lobster/tools/$*/requirements.trlc lobster/tools/requirements.rsl \
+		--config-file=lobster/tools/lobster-trlc.conf \
+		--out requirements.lobster
+ 
+# Note: Wildcard does not support recirsive search.
+# eg. cpptest tool has a subfolder: parser
+code.lobster-%:
+    lobster-python --out code.lobster $(shell find lobster/tools/$* -name "*.py")
+
+# should subfolders be considered here too??
+unit-tests.lobster-%: $(wildcard test-unit/lobster-%/*.py)
+	lobster-python --activity --out unit-tests.lobster test-unit/lobster-$*
+
+system-tests.lobster-%: $(wildcard test-system/%/*.rsl) \
+                        $(wildcard test-system/%/*.trlc) \
+                        $(wildcard test-system/%/tracing)
+	python3 test-system/$*/lobster-$*-system-test.py
+ 
+# Deleet generated *.lobster files before the next tool is started
+clean-lobster:
+	rm -f code.lobster
+	rm -f report.lobster
+	rm -f requirements.lobster
+	rm -f unit-tests.lobster
+	rm -f system-tests.lobster
