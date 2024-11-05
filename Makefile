@@ -146,14 +146,14 @@ tracing-tools-%: tracing-% clean-lobster
 tracing-%: report.lobster-%
 	mkdir -p docs
 	make lobster/html/assets.py
-	lobster-html-report report.lobster-$* --out=docs/tracing-$*.html
-	lobster-ci-report report.lobster-$*
+	lobster-html-report report.lobster --out=docs/tracing-$*.html
+	lobster-ci-report report.lobster
 
 report.lobster-%: lobster/tools/lobster.conf \
                   code.lobster-% \
                   unit-tests.lobster-% \
-                  requirements.lobster-% \
-                  system-tests.lobster-%
+                  requirements.lobster-%
+                  # system-tests.lobster-%
 	lobster-report \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
@@ -168,7 +168,7 @@ requirements.lobster-%: lobster/tools/%/requirements.trlc \
 # Note: Wildcard does not support recirsive search.
 # eg. cpptest tool has a subfolder: parser
 code.lobster-%:
-    lobster-python --out code.lobster $(shell find lobster/tools/$* -name "*.py")
+	lobster-python --out code.lobster $(shell find lobster/tools/$* -name "*.py")
 
 # should subfolders be considered here too??
 unit-tests.lobster-%: $(wildcard test-unit/lobster-%/*.py)
