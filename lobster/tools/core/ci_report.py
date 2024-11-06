@@ -26,7 +26,7 @@ from lobster.items import Tracing_Status
 
 
 def main():
-    # lobster-trace: trlc_req.Dummy_Requirement_Core
+    # lobster-trace: core_req.Dummy_Requirement
     ap = argparse.ArgumentParser()
     ap.add_argument("lobster_report",
                     nargs="?",

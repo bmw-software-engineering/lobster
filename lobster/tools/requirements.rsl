@@ -1,4 +1,4 @@
-package trlc_req
+package req
 
 type Tool_Requirement {
   description '''

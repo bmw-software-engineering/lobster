@@ -404,7 +404,7 @@ def parse_cb_config(file_name):
 
 
 def main():
-    # lobster-trace: trlc_req.Dummy_Requirement_Codebeamer
+    # lobster-trace: codebeamer_req.Dummy_Requirement
     ap = argparse.ArgumentParser()
 
     modes = ap.add_mutually_exclusive_group(required=True)

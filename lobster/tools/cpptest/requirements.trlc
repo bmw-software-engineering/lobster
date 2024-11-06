@@ -1,20 +1,14 @@
-package trlc_req
+package cpptest_req
+import req
 
-Tool_Requirement Dummy_Requirement_Cpptest {
+req.Tool_Requirement Dummy_Requirement {
   description = '''
     This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
     It can be deleted as soon as all the tools get their real requirements.
   '''
 }
 
-Tool_Requirement Dummy_Requirement_Unit_Test_Cpptest {
-  description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
-  '''
-}
-
-Tool_Requirement Dummy_Requirement_System_Test_Cpptest {
+req.Tool_Requirement Dummy_Requirement_Unit_Test {
   description = '''
     This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
     It can be deleted as soon as all the tools get their real requirements.

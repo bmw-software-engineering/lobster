@@ -193,7 +193,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
 
 
 def main():
-    # lobster-trace: trlc_req.Dummy_Requirement_Json
+    # lobster-trace: json_req.Dummy_Requirement
     tool = LOBSTER_Json()
     return tool.execute()
 

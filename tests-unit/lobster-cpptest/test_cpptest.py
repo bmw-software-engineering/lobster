@@ -548,7 +548,7 @@ class LobsterCpptestTests(unittest.TestCase):
                 )
 
     def tearDown(self):
-        # lobster-trace: trlc_req.Dummy_Requirement_Unit_Test
+        # lobster-trace: cpptest_req.Dummy_Requirement_Unit_Test
         for output_file in self.output_file_names:
             if os.path.exists(output_file):
                 os.remove(output_file)

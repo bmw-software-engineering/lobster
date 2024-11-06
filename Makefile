@@ -133,10 +133,19 @@ system-tests.lobster: $(wildcard tests-system/*/*.rsl) \
 
 TOOL_FOLDERS := $(shell find ./lobster/tools -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
  # TOOL_FOLDERS = python core gtest cpptest trlc cpp json codebeamer
- # __pycache__ folder how to handle? TBD
 
-docs: clean-docs $(patsubst %, tracing-tools-%, $(TOOL_FOLDERS))
+CORE_TOOLS := $(shell find ./lobster/tools/core -type f -name "*.py" ! -name "__init__.py" ! -path "*/__pycache__/*" -exec basename {} .py \;)
+# CORE_TOOLS = ci_report online_report report html_report
+
+.PHONY: docs clean-docs tracing-tools-% tracing-% clean-lobster
  
+docs: clean-docs
+	@for tool in $(TOOL_FOLDERS); do \
+		$(MAKE) tracing-tools-$$tool; \
+	done
+	make clean-lobster
+# read -p "Finished processing $$tool. Press Enter to continue... " input; \
+
 clean-docs:
 	rm -rf docs
  
@@ -167,17 +176,17 @@ requirements.lobster-%: lobster/tools/%/requirements.trlc \
  
 # Note: Wildcard does not support recirsive search.
 # eg. cpptest tool has a subfolder: parser
-code.lobster-%:
-	lobster-python --out code.lobster $(shell find lobster/tools/$* -name "*.py")
 
+code.lobster-%: $(shell find lobster/tools/$* -type f -name '*.py' ! -path "*/__pycache__/*")
+	lobster-python --out code.lobster lobster/tools/$*
+# we need four reports for core because its 4 tools
 # should subfolders be considered here too??
-unit-tests.lobster-%: $(wildcard test-unit/lobster-%/*.py)
+unit-tests.lobster-%: $(shell find test-unit/lobster-$* -type f -name '*.py')
 	lobster-python --activity --out unit-tests.lobster test-unit/lobster-$*
 
-system-tests.lobster-%: $(wildcard test-system/%/*.rsl) \
-                        $(wildcard test-system/%/*.trlc) \
-                        $(wildcard test-system/%/tracing)
-	python3 test-system/$*/lobster-$*-system-test.py
+system-tests.lobster-%: $(shell find test-system/$* -type f \( -name '*.rsl' -o -name '*.trlc' \)) \
+                        $(shell find test-system/$* -type d -name 'tracing')
+    python3 test-system/lobster-trlc-system-test.py $*
  
 # Deleet generated *.lobster files before the next tool is started
 clean-lobster:
