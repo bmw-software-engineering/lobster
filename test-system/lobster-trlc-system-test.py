@@ -26,14 +26,15 @@ from lobster.io import lobster_write
 from trlc.trlc import Source_Manager
 from trlc.errors import Message_Handler
 
-SCRIPT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+TEST_DIR = "test-system/lobster-" + sys.argv[1]
 TARGET   = "system-tests.lobster"
 
-def process(test_dir, mapping):
+def process(testname, mapping):
+    test_dir = os.path.join(TEST_DIR, testname)
     assert os.path.isdir(test_dir)
     assert isinstance(mapping, dict)
     tag_file = os.path.join(test_dir, "tracing")
-    testname = os.path.basename(test_dir)
+
     item = Activity(
         tag       = Tracing_Tag(namespace = "trlc-st",
                                 tag       = testname),
@@ -72,14 +73,12 @@ def process(test_dir, mapping):
         return []
 
 
-def main(lobster_folder):
+def main():
     sm = Source_Manager(mh = Message_Handler(),
                         lint_mode   = False,
                         parse_trlc  = True,
                         verify_mode = False)
-
-    filename = os.path.join(SCRIPT_DIR, 'lobster/tools')
-    sm.register_directory(filename)
+    sm.register_directory("lobster/tools")
     stab = sm.process()
     pkg_req = stab.lookup_assuming(sm.mh, "req")
     mapping = {}
@@ -87,9 +86,9 @@ def main(lobster_folder):
         mapping[item.name.lower().replace("_", "-")] = item.name
 
     items = []
-    for dirent in sorted(os.scandir(SCRIPT_DIR),
+    for dirent in sorted(os.scandir(TEST_DIR),
                          key=lambda de: de.name):
-        if dirent.is_dir() and dirent.name == lobster_folder:
+        if dirent.is_dir():
             if dirent.name == "htmlcov":
                 continue
             items += process(dirent.name, mapping)
@@ -102,5 +101,4 @@ def main(lobster_folder):
 
 
 if __name__ == "__main__":
-    lobster_folder = sys.argv[1]
-    sys.exit(main(lobster_folder))
+    sys.exit(main())

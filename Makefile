@@ -161,8 +161,8 @@ tracing-%: report.lobster-%
 report.lobster-%: lobster/tools/lobster.conf \
                   code.lobster-% \
                   unit-tests.lobster-% \
-                  requirements.lobster-%
-                  # system-tests.lobster-%
+                  requirements.lobster-% \
+                  system-tests.lobster-%
 	lobster-report \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
@@ -177,17 +177,19 @@ requirements.lobster-%: lobster/tools/%/requirements.trlc \
 # Note: Wildcard does not support recirsive search.
 # eg. cpptest tool has a subfolder: parser
 
-code.lobster-%: $(shell find lobster/tools/$* -type f -name '*.py' ! -path "*/__pycache__/*")
+code.lobster-%: $(wildcard lobster/tools/$*/**/*.py)
 	lobster-python --out code.lobster lobster/tools/$*
+
 # we need four reports for core because its 4 tools
 # should subfolders be considered here too??
-unit-tests.lobster-%: $(shell find test-unit/lobster-$* -type f -name '*.py')
+unit-tests.lobster-%: $(wildcard test-unit/lobster-$*/**/*.py)
 	lobster-python --activity --out unit-tests.lobster test-unit/lobster-$*
 
-system-tests.lobster-%: $(shell find test-system/$* -type f \( -name '*.rsl' -o -name '*.trlc' \)) \
-                        $(shell find test-system/$* -type d -name 'tracing')
-    python3 test-system/lobster-trlc-system-test.py $*
- 
+system-tests.lobster-%: $(wildcard test-system/lobster-$*/**/*.rsl) \
+                        $(wildcard test-system/lobster-$*/**/*.trlc) \
+                        $(wildcard test-system/lobster-$*/tracing)
+	python3 test-system/lobster-trlc-system-test.py $*;
+
 # Deleet generated *.lobster files before the next tool is started
 clean-lobster:
 	rm -f code.lobster
