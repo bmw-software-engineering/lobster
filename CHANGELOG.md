@@ -5,10 +5,6 @@
 
 ### 0.9.19-dev
 
-* Fixes packaging of `bmw-lobster`.
-
-### 0.9.18
-
 * Add support to `lobster-codebeamer` to generate output using the following schemas:
   - requirement
   - implementation
@@ -16,6 +12,10 @@
 
   The user can select the schema with a command line flag,
   or through the configuration file.
+
+* Fixes packaging of `bmw-lobster`.
+
+### 0.9.18
 
 * Added a new tool `lobster-cpptest` which can extract references
   from C++ unit tests using various regex patterns.
