@@ -33,7 +33,7 @@ from lobster.location import File_Reference
 
 @dataclass
 class Coverage:
-    level:str
+    level: str
     items: int
     ok: int
     coverage: None
@@ -103,12 +103,12 @@ class Report:
                                         dst_tag.version))
 
     def compute_coverage_for_items(self):
-        for level, level_obj in self.coverage.items():
+        for level_obj in self.coverage.values():
             if level_obj.ok == level_obj.items:
                 level_obj.coverage = 100.0
             else:
                 level_obj.coverage = (
-                        float(level_obj.ok * 100) / float(level_obj.items)
+                    float(level_obj.ok * 100) / float(level_obj.items)
                 )
             print("\nBefore Data Coverage ", level_obj.coverage)
 
@@ -179,7 +179,9 @@ class Report:
         self.config = data["policy"]
         for level in data["levels"]:
             assert level["name"] in self.config
-            coverage = Coverage(level=level["name"], items=0, ok=0, coverage=level["coverage"])
+            coverage = Coverage(
+                level=level["name"], items=0, ok=0, coverage=level["coverage"]
+            )
             self.coverage.update({level["name"]: coverage})
 
             for item_data in level["items"]:
