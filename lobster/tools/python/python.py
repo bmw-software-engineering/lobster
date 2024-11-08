@@ -30,6 +30,7 @@ import libcst as cst
 from lobster.items import Tracing_Tag, Implementation, Activity
 from lobster.location import File_Reference
 from lobster.io import lobster_write
+from lobster.version import get_version
 
 LOBSTER_TRACE_PREFIX = "# lobster-trace: "
 LOBSTER_JUST_PREFIX = "# lobster-exclude: "
@@ -442,7 +443,7 @@ def process_file(file_name, options):
         print("Unspecified issue in file: %s" % file_name)
         raise
 
-
+@get_version
 def main():
     # lobster-trace: python_req.Dummy_Requirement
     ap = argparse.ArgumentParser()
