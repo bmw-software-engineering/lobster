@@ -33,6 +33,7 @@ from trlc import ast
 from lobster.items import Tracing_Tag, Requirement
 from lobster.location import File_Reference
 from lobster.io import lobster_write
+from lobster.version import get_version
 
 
 class Config_Parser(Parser_Base):
@@ -361,7 +362,7 @@ class Config_Parser(Parser_Base):
         else:
             self.parse_tuple_type(n_typ)
 
-
+@get_version
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config-file",
