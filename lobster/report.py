@@ -118,6 +118,7 @@ class Report:
 
         with open(filename, "w", encoding="UTF-8") as fd:
             json.dump(report, fd, indent=2)
+            fd.write("\n")
 
     def load_report(self, filename):
         assert isinstance(filename, str)

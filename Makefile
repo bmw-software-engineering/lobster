@@ -88,7 +88,7 @@ full-release:
 coverage:
 	coverage combine -q
 	coverage html --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=64
+	coverage report --rcfile=coverage.cfg --fail-under=72
 
 test: system-tests unit-tests
 	make coverage
@@ -128,10 +128,10 @@ requirements.lobster: lobster/tools/trlc/requirements.trlc \
 code.lobster: $(wildcard lobster/tools/trlc/*.py)
 	lobster-python --out code.lobster lobster/tools/trlc
 
-unit-tests.lobster: $(wildcard test-unit/lobster-trlc/*.py)
-	lobster-python --activity --out unit-tests.lobster test-unit/lobster-trlc
+unit-tests.lobster: $(wildcard tests-unit/lobster-trlc/*.py)
+	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-trlc
 
-system-tests.lobster: $(wildcard test-system/*/*.rsl) \
-                      $(wildcard test-system/*/*.trlc) \
-                      $(wildcard test-system/*/tracing)
-	python3 test-system/lobster-trlc/lobster-trlc-system-test.py
+system-tests.lobster: $(wildcard tests-system/*/*.rsl) \
+                      $(wildcard tests-system/*/*.trlc) \
+                      $(wildcard tests-system/*/tracing)
+	python3 tests-system/lobster-trlc/lobster-trlc-system-test.py
