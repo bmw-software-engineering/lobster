@@ -140,7 +140,7 @@ class Config_Parser(Parser_Base):
                 self.lexer.mh.error(n_typ.location,
                                     "please define a to_string function for"
                                     " this type in the lobster-trlc"
-                                    " configuraiton file")
+                                    " configuration file")
 
             # We have functions, so we attempt to apply until we get
             # one that works, in order.
