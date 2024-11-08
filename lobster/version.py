@@ -16,6 +16,8 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
+import argparse
+import sys
 
 VERSION_TUPLE = (0, 9, 19)
 VERSION_SUFFIX = "dev"
@@ -25,3 +27,17 @@ LOBSTER_VERSION = ("%u.%u.%u" % VERSION_TUPLE) + (
 )
 
 FULL_NAME = "LOBSTER %s" % LOBSTER_VERSION
+
+
+def get_version(func):
+    ap = argparse.ArgumentParser()
+    version = ap.add_argument("--version",
+                              default=None,
+                              help="Get version for the tool")
+    def inner():
+        if version:
+            print("Lobster ", LOBSTER_VERSION)
+            return sys.exit(0)
+        else:
+            func()
+    return inner()
