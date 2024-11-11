@@ -13,7 +13,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/sysreq_example.trlc",
+            "file": "tests-integration/projects/filter/sysreq_example.trlc",
             "line": 4
           },
           "name": "sysreq_example.lobster_example",
@@ -38,7 +38,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/sysreq_example.trlc",
+            "file": "tests-integration/projects/filter/sysreq_example.trlc",
             "line": 11
           },
           "name": "sysreq_example.req_implication",
@@ -62,7 +62,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/sysreq_example.trlc",
+            "file": "tests-integration/projects/filter/sysreq_example.trlc",
             "line": 19
           },
           "name": "sysreq_example.req_xor",
@@ -93,7 +93,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/softreq_example.trlc",
+            "file": "tests-integration/projects/filter/softreq_example.trlc",
             "line": 5
           },
           "name": "softreq_example.req_implication",
@@ -122,7 +122,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/softreq_example.trlc",
+            "file": "tests-integration/projects/filter/softreq_example.trlc",
             "line": 17
           },
           "name": "softreq_example.req_xor",
@@ -160,7 +160,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/foo.cpp",
+            "file": "tests-integration/projects/filter/foo.cpp",
             "line": 3
           },
           "name": "implication",
@@ -182,7 +182,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/foo.cpp",
+            "file": "tests-integration/projects/filter/foo.cpp",
             "line": 9
           },
           "name": "exclusive_or",
@@ -211,7 +211,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/test_example.json",
+            "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },
           "name": "test_example.json:Implication Test 1",
@@ -234,7 +234,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/test_example.json",
+            "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },
           "name": "test_example.json:Implication Test 2",
@@ -257,7 +257,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/test_example.json",
+            "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },
           "name": "test_example.json:XOR Test 1",
@@ -280,7 +280,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/test_example.json",
+            "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },
           "name": "test_example.json:XOR Test 2",
@@ -303,7 +303,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/test_example.json",
+            "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },
           "name": "test_example.json:XOR Test 3",
@@ -326,7 +326,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "integration-tests/projects/filter/test_example.json",
+            "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },
           "name": "test_example.json:XOR Test 4",

@@ -12,7 +12,6 @@ permissions:
 jobs:
   lint:
     name: PyLint
-    needs: test
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +25,7 @@ jobs:
           make lint
   test:
     name: TestSuite
-    if: success()
+    needs: lint
     strategy:
       matrix:
         os: [ubuntu-24.04, windows-2022, macos-13, macos-14]
@@ -65,3 +64,49 @@ jobs:
         if: always()
         run: |
           util/check_local_modifications.sh
+  integration-tests:
+    name: Integration tests
+    needs: test
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install python version
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements_dev.txt
+          sudo apt install cmake ninja-build graphviz
+      - name: Cache clang-tidy
+        id: cache-clang-tidy
+        uses: actions/cache@v4
+        with:
+          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
+          key: cache-clang-tidy
+      - if: ${{ steps.cache-clang-tidy.outputs.cache-hit != 'true' }}
+        name: Build clang-tidy
+        run: |
+          make clang-tidy
+      - if: ${{ steps.cache-clang-tidy.outputs.cache-hit != 'true' }}
+        name: Save cache
+        uses: actions/cache/save@v4
+        with:
+          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
+          key: cache-clang-tidy
+      - name: Run integration tests
+        run: |
+          make integration-tests
+      - name: Check output files
+        if: always()
+        run: |
+          util/check_local_modifications.sh
+  failure:
+    name: Check all jobs
+    needs: integration-tests
+    if: ${{ failure() || cancelled() }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Failure
+        run: exit 1
