@@ -1,6 +1,7 @@
 SYSTEM_PYTHONPATH:=$(PYTHONPATH)
 export LOBSTER_ROOT=$(PWD)
 export PYTHONPATH=$(LOBSTER_ROOT)
+export PATH:=$(LOBSTER_ROOT):$(PATH)
 
 ASSETS=$(wildcard assets/*.svg)
 
@@ -132,27 +133,86 @@ system-tests.lobster: $(wildcard tests-system/*/*.rsl) \
 	python3 tests-system/lobster-trlc/lobster-trlc-system-test.py
 
 TOOL_FOLDERS := $(shell find ./lobster/tools -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
- # TOOL_FOLDERS = python core gtest cpptest trlc cpp json codebeamer
+# TOOL_FOLDERS = python core gtest cpptest trlc cpp json __pycache__ codebeamer
+
+TOOL_FOLDERS_3 := $(shell find ./lobster/tools -mindepth 1 -maxdepth 2 -type d | sed 's|^./lobster/tools/||')
+# Tool folders 2 is: python python/__pycache__ core core/html_report core/report core/online_report core/ci_report core/__pycache__ gtest cpptest cpptest/parser trlc trlc/__pycache__ cpp json __pycache__ codebeamer
+
+TOOL_FOLDERS_2_old := $(shell find ./lobster/tools -mindepth 1 -maxdepth 2 -type d | grep -v -E '^./lobster/tools/core$$|__pycache__' | sed 's|^./lobster/tools/||')
+
+TOOL_FOLDERS_2 := $(shell find ./lobster/tools -mindepth 1 -maxdepth 2 -type d | grep -v -E '^./lobster/tools/core$$|__pycache__' | sed 's|^./lobster/tools/||; s|/|99|g')
+
+$(eval EXPANDED_TOOL_FOLDERS := $(TOOL_FOLDERS_2))
+$(foreach tool,$(EXPANDED_TOOL_FOLDERS),$(eval tracing_tools_$(tool): tracing_tools_% ; @echo "Running tracing_tools_$(tool)"))
 
 CORE_TOOLS := $(shell find ./lobster/tools/core -type f -name "*.py" ! -name "__init__.py" ! -path "*/__pycache__/*" -exec basename {} .py \;)
 # CORE_TOOLS = ci_report online_report report html_report
 
-.PHONY: docs clean-docs tracing-tools-% tracing-% clean-lobster
- 
-docs: clean-docs
-	@for tool in $(TOOL_FOLDERS); do \
-		$(MAKE) tracing-tools-$$tool; \
+CORE_CODE_SCRIPTS := $(shell find ./lobster/tools/core -type f -name "*.py" ! -name "__init__.py" ! -path "*/__pycache__/*" -exec echo core/{} \; | sed 's|./lobster/tools/core/||')
+# CORE_CODE_SCRIPTS = core/ci_report.py core/online_report.py core/report.py core/html_report.py
+
+CORE_COUNT := $(shell echo $(CORE_CODE_SCRIPTS) | wc -w)
+CORE_REPEATED := $(shell yes core | head -n $(CORE_COUNT) | tr '\n' ' ' | sed 's/ *$$//')
+$(eval TOOL_FOLDERS := $(shell echo $(TOOL_FOLDERS) | sed "s/\bcore\b/$(CORE_REPEATED)/"))
+# Final TOOL_FOLDERS: python core core core core gtest cpptest trlc cpp json __pycache__ codebeamer
+
+# Target to prepare the environment for tracing (for verification)
+prepare-environment-tracing:
+#	@echo "Initial TOOL_FOLDERS: $(TOOL_FOLDERS)"
+	@rm -f lobster-python-commands.txt
+	@core_written=false; \ 
+	for tool in $(TOOL_FOLDERS); do \
+		if [ "$$tool" = "core" ]; then \
+			if [ "$$core_written" = false ]; then \
+				for script in $(CORE_CODE_SCRIPTS); do \
+					echo "$$script" >> lobster-python-commands.txt; \
+				done; \
+				core_written=true; \
+			fi; \
+		else \
+			echo "$$tool" >> lobster-python-commands.txt; \
+		fi; \
 	done
+#	@echo "Generated lobster-python-commands.txt with the following content:"
+#	@cat lobster-python-commands.txt
+#	@echo "Final TOOL_FOLDERS: $(TOOL_FOLDERS)"
+
+.PHONY: docs clean-docs tracing-% clean-lobster tracing_tools_%
+
+print-var/var:
+	@echo "Tool folders 2 is: $(TOOL_FOLDERS_2)"
+docs-copy: clean-docs prepare-environment-tracing
+	@for tool in $(TOOL_FOLDERS); do \
+			echo "hi"
+		else \
+            $(MAKE) -B tracing-tools-$$tool; \
+            read -p "Finished processing $$tool. Press Enter to continue... " input; \
+        fi; \
+    done
+#	make clean-lobster
+# read -p "Finished processing $$tool. Press Enter to continue... " input; \
+tracing-tools-
+docs: clean-docs
+	@echo "TOOL_FOLDER_2 is: $(TOOL_FOLDERS_2)"
+	@echo "EXPANDED_TOOL_FOLDERS is: $(EXPANDED_TOOL_FOLDERS)"
+	make clean-lobster
+	@for tool in $(EXPANDED_TOOL_FOLDERS); do \
+		echo "Starting tool: $$tool"; \
+		target_name=tracing_tools_$$tool; \
+		echo "Invoking target: $$target_name"; \
+		$(MAKE) -B $$target_name; \
+		read -p "Finished processing $$tool. Press Enter to continue... " input; \
+    done
 	make clean-lobster
 # read -p "Finished processing $$tool. Press Enter to continue... " input; \
 
 clean-docs:
 	rm -rf docs
  
-tracing-tools-%: tracing-% clean-lobster
+tracing_tools_%: tracing_% clean-lobster
 	@echo "Finished processing tool: $*"
 
-tracing-%: report.lobster-%
+tracing_%: report.lobster-%
 	mkdir -p docs
 	make lobster/html/assets.py
 	lobster-html-report report.lobster --out=docs/tracing-$*.html
@@ -177,18 +237,26 @@ requirements.lobster-%: lobster/tools/%/requirements.trlc \
 # Note: Wildcard does not support recirsive search.
 # eg. cpptest tool has a subfolder: parser
 
-code.lobster-%: $(wildcard lobster/tools/$*/**/*.py)
-	lobster-python --out code.lobster lobster/tools/$*
+code.lobster-%:
+	@echo "TOOL_PATH first is: $(TOOL_PATH)"
+	$(eval TOOL_PATH := $(subst 99,/,$*))
+	@echo "TOOL_PATH after is: $(TOOL_PATH)"
+	lobster-python --out code.lobster lobster/tools/$(TOOL_PATH)
 
 # we need four reports for core because its 4 tools
 # should subfolders be considered here too??
-unit-tests.lobster-%: $(wildcard test-unit/lobster-$*/**/*.py)
-	lobster-python --activity --out unit-tests.lobster test-unit/lobster-$*
+unit-tests.lobster-%:
+	@echo "TOOL_PATH first is: $(TOOL_PATH)"
+	$(eval TOOL_PATH := $(subst 99,/,$*))
+	@echo "TOOL_PATH after is: $(TOOL_PATH)"
+	lobster-python --activity --out unit-tests.lobster test-unit/lobster-$(TOOL_PATH)
 
-system-tests.lobster-%: $(wildcard test-system/lobster-$*/**/*.rsl) \
-                        $(wildcard test-system/lobster-$*/**/*.trlc) \
-                        $(wildcard test-system/lobster-$*/tracing)
-	python3 test-system/lobster-trlc-system-test.py $*;
+system-tests.lobster-%:
+	@echo "TOOL_PATH first is: $(TOOL_PATH)"
+	$(eval TOOL_PATH := $(subst 99,/,$*))
+	@echo "TOOL_PATH after is: $(TOOL_PATH)"
+	python3 test-system/lobster-trlc-system-test.py $(TOOL_PATH);
+#should we rename the py?
 
 # Deleet generated *.lobster files before the next tool is started
 clean-lobster:
