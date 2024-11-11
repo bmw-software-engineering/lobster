@@ -14,7 +14,6 @@ html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requiremen
 	@lobster-online-report
 	@cp report.lobster report.reference_output
 	@lobster-html-report
-	@cp lobster_report.html ../../../documentation/example_report.html
 	@lobster-ci-report | tee ci_report.reference_output
 
 cppcode.lobster: foo.h foo.cpp
@@ -37,8 +36,8 @@ pycode.lobster: nor.py
 		--out="pycode.lobster" \
 		--parse-decorator trlc_reference requirement
 
-software-requirements.lobster: potato.rsl potato.check potato.trlc
-	@lobster-trlc *.rsl *.check *.trlc \
+software-requirements.lobster: potato.rsl potato.trlc
+	@lobster-trlc *.rsl *.trlc \
 		--out="software-requirements.lobster"
 
 json.lobster: example.json
