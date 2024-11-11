@@ -65,7 +65,7 @@ def process(testname, mapping):
                                            for item in components))
         item.add_tracing_target(
             Tracing_Tag(namespace = "req",
-                        tag       = "req.%s" % requirement))
+                        tag       = f"{sys.argv[1]}_req.{requirement}"))
     if include_test:
         return [item]
     else:
@@ -78,9 +78,10 @@ def main():
                         lint_mode   = False,
                         parse_trlc  = True,
                         verify_mode = False)
-    sm.register_directory("lobster/tools")
+    sm.register_directory("lobster/tools/" + str(sys.argv[1]))
+    sm.register_file("lobster/tools/requirements.rsl")
     stab = sm.process()
-    pkg_req = stab.lookup_assuming(sm.mh, "req")
+    pkg_req = stab.lookup_assuming(sm.mh, str(sys.argv[1]) + "_req")
     mapping = {}
     for item in pkg_req.symbols.iter_record_objects():
         mapping[item.name.lower().replace("_", "-")] = item.name
@@ -94,7 +95,7 @@ def main():
             items += process(dirent.name, mapping)
 
     with open(TARGET, "w", encoding="UTF-8") as fd:
-        lobster_write(fd, Activity, "lobster-trlc-system-test", items)
+        lobster_write(fd, Activity, f"lobster-{str(sys.argv[1])}-system-test", items)
 
     print("Written %u items to %s" % (len(items), TARGET))
     return 0

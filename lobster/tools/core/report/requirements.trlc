@@ -1,4 +1,4 @@
-package gtest_req
+package core_report_req
 import req
 
 req.Software_Requirement Dummy_Requirement {

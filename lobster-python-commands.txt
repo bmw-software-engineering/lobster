@@ -1,0 +1,12 @@
+python
+core/ci_report.py
+core/online_report.py
+core/report.py
+core/html_report.py
+gtest
+cpptest
+trlc
+cpp
+json
+__pycache__
+codebeamer

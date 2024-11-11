@@ -7,3 +7,10 @@ type Tool_Requirement {
     It does not describe implementation details.
   ''' String
 }
+
+type Software_Requirement {
+  description '''
+    The content of the requirement.
+    A software requirement describes the behaviour of a lobster tool.
+  ''' String
+}
