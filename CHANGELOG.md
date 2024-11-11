@@ -5,6 +5,12 @@
 
 ### 0.9.19-dev
 
+* `lobster-trlc` requires TRLC version 2.0.0.
+
+* Fixed bug in `lobster-python` where the tag for functions was constructed by using
+  only the class name, not the function name. Now both the class name and function name
+  are included in the tag.
+
 * Add support to `lobster-codebeamer` to generate output using the following schemas:
   - requirement
   - implementation
