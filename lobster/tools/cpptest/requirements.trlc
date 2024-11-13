@@ -1,16 +1,75 @@
 package cpptest_req
 import req
 
-req.Software_Requirement Dummy_Requirement {
+req.Tool_Definition Source_Input_Valid {
+  title = '''Valid source input given'''
   description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
+    Valid source input means that the tool was called with
+    a list of terms as a command line argument.
+    Each term is an existing file or an existing directory path
   '''
 }
 
-req.Software_Requirement Dummy_Requirement_Unit_Test {
+req.Tool_Definition No_Source_Input {
+  title = '''No source input given'''
   description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
+    No source input means that the tool was called with nothing specified
+    in the command line argument.
   '''
+}
+
+req.Tool_Definition Source_Inputs_Invalid {
+  title = '''Invalid source input given'''
+  description = '''
+    Invalid source input means that the tool was called with
+    a list of terms as a command line argument.
+    At least one term is an non-existent file or an non-existent directory path
+  '''
+}
+
+req.Tool_Definition Source_Input_Files {
+  title = '''Source input files given'''
+  description = '''
+    Valid existing source input files in the case of [[Source_Inputs_Valid]]
+  '''
+}
+
+req.Tool_Definition Config_File {
+  title = '''Config file'''
+  description = '''
+    This file consists of the configuration of the tool.
+  '''
+}
+
+req.Tool_Config_Parameter Source_Input_File_Paths {
+    description = '''
+      The input terms can be specified in space separated format
+      as a command line argument.
+      Only files ending on [".cpp", ".cc", ".c", ".h"] are considered.
+    '''
+}
+
+req.Tool_Config_Parameter Config_File_Path {
+    description = '''
+      This parameter specifies the path to [[Config_File]].
+    '''
+}
+
+req.System_Requirement Valid_Source_Input_File_Paths {
+    description = '''
+      If [[Source_Inputs_Valid]] and [[Config_File_Path]] is specified, the output file/s containing the extracted tests
+      from [[Source_Input_Files]] will be written with user-specific markers to the file specified in [[Config_File]].
+    '''
+}
+
+req.System_Requirement_Else No_Source_Input_File_Path {
+    description = '''
+      Else if [[No_Source_Input]], the tool shall exit with return code 1.
+    '''
+}
+
+req.System_Requirement_Else Invalid_Source_Input_File_Paths {
+    description = '''
+      Else if [[Source_Inputs_Invalid]], the tool shall exit with return code 1.
+    '''
 }
