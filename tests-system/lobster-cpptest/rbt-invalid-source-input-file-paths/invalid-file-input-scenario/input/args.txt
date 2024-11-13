@@ -1,0 +1,1 @@
+../../../data/testtt_case.cpp --config-file=cpptest_output.conf

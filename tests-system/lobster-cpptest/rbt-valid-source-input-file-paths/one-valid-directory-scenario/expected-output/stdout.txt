@@ -1,0 +1,43 @@
+Written 4 lobster items to "cpptest.lobster".
+{
+  "data": [
+    {
+      "tag": "cpp test_case.cpp:VersionTagTest:4",
+      "location": {
+        "kind": "file",
+        "file": "..\\..\\..\\data\\other-data\\test_case.cpp",
+        "line": 4,
+        "column": null
+      },
+      "name": "test_case.cpp:VersionTagTest:4",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp test_case.cpp:VersionTagTest:7",
+      "location": {
+        "kind": "file",
+        "file": "..\\..\\..\\data\\other-data\\test_case.cpp",
+        "line": 7,
+        "column": null
+      },
+      "name": "test_case.cpp:VersionTagTest:7",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    }
+  ],
+  "generator": "lobster-cpptest",
+  "schema": "lobster-act-trace",
+  "version": 3
+}
+Written 2 lobster items to stdout.

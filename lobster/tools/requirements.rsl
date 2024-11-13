@@ -1,16 +1,32 @@
-package req
+package trlc_req
 
-type System_Requirement {
+type Tool_Definition {
+  title '''
+    Title of the definition.
+  ''' String
+  description '''
+    A definition describes what a particular entity is.
+  ''' String
+}
+
+type Tool_Config_Parameter {
+  description '''
+    A tool configuration parameter describes the exact way in which the
+    parameters shall be given for the tool from the user's point of view.
+  ''' String
+}
+
+type Tool_Requirement {
   description '''
     The content of the requirement.
-    A tool requirement describes the behaviour of a lobster tool from the point of view of the user.
+    A tool requirement describes the behavior of a lobster tool from the point of view of the user.
     It does not describe implementation details.
   ''' String
 }
 
-type Software_Requirement {
+type Tool_Requirement_Else {
   description '''
-    The content of the requirement.
-    A software requirement describes the behaviour of a lobster tool.
+    A tool requirement else describes the behavior of a Lobster tool in which the specific conditions
+    can be applied by the user.
   ''' String
 }
