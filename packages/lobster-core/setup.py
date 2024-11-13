@@ -51,7 +51,7 @@ setuptools.setup(
               "lobster.tools.core.ci_report",
               "lobster.tools.core.html_report",
               "lobster.tools.core.online_report",
-              "lobster.tools.core..report"],
+              "lobster.tools.core.report"],
     install_requires=[],
     python_requires=">=3.7, <4",
     classifiers=[
