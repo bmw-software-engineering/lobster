@@ -81,7 +81,7 @@ def main():
     sm.register_directory("lobster/tools/" + str(sys.argv[1]))
     sm.register_file("lobster/tools/requirements.rsl")
     stab = sm.process()
-    pkg_req = stab.lookup_assuming(sm.mh, str(sys.argv[1]) + "_req")
+    pkg_req = stab.lookup_assuming(sm.mh, str(sys.argv[1]).replace("/","_") + "_req")
     mapping = {}
     for item in pkg_req.symbols.iter_record_objects():
         mapping[item.name.lower().replace("_", "-")] = item.name
