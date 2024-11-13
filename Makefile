@@ -145,11 +145,11 @@ code.lobster-%:
 
 unit-tests.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
-	lobster-python --activity --out unit-tests.lobster test-unit/lobster-$(TOOL_PATH)
+	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-$(TOOL_PATH)
 
 system-tests.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
-	python3 test-system/lobster-trlc-system-test.py $(TOOL_PATH);
+	python3 tests-system/lobster-trlc-system-test.py $(TOOL_PATH);
 
 clean-lobster:
 	rm -f code.lobster

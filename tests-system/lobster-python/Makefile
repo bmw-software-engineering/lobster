@@ -1,6 +1,7 @@
 TOOL=../../lobster-python
 
-TARGETS=$(addsuffix .output, $(basename $(wildcard *.py)))
+INPUT_FILES=$(shell find . -maxdepth 2 -type f -name '*.py')
+TARGETS=$(INPUT_FILES:.py=.output)
 
 all: $(TARGETS)
 
