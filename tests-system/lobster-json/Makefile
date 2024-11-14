@@ -1,7 +1,6 @@
 TOOL=../../lobster-json
 
-INPUT_FILES=$(shell find . -maxdepth 2 -type f -name '*.input')
-TARGETS=$(INPUT_FILES:.input=.output)
+TARGETS=$(addsuffix .output, $(basename $(wildcard **/*.input) $(wildcard *.input)))
 
 all: $(TARGETS)
 
