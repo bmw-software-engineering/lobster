@@ -135,7 +135,7 @@ def create_policy_diagram(doc, report, dot):
 
     for level in report.config.values():
         source = name_hash(level["name"])
-        for target in map(name_hash, level["traces"]):
+        for target in map(name_hash, level["traces_to"]):
             # Not a mistake; we want to show the tracing down, whereas
             # in the config file we indicate how we trace up.
             graph += '  n_%s -> n_%s;\n' % (target, source)
