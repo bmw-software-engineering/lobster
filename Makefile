@@ -103,17 +103,15 @@ TOOL_FOLDERS := $(shell find ./lobster/tools -mindepth 1 -maxdepth 2 -type d | g
 
 .PHONY: docs
 
-docs: clean-docs
-	make lobster/html/assets.py
+docs:
+	rm -rf docs
+	@make lobster/html/assets.py
 	mkdir -p docs
-	make clean-lobster
+	@make clean-lobster
 	@for tool in $(TOOL_FOLDERS); do \
 		make tracing-tools-$$tool; \
 	done
 	@make clean-lobster
-
-clean-docs:
-	rm -rf docs
 
 tracing-tools-%: tracing-% clean-lobster
 	@echo "Finished processing tool: $*"
