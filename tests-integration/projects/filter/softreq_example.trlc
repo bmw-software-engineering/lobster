@@ -1,8 +1,8 @@
 package softreq_example
-import example
+import filter_example
 import sysreq_example
 
-example.Software_Requirement req_implication
+filter_example.Software_Requirement req_implication
 {
    text = '''
       Implement a function with the signature 
@@ -14,7 +14,7 @@ example.Software_Requirement req_implication
    trace_trlc = [sysreq_example.lobster_example, sysreq_example.req_implication]
 }
 
-example.Software_Requirement req_xor
+filter_example.Software_Requirement req_xor
 {
    text = '''
       Implement a function with the signature 
