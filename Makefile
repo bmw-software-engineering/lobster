@@ -58,6 +58,7 @@ integration-tests: packages
 
 system-tests:
 	mkdir -p docs
+	make -B -C tests-system/lobster-trlc
 	make -B -C tests-system/lobster-json
 	make -B -C tests-system/lobster-python
 
