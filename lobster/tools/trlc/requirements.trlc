@@ -1,6 +1,6 @@
 package trlc_req
 
-Tool_Requirement Output_File {
+System_Requirement Output_File {
     description = '''
       If a output file is specified as command line argument, then the output must be written into that file.
       Otherwise, the output shall be written to 'trlc.lobster'.
