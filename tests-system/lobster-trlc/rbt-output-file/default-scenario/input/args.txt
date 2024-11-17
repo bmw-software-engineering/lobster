@@ -1,1 +1,1 @@
---config-file=rbt-output-file/default-scenario/input/default_file.conf
+--config-file=default_file.conf
