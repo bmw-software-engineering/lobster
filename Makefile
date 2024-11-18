@@ -4,6 +4,9 @@ export PYTHONPATH=$(LOBSTER_ROOT)
 export PATH:=$(LOBSTER_ROOT):$(PATH)
 
 ASSETS=$(wildcard assets/*.svg)
+TOOL_FOLDERS := $(shell find ./lobster/tools -mindepth 1 -maxdepth 2 -type d | grep -v -E '^./lobster/tools/core$$|__pycache__|parser' | sed 's|^./lobster/tools/||; s|/|-|g')
+
+.PHONY: packages docs
 
 lobster/html/assets.py: $(ASSETS) util/mkassets.py
 	util/mkassets.py lobster/html/assets.py $(ASSETS)
@@ -19,7 +22,6 @@ style:
 	@python3 -m pycodestyle lobster \
 		--exclude=assets.py
 
-.PHONY: packages
 packages:
 	git clean -xdf
 	make lobster/html/assets.py
@@ -99,21 +101,18 @@ test-all: integration-tests system-tests unit-tests
 	make coverage
 	util/check_local_modifications.sh
 
-TOOL_FOLDERS := $(shell find ./lobster/tools -mindepth 1 -maxdepth 2 -type d | grep -v -E '^./lobster/tools/core$$|__pycache__|parser' | sed 's|^./lobster/tools/||; s|/|-|g')
-
-.PHONY: docs
-
 docs:
 	rm -rf docs
-	@make lobster/html/assets.py
 	mkdir -p docs
-	@make clean-lobster
+	@-make tracing
+
+tracing:
+	@make lobster/html/assets.py
 	@for tool in $(TOOL_FOLDERS); do \
 		make tracing-tools-$$tool; \
 	done
-	@make clean-lobster
 
-tracing-tools-%: tracing-% clean-lobster
+tracing-tools-%: tracing-%
 	@echo "Finished processing tool: $*"
 
 tracing-%: report.lobster-%
@@ -148,10 +147,3 @@ unit-tests.lobster-%:
 system-tests.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
 	python3 tests-system/lobster-trlc-system-test.py $(TOOL_PATH);
-
-clean-lobster:
-	rm -f code.lobster
-	rm -f report.lobster
-	rm -f requirements.lobster
-	rm -f unit-tests.lobster
-	rm -f system-tests.lobster
