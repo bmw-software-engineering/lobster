@@ -107,6 +107,7 @@ docs:
 	@-make tracing
 
 tracing:
+	@mkdir -p docs
 	@make lobster/html/assets.py
 	@for tool in $(TOOL_FOLDERS); do \
 		make tracing-tools-$$tool; \
