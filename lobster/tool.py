@@ -25,7 +25,7 @@ import multiprocessing
 from abc import ABCMeta, abstractmethod
 from functools import partial
 
-from lobster.version import FULL_NAME
+from lobster.version import FULL_NAME, get_version
 from lobster.errors import Message_Handler
 from lobster.location import File_Reference
 from lobster.items import Requirement, Implementation, Activity
@@ -35,6 +35,7 @@ BUG_URL = "https://github.com/bmw-software-engineering/lobster/issues"
 
 
 class LOBSTER_Tool(metaclass=ABCMeta):
+
     def __init__(self, name, description, extensions, official):
         assert isinstance(name, str)
         assert isinstance(description, str)
@@ -94,6 +95,7 @@ class LOBSTER_Tool(metaclass=ABCMeta):
 
         self.add_argument = self.g_tool.add_argument
 
+    @get_version
     def process_commandline_options(self):
         options = self.ap.parse_args()
 
@@ -213,7 +215,9 @@ class LOBSTER_Per_File_Tool(LOBSTER_Tool):
     def process(cls, options, file_name):
         return True, []
 
+
     def execute(self):
+        # print(self.process_commandline_options(), "\nsadsadsadsad")
         options, work_list = self.process_commandline_options()
 
         ok    = True
