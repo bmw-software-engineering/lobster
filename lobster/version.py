@@ -18,6 +18,7 @@
 # <https://www.gnu.org/licenses/>.
 import argparse
 import sys
+from argparse import ArgumentParser
 
 VERSION_TUPLE = (0, 9, 20)
 VERSION_SUFFIX = "dev"
@@ -29,15 +30,64 @@ LOBSTER_VERSION = ("%u.%u.%u" % VERSION_TUPLE) + (
 FULL_NAME = "LOBSTER %s" % LOBSTER_VERSION
 
 
-def get_version(func):
-    ap = argparse.ArgumentParser()
-    version = ap.add_argument("--version",
-                              default=None,
-                              help="Get version for the tool")
-    def inner():
-        if version:
-            print("Lobster ", LOBSTER_VERSION)
-            return sys.exit(0)
-        else:
-            func()
-    return inner()
+# def get_version(func):
+#     # all_objects = ap.get_class_objects()
+#     # for obj in all_objects:
+#     #     obj.print_value()
+#     # ap.g_common.add_argument("-v, --version", action="store_true",
+#     #                 default=None,
+#     #                 help="Get version for the tool")
+#     def version():
+#         print("Hello")
+#         if sys.argv[1] == "--version" or sys.argv[1] == "-v":
+#             print(FULL_NAME)
+#             return sys.exit(0)
+#         else:
+#             func()
+#         # def execution(func):
+#         #     print("YELO")
+#         #     print(sys.argv[1])
+#         #     if sys.argv[1] == "--version" or sys.argv[1] == "-v":
+#         #         print(FULL_NAME)
+#         #         return sys.exit(0)
+#         #     else:
+#         #         func()
+#     return version
+
+
+def get_version(ap):
+    # all_objects = ap.get_class_objects()
+    # for obj in all_objects:
+    #     obj.print_value()
+    # print(ap)
+    # print(ap.__dict__)
+    print("TYPE OF AP ", type(ap))
+    if type(ap) == ArgumentParser:
+        ap.add_argument("-v, --version", action="store_true",
+                        default=None,
+                        help="Get version for the tool")
+        print(type(ap))
+        def version(func):
+            def execution():
+                print("YELO")
+                print(sys.argv[1])
+                if sys.argv[1] == "--version" or sys.argv[1] == "-v":
+                    print(FULL_NAME)
+                    return sys.exit(0)
+                else:
+                    return func()
+            return execution
+        return version
+    else:
+        print("AP TYPE " , type(ap))
+        def version(func):
+            print("Function TYPE ", type(func))
+            print(func)
+            if type(ap) != ArgumentParser:
+                func.ap.add_argument("-v, --version", action="store_true",
+                            default=None,
+                            help="Get version for the tool")
+                if sys.argv[1] == "--version" or sys.argv[1] == "-v":
+                    return sys.exit(0)
+            return ap(func)
+        return version

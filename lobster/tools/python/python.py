@@ -443,10 +443,13 @@ def process_file(file_name, options):
         print("Unspecified issue in file: %s" % file_name)
         raise
 
-@get_version
+
+ap = argparse.ArgumentParser()
+
+
+@get_version(ap)
 def main():
     # lobster-trace: python_req.Dummy_Requirement
-    ap = argparse.ArgumentParser()
     ap.add_argument("files",
                     nargs="+",
                     metavar="FILE|DIR")

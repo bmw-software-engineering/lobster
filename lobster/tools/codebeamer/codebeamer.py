@@ -49,6 +49,7 @@ from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
 from lobster.location import Codebeamer_Reference
 from lobster.errors import Message_Handler, LOBSTER_Error
 from lobster.io import lobster_read, lobster_write
+from lobster.version import get_version
 
 TOKEN = 'token'
 REFERENCES = 'references'
@@ -402,11 +403,10 @@ def parse_cb_config(file_name):
 
     return json_config
 
-
+ap = argparse.ArgumentParser()
+@get_version(ap)
 def main():
     # lobster-trace: codebeamer_req.Dummy_Requirement
-    ap = argparse.ArgumentParser()
-
     modes = ap.add_mutually_exclusive_group(required=True)
     modes.add_argument("--import-tagged",
                        metavar="LOBSTER_FILE",

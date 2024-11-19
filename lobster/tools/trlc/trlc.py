@@ -362,9 +362,9 @@ class Config_Parser(Parser_Base):
         else:
             self.parse_tuple_type(n_typ)
 
-@get_version
+ap = argparse.ArgumentParser()
+@get_version(ap)
 def main():
-    ap = argparse.ArgumentParser()
     ap.add_argument("--config-file",
                     help=("name of lobster-trlc config file, "
                           "by default %(default)s"),
