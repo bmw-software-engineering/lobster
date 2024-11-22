@@ -26,10 +26,10 @@ def main():
     ap.add_argument("infiles", nargs="*")
     options = ap.parse_args()
 
-    with open(options.outfile, "w") as fd_out:
+    with open(options.outfile, "w", encoding="UTF-8") as fd_out:
         fd_out.write("#!/usr/bin/env python3\n\n")
         for file_name in options.infiles:
-            with open(file_name, "r") as fd_in:
+            with open(file_name, "r", encoding="UTF-8") as fd_in:
                 svg = fd_in.read()
             assert len(svg.splitlines()) == 1
             name, _ = os.path.splitext(os.path.basename(file_name))
