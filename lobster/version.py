@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
-import argparse
 import sys
 from argparse import ArgumentParser
 
@@ -30,47 +29,27 @@ LOBSTER_VERSION = ("%u.%u.%u" % VERSION_TUPLE) + (
 FULL_NAME = "LOBSTER %s" % LOBSTER_VERSION
 
 
-# def get_version(func):
-#     # all_objects = ap.get_class_objects()
-#     # for obj in all_objects:
-#     #     obj.print_value()
-#     # ap.g_common.add_argument("-v, --version", action="store_true",
-#     #                 default=None,
-#     #                 help="Get version for the tool")
-#     def version():
-#         print("Hello")
-#         if sys.argv[1] == "--version" or sys.argv[1] == "-v":
-#             print(FULL_NAME)
-#             return sys.exit(0)
-#         else:
-#             func()
-#         # def execution(func):
-#         #     print("YELO")
-#         #     print(sys.argv[1])
-#         #     if sys.argv[1] == "--version" or sys.argv[1] == "-v":
-#         #         print(FULL_NAME)
-#         #         return sys.exit(0)
-#         #     else:
-#         #         func()
-#     return version
+def get_version(obj):
+    """
+    This decorator function is used on function wherever we are parsing
+    the command line arguments which then adds a version argument to the function.
+    If a version flag is passed to the command line arguments then the LOBSTER version
+    is printed.
+    Parameters
+    ----------
+    obj - obj can be an ArgumentParser object or a Function object.
 
+    Returns - None
+    -------
 
-def get_version(ap):
-    # all_objects = ap.get_class_objects()
-    # for obj in all_objects:
-    #     obj.print_value()
-    # print(ap)
-    # print(ap.__dict__)
-    print("TYPE OF AP ", type(ap))
-    if type(ap) == ArgumentParser:
-        ap.add_argument("-v, --version", action="store_true",
-                        default=None,
-                        help="Get version for the tool")
-        print(type(ap))
+    """
+    if isinstance(obj, ArgumentParser):
+        obj.add_argument("-v, --version", action="store_true",
+                         default=None,
+                         help="Get version for the tool")
+
         def version(func):
             def execution():
-                print("YELO")
-                print(sys.argv[1])
                 if sys.argv[1] == "--version" or sys.argv[1] == "-v":
                     print(FULL_NAME)
                     return sys.exit(0)
@@ -79,15 +58,13 @@ def get_version(ap):
             return execution
         return version
     else:
-        print("AP TYPE " , type(ap))
         def version(func):
-            print("Function TYPE ", type(func))
-            print(func)
-            if type(ap) != ArgumentParser:
+            if not isinstance(obj, ArgumentParser):
                 func.ap.add_argument("-v, --version", action="store_true",
-                            default=None,
-                            help="Get version for the tool")
+                                     default=None,
+                                     help="Get version for the tool")
                 if sys.argv[1] == "--version" or sys.argv[1] == "-v":
+                    print(FULL_NAME)
                     return sys.exit(0)
-            return ap(func)
+            return obj(func)
         return version

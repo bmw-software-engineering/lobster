@@ -35,7 +35,6 @@ BUG_URL = "https://github.com/bmw-software-engineering/lobster/issues"
 
 
 class LOBSTER_Tool(metaclass=ABCMeta):
-
     def __init__(self, name, description, extensions, official):
         assert isinstance(name, str)
         assert isinstance(description, str)
@@ -215,9 +214,7 @@ class LOBSTER_Per_File_Tool(LOBSTER_Tool):
     def process(cls, options, file_name):
         return True, []
 
-
     def execute(self):
-        # print(self.process_commandline_options(), "\nsadsadsadsad")
         options, work_list = self.process_commandline_options()
 
         ok    = True

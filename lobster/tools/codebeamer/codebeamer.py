@@ -403,7 +403,10 @@ def parse_cb_config(file_name):
 
     return json_config
 
+
 ap = argparse.ArgumentParser()
+
+
 @get_version(ap)
 def main():
     # lobster-trace: codebeamer_req.Dummy_Requirement

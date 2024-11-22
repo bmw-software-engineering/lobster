@@ -362,7 +362,10 @@ class Config_Parser(Parser_Base):
         else:
             self.parse_tuple_type(n_typ)
 
+
 ap = argparse.ArgumentParser()
+
+
 @get_version(ap)
 def main():
     ap.add_argument("--config-file",

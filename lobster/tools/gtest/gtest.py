@@ -28,6 +28,8 @@ from lobster.io import lobster_write
 from lobster.version import get_version
 
 ap = argparse.ArgumentParser()
+
+
 @get_version(ap)
 def main():
     # lobster-trace: gtest_req.Dummy_Requirement
