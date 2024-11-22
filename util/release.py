@@ -29,17 +29,18 @@ import util.changelog
 
 VERSION_FILE = os.path.join("lobster", "version.py")
 
+# pylint: disable=invalid-name
 tmp = ""
-with open(VERSION_FILE, "r") as fd:
+with open(VERSION_FILE, "r", encoding="UTF-8") as fd:
     for raw_line in fd:
         if raw_line.startswith("VERSION_SUFFIX"):
             raw_line = 'VERSION_SUFFIX = ""\n'
         tmp += raw_line
 
-with open(VERSION_FILE, "w") as fd:
+with open(VERSION_FILE, "w", encoding="UTF-8") as fd:
     fd.write(tmp)
 
-from lobster.version import LOBSTER_VERSION
+from lobster.version import LOBSTER_VERSION  # pylint: disable=wrong-import-position
 print(LOBSTER_VERSION)
 
 # Update last CHANGELOG entry and documentation to use the new
