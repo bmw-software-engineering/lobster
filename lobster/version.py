@@ -51,7 +51,6 @@ def get_version(obj):
         def version(func):
             def execution():
                 if sys.argv[1] == "--version" or sys.argv[1] == "-v":
-                    print(FULL_NAME)
                     return sys.exit(0)
                 else:
                     return func()
