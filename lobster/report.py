@@ -22,8 +22,6 @@ import json
 from collections import OrderedDict
 from dataclasses import dataclass
 
-# from dataclasses import dataclass
-
 from lobster.items import Tracing_Status, Requirement, Implementation, Activity
 from lobster.config.parser import load as load_config
 from lobster.errors import Message_Handler
@@ -33,10 +31,10 @@ from lobster.location import File_Reference
 
 @dataclass
 class Coverage:
-    level: str
-    items: int
-    ok: int
-    coverage: None
+    level    : str
+    items    : int
+    ok       : int
+    coverage : None
 
 
 class Report:
@@ -176,6 +174,16 @@ class Report:
         self.compute_items_and_coverage_for_items(data)
 
     def compute_items_and_coverage_for_items(self, data):
+        """
+        Function calcuates items and coverage for the items
+        Parameters
+        ----------
+        data - contents of lobster json file.
+
+        Returns - None
+        -------
+
+        """
         self.config = data["policy"]
         for level in data["levels"]:
             assert level["name"] in self.config
@@ -206,6 +214,17 @@ class Report:
                     self.coverage[item.level].ok += 1
 
     def validate_indicated_schema(self, data, loc):
+        """
+        Function validates the schema and version.
+        Parameters
+        ----------
+        data - contents of lobster json file.
+        loc  - location from where the error was raised.
+
+        Returns - None
+        -------
+
+        """
         supported_schema = {
             "lobster-report": set([2]),
         }
@@ -217,22 +236,27 @@ class Report:
                           (data["version"], data["schema"]))
 
     def validate_basic_structure_of_lobster_file(self, data, loc):
+        """
+        Function validates the basic structure of lobster file. All the first level
+        keys of the lobster json file are validated here.
+        Parameters
+        ----------
+        data - contents of lobster json file.
+        loc  - location from where the error was raised.
+
+        Returns - None
+        -------
+
+        """
         if not isinstance(data, dict):
             self.mh.error(loc, "parsed json is not an object")
-        for rkey in ("schema", "version", "generator",
-                     "levels", "policy", "matrix"):
+
+        rkey_dict = {"schema": str, "version": int, "generator": str, "levels": list,
+                     "policy": dict, "matrix": list}
+        type_dict = {int: "an integer.", str: "a string.", list: "an array",
+                     dict: "an object"}
+        for rkey, rvalue in rkey_dict.items():
             if rkey not in data:
-                self.mh.error(loc,
-                              "required top-levelkey %s not present" % rkey)
-            if rkey in ("levels", "matrix"):
-                if not isinstance(data[rkey], list):
-                    self.mh.error(loc, "%s is not an array" % rkey)
-            elif rkey == "policy":
-                if not isinstance(data[rkey], dict):
-                    self.mh.error(loc, "policy is not an object")
-            elif rkey == "version":
-                if not isinstance(data[rkey], int):
-                    self.mh.error(loc, "version is not an integer")
-            else:
-                if not isinstance(data[rkey], str):
-                    self.mh.error(loc, "%s is not a string" % rkey)
+                self.mh.error(loc, "required top-levelkey %s not present" % rkey)
+            if not isinstance(data[rkey], rvalue):
+                self.mh.error(loc, "%s is not %s" % (rkey, type_dict[rvalue]))
