@@ -1,6 +1,6 @@
 package req
 
-type Tool_Requirement {
+type System_Requirement {
   description '''
     The content of the requirement.
     A tool requirement describes the behaviour of a lobster tool from the point of view of the user.

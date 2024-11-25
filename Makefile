@@ -16,7 +16,7 @@ lint: style
 	python3 -m pylint --rcfile=pylint3.cfg \
 		--reports=no \
 		--ignore=assets.py \
-		lobster
+		lobster util
 
 style:
 	@python3 -m pycodestyle lobster \
