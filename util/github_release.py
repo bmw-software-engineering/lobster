@@ -57,7 +57,7 @@ def main():
             "name"     : rel_name,
             "body"     : rel_body}
 
-    r = requests.post(api_endpoint, auth=auth, data=json.dumps(data))
+    r = requests.post(api_endpoint, auth=auth, data=json.dumps(data), timeout=60)
     print(r)
 
 if __name__ == "__main__":
