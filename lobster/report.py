@@ -253,10 +253,10 @@ class Report:
 
         rkey_dict = {"schema": str, "version": int, "generator": str, "levels": list,
                      "policy": dict, "matrix": list}
-        type_dict = {int: "an integer.", str: "a string.", list: "an array",
+        type_dict = {int: "an integer", str: "a string", list: "an array",
                      dict: "an object"}
         for rkey, rvalue in rkey_dict.items():
             if rkey not in data:
                 self.mh.error(loc, "required top-levelkey %s not present" % rkey)
             if not isinstance(data[rkey], rvalue):
-                self.mh.error(loc, "%s is not %s" % (rkey, type_dict[rvalue]))
+                self.mh.error(loc, "%s is not %s." % (rkey, type_dict[rvalue]))
