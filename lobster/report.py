@@ -20,12 +20,21 @@
 import os.path
 import json
 from collections import OrderedDict
+from dataclasses import dataclass
 
 from lobster.items import Tracing_Status, Requirement, Implementation, Activity
 from lobster.config.parser import load as load_config
 from lobster.errors import Message_Handler
 from lobster.io import lobster_read
 from lobster.location import File_Reference
+
+
+@dataclass
+class Coverage:
+    level    : str
+    items    : int
+    ok       : int
+    coverage : None
 
 
 class Report:
@@ -36,6 +45,16 @@ class Report:
         self.coverage = {}
 
     def parse_config(self, filename):
+        """
+        Function parses the lobster config file to generate a .lobster file.
+        Parameters
+        ----------
+        filename - configuration file
+
+        Returns - Nothing
+        -------
+
+        """
         assert isinstance(filename, str)
         assert os.path.isfile(filename)
 
@@ -48,7 +67,16 @@ class Report:
                 lobster_read(self.mh, source["file"], level, self.items,
                              source)
 
-        # Resolve references
+        # Resolve references for items
+        self.resolve_references_for_items()
+
+        # Compute status and items count
+        self.compute_item_count_and_status()
+
+        # Compute coverage for items
+        self.compute_coverage_for_items()
+
+    def resolve_references_for_items(self):
         for src_item in self.items.values():
             while src_item.unresolved_references:
                 dst_tag = src_item.unresolved_references.pop()
@@ -72,25 +100,26 @@ class Report:
                                         dst_item.tag.version,
                                         dst_tag.version))
 
-        # Compute status and coverage for items
-        self.coverage = {level: {"items"    : 0,
-                                 "ok"       : 0,
-                                 "coverage" : None}
-                         for level in self.config}
+    def compute_coverage_for_items(self):
+        for level_obj in self.coverage.values():
+            if level_obj.ok == level_obj.items:
+                level_obj.coverage = 100.0
+            else:
+                level_obj.coverage = (
+                    float(level_obj.ok * 100) / float(level_obj.items)
+                )
+            print("\nBefore Data Coverage ", level_obj.coverage)
+
+    def compute_item_count_and_status(self):
+        for level in self.config:
+            coverage = Coverage(level=level, items=0, ok=0, coverage=None)
+            self.coverage.update({level: coverage})
         for item in self.items.values():
             item.determine_status(self.config, self.items)
-            self.coverage[item.level]["items"] += 1
+            self.coverage[item.level].items += 1
             if item.tracing_status in (Tracing_Status.OK,
                                        Tracing_Status.JUSTIFIED):
-                self.coverage[item.level]["ok"] += 1
-
-        # Compute coverage for levels
-        for data in self.coverage.values():
-            if data["ok"] == data["items"]:
-                data["coverage"] = 100.0
-            else:
-                data["coverage"] = \
-                    float(data["ok"] * 100) / float(data["items"])
+                self.coverage[item.level].ok += 1
 
     def write_report(self, filename):
         assert isinstance(filename, str)
@@ -103,7 +132,7 @@ class Report:
                 "items"    : [item.to_json()
                               for item in self.items.values()
                               if item.level == level_config["name"]],
-                "coverage" : self.coverage[level_config["name"]]["coverage"]
+                "coverage" : self.coverage[level_config["name"]].coverage
             }
             levels.append(level)
 
@@ -136,47 +165,33 @@ class Report:
                               err.msg)
 
         # Validate basic structure
-        if not isinstance(data, dict):
-            self.mh.error(loc, "parsed json is not an object")
-
-        for rkey in ("schema", "version", "generator",
-                     "levels", "policy", "matrix"):
-            if rkey not in data:
-                self.mh.error(loc,
-                              "required top-levelkey %s not present" % rkey)
-            if rkey in ("levels", "matrix"):
-                if not isinstance(data[rkey], list):
-                    self.mh.error(loc, "%s is not an array" % rkey)
-            elif rkey == "policy":
-                if not isinstance(data[rkey], dict):
-                    self.mh.error(loc, "policy is not an object")
-            elif rkey == "version":
-                if not isinstance(data[rkey], int):
-                    self.mh.error(loc, "version is not an integer")
-            else:
-                if not isinstance(data[rkey], str):
-                    self.mh.error(loc, "%s is not a string" % rkey)
+        self.validate_basic_structure_of_lobster_file(data, loc)
 
         # Validate indicated schema
-        supported_schema = {
-            "lobster-report" : set([2]),
-        }
-        if data["schema"] not in supported_schema:
-            self.mh.error(loc, "unknown schema kind %s" % data["schema"])
-        if data["version"] not in supported_schema[data["schema"]]:
-            self.mh.error(loc,
-                          "version %u for schema %s is not supported" %
-                          (data["version"], data["schema"]))
+        self.validate_indicated_schema(data, loc)
 
         # Read in data
+        self.compute_items_and_coverage_for_items(data)
+
+    def compute_items_and_coverage_for_items(self, data):
+        """
+        Function calcuates items and coverage for the items
+        Parameters
+        ----------
+        data - contents of lobster json file.
+
+        Returns - Nothing
+        -------
+
+        """
         self.config = data["policy"]
         for level in data["levels"]:
             assert level["name"] in self.config
-            self.coverage[level["name"]] = {
-                "items"    : 0,
-                "ok"       : 0,
-                "coverage" : level["coverage"]
-            }
+            coverage = Coverage(
+                level=level["name"], items=0, ok=0, coverage=level["coverage"]
+            )
+            self.coverage.update({level["name"]: coverage})
+
             for item_data in level["items"]:
                 if level["kind"] == "requirements":
                     item = Requirement.from_json(level["name"],
@@ -193,7 +208,55 @@ class Report:
                                               3)
 
                 self.items[item.tag.key()] = item
-                self.coverage[item.level]["items"] += 1
+                self.coverage[item.level].items += 1
                 if item.tracing_status in (Tracing_Status.OK,
                                            Tracing_Status.JUSTIFIED):
-                    self.coverage[item.level]["ok"] += 1
+                    self.coverage[item.level].ok += 1
+
+    def validate_indicated_schema(self, data, loc):
+        """
+        Function validates the schema and version.
+        Parameters
+        ----------
+        data - contents of lobster json file.
+        loc  - location from where the error was raised.
+
+        Returns - Nothing
+        -------
+
+        """
+        supported_schema = {
+            "lobster-report": set([2]),
+        }
+        if data["schema"] not in supported_schema:
+            self.mh.error(loc, "unknown schema kind %s" % data["schema"])
+        if data["version"] not in supported_schema[data["schema"]]:
+            self.mh.error(loc,
+                          "version %u for schema %s is not supported" %
+                          (data["version"], data["schema"]))
+
+    def validate_basic_structure_of_lobster_file(self, data, loc):
+        """
+        Function validates the basic structure of lobster file. All the first level
+        keys of the lobster json file are validated here.
+        Parameters
+        ----------
+        data - contents of lobster json file.
+        loc  - location from where the error was raised.
+
+        Returns - Nothing
+        -------
+
+        """
+        if not isinstance(data, dict):
+            self.mh.error(loc, "parsed json is not an object")
+
+        rkey_dict = {"schema": str, "version": int, "generator": str, "levels": list,
+                     "policy": dict, "matrix": list}
+        type_dict = {int: "an integer", str: "a string", list: "an array",
+                     dict: "an object"}
+        for rkey, rvalue in rkey_dict.items():
+            if rkey not in data:
+                self.mh.error(loc, "required top-levelkey %s not present" % rkey)
+            if not isinstance(data[rkey], rvalue):
+                self.mh.error(loc, "%s is not %s." % (rkey, type_dict[rvalue]))
