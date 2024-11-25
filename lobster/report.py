@@ -180,7 +180,7 @@ class Report:
         ----------
         data - contents of lobster json file.
 
-        Returns - None
+        Returns - Nothing
         -------
 
         """
@@ -221,7 +221,7 @@ class Report:
         data - contents of lobster json file.
         loc  - location from where the error was raised.
 
-        Returns - None
+        Returns - Nothing
         -------
 
         """
@@ -244,7 +244,7 @@ class Report:
         data - contents of lobster json file.
         loc  - location from where the error was raised.
 
-        Returns - None
+        Returns - Nothing
         -------
 
         """
