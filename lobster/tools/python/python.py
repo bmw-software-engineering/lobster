@@ -444,6 +444,7 @@ def process_file(file_name, options):
 
 
 def main():
+    # lobster-trace: python_req.Dummy_Requirement
     ap = argparse.ArgumentParser()
     ap.add_argument("files",
                     nargs="+",

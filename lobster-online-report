@@ -19,7 +19,7 @@
 
 import sys
 
-from lobster.tools.core.online_report import main
+from lobster.tools.core.online_report.online_report import main
 
 if __name__ == "__main__":
     sys.exit(main())

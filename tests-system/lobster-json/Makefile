@@ -1,6 +1,6 @@
 TOOL=../../lobster-json
 
-TARGETS=$(addsuffix .output, $(basename $(wildcard *.input)))
+TARGETS=$(addsuffix .output, $(basename $(wildcard **/*.input) $(wildcard *.input)))
 
 all: $(TARGETS)
 

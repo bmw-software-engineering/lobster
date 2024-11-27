@@ -1,6 +1,6 @@
 TOOL=../../lobster-python
 
-TARGETS=$(addsuffix .output, $(basename $(wildcard *.py)))
+TARGETS=$(addsuffix .output, $(basename $(wildcard **/*.py) $(wildcard *.py)))
 
 all: $(TARGETS)
 

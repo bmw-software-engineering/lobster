@@ -28,6 +28,7 @@ from lobster.io import lobster_write
 
 
 def main():
+    # lobster-trace: gtest_req.Dummy_Requirement
     ap = argparse.ArgumentParser()
     ap.add_argument("files",
                     nargs="+",

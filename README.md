@@ -77,16 +77,17 @@ The individual packages that `bmw-lobster` depends on are:
 
 Here are the links to the individual html requirements coverage reports:
 
-* [Requirement Coverage Report TRLC](https://bmw-software-engineering.github.io/lobster/tracing.html)
-* **WIP** [Requirement Coverage Report Python](https://bmw-software-engineering.github.io/lobster/)
-* **WIP** [Requirement Coverage Report json](https://bmw-software-engineering.github.io/lobster/)
-* **WIP** [Requirement Coverage Report gtest](https://bmw-software-engineering.github.io/lobster/)
-* **WIP** [Requirement Coverage Report cpptest](https://bmw-software-engineering.github.io/lobster/)
-* **WIP** [Requirement Coverage Report cpp](https://bmw-software-engineering.github.io/lobster/)
-* **WIP** [Requirement Coverage Report core](https://bmw-software-engineering.github.io/lobster/)
-* **WIP** [Requirement Coverage Report codebeamer](https://bmw-software-engineering.github.io/lobster/)
-
-> **Note:** Not all reports are ready yet. Some links will not work, as they are still **WIP**. They will be updated once available.
+* [Requirement Coverage Report TRLC](https://bmw-software-engineering.github.io/lobster/tracing-trlc.html)
+* [Requirement Coverage Report Python](https://bmw-software-engineering.github.io/lobster/tracing-python.html)
+* [Requirement Coverage Report Json](https://bmw-software-engineering.github.io/lobster/tracing-json.html)
+* [Requirement Coverage Report Gtest](https://bmw-software-engineering.github.io/lobster/tracing-gtest.html)
+* [Requirement Coverage Report Cpptest](https://bmw-software-engineering.github.io/lobster/tracing-cpptest.html)
+* [Requirement Coverage Report Cpp](https://bmw-software-engineering.github.io/lobster/tracing-cpp.html)
+* [Requirement Coverage Report Core CI Report](https://bmw-software-engineering.github.io/lobster/tracing-core_ci_report.html)
+* [Requirement Coverage Report Core HTML Report](https://bmw-software-engineering.github.io/lobster/tracing-core_html_report.html)
+* [Requirement Coverage Report Core Online Report](https://bmw-software-engineering.github.io/lobster/tracing-core_online_report.html)
+* [Requirement Coverage Report Core Report](https://bmw-software-engineering.github.io/lobster/tracing-core_report.html)
+* [Requirement Coverage Report Codebeamer](https://bmw-software-engineering.github.io/lobster/tracing-codebeamer.html)
 
 ## Planned inputs
 
