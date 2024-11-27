@@ -1,8 +1,12 @@
 SYSTEM_PYTHONPATH:=$(PYTHONPATH)
 export LOBSTER_ROOT=$(PWD)
 export PYTHONPATH=$(LOBSTER_ROOT)
+export PATH:=$(LOBSTER_ROOT):$(PATH)
 
 ASSETS=$(wildcard assets/*.svg)
+TOOL_FOLDERS := $(shell find ./lobster/tools -mindepth 1 -maxdepth 2 -type d | grep -v -E '^./lobster/tools/core$$|__pycache__|parser' | sed 's|^./lobster/tools/||; s|/|-|g')
+
+.PHONY: packages docs
 
 lobster/html/assets.py: $(ASSETS) util/mkassets.py
 	util/mkassets.py lobster/html/assets.py $(ASSETS)
@@ -18,7 +22,6 @@ style:
 	@python3 -m pycodestyle lobster \
 		--exclude=assets.py
 
-.PHONY: packages
 packages:
 	git clean -xdf
 	make lobster/html/assets.py
@@ -100,38 +103,48 @@ test-all: integration-tests system-tests unit-tests
 
 docs:
 	rm -rf docs
-	mkdir docs
+	mkdir -p docs
 	@-make tracing
 
-tracing: report.lobster
-	mkdir -p docs
-	make lobster/html/assets.py
-	lobster-html-report report.lobster --out=docs/tracing.html
+tracing:
+	@mkdir -p docs
+	@make lobster/html/assets.py
+	@for tool in $(TOOL_FOLDERS); do \
+		make tracing-tools-$$tool; \
+	done
+
+tracing-tools-%: tracing-%
+	@echo "Finished processing tool: $*"
+
+tracing-%: report.lobster-%
+	$(eval TOOL_PATH := $(subst -,_,$*))
+	lobster-html-report report.lobster --out=docs/tracing-$(TOOL_PATH).html
 	lobster-ci-report report.lobster
 
-report.lobster: lobster/tools/lobster.conf \
-                code.lobster \
-				unit-tests.lobster \
-				requirements.lobster \
-				system-tests.lobster
+report.lobster-%: lobster/tools/lobster.conf \
+				  code.lobster-% \
+				  unit-tests.lobster-% \
+				  requirements.lobster-% \
+				  system-tests.lobster-%
 	lobster-report \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
 	lobster-online-report report.lobster
 
-requirements.lobster: lobster/tools/trlc/requirements.trlc \
-                      lobster/tools/requirements.rsl
-	lobster-trlc lobster/tools/trlc lobster/tools/requirements.rsl \
-		--config-file=lobster/tools/lobster-trlc.conf \
-		--out requirements.lobster
+requirements.lobster-%: lobster/tools/requirements.rsl
+	$(eval TOOL_PATH := $(subst -,/,$*))   
+	lobster-trlc lobster/tools/$(TOOL_PATH)/requirements.trlc lobster/tools/requirements.rsl \
+	--config-file=lobster/tools/lobster-trlc.conf \
+	--out requirements.lobster
 
-code.lobster: $(wildcard lobster/tools/trlc/*.py)
-	lobster-python --out code.lobster lobster/tools/trlc
+code.lobster-%:
+	$(eval TOOL_PATH := $(subst -,/,$*))
+	lobster-python --out code.lobster lobster/tools/$(TOOL_PATH)
 
-unit-tests.lobster: $(wildcard tests-unit/lobster-trlc/*.py)
-	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-trlc
+unit-tests.lobster-%:
+	$(eval TOOL_PATH := $(subst -,/,$*))
+	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-$(TOOL_PATH)
 
-system-tests.lobster: $(wildcard tests-system/*/*.rsl) \
-                      $(wildcard tests-system/*/*.trlc) \
-                      $(wildcard tests-system/*/tracing)
-	python3 tests-system/lobster-trlc/lobster-trlc-system-test.py
+system-tests.lobster-%:
+	$(eval TOOL_PATH := $(subst -,/,$*))
+	python3 tests-system/lobster-trlc-system-test.py $(TOOL_PATH);

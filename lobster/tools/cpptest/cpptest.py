@@ -372,6 +372,7 @@ def main():
     Main function to parse arguments, read configuration
     and launch lobster_cpptest.
     """
+    # lobster-trace: cpptest_req.Dummy_Requirement
     ap = argparse.ArgumentParser()
     ap.add_argument("files",
                     nargs="+",
