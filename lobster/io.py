@@ -101,6 +101,7 @@ def lobster_read(mh, filename, level, items, source_info=None):
                  "version %u for schema %s is not supported" %
                  (data["version"], data["schema"]))
 
+    duplicate_items = []
     # Convert to items, and integrate into symbol table
     for raw in data["data"]:
         if data["schema"] == "lobster-req-trace":
@@ -124,10 +125,18 @@ def lobster_read(mh, filename, level, items, source_info=None):
 
         if all(filter_conditions):
             if item.tag.key() in items:
-                mh.error(item.location,
-                          "duplicate definition of %s, "
-                          "previously defined at %s" %
-                          (item.tag.key(),
-                           items[item.tag.key()].location.to_string()))
+                # 'duplicate definition' errors are fatal, but the user wants to see all
+                # of them. So store the affected items in a list first, and create
+                # errors later.
+                duplicate_items.append(item)
+            else:
+                items[item.tag.key()] = item
 
-            items[item.tag.key()] = item
+    if duplicate_items:
+        for counter, item in enumerate(duplicate_items, start=1):
+            mh.error(
+                item.location,
+                f"duplicate definition of {item.tag.key()}, "
+                f"previously defined at {items[item.tag.key()].location.to_string()}",
+                fatal=(counter == len(duplicate_items)),
+            )

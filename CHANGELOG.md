@@ -5,6 +5,13 @@
 
 ### 0.9.20-dev
 
+* If a `*.lobster` file contains a tag more than once, then an error message
+  ("duplicated definition") is printed for each consecutive entry with the same tag,
+  instead of printing it just for the first entry.
+  The following tools are affected:
+  * `lobster-codebeamer`
+  * `lobster-report`
+
 * `lobster-gtest` accepts XML nodes other than `testcase`, but ignores them.
 
 ### 0.9.19

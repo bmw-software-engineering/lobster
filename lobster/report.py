@@ -174,7 +174,7 @@ class Report:
 
     def compute_items_and_coverage_for_items(self, data):
         """
-        Function calcuates items and coverage for the items
+        Function calculates items and coverage for the items
         Parameters
         ----------
         data - contents of lobster json file.
