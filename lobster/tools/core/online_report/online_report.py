@@ -26,6 +26,7 @@ import subprocess
 
 from lobster.report import Report
 from lobster.location import File_Reference, Github_Reference
+from lobster.version import get_version
 
 
 class Parse_Error(Exception):
@@ -141,9 +142,12 @@ def parse_git_root(cfg):
     return gh_root
 
 
+ap = argparse.ArgumentParser()
+
+
+@get_version(ap)
 def main():
     # lobster-trace: core_online_report_req.Dummy_Requirement
-    ap = argparse.ArgumentParser()
     ap.add_argument("lobster_report",
                     nargs="?",
                     default="report.lobster")

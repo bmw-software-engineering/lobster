@@ -30,6 +30,7 @@ from lobster.io import lobster_write
 from lobster.tools.cpptest.parser.constants import Constants
 from lobster.tools.cpptest.parser.requirements_parser import \
     ParserForRequirements
+from lobster.version import get_version
 
 OUTPUT  = "output"
 CODEBEAMER_URL = "codebeamer_url"
@@ -367,13 +368,16 @@ def lobster_cpptest(file_dir_list: list, config_dict: dict):
     )
 
 
+ap = argparse.ArgumentParser()
+
+
+@get_version(ap)
 def main():
     """
     Main function to parse arguments, read configuration
     and launch lobster_cpptest.
     """
     # lobster-trace: cpptest_req.Dummy_Requirement
-    ap = argparse.ArgumentParser()
     ap.add_argument("files",
                     nargs="+",
                     metavar="FILE|DIR")

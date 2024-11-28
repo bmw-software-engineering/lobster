@@ -51,9 +51,7 @@ RE_JUST = (PREFIX + " " +
 ap = argparse.ArgumentParser()
 
 
-get_version(ap)
-
-
+@get_version(ap)
 def main():
     # lobster-trace: cpp_req.Dummy_Requirement
     ap.add_argument("files",
