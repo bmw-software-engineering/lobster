@@ -5,6 +5,7 @@
 
 ### 0.9.20-dev
 
+* `lobster-gtest` accepts XML nodes other than `testcase`, but ignores them.
 
 ### 0.9.19
 
