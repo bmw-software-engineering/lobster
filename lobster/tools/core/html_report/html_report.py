@@ -340,6 +340,7 @@ def write_html(fd, report, dot, high_contrast):
         "padding-left" : "0.4em",
         "margin-left"  : "0.5em",
     }
+
     ### Menu & Navigation
     doc.navbar.add_link("Overview", "#sec-overview")
     doc.navbar.add_link("Issues", "#sec-issues")
@@ -393,7 +394,6 @@ def write_html(fd, report, dot, high_contrast):
 
     doc.add_line('<button class ="button buttonWarning" '
                  'onclick=("buttonFilter(\'warning\')") > Warning </button>')
-
     doc.add_line("</div>")
 
     doc.add_heading(3, "Show Issues")
@@ -404,7 +404,6 @@ def write_html(fd, report, dot, high_contrast):
 
     doc.add_heading(3, "Search", "search")
     doc.add_line('<input type="text" id="search" placeholder="Search..." onkeyup="searchItem()">')
-
     doc.add_line('<div id="search-sec-id"')
 
     ### Issues
@@ -465,10 +464,7 @@ def write_html(fd, report, dot, high_contrast):
                     else:  # pragma: no cover
                         assert False
                     if new_file_heading != file_heading:
-                        if file_heading:
-                            doc.add_line("</div>")
                         file_heading = new_file_heading
-                        doc.add_line('<div class="item-group">')
                         doc.add_heading(5, html.escape(file_heading))
 
                     write_item_box_begin(doc, item)
@@ -486,6 +482,7 @@ def write_html(fd, report, dot, high_contrast):
                     write_item_box_end(doc)
             else:
                 doc.add_line("No items recorded at this level.")
+    # Closing tag for id #search-sec-id
     doc.add_line("</div>")
     # add javascripts
     dir_path = os.path.dirname(os.path.abspath(__file__))
