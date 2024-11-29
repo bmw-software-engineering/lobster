@@ -28,6 +28,7 @@ from lobster.io import lobster_write
 
 
 def main():
+    # lobster-trace: gtest_req.Dummy_Requirement
     ap = argparse.ArgumentParser()
     ap.add_argument("files",
                     nargs="+",
@@ -75,7 +76,8 @@ def main():
             assert suite.tag == "testsuite"
             suite_name = suite.attrib["name"]
             for testcase in suite:
-                assert testcase.tag == "testcase"
+                if testcase.tag != "testcase":
+                    continue
                 test_name     = testcase.attrib["name"]
                 test_executed = testcase.attrib["status"] == "run"
                 test_ok       = True

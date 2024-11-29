@@ -49,6 +49,7 @@ RE_JUST = (PREFIX + " " +
 
 
 def main():
+    # lobster-trace: cpp_req.Dummy_Requirement
     ap = argparse.ArgumentParser()
     ap.add_argument("files",
                     nargs="+",

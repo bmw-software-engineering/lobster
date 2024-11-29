@@ -17,27 +17,22 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
-
 # pylint: disable=invalid-name
-
 import os
 import sys
-
 from lobster.items import Tracing_Tag, Activity
 from lobster.location import File_Reference
 from lobster.io import lobster_write
-
 from trlc.trlc import Source_Manager
 from trlc.errors import Message_Handler
 
-SCRIPT_DIR = os.path.dirname(__file__)
+TEST_DIR = "tests-system/lobster-" + sys.argv[1]
 TARGET   = "system-tests.lobster"
 
 def process(testname, mapping):
-    test_dir = os.path.join(SCRIPT_DIR, testname)
+    test_dir = os.path.join(TEST_DIR, testname)
     assert os.path.isdir(test_dir)
     assert isinstance(mapping, dict)
-
     tag_file = os.path.join(test_dir, "tracing")
 
     item = Activity(
@@ -47,7 +42,6 @@ def process(testname, mapping):
         framework = "TRLCST",
         kind      = "Test Directory")
     include_test = False
-
     if os.path.isfile(tag_file):
         include_test = True
         with open(tag_file, "r", encoding="UTF-8") as fd:
@@ -57,7 +51,6 @@ def process(testname, mapping):
                     if line.strip()]
         for tag in tags:
             item.add_tracing_target(tag)
-
     if testname.startswith("rbt-"):
         include_test = True
         components = testname[4:].lower().split("-")
@@ -72,8 +65,7 @@ def process(testname, mapping):
                                            for item in components))
         item.add_tracing_target(
             Tracing_Tag(namespace = "req",
-                        tag       = "trlc_req.%s" % requirement))
-
+                        tag       = f"{sys.argv[1]}_req.{requirement}"))
     if include_test:
         return [item]
     else:
@@ -86,17 +78,16 @@ def main():
                         lint_mode   = False,
                         parse_trlc  = True,
                         verify_mode = False)
-
-    filename = os.path.join(SCRIPT_DIR, '../../lobster/tools')
-    sm.register_directory(filename)
+    sm.register_directory("lobster/tools/" + str(sys.argv[1]))
+    sm.register_file("lobster/tools/requirements.rsl")
     stab = sm.process()
-    pkg_trlc_req = stab.lookup_assuming(sm.mh, "trlc_req")
+    pkg_req = stab.lookup_assuming(sm.mh, str(sys.argv[1]).replace("/","_") + "_req")
     mapping = {}
-    for item in pkg_trlc_req.symbols.iter_record_objects():
+    for item in pkg_req.symbols.iter_record_objects():
         mapping[item.name.lower().replace("_", "-")] = item.name
 
     items = []
-    for dirent in sorted(os.scandir(SCRIPT_DIR),
+    for dirent in sorted(os.scandir(TEST_DIR),
                          key=lambda de: de.name):
         if dirent.is_dir():
             if dirent.name == "htmlcov":
@@ -104,7 +95,7 @@ def main():
             items += process(dirent.name, mapping)
 
     with open(TARGET, "w", encoding="UTF-8") as fd:
-        lobster_write(fd, Activity, "lobster-trlc-system-test", items)
+        lobster_write(fd, Activity, f"lobster-{str(sys.argv[1])}-system-test", items)
 
     print("Written %u items to %s" % (len(items), TARGET))
     return 0

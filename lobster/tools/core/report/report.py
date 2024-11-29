@@ -27,6 +27,7 @@ from lobster.report import Report
 
 
 def main():
+    # lobster-trace: core_report_req.Dummy_Requirement
     ap = argparse.ArgumentParser()
     ap.add_argument("--lobster-config",
                     metavar="FILE",

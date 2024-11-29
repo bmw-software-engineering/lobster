@@ -48,8 +48,10 @@ setuptools.setup(
     packages=["lobster",
               "lobster.config",
               "lobster.html",
-              "lobster.tools",
-              "lobster.tools.core"],
+              "lobster.tools.core.ci_report",
+              "lobster.tools.core.html_report",
+              "lobster.tools.core.online_report",
+              "lobster.tools.core.report"],
     install_requires=[],
     python_requires=">=3.7, <4",
     classifiers=[
@@ -62,10 +64,10 @@ setuptools.setup(
     ],
     entry_points={
         "console_scripts": [
-            "lobster-report=lobster.tools.core.report:main",
-            "lobster-html-report=lobster.tools.core.html_report:main",
-            "lobster-online-report=lobster.tools.core.online_report:main",
-            "lobster-ci-report=lobster.tools.core.ci_report:main"
+            "lobster-report=lobster.tools.core.report.report:main",
+            "lobster-html-report=lobster.tools.core.html_report.html_report:main",
+            "lobster-online-report=lobster.tools.core.online_report.online_report:main",
+            "lobster-ci-report=lobster.tools.core.ci_report.ci_report:main"
         ]
     },
 )

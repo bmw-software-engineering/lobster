@@ -176,15 +176,15 @@ def create_item_coverage(doc, report):
         doc.add_line('<td><a href="#sec-%s">%s</a></td>' %
                      (name_hash(level["name"]),
                       html.escape(level["name"])))
-        doc.add_line("<td>%.1f%%</td>" % data["coverage"])
+        doc.add_line("<td>%.1f%%</td>" % data.coverage)
         doc.add_line("<td>")
         doc.add_line('<progress value="%u" max="%u">' %
-                     (data["ok"], data["items"]))
-        doc.add_line("%.2f%%" % data["coverage"])
+                     (data.ok, data.items))
+        doc.add_line("%.2f%%" % data.coverage)
         doc.add_line('</progress>')
         doc.add_line("</td>")
-        doc.add_line('<td align="right">%u</td>' % data["ok"])
-        doc.add_line('<td align="right">%u</td>' % data["items"])
+        doc.add_line('<td align="right">%u</td>' % data.ok)
+        doc.add_line('<td align="right">%u</td>' % data.items)
         doc.add_line("</tr>")
     doc.add_line("</table>")
 
@@ -455,6 +455,7 @@ def write_html(fd, report, dot, high_contrast):
 
 
 def main():
+    # lobster-trace: core_html_report_req.Dummy_Requirement
     ap = argparse.ArgumentParser()
     ap.add_argument("lobster_report",
                     nargs="?",
