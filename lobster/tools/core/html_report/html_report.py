@@ -345,7 +345,7 @@ def write_html(fd, report, dot, high_contrast):
     # Add the css from assets/html_report.css
     dir_path = os.path.dirname(os.path.abspath(__file__))
     file_path = dir_path + "/assets/html_report.css"
-    with open(file_path, "r") as styles:
+    with open(file_path, "r", encoding="UTF-8") as styles:
         styles = ("".join(styles.readlines()))
         doc.style.update(ast.literal_eval(styles))
 
@@ -411,7 +411,8 @@ def write_html(fd, report, dot, high_contrast):
     doc.add_line('</div>')
 
     doc.add_heading(3, "Search", "search")
-    doc.add_line('<input type="text" id="search" placeholder="Search..." onkeyup="searchItem()">')
+    doc.add_line('<input type="text" id="search" placeholder="Search..." '
+                 'onkeyup="searchItem()">')
     doc.add_line('<div id="search-sec-id"')
 
     ### Issues
@@ -492,10 +493,11 @@ def write_html(fd, report, dot, high_contrast):
                 doc.add_line("No items recorded at this level.")
     # Closing tag for id #search-sec-id
     doc.add_line("</div>")
-    # add javascripts
+
+    # Add javascript from assets/html_report.js file
     dir_path = os.path.dirname(os.path.abspath(__file__))
     file_path = dir_path + "/assets/html_report.js"
-    with open (file_path, "r") as scripts:
+    with open(file_path, "r", encoding="UTF-8") as scripts:
         doc.scripts.append("".join(scripts.readlines()))
 
     ### STM
