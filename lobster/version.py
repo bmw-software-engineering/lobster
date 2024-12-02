@@ -50,7 +50,8 @@ def get_version(obj):
 
         def version(func):
             def execution():
-                if sys.argv[1] == "--version" or sys.argv[1] == "-v":
+                if (len(sys.argv)  > 1 and
+                        (sys.argv[1] == "--version" or sys.argv[1] == "-v")):
                     print(FULL_NAME)
                     return sys.exit(0)
                 else:
@@ -63,7 +64,8 @@ def get_version(obj):
                 func.ap.add_argument("-v, --version", action="store_true",
                                      default=None,
                                      help="Get version for the tool")
-                if sys.argv[1] == "--version" or sys.argv[1] == "-v":
+                if (len(sys.argv)  > 1 and
+                        (sys.argv[1] == "--version" or sys.argv[1] == "-v")):
                     print(FULL_NAME)
                     return sys.exit(0)
             return obj(func)

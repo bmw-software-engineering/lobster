@@ -5,6 +5,19 @@
 
 ### 0.9.20-dev
 
+* Add support to view version for lobster tools for following tools:
+  - `lobster-ci-report`
+  - `lobster-codebeamer`
+  - `lobster-cpp`
+  - `lobster-cpptest`
+  - `lobster-gtest`
+  - `lobster-html-report`
+  - `lobster-json`
+  - `lobster-online-report`
+  - `lobster-python`
+  - `lobster-report`
+  - `lobster-trlc`
+
 * `lobster-gtest` accepts XML nodes other than `testcase`, but ignores them.
 
 ### 0.9.19
