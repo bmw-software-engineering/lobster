@@ -69,6 +69,7 @@ function activeButton(filter) {
     }
 }
 
+
 function ToggleIssues() {
     var div_issue = document.getElementById("issues-section");
     if (div_issue.style.display == "block" || div_issue.style.display == "") {
