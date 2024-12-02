@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
-
+import ast
 import os.path
 import argparse
 import html
@@ -342,6 +342,13 @@ def write_html(fd, report, dot, high_contrast):
         "margin-left"  : "0.5em",
     }
 
+    # Add the css from assets/html_report.css
+    dir_path = os.path.dirname(os.path.abspath(__file__))
+    file_path = dir_path + "/assets/html_report.css"
+    with open(file_path, "r") as styles:
+        styles = ("".join(styles.readlines()))
+        doc.style.update(ast.literal_eval(styles))
+
     ### Menu & Navigation
     doc.navbar.add_link("Overview", "#sec-overview")
     doc.navbar.add_link("Issues", "#sec-issues")
@@ -394,7 +401,7 @@ def write_html(fd, report, dot, high_contrast):
                  'onclick="buttonFilter(\'justified\')" > Justified </button>')
 
     doc.add_line('<button class ="button buttonWarning" '
-                 'onclick=("buttonFilter(\'warning\')") > Warning </button>')
+                 'onclick="buttonFilter(\'warning\')" > Warning </button>')
     doc.add_line("</div>")
 
     doc.add_heading(3, "Show Issues")
