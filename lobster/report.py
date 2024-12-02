@@ -108,7 +108,6 @@ class Report:
                 level_obj.coverage = (
                     float(level_obj.ok * 100) / float(level_obj.items)
                 )
-            print("\nBefore Data Coverage ", level_obj.coverage)
 
     def compute_item_count_and_status(self):
         for level in self.config:
