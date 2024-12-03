@@ -5,6 +5,13 @@
 
 ### 0.9.20-dev
 
+* Enhanced Configuration Management: Transitioned from command-line arguments to YAML
+  configuration files for LOBSTER-Codebeamer tools.
+
+  **Rationale:** Managing numerous parameters via command-line arguments was cumbersome and error-prone for users.
+
+  **Benefits:** Improved configurability, better readability, and simplified management of tool settings.
+
 * `lobster-gtest` accepts XML nodes other than `testcase`, but ignores them.
 
 ### 0.9.19
