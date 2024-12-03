@@ -59,6 +59,14 @@ def main():
                     metavar="FILE",
                     help=("use the specified clang-tidy; by default we"
                           " pick the one on PATH"))
+    ap.add_argument("--compile-commands",
+                    metavar="FILE",
+                    default=None,
+                    help=("Path to the compile command database for all targets for "
+                          "'clang tidy', or none to use the default behavior of "
+                          "'clang tidy'. This is equal to calling 'clang tidy' "
+                          "directly with its '-p' option. Refer to its official "
+                          "documentation for more details."))
     ap.add_argument("--out",
                     default=None,
                     help=("write output to this file; otherwise output to"
@@ -83,13 +91,17 @@ def main():
 
     # Test if the clang-tidy can be used
 
-    rv = subprocess.run([os.path.expanduser(options.clang_tidy),
-                         "-checks=-*,lobster-tracing",
-                         "--list-checks"],
-                        stdout=subprocess.PIPE,
-                        stderr=subprocess.PIPE,
-                        encoding="UTF-8",
-                        check=False)
+    rv = subprocess.run(
+        [
+            os.path.expanduser(options.clang_tidy),
+            "-checks=-*,lobster-tracing",
+            "--list-checks",
+        ],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        encoding="UTF-8",
+        check=False,
+    )
 
     if "No checks enabled." in rv.stderr:
         print("The provided clang-tidy does include the lobster-tracing check")
@@ -99,13 +111,23 @@ def main():
               "correct binary using the --clang-tidy flag")
         return 1
 
-    rv = subprocess.run([os.path.expanduser(options.clang_tidy),
-                         "-checks=-*,lobster-tracing"] +
-                        file_list,
-                        stdout=subprocess.PIPE,
-                        stderr=subprocess.PIPE,
-                        encoding="UTF-8",
-                        check=False)
+    subprocess_args = [
+        os.path.expanduser(options.clang_tidy),
+        "-checks=-*,lobster-tracing",
+    ]
+    if options.compile_commands:
+        subprocess_args.append("-p")
+        subprocess_args.append(options.compile_commands)
+
+    subprocess_args += file_list
+
+    rv = subprocess.run(
+        subprocess_args,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        encoding="UTF-8",
+        check=False,
+    )
 
     if rv.returncode != 0:
         found_reason = False
