@@ -5,6 +5,9 @@
 
 ### 0.9.20-dev
 
+* `lobster-cpptest` writes absolute paths into its `*.lobster` output files instead of
+  paths relative to the current working directory.
+
 * If a `*.lobster` file contains a tag more than once, then an error message
   ("duplicated definition") is printed for each consecutive entry with the same tag,
   instead of printing it just for the first entry.
