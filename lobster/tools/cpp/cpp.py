@@ -35,8 +35,8 @@ PREFIX = "^%s warning:" % FILE_LINE_PATTERN
 SUFFIX = r"\[lobster-tracing\]$"
 
 RE_NOTAGS = (PREFIX + " " +
-             "%s %s has no tracing tags" % (KIND_PATTERN,
-                                            NAME_PATTERN) +
+             r"%s %s has no tracing tags" % (KIND_PATTERN,
+                                             NAME_PATTERN) +
              " " + SUFFIX)
 RE_TAGS = (PREFIX + " " +
            r"%s %s traces to +(.+) +" % (KIND_PATTERN,
