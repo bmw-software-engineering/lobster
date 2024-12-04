@@ -5,6 +5,11 @@
 
 ### 0.9.20-dev
 
+* Add `--compile-commands` flag to `lobster-cpp`. This allows to specify a path to the
+  compile command database and is effectively a wrapper around the `-p` argument of
+  `clang tidy`. See the official documentation of `clang tidy` for more details on this
+  parameter.
+
 * `lobster-cpptest` writes absolute paths into its `*.lobster` output files instead of
   paths relative to the current working directory.
 
