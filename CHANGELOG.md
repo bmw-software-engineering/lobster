@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.9.20-dev
+### 0.9.20
 
 * Add `--compile-commands` flag to `lobster-cpp`. This allows to specify a path to the
   compile command database and is effectively a wrapper around the `-p` argument of
