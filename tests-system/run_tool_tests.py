@@ -184,12 +184,14 @@ def _run_tests(directory: str, tool: str) -> int:
     if not tool:
         raise ValueError("No tool specified!")
 
+    counter = 0
     for rbt_dir_entry in _get_directories(directory, REQUIREMENTS_BASED_TEST_PREFIX):
         for test_case_dir_entry in _get_directories(rbt_dir_entry.path):
             test_setup = TestSetup(test_case_dir_entry.path)
             completed_process = _run_test(test_setup, tool)
             _compare_results(test_setup, completed_process)
-    print(f"All system tests finished successfully for {tool}.")
+            counter += 1
+    print(f"{counter} system tests finished successfully for {tool}.")
 
     # TODO: the current implementation is not consistent with respect to return codes.
     # The tests use assertion statements to indicate failures, but here we use an
@@ -212,7 +214,9 @@ def _get_tool(test_dir: str) -> str:
 
 
 if __name__ == "__main__":
-    test_directory = dirname(Path(__file__).resolve())
+    test_directory = Path(sys.argv[1]).resolve()
+    print(f"Starting system tests on folder '{test_directory}'")
+
     sys.exit(
         _run_tests(
             test_directory,
