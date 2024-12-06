@@ -14,6 +14,11 @@ from the provided comments in cpp files
 * `lobster-cpptest`: Extract requirements with dynamic refrences 
   from comments.
 
+## Configuration
+
+The tool requires a YAML configuration file to define its settings.
+You must provide this file when running the tool to specify parameters to process.
+
 ## Usage
 
 This tool supports C/C++ code.
@@ -29,28 +34,37 @@ For this you can provide some cpp file with these comments:
  */
 TEST(RequirementTagTest1, RequirementsAsMultipleComments) {}
 ```
-You can also provide a config-file which determines which markers 
-should be extracted in which files. In addition you have to provide 
-the codebeamer-url:
+You can also provide parameters to specify which markers should be extracted from which files.
+Additionally, you need to provide the Codebeamer URL.
 
-```config
-{
-	"output": {
-		"unit_tests.lobster" : 
-            {
-                "markers": ["@requirement"],
-                "kind": "req"
-            },
-        "components_tests.lobster" :
-            {
-                "markers": ["@requiredby", "@requirement"],
-                "kind": "imp"
-            }
-	},
-	"codebeamer_url": "https://codebeamer.example.com/test"
-}
+Examples:
+
+```yaml
+    output:
+        component_tests.lobster:
+            markers:
+            - "@requirement"
+            kind: "req"
+
+        unit_tests.lobster:
+            markers:
+            - "@requiredby"
+            kind: "req"
+
+        other_tests.lobster:
+            markers: []
+            kind: ""
+
+    codebeamer_url: "https://codebeamer.com"
  ```
+You can also include CPP files in the YAML configuration file.
 
+```yaml
+  files:
+    - 'path/to/source1.cpp'
+    - 'path/to/source2.cpp'
+```
+Note: File paths are accepted only in single quotes.
 
 ## Copyright & License information
 
