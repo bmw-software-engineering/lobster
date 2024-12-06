@@ -11,6 +11,8 @@ this to work you need to build [our clang-tidy
 fork](https://github.com/bmw-software-engineering/llvm-project) and
 place the `clang-tidy` binary somewhere on your PATH.
 
+Instructions for clang-tidy [here](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/user-manual.md#clang-tidy-file-generation).
+
 This tool works using a custom clang-tidy checker `lobster-trace`
 which emits tracing information as clang checks.
 
