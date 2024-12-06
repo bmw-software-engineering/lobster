@@ -6,19 +6,21 @@ and requirements coverage, which is essential for meeting standards
 such as ISO 26262.
 
 This package contains a tool extract tracing tags from ISO C or C++
-source code. This tool is also extracting configurable markers/ test-types 
-from the provided comments in cpp files
+source code. The tracing tags are identified by searching for configurable 
+markers in the comments of the source code.
 
 ## Tools
 
-* `lobster-cpptest`: Extract requirements with dynamic refrences 
-  from comments.
+* `lobster-cpptest`: Extract requirements with specific references 
+  from tests.
 
 ## Usage
 
 This tool supports C/C++ code.
 
-For this you can provide some cpp file with these comments:
+For this you have to provide a C/C++ test documentation with `markers`:
+
+`Markers` can be either `@requirement`, `@requiredby` or `@defect`.
 
 ```cpp
 /**
@@ -29,9 +31,23 @@ For this you can provide some cpp file with these comments:
  */
 TEST(RequirementTagTest1, RequirementsAsMultipleComments) {}
 ```
-You can also provide a config-file which determines which markers 
-should be extracted in which files. In addition you have to provide 
-the codebeamer-url:
+You have to provide a config-file which determines which `markers` should be extracted in which output-files.
+The expected `kind` for each output-file should also be specified.  
+
+* Note: If you want to extract the other tests with other `markers`,
+ you can use an empty list as `markers` value. Be aware in this case the tests do not have any references.
+
+
+```config
+{
+    "markers": [],
+    "kind": "req"
+}
+```
+
+In addition, you have to provide the codebeamer-url:
+
+`Kind` can be either `req`, `imp` or `act`.
 
 ```config
 {
@@ -50,6 +66,8 @@ the codebeamer-url:
 	"codebeamer_url": "https://codebeamer.example.com/test"
 }
  ```
+
+For more information about how to setup cpp and config files take a look at [manual-lobster_cpptest](../../documentation/manual-lobster_cpptest.md)
 
 
 ## Copyright & License information

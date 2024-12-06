@@ -56,6 +56,17 @@ void main()
 }
 ```
 
+For C++ tests requirements will be referenced inside the documentation.
+
+The syntax for Codebeamer requirements looks like this:
+
+```C++ TEST
+/**
+ * @requirement CB-#0815 CB-#0816
+ */
+TEST(RequirementTagTest1, RequirementAsComments) {}
+```
+
 A central idea in LOBSTER is to reduce duplication of information, so
 tracing links are *only ever added to artefacts lower in the tracing
 hierarchy*. So in the first example above, we'd add tags to the tests,
@@ -117,6 +128,7 @@ All its final html outputs are to be seen [here](https://github.com/bmw-software
 ### C / C++
 
 * lobster_cpp: DOCUMENTATION TODO
+* [lobster_cpptest](manual-lobster_cpptest.md): for tracing requirements and/or defects from C++ tests.
 * [lobster_gtest](manual-lobster_gtest.md): for tracing tags in
   (executed) googletests.
 
