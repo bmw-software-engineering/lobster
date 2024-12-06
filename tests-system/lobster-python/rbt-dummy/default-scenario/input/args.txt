@@ -1,0 +1,5 @@
+.
+--out=basic.lobster
+--parse-decorator
+trlc_reference
+requirement
