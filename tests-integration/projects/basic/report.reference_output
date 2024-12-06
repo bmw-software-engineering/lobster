@@ -605,10 +605,6 @@
       ],
       "source": [
         {
-          "file": "cppcode.lobster",
-          "filters": []
-        },
-        {
           "file": "mcode.lobster",
           "filters": []
         },
