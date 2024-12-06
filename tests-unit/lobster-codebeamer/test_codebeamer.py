@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from lobster.tools.codebeamer.codebeamer import get_single_item, get_many_items, to_lobster, \
+from lobster.tools.codebeamer.codebeamer import get_query, get_single_item, get_many_items, to_lobster, \
     import_tagged
 from lobster.errors import Message_Handler
 
@@ -14,6 +14,104 @@ class QueryCodebeamerTest(unittest.TestCase):
         for obj1, obj2 in zip(list1, list2):
             for attr in list_of_compared_attributes:
                 self.assertEqual(getattr(obj1, attr), getattr(obj2, attr), f"{obj1} is not like {obj2} in {attr}")
+
+    @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
+    def test_get_query_with_ID(self, mock_query_cb_single):
+        mh = Message_Handler()
+        mock_cb_config = {
+            "root" : "https://codebeamer.bmwgroup.net",
+            "base": "https://test.com",
+            "page_size": 10
+        }
+        mock_query = 171619121
+        item_data = [
+            {
+                "item": {
+                    "id": 34886222,
+                    "name" : "mock item",
+                    "version": 8,
+                    "tracker": {
+                        "id": 34158092
+                        },
+                    "categories": [{"name": "Requirement"}],
+                    "status": {"name": "Content Review",}
+                }
+            }
+        ]
+        mock_query_cb_single.return_value = {
+                "page": 1,
+                "pageSize": 100,
+                "total": 1,
+                "items": item_data
+            }        
+
+        result = get_query(mh, mock_cb_config, mock_query)
+        self.assertEqual(len(result), 1)
+
+        self.assertEqual(result[0].kind, item_data[0]["item"]["categories"][0]["name"])
+        self.assertEqual(result[0].status, item_data[0]["item"]["status"]["name"])
+        self.assertEqual(result[0].name, item_data[0]["item"]["name"])
+        self.assertEqual(result[0].tag.tag, str(item_data[0]["item"]["id"]))
+        self.assertEqual(result[0].location.item, item_data[0]["item"]["id"])
+        self.assertEqual(result[0].location.tracker, item_data[0]["item"]["tracker"]["id"])
+        self.assertEqual(result[0].location.version, item_data[0]["item"]["version"])
+
+    @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
+    def test_get_query_with_query(self, mock_query_cb_single):
+        mh = Message_Handler()
+        mock_cb_config = {
+            "root" : "https://codebeamer.bmwgroup.net",
+            "base": "https://test.com",
+            "page_size": 10
+        }
+        mock_query = "TeamID IN (10833708) AND workItemStatus IN ('InProgress') AND summary LIKE 'Vulnerable Road User'"
+        item_data = [
+            {
+                "id": 34886222,
+                "name" : "mock item",
+                "version": 8,
+                "tracker": {
+                    "id": 34158092
+                    },
+                "categories": [{"name": "Requirement"}],
+                "status": {"name": "Content Review",}
+            }            
+        ]
+        mock_query_cb_single.return_value = {
+                "page": 1,
+                "pageSize": 100,
+                "total": 1,
+                "items": item_data
+            }        
+
+        result = get_query(mh, mock_cb_config, mock_query)
+        self.assertEqual(len(result), 1)
+
+        self.assertEqual(result[0].kind, item_data[0]["categories"][0]["name"])
+        self.assertEqual(result[0].status, item_data[0]["status"]["name"])
+        self.assertEqual(result[0].name, item_data[0]["name"])
+        self.assertEqual(result[0].tag.tag, str(item_data[0]["id"]))
+        self.assertEqual(result[0].location.item, item_data[0]["id"])
+        self.assertEqual(result[0].location.tracker, item_data[0]["tracker"]["id"])
+        self.assertEqual(result[0].location.version, item_data[0]["version"])
+
+    @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
+    def test_get_query_with_invalid_data(self, mock_query_cb_single):
+        mock_query = 789
+        mh = Message_Handler()
+        mock_cb_config = {
+            "root" : "https://codebeamer.bmwgroup.net",
+            "base": "https://test.com",
+            "page_size": 10
+        }
+        mock_query_cb_single.return_value = {
+                "page": 1,
+                "pageSize": 100,
+                "total": 1,
+                "items": []
+            }  
+        with self.assertRaises(SystemExit):
+            get_query(mh, mock_cb_config, mock_query)
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_single_item(self, mock_get):

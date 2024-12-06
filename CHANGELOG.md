@@ -5,6 +5,9 @@
 
 ### 0.9.21-dev
 
+* `lobster-codebeamer` now supports query string, query string (CBQL) can be passed 
+  as a command line argument to the tool `lobster-codebeamer`.
+
 * `lobster-html-report` has the following updates.
   * Filter items by status (Ok, Missing, Partial, Warning, Justified)
   * Hide/Unhide Issues.
