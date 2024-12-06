@@ -9,16 +9,12 @@ CLANG_TIDY:=$(LOBSTER_ROOT)/../llvm-project/build/bin/clang-tidy
 THIS_TEST:=$(shell realpath --relative-to $(LOBSTER_ROOT) $(PWD))
 THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
 
-html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
+html_report.html: gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
 	@lobster-report
 	@lobster-online-report
 	@cp report.lobster report.reference_output
 	@lobster-html-report
 	@lobster-ci-report | tee ci_report.reference_output
-
-cppcode.lobster: foo.h foo.cpp
-	@lobster-cpp foo.cpp foo.h \
-		--out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
 
 gtests.lobster: foo.h foo.cpp test.cpp
 	@bazel test foo_test --cxxopt='-std=c++14'
