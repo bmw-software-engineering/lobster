@@ -23,11 +23,15 @@ import argparse
 
 from lobster.report import Report
 from lobster.items import Tracing_Status
+from lobster.version import get_version
 
 
+ap = argparse.ArgumentParser()
+
+
+@get_version(ap)
 def main():
     # lobster-trace: core_ci_report_req.Dummy_Requirement
-    ap = argparse.ArgumentParser()
     ap.add_argument("lobster_report",
                     nargs="?",
                     default="report.lobster")
