@@ -151,21 +151,27 @@ def get_many_items(cb_config, item_ids):
     return rv
 
 
-def get_query(mh, cb_config, query_id):
+def get_query(mh, cb_config, query_id, query_string):
     assert isinstance(mh, Message_Handler)
     assert isinstance(cb_config, dict)
-    assert isinstance(query_id, int)
+    assert isinstance(query_id, int) or query_id is None
+    assert isinstance(query_string, str) or query_string is None
     rv = []
     page_id = 1
     total_items = None
 
     while total_items is None or len(rv) < total_items:
         print("Fetching page %u of query..." % page_id)
-        url = "%s/reports/%u/items?page=%u&pageSize=%u" % \
-            (cb_config["base"],
-             query_id,
-             page_id,
-             cb_config["page_size"])
+        if query_id is not None:
+            url = "%s/reports/%u/items?page=%u&pageSize=%u" % \
+                (cb_config["base"],
+                query_id,
+                page_id,
+                cb_config["page_size"])
+        else:
+            url = "%s/items/query?queryString=%s" % \
+                (cb_config["base"],
+                query_string)
         data = query_cb_single(cb_config, url)
         assert len(data) == 4
 
@@ -182,8 +188,11 @@ def get_query(mh, cb_config, query_id):
         else:
             assert total_items == data["total"]
 
-        rv += [to_lobster(cb_config, cb_item["item"])
-               for cb_item in data["items"]]
+        if query_id is not None:
+            rv += [to_lobster(cb_config, cb_item["item"])
+                for cb_item in data["items"]]
+        elif query_string is not None:
+            rv += to_lobster(cb_config, data["items"])
 
         page_id += 1
 
@@ -416,6 +425,10 @@ def main():
                        metavar="CB_QUERY_ID",
                        default=None)
 
+    modes.add_argument("--query-string",
+                       metavar="CB_QUERY_STRING",
+                       default=None)
+
     ap.add_argument("--config",
                     help=("name of codebeamer "
                           "config file, supported references: '%s'" %
@@ -528,11 +541,20 @@ def main():
         if query_id < 1:
             ap.error("query-id must be a positive")
 
+    elif options.query_string:
+        try:
+            options.query_string = str(options.query_string)
+        except ValueError:
+            ap.error("query_string must be an string")
+
     try:
         if options.import_tagged:
             items = import_tagged(mh, cb_config, items_to_import)
         elif options.import_query:
-            items = get_query(mh, cb_config, query_id)
+            items = get_query(mh, cb_config, query_id, options.query_string)
+        elif options.query_string:
+            query_id = None
+            items = get_query(mh, cb_config, query_id, options.query_string)
     except LOBSTER_Error:
         return 1
 
