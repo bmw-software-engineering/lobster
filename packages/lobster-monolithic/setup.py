@@ -48,6 +48,9 @@ setuptools.setup(
     project_urls=project_urls,
     license="GNU Affero General Public License v3",
     packages=setuptools.find_packages(),
+    package_data={
+        "lobster.tools.core.html_report":["assets/*"]
+    },
     install_requires=[
         "miss-hit>=0.9.42",
         "requests>=2.22", 
