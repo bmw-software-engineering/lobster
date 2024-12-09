@@ -25,11 +25,14 @@ import xml.etree.ElementTree as ET
 from lobster.items import Tracing_Tag, Activity
 from lobster.location import Void_Reference, File_Reference
 from lobster.io import lobster_write
+from lobster.version import get_version
+
+ap = argparse.ArgumentParser()
 
 
+@get_version(ap)
 def main():
     # lobster-trace: gtest_req.Dummy_Requirement
-    ap = argparse.ArgumentParser()
     ap.add_argument("files",
                     nargs="+",
                     metavar="FILE|DIR")

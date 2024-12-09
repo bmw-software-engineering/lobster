@@ -26,7 +26,7 @@ import re
 from lobster.items import Tracing_Tag, Implementation
 from lobster.location import File_Reference
 from lobster.io import lobster_write
-
+from lobster.version import get_version
 
 FILE_LINE_PATTERN = r"(.*):(\d+):\d+:"
 KIND_PATTERN = r"(function|main function|method)"
@@ -48,9 +48,12 @@ RE_JUST = (PREFIX + " " +
            SUFFIX)
 
 
+ap = argparse.ArgumentParser()
+
+
+@get_version(ap)
 def main():
     # lobster-trace: cpp_req.Dummy_Requirement
-    ap = argparse.ArgumentParser()
     ap.add_argument("files",
                     nargs="+",
                     metavar="FILE|DIR")

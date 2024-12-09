@@ -24,11 +24,15 @@ import argparse
 from lobster.exceptions import LOBSTER_Exception
 from lobster.errors import LOBSTER_Error
 from lobster.report import Report
+from lobster.version import get_version
 
 
+ap = argparse.ArgumentParser()
+
+
+@get_version(ap)
 def main():
     # lobster-trace: core_report_req.Dummy_Requirement
-    ap = argparse.ArgumentParser()
     ap.add_argument("--lobster-config",
                     metavar="FILE",
                     default="lobster.conf")
