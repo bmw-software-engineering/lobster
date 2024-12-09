@@ -30,10 +30,10 @@ In your test you need to also add documentation. For example:
 TEST(ImplicationTest, BasicTest) {}
 ```
 
-* Each test can have multiple test types defined in the documentation part.
-* Test types can be used multiple times in the test documentation and can be written on multiple lines
+* Each test can have multiple test-tags defined in the documentation part.
+* Test-tags can be used multiple times in the test documentation and can be written on multiple lines
 
-* These can be simply defined with `/** Test types */` or `/// Test types` format. 
+* These can be simply defined with `/** Test-tags */` or `/// Test-tags` format. 
 
 * Test-tags can be separated by commas or spaces.
 
