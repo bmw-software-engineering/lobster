@@ -5,10 +5,6 @@ The **L**ightweight **O**pen **B**MW **S**oftware **T**raceability
 and requirements coverage, which is essential for meeting standards
 such as ISO 26262.
 
-This package contains a tool to interface with the proprietary
-requirements management tool
-[Codebeamer](https://intland.com/codebeamer).
-
 ## Configuration
 
 This tool is a bit more complex and you need to supply a config file,

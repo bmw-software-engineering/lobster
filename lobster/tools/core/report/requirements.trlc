@@ -1,10 +1,10 @@
 package core_report_req
 import req
 
-req.Software_Requirement Dummy_Requirement {
+req.System_Requirement Report_Input_Duplicate_Definition {
   description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
+    If any of the source files given in the lobster configuration file contains a tag
+    more than once, then the tool must exit with code 1.
   '''
 }
 
