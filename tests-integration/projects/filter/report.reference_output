@@ -351,7 +351,7 @@
     "System Requirements": {
       "name": "System Requirements",
       "kind": "requirements",
-      "traces": [],
+      "trace_to": [],
       "source": [
         {
           "file": "requirements.lobster",
@@ -364,9 +364,7 @@
           "valid_status": []
         }
       ],
-      "needs_tracing_up": false,
-      "needs_tracing_down": true,
-      "breakdown_requirements": [
+      "trace_from": [
         [
           "Software Requirements"
         ]
@@ -375,7 +373,7 @@
     "Software Requirements": {
       "name": "Software Requirements",
       "kind": "requirements",
-      "traces": [
+      "trace_to": [
         "System Requirements"
       ],
       "source": [
@@ -390,9 +388,7 @@
           "valid_status": []
         }
       ],
-      "needs_tracing_up": true,
-      "needs_tracing_down": true,
-      "breakdown_requirements": [
+      "trace_from": [
         [
           "Code"
         ],
@@ -404,7 +400,7 @@
     "Code": {
       "name": "Code",
       "kind": "implementation",
-      "traces": [
+      "trace_to": [
         "Software Requirements"
       ],
       "source": [
@@ -413,14 +409,12 @@
           "filters": []
         }
       ],
-      "needs_tracing_up": true,
-      "needs_tracing_down": false,
-      "breakdown_requirements": []
+      "trace_from": []
     },
     "Verification Test": {
       "name": "Verification Test",
       "kind": "activity",
-      "traces": [
+      "trace_to": [
         "Software Requirements"
       ],
       "source": [
@@ -429,9 +423,7 @@
           "filters": []
         }
       ],
-      "needs_tracing_up": true,
-      "needs_tracing_down": false,
-      "breakdown_requirements": []
+      "trace_from": []
     }
   },
   "matrix": []
