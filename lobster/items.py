@@ -134,31 +134,42 @@ class Item(metaclass=ABCMeta):
         level = config[self.level]
 
         has_up_ref      = len(self.ref_up) > 0
+        has_down_ref    = len(self.ref_down) > 0
         has_just_up     = len(self.just_up) > 0 or len(self.just_global) > 0
         has_just_down   = len(self.just_down) > 0 or len(self.just_global) > 0
         has_init_errors = len(self.messages) > 0
 
         # Check up references
         ok_up = True
-        if level["needs_tracing_up"]:
+        if level.get("trace_to"):
             if not has_up_ref and not has_just_up:
                 ok_up = False
                 self.messages.append("missing up reference")
 
+            for trace_to in level["trace_to"]:
+                # and
+                if not ok_up:
+                    break
+
+                # or
+                refs_levels = [stab[ref.key()].level for ref in self.ref_up]
+                ok_up = len(set(refs_levels).intersection(set(trace_to))) > 0
+
         # Check set of down references
         ok_down = True
-        if level["needs_tracing_down"]:
-            has_trace = {name : False
-                         for name in config
-                         if self.level in config[name]["traces"]}
-            for ref in self.ref_down:
-                has_trace[stab[ref.key()].level] = True
-            for chain in level["breakdown_requirements"]:
-                if not any(has_trace[src] for src in chain) and \
-                   not has_just_down:
-                    ok_down = False
-                    self.messages.append("missing reference to %s" %
-                                         " or ".join(sorted(chain)))
+        if level.get("trace_from"):
+            if not has_down_ref and not has_just_down:
+                ok_down = False
+                self.messages.append("missing down reference")
+
+            for trace_from in level["trace_from"]:
+                # and
+                if not ok_down:
+                    break
+                # or
+                refs_levels = [stab[ref.key()].level for ref in self.ref_down]
+                ok_down = len(set(refs_levels)
+                              .intersection(set(trace_from))) > 0
 
         # Set status
         if self.has_error:
@@ -168,9 +179,7 @@ class Item(metaclass=ABCMeta):
                 self.tracing_status = Tracing_Status.JUSTIFIED
             else:
                 self.tracing_status = Tracing_Status.OK
-        elif (ok_up or ok_down) and \
-             level["needs_tracing_up"] and \
-             level["needs_tracing_down"]:
+        elif ok_up or ok_down:
             self.tracing_status = Tracing_Status.PARTIAL
         else:
             self.tracing_status = Tracing_Status.MISSING
