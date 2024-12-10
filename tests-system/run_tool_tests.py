@@ -15,6 +15,7 @@ class TestSetup:
     _EXPECTED_OUTPUT_FOLDER_NAME = "expected-output"
     _EXIT_CODE_FILE_NAME = "exit-code.txt"
     _EXPECTED_STDOUT_FILE_NAME = "stdout.txt"
+    _EXPECTED_STDERR_FILE_NAME = "stderr.txt"
 
     def __init__(self, test_case_path: str):
         """Constructor
@@ -83,9 +84,9 @@ class TestSetup:
         test) from the corresponding test setup file"""
         file = join(self._input_folder, self._ARGS_FILE_NAME)
         with open(file, "r", encoding="UTF-8") as file:
-            return file.readlines()
+            return [argument.strip() for argument in file.readlines()]
 
-    def get_expected_cmd_output(self) -> str:
+    def get_expected_stdout(self) -> str:
         """Reads the expected command line output (for stdout) from the corresponding
         test setup file"""
         cmd_file = join(
@@ -93,6 +94,16 @@ class TestSetup:
             self._EXPECTED_STDOUT_FILE_NAME,
         )
         with open(cmd_file, "r", encoding="UTF-8") as file:
+            return file.read()
+
+    def get_expected_stderr(self) -> str:
+        """Reads the expected command line output (for stderr) from the corresponding
+        test setup file"""
+        errout_file = join(
+            self.get_expected_output_path(),
+            self._EXPECTED_STDERR_FILE_NAME,
+        )
+        with open(errout_file, "r", encoding="UTF-8") as file:
             return file.read()
 
     @property
@@ -112,13 +123,25 @@ class TestSetup:
 
 
 def _run_test(setup: TestSetup, tool: str) -> CompletedProcess:
-    """Runs the tool system test.
+    """Runs the tool system test using the coverage command.
     The tool will be executed such that its current working directory is equal to the
     "input" folder."""
     print(f"Starting system test '{setup.name}' with arguments {setup.args} " \
-          f"for tool '{tool}'.")
+          f"for tool '{tool}' with coverage.")
+    root_directory = Path(__file__).resolve().parents[1]
+    coverage_config_path = root_directory / "coverage.cfg"
+    coverage_data_path = root_directory / ".coverage"
+
+    coverage_command = [
+        "coverage", "run", "-p",
+        f"--rcfile={coverage_config_path}",
+        "--branch",
+        f"--data-file={coverage_data_path}",
+        tool, *setup.args
+    ]
+
     completed_process = run(
-        [sys.executable, tool, *setup.args],
+        coverage_command,
         stdout=PIPE,
         stderr=PIPE,
         encoding="UTF-8",
@@ -129,11 +152,16 @@ def _run_test(setup: TestSetup, tool: str) -> CompletedProcess:
 
 
 def _compare_results(setup: TestSetup, completed_process: CompletedProcess):
+    if setup.expected_exit_code != completed_process.returncode:
+        print(f"STDOUT is: {completed_process.stdout}")
+        print(f"STDERR is: {completed_process.stderr}")
     assert setup.expected_exit_code == completed_process.returncode, \
         f"{setup.name}: Expected exit code is {setup.expected_exit_code}, " \
         f"actual is {completed_process.returncode}!"
-    assert setup.get_expected_cmd_output() == completed_process.stdout, \
-        "Command line output is different!"
+    assert setup.get_expected_stdout() == completed_process.stdout, \
+        "Command line output for stdout is different!"
+    assert setup.get_expected_stderr() == completed_process.stderr, \
+        "Command line output for stderr is different!"
     expected = join(
         setup.get_expected_output_path(),
         setup.expected_lobster_output_file_name,
