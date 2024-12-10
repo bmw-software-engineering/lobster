@@ -3,8 +3,41 @@
 ## Changelog
 
 
-### 0.9.20-dev
+### 0.9.21-dev
 
+
+
+### 0.9.20
+
+* Add `--compile-commands` flag to `lobster-cpp`. This allows to specify a path to the
+  compile command database and is effectively a wrapper around the `-p` argument of
+  `clang tidy`. See the official documentation of `clang tidy` for more details on this
+  parameter.
+
+* `lobster-cpptest` writes absolute paths into its `*.lobster` output files instead of
+  paths relative to the current working directory.
+
+* If a `*.lobster` file contains a tag more than once, then an error message
+  ("duplicated definition") is printed for each consecutive entry with the same tag,
+  instead of printing it just for the first entry.
+  The following tools are affected:
+  * `lobster-codebeamer`
+  * `lobster-report`
+
+* Add support to view version for lobster tools for following tools:
+  - `lobster-ci-report`
+  - `lobster-codebeamer`
+  - `lobster-cpp`
+  - `lobster-cpptest`
+  - `lobster-gtest`
+  - `lobster-html-report`
+  - `lobster-json`
+  - `lobster-online-report`
+  - `lobster-python`
+  - `lobster-report`
+  - `lobster-trlc`
+
+* `lobster-gtest` accepts XML nodes other than `testcase`, but ignores them.
 
 ### 0.9.19
 

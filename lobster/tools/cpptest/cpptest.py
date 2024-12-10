@@ -30,6 +30,7 @@ from lobster.io import lobster_write
 from lobster.tools.cpptest.parser.constants import Constants
 from lobster.tools.cpptest.parser.requirements_parser import \
     ParserForRequirements
+from lobster.version import get_version
 
 OUTPUT  = "output"
 CODEBEAMER_URL = "codebeamer_url"
@@ -220,7 +221,6 @@ def create_lobster_items_output_dict_from_test_cases(
          The lobster items dictionary for the given test cases
          grouped by configured output.
     """
-    prefix = os.getcwd()
     lobster_items_output_dict = {}
 
     no_marker_output_file_name = ''
@@ -239,7 +239,7 @@ def create_lobster_items_output_dict_from_test_cases(
 
     for test_case in test_case_list:
         function_name: str = test_case.suite_name
-        file_name = os.path.relpath(test_case.file_name, prefix)
+        file_name = os.path.abspath(test_case.file_name)
         line_nr = int(test_case.docu_start_line)
         function_uid = "%s:%s:%u" % (os.path.basename(file_name),
                                      function_name,
@@ -367,13 +367,16 @@ def lobster_cpptest(file_dir_list: list, config_dict: dict):
     )
 
 
+ap = argparse.ArgumentParser()
+
+
+@get_version(ap)
 def main():
     """
     Main function to parse arguments, read configuration
     and launch lobster_cpptest.
     """
     # lobster-trace: cpptest_req.Dummy_Requirement
-    ap = argparse.ArgumentParser()
     ap.add_argument("files",
                     nargs="+",
                     metavar="FILE|DIR")

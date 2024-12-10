@@ -1,4 +1,5 @@
 import os
+import json
 import unittest
 from os.path import dirname
 from pathlib import Path
@@ -240,6 +241,15 @@ class LobsterCpptestTests(unittest.TestCase):
         file_exists = os.path.exists(self.output_file_name)
         self.assertTrue(file_exists)
 
+        # Open and read the JSON output file to validate all file paths are absolute
+        with open(self.output_file_name, 'r') as output_file:
+            data = json.load(output_file)
+            tag_list = data.get('data')
+
+            for tag in tag_list:
+                file_name = tag.get('location').get('file')
+                self.assertTrue(os.path.isabs(file_name))
+
     def test_single_directory(self):
         file_dir_list = [self.test_data_dir]
 
@@ -333,6 +343,8 @@ class LobsterCpptestTests(unittest.TestCase):
         for lobster_item in unit_test_lobster_items:
             self.assertIsNotNone(lobster_item)
             self.assertIsInstance(lobster_item, dict)
+            file_name = lobster_item.get('location').get('file')
+            self.assertTrue(os.path.isabs(file_name))
             tag = lobster_item.get('tag')
             refs = lobster_item.get('refs')
             self.assertIsInstance(refs, list)
@@ -361,6 +373,8 @@ class LobsterCpptestTests(unittest.TestCase):
         for lobster_item in component_test_lobster_items:
             self.assertIsNotNone(lobster_item)
             self.assertIsInstance(lobster_item, dict)
+            file_name = lobster_item.get('location').get('file')
+            self.assertTrue(os.path.isabs(file_name))
             tag = lobster_item.get('tag')
             refs = lobster_item.get('refs')
             self.assertIsInstance(refs, list)

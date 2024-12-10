@@ -8,11 +8,11 @@ of any safety related software developments, and often involves
 duplicate maintenance and tedious manual processes. LOBSTER aims to
 simplify this. The basic setup is as follows:
 
-1. Configure LOBSTER
-2. Annotate code / tests / requirements
-3. Setup build system to use lobster tools (e.g. `lobster_cpp`) to
-   extract information
-4. Build report by calling `lobster_report`
+1. Configure LOBSTER via the tracing policy. Usually called `lobster.conf`. More on that [here](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/config_files.md).
+2. Annotate traces onto your code, your tests and/or your requirements. Please notice each one of the supported languages has their own way to annotate the tracing tags.
+3. Extract the requirement traces with the corresponding lobster conversion tools (e.g. `lobster-cpp`). This converts those traces into a *.lobster file (into a "common unified interchange format").
+4. Build report by calling `lobster-report`
+5. Render your report by calling the core losbter tools. Usually a local HTML report is desired via `lobster-html-report` or even `lobster-ci-report` for your CI.
 
 The basic idea is that you have a number of artefacts that you wish to
 relate to each other; stored in different "databases". Sometimes this
@@ -54,6 +54,17 @@ void main()
   // lobster-trace: my.requirement
   do_stuff();
 }
+```
+
+For C++ tests requirements will be referenced inside the documentation.
+
+The syntax for Codebeamer requirements looks like this:
+
+```C++ TEST
+/**
+ * @requirement CB-#0815 CB-#0816
+ */
+TEST(RequirementTagTest1, RequirementAsComments) {}
 ```
 
 A central idea in LOBSTER is to reduce duplication of information, so
@@ -105,6 +116,10 @@ as integration tests, HIL tests, etc.)
 
 * lobster_trlc: DOCUMENTATION TODO
 
+Note: We are providing a full traceability report, using LOBSTER itself and [TRLC](https://github.com/bmw-software-engineering/trlc), for each tool maintained in this repository. You are able to produce these reports yourself when using the target `make tracing`.
+
+All its final html outputs are to be seen [here](https://github.com/bmw-software-engineering/lobster?tab=readme-ov-file#requirements-coverage).
+
 ### codeBeamer
 
 * [lobster_codebeamer](manual-lobster_codebeamer.md): for tracing to
@@ -113,8 +128,33 @@ as integration tests, HIL tests, etc.)
 ### C / C++
 
 * lobster_cpp: DOCUMENTATION TODO
+* [lobster_cpptest](manual-lobster_cpptest.md): for tracing requirements and/or defects from C++ tests.
 * [lobster_gtest](manual-lobster_gtest.md): for tracing tags in
   (executed) googletests.
+
+> **Note:** The lobster-cpp tool needs a clang-tidy file. Don't forget to generate it to be able to use this conversion tool.
+
+####  Clang-tidy File Generation
+
+You can just run the `clang-tidy` Makefile target in root folder.
+
+If you prefer to do it manually or are Windows user, install Ninja and cmake and then please follow the next steps:
+
+* To generate the clang-tidy file, which is needed for the cpp tool, make sure that your apt is working well on WSL (Windows Subsystem for Linux) or use a Linux environment.
+
+* Clone this repository - `https://github.com/bmw-software-engineering/llvm-project`
+
+* Below 2 dependencies required for clang-tidy creation.
+  1. `sudo apt install cmake`
+  2. `sudo apt install ninja-build`
+
+* Below 2 commands need to execute to generate the build folder.
+  1. `cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra' -DCMAKE_BUILD_TYPE=Release`
+  2. `cmake --build build --target clang-tidy`
+
+* Once you generate the build folder you can see the clang-tidy file in `./build/bin` folder.
+
+* To generate the cpp.lobster file, you need to make sure that your llvm-project and lobster-demo project should be in same directory.
 
 ### Python
 

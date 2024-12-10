@@ -108,7 +108,6 @@ class Report:
                 level_obj.coverage = (
                     float(level_obj.ok * 100) / float(level_obj.items)
                 )
-            print("\nBefore Data Coverage ", level_obj.coverage)
 
     def compute_item_count_and_status(self):
         for level in self.config:
@@ -175,7 +174,7 @@ class Report:
 
     def compute_items_and_coverage_for_items(self, data):
         """
-        Function calcuates items and coverage for the items
+        Function calculates items and coverage for the items
         Parameters
         ----------
         data - contents of lobster json file.

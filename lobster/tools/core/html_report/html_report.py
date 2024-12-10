@@ -32,6 +32,7 @@ from lobster.location import (Void_Reference,
                               Codebeamer_Reference)
 from lobster.items import (Tracing_Status, Item,
                            Requirement, Implementation, Activity)
+from lobster.version import get_version
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
 
@@ -506,9 +507,12 @@ def write_html(fd, report, dot, high_contrast):
     fd.write(doc.render() + "\n")
 
 
+ap = argparse.ArgumentParser()
+
+
+@get_version(ap)
 def main():
     # lobster-trace: core_html_report_req.Dummy_Requirement
-    ap = argparse.ArgumentParser()
     ap.add_argument("lobster_report",
                     nargs="?",
                     default="report.lobster")
