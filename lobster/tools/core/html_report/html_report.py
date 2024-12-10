@@ -342,13 +342,6 @@ def write_html(fd, report, dot, high_contrast):
         "margin-left"  : "0.5em",
     }
 
-    # Add the css from assets/html_report.css
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-    file_path = dir_path + "/assets/html_report.css"
-    with open(file_path, "r", encoding="UTF-8") as styles:
-        styles = ("".join(styles.readlines()))
-        doc.style.update(ast.literal_eval(styles))
-
     ### Menu & Navigation
     doc.navbar.add_link("Overview", "#sec-overview")
     doc.navbar.add_link("Issues", "#sec-issues")
@@ -493,6 +486,11 @@ def write_html(fd, report, dot, high_contrast):
                 doc.add_line("No items recorded at this level.")
     # Closing tag for id #search-sec-id
     doc.add_line("</div>")
+
+    # Add the css from assets
+    dir_path = os.path.dirname(os.path.abspath(__file__))
+    file_path = dir_path + "/assets/html_report.css"
+    doc.css_files.append(file_path)
 
     # Add javascript from assets/html_report.js file
     dir_path = os.path.dirname(os.path.abspath(__file__))
