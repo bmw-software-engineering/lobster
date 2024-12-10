@@ -14,8 +14,8 @@ html_report.html: softreq.lobster sysreq.lobster lobster.conf trlc-softreq.conf 
 
 softreq.lobster: example.rsl softreq_example.trlc sysreq_example.trlc
 	@lobster-trlc example.rsl softreq_example.trlc sysreq_example.trlc\
-		--out="softreq.lobster"
+		--out="softreq.lobster" --config-file="trlc-softreq.conf"
 
 sysreq.lobster: example.rsl softreq_example.trlc sysreq_example.trlc
 	@lobster-trlc example.rsl softreq_example.trlc sysreq_example.trlc\
-		--out="sysreq.lobster"
+		--out="sysreq.lobster" --config-file="trlc-sysreq.conf"
