@@ -25,7 +25,6 @@ jobs:
           make lint
   integration-tests:
     name: Integration tests
-    needs: test
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
