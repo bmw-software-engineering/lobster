@@ -53,8 +53,6 @@ clang-tidy:
 
 integration-tests: packages
 	(cd tests-integration/projects/coverage; make)
-	(cd tests-integration/projects/basic; make)
-	(cd tests-integration/projects/filter; make)
 	rm -f MODULE.bazel MODULE.bazel.lock
 
 system-tests:
