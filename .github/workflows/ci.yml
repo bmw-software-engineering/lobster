@@ -64,6 +64,18 @@ jobs:
         if: always()
         run: |
           util/check_local_modifications.sh
+  selenium-tests:
+    name: Run Selenium Tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install selenium webdriver-manager
+      - name: Run selenium Tests
+        run: |
+          make selenium-tests
   integration-tests:
     name: Integration tests
     needs: test
