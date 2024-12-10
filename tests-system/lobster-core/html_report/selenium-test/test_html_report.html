@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>L.O.B.S.T.E.R.</title>
+<style>
+html {
+  scroll-padding-top: 5em;
+}
+body {
+  margin: 0;
+}
+.title {
+  background-color: #009ada;
+  color: white;
+  padding: 0.5em;
+  margin: 0;
+}
+h1 {
+  padding: 0;
+  margin: 0;
+}
+h2 {
+  padding: 0.5em;
+  margin: 0;
+  border-bottom: 0.25em solid #009ada;
+  text-align: right;
+}
+.content {
+  padding: 0.5em;
+}
+.item-ok, .item-partial, .item-missing, .item-justified {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  margin-top: 0.4em;
+  padding: 0.25em;
+}
+.item-ok:target, .item-partial:target, .item-missing:target, .item-justified:target {
+  border: 3px solid black;
+}
+.subtle-ok, .subtle-partial, .subtle-missing, .subtle-justified {
+  padding-left: 0.2em;
+}
+.item-ok {
+  background-color: #efe;
+}
+.item-partial {
+  background-color: #ffe;
+}
+.item-missing {
+  background-color: #fee;
+}
+.item-justified {
+  background-color: #eee;
+}
+.subtle-ok {
+  border-left: 0.2em solid #8f8;
+}
+.subtle-partial {
+  border-left: 0.2em solid #ff8;
+}
+.subtle-missing {
+  border-left: 0.2em solid #f88;
+}
+.subtle-justified {
+  border-left: 0.2em solid #888;
+}
+.item-name {
+  font-size: 125%;
+  font-weight: bold;
+}
+.attribute {
+  margin-top: 0.5em;
+}
+.columns {
+  display: flex;
+}
+.columns .column {
+  flex: 45%;
+}
+thead tr {
+  font-weight: bold;
+}
+tbody tr.alt {
+  background-color: #eee;
+}
+blockquote {
+  font-style: italic;
+  border-left: 0.2em solid gray;
+  padding-left: 0.4em;
+  margin-left: 0.5em;
+}
+#navbar {
+  overflow: hidden;
+  background-color: #009ada;
+}
+.navbar-right {
+  float: right;
+}
+#navbar a {
+  float: left;
+  display: block;
+  color: white;
+  padding: 14px;
+  text-decoration: none;
+}
+#navbar a:hover {
+  background-color: white;
+  color: #009ada;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.sticky + .htmlbody {
+  padding-top: 60px;
+}
+#navbar .dropdown {
+  float: left;
+  overflow: hidden;
+}
+.navbar-right .dropdown {
+  float: right;
+  overflow: hidden;
+}
+.dropdown .dropbtn {
+  font-size: inherit;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  background-color: inherit;
+  color: white;
+  font-family: inherit;
+  margin: 0;
+}
+.dropdown:hover .dropbtn {
+  background-color: white;
+  color: #009ada;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #009ada;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.navbar-right .dropdown-content {
+  right: 0;
+}
+.dropdown-content a {
+  float: none;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+.dropdown-content a:hover {
+  color: #009ada;
+  background-color: white;
+}
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+.sticky .dropdown-content {
+  position: fixed;
+}
+</style>
+</head>
+<body>
+<div class="title">
+<h1>L.O.B.S.T.E.R.</h1>
+<div class="subtitle">Lightweight Open BMW Software Traceability Evidence Report</div>
+</div>
+<div id="navbar">
+<a href="#sec-overview">Overview</a>
+<a href="#sec-issues">Issues</a>
+<div class="dropdown">
+<button class="dropbtn">Detailed report<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+<div class="dropdown-content">
+<a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</a>
+<a href="#sec-c13367945d5d4c91047b3b50234aa7ab">code</a>
+</div>
+</div>
+<div class="navbar-right">
+<div class="dropdown">
+<button class="dropbtn">LOBSTER<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+<div class="dropdown-content">
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> Documentation</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> License</a>
+<a href="https://github.com/bmw-software-engineering/lobster"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> Source</a>
+</div>
+</div>
+</div>
+</div>
+<div class="htmlbody">
+<h2 id="sec-overview">Overview</h2>
+<div class="content">
+<div class="columns">
+<div class="column">
+<h3>Coverage</h3>
+<table>
+<thead><tr>
+<td>Category</td>
+<td>Ratio</td>
+<td>Coverage</td>
+<td>OK Items</td>
+<td>Total Items</td>
+</tr><thead>
+<tbody>
+</tbody>
+<tr>
+<td><a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</a></td>
+<td>0.0%</td>
+<td>
+<progress value="0" max="3">
+0.00%
+</progress>
+</td>
+<td align="right">0</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td><a href="#sec-c13367945d5d4c91047b3b50234aa7ab">code</a></td>
+<td>0.0%</td>
+<td>
+<progress value="0" max="3">
+0.00%
+</progress>
+</td>
+<td align="right">0</td>
+<td align="right">3</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<h2 id="sec-issues">Issues</h2>
+<div class="content">
+<ul>
+<li>Python Function <a href='#item-dd23366748cfcf4c1df7b4891951b69d3fa01cea'>main.greet_user</a>: unknown tracing target req welcome.greet</li>
+<li>Python Function <a href='#item-dd23366748cfcf4c1df7b4891951b69d3fa01cea'>main.greet_user</a>: missing up reference</li>
+<li>TRLC Requirement <a href='#item-120765d52506a26ab3c700b8796cf2f8c3637a7f'>vanillaEg.trlc</a>: missing reference to code</li>
+<li>TRLC Requirement <a href='#item-7347ab472f9485888f07fd035759f258e5e2a3a2'>vanillaEg.lobster</a>: missing reference to code</li>
+<li>Python Function <a href='#item-1f8a281034ddc6eb0f1d883f4213703bde40f619'>software.hello</a>: missing up reference</li>
+<li>Python Function <a href='#item-d167abaa1b8460369d15af3522693075050adc29'>software.hello1</a>: missing up reference</li>
+<li>codebeamer Technical requirement <a href='#item-437819bc0366cae09d015850eaa945e52fc90b0e'>traffic light detection</a>: missing reference to code</li>
+</ul>
+</div>
+<h2 id="sec-detailed-report">Detailed report</h2>
+<div class="content">
+<h3>Requirements and Specification</h3>
+<h4 id="sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</h4>
+<h5>.\main.trlc</h5>
+<!-- begin item req vanillaEg.trlc -->
+<div class="item-missing" id="item-120765d52506a26ab3c700b8796cf2f8c3637a7f">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> TRLC Requirement vanillaEg.trlc</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href=".\main.trlc" target="_blank">.\main.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>Treat Requirements Like Code</blockquote>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing reference to code</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req vanillaEg.lobster -->
+<div class="item-missing" id="item-7347ab472f9485888f07fd035759f258e5e2a3a2">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> TRLC Requirement vanillaEg.lobster</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href=".\main.trlc" target="_blank">.\main.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>Lightweight Open BMW Software Traceability Evidence Report</blockquote>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing reference to code</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>Codebeamer https://codebeamer.company.net/, tracker 65426</h5>
+<!-- begin item req 17044 -->
+<div class="item-missing" id="item-437819bc0366cae09d015850eaa945e52fc90b0e">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> codebeamer Technical requirement traffic light detection</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href="https://codebeamer.company.net//cb/issue/17044" target="_blank">cb item 17044 'traffic light detection'</a>
+</div>
+<div class="attribute">
+Status: Valid
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing reference to code</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h3>Implementation</h3>
+<h4 id="sec-c13367945d5d4c91047b3b50234aa7ab">code</h4>
+<h5>.\Test_Setup\main.py</h5>
+<!-- begin item python main.greet_user -->
+<div class="item-missing" id="item-dd23366748cfcf4c1df7b4891951b69d3fa01cea">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Python Function main.greet_user</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href=".\Test_Setup\main.py" target="_blank">.\Test_Setup\main.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req welcome.greet</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>.\software.py</h5>
+<!-- begin item python software.hello -->
+<div class="item-missing" id="item-1f8a281034ddc6eb0f1d883f4213703bde40f619">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Python Function software.hello</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href=".\software.py" target="_blank">.\software.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python software.hello1 -->
+<div class="item-missing" id="item-d167abaa1b8460369d15af3522693075050adc29">
+<div class="item-name"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Python Function software.hello1</div>
+<div class="attribute">Source: 
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<a href=".\software.py" target="_blank">.\software.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h3>Verification and Validation</h3>
+</div>
+</div>
+<script>
+
+window.onscroll = function() {stickyNavbar()};
+
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+function stickyNavbar() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+</body>
+</html>
