@@ -11,9 +11,9 @@
           "tag": "req sysreq_coverage_example.requirement_1",
           "location": {
             "kind": "github",
-            "gh_root": "https://github.com/vispiron-swe/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "tests-integration\\projects\\coverage\\sysreq_example.trlc",
+            "file": "tests-integration/projects/coverage/sysreq_example.trlc",
             "line": 4
           },
           "name": "sysreq_coverage_example.requirement_1",
@@ -42,9 +42,9 @@
           "tag": "req softreq_coverage_example.requirement_2",
           "location": {
             "kind": "github",
-            "gh_root": "https://github.com/vispiron-swe/lobster",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "main",
-            "file": "tests-integration\\projects\\coverage\\softreq_example.trlc",
+            "file": "tests-integration/projects/coverage/softreq_example.trlc",
             "line": 5
           },
           "name": "softreq_coverage_example.requirement_2",
