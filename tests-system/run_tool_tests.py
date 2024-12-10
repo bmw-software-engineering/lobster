@@ -151,17 +151,31 @@ def _run_test(setup: TestSetup, tool: str) -> CompletedProcess:
     return completed_process
 
 
+def _compare_cmd_output(name: str, expected: str, actual: str) -> bool:
+    if expected != actual:
+        print(f"Actual {name} is (length: {len(actual)} chars):\n{actual}")
+        print(f"Expected {name} is (length: {len(expected)} chars):\n{expected}")
+        return False
+    return True
+
+
 def _compare_results(setup: TestSetup, completed_process: CompletedProcess):
-    if setup.expected_exit_code != completed_process.returncode:
-        print(f"STDOUT is: {completed_process.stdout}")
-        print(f"STDERR is: {completed_process.stderr}")
     assert setup.expected_exit_code == completed_process.returncode, \
         f"{setup.name}: Expected exit code is {setup.expected_exit_code}, " \
         f"actual is {completed_process.returncode}!"
-    assert setup.get_expected_stdout() == completed_process.stdout, \
-        "Command line output for stdout is different!"
-    assert setup.get_expected_stderr() == completed_process.stderr, \
-        "Command line output for stderr is different!"
+    
+    assert _compare_cmd_output(
+        name="STDOUT",
+        expected=setup.get_expected_stdout(),
+        actual=completed_process.stdout,
+    ), "Command line output for STDOUT is different!"
+    
+    assert _compare_cmd_output(
+        name="STDERR",
+        expected=setup.get_expected_stderr(),
+        actual=completed_process.stderr,
+    ), "Command line output for STDERR is different!"
+
     expected = join(
         setup.get_expected_output_path(),
         setup.expected_lobster_output_file_name,
