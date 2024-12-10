@@ -1,0 +1,7 @@
+package sysreq_coverage_example
+import coverage_example
+
+coverage_example.System_Requirement requirement_1
+{
+   text = '''Requirement 1'''
+}
