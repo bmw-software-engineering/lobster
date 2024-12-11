@@ -1,0 +1,3 @@
+--single
+--tag-attribute=tags
+--out=output.lobster

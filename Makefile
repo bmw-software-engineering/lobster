@@ -58,9 +58,9 @@ integration-tests: packages
 
 system-tests:
 	mkdir -p docs
+	make -B -C tests-system TOOL=lobster-json
 	make -B -C tests-system TOOL=lobster-trlc
 	make -B -C tests-system TOOL=lobster-python
-	make -B -C tests-system/lobster-json
 
 unit-tests:
 	coverage run -p \
