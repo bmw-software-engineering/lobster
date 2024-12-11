@@ -52,6 +52,9 @@ setuptools.setup(
               "lobster.tools.core.html_report",
               "lobster.tools.core.online_report",
               "lobster.tools.core.report"],
+    package_data={
+        "lobster.tools.core.html_report":["assets/*"]
+    },
     install_requires=[],
     python_requires=">=3.7, <4",
     classifiers=[
