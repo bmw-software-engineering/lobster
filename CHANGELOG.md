@@ -5,7 +5,23 @@
 
 ### 0.9.21-dev
 
+* `lobster-html-report` has the following updates.
+  * Filter items by status (Ok, Missing, Partial, Warning, Justified)
+  * Hide/Unhide Issues.
+  * Search in issues and detailed report.
 
+* Add support to view version for lobster tools for following tools:
+  - `lobster-ci-report`
+  - `lobster-codebeamer`
+  - `lobster-cpp`
+  - `lobster-cpptest`
+  - `lobster-gtest`
+  - `lobster-html-report`
+  - `lobster-json`
+  - `lobster-online-report`
+  - `lobster-python`
+  - `lobster-report`
+  - `lobster-trlc`
 
 ### 0.9.20
 
@@ -23,19 +39,6 @@
   The following tools are affected:
   * `lobster-codebeamer`
   * `lobster-report`
-
-* Add support to view version for lobster tools for following tools:
-  - `lobster-ci-report`
-  - `lobster-codebeamer`
-  - `lobster-cpp`
-  - `lobster-cpptest`
-  - `lobster-gtest`
-  - `lobster-html-report`
-  - `lobster-json`
-  - `lobster-online-report`
-  - `lobster-python`
-  - `lobster-report`
-  - `lobster-trlc`
 
 * `lobster-gtest` accepts XML nodes other than `testcase`, but ignores them.
 
