@@ -1,6 +1,7 @@
 *~
 *.pyc
 bazel-*
+launch.json
 
 *.egg-info
 build
