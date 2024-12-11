@@ -13,32 +13,7 @@ function buttonFilter(filter) {
             }
         }
     }
-    // Code commented on purpose. This is work in progress to hide the filenames in
-    //Detailed report while issue toggling
-//    var item_groups = document.querySelectorAll('.item-group');
-//    for (var i = 0; i < item_groups.length; i++) {
-//
-//        var item_group = item_groups[i];
-//        console.log("item_group" + item_group)
-//        //          var siblingDivCount = 0;
-//        //          // Get the sibling div elements
-//        //
-//        //          var parentElement = item_group.parentElement;
-//        var children = item_group.getElementsByTagName('div');
-//        item_group.style.display = "none";
-//        for (var j = 0; j < children.length; j++) {
-//            console.log("children[j].id " + children[j].id)
-//            if (children[j].id.startsWith("item-")) {
-//                //                console.log("children[j] "+children[j].innerHTML)
-//                //                console.log("children[j] "+children[j].style.display)
-//                if (children[j].style.display != "none") {
-//                    console.log("INN")
-//                    item_group.style.display = "block";
-//                    break;
-//                }
-//            }
-//        }
-//    }
+    // filter the issues list based on the issue filter button clicked
     for (i = 0; i < issue_elms.length; i++) {
         console.log("log ", issue_elms[i].className)
         if (filter == "all") {
