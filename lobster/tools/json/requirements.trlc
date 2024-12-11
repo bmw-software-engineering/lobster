@@ -1,16 +1,20 @@
 package json_req
 import req
 
-req.Software_Requirement Dummy_Requirement {
+req.Software_Requirement Synthetic_Tag_Name {
   description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
+    If the command line option --name-attribute is not given, then the tool shall create
+    a synthetic tag name based on the path of the JSON input file and an item counter.
+
+    Note: The item counter does not need to be unique across files.
+    It shall be unique at least for each input file separately.
   '''
 }
 
-req.Software_Requirement Dummy_Requirement_Unit_Test {
+req.Software_Requirement Name_Attribute {
   description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
+    If the command line option --name-attribute is given, then the tool shall
+    - use the value of the command line argument as JSON key of the JSON item
+    - and use that obtained value as LOBSTER item tag name.
   '''
 }
