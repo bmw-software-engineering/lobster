@@ -1,16 +1,14 @@
-lobster-json: wrote 6 items to basic.lobster
-==========
 {
   "data": [
     {
-      "tag": "json ./basic.json:Test_1",
+      "tag": "json ./one/two/basic.json:one.two.basic.1",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./one/two/basic.json",
         "line": null,
         "column": null
       },
-      "name": "./basic.json:Test_1",
+      "name": "./one/two/basic.json:one.two.basic.1",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -23,14 +21,14 @@ lobster-json: wrote 6 items to basic.lobster
       "status": null
     },
     {
-      "tag": "json ./basic.json:Test_2",
+      "tag": "json ./one/two/basic.json:one.two.basic.2",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./one/two/basic.json",
         "line": null,
         "column": null
       },
-      "name": "./basic.json:Test_2",
+      "name": "./one/two/basic.json:one.two.basic.2",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -40,14 +38,14 @@ lobster-json: wrote 6 items to basic.lobster
       "status": null
     },
     {
-      "tag": "json ./basic.json:Test_3",
+      "tag": "json ./one/two/basic.json:one.two.basic.3",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./one/two/basic.json",
         "line": null,
         "column": null
       },
-      "name": "./basic.json:Test_3",
+      "name": "./one/two/basic.json:one.two.basic.3",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -61,14 +59,14 @@ lobster-json: wrote 6 items to basic.lobster
       "status": null
     },
     {
-      "tag": "json ./basic.json:Test_4",
+      "tag": "json ./one/two/basic.json:one.two.basic.4",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./one/two/basic.json",
         "line": null,
         "column": null
       },
-      "name": "./basic.json:Test_4",
+      "name": "./one/two/basic.json:one.two.basic.4",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -78,14 +76,14 @@ lobster-json: wrote 6 items to basic.lobster
       "status": null
     },
     {
-      "tag": "json ./basic.json:Test_5",
+      "tag": "json ./one/two/basic.json:one.two.basic.5",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./one/two/basic.json",
         "line": null,
         "column": null
       },
-      "name": "./basic.json:Test_5",
+      "name": "./one/two/basic.json:one.two.basic.5",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -98,14 +96,14 @@ lobster-json: wrote 6 items to basic.lobster
       "status": null
     },
     {
-      "tag": "json ./basic.json:Test_6",
+      "tag": "json ./one/two/basic.json:one.two.basic.6",
       "location": {
         "kind": "file",
-        "file": "./basic.json",
+        "file": "./one/two/basic.json",
         "line": null,
         "column": null
       },
-      "name": "./basic.json:Test_6",
+      "name": "./one/two/basic.json:one.two.basic.6",
       "messages": [],
       "just_up": [],
       "just_down": [],

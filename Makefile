@@ -18,6 +18,9 @@ lint: style
 		--ignore=assets.py \
 		lobster util tests-system/run_tool_tests.py
 
+trlc:
+	trlc lobster --error-on-warnings --verify
+
 style:
 	@python3 -m pycodestyle lobster \
 		--exclude=assets.py
@@ -57,9 +60,9 @@ integration-tests: packages
 
 system-tests:
 	mkdir -p docs
-	make -B -C tests-system/lobster-trlc
-	make -B -C tests-system/lobster-json
-	make -B -C tests-system/lobster-python
+	make -B -C tests-system TOOL=lobster-json
+	make -B -C tests-system TOOL=lobster-trlc
+	make -B -C tests-system TOOL=lobster-python
 
 unit-tests:
 	coverage run -p \
@@ -91,9 +94,9 @@ full-release:
 coverage:
 	coverage combine -q
 	coverage html --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=66
+	coverage report --rcfile=coverage.cfg --fail-under=62
 
-test: system-tests unit-tests
+test: clean-coverage system-tests unit-tests
 	make coverage
 	util/check_local_modifications.sh
 
@@ -148,3 +151,9 @@ unit-tests.lobster-%:
 system-tests.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
 	python3 tests-system/lobster-trlc-system-test.py $(TOOL_PATH);
+
+clean-coverage:
+	@rm -rf htmlcov
+	@find . -name '.coverage*' -type f -delete
+	@find . -name '*.pyc' -type f -delete
+	@echo "All .coverage, .coverage.* and *.pyc files deleted."

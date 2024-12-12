@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
-
 import os.path
 import argparse
 import html
@@ -374,8 +373,43 @@ def write_html(fd, report, dot, high_contrast):
         print("> please install Graphviz (https://graphviz.org)")
     doc.add_line('</div>')
 
+    ### Filtering
+    doc.add_heading(2, "Filtering", "filtering-options")
+    doc.add_heading(3, "Item Filters")
+    doc.add_line('<div id = "btnFilterItem">')
+    doc.add_line('<button class="button buttonAll buttonActive" '
+                 'onclick="buttonFilter(\'all\')"> Show All </button>')
+
+    doc.add_line('<button class ="button buttonOK" '
+                 'onclick="buttonFilter(\'ok\')" > OK </button>')
+
+    doc.add_line('<button class ="button buttonMissing" '
+                 'onclick="buttonFilter(\'missing\')" > Missing </button>')
+
+    doc.add_line('<button class ="button buttonPartial" '
+                 'onclick="buttonFilter(\'partial\')" > Partial </button>')
+
+    doc.add_line('<button class ="button buttonJustified" '
+                 'onclick="buttonFilter(\'justified\')" > Justified </button>')
+
+    doc.add_line('<button class ="button buttonWarning" '
+                 'onclick="buttonFilter(\'warning\')" > Warning </button>')
+    doc.add_line("</div>")
+
+    doc.add_heading(3, "Show Issues")
+    doc.add_line('<div id = "ContainerBtnToggleIssue">')
+    doc.add_line('<button class ="button buttonBlue" id="BtnToggleIssue" '
+                 'onclick="ToggleIssues()"> Show Issues </button>')
+    doc.add_line('</div>')
+
+    doc.add_heading(3, "Search", "search")
+    doc.add_line('<input type="text" id="search" placeholder="Search..." '
+                 'onkeyup="searchItem()">')
+    doc.add_line('<div id="search-sec-id"')
+
     ### Issues
     doc.add_heading(2, "Issues", "issues")
+    doc.add_line('<div id="issues-section" style="display:none">')
     has_issues = False
     for item in sorted(report.items.values(),
                        key = lambda x: x.location.sorting_key()):
@@ -385,13 +419,15 @@ def write_html(fd, report, dot, high_contrast):
                 if not has_issues:
                     has_issues = True
                     doc.add_line("<ul>")
-                doc.add_line("<li>%s: %s</li>" %
-                             (xref_item(item),
+                doc.add_line("<li class=\"issue issue-%s\">%s: %s</li>" %
+                             (item.tracing_status.name.lower(),
+                              xref_item(item),
                               message))
     if has_issues:
         doc.add_line("</ul>")
     else:
         doc.add_line("<div>No traceability issues found.</div>")
+    doc.add_line("</div>")
 
     ### Report
     file_heading = None
@@ -447,6 +483,26 @@ def write_html(fd, report, dot, high_contrast):
                     write_item_box_end(doc)
             else:
                 doc.add_line("No items recorded at this level.")
+    # Closing tag for id #search-sec-id
+    doc.add_line("</div>")
+
+    # Add the css from assets
+    dir_path = os.path.dirname(os.path.abspath(__file__))
+    file_path = dir_path + "/assets"
+    for filename in os.listdir(file_path):
+        if filename.endswith(".css"):
+            filename = os.path.join(file_path, filename)
+            with open(filename, "r", encoding="UTF-8") as styles:
+                doc.css.append("".join(styles.readlines()))
+
+    # Add javascript from assets/html_report.js file
+    dir_path = os.path.dirname(os.path.abspath(__file__))
+    file_path = dir_path + "/assets"
+    for filename in os.listdir(file_path):
+        if filename.endswith(".js"):
+            filename = os.path.join(file_path, filename)
+            with open(filename, "r", encoding="UTF-8") as scripts:
+                doc.scripts.append("".join(scripts.readlines()))
 
     ### STM
     # doc.add_heading(2, "Software traceability matrix", "matrix")
