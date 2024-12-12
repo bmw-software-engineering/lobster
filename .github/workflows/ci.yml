@@ -23,9 +23,21 @@ jobs:
       - name: Executing linter
         run: |
           make lint
+  trlc:
+    name: TRLC
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
+      - name: Run TRLC
+        run: |
+          make trlc
   test:
     name: TestSuite
-    needs: lint
+    needs: [lint, trlc]
     strategy:
       matrix:
         os: [ubuntu-24.04, windows-2022, macos-13, macos-14]
@@ -95,6 +107,10 @@ jobs:
         with:
           path: ~/work/lobster/llvm-project/build/bin/clang-tidy
           key: cache-clang-tidy
+      - name: Setup bazel (for lobster-gtest)
+        uses: jwlawson/actions-setup-bazel@v2
+        with:
+          bazel-version: '8.0.0'
       - name: Run integration tests
         run: |
           make integration-tests
