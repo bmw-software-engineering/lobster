@@ -107,6 +107,10 @@ jobs:
         with:
           path: ~/work/lobster/llvm-project/build/bin/clang-tidy
           key: cache-clang-tidy
+      - name: Setup bazel (for lobster-gtest)
+        uses: jwlawson/actions-setup-bazel@v2
+        with:
+          bazel-version: '8.0.0'
       - name: Run integration tests
         run: |
           make integration-tests
