@@ -247,7 +247,7 @@ class Document:
         }
         self.scripts = []
         self.body = []
-        self.css_files = []
+        self.css = []
 
     def add_line(self, line):
         assert isinstance(line, str)
@@ -293,11 +293,11 @@ class Document:
             for attr, value in style.items():
                 rv.append("  %s: %s;" % (attr, value))
             rv.append("}")
-        rv.append("</style>")
 
         # add css files that are appended to self.files
-        for css_file in self.css_files:
-            rv.append(f"<link rel='stylesheet' href={css_file}>")
+        for css_file in self.css:
+            rv.append(css_file)
+        rv.append("</style>")
         rv.append("</head>")
         rv.append("<body>")
 

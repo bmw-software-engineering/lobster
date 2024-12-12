@@ -488,14 +488,21 @@ def write_html(fd, report, dot, high_contrast):
 
     # Add the css from assets
     dir_path = os.path.dirname(os.path.abspath(__file__))
-    file_path = dir_path + "/assets/html_report.css"
-    doc.css_files.append(file_path)
+    file_path = dir_path + "/assets"
+    for filename in os.listdir(file_path):
+        if filename.endswith(".css"):
+            filename = os.path.join(file_path, filename)
+            with open(filename, "r", encoding="UTF-8") as styles:
+                doc.css.append("".join(styles.readlines()))
 
     # Add javascript from assets/html_report.js file
     dir_path = os.path.dirname(os.path.abspath(__file__))
-    file_path = dir_path + "/assets/html_report.js"
-    with open(file_path, "r", encoding="UTF-8") as scripts:
-        doc.scripts.append("".join(scripts.readlines()))
+    file_path = dir_path + "/assets"
+    for filename in os.listdir(file_path):
+        if filename.endswith(".js"):
+            filename = os.path.join(file_path, filename)
+            with open(filename, "r", encoding="UTF-8") as scripts:
+                doc.scripts.append("".join(scripts.readlines()))
 
     ### STM
     # doc.add_heading(2, "Software traceability matrix", "matrix")
