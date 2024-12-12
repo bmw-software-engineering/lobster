@@ -59,7 +59,7 @@
           "tracing_status": "OK",
           "framework": "TRLC",
           "kind": "Software_Requirement",
-          "text": "Requirement2",
+          "text": "Requirement 2",
           "status": null
         }
       ],
