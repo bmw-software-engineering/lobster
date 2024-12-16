@@ -18,6 +18,9 @@ lint: style
 		--ignore=assets.py \
 		lobster util tests-system/run_tool_tests.py
 
+trlc:
+	trlc lobster --error-on-warnings --verify
+
 style:
 	@python3 -m pycodestyle lobster \
 		--exclude=assets.py
