@@ -1,0 +1,2 @@
+usage: lobster-cpptest [-h] --config-file CONFIG_FILE FILE|DIR [FILE|DIR ...]
+lobster-cpptest: error: "../../../data/testtt_case.cpp" is not a file or directory.
