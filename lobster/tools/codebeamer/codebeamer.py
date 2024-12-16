@@ -163,19 +163,18 @@ def get_query(mh, cb_config, query):
 
     while total_items is None or len(rv) < total_items:
         print("Fetching page %u of query..." % page_id)
-        if query is not None:
-            if isinstance(query, int):
-                url = ("%s/reports/%u/items?page=%u&pageSize=%u" %
-                        (cb_config["base"],
-                         query,
-                         page_id,
-                         cb_config["page_size"]))
-            elif isinstance(query, str):
-                url = ("%s/items/query?queryString=%s" %
-                        (cb_config["base"],
-                         query))
-            data = query_cb_single(cb_config, url)
-            assert len(data) == 4
+        if isinstance(query, int):
+            url = ("%s/reports/%u/items?page=%u&pageSize=%u" %
+                    (cb_config["base"],
+                        query,
+                        page_id,
+                        cb_config["page_size"]))
+        elif isinstance(query, str):
+            url = ("%s/items/query?queryString=%s" %
+                    (cb_config["base"],
+                        query))
+        data = query_cb_single(cb_config, url)
+        assert len(data) == 4
 
         if page_id == 1 and len(data["items"]) == 0:
             print("This query doesn't generate items. Please check:")
@@ -539,18 +538,16 @@ def main():
             if isinstance(options.import_query, int):
                 query = int(options.import_query)
                 if query < 1:
-                    raise ValueError("query_string must be a positive integer"
-                                     "or valid string")
+                    ap.error("query_string must be a positive integer")
             elif isinstance(options.import_query, str):
                 if options.import_query.startswith("-"):
-                    raise ValueError("query_string must be a positive integer"
-                                     "or valid string")
+                    ap.error("query_string must be a positive integer"
+                                     " or valid string")
                 elif options.import_query.isdigit():
                     query = int(options.import_query)
                     if query < 1:
-                        raise ValueError("query_string must be a positive integer"
-                                         "or valid string")
-                elif isinstance(options.import_query, str):
+                        ap.error("query_string must be a positive integer")
+                else:
                     query = str(options.import_query)
         except ValueError as e:
             ap.error(str(e))
