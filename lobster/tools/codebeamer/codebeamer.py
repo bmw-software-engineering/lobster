@@ -152,21 +152,27 @@ def get_many_items(cb_config, item_ids):
     return rv
 
 
-def get_query(mh, cb_config, query_id):
+def get_query(mh, cb_config, query):
     assert isinstance(mh, Message_Handler)
     assert isinstance(cb_config, dict)
-    assert isinstance(query_id, int)
+    assert isinstance(query, (int, str))
     rv = []
+    url = ""
     page_id = 1
     total_items = None
 
     while total_items is None or len(rv) < total_items:
         print("Fetching page %u of query..." % page_id)
-        url = "%s/reports/%u/items?page=%u&pageSize=%u" % \
-            (cb_config["base"],
-             query_id,
-             page_id,
-             cb_config["page_size"])
+        if isinstance(query, int):
+            url = ("%s/reports/%u/items?page=%u&pageSize=%u" %
+                    (cb_config["base"],
+                        query,
+                        page_id,
+                        cb_config["page_size"]))
+        elif isinstance(query, str):
+            url = ("%s/items/query?queryString=%s" %
+                    (cb_config["base"],
+                        query))
         data = query_cb_single(cb_config, url)
         assert len(data) == 4
 
@@ -183,8 +189,12 @@ def get_query(mh, cb_config, query_id):
         else:
             assert total_items == data["total"]
 
-        rv += [to_lobster(cb_config, cb_item["item"])
-               for cb_item in data["items"]]
+        if query is not None and isinstance(query, int):
+            rv += [to_lobster(cb_config, cb_item["item"])
+                    for cb_item in data["items"]]
+        elif query is not None and isinstance(query, str):
+            rv += [to_lobster(cb_config, cb_item)
+                    for cb_item in data["items"]]
 
         page_id += 1
 
@@ -416,7 +426,7 @@ def main():
                        default=None)
 
     modes.add_argument("--import-query",
-                       metavar="CB_QUERY_ID",
+                       metavar="CB_QUERY",
                        default=None)
 
     ap.add_argument("--config",
@@ -525,17 +535,28 @@ def main():
 
     elif options.import_query:
         try:
-            query_id = int(options.import_query)
-        except ValueError:
-            ap.error("query-id must be an integer")
-        if query_id < 1:
-            ap.error("query-id must be a positive")
+            if isinstance(options.import_query, int):
+                query = int(options.import_query)
+                if query < 1:
+                    ap.error("query_string must be a positive integer")
+            elif isinstance(options.import_query, str):
+                if options.import_query.startswith("-"):
+                    ap.error("query_string must be a positive integer"
+                                     " or valid string")
+                elif options.import_query.isdigit():
+                    query = int(options.import_query)
+                    if query < 1:
+                        ap.error("query_string must be a positive integer")
+                else:
+                    query = str(options.import_query)
+        except ValueError as e:
+            ap.error(str(e))
 
     try:
         if options.import_tagged:
             items = import_tagged(mh, cb_config, items_to_import)
         elif options.import_query:
-            items = get_query(mh, cb_config, query_id)
+            items = get_query(mh, cb_config, query)
     except LOBSTER_Error:
         return 1
 
