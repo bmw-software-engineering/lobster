@@ -5,7 +5,7 @@
 
 ### 0.9.21-dev
 
-* `lobster-codebeamer` now supports query string, query string (CBQL) can be passed 
+* `lobster-codebeamer` now supports query string, query string (cbQL) can be passed 
   as a command line argument to the tool `lobster-codebeamer`.
 
 * `lobster-html-report` has the following updates.

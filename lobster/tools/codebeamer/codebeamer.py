@@ -170,8 +170,10 @@ def get_query(mh, cb_config, query):
                         page_id,
                         cb_config["page_size"]))
         elif isinstance(query, str):
-            url = ("%s/items/query?queryString=%s" %
+            url = ("%s/items/query?page=%u&pageSize=%u&queryString=%s" %
                     (cb_config["base"],
+                        page_id,
+                        cb_config["page_size"],
                         query))
         data = query_cb_single(cb_config, url)
         assert len(data) == 4
@@ -535,20 +537,14 @@ def main():
 
     elif options.import_query:
         try:
-            if isinstance(options.import_query, int):
-                query = int(options.import_query)
-                if query < 1:
-                    ap.error("query_string must be a positive integer")
-            elif isinstance(options.import_query, str):
-                if options.import_query.startswith("-"):
-                    ap.error("query_string must be a positive integer"
-                                     " or valid string")
+            if isinstance(options.import_query, str):
+                if (options.import_query.startswith("-") and
+                    options.import_query[1:].isdigit()):
+                    ap.error("import-query must be a positive integer")
+                elif options.import_query.startswith("-"):
+                    ap.error("import-query must be a valid cbQL query")
                 elif options.import_query.isdigit():
-                    query = int(options.import_query)
-                    if query < 1:
-                        ap.error("query_string must be a positive integer")
-                else:
-                    query = str(options.import_query)
+                    options.import_query = int(options.import_query)
         except ValueError as e:
             ap.error(str(e))
 
@@ -556,7 +552,7 @@ def main():
         if options.import_tagged:
             items = import_tagged(mh, cb_config, items_to_import)
         elif options.import_query:
-            items = get_query(mh, cb_config, query)
+            items = get_query(mh, cb_config, options.import_query)
     except LOBSTER_Error:
         return 1
 
