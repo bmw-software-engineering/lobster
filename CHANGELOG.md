@@ -3,10 +3,10 @@
 ## Changelog
 
 
-### 0.9.21-dev
+### 0.9.21
 
-* `lobster-codebeamer` now supports query string, query string (cbQL) can be passed 
-  as a command line argument to the tool `lobster-codebeamer`.
+* `lobster-codebeamer` now supports query string along with query ID, query string (cbQL) can be passed 
+  as a command line argument to `--import-query` for the tool `lobster-codebeamer`.
 
 * `lobster-html-report` has the following updates.
   * Filter items by status (Ok, Missing, Partial, Warning, Justified)
