@@ -11,8 +11,13 @@ markers in the comments of the source code.
 
 ## Tools
 
-* `lobster-cpptest`: Extract requirements with specific references 
-  from tests.
+* `lobster-cpptest`: Extract requirements with dynamic refrences 
+  from comments.
+
+## Configuration
+
+The tool requires a YAML configuration file to define its settings.
+You must provide this file when running the tool to specify parameters to process.
 
 ## Usage
 
@@ -31,44 +36,37 @@ For this you have to provide a C/C++ test documentation with `markers`:
  */
 TEST(RequirementTagTest1, RequirementsAsMultipleComments) {}
 ```
-You have to provide a config-file which determines which `markers` should be extracted in which output-files.
-The expected `kind` for each output-file should also be specified.  
+You can also provide parameters to specify which markers should be extracted from which files.
+Additionally, you need to provide the Codebeamer URL.
 
-* Note: If you want to extract the other tests with other `markers`,
- you can use an empty list as `markers` value. Be aware in this case the tests do not have any references.
+Examples:
 
+```yaml
+    output:
+        component_tests.lobster:
+            markers:
+            - "@requirement"
+            kind: "req"
 
-```config
-{
-    "markers": [],
-    "kind": "req"
-}
-```
+        unit_tests.lobster:
+            markers:
+            - "@requiredby"
+            kind: "req"
 
-In addition, you have to provide the codebeamer-url:
+        other_tests.lobster:
+            markers: []
+            kind: ""
 
-`Kind` can be either `req`, `imp` or `act`.
-
-```config
-{
-	"output": {
-		"unit_tests.lobster" : 
-            {
-                "markers": ["@requirement"],
-                "kind": "req"
-            },
-        "components_tests.lobster" :
-            {
-                "markers": ["@requiredby", "@requirement"],
-                "kind": "imp"
-            }
-	},
-	"codebeamer_url": "https://codebeamer.example.com/test"
-}
+    codebeamer_url: "https://codebeamer.com"
  ```
+You can also include CPP files in the YAML configuration file.
 
-For more information about how to setup cpp and config files take a look at [manual-lobster_cpptest](../../documentation/manual-lobster_cpptest.md)
-
+```yaml
+  files:
+    - 'path/to/source1.cpp'
+    - 'path/to/source2.cpp'
+```
+Note: File paths are accepted only in single quotes.
 
 ## Copyright & License information
 
