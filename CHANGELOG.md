@@ -5,7 +5,7 @@
 
 ### 0.9.22-dev
 
-
+* The configuration management for the `lobster-cpptest` tool has been migrated from command-line arguments to YAML configuration files.
 
 ### 0.9.21
 
