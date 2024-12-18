@@ -21,7 +21,7 @@ expected-output/
 
 ```
 
-The target `make system-tests` in the root `~Makefile` sets the current working
+The target `make system-tests` in the root `Makefile` sets the current working
 directory of the tool under test to the `input` folder.
 
 The files must contain the following piece of information:
