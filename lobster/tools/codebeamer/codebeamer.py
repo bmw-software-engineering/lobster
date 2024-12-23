@@ -162,21 +162,29 @@ def get_many_items(cb_config, item_ids):
     return rv
 
 
-def get_query(mh, cb_config, query_id):
+def get_query(mh, cb_config, query):
     assert isinstance(mh, Message_Handler)
     assert isinstance(cb_config, dict)
-    assert isinstance(query_id, int)
+    assert isinstance(query, (int, str))
     rv = []
+    url = ""
     page_id = 1
     total_items = None
 
     while total_items is None or len(rv) < total_items:
         print("Fetching page %u of query..." % page_id)
-        url = "%s/reports/%u/items?page=%u&pageSize=%u" % \
-            (cb_config["base"],
-             query_id,
-             page_id,
-             cb_config["page_size"])
+        if isinstance(query, int):
+            url = ("%s/reports/%u/items?page=%u&pageSize=%u" %
+                    (cb_config["base"],
+                        query,
+                        page_id,
+                        cb_config["page_size"]))
+        elif isinstance(query, str):
+            url = ("%s/items/query?page=%u&pageSize=%u&queryString=%s" %
+                    (cb_config["base"],
+                        page_id,
+                        cb_config["page_size"],
+                        query))
         data = query_cb_single(cb_config, url)
         assert len(data) == 4
 
@@ -193,8 +201,12 @@ def get_query(mh, cb_config, query_id):
         else:
             assert total_items == data["total"]
 
-        rv += [to_lobster(cb_config, cb_item["item"])
-               for cb_item in data["items"]]
+        if query is not None and isinstance(query, int):
+            rv += [to_lobster(cb_config, cb_item["item"])
+                    for cb_item in data["items"]]
+        elif query is not None and isinstance(query, str):
+            rv += [to_lobster(cb_config, cb_item)
+                    for cb_item in data["items"]]
 
         page_id += 1
 
@@ -522,17 +534,24 @@ def main():
 
     elif cb_config.get("import_query"):
         try:
-            query_id = int(cb_config["import_query"])
-        except ValueError:
-            sys.exit("lobster-codebeamer: Query ID must be an integer.")
-        if query_id < 1:
-            sys.exit("lobster-codebeamer: Query ID must be a positive integer.")
+            if isinstance(cb_config["import_query"], int):
+                cb_config["import_query"] = int(cb_config["import_query"])
+                if cb_config["import_query"] < 0:
+                    ap.error("import-query must be a positive integer")
+            elif isinstance(cb_config["import_query"], str):
+                if (cb_config["import_query"].startswith("-") and
+                    cb_config["import_query"][1:].isdigit()):
+                    ap.error("import-query must be a positive integer")
+                elif cb_config["import_query"].startswith("-"):
+                    ap.error("import-query must be a valid cbQL query")
+        except ValueError as e:
+            ap.error(str(e))
 
     try:
         if cb_config.get("import_tagged"):
             items = import_tagged(mh, cb_config, items_to_import)
         elif cb_config.get("import_query"):
-            items = get_query(mh, cb_config, query_id)
+            items = get_query(mh, cb_config, cb_config["import_query"])
     except LOBSTER_Error:
         return 1
 

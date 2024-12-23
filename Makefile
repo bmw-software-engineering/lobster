@@ -92,7 +92,7 @@ full-release:
 coverage:
 	coverage combine -q
 	coverage html --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=66
+	coverage report --rcfile=coverage.cfg --fail-under=69
 
 test: system-tests unit-tests
 	make coverage
