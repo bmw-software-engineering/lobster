@@ -33,7 +33,8 @@ class ItemsTests(unittest.TestCase):
                 "gh_root": "https://mysuperserver.com",
                 "commit": "commit string",
                 "file": "example.txt",
-                "line": 1
+                "line": 1,
+                "exec_commit_id": "efdc34rfe2345554rfe"
             }
         elif location_type == "codebeamer":
             location_data = {
