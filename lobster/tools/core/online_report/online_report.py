@@ -227,19 +227,27 @@ def main():
             actual_repo = gh_root
             actual_sha  = options.commit
             actual_path = rel_path_from_root
+            exec_commit_id = subprocess.check_output(
+                ["git", "log", "-n", "1", "--format=%H", "--", item.location.filename]
+            ).decode().strip()
             # pylint: disable=consider-using-dict-items
             for prefix in gh_submodule_roots:
                 if path_starts_with_subpath(rel_path_from_root, prefix):
                     actual_repo = gh_submodule_roots[prefix]
                     actual_sha  = gh_submodule_sha[prefix]
                     actual_path = rel_path_from_root[len(prefix) + 1:]
+                    exec_commit_id = subprocess.check_output(
+                        ["git", "log", "-n", "1", "--format=%H", "--",
+                         actual_path], universal_newlines=True, cwd=prefix)
+                    exec_commit_id = exec_commit_id.strip()
                     break
 
             loc = Github_Reference(
-                gh_root  = actual_repo,
-                commit   = actual_sha,
-                filename = actual_path,
-                line     = item.location.line)
+                gh_root        = actual_repo,
+                commit         = actual_sha,
+                filename       = actual_path,
+                line           = item.location.line,
+                exec_commit_id = exec_commit_id)
             item.location = loc
 
     report.write_report(options.out if options.out else options.lobster_report)
