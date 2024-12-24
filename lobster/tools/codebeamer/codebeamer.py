@@ -534,16 +534,18 @@ def main():
 
     elif cb_config.get("import_query"):
         try:
-            if isinstance(cb_config["import_query"], int):
-                cb_config["import_query"] = int(cb_config["import_query"])
-                if cb_config["import_query"] < 0:
-                    ap.error("import-query must be a positive integer")
+            if (isinstance(cb_config["import_query"], int) and
+                cb_config["import_query"] < 0):
+                ap.error("import-query must be a positive integer")
             elif isinstance(cb_config["import_query"], str):
-                if (cb_config["import_query"].startswith("-") and
-                    cb_config["import_query"][1:].isdigit()):
-                    ap.error("import-query must be a positive integer")
-                elif cb_config["import_query"].startswith("-"):
-                    ap.error("import-query must be a valid cbQL query")
+                if cb_config["import_query"].startswith("-"):
+                    if cb_config["import_query"][1:].isdigit():
+                        ap.error("import-query must be a positive integer")
+                    else:
+                        ap.error("import-query must be a valid cbQL query")
+                elif cb_config["import_query"][1:].isdigit():
+                    cb_config["import_query"] = int(cb_config["import_query"])
+                    
         except ValueError as e:
             ap.error(str(e))
 
