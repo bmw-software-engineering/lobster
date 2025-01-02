@@ -1,14 +1,18 @@
 # Makefile
 
+LOBSTER_PYTHON_TOOL = "../../../lobster-python"
+LOBSTER_REPORT_TOOL = "../../../lobster-report"
+LOBSTER_ONLINE_REPORT_TOOL = "../../../lobster-online-report"
+
 # Set the paths to the Python script and Lobster commands
-PYTHON_SCRIPT = ../../../lobster/tools/python/python.py
-LOBSTER_CONFIG = lobster.config
+PYTHON_SCRIPT = "../../../lobster/tools/python/python.py"
+LOBSTER_CONFIG = "lobster.config"
 
 # Set the output file names
-PYTHON_OUTPUT = python.lobster
-REPORT_OUTPUT = report.lobster
-ONLINE_REPORT_OUTPUT = online-report.lobster
-EXPECTED_OUTPUT = expected-output.lobster
+PYTHON_OUTPUT = "python.lobster"
+REPORT_OUTPUT = "report.lobster"
+ONLINE_REPORT_OUTPUT = "online-report.lobster"
+EXPECTED_OUTPUT = "expected-output.lobster"
 
 # Set the Python interpreter
 PYTHON = python3
@@ -19,15 +23,15 @@ run: python-output	report-output online-report-output copy-output python-script 
 # Execute the Python script
 python-output:
 	@echo "Running lobster-python script on: $(PYTHON_SCRIPT)"
-	lobster-python $(PYTHON_SCRIPT) --out=$(PYTHON_OUTPUT)
+	$(LOBSTER_PYTHON_TOOL) $(PYTHON_SCRIPT) --out=$(PYTHON_OUTPUT)
 
 # Generate the LOBSTER report
 report-output:
-	lobster-report --lobster-config=$(LOBSTER_CONFIG) --out=$(REPORT_OUTPUT)
+	@(LOBSTER_REPORT_TOOL) --lobster-config=$(LOBSTER_CONFIG) --out=$(REPORT_OUTPUT)
 
 # Generate the online LOBSTER report
 online-report-output:
-	lobster-online-report $(REPORT_OUTPUT) --out=$(ONLINE_REPORT_OUTPUT)
+	@(LOBSTER_ONLINE_REPORT_TOOL) $(REPORT_OUTPUT) --out=$(ONLINE_REPORT_OUTPUT)
 
 # Copy the online report to the expected output file
 copy-output:
