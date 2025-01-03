@@ -27,11 +27,11 @@ python-output:
 
 # Generate the LOBSTER report
 report-output:
-	@(LOBSTER_REPORT_TOOL) --lobster-config=$(LOBSTER_CONFIG) --out=$(REPORT_OUTPUT)
+	$(LOBSTER_REPORT_TOOL) --lobster-config=$(LOBSTER_CONFIG) --out=$(REPORT_OUTPUT)
 
 # Generate the online LOBSTER report
 online-report-output:
-	@(LOBSTER_ONLINE_REPORT_TOOL) $(REPORT_OUTPUT) --out=$(ONLINE_REPORT_OUTPUT)
+	$(LOBSTER_ONLINE_REPORT_TOOL) $(REPORT_OUTPUT) --out=$(ONLINE_REPORT_OUTPUT)
 
 # Copy the online report to the expected output file
 copy-output:
