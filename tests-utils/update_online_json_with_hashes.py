@@ -18,8 +18,7 @@ def update_json(filename):
             location = item['location']
             if 'file' in location:
                 exec_commit_id = subprocess.check_output(
-                    ["git", "log", "-n", "1", "--format=%H", "--",
-                     "../../../"+location['file']]).decode().strip()
+                    ["git", "rev-parse", "HEAD"]).decode().strip()
                 location['exec_commit_id'] = exec_commit_id
 
     # Save the updated JSON data back to the same file

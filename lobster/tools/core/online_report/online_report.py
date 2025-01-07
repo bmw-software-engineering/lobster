@@ -228,7 +228,7 @@ def main():
             actual_sha  = options.commit
             actual_path = rel_path_from_root
             exec_commit_id = subprocess.check_output(
-                ["git", "log", "-n", "1", "--format=%H", "--", item.location.filename]
+                ["git", "rev-parse", "HEAD"]
             ).decode().strip()
             # pylint: disable=consider-using-dict-items
             for prefix in gh_submodule_roots:
@@ -237,8 +237,7 @@ def main():
                     actual_sha  = gh_submodule_sha[prefix]
                     actual_path = rel_path_from_root[len(prefix) + 1:]
                     exec_commit_id = subprocess.check_output(
-                        ["git", "log", "-n", "1", "--format=%H", "--",
-                         actual_path], universal_newlines=True, cwd=prefix)
+                        ["git", "rev-parse", "HEAD"], universal_newlines=True, cwd=prefix)
                     exec_commit_id = exec_commit_id.strip()
                     break
 
