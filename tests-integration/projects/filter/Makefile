@@ -9,10 +9,15 @@ CLANG_TIDY:=$(LOBSTER_ROOT)/../llvm-project/build/bin/clang-tidy
 THIS_TEST:=$(shell realpath --relative-to $(LOBSTER_ROOT) $(PWD))
 THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
 
+REFERENCE_OUTPUT:='report.reference_output'
+PYTHON = python3
+UPDATE_GIT_HASHES_SCRIPT:='../../../tests-utils/update_online_json_with_hashes.py'
+
 html_report.html: cppcode.lobster requirements.lobster lobster.conf json.lobster
 	@lobster-report
 	@lobster-online-report
 	@cp report.lobster report.reference_output
+	$(PYTHON) $(UPDATE_GIT_HASHES_SCRIPT) $(REFERENCE_OUTPUT)
 	@lobster-html-report
 
 cppcode.lobster: foo.h foo.cpp
