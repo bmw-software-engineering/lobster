@@ -12,7 +12,10 @@ LOBSTER_CONFIG = "lobster.config"
 PYTHON_OUTPUT = "python.lobster"
 REPORT_OUTPUT = "report.lobster"
 ONLINE_REPORT_OUTPUT = "online-report.lobster"
-EXPECTED_OUTPUT = "expected-output.lobster"
+EXPECTED_OUTPUT = 'expected-output.lobster'
+
+# Python script to update the expected git hashes
+PYTHON_FILE:='../../../tests-utils/update_online_json_with_hashes.py'
 
 # Set the Python interpreter
 PYTHON = python3
@@ -37,12 +40,9 @@ online-report-output:
 copy-output:
 	cp $(ONLINE_REPORT_OUTPUT) $(EXPECTED_OUTPUT)
 
-# Python script to update the expected git hashes
-PYTHON_FILE = update_online_json_with_hashes.py
-
 # 'python-script' target to execute the python script to update expected git hashes
 python-script:
-	$(PYTHON) $(PYTHON_FILE)
+	$(PYTHON) $(PYTHON_FILE) $(EXPECTED_OUTPUT)
 
 # Compare target to compare the expected output with the actual output
 compare:
