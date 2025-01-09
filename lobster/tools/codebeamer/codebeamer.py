@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_codebeamer - Extract codebeamer items for LOBSTER
-# Copyright (C) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -17,21 +17,17 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-# This tool is based on the codebeamer Rest API, as documented here:
-# https://codebeamer.com/cb/wiki/117612
+# This tool is based on the codebeamer Rest API v3, as documented here:
+# https://codebeamer.com/cb/wiki/11631738
 #
 # There are some assumptions encoded here that are not clearly
 # documented, in that items have a type and the type has a name.
 #
-# I could not find a better API for returning a specific list of
-# items, but I believe it exists.
 #
 # Main limitations:
 # * Item descriptions are ignored right now
-# * Branches (if they exists or are possible) are ignored
+# * Branches (if they exist) are ignored
 # * We only ever fetch the HEAD item
-# * We ignore any links to any other items
-# * By-tracker + filter import is not implemented yet
 #
 # However you _can_ import all the items referenced from another
 # lobster artefact.
