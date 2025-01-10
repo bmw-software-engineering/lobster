@@ -1,0 +1,2 @@
+lobster.conf:7: lobster error: cannot trace to yourself
+lobster: aborting due to earlier errors.
