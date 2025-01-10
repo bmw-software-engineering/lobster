@@ -185,7 +185,7 @@ class Github_Reference(Location):
 
         return '<a href="%s/blob/%s/%s" target="_blank">%s</a>' % (
             self.gh_root,
-            self.commit,
+            self.exec_commit_id,
             file_ref,
             self.to_string())
 
