@@ -18,8 +18,13 @@ DELETE_COMMIT_IDS_PYTHON_SCRIPT:='../../../tests-system/tests_utils/delete_commi
 html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
 	@lobster-report
 	@lobster-online-report
-	@cp report.lobster report.reference_output
-	$(PYTHON) $(DELETE_COMMIT_IDS_PYTHON_SCRIPT) $(REFERENCE_OUTPUT)
+	$(PYTHON) $(UPDATE_GIT_HASHES_SCRIPT) $(REFERENCE_OUTPUT)
+	@if diff report.lobster $(REFERENCE_OUTPUT); then \
+        echo "Files are identical"; \
+    else \
+        echo "Files are different"; \
+        exit 1; \
+    fi
 	@lobster-html-report
 	@lobster-ci-report | tee ci_report.reference_output
 
