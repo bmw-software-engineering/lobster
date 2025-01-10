@@ -308,11 +308,12 @@ def _get_tool(test_dir: str) -> str:
     to the tool name
     :param test_dir: The path containing the requirements-based tests
     """
-    return normpath(
-        Path(
-            join("../", tool_name_mapping.get(basename(test_dir), basename(test_dir)))
-        ).absolute()
-    )
+    return normpath(Path(join("../", basename(test_dir))).absolute())
+    # return normpath(
+    #     Path(
+    #         join("../", tool_name_mapping.get(basename(test_dir), basename(test_dir)))
+    #     ).absolute()
+    # )
 
 
 if __name__ == "__main__":
