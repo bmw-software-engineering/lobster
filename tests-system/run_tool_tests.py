@@ -6,9 +6,17 @@ from pathlib import Path
 from subprocess import CompletedProcess, PIPE, run
 from typing import Iterator, Optional, List
 
+from tests_utils.update_online_json_with_hashes import update_json
+
 # This is the folder containing the folders starting with "rbt-"
 REQUIREMENTS_BASED_TEST_PREFIX = "rbt-"
 
+LOBSTER_ONLINE_REPORT_TOOL = "lobster-online-report"
+LOBSTER_HTML_REPORT_TOOL = "lobster-html-report"
+LOBSTER_CI_REPORT_TOOL = "lobster-ci-report"
+tool_name_mapping = {"online_report": LOBSTER_ONLINE_REPORT_TOOL,
+                     "html_report"  : LOBSTER_HTML_REPORT_TOOL,
+                     "ci_report"    : LOBSTER_CI_REPORT_TOOL}
 
 class TestSetup:
     _INPUT_FOLDER_NAME = "input"
@@ -265,12 +273,19 @@ def _run_tests(directory: Path, tool: str) -> int:
         raise ValueError("No directory specified!")
     if not tool:
         raise ValueError("No tool specified!")
-
     counter = 0
     for rbt_dir_entry in _get_directories(directory, REQUIREMENTS_BASED_TEST_PREFIX):
         for test_case_dir_entry in _get_directories(rbt_dir_entry.path):
             test_setup = TestSetup(test_case_dir_entry.path)
             completed_process = _run_test(test_setup, tool)
+            print("TOOOL base name", basename(tool))
+            if basename(tool) in tool_name_mapping.values():
+                for file_name in test_setup.expected_lobster_output_file_names:
+                    expected = join(
+                        test_setup.get_expected_output_path(),
+                        file_name,
+                    )
+                    update_json(expected)
             _compare_results(test_setup, completed_process)
             _delete_generated_files(test_setup)
             counter += 1
@@ -293,7 +308,11 @@ def _get_tool(test_dir: str) -> str:
     to the tool name
     :param test_dir: The path containing the requirements-based tests
     """
-    return normpath(Path(join("../", basename(test_dir))).absolute())
+    return normpath(
+        Path(
+            join("../", tool_name_mapping.get(basename(test_dir), basename(test_dir)))
+        ).absolute()
+    )
 
 
 if __name__ == "__main__":
