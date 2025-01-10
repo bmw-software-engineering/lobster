@@ -1,11 +1,7 @@
 import json
 import subprocess
 import sys
-from fileinput import filename
 
-
-# File name
-# file_name = 'expected-output.lobster'
 
 def update_json(filename):
     # Load the JSON data from the file

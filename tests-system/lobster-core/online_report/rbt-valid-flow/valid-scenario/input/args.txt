@@ -1,0 +1,2 @@
+report-lobster.input
+--out=expected-output.lobster

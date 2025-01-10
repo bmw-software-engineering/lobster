@@ -237,7 +237,9 @@ def main():
                     actual_sha  = gh_submodule_sha[prefix]
                     actual_path = rel_path_from_root[len(prefix) + 1:]
                     exec_commit_id = subprocess.check_output(
-                        ["git", "rev-parse", "HEAD"], universal_newlines=True, cwd=prefix)
+                        ["git", "rev-parse", "HEAD"],
+                        universal_newlines=True, cwd=prefix
+                    )
                     exec_commit_id = exec_commit_id.strip()
                     break
 
