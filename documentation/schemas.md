@@ -58,12 +58,13 @@ References to github look like this:
 
 ```
 {
-   "kind"     : "github",
-   "gh_root"  : STRING,
-   "gh_repo"  : STRING,
-   "commit"   : STRING,
-   "filename" : INTEGER,
-   "line"     : INTEGER or null
+   "kind"           : "github",
+   "gh_root"        : STRING,
+   "gh_repo"        : STRING,
+   "commit"         : STRING,
+   "filename"       : INTEGER,
+   "line"           : INTEGER or null,
+   "exec_commit_id" : STRING
 }
 ```
 
