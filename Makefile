@@ -55,8 +55,9 @@ clang-tidy:
 	cmake --build build --target clang-tidy
 
 selenium-tests:
+	@make lobster/html/assets.py
 	@echo "Running Selenium Tests..."
-	python3 ./tests-system/lobster-core/html_report/selenium-test/test_html_report.py
+	(cd tests-UI; make)
 
 integration-tests: packages
 	(cd tests-integration/projects/basic; make)
