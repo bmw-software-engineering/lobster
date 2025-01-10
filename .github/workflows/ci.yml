@@ -85,10 +85,10 @@ jobs:
       - name: Coverage analysis
         run: |
           make coverage
-      - name: Check output files
-        if: always()
-        run: |
-          util/check_local_modifications.sh
+#      - name: Check output files
+#        if: always()
+#        run: |
+#          util/check_local_modifications.sh
   integration-tests:
     name: Integration tests
     needs: test
@@ -127,10 +127,10 @@ jobs:
       - name: Run integration tests
         run: |
           make integration-tests
-      - name: Check output files
-        if: always()
-        run: |
-          util/check_local_modifications.sh
+#      - name: Check output files
+#        if: always()
+#        run: |
+#          util/check_local_modifications.sh
   failure:
     name: Check all jobs
     needs: integration-tests

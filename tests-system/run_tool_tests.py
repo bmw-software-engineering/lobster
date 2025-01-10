@@ -273,12 +273,12 @@ def _run_tests(directory: Path, tool: str) -> int:
         raise ValueError("No directory specified!")
     if not tool:
         raise ValueError("No tool specified!")
+
     counter = 0
     for rbt_dir_entry in _get_directories(directory, REQUIREMENTS_BASED_TEST_PREFIX):
         for test_case_dir_entry in _get_directories(rbt_dir_entry.path):
             test_setup = TestSetup(test_case_dir_entry.path)
             completed_process = _run_test(test_setup, tool)
-            print("TOOOL base name", basename(tool))
             if basename(tool) in tool_name_mapping.values():
                 for file_name in test_setup.expected_lobster_output_file_names:
                     expected = join(
