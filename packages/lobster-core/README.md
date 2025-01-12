@@ -16,7 +16,7 @@ with additional tools:
 
 * `lobster-online-report`: Preprocess a JSON report to contain github
   references instead of local file references
-* `lobster-html-report`: Generate a HTML report
+* `lobster-html-report`: Generate an HTML report
 * `lobster-ci-report`: Generate a compiler-message like output, useful for CI
 
 ## Requirements
