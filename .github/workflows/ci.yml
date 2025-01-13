@@ -44,7 +44,6 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
-          python3 -m pip install selenium webdriver-manager
       - name: Run selenium Tests
         run: |
           make selenium-tests
