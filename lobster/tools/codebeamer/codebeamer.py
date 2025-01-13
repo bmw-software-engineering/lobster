@@ -530,22 +530,22 @@ def main():
 
     elif cb_config.get("import_query"):
         try:
-            if isinstance(options.import_query, str):
-                if (options.import_query.startswith("-") and
-                    options.import_query[1:].isdigit()):
+            if isinstance(cb_config["import_query"], str):
+                if (cb_config["import_query"].startswith("-") and
+                    cb_config["import_query"][1:].isdigit()):
                     ap.error("import-query must be a positive integer")
-                elif options.import_query.startswith("-"):
+                elif cb_config["import_query"].startswith("-"):
                     ap.error("import-query must be a valid cbQL query")
-                elif options.import_query.isdigit():
-                    options.import_query = int(options.import_query)
+                elif cb_config["import_query"].isdigit():
+                    cb_config["import_query"] = int(cb_config["import_query"])
         except ValueError as e:
             ap.error(str(e))
 
     try:
         if cb_config.get("import_tagged"):
             items = import_tagged(mh, cb_config, items_to_import)
-        elif options.import_query:
-            items = get_query(mh, cb_config, options.import_query)
+        elif cb_config["import_query"]:
+            items = get_query(mh, cb_config, cb_config["import_query"])
     except LOBSTER_Error:
         return 1
 
