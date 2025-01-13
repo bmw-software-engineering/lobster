@@ -3,7 +3,7 @@ package req
 type System_Requirement {
   description '''
     The content of the requirement.
-    A tool requirement describes the behaviour of a lobster tool from the point of view of the user.
+    A tool requirement describes the behavior of a lobster tool from the point of view of the user.
     It does not describe implementation details.
   ''' String
 }
@@ -11,6 +11,14 @@ type System_Requirement {
 type Software_Requirement {
   description '''
     The content of the requirement.
-    A software requirement describes the behaviour of a lobster tool.
+    A software requirement describes the behavior of a class method or module function.
+  ''' String
+}
+
+type Definition {
+  description '''
+    The text of the definition.
+    A definition shall be formulated such that it is reusable in multiple requirements,
+    to prevent the need of duplicating text.
   ''' String
 }
