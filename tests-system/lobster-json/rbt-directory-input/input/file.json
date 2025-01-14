@@ -1,0 +1,14 @@
+{
+  "test-name": "potato",
+  "potato" : {
+  "data": [
+    {
+    "name"   : "Test_1",
+    "tags"   : ["example.req1"],
+    "inputs" : [1, 2],
+    "expect" : 3
+    }
+  ],
+  "wibble": 42
+  }
+}
