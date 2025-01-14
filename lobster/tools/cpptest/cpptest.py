@@ -23,6 +23,7 @@ import os.path
 from copy import copy
 from enum import Enum
 import yaml
+from lobster.exceptions import LOBSTER_Exception
 from lobster.items import Tracing_Tag, Activity
 from lobster.location import File_Reference
 from lobster.io import lobster_write
@@ -94,7 +95,10 @@ def parse_config_file(file_name: str) -> dict:
         raise ValueError(f'{file_name} is not an existing file!')
 
     with open(file_name, "r", encoding='utf-8') as file:
-        config_dict = yaml.safe_load(file)
+        try:
+            config_dict = yaml.safe_load(file)
+        except yaml.scanner.ScannerError as ex:
+            raise LOBSTER_Exception(message="Invalid config file") from ex
 
     if (not config_dict or OUTPUT not in config_dict or
             CODEBEAMER_URL not in config_dict):
