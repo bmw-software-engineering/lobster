@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023, 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -24,6 +24,7 @@ import multiprocessing
 
 from abc import ABCMeta, abstractmethod
 from functools import partial
+from typing import List, Union, Tuple
 
 from lobster.version import FULL_NAME, get_version
 from lobster.errors import Message_Handler
@@ -95,9 +96,21 @@ class LOBSTER_Tool(metaclass=ABCMeta):
         self.add_argument = self.g_tool.add_argument
 
     @get_version
-    def process_commandline_options(self):
+    def process_commandline_options(
+            self,
+    ) -> Tuple[argparse.Namespace, List[Tuple[File_Reference, str]]]:
+        """Processes all command line options"""
         options = self.ap.parse_args()
+        work_list = self.process_common_options(options)
+        self.process_tool_options(options, work_list)
+        return options, work_list
 
+    def process_common_options(
+            self,
+            options: argparse.Namespace,
+    ) -> List[Tuple[File_Reference, str]]:
+        """Generates the exact list of files to work on later. The list is sorted
+        alphabetically."""
         # Sanity check output
         if options.out and \
            os.path.exists(options.out) and \
@@ -137,13 +150,19 @@ class LOBSTER_Tool(metaclass=ABCMeta):
 
             elif os.path.isdir(item):
                 for path, dirs, files in os.walk(item):
+                    # TODO: why in reverse order?
                     for n, dir_name in reversed(list(enumerate(dirs))):
                         keep = True
+                        # TODO: "exclude_pat" is always empty,
+                        #  and "traverse-bazel-dirs" is always ignored!
                         for pattern in self.exclude_pat:
                             if pattern.match(dir_name):
                                 keep = False
                                 break
                         if not keep:
+                            # TODO: can be simplified, "keep" is not necessary!
+                            #  But unit test should be written first, just to make
+                            #  sure!
                             del dirs[n]
 
                     for file_name in files:
@@ -161,11 +180,14 @@ class LOBSTER_Tool(metaclass=ABCMeta):
 
         work_list.sort()
 
-        self.process_tool_options(options, work_list)
+        return work_list
 
-        return options, work_list
-
-    def write_output(self, ok, options, items):
+    def write_output(
+            self,
+            ok: bool,
+            options: argparse.Namespace,
+            items: List[Union[Activity, Implementation, Requirement]],
+    ):
         assert isinstance(ok, bool)
         assert isinstance(options, argparse.Namespace)
         assert isinstance(items, list)
@@ -190,7 +212,11 @@ class LOBSTER_Tool(metaclass=ABCMeta):
             return 1
 
     @abstractmethod
-    def process_tool_options(self, options, work_list):
+    def process_tool_options(
+            self,
+            options: argparse.Namespace,
+            work_list: List[Tuple[File_Reference, str]],
+    ):
         assert isinstance(options, argparse.Namespace)
         assert isinstance(work_list, list)
 
@@ -211,8 +237,12 @@ class LOBSTER_Per_File_Tool(LOBSTER_Tool):
 
     @classmethod
     @abstractmethod
-    def process(cls, options, file_name):
-        return True, []
+    def process(
+            cls,
+            options,
+            file_name,
+    ) -> Tuple[bool, List[Union[Activity, Implementation, Requirement]]]:
+        pass
 
     def execute(self):
         options, work_list = self.process_commandline_options()

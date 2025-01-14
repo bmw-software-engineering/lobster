@@ -1,0 +1,40 @@
+package json_req
+import req
+
+req.Definition JSON_Input_File {
+    description = '''
+      Each file with the file name extension json is a valid input file.
+    '''
+}
+
+req.Definition File_Scanning {
+    description = '''
+      The term "scanning an input file" means that the tool
+      1. searches for JSON elements in it according to the configuration provided by
+         the user,
+      2. and serializes these elements in LOBSTER interchange format to the desired
+         output.
+      
+      Note:
+      It is possible to write a system test to verify that the tool is scanning a file
+      in the following way:
+      1. Define a set of valid input files containing valid elements.
+      2. Run the tool.
+      3. Verify that the resulting output contains (exactly) all of the input elements.
+    '''
+}
+
+req.Definition Directory_Scanning {
+    description = '''
+    The term "scanning a directory" means that the tool scans each file inside that directory
+    according to [[File_Scanning]], if it is a JSON file according to [[JSON_Input_File]].
+    '''
+}
+
+req.System_Requirement Directory_Input {
+  description = '''
+    If a list element given through the command line option FILE_OR_DIR is a directory,
+    then that directory and recursively all subdirectories shall be scanned
+    according to [[Directory_Scanning]].
+  '''
+}
