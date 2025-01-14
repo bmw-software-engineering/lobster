@@ -14,10 +14,40 @@ You can generate a report linking everything together with `lobster-report`.
 The report is in JSON, but you can generate more readable versions of it
 with additional tools:
 
+* `lobster-report`: Creation of JSON format report from provided config file
 * `lobster-online-report`: Preprocess a JSON report to contain github
   references instead of local file references
 * `lobster-html-report`: Generate an HTML report
 * `lobster-ci-report`: Generate a compiler-message like output, useful for CI
+
+## Configuration
+The `lobster-report` tool works with a config file. In it you can declare the 
+upstream, downstream and source of tracing policies. 
+
+The configuration file follows the following rules:
+
+* This file is able to get multiple `trace to` and `trace from` keys.
+* `trace to` specifies all the outgoing targets.
+* `trace from` specifies all the incoming targets.
+* Multiple lines of the same rule are treated as if they had an `and` between them.
+* `or` is supported in each line, to specify that only one target is needed, not 
+  all of them.
+* Self-references are also allowed.
+
+
+```
+requirements "Requirements" {
+   source: "file1.lobster";
+}
+
+requirements "System Requirements" {
+   source: "file2.lobster";
+   trace to: "Models" or "Software Requirements";
+   trace to: "Requirements";
+   trace from: "System Requirements" or "Integration Tests";
+   trace from: "Unit Tests";
+}
+```
 
 ## Requirements
 * `lobster-online-report`: This tool needs `git 1.7.8` or higher to support 

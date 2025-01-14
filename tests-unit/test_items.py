@@ -176,10 +176,8 @@ class TestItem(ItemsTests):
         mock_key.return_value = expected_result
         config = {
             "level1": {
-                "needs_tracing_up": True,
-                "needs_tracing_down": True,
-                "traces": ["level1"],
-                "breakdown_requirements": [["level1"]]
+                "trace_to": ["level1"],
+                "trace_from": [["level1"]]
             }
         }
         stab = {
@@ -198,10 +196,8 @@ class TestItem(ItemsTests):
         self.item.ref_up = []
         config = {
             "level1": {
-                "needs_tracing_up": True,
-                "needs_tracing_down": False,
-                "traces": ["level1"],
-                "breakdown_requirements": [["level1"]]
+                "trace_to": ["level1"],
+                "trace_from": [["level1"]]
             }
         }
         stab = {
@@ -221,10 +217,8 @@ class TestItem(ItemsTests):
         self.item.ref_down = []
         config = {
             "level1": {
-                "needs_tracing_up": False,
-                "needs_tracing_down": True,
-                "traces": ["level1"],
-                "breakdown_requirements": [["level1"]]
+                "trace_to": ["level1"],
+                "trace_from": [["level1"]]
             }
         }
         stab = {
@@ -233,7 +227,7 @@ class TestItem(ItemsTests):
         self.item.determine_status(config, stab)
 
         self.assertEqual(self.item.tracing_status, Tracing_Status.MISSING)
-        self.assertIn("missing reference to level1", self.item.messages)
+        self.assertIn("missing up reference", self.item.messages)
 
     @patch("lobster.items.Item.set_level")
     def test_additional_data_from_json_valid_data(self, mock_set_level):
