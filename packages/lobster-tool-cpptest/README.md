@@ -6,22 +6,32 @@ and requirements coverage, which is essential for meeting standards
 such as ISO 26262.
 
 This package contains a tool extract tracing tags from ISO C or C++
-source code. The tracing tags are identified by searching for configurable 
-markers in the comments of the source code.
+test code. The tracing tags are identified by searching for configurable 
+markers in the comments above the test code.
 
 ## Tools
 
-* `lobster-cpptest`: Extract requirements with specific references 
-  from tests.
+This LOBSTER package contains only one tool, `lobster-cpptest`.
+It can be used to extract references from C/C++ tests.
+The most frequent use case is that, the references point to requirements.
+But `lobstser-cpptest` is agnostic to that, and the references can point to any kind
+of artefact.
+The references must be given inside a comment above the test case itself.
+
+The resulting `*.lobster` file will then contain a LOBSTER item per test case.
+This file can be used to generate a LOBSTER report.
+
+## Configuration
+
+The tool requires a YAML configuration file to define its settings.
+You must provide this file when running the tool to specify parameters to process.
 
 ## Usage
 
 This tool supports C/C++ code.
-
-For this you have to provide a C/C++ test documentation with `markers`:
-
-`Markers` can be either `@requirement`, `@requiredby` or `@defect`.
-
+For this your C/C++ tests must have a documentation with `markers`:
+They can either be `@requirement`, `@requiredby` or `@defect`.
+Here is an example:
 ```cpp
 /**
  * @requirement CB-#1111, CB-#2222,
@@ -29,46 +39,41 @@ For this you have to provide a C/C++ test documentation with `markers`:
  * @requirement CB-#4444 CB-#5555
  *              CB-#6666
  */
-TEST(RequirementTagTest1, RequirementsAsMultipleComments) {}
-```
-You have to provide a config-file which determines which `markers` should be extracted in which output-files.
-The expected `kind` for each output-file should also be specified.  
-
-* Note: If you want to extract the other tests with other `markers`,
- you can use an empty list as `markers` value. Be aware in this case the tests do not have any references.
-
-
-```config
-{
-    "markers": [],
-    "kind": "req"
+TEST(RequirementTagTest1, RequirementsAsMultipleComments) {
+  // your test implementation here
 }
 ```
+You can also provide parameters to specify which markers should be extracted from which files.
+Additionally, you need to provide the Codebeamer URL.
 
-In addition, you have to provide the codebeamer-url:
+Examples:
 
-`Kind` can be either `req`, `imp` or `act`.
+```yaml
+output:
+    component_tests.lobster:
+        markers:
+        - "@requirement"
+        kind: "req"
 
-```config
-{
-	"output": {
-		"unit_tests.lobster" : 
-            {
-                "markers": ["@requirement"],
-                "kind": "req"
-            },
-        "components_tests.lobster" :
-            {
-                "markers": ["@requiredby", "@requirement"],
-                "kind": "imp"
-            }
-	},
-	"codebeamer_url": "https://codebeamer.example.com/test"
-}
+    unit_tests.lobster:
+        markers:
+        - "@requiredby"
+        kind: "req"
+
+    other_tests.lobster:
+        markers: []
+        kind: ""
+
+codebeamer_url: "https://codebeamer.com"
  ```
+You can also include CPP files in the YAML configuration file.
 
-For more information about how to setup cpp and config files take a look at [manual-lobster_cpptest](../../documentation/manual-lobster_cpptest.md)
-
+```yaml
+  files:
+    - 'path/to/source1.cpp'
+    - 'path/to/source2.cpp'
+```
+Note: File paths are accepted only in single quotes.
 
 ## Copyright & License information
 
