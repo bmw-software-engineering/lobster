@@ -6,13 +6,20 @@ and requirements coverage, which is essential for meeting standards
 such as ISO 26262.
 
 This package contains a tool extract tracing tags from ISO C or C++
-source code. The tracing tags are identified by searching for configurable 
-markers in the comments of the source code.
+test code. The tracing tags are identified by searching for configurable 
+markers in the comments above the test code.
 
 ## Tools
 
-* `lobster-cpptest`: Extract requirements with dynamic refrences 
-  from comments.
+This LOBSTER package contains only one tool, `lobster-cpptest`.
+It can be used to extract references from C/C++ tests.
+The most frequent use case is that, the references point to requirements.
+But `lobstser-cpptest` is agnostic to that, and the references can point to any kind
+of artefact.
+The references must be given inside a comment above the test case itself.
+
+The resulting `*.lobster` file will then contain a LOBSTER item per test case.
+This file can be used to generate a LOBSTER report.
 
 ## Configuration
 
@@ -22,11 +29,9 @@ You must provide this file when running the tool to specify parameters to proces
 ## Usage
 
 This tool supports C/C++ code.
-
-For this you have to provide a C/C++ test documentation with `markers`:
-
-`Markers` can be either `@requirement`, `@requiredby` or `@defect`.
-
+For this your C/C++ tests must have a documentation with `markers`:
+They can either be `@requirement`, `@requiredby` or `@defect`.
+Here is an example:
 ```cpp
 /**
  * @requirement CB-#1111, CB-#2222,
@@ -34,7 +39,9 @@ For this you have to provide a C/C++ test documentation with `markers`:
  * @requirement CB-#4444 CB-#5555
  *              CB-#6666
  */
-TEST(RequirementTagTest1, RequirementsAsMultipleComments) {}
+TEST(RequirementTagTest1, RequirementsAsMultipleComments) {
+  // your test implementation here
+}
 ```
 You can also provide parameters to specify which markers should be extracted from which files.
 Additionally, you need to provide the Codebeamer URL.
@@ -42,22 +49,22 @@ Additionally, you need to provide the Codebeamer URL.
 Examples:
 
 ```yaml
-    output:
-        component_tests.lobster:
-            markers:
-            - "@requirement"
-            kind: "req"
+output:
+    component_tests.lobster:
+        markers:
+        - "@requirement"
+        kind: "req"
 
-        unit_tests.lobster:
-            markers:
-            - "@requiredby"
-            kind: "req"
+    unit_tests.lobster:
+        markers:
+        - "@requiredby"
+        kind: "req"
 
-        other_tests.lobster:
-            markers: []
-            kind: ""
+    other_tests.lobster:
+        markers: []
+        kind: ""
 
-    codebeamer_url: "https://codebeamer.com"
+codebeamer_url: "https://codebeamer.com"
  ```
 You can also include CPP files in the YAML configuration file.
 
