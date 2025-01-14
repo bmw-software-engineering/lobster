@@ -6,7 +6,8 @@ and requirements coverage, which is essential for meeting standards
 such as ISO 26262.
 
 This repository contains the prototype for LOBSTER, which is a key
-ingredient to make TRLC and other supported tools more useful.
+ingredient to make [TRLC](https://github.com/bmw-software-engineering/trlc/)
+and other supported tools more useful.
 
 It has tools to extract tracing tags from a variety of sources to
 combine them and produce a tracing report. The [TRLC tracing
@@ -36,13 +37,14 @@ The `lobster-cpp` converter tool needs a specific version of `clang-tidy`. Pleas
 
 The following requirements frameworks are supported:
 
-* [TRLC](https://github.com/bmw-software-engineering/trlc/) (only some use cases supported right now)
-* [Codebeamer](packages/lobster-tool-codebeamer/README.md) (only some
-  use cases supported right now)
+* [TRLC](https://github.com/bmw-software-engineering/trlc/)
+* [Codebeamer](packages/lobster-tool-codebeamer/README.md)
 
 The following programming languages are supported:
 
-* [C/C++](packages/lobster-tool-cpp/README.md)
+* C/C++
+  * [lobster-cpp](packages/lobster-tool-cpp/README.md) (to extract tags from target code)
+  * [lobster-cpptest](packages/lobster-tool-cpptest/README.md) (to extract tags from test code)
 * [Python3](packages/lobster-tool-python/README.md)
 * [SIMULINK and MATLAB](https://misshit.org) using the 3rd-party tool
   MISS_HIT; supports both code and tests
@@ -84,7 +86,9 @@ The individual PyPI packages that `bmw-lobster` depends on are:
 
 #### Requirements Coverage 
 
-Here are the links to the individual html requirements coverage reports:
+The requirement-to-test coverage is measured using LOBSTER itself.
+Each LOBSTER tool has got a report on its own.
+Here are the links to the individual requirement coverage reports:
 
 * [Requirement Coverage Report TRLC](https://bmw-software-engineering.github.io/lobster/tracing-trlc.html)
 * [Requirement Coverage Report Python](https://bmw-software-engineering.github.io/lobster/tracing-python.html)
@@ -100,12 +104,18 @@ Here are the links to the individual html requirements coverage reports:
 
 ### Simple lobster-demo
 
-* A simple example can be found in the repository: [lobster-demo](https://github.com/bmw-software-engineering/lobster-demo)
+A simple example can be found in the repository: [lobster-demo](https://github.com/bmw-software-engineering/lobster-demo).
+It is still work in progress.
 
 ## Workflow of LOBSTER
 
 The lobster tool uses several steps to accomplish a fully modular software traceability
-and requirements coverage report. You can consider lobster as a set of 1) conversion tools, 2) a common interchange format, 3) the report creation tool and 4) a renderer for the tracing report.
+and requirements coverage report.
+You can consider lobster as a set of
+1. conversion tools,
+2. a common interchange format,
+3. the report creation tool and
+4. a renderer for the tracing report.
 
 For a more detailed description please read our [user guide](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/config_files.md).
 
@@ -174,7 +184,7 @@ graph LR
 
 ## Planned inputs
 
-The following inputs are planned but not implemeted yet:
+The following inputs are planned but not implemented yet:
 
 * `lobster-java`: Java code
 * `lobster-kotlin`: Kotlin code
