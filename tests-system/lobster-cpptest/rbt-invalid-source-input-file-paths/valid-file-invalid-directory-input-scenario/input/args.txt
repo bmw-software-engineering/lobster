@@ -1,0 +1,2 @@
+../../../data/test_case.cpp ../../../data/the-other-data
+--config-file=cpptest_output.conf
