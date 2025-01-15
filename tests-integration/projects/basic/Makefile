@@ -8,11 +8,23 @@ CLANG_TIDY:=$(LOBSTER_ROOT)/../llvm-project/build/bin/clang-tidy
 
 THIS_TEST:=$(shell realpath --relative-to $(LOBSTER_ROOT) $(PWD))
 THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
+REFERENCE_OUTPUT:='report.reference_output'
+PYTHON = python3
+UPDATE_GIT_HASHES_SCRIPT:='../../../tests-system/tests_utils/update_online_json_with_hashes.py'
+
+# Python script to delete the git hashes from reference_output file
+DELETE_COMMIT_IDS_PYTHON_SCRIPT:='../../../tests-system/tests_utils/delete_commit_ids_integration_test.py'
 
 html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
 	@lobster-report
 	@lobster-online-report
-	@cp report.lobster report.reference_output
+	$(PYTHON) $(UPDATE_GIT_HASHES_SCRIPT) $(REFERENCE_OUTPUT)
+	@if diff report.lobster $(REFERENCE_OUTPUT); then \
+        echo "Files are identical"; \
+    else \
+        echo "Files are different"; \
+        exit 1; \
+    fi
 	@lobster-html-report
 	@lobster-ci-report | tee ci_report.reference_output
 
