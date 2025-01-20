@@ -153,6 +153,7 @@ def main():
         match = re.match(RE_NOTAGS, line)
         if match:
             filename, line_nr, kind, function_name = match.groups()
+            filename = next((item for item in file_list if filename in item), None)
             filename = os.path.relpath(filename, prefix)
             line_nr = int(line_nr)
             function_uid = "%s:%s:%u" % (os.path.basename(filename),
@@ -174,6 +175,7 @@ def main():
         match = re.match(RE_JUST, line)
         if match:
             filename, line_nr, kind, function_name, reason = match.groups()
+            filename = next((item for item in file_list if filename in item), None)
             filename = os.path.relpath(filename, prefix)
             line_nr = int(line_nr)
             function_uid = "%s:%s:%u" % (os.path.basename(filename),
@@ -197,6 +199,7 @@ def main():
         match = re.match(RE_TAGS, line)
         if match:
             filename, line_nr, kind, function_name, ref = match.groups()
+            filename = next((item for item in file_list if filename in item), None)
             filename = os.path.relpath(filename, prefix)
             line_nr = int(line_nr)
             function_uid = "%s:%s:%u" % (os.path.basename(filename),
