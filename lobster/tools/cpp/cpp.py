@@ -142,7 +142,6 @@ def main():
             print(rv.stdout)
         print()
         print(rv.stderr)
-        return 1
 
     db = {}
 
@@ -219,7 +218,6 @@ def main():
 
         print("could not parse line")
         print(">", line)
-        return 1
 
     if options.out:
         with open(options.out, "w", encoding="UTF-8") as fd:
