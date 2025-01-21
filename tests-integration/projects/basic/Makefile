@@ -16,17 +16,16 @@ UPDATE_GIT_HASHES_SCRIPT:='../../../tests-system/tests_utils/update_online_json_
 DELETE_COMMIT_IDS_PYTHON_SCRIPT:='../../../tests-system/tests_utils/delete_commit_ids_integration_test.py'
 
 html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
-	@lobster-report
-	@lobster-online-report
-	$(PYTHON) $(UPDATE_GIT_HASHES_SCRIPT) $(REFERENCE_OUTPUT)
-	@if diff report.lobster $(REFERENCE_OUTPUT); then \
-        echo "Files are identical"; \
-    else \
-        echo "Files are different"; \
-        exit 1; \
-    fi
-	@lobster-html-report
-	@lobster-ci-report | tee ci_report.reference_output
+
+	@bash -c "lobster-report && echo '✅ lobster-report succeeded!' || { echo '❌ ERROR: lobster-report failed!'; exit 1; }"
+
+	@bash -c "lobster-online-report && echo '✅ lobster-online-report succeeded!' || { echo '❌ ERROR: lobster-online-report failed!'; exit 1; }"
+
+	@cp report.lobster report.reference_output && echo '✅ Copy report.lobster to report.reference_output succeeded!' || { echo '❌ ERROR: copy report.lobster to report.reference_output failed!'; exit 1; }
+
+	@bash -c "lobster-html-report && echo '✅ lobster-html-report succeeded!' || { echo '❌ ERROR: lobster-html-report failed!'; exit 1; }"
+
+	@bash -c "lobster-ci-report | tee ci_report.reference_output && echo '✅ lobster-ci-report succeeded!' || { echo '❌ ERROR: lobster-ci-report failed!'; exit 1; }"
 
 cppcode.lobster: foo.h foo.cpp
 	@lobster-cpp foo.cpp foo.h \
