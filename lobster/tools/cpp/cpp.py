@@ -161,15 +161,15 @@ def main():
             tag = Tracing_Tag("cpp", function_uid)
             loc = File_Reference(filename, line_nr)
 
-            assert tag.key() not in db
-            db[tag.key()] = Implementation(
-                tag      = tag,
-                location = loc,
-                language = "C/C++",
-                kind     = kind,
-                name     = function_name)
+            if tag.key() not in db:
+                db[tag.key()] = Implementation(
+                    tag      = tag,
+                    location = loc,
+                    language = "C/C++",
+                    kind     = kind,
+                    name     = function_name)
 
-            continue
+                continue
 
         match = re.match(RE_JUST, line)
         if match:

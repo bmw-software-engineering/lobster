@@ -218,29 +218,29 @@ def main():
 
     for item in report.items.values():
         if isinstance(item.location, File_Reference):
-            assert os.path.isdir(item.location.filename) or \
-                os.path.isfile(item.location.filename)
+            if os.path.isdir(item.location.filename) or \
+               os.path.isfile(item.location.filename):
 
-            rel_path_from_root = os.path.relpath(item.location.filename,
-                                                 repo_root)
-            # pylint: disable=possibly-used-before-assignment
-            actual_repo = gh_root
-            actual_sha  = options.commit
-            actual_path = rel_path_from_root
-            # pylint: disable=consider-using-dict-items
-            for prefix in gh_submodule_roots:
-                if path_starts_with_subpath(rel_path_from_root, prefix):
-                    actual_repo = gh_submodule_roots[prefix]
-                    actual_sha  = gh_submodule_sha[prefix]
-                    actual_path = rel_path_from_root[len(prefix) + 1:]
-                    break
+                rel_path_from_root = os.path.relpath(item.location.filename,
+                                                     repo_root)
+                # pylint: disable=possibly-used-before-assignment
+                actual_repo = gh_root
+                actual_sha  = options.commit
+                actual_path = rel_path_from_root
+                # pylint: disable=consider-using-dict-items
+                for prefix in gh_submodule_roots:
+                    if path_starts_with_subpath(rel_path_from_root, prefix):
+                        actual_repo = gh_submodule_roots[prefix]
+                        actual_sha  = gh_submodule_sha[prefix]
+                        actual_path = rel_path_from_root[len(prefix) + 1:]
+                        break
 
-            loc = Github_Reference(
-                gh_root  = actual_repo,
-                commit   = actual_sha,
-                filename = actual_path,
-                line     = item.location.line)
-            item.location = loc
+                loc = Github_Reference(
+                    gh_root  = actual_repo,
+                    commit   = actual_sha,
+                    filename = actual_path,
+                    line     = item.location.line)
+                item.location = loc
 
     report.write_report(options.out if options.out else options.lobster_report)
     print("LOBSTER report %s changed to use online references" %
