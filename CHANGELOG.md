@@ -5,6 +5,8 @@
 
 ### 0.9.22-dev
 
+* `lobster-online-report` - now contains the actual git commit hashes when the user executed the tool. 
+
 * The configuration management for the `lobster-cpptest` tool has been migrated from command-line arguments to YAML configuration files.
 
 ### 0.9.21

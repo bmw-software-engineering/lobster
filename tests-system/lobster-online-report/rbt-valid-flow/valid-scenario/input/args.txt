@@ -1,2 +1,2 @@
-report-lobster.input
+report.lobster
 --out=expected-output.lobster
