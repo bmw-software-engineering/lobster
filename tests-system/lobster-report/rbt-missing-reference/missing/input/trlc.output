@@ -1,14 +1,14 @@
 {
   "data": [
     {
-      "tag": "req example.adas_100",
+      "tag": "req example.adas_100_A",
       "location": {
         "kind": "file",
         "file": ".\\demo.trlc",
         "line": 3,
         "column": 13
       },
-      "name": "example.adas_100",
+      "name": "example.adas_100_A",
       "messages": [],
       "just_up": [],
       "just_down": [],
