@@ -22,6 +22,7 @@ import html
 import subprocess
 import hashlib
 import tempfile
+from datetime import datetime, timezone
 
 from lobster.html import htmldoc, assets
 from lobster.report import Report
@@ -189,6 +190,23 @@ def create_item_coverage(doc, report):
     doc.add_line("</table>")
 
 
+def get_commit_timestamp_utc(commit_hash):
+    try:
+        result = subprocess.run(
+            ['git', 'show', '-s', '--format=%ct', commit_hash],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        epoch_time = int(result.stdout.strip())
+        # Convert to UTC datetime
+        utc_time = datetime.fromtimestamp(epoch_time, tz=timezone.utc)
+        return utc_time
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e}")
+        return None
+
+
 def write_item_box_begin(doc, item):
     assert isinstance(doc, htmldoc.Document)
     assert isinstance(item, Item)
@@ -252,8 +270,17 @@ def write_item_tracing(doc, report, item):
     doc.add_line("</div>")
 
 
-def write_item_box_end(doc):
+def write_item_box_end(doc, item):
     assert isinstance(doc, htmldoc.Document)
+
+    if getattr(item.location, "exec_commit_id", None) is not None:
+        commit_hash = item.location.exec_commit_id
+        doc.add_line(
+            f'<div class="attribute">'
+            f'Build Reference: <strong>{commit_hash}</strong> | '
+            f'Timestamp: {get_commit_timestamp_utc(commit_hash)}'
+            f'</div>'
+        )
     doc.add_line("</div>")
     doc.add_line('<!-- end item -->')
 
@@ -480,7 +507,7 @@ def write_html(fd, report, dot, high_contrast):
                             html.escape(item.text).replace("\n", "<br>"))
                         doc.add_line('</div>')
                     write_item_tracing(doc, report, item)
-                    write_item_box_end(doc)
+                    write_item_box_end(doc, item)
             else:
                 doc.add_line("No items recorded at this level.")
     # Closing tag for id #search-sec-id
