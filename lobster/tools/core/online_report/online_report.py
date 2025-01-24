@@ -218,8 +218,8 @@ def main():
 
     for item in report.items.values():
         if isinstance(item.location, File_Reference):
-            assert os.path.isdir(item.location.filename) or \
-                   os.path.isfile(item.location.filename)
+            assert (os.path.isdir(item.location.filename) or
+                    os.path.isfile(item.location.filename))
 
             rel_path_from_root = os.path.relpath(item.location.filename,
                                                  repo_root)

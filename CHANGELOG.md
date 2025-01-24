@@ -5,9 +5,9 @@
 
 ### 0.9.22-dev
 
-* Added Git commit hashes to the `lobster-html-report` to track the exact version of the code used when executing the tool.
+* `lobster-html-report` adds actual git commit hashes to the source in the HTML report.
 
-* `lobster-online-report` - now contains the actual git commit hashes when the user executed the tool. 
+* `lobster-online-report` - now contains the actual git commit hashes when the user executes the tool. 
 
 * The configuration management for the `lobster-cpptest` tool has been migrated from command-line arguments to YAML configuration files.
 
