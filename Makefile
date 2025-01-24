@@ -70,6 +70,7 @@ system-tests:
 	make -B -C tests-system TOOL=lobster-json
 	make -B -C tests-system TOOL=lobster-trlc
 	make -B -C tests-system TOOL=lobster-python
+	make -B -C tests-system TOOL=lobster-online-report
 
 unit-tests:
 	coverage run -p \

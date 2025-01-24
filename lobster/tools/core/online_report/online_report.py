@@ -218,33 +218,43 @@ def main():
 
     for item in report.items.values():
         if isinstance(item.location, File_Reference):
-            assert os.path.isdir(item.location.filename) or \
-                os.path.isfile(item.location.filename)
+            assert (os.path.isdir(item.location.filename) or
+                    os.path.isfile(item.location.filename))
 
             rel_path_from_root = os.path.relpath(item.location.filename,
                                                  repo_root)
             # pylint: disable=possibly-used-before-assignment
             actual_repo = gh_root
-            actual_sha  = options.commit
+            actual_sha = options.commit
             actual_path = rel_path_from_root
+            exec_commit_id = subprocess.check_output(
+                ["git", "rev-parse", "HEAD"]
+            ).decode().strip()
             # pylint: disable=consider-using-dict-items
             for prefix in gh_submodule_roots:
                 if path_starts_with_subpath(rel_path_from_root, prefix):
                     actual_repo = gh_submodule_roots[prefix]
-                    actual_sha  = gh_submodule_sha[prefix]
+                    actual_sha = gh_submodule_sha[prefix]
                     actual_path = rel_path_from_root[len(prefix) + 1:]
+                    exec_commit_id = subprocess.check_output(
+                        ["git", "rev-parse", "HEAD"],
+                        universal_newlines=True, cwd=prefix
+                    )
+                    exec_commit_id = exec_commit_id.strip()
                     break
 
             loc = Github_Reference(
-                gh_root  = actual_repo,
-                commit   = actual_sha,
-                filename = actual_path,
-                line     = item.location.line)
+                gh_root=actual_repo,
+                commit=actual_sha,
+                filename=actual_path,
+                line=item.location.line,
+                exec_commit_id=exec_commit_id)
             item.location = loc
 
     report.write_report(options.out if options.out else options.lobster_report)
     print("LOBSTER report %s changed to use online references" %
           options.out if options.out else options.lobster_report)
+    return 0
 
 
 if __name__ == "__main__":
