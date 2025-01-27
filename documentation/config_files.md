@@ -69,11 +69,11 @@ requirements "Requirements" {
 
 implementation "Code" {
    source: "python.lobster";
-   trace to: "Requirements";
+   trace to: "Requirements" or "Code";
 }
 ```
 
-#### requires
+#### trace from
 
 Sometimes you might want alternatives. For example we could have two
 possibly ways to verify a requirement: by proof or by test. If we just
@@ -101,15 +101,15 @@ activity "Formal Proof" {
 ```
 
 Then we would get lots of errors as the tooling would require a
-requirement to be broken down into all three. The `requires`
+requirement to be broken down into all three. The `trace from`
 configuration can help here:
 
 
 ```
 requirements "Requirements" {
    source: "trlc.lobster";
-   requires: "Code";
-   requires: "Unit Test" or "Formal Proof";
+   trace from: "Code";
+   trace from: "Unit Test" or "Formal Proof";
 }
 ```
 
@@ -118,7 +118,17 @@ link to code, and either a link to a test or a link to a proof.
 
 **Note:**
 Don't forget that the `trace to` configuration is always mandatory.
-You cannot build links with a configuration that uses only `requires`.
+You cannot build links with a configuration that uses only `trace from`.
+
+**Note:**
+Multiple lines of the same rule are treated as if they had an `and` between them.
+
+**Note:**
+`or` is supported in each line, to specify that only one target is needed, not 
+  all of them.
+
+**Note:**
+Self-references are also allowed.
 
 # Examples
 
@@ -148,7 +158,7 @@ our own custom LOBSTER trace tool).
 requirements "System Requirements" {
    source: "cbtrace.lobster" with
      valid_status {"Valid"};
-   requires: "Integration Tests" or "Analysis";
+   trace from: "Integration Tests" or "Analysis";
 }
 
 requirements "Software Requirements" {

@@ -102,13 +102,11 @@ class Parser:
                        "duplicate declaration")
 
         item = {
-            "name"                   : level_name,
-            "kind"                   : level_kind,
-            "traces"                 : [],
-            "source"                 : [],
-            "needs_tracing_up"       : False,
-            "needs_tracing_down"     : False,
-            "raw_trace_requirements" : []
+            "name"       : level_name,
+            "kind"       : level_kind,
+            "source"     : [],
+            "trace_to"   : [],
+            "trace_from" : []
         }
         self.levels[level_name] = item
 
@@ -175,39 +173,40 @@ class Parser:
 
             elif self.peek("KEYWORD", "trace"):
                 self.match("KEYWORD", "trace")
-                self.match("KEYWORD", "to")
-                self.match("COLON")
-                self.match("STRING")
-                if self.ct.value() == level_name:
-                    self.error(self.ct.loc,
-                               "cannot trace to yourself")
-                elif self.ct.value() not in self.levels:
-                    self.error(self.ct.loc,
-                               "unknown item %s" % self.ct.value())
-                else:
-                    self.levels[self.ct.value()]["needs_tracing_down"] = True
-                item["traces"].append(self.ct.value())
-                item["needs_tracing_up"] = True
 
-                self.match("SEMI")
+                if self.peek("KEYWORD", "to"):
+                    self.match("KEYWORD", "to")
+                    self.match("COLON")
 
-            elif self.peek("KEYWORD", "requires"):
-                self.match("KEYWORD", "requires")
-                self.match("COLON")
-
-                req_list = []
-
-                self.match("STRING")
-                req_list.append(self.ct)
-
-                while self.peek("KEYWORD", "or"):
-                    self.match("KEYWORD", "or")
+                    req_list = []
                     self.match("STRING")
-                    req_list.append(self.ct)
+                    req_list.append(self.ct.value())
 
-                self.match("SEMI")
+                    while self.peek("KEYWORD", "or"):
+                        self.match("KEYWORD", "or")
+                        self.match("STRING")
+                        req_list.append(self.ct.value())
 
-                item["raw_trace_requirements"].append(req_list)
+                    self.match("SEMI")
+
+                    item["trace_to"].append(req_list)
+
+                elif self.peek("KEYWORD", "from"):
+                    self.match("KEYWORD", "from")
+                    self.match("COLON")
+
+                    req_list = []
+                    self.match("STRING")
+                    req_list.append(self.ct.value())
+
+                    while self.peek("KEYWORD", "or"):
+                        self.match("KEYWORD", "or")
+                        self.match("STRING")
+                        req_list.append(self.ct.value())
+
+                    self.match("SEMI")
+
+                    item["trace_from"].append(req_list)
 
             else:
                 self.error(self.nt.loc,
@@ -219,28 +218,19 @@ class Parser:
 def load(mh, file_name):
     parser = Parser(mh, file_name)
     ast = parser.parse()
-
-    # Resolve requires links now
+    item_names = list(ast.keys())
     for item in ast.values():
-        item["breakdown_requirements"] = []
-        if len(item["raw_trace_requirements"]) > 0:
-            for chain in item["raw_trace_requirements"]:
-                new_chain = []
-                for tok in chain:
-                    if tok.value() not in ast:
-                        mh.error(tok.loc, "unknown level %s" % tok.value())
-                    if item["name"] not in ast[tok.value()]["traces"]:
-                        mh.error(tok.loc,
-                                 "%s cannot trace to %s items" %
-                                 (tok.value(),
-                                  item["name"]))
-                    new_chain.append(tok.value())
-                item["breakdown_requirements"].append(new_chain)
-        else:
-            for src in ast.values():
-                if item["name"] in src["traces"]:
-                    item["breakdown_requirements"].append([src["name"]])
-        del item["raw_trace_requirements"]
+        if len(item["trace_to"]) > 0:
+            for trace_to in item["trace_to"]:
+                if not set(trace_to).issubset(item_names):
+                    mh.error(set(trace_to).issubset(item_names),
+                             "cannot trace to %s items" % ",".join(trace_to))
+
+        if len(item["trace_from"]) > 0:
+            for trace_from in item["trace_from"]:
+                if not set(trace_from).issubset(item_names):
+                    mh.error("cannot trace from %s items" %
+                             ",".join(trace_from))
 
     return ast
 

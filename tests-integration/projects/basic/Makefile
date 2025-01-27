@@ -15,7 +15,7 @@ UPDATE_GIT_HASHES_SCRIPT:='../../../tests-system/tests_utils/update_online_json_
 # Python script to delete the git hashes from reference_output file
 DELETE_COMMIT_IDS_PYTHON_SCRIPT:='../../../tests-system/tests_utils/delete_commit_ids_integration_test.py'
 
-html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
+html_report.html: gtests.lobster mcode.lobster system-requirements.lobster software-requirements.lobster lobster.conf pycode.lobster json.lobster
 	@lobster-report
 	@lobster-online-report
 	$(PYTHON) $(UPDATE_GIT_HASHES_SCRIPT) $(REFERENCE_OUTPUT)
@@ -27,10 +27,6 @@ html_report.html: cppcode.lobster gtests.lobster mcode.lobster system-requiremen
     fi
 	@lobster-html-report
 	@lobster-ci-report | tee ci_report.reference_output
-
-cppcode.lobster: foo.h foo.cpp
-	@lobster-cpp foo.cpp foo.h \
-		--out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
 
 gtests.lobster: foo.h foo.cpp test.cpp
 	@bazel test foo_test --cxxopt='-std=c++14' --enable_workspace

@@ -136,10 +136,11 @@ def create_policy_diagram(doc, report, dot):
 
     for level in report.config.values():
         source = name_hash(level["name"])
-        for target in map(name_hash, level["traces"]):
+        all_trace_tos = sum(level["trace_to"], [])
+        for target in map(name_hash, all_trace_tos):
             # Not a mistake; we want to show the tracing down, whereas
             # in the config file we indicate how we trace up.
-            graph += '  n_%s -> n_%s;\n' % (target, source)
+            graph += '  n_%s -> n_%s;\n' % (source, target)
     graph += "}\n"
 
     with tempfile.TemporaryDirectory() as tmp_dir:
