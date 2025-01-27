@@ -1,0 +1,18 @@
+files:
+      - data/test_case.scala
+object-name-regex:
+      - (\\w+[\\s\\t\\n]*)*def[\\s\\t\\n]*((\\w+)|(`(\\w+)`))[\\s\\t\\n]*\\(
+requirements_regex:
+  "@requirement":
+      - (CB-#\\d+)
+  "@requiredby":
+      - (\\w*::\\w+)
+docstring_regex:
+      - /\*\*.*?\*/
+direction: forward
+output:
+  output.lobster:
+    markers:
+      - "@requirement"
+      - "@requiredby"
+    kind: "req"

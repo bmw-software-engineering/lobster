@@ -1,0 +1,83 @@
+package regex_req
+import req
+
+req.Tool_Definition Valid_Config_Path {
+  title = '''Valid config path given'''
+  description = '''
+    Valid config path means that the tool was called with
+    an existing [[Config_File_Path]].
+  '''
+}
+
+req.Tool_Definition No_Config_Path {
+  title = '''No config path given'''
+  description = '''
+    No config path means that the tool was called with nothing specified
+    as the command line.
+  '''
+}
+
+req.Tool_Definition Invalid_Config_Path {
+  title = '''Invalid path given'''
+  description = '''
+    Invalid config path means that the tool was called with
+    a non-existent [[Config_File_Path]].
+  '''
+}
+
+req.Tool_Definition Valid_Config_File {
+  title = '''Valid config file given'''
+  description = '''
+    Valid config file means that the tool was called with
+    a [[Config_File]].
+  '''
+}
+
+req.Tool_Definition Invalid_Config_File {
+  title = '''Invalid config file given'''
+  description = '''
+    Invalid config file means that the tool was called with a file
+    which is not [[Config_File]].
+  '''
+}
+
+
+req.Tool_Config_Parameter Config_File {
+  description = '''
+    This Yarn file consists of the configuration of the tool.
+    The file should consist of the following keys: test_case_names_regex, requirements_regex, output
+  '''
+}
+
+req.Tool_Config_Parameter Config_File_Path {
+    description = '''
+      This parameter specifies the path to [[Config_File]] as a command line .
+    '''
+}
+
+
+
+req.System_Requirement Valid_Input_Config {
+    description = '''
+      If [[Valid_Config_Path]] and [[Valid_Config_File]] are specified, the output file/s containing the extracted tests
+      will be written with user-specific markers to the file specified in [[Config_File]].
+    '''
+}
+
+req.System_Requirement_Else No_Input_Config {
+    description = '''
+      Else if [[No_Config_Path]], the tool shall exit with return code 1.
+    '''
+}
+
+req.System_Requirement_Else Invalid_Input_Config_Path {
+    description = '''
+      Else if [[Invalid_Config_Path]], the tool shall exit with return code 1.
+    '''
+}
+
+req.System_Requirement_Else Invalid_Input_Config_File {
+    description = '''
+      Else if [[Invalid_Config_File]], the tool shall exit with return code 1.
+    '''
+}
