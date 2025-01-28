@@ -1,0 +1,3 @@
+usage: lobster-cpptest [-h] [-v, --version] --config-file CONFIG_FILE
+                       FILE|DIR [FILE|DIR ...]
+lobster-cpptest: error: the following arguments are required: FILE|DIR

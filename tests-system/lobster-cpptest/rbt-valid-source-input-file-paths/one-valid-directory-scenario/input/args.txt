@@ -1,0 +1,2 @@
+../../../data/other-data
+--config-file=cpptest_output.conf

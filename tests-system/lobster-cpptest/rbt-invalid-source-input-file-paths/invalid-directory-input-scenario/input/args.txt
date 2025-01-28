@@ -1,0 +1,2 @@
+../../../dattta
+--config-file=cpptest_output.conf
