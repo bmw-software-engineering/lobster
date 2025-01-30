@@ -135,18 +135,25 @@ tracing-%: report.lobster-%
 report.lobster-%: lobster/tools/lobster.conf \
 				  code.lobster-% \
 				  unit-tests.lobster-% \
-				  requirements.lobster-% \
+				  system_requirements.lobster-% \
+				  software_requirements.lobster-% \
 				  system-tests.lobster-%
 	lobster-report \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
 	lobster-online-report report.lobster
 
-requirements.lobster-%: lobster/tools/requirements.rsl
+system_requirements.lobster-%: lobster/tools/requirements.rsl
 	$(eval TOOL_PATH := $(subst -,/,$*))   
 	lobster-trlc lobster/tools/$(TOOL_PATH) lobster/tools/requirements.rsl \
-	--config-file=lobster/tools/lobster-trlc.conf \
-	--out requirements.lobster
+	--config-file=lobster/tools/lobster-trlc-system.conf \
+	--out system_requirements.lobster
+
+software_requirements.lobster-%: lobster/tools/requirements.rsl
+	$(eval TOOL_PATH := $(subst -,/,$*))   
+	lobster-trlc lobster/tools/$(TOOL_PATH) lobster/tools/requirements.rsl \
+	--config-file=lobster/tools/lobster-trlc-software.conf \
+	--out software_requirements.lobster
 
 code.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
