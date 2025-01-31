@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_json - Extract JSON tags for LOBSTER
-# Copyright (C) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -16,11 +16,12 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
-
+import argparse
 import sys
 import json
 from pathlib import PurePath
 from pprint import pprint
+from typing import Tuple, List
 
 from lobster.tool import LOBSTER_Per_File_Tool
 from lobster.items import Tracing_Tag, Activity
@@ -98,12 +99,16 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
                           help     = ("Member name indicator for "
                                       " justifications."))
 
-    def process_tool_options(self, options, work_list):
+    def process_tool_options(
+            self,
+            options: argparse.Namespace,
+            work_list: List[Tuple[File_Reference, str]],
+    ):
+        super().process_tool_options(options, work_list)
         self.schema = Activity
-        return True
 
     @classmethod
-    def process(cls, options, file_name):
+    def process(cls, options, file_name) -> Tuple[bool, List[Activity]]:
         try:
             with open(file_name, "r", encoding="UTF-8") as fd:
                 data = json.load(fd)
