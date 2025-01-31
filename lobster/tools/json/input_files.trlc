@@ -1,0 +1,47 @@
+package json_req
+import req
+
+req.System_Requirement Parse_Input_File {
+    description = '''
+      IF a list element given through the command line option "FILE_OR_DIR" is a file,
+    '''
+}
+
+req.System_Requirement_Aspect Parse_Input_File_JSON_Extension {
+  description = '''
+    AND if the file extension is "json" (case-insensitive),
+  '''
+}
+
+req.System_Requirement_Aspect Parse_Input_File_Valid_JSON {
+  description = '''
+    AND if the file content is valid JSON,
+  '''
+}
+
+req.System_Requirement_Aspect Parse_Input_File_Input_Items {
+  description = '''
+    THEN each key-value pair of the outer-most dictionary of the JSON data struct
+  '''
+}
+
+req.System_Requirement_Aspect Parse_Input_File_To_Lobster {
+  description = '''
+    SHALL be written in the LOBSTER interchange format
+  '''
+}
+
+// missing aspect: how to convert (i.e. what is the item name)? 
+
+req.System_Requirement_Aspect Parse_Input_File_To_Stdout {
+  description = '''
+    to the file given in the command line option "out",
+    IF that option is given and is not an empty string,
+  '''
+}
+
+req.System_Requirement_Aspect Parse_Input_File_To_File {
+  description = '''
+    OTHERWISE to STDOUT.
+  '''
+}

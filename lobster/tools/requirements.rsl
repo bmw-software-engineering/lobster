@@ -8,6 +8,19 @@ type System_Requirement {
   ''' String
 }
 
+type System_Requirement_Aspect extends System_Requirement {
+  /* This type describes an aspect of a system requirement.
+     The aspect itself is not testable. It is only testable in the context of a requirement.
+     For example, an aspect may give details about a certain input, but it does not describe
+     the related output.
+     Nevertheless, system tests shall be linked to aspects, and each aspect shall be covered
+     by system tests. These tests must always take the requirement into account, which uses
+     the aspect.
+     Using this type helps to make long requirements easier to read, and it is easier to
+     develop tests for them.
+   */
+}
+
 type Software_Requirement {
   description '''
     The content of the requirement.

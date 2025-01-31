@@ -144,7 +144,7 @@ report.lobster-%: lobster/tools/lobster.conf \
 
 requirements.lobster-%: lobster/tools/requirements.rsl
 	$(eval TOOL_PATH := $(subst -,/,$*))   
-	lobster-trlc lobster/tools/$(TOOL_PATH)/requirements.trlc lobster/tools/requirements.rsl \
+	lobster-trlc lobster/tools/$(TOOL_PATH) lobster/tools/requirements.rsl \
 	--config-file=lobster/tools/lobster-trlc.conf \
 	--out requirements.lobster
 
