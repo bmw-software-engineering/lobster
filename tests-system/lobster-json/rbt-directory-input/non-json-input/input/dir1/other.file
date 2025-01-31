@@ -1,0 +1,9 @@
+{
+  "banana": {
+    "data": [
+      {
+        "name": "This file is in fact a JSON file, but its file ending is different."
+      }
+    ]
+  }
+}
