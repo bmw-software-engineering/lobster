@@ -1,0 +1,5 @@
+--name-attribute=fruit
+--tag-attribute=vegtable
+--out=output.lobster
+data.txt
+data.json
