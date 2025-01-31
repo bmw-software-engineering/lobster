@@ -1,0 +1,2 @@
+<cmdline>: lobster warning: not a .json file
+lobster-json: wrote 1 items to output.lobster

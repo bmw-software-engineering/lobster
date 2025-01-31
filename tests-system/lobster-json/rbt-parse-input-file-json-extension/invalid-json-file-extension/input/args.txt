@@ -1,0 +1,4 @@
+--single
+--tag-attribute=something
+--out=output.lobster
+data.invalidjson
