@@ -6,8 +6,10 @@ req.Software_Requirement Synthetic_Tag_Name {
     If the command line option --name-attribute is not given, then the tool shall create
     a synthetic tag name based on the path of the JSON input file and an item counter.
 
-    Note: The item counter does not need to be unique across files.
-    It shall be unique at least for each input file separately.
+    Notes:
+    - "Synthetic" means that, the name does not need to be related to the data.
+    - The item counter does not need to be unique across files.
+      But it shall be unique at least for each input file separately.
   '''
 }
 
