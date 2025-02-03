@@ -1,0 +1,63 @@
+package json_req
+import req
+
+req.System_Requirement Parse_Input_File {
+    description = '''
+      IF a list element given through the command line option "FILE_OR_DIR" is not a file nor a directory,
+      THEN the tool shall exit with a non-zero return code.
+    '''
+
+    /*
+     
+     args.txt
+     "path/does/not/exist.json"
+    */
+}
+
+req.System_Requirement_Aspect Parse_Input_File_JSON_Extension {
+  description = '''
+    OTHERWISE,
+    if the file extension is not "json" (case-insensitive),
+    THEN the tool shall exit with a non-zero return code.
+  '''
+
+      /*
+     args.txt
+     "path/does/exist.txt"
+    */
+}
+
+req.System_Requirement_Aspect Parse_Input_File_Valid_JSON {
+  description = '''
+    OTHERWISE,
+    if the file content is invalid JSON,
+    THEN the tool shall exit with a non-zero return code.
+  '''
+
+    /*
+     args.txt
+     "path/does/exist.json" (but with non-json content)
+    */
+}
+
+req.System_Requirement_Aspect Parse_Input_File_Input_Items {
+  description = '''
+    OTHERWISE each key-value pair of the outer-most dictionary of the JSON data struct
+    SHALL be written in the LOBSTER interchange format
+  '''
+}
+
+// missing aspect: how to convert (i.e. what is the item name)? 
+
+req.System_Requirement_Aspect Parse_Input_File_To_Stdout {
+  description = '''
+    to the file given in the command line option "out",
+    IF that option is given and is not an empty string,
+  '''
+}
+
+req.System_Requirement_Aspect Parse_Input_File_To_File {
+  description = '''
+    OTHERWISE to STDOUT.
+  '''
+}
