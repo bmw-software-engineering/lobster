@@ -13,9 +13,6 @@ REFERENCE_OUTPUT:='report.reference_output'
 PYTHON = python3
 UPDATE_GIT_HASHES_SCRIPT:='../../../tests-system/tests_utils/update_online_json_with_hashes.py'
 
-# Python script to delete the git hashes from reference_output file
-DELETE_COMMIT_IDS_PYTHON_SCRIPT:='../../../tests-system/tests_utils/delete_commit_ids_integration_test.py'
-
 html_report.html: cppcode.lobster requirements.lobster lobster.conf json.lobster
 	@lobster-report
 	@lobster-online-report
