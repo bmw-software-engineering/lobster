@@ -5,12 +5,16 @@ PYTHONPATH:=$(wildcard $(LOBSTER_ROOT)/test_install/lib/python*/site-packages)
 
 THIS_TEST:=$(shell realpath --relative-to $(LOBSTER_ROOT) $(PWD))
 THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
+REFERENCE_OUTPUT:=report.reference_output
 
 html_report.html: softreq.lobster sysreq.lobster testreq.lobster lobster.conf trlc-softreq.conf trlc-sysreq.conf trlc-testreq.conf
 	@lobster-report
-	@lobster-online-report
-	@cp report.lobster report.reference_output
-	@lobster-html-report
+	@if diff report.lobster $(REFERENCE_OUTPUT); then \
+	    echo "Files are identical"; \
+    else \
+        echo "Files are different"; \
+        exit 1; \
+	fi
 
 softreq.lobster: example.rsl softreq_example.trlc sysreq_example.trlc testreq_example.trlc
 	@lobster-trlc example.rsl softreq_example.trlc sysreq_example.trlc testreq_example.trlc\

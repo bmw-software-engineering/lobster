@@ -10,11 +10,10 @@
         {
           "tag": "req softreq_coverage_half_example.requirement_d",
           "location": {
-            "kind": "github",
-            "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
-            "file": "tests-integration/projects/coverage-mix/softreq_example.trlc",
-            "line": 5
+            "kind": "file",
+            "file": "softreq_example.trlc",
+            "line": 5,
+            "column": 44
           },
           "name": "softreq_coverage_half_example.requirement_d",
           "messages": [],
@@ -41,11 +40,10 @@
         {
           "tag": "req sysreq_coverage_half_example.requirement_e",
           "location": {
-            "kind": "github",
-            "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
-            "file": "tests-integration/projects/coverage-mix/sysreq_example.trlc",
-            "line": 5
+            "kind": "file",
+            "file": "sysreq_example.trlc",
+            "line": 5,
+            "column": 42
           },
           "name": "sysreq_coverage_half_example.requirement_e",
           "messages": [
@@ -70,11 +68,10 @@
         {
           "tag": "req testreq_coverage_half_example.requirement_f",
           "location": {
-            "kind": "github",
-            "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
-            "file": "tests-integration/projects/coverage-mix/testreq_example.trlc",
-            "line": 5
+            "kind": "file",
+            "file": "testreq_example.trlc",
+            "line": 5,
+            "column": 40
           },
           "name": "testreq_coverage_half_example.requirement_f",
           "messages": [],
