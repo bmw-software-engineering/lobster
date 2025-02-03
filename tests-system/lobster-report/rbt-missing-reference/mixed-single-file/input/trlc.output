@@ -15,7 +15,7 @@
       "just_global": [],
       "framework": "TRLC",
       "kind": "Requirement",
-      "text": "keep the vehicle in lane.",
+      "text": "keep the vehicle in lane for A.",
       "status": null
     },
     {
@@ -33,7 +33,7 @@
       "just_global": [],
       "framework": "TRLC",
       "kind": "Requirement",
-      "text": "keep the vehicle in lane.",
+      "text": "keep the vehicle in lane for B.",
       "status": null
     }
   ],

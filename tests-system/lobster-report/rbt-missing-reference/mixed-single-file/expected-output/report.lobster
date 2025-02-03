@@ -4,14 +4,14 @@
   "generator": "lobster_report",
   "levels": [
     {
-      "name": "Requirements A",
+      "name": "Requirements",
       "kind": "requirements",
       "items": [
         {
           "tag": "req example.adas_100_A",
           "location": {
             "kind": "file",
-            "file": ".\\demo.trlc",
+            "file": "./demo.trlc",
             "line": 3,
             "column": 13
           },
@@ -27,22 +27,15 @@
           "tracing_status": "OK",
           "framework": "TRLC",
           "kind": "Requirement",
-          "text": "keep the vehicle in lane.",
+          "text": "keep the vehicle in lane for A.",
           "status": null
-        }
-      ],
-      "coverage": 100.0
-    },
-    {
-      "name": "Requirements B",
-      "kind": "requirements",
-      "items": [
+        },
         {
           "tag": "req example.adas_100_B",
           "location": {
             "kind": "file",
-            "file": ".\\demo.trlc",
-            "line": 3,
+            "file": "./demo.trlc",
+            "line": 8,
             "column": 13
           },
           "name": "example.adas_100_B",
@@ -55,11 +48,11 @@
           "tracing_status": "MISSING",
           "framework": "TRLC",
           "kind": "Requirement",
-          "text": "keep the vehicle in lane.",
+          "text": "keep the vehicle in lane for B.",
           "status": null
         }
       ],
-      "coverage": 0.0
+      "coverage": 50.0
     },
     {
       "name": "Code",
@@ -69,7 +62,7 @@
           "tag": "python software.Example",
           "location": {
             "kind": "file",
-            "file": ".\\software.py",
+            "file": "./software.py",
             "line": 1,
             "column": null
           },
@@ -91,32 +84,13 @@
     }
   ],
   "policy": {
-    "Requirements A": {
-      "name": "Requirements A",
+    "Requirements": {
+      "name": "Requirements",
       "kind": "requirements",
       "traces": [],
       "source": [
         {
-          "file": "trlc-A.lobster",
-          "filters": [],
-          "valid_status": []
-        }
-      ],
-      "needs_tracing_up": false,
-      "needs_tracing_down": true,
-      "breakdown_requirements": [
-        [
-          "Code"
-        ]
-      ]
-    },
-    "Requirements B": {
-      "name": "Requirements B",
-      "kind": "requirements",
-      "traces": [],
-      "source": [
-        {
-          "file": "trlc-B.lobster",
+          "file": "trlc.output",
           "filters": [],
           "valid_status": []
         }
@@ -133,12 +107,11 @@
       "name": "Code",
       "kind": "implementation",
       "traces": [
-        "Requirements A",
-        "Requirements B"
+        "Requirements"
       ],
       "source": [
         {
-          "file": "python.lobster",
+          "file": "python.output",
           "filters": []
         }
       ],

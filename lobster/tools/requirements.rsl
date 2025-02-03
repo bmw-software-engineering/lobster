@@ -35,11 +35,3 @@ type Definition {
     to prevent the need of duplicating text.
   ''' String
 }
-
-type Definition {
-  description '''
-    The text of the definition.
-    A definition shall be formulated such that it is reusable in multiple requirements,
-    to prevent the need of duplicating text.
-  ''' String
-}

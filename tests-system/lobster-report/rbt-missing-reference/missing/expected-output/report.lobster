@@ -34,8 +34,28 @@
     {
       "name": "Code",
       "kind": "implementation",
-      "items": [],
-      "coverage": 100.0
+      "items": [
+        {
+          "tag": "python software.Example",
+          "location": {
+            "kind": "file",
+            "file": "./software.py",
+            "line": 1,
+            "column": null
+          },
+          "name": "software.Example",
+          "messages": [
+            "missing up reference"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "MISSING",
+          "language": "Python",
+          "kind": "Function"
+        }
+      ],
+      "coverage": 0.0
     }
   ],
   "policy": {
