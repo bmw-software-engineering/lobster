@@ -4,6 +4,8 @@ import req
 req.System_Requirement Parse_Input_File {
     description = '''
       IF a list element given through the command line option "FILE_OR_DIR" is a file,
+
+      (OTHERWISE, the tool shall exit with a non-zero return code.)
     '''
 }
 
