@@ -26,7 +26,9 @@ from lobster.io import lobster_write
 from trlc.trlc import Source_Manager
 from trlc.errors import Message_Handler
 
-TEST_DIR = "tests-system/lobster-" + sys.argv[1]
+tool_name = (sys.argv[1].split("/")[1] if "core/" in sys.argv[1]
+    else sys.argv[1]).replace("_", "-")
+TEST_DIR = f"tests-system/lobster-{tool_name}"
 TARGET   = "system-tests.lobster"
 
 def process(testname, mapping):
