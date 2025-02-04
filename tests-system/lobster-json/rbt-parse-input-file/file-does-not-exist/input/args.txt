@@ -1,0 +1,4 @@
+--single
+--tag-attribute=something
+--out=output.lobster
+file/does/not_exists.json
