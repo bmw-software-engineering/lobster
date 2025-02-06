@@ -71,6 +71,7 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
+          make lobster/html/assets.py
       - name: Install gnu make on macos
         if: startsWith(matrix.os, 'macos')
         run: |
