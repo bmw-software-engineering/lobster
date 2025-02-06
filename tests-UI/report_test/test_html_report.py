@@ -1,37 +1,49 @@
 import sys
 import importlib
 import time
+import json
+import subprocess
+import os
+from datetime import datetime, timezone
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-class ButtonTest:
+
+class LobsterUIReportTests:
+    """UI Automation Tests for Lobster Report."""
+
+    TESTS_UI_PATH = "tests-UI"
+    TIMEOUT = 10
+
     def __init__(self):
-        # Add tests-UI path and import driver setup
-        sys.path.append('tests-UI')
+        sys.path.append(self.TESTS_UI_PATH)
+        self.driver = self._setup_driver()
+
+    def _setup_driver(self):
+        """Initialize the Selenium WebDriver."""
         try:
-            self.driver = importlib.import_module("tests-UI.setup").setup_driver()
+            return importlib.import_module("tests-UI.setup").setup_driver()
         except ImportError as e:
             sys.stderr.write(f"Error importing driver module: {e}\n")
             sys.exit(1)
 
     def test_show_issue_button(self):
-        """
-        Test the toggle functionality of the Show Issue button.
-        """
-        sys.stdout.write("Testing Show Issue button...\n")
+        """Test the toggle functionality of the Show Issue button."""
+        print("Testing Show Issue button...")
+
         for toggle in range(2):
             try:
-                WebDriverWait(self.driver, 10).until(
-                    EC.element_to_be_clickable((By.ID, 'BtnToggleIssue'))
+                WebDriverWait(self.driver, self.TIMEOUT).until(
+                    EC.element_to_be_clickable((By.ID, "BtnToggleIssue"))
                 ).click()
-                element = self.driver.find_element(By.ID, 'issues-section')
+                element = self.driver.find_element(By.ID, "issues-section")
+                expected_display = "block" if toggle == 0 else "none"
 
-                if (toggle == 0 and element.value_of_css_property("display") == "block") or \
-                   (toggle == 1 and element.value_of_css_property("display") == "none"):
-                    sys.stdout.write(f"Issue items visibility is as expected.\n")
+                if element.value_of_css_property("display") == expected_display:
+                    print("Issue items visibility is as expected.")
                 else:
-                    sys.stderr.write(f"Test failed. Visibility mismatch.\n")
+                    sys.stderr.write("Test failed: Visibility mismatch.\n")
                     return False
             except Exception as e:
                 sys.stderr.write(f"Error during Show Issue button test: {e}\n")
@@ -39,51 +51,38 @@ class ButtonTest:
         return True
 
     def click_and_verify(self, button_xpath, item_class, status):
-        """
-        Click a button and verify the visibility of elements by class.
-        """
+        """Click a button and verify the visibility of elements."""
         try:
-            WebDriverWait(self.driver, 10).until(
+            WebDriverWait(self.driver, self.TIMEOUT).until(
                 EC.element_to_be_clickable((By.XPATH, button_xpath))
             ).click()
 
-            if item_class == "item-":
-                xpath = "//div[starts-with(@class, 'item-') and not(contains(@class, 'item-name'))]"
-                total_items = len(self.driver.find_elements(By.XPATH, xpath))
-            else:
-                WebDriverWait(self.driver, 10).until(
-                    lambda d: len(d.find_elements(By.CLASS_NAME, item_class)) > 0
-                )
-                total_items = len(self.driver.find_elements(By.CLASS_NAME, item_class))
+            elements = self.driver.find_elements(By.CLASS_NAME, item_class) if item_class != "item-" else \
+                self.driver.find_elements(By.XPATH, "//div[starts-with(@class, 'item-') and not(contains(@class, 'item-name'))]")
 
-            sys.stdout.write(f"{total_items} items retrieved after clicking the '{status}' button.\n")
+            print(f"{len(elements)} items retrieved after clicking '{status}' button.")
             return True
         except Exception as e:
             print(f"No items found for '{status}' button, skipping check.")
             return False
 
     def check_hidden_elements(self, item_classes, current_status):
-        """
-        Verify that elements for statuses other than the current one are hidden.
-        """
+        """Ensure that elements for other statuses are hidden."""
         for status, class_name in item_classes.items():
             if status != current_status:
                 try:
                     element = self.driver.find_element(By.CLASS_NAME, class_name)
-                    display_property = element.value_of_css_property("display")
                     expected_display = "none" if current_status != "Show All" else "block"
 
-                    if display_property == expected_display:
-                        sys.stdout.write(f"'{status}' items visibility is as expected.\n")
+                    if element.value_of_css_property("display") == expected_display:
+                        print(f"'{status}' items visibility is as expected.")
                     else:
                         sys.stderr.write(f"Visibility mismatch for '{status}' items.\n")
-                except Exception as e:
+                except Exception:
                     print(f"No items found for '{status}' button.")
 
     def test_html_report_title(self):
-        """
-        Test various buttons in an HTML report and their corresponding item visibility.
-        """
+        """Test visibility toggles in the HTML report."""
         button_xpath = {
             "OK": '//*[@id="btnFilterItem"]/button[2]',
             "Missing": '//*[@id="btnFilterItem"]/button[3]',
@@ -101,28 +100,50 @@ class ButtonTest:
             "Show All": "item-",
         }
 
-        try:
-            for status, xpath in button_xpath.items():
-                sys.stdout.write(f"Testing '{status}' button...\n")
-                if self.click_and_verify(xpath, item_classes[status], status):
-                    time.sleep(1)
-                    self.check_hidden_elements(item_classes, status)
-
-            if not self.test_show_issue_button():
-                sys.stderr.write("Show Issue button test failed.\n")
-                sys.exit(1)
-
-            sys.stdout.write("All tests passed successfully.\n")
-        except Exception as e:
-            sys.stderr.write(f"Test execution error: {e}\n")
+        for status, xpath in button_xpath.items():
+            print(f"Testing '{status}' button...")
+            if self.click_and_verify(xpath, item_classes[status], status):
+                time.sleep(1)
+                self.check_hidden_elements(item_classes, status)
+               
+        if not self.test_show_issue_button():
+            sys.stderr.write("Show Issue button test failed.\n")
             sys.exit(1)
 
+        print("All tests passed successfully.")
+
+    def test_git_hash_timestamp(self):
+        """Verify git commit timestamps in the report output."""
+        report_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "report.output")
+        print(f"Processing report: {report_path}")
+
+        with open(report_path) as file:
+            data = json.load(file)
+
+        for level in data.get("levels", []):
+            for item in level.get("items", []):
+                tag, exec_commit_id = item.get("tag"), item.get("location", {}).get("exec_commit_id")
+                if not (tag and exec_commit_id):
+                    continue
+
+                elements = self.driver.find_elements(By.XPATH, "//div[starts-with(@class, 'item-') and not(contains(@class, 'item-name'))]")
+                for elem in elements:
+                    text = elem.text.replace("Python Function", "python")
+                    if tag in text and exec_commit_id in text:
+                        result = subprocess.run(
+                            ['git', 'show', '-s', '--format=%ct', exec_commit_id],
+                            capture_output=True, text=True, check=True
+                        )
+
+                        expected_time = datetime.fromtimestamp(int(result.stdout.strip()), tz=timezone.utc)
+                        if str(expected_time) in text:
+                            print("Timestamp verification passed.")
+
     def run_tests(self):
-        """
-        Run all the tests in sequence.
-        """
+        """Execute all test cases."""
         try:
             self.test_html_report_title()
+            self.test_git_hash_timestamp()
         except Exception as e:
             sys.stderr.write(f"Critical error during test execution: {e}\n")
             sys.exit(1)
@@ -132,5 +153,4 @@ class ButtonTest:
 
 
 if __name__ == "__main__":
-    test_suite = ButtonTest()
-    test_suite.run_tests()
+    LobsterUIReportTests().run_tests()
