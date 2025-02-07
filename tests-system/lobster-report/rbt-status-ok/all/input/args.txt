@@ -1,0 +1,2 @@
+--lobster-config=lobster.conf
+--out=report.lobster

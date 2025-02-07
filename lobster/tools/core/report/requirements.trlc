@@ -14,3 +14,23 @@ req.Software_Requirement Dummy_Requirement_Unit_Test {
     It can be deleted as soon as all the tools get their real requirements.
   '''
 }
+
+req.Definition Traced_level{
+    description = '''
+    A traced level is a name that is given in the "trace to" parameter. 
+    A traced level is valid if that level is declared in the configuration file.
+  '''
+}
+
+req.Definition Item{
+    description = '''
+    An item is an entry in the data section according to the schema.
+  '''
+}
+
+req.System_Requirement Missing_reference {
+  description = '''    
+    If an [[Item]] has no references to an [[Item]] from a [[Traced_level]], 
+    then the tool shall write "missing up reference" into the message section and set the tracing status to "MISSING" of that [[Item]] according to the schema.
+  '''
+}
