@@ -136,14 +136,12 @@ def _run_test(setup: TestSetup, tool: str) -> CompletedProcess:
     print(f"Starting system test '{setup.name}' with arguments {setup.args} " \
           f"for tool '{tool}' with coverage.")
     root_directory = Path(__file__).resolve().parents[1]
-    coverage_config_path = root_directory / "coverage.cfg"
-    coverage_data_path = root_directory / ".coverage"
-
     coverage_command = [
         "coverage", "run", "-p",
-        f"--rcfile={coverage_config_path}",
+        f"--rcfile={root_directory / 'coverage.cfg'}",
         "--branch",
-        f"--data-file={coverage_data_path}",
+        f"--data-file={root_directory / '.coverage'}",
+        f"--source={root_directory / 'lobster'}",
         tool, *setup.args
     ]
 
