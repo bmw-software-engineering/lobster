@@ -1,14 +1,14 @@
 {
   "data": [
     {
-      "tag": "json data.invalidjson:data.invalidjson.1",
+      "tag": "json data.json:apple",
       "location": {
         "kind": "file",
-        "file": "data.invalidjson",
+        "file": "data.json",
         "line": null,
         "column": null
       },
-      "name": "data.invalidjson:data.invalidjson.1",
+      "name": "data.json:apple",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -18,14 +18,14 @@
       "status": null
     },
     {
-      "tag": "json valid.json:valid.1",
+      "tag": "json data.txt:banana",
       "location": {
         "kind": "file",
-        "file": "valid.json",
+        "file": "data.txt",
         "line": null,
         "column": null
       },
-      "name": "valid.json:valid.1",
+      "name": "data.txt:banana",
       "messages": [],
       "just_up": [],
       "just_down": [],
