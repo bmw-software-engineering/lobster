@@ -76,6 +76,7 @@ unit-tests:
 	coverage run -p \
 			--branch --rcfile=coverage.cfg \
 			--data-file .coverage \
+			--source=lobster \
 			-m unittest discover -s tests-unit -v
 
 upload-main: packages
@@ -102,7 +103,7 @@ full-release:
 coverage:
 	coverage combine -q
 	coverage html --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=58
+	coverage report --rcfile=coverage.cfg --fail-under=53
 
 test: clean-coverage system-tests unit-tests
 	make coverage
