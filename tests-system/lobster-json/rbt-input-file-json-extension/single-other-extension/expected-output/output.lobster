@@ -1,14 +1,14 @@
 {
   "data": [
     {
-      "tag": "json data.invalidjson:data.invalidjson.1",
+      "tag": "json data.txt:cherry",
       "location": {
         "kind": "file",
-        "file": "data.invalidjson",
+        "file": "data.txt",
         "line": null,
         "column": null
       },
-      "name": "data.invalidjson:data.invalidjson.1",
+      "name": "data.txt:cherry",
       "messages": [],
       "just_up": [],
       "just_down": [],
