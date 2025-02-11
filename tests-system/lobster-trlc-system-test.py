@@ -31,48 +31,52 @@ tool_name = (sys.argv[1].split("/")[1] if "core/" in sys.argv[1]
 TEST_DIR = f"tests-system/lobster-{tool_name}"
 TARGET   = "system-tests.lobster"
 
-def process(testname, mapping):
-    test_dir = os.path.join(TEST_DIR, testname)
+def process(test_name_orig: str, mapping: dict):
+    test_name = test_name_orig
+    test_dir = os.path.join(TEST_DIR, test_name)
     assert os.path.isdir(test_dir)
     assert isinstance(mapping, dict)
     tag_file = os.path.join(test_dir, "tracing")
 
-    item = Activity(
-        tag       = Tracing_Tag(namespace = "trlc-st",
-                                tag       = testname),
-        location  = File_Reference(filename = test_dir),
-        framework = "TRLCST",
-        kind      = "Test Directory")
-    include_test = False
-    if os.path.isfile(tag_file):
-        include_test = True
-        with open(tag_file, "r", encoding="UTF-8") as fd:
-            tags = [Tracing_Tag(namespace = "req",
-                                tag       = line.strip())
-                    for line in fd.read().splitlines()
-                    if line.strip()]
-        for tag in tags:
-            item.add_tracing_target(tag)
-    if testname.startswith("rbt-"):
-        include_test = True
-        components = testname[4:].lower().split("-")
-        if len(components) >= 2:
-            try:
-                int(components[-1])
-                components.pop()
-            except ValueError:
-                pass
-        requirement = mapping.get("-".join(components),
-                                  "_".join(item.capitalize()
-                                           for item in components))
-        item.add_tracing_target(
-            Tracing_Tag(namespace = "req",
-                        tag       = f"{sys.argv[1]}_req.{requirement}"))
-    if include_test:
-        return [item]
-    else:
-        # We don't need to know about untraced regression tests
-        return []
+    items = []
+    for test_case_dir_entry in os.scandir(test_dir):
+        if not test_case_dir_entry.is_dir():
+            continue
+        test_name = test_name_orig + "." + test_case_dir_entry.name
+        item = Activity(
+            tag       = Tracing_Tag(namespace = "trlc-st",
+                                    tag       = test_name),
+            location  = File_Reference(filename = test_dir),
+            framework = "TRLCST",
+            kind      = "Test Directory")
+        include_test = False
+        if os.path.isfile(tag_file):
+            include_test = True
+            with open(tag_file, "r", encoding="UTF-8") as fd:
+                tags = [Tracing_Tag(namespace = "req",
+                                    tag       = line.strip())
+                        for line in fd.read().splitlines()
+                        if line.strip()]
+            for tag in tags:
+                item.add_tracing_target(tag)
+        if test_name.startswith("rbt-"):
+            include_test = True
+            components = test_name[4:].lower().split("-")
+            if len(components) >= 2:
+                try:
+                    int(components[-1])
+                    components.pop()
+                except ValueError:
+                    pass
+            requirement = mapping.get("-".join(components),
+                                    "_".join(item.capitalize()
+                                            for item in components))
+            item.add_tracing_target(
+                Tracing_Tag(namespace = "req",
+                            tag       = f"{sys.argv[1]}_req.{requirement}"))
+        if include_test:
+            items.append(item)
+    return items
 
 
 def main():
@@ -89,12 +93,12 @@ def main():
         mapping[item.name.lower().replace("_", "-")] = item.name
 
     items = []
-    for dirent in sorted(os.scandir(TEST_DIR),
+    for dir_entry in sorted(os.scandir(TEST_DIR),
                          key=lambda de: de.name):
-        if dirent.is_dir():
-            if dirent.name == "htmlcov":
+        if dir_entry.is_dir():
+            if dir_entry.name == "htmlcov":
                 continue
-            items += process(dirent.name, mapping)
+            items += process(dir_entry.name, mapping)
 
     with open(TARGET, "w", encoding="UTF-8") as fd:
         lobster_write(fd, Activity, f"lobster-{str(sys.argv[1])}-system-test", items)
