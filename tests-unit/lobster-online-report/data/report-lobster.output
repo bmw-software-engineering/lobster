@@ -11,7 +11,7 @@
           "tag": "python basic.trlc_reference",
           "location": {
             "kind": "file",
-            "file": "tests-unit/lobster-core/online_report/data/basic.py",
+            "file": "tests-unit/lobster-online-report/data/basic.py",
             "line": 5,
             "column": null
           },
@@ -30,7 +30,7 @@
           "tag": "python basic.Example.helper_function",
           "location": {
             "kind": "file",
-            "file": "tests-unit/lobster-core/online_report/data/basic.py",
+            "file": "tests-unit/lobster-online-report/data/basic.py",
             "line": 13,
             "column": null
           },
@@ -47,7 +47,7 @@
           "tag": "python basic.Example.nor",
           "location": {
             "kind": "file",
-            "file": "tests-unit/lobster-core/online_report/data/basic.py",
+            "file": "tests-unit/lobster-online-report/data/basic.py",
             "line": 17,
             "column": null
           },
