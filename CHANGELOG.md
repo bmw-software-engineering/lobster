@@ -5,6 +5,8 @@
 
 ### 0.10.1-dev
 
+* Minor fix of handling multithreading in `lobster-json`.
+
 * `lobster-html-report` gives consistent error message if the input file does not exist,
   even if the user specified no value. In that case the tool tries to open the file
   called `lobster.report` in the current working directory as input, and it gives the
@@ -13,12 +15,11 @@
 * `lobster-codebeamer` used to append `/cb` to the `root` parameter in config file 
   and now the user explicitly needs to add it while specifying the `root`.
 
-
 ### 0.10.0
 
 * `lobster-html-report` adds actual git commit hashes to the source in the HTML report.
 
-* `lobster-online-report` - now contains the actual git commit hashes when the user executes the tool.
+* `lobster-online-report` now contains the actual git commit hashes when the user executes the tool.
 
 * The configuration management for the following tools has been migrated from 
   command-line arguments to YAML configuration files.

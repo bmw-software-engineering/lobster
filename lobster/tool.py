@@ -254,5 +254,7 @@ class LOBSTER_Per_File_Tool(LOBSTER_Tool):
                 for new_ok, new_items in pool.imap(pfun, work_list, 4):
                     ok    &= new_ok
                     items += new_items
+                pool.close()
+                pool.join()
 
         return self.write_output(ok, options, items)
