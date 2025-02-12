@@ -1,2 +1,2 @@
-<cmdline>: lobster warning: not a .json file
+<config>: lobster warning: not a .json file
 lobster-json: wrote 2 items to output.lobster
