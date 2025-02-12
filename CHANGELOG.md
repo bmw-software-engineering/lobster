@@ -3,6 +3,10 @@
 ## Changelog
 
 
+### 0.10.1-dev
+
+
+
 ### 0.10.0
 
 * `lobster-html-report` adds actual git commit hashes to the source in the HTML report.
