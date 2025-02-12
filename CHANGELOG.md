@@ -5,6 +5,8 @@
 
 ### 0.10.1-dev
 
+* `lobster-codebeamer` use to append `/cb` to the `root` parameter in config file 
+  and now the user explicitly needs to add it while specifying the `root`.
 
 
 ### 0.10.0
