@@ -428,7 +428,7 @@ def parse_yaml_config(file_name: str):
             "refs": ensure_array_of_strings(data["refs"])
         } if "refs" in data else {},
         "token": data.pop("token", None),
-        "base": f"{data.get('root', '')}/cb/api/v3",
+        "base": f"{data.get('root', '')}/api/v3",
     }
 
     # Validate supported keys
