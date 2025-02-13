@@ -161,8 +161,8 @@ code.lobster-%:
 	lobster-python --out code.lobster lobster/tools/$(TOOL_PATH)
 
 unit-tests.lobster-%:
-	$(eval TOOL_PATH := $(subst -,/,$*))
-	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-$(TOOL_PATH)
+	$(eval TOOL_NAME := $(subst _,-,$(notdir $(TOOL_PATH))))
+	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-$(TOOL_NAME)
 
 system-tests.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
