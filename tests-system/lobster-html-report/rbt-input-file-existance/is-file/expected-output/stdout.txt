@@ -1,0 +1,3 @@
+warning: dot utility not found, report will not include the tracing policy visualisation
+> please install Graphviz (https://graphviz.org)
+LOBSTER HTML report written to is_actually_html.lobster

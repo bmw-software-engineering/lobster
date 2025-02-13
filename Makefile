@@ -71,6 +71,7 @@ system-tests:
 	make -B -C tests-system TOOL=lobster-trlc
 	make -B -C tests-system TOOL=lobster-python
 	make -B -C tests-system TOOL=lobster-online-report
+	make -B -C tests-system TOOL=lobster-html-report
 
 unit-tests:
 	coverage run -p \
