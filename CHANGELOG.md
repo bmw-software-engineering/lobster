@@ -5,6 +5,11 @@
 
 ### 0.10.1-dev
 
+* `lobster-html-report` gives consistent error message if the input file does not exist,
+  even if the user specified no value. In that case the tool tries to open the file
+  called `lobster.report` in the current working directory as input, and it gives the
+  same error message if that file does not exist.
+
 * `lobster-codebeamer` used to append `/cb` to the `root` parameter in config file 
   and now the user explicitly needs to add it while specifying the `root`.
 

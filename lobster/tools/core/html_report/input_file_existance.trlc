@@ -1,0 +1,11 @@
+package html_req
+import req
+
+req.System_Requirement Input_File_Existance {
+    description = '''
+      IF the input file specified via the first positional command line argument is
+      not a file,
+      THEN the tool shall exit with a non-zero return code
+      AND shall print an error message to STDERR.
+    '''
+}
