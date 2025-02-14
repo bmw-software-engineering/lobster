@@ -559,10 +559,7 @@ def main():
     options = ap.parse_args()
 
     if not os.path.isfile(options.lobster_report):
-        if options.lobster_report == "report.lobster":
-            ap.error("specify report file")
-        else:
-            ap.error("%s is not a file" % options.lobster_report)
+        ap.error(f"{options.lobster_report} is not a file")
 
     report = Report()
     report.load_report(options.lobster_report)
