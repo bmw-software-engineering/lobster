@@ -31,7 +31,6 @@ class ItemsTests(unittest.TestCase):
             location_data = {
                 "kind": location_type,
                 "gh_root": "https://mysuperserver.com",
-                "commit": "commit string",
                 "file": "example.txt",
                 "line": 1,
                 "exec_commit_id": "efdc34rfe2345554rfe"
@@ -395,7 +394,6 @@ class TestRequirement(ItemsTests):
                             self.assertEqual(result.location.filename, location_data["file"])
                 elif location_type == "github":
                     self.assertEqual(result.location.gh_root, location_data["gh_root"])
-                    self.assertEqual(result.location.commit, location_data["commit"])
                     self.assertEqual(result.location.filename, location_data["file"])
                     self.assertEqual(result.location.line, location_data["line"])
                 elif location_type == "codebeamer":
@@ -449,7 +447,6 @@ class TestImplementation(ItemsTests):
                             self.assertEqual(result.location.filename, location_data["file"])
                 elif location_type == "github":
                     self.assertEqual(result.location.gh_root, location_data["gh_root"])
-                    self.assertEqual(result.location.commit, location_data["commit"])
                     self.assertEqual(result.location.filename, location_data["file"])
                     self.assertEqual(result.location.line, location_data["line"])
                 elif location_type == "codebeamer":
@@ -504,7 +501,6 @@ class TestActivity(ItemsTests):
                     self.assertEqual(result.location.filename, location_data["file"])
                 elif location_type == "github":
                     self.assertEqual(result.location.gh_root, location_data["gh_root"])
-                    self.assertEqual(result.location.commit, location_data["commit"])
                     self.assertEqual(result.location.filename, location_data["file"])
                     self.assertEqual(result.location.line, location_data["line"])
                 elif location_type == "codebeamer":
