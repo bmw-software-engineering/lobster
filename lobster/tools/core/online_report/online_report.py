@@ -191,7 +191,6 @@ def main():
         git_m_config.read(os.path.join(repo_root, ".gitmodules"))
 
     gh_submodule_roots = {}
-    gh_submodule_sha = {}
     for item in git_config:
         if item == 'remote "origin"':
             gh_root = parse_git_root(git_config[item])
