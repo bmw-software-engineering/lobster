@@ -48,7 +48,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/potato.trlc",
             "line": 3,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -76,7 +75,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/potato.trlc",
             "line": 9,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -107,7 +105,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/potato.trlc",
             "line": 15,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -136,7 +133,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/potato.trlc",
             "line": 22,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -166,7 +162,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/potato.trlc",
             "line": 27,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -191,7 +186,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/potato.trlc",
             "line": 39,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -227,7 +221,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/foo.cpp",
             "line": 3,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -250,7 +243,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/foo.cpp",
             "line": 9,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -271,7 +263,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/foo.cpp",
             "line": 14,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -293,7 +284,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/nand.m",
             "line": 1,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -316,7 +306,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/exclusive_or.slx",
             "line": 1,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -337,7 +326,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/exclusive_or.slx",
             "line": null,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -358,7 +346,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/exclusive_or.slx",
             "line": null,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -381,7 +368,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/nor.py",
             "line": 5,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -402,7 +388,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/nor.py",
             "line": 13,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -425,7 +410,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/nor.py",
             "line": 17,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -455,7 +439,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/test.cpp",
             "line": 7,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -479,7 +462,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/nand_test.m",
             "line": 3,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -503,7 +485,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/example.json",
             "line": null,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -527,7 +508,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/example.json",
             "line": null,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
@@ -551,7 +531,6 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
             "file": "tests-integration/projects/basic/example.json",
             "line": null,
             "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"

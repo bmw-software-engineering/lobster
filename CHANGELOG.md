@@ -5,6 +5,11 @@
 
 ### 0.10.1-dev
 
+* The `--commit` command line argument from `lobster-online-report` tool is now 
+  removed and no longer available. It was redundant and is already replaced by the 
+  automated git hash feature that doesn't require user intervention and is handled 
+  by the code. See changelog `0.10.0` for more information.
+
 * The title and placeholder for search box is renamed to `Filter` in 
   `lobster-html-report` tool.
 
