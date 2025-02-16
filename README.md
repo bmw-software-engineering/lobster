@@ -48,6 +48,7 @@ The following programming languages are supported:
 * [Python3](packages/lobster-tool-python/README.md)
 * [SIMULINK and MATLAB](https://misshit.org) using the 3rd-party tool
   MISS_HIT; supports both code and tests
+* [Rust](https://github.com/NewTec-GmbH/lobster-rust) using the 3rd-party tool lobster-rust; currently only supports code
 
 The following verification and miscellaneous frameworks are supported:
 
