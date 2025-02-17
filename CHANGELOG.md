@@ -5,6 +5,10 @@
 
 ### 0.10.1-dev
 
+* Introduced YAML-based configuration for `lobster-tool-class`, replacing individual command-line arguments.
+  * Added a `--config` argument to specify a YAML configuration file.
+  * Eliminated the need for direct command-line arguments like `--out`, `--single`, `--inputs`, and `--inputs-from-file`, simplifying user interaction.
+
 * The title and placeholder for search box is renamed to `Filter` in 
   `lobster-html-report` tool.
 

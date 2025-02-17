@@ -1,3 +1,2 @@
 --tag-attribute=soup
-file_exists.json
-file/does/not_exists.json
+--config=config.yaml

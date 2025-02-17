@@ -1,2 +1,2 @@
 --tag-attribute=pizza
-file/does/not_exists.json
+--config=config.yaml
