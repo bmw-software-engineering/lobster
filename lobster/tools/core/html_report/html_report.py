@@ -429,8 +429,8 @@ def write_html(fd, report, dot, high_contrast):
                  'onclick="ToggleIssues()"> Show Issues </button>')
     doc.add_line('</div>')
 
-    doc.add_heading(3, "Search", "search")
-    doc.add_line('<input type="text" id="search" placeholder="Search..." '
+    doc.add_heading(3, "Filter", "filter")
+    doc.add_line('<input type="text" id="search" placeholder="Filter..." '
                  'onkeyup="searchItem()">')
     doc.add_line('<div id="search-sec-id"')
 

@@ -391,8 +391,8 @@ blockquote {
 <div id = "ContainerBtnToggleIssue">
 <button class ="button buttonBlue" id="BtnToggleIssue" onclick="ToggleIssues()"> Show Issues </button>
 </div>
-<h3 id="sec-search">Search</h3>
-<input type="text" id="search" placeholder="Search..." onkeyup="searchItem()">
+<h3 id="sec-filter">Filter</h3>
+<input type="text" id="search" placeholder="Filter..." onkeyup="searchItem()">
 <div id="search-sec-id"
 </div>
 <h2 id="sec-issues">Issues</h2>

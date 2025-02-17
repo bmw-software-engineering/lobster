@@ -5,6 +5,9 @@
 
 ### 0.10.1-dev
 
+* The title and placeholder for search box is renamed to `Filter` in 
+  `lobster-html-report` tool.
+
 * If the constraint `valid_status` is omitted in the configuration file of `lobster-report`,
   then no status check is performed.
 
