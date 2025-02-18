@@ -15,22 +15,22 @@ req.Software_Requirement Dummy_Requirement_Unit_Test {
   '''
 }
 
-req.Definition Traced_level{
-    description = '''
-    A traced level is a name that is given in the "trace to" parameter. 
-    A traced level is valid if that level is declared in the configuration file.
-  '''
-}
-
 req.Definition Item{
-    description = '''
+  description = '''
     An item is an entry in the data section according to the schema.
   '''
 }
 
-req.System_Requirement Missing_reference {
+req.System_Requirement_Aspect Invalid_Trace_To{
+  description = '''
+    IF "trace to" is an invalid entry given in the configuration file according to the schema,
+    THEN the tool shall exit with a non-zero return code and with an error message "lobster error: unknown item".
+  '''
+}
+
+req.System_Requirement_Aspect Status_Missing {
   description = '''    
-    If an [[Item]] has no references to an [[Item]] from a [[Traced_level]], 
-    then the tool shall write "missing up reference" into the message section and set the tracing status to "MISSING" of that [[Item]] according to the schema.
+    OTHERWISE, IF an [[Item]] has no references to an [[Item]] from a level mentioned in trace to,
+    THEN the tool shall set the tracing status to "MISSING" of that [[Item]] and write "missing up reference" into the message section according to the schema.
   '''
 }
