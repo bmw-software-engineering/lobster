@@ -15,7 +15,7 @@ req.Software_Requirement Dummy_Requirement_Unit_Test {
   '''
 }
 
-req.System_Requirement_Aspect Item{
+req.Definition Item{
   description = '''
     An item is an entry in the data section according to the schema.
   '''
@@ -23,14 +23,14 @@ req.System_Requirement_Aspect Item{
 
 req.System_Requirement_Aspect Invalid_Trace_To{
   description = '''
-    IF "trace to" is an invalid entry given in the configuration file according to the schema.
-    THEREFORE, the tool shall exit with a non-zero return code and with an error message "lobster error: unknown item".
+    IF "trace to" is an invalid entry given in the configuration file according to the schema,
+    THEN the tool shall exit with a non-zero return code and with an error message "lobster error: unknown item".
   '''
 }
 
 req.System_Requirement_Aspect Status_Missing {
   description = '''    
-    OTHERWISE, IF an [[Item]] has no references to an [[Item]] from a level mentioned in trace to.
+    OTHERWISE, IF an [[Item]] has no references to an [[Item]] from a level mentioned in trace to,
     THEN the tool shall set the tracing status to "MISSING" of that [[Item]] and write "missing up reference" into the message section according to the schema.
   '''
 }
