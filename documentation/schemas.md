@@ -70,7 +70,7 @@ References to github look like this:
 The *gh_root* is the github instance, for example
 `https://github.com`. The *gh_repo* is the combination of user and
 repo, for example `bmw-software-engineering/trlc`. The *exec_commit_id* is
-either a SHA on which the user had checkout before executing the 
+either a SHA on which the user had checked out before executing the 
 `lobster-online-report` tool. Finally,
 *filename* and *line* has the usual meaning.
 
