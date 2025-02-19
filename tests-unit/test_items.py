@@ -31,10 +31,9 @@ class ItemsTests(unittest.TestCase):
             location_data = {
                 "kind": location_type,
                 "gh_root": "https://mysuperserver.com",
-                "commit": "commit string",
                 "file": "example.txt",
                 "line": 1,
-                "exec_commit_id": "efdc34rfe2345554rfe"
+                "commit": "efdc34rfe2345554rfe"
             }
         elif location_type == "codebeamer":
             location_data = {
@@ -395,9 +394,9 @@ class TestRequirement(ItemsTests):
                             self.assertEqual(result.location.filename, location_data["file"])
                 elif location_type == "github":
                     self.assertEqual(result.location.gh_root, location_data["gh_root"])
-                    self.assertEqual(result.location.commit, location_data["commit"])
                     self.assertEqual(result.location.filename, location_data["file"])
                     self.assertEqual(result.location.line, location_data["line"])
+                    self.assertEqual(result.location.commit, location_data["commit"])
                 elif location_type == "codebeamer":
                     self.assertEqual(result.location.cb_root, location_data["cb_root"])
                     self.assertEqual(result.location.tracker, location_data["tracker"])
@@ -449,9 +448,9 @@ class TestImplementation(ItemsTests):
                             self.assertEqual(result.location.filename, location_data["file"])
                 elif location_type == "github":
                     self.assertEqual(result.location.gh_root, location_data["gh_root"])
-                    self.assertEqual(result.location.commit, location_data["commit"])
                     self.assertEqual(result.location.filename, location_data["file"])
                     self.assertEqual(result.location.line, location_data["line"])
+                    self.assertEqual(result.location.commit, location_data["commit"])
                 elif location_type == "codebeamer":
                     self.assertEqual(result.location.cb_root, location_data["cb_root"])
                     self.assertEqual(result.location.tracker, location_data["tracker"])
@@ -504,9 +503,9 @@ class TestActivity(ItemsTests):
                     self.assertEqual(result.location.filename, location_data["file"])
                 elif location_type == "github":
                     self.assertEqual(result.location.gh_root, location_data["gh_root"])
-                    self.assertEqual(result.location.commit, location_data["commit"])
                     self.assertEqual(result.location.filename, location_data["file"])
                     self.assertEqual(result.location.line, location_data["line"])
+                    self.assertEqual(result.location.commit, location_data["commit"])
                 elif location_type == "codebeamer":
                     self.assertEqual(result.location.cb_root, location_data["cb_root"])
                     self.assertEqual(result.location.tracker, location_data["tracker"])

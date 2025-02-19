@@ -273,8 +273,8 @@ def write_item_tracing(doc, report, item):
 def write_item_box_end(doc, item):
     assert isinstance(doc, htmldoc.Document)
 
-    if getattr(item.location, "exec_commit_id", None) is not None:
-        commit_hash = item.location.exec_commit_id
+    if getattr(item.location, "commit", None) is not None:
+        commit_hash = item.location.commit
         doc.add_line(
             f'<div class="attribute">'
             f'Build Reference: <strong>{commit_hash}</strong> | '

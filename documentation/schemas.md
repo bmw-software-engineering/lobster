@@ -61,17 +61,17 @@ References to github look like this:
    "kind"           : "github",
    "gh_root"        : STRING,
    "gh_repo"        : STRING,
-   "commit"         : STRING,
    "filename"       : INTEGER,
    "line"           : INTEGER or null,
-   "exec_commit_id" : STRING
+   "commit" : STRING
 }
 ```
 
 The *gh_root* is the github instance, for example
 `https://github.com`. The *gh_repo* is the combination of user and
 repo, for example `bmw-software-engineering/trlc`. The *commit* is
-either a SHA or a branch/tag name, for example `main`. Finally
+a SHA on which the user had checked out before executing the 
+`lobster-online-report` tool. Finally,
 *filename* and *line* has the usual meaning.
 
 #### codebeamer references
