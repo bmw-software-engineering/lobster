@@ -149,19 +149,19 @@ class File_Reference(Location):
 
 
 class Github_Reference(Location):
-    def __init__(self, gh_root, filename, line, exec_commit_id):
+    def __init__(self, gh_root, filename, line, commit):
         assert isinstance(gh_root, str)
         assert gh_root.startswith("http")
         assert isinstance(filename, str)
         assert line is None or (isinstance(line, int) and
                                 line >= 1)
-        assert isinstance(exec_commit_id, str)
+        assert isinstance(commit, str)
 
         self.gh_root        = gh_root.rstrip("/")
         self.gh_repo        = self.gh_root.split("/")[-1]
+        self.commit         = commit
         self.filename       = filename
         self.line           = line
-        self.exec_commit_id = exec_commit_id
 
     def sorting_key(self):
         if self.line is not None:
@@ -183,16 +183,17 @@ class Github_Reference(Location):
 
         return '<a href="%s/blob/%s/%s" target="_blank">%s</a>' % (
             self.gh_root,
-            self.exec_commit_id,
+            self.commit,
             file_ref,
             self.to_string())
 
     def to_json(self):
         return {"kind"           : "github",
                 "gh_root"        : self.gh_root,
+                "commit"         : self.commit,
                 "file"           : self.filename,
-                "line"           : self.line,
-                "exec_commit_id" : self.exec_commit_id}
+                "line"           : self.line
+                }
 
     @classmethod
     def from_json(cls, json):
@@ -202,8 +203,8 @@ class Github_Reference(Location):
         gh_root  = json["gh_root"]
         filename = json["file"]
         line     = json.get("line", None)
-        exec_commit_id = json.get("exec_commit_id")
-        return Github_Reference(gh_root, filename, line, exec_commit_id)
+        commit = json.get("commit")
+        return Github_Reference(gh_root, filename, line, commit)
 
 
 class Codebeamer_Reference(Location):

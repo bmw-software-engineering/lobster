@@ -12,9 +12,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/sysreq_example.trlc",
-            "line": 4,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 4
           },
           "name": "sysreq_example.lobster_example",
           "messages": [],
@@ -37,9 +37,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/sysreq_example.trlc",
-            "line": 11,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 11
           },
           "name": "sysreq_example.req_implication",
           "messages": [],
@@ -61,9 +61,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/sysreq_example.trlc",
-            "line": 19,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 19
           },
           "name": "sysreq_example.req_xor",
           "messages": [],
@@ -92,9 +92,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/softreq_example.trlc",
-            "line": 5,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 5
           },
           "name": "softreq_example.req_implication",
           "messages": [],
@@ -121,9 +121,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/softreq_example.trlc",
-            "line": 17,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 17
           },
           "name": "softreq_example.req_xor",
           "messages": [],
@@ -159,9 +159,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/foo.cpp",
-            "line": 3,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 3
           },
           "name": "implication",
           "messages": [],
@@ -181,9 +181,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/foo.cpp",
-            "line": 9,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 9
           },
           "name": "exclusive_or",
           "messages": [],
@@ -210,9 +210,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
-            "line": null,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": null
           },
           "name": "test_example.json:Implication Test 1",
           "messages": [],
@@ -233,9 +233,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
-            "line": null,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": null
           },
           "name": "test_example.json:Implication Test 2",
           "messages": [],
@@ -256,9 +256,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
-            "line": null,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": null
           },
           "name": "test_example.json:XOR Test 1",
           "messages": [],
@@ -279,9 +279,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
-            "line": null,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": null
           },
           "name": "test_example.json:XOR Test 2",
           "messages": [],
@@ -302,9 +302,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
-            "line": null,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": null
           },
           "name": "test_example.json:XOR Test 3",
           "messages": [],
@@ -325,9 +325,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
-            "line": null,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": null
           },
           "name": "test_example.json:XOR Test 4",
           "messages": [],

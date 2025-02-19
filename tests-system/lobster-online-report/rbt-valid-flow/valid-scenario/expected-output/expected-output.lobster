@@ -12,9 +12,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "b9f6d99a007bca61680d5d1ea8b292bb102ab7b1",
             "file": "tests-system/lobster-online-report/rbt-valid-flow/valid-scenario/input/basic.py",
-            "line": 5,
-            "exec_commit_id": "4cd62e2dccfd423720d31ca0ed261a2010061740"
+            "line": 5
           },
           "name": "basic.trlc_reference",
           "messages": [],
@@ -32,9 +32,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "b9f6d99a007bca61680d5d1ea8b292bb102ab7b1",
             "file": "tests-system/lobster-online-report/rbt-valid-flow/valid-scenario/input/basic.py",
-            "line": 13,
-            "exec_commit_id": "4cd62e2dccfd423720d31ca0ed261a2010061740"
+            "line": 13
           },
           "name": "basic.Example.helper_function",
           "messages": [],
@@ -50,9 +50,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "b9f6d99a007bca61680d5d1ea8b292bb102ab7b1",
             "file": "tests-system/lobster-online-report/rbt-valid-flow/valid-scenario/input/basic.py",
-            "line": 17,
-            "exec_commit_id": "4cd62e2dccfd423720d31ca0ed261a2010061740"
+            "line": 17
           },
           "name": "basic.Example.nor",
           "messages": [

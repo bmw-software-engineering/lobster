@@ -122,16 +122,16 @@ class LobsterUIReportTests:
 
         for level in data.get("levels", []):
             for item in level.get("items", []):
-                tag, exec_commit_id = item.get("tag"), item.get("location", {}).get("exec_commit_id")
-                if not (tag and exec_commit_id):
+                tag, commit = item.get("tag"), item.get("location", {}).get("commit")
+                if not (tag and commit):
                     continue
 
                 elements = self.driver.find_elements(By.XPATH, "//div[starts-with(@class, 'item-') and not(contains(@class, 'item-name'))]")
                 for elem in elements:
                     text = elem.text.replace("Python Function", "python")
-                    if tag in text and exec_commit_id in text:
+                    if tag in text and commit in text:
                         result = subprocess.run(
-                            ['git', 'show', '-s', '--format=%ct', exec_commit_id],
+                            ['git', 'show', '-s', '--format=%ct', commit],
                             capture_output=True, text=True, check=True
                         )
 
