@@ -212,7 +212,7 @@ def main():
             # pylint: disable=possibly-used-before-assignment
             actual_repo = gh_root
             actual_path = rel_path_from_root
-            exec_commit_id = subprocess.check_output(
+            commit = subprocess.check_output(
                 ["git", "rev-parse", "HEAD"]
             ).decode().strip()
             # pylint: disable=consider-using-dict-items
@@ -220,18 +220,17 @@ def main():
                 if path_starts_with_subpath(rel_path_from_root, prefix):
                     actual_repo = gh_submodule_roots[prefix]
                     actual_path = rel_path_from_root[len(prefix) + 1:]
-                    exec_commit_id = subprocess.check_output(
+                    commit = subprocess.check_output(
                         ["git", "rev-parse", "HEAD"],
                         universal_newlines=True, cwd=prefix
                     )
-                    exec_commit_id = exec_commit_id.strip()
+                    commit = commit.strip()
                     break
-
             loc = Github_Reference(
                 gh_root=actual_repo,
                 filename=actual_path,
                 line=item.location.line,
-                exec_commit_id=exec_commit_id)
+                commit=commit)
             item.location = loc
 
     report.write_report(options.out if options.out else options.lobster_report)

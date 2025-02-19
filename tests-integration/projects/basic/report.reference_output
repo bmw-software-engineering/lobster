@@ -48,9 +48,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/potato.trlc",
-            "line": 3,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 3
           },
           "name": "example.req_implication",
           "messages": [],
@@ -75,9 +75,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/potato.trlc",
-            "line": 9,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 9
           },
           "name": "example.req_xor",
           "messages": [
@@ -105,9 +105,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/potato.trlc",
-            "line": 15,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 15
           },
           "name": "example.req_nand",
           "messages": [],
@@ -133,9 +133,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/potato.trlc",
-            "line": 22,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 22
           },
           "name": "example.req_nor",
           "messages": [
@@ -162,9 +162,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/potato.trlc",
-            "line": 27,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 27
           },
           "name": "example.req_implies",
           "messages": [],
@@ -186,9 +186,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/potato.trlc",
-            "line": 39,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 39
           },
           "name": "example.req_important",
           "messages": [
@@ -221,9 +221,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/foo.cpp",
-            "line": 3,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 3
           },
           "name": "implication",
           "messages": [],
@@ -243,9 +243,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/foo.cpp",
-            "line": 9,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 9
           },
           "name": "exclusive_or",
           "messages": [
@@ -263,9 +263,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/foo.cpp",
-            "line": 14,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 14
           },
           "name": "potato",
           "messages": [
@@ -284,9 +284,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/nand.m",
-            "line": 1,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 1
           },
           "name": "nand",
           "messages": [],
@@ -306,9 +306,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/exclusive_or.slx",
-            "line": 1,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 1
           },
           "name": "exclusive_or/MATLAB Function",
           "messages": [
@@ -326,9 +326,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/exclusive_or.slx",
-            "line": null,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": null
           },
           "name": "exclusive_or",
           "messages": [
@@ -346,9 +346,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/exclusive_or.slx",
-            "line": null,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": null
           },
           "name": "exclusive_or/My Exclusive Or",
           "messages": [],
@@ -368,9 +368,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/nor.py",
-            "line": 5,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 5
           },
           "name": "nor.trlc_reference",
           "messages": [],
@@ -388,9 +388,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/nor.py",
-            "line": 13,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 13
           },
           "name": "nor.Example.helper_function",
           "messages": [],
@@ -410,9 +410,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/nor.py",
-            "line": 17,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 17
           },
           "name": "nor.Example.nor",
           "messages": [],
@@ -439,9 +439,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/test.cpp",
-            "line": 7,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 7
           },
           "name": "ImplicationTest:BasicTest",
           "messages": [],
@@ -462,9 +462,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/nand_test.m",
-            "line": 3,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": 3
           },
           "name": "nand_test::test_1",
           "messages": [],
@@ -485,9 +485,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/example.json",
-            "line": null,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": null
           },
           "name": "example.json:XOR Test 1",
           "messages": [],
@@ -508,9 +508,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/example.json",
-            "line": null,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": null
           },
           "name": "example.json:XOR Test 2",
           "messages": [],
@@ -531,9 +531,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/basic/example.json",
-            "line": null,
-            "exec_commit_id": "1275eec5522ff3b78e70eff36dbe3275feca7713"
+            "line": null
           },
           "name": "example.json:Potato Test 1",
           "messages": [],
