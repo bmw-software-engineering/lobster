@@ -1,13 +1,13 @@
-# Tracing to C/C++ tests
+# Tracing to C++ tests
 
 ## Setup and requirements
 
-You will need a C/C++ file or a directory containing these files.
+You will need a C++ file or a directory containing these files.
 * Note: The tool also supports a combination of files and folders.
 
-C/C++ files should have one of these extensions to be evaluated by this tool: `.cpp`, `.cc`, `.c` or `.h`
+C++ files should have one of these extensions to be evaluated by this tool: `.cpp`, `.cc`, `.c` or `.h`
 
-## Preparing C/C++ test documentation with requirements
+## Preparing C++ test documentation with requirements
 The test functions should be specified with one the following `macros`: 
         `TEST`,
         `TEST_P`,
@@ -110,9 +110,9 @@ In addition, you have to provide the `codebeamer-url`:
 
 ## Creating lobster files
 
-Run the `lobster_cpptest` tool, pointing it to one or more C/C++ files, or a directory containing one or more C/C++ files. 
+Run the `lobster_cpptest` tool, pointing it to one or more C++ files, or a directory containing one or more C++ files. 
 
-For example `lobster_cpptest .` should find all your C/C++ files in the root directory.
+For example `lobster_cpptest .` should find all your C++ files in the root directory.
 
 You have to also provide a `--config-file` file to configure the behaviour of the tool. 
 A more complete command line might look like:
