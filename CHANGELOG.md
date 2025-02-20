@@ -5,6 +5,8 @@
 
 ### 0.10.1-dev
 
+* Minor fix of handling multithreading in `lobster-json`.
+
 * The title and placeholder for search box is renamed to `Filter` in 
   `lobster-html-report` tool.
 
@@ -23,7 +25,7 @@
 
 * `lobster-html-report` adds actual git commit hashes to the source in the HTML report.
 
-* `lobster-online-report` - now contains the actual git commit hashes when the user executes the tool.
+* `lobster-online-report` now contains the actual git commit hashes when the user executes the tool.
 
 * The configuration management for the following tools has been migrated from 
   command-line arguments to YAML configuration files.
