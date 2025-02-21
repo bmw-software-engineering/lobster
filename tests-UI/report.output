@@ -12,10 +12,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "e1981245cb1c5064d42299b59f80f4e1c3c37901",
             "file": "lobster\\tools\\python\\python.py",
-            "line": 40,
-            "exec_commit_id": "e1981245cb1c5064d42299b59f80f4e1c3c37901"
+            "line": 40
           },
           "name": "python.count_occurrence_of_last_function_from_function_name_list",
           "messages": [],
@@ -31,10 +30,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "e1981245cb1c5064d42299b59f80f4e1c3c37901",
             "file": "lobster\\tools\\python\\python.py",
-            "line": 89,
-            "exec_commit_id": "e1981245cb1c5064d42299b59f80f4e1c3c37901"
+            "line": 89
           },
           "name": "python.parse_value",
           "messages": [],
@@ -50,10 +48,9 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "e1981245cb1c5064d42299b59f80f4e1c3c37901",
             "file": "lobster\\tools\\python\\python.py",
-            "line": 451,
-            "exec_commit_id": "e1981245cb1c5064d42299b59f80f4e1c3c37901"
+            "line": 451
           },
           "name": "python.main",
           "messages": [
