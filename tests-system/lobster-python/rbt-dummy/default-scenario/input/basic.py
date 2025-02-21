@@ -1,10 +1,12 @@
 import potatolib
 
+
 def trlc_reference(requirement):
     # lobster-exclude: helper function
     def decorator(obj):
         return obj
     return decorator
+
 
 class Example:
     @trlc_reference(requirement="example.req_nor")

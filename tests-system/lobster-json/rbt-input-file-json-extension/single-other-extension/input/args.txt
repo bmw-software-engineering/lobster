@@ -1,3 +1,0 @@
---name-attribute=fruit
---tag-attribute=vegtable
---config=config.yaml

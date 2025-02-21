@@ -16,13 +16,21 @@ lint: style
 	python3 -m pylint --rcfile=pylint3.cfg \
 		--reports=no \
 		--ignore=assets.py \
-		lobster util tests-system/run_tool_tests.py
+		lobster util
+
+lint-system-tests: style
+	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
+	python3 -m pylint --rcfile=tests-system/pylint3.cfg \
+		--reports=no \
+		tests-system/systemtestcasebase.py \
+		tests-system/asserter.py \
+		tests-system/lobster-json
 
 trlc:
 	trlc lobster --error-on-warnings --verify
 
 style:
-	@python3 -m pycodestyle lobster \
+	@python3 -m pycodestyle lobster tests-system \
 		--exclude=assets.py
 
 packages:
@@ -66,8 +74,8 @@ integration-tests: packages
 
 system-tests:
 	mkdir -p docs
+	python -m unittest discover -s tests-system -v -t .
 	make -B -C tests-system TOOL=lobster-report
-	make -B -C tests-system TOOL=lobster-json
 	make -B -C tests-system TOOL=lobster-trlc
 	make -B -C tests-system TOOL=lobster-python
 	make -B -C tests-system TOOL=lobster-online-report
@@ -118,6 +126,7 @@ docs:
 	rm -rf docs
 	mkdir -p docs
 	@-make tracing
+	@-make tracing-stf
 
 tracing:
 	@mkdir -p docs
@@ -166,8 +175,22 @@ unit-tests.lobster-%:
 	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-$(TOOL_NAME)
 
 system-tests.lobster-%:
-	$(eval TOOL_PATH := $(subst -,/,$*))
-	python3 tests-system/lobster-trlc-system-test.py $(TOOL_PATH);
+	lobster-python --activity --out=system-tests.lobster tests-system/lobster-$*
+
+# STF is short for System Test Framework
+STF_TRLC_FILES := $(wildcard tests-system/*.trlc)
+STF_PYTHON_FILES := $(filter-out tests-system/test_%.py tests-system/run_tool_tests.py, $(wildcard tests-system/*.py))
+
+# This target is used to generate the LOBSTER report for the requirements of the system test framework itself.
+tracing-stf: $(STF_TRLC_FILES)
+	lobster-trlc tests-system lobster/tools/requirements.rsl --config-file=lobster/tools/lobster-trlc-system.conf --out=stf_system_requirements.lobster
+	lobster-trlc tests-system lobster/tools/requirements.rsl --config-file=lobster/tools/lobster-trlc-software.conf --out=stf_software_requirements.lobster
+	lobster-python --out=stf_code.lobster --only-tagged-functions $(STF_PYTHON_FILES)
+	lobster-report --lobster-config=tests-system/stf-lobster.conf --out=stf_report.lobster
+	lobster-online-report stf_report.lobster
+	lobster-html-report stf_report.lobster --out=docs/tracing-stf.html
+	@echo "Deleting STF *.lobster files..."
+	rm -f stf_system_requirements.lobster stf_software_requirements.lobster stf_code.lobster stf_report.lobster
 
 clean-coverage:
 	@rm -rf htmlcov

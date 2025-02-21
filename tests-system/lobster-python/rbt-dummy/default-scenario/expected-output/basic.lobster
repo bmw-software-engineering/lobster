@@ -5,7 +5,7 @@
       "location": {
         "kind": "file",
         "file": "./basic.py",
-        "line": 3,
+        "line": 4,
         "column": null
       },
       "name": "basic.trlc_reference",
@@ -23,7 +23,7 @@
       "location": {
         "kind": "file",
         "file": "./basic.py",
-        "line": 11,
+        "line": 13,
         "column": null
       },
       "name": "basic.Example.helper_function",
@@ -42,7 +42,7 @@
       "location": {
         "kind": "file",
         "file": "./basic.py",
-        "line": 15,
+        "line": 17,
         "column": null
       },
       "name": "basic.Example.nor",

@@ -5,15 +5,21 @@ req.System_Requirement Name_Attribute_Given {
   description = '''
     In addition to [[Parse_Input_File]],
     IF the command line option "name-attribute" is given and not an empty string,
-    THEN the tool
-    SHALL obtain the value from the input item at that key,
-    and use the obtained value as tag in the serialized LOBSTER item.
+    AND the input items contains that key
+    THEN the tool SHALL use the value of that key as tag in the serialized LOBSTER item.
+    '''
+}
+
+req.System_Requirement_Aspect Name_Attribute_Given_Key_Missing {
+  description = '''
+    OTHERWISE (if they key does not exist)
+    the tool SHALL print an error message.
     '''
 }
 
 req.System_Requirement_Aspect Name_Attribute_Missing {
   description = '''
-    OTHERWISE, the tool
+    OTHERWISE ("name-attribute" is not given or not an empty string), the tool
     SHALL create a synthetic tag name based on the path of the JSON input file and an item counter.
 
     Notes:
