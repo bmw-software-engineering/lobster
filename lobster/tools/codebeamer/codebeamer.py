@@ -496,9 +496,10 @@ def main():
 
     if (cb_config["token"] is None and
             (cb_config["user"] is None or cb_config["pass"] is None)):
-        sys.exit("lobster-codebeamer: please set --cb-token"
-                 "or add your token to the config-file"
-                 "or use --cb-user and --cb-pass")
+        sys.exit("lobster-codebeamer: please set --cb-token, "
+                 "or add your token to the config file, "
+                 "or use --cb-user and --cb-pass, "
+                 "or configure credentials in the .netrc file.")
 
     items_to_import = set()
 
