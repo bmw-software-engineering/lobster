@@ -1,1 +1,0 @@
-<config>: lobster error: file/does/not_exists.json is not a file or directory

@@ -1,2 +1,0 @@
---tag-attribute=pizza
---config=config.yaml
