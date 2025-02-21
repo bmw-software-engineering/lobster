@@ -29,7 +29,7 @@ class LobsterOnlineReportTests(unittest.TestCase):
                     with self.subTest(item):
                         location = item['location']
                         if 'file' in location:
-                            self.assertIsNotNone(location.get('exec_commit_id'))
+                            self.assertIsNotNone(location.get('commit'))
         self.assertEqual(exit_code, 0)
         self.assertIn(f"LOBSTER report {self.online_report} "
                       f"changed to use online references", output)
