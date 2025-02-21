@@ -16,20 +16,20 @@
             "column": 13
           },
           "name": "example.adas_100_A",
-          "messages": [
-            "missing reference to Code"
-          ],
+          "messages": [],
           "just_up": [],
           "just_down": [],
-          "just_global": [],
-          "tracing_status": "MISSING",
+          "just_global": [
+            "not linked"
+          ],
+          "tracing_status": "JUSTIFIED",
           "framework": "TRLC",
           "kind": "Requirement",
           "text": "keep the vehicle in lane.",
           "status": null
         }
       ],
-      "coverage": 0.0
+      "coverage": 100.0
     },
     {
       "name": "Code",
