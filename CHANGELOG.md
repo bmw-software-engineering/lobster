@@ -5,6 +5,9 @@
 
 ### 0.10.1-dev
 
+* Removed limitation from `lobster-cpptest` which skipped output files that had
+  less than two LOBSTER items.
+
 * Minor fix of handling multithreading in `lobster-json`.
 
 * The title and placeholder for search box is renamed to `Filter` in 

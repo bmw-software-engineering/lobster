@@ -309,8 +309,6 @@ def write_lobster_items_output_dict(lobster_items_output_dict: dict):
     lobster_generator = Constants.LOBSTER_GENERATOR
     for output_file_name, lobster_items in lobster_items_output_dict.items():
         item_count = len(lobster_items)
-        if item_count <= 1:
-            continue
 
         if output_file_name:
             with open(output_file_name, "w", encoding="UTF-8") as output_file:
