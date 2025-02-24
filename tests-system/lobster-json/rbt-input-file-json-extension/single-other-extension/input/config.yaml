@@ -1,0 +1,3 @@
+out    : output.lobster
+inputs :
+  - data.txt

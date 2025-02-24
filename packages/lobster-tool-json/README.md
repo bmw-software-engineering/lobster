@@ -17,6 +17,39 @@ your own tool for your own files.
 
 * `lobster-json`: Extract activities from JSON files
 
+## Configuration via YAML
+
+The tool uses a YAML configuration file to define the following common parameters:
+
+  1) inputs: A list of input file paths (can include directories).
+  2) out: The name of the output file where results will be stored.
+  3) inputs-from-file: A file containing paths to input files or directories.
+  4) single: A flag to avoid the use of multiprocessing. If true, multiprocessing will be skipped.
+
+  * YAML Configuration Example:
+
+    Below is an example of how you can define these parameters in the YAML configuration file:
+
+    ```yaml
+    out: "output.lobster"  # Output file where results will be written
+    inputs:
+        - "file1.json"
+        - "file2.json"
+        - "directory1/"
+    inputs-from-file: "directory1/"  # File containing a list of input files or directories
+    single: false  # Set to true to avoid multiprocessing
+    ```
+
+  * Command-Line Usage:
+
+    To run the tool with the specified YAML configuration file, use the following command:
+
+    ```bash
+    lobster-json --config /path/to/config.yaml
+    ```
+
+    Where /path/to/config.yaml is the path to your YAML configuration file.
+
 ## Usage
 
 Some projects store their test vectors in JSON files. This tool can be
@@ -49,7 +82,7 @@ Here we have a list of three tests. You can configure the
 $ lobster-json --name-attribute "name" \
                --tag-attribute "tags" \
                --justification-attribute "justification" \
-               FILENAME
+               --config "/path/to/config.yaml"
 ```
 
 The name attribute is optional. If your test files do not contain
@@ -82,7 +115,7 @@ Then you can get to the data like so:
 $ lobster-json --name-attribute "meta.name" \
                --tag-attribute "meta.req" \
                --justification-attribute "meta.just" \
-               FILENAME
+               --config "/path/to/config.yaml"
 ```
 
 Finally, if your list of tests is nested more deeply in an object, you
