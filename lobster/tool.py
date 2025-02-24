@@ -123,7 +123,8 @@ class LOBSTER_Tool(metaclass=ABCMeta):
         options = self.ap.parse_args()
         config = self.load_yaml_config(options.config)
 
-        options.out = config.get("out")
+        if not options.out:
+            options.out = config.get("out")
         options.inputs_from_file = config.get("inputs_from_file")
         options.inputs = config.get("inputs", [])
         options.traverse_bazel_dirs = config.get("traverse_bazel_dirs", False)
