@@ -1,0 +1,4 @@
+out    : output.lobster
+inputs :
+  - data.txt
+  - data.json

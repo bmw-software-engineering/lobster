@@ -1,3 +1,2 @@
---single
 --tag-attribute=tags
---out=output.lobster
+--config=config.yaml
