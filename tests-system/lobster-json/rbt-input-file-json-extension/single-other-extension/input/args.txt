@@ -1,4 +1,3 @@
 --name-attribute=fruit
 --tag-attribute=vegtable
---out=output.lobster
-data.txt
+--config=config.yaml
