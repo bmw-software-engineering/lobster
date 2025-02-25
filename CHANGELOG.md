@@ -15,9 +15,12 @@
 
 * Minor fix of handling multithreading in `lobster-json`.
 
-* Introduced YAML-based configuration for `lobster-tool-class`, replacing individual command-line arguments.
+* Introduced YAML-based configuration for `lobster-json`, replacing individual command-line arguments.
   * Added a `--config` argument to specify a YAML configuration file.
-  * Eliminated the need for direct command-line arguments like `--out`, `--single`, `--inputs`, and `--inputs-from-file`, simplifying user interaction.
+  * Eliminated the need for direct command-line arguments like `--out`, `--single`, `--inputs`, and `--inputs-from-file`,
+    unifying user interaction across all lobster tools.
+  * The argument `--out` is still supported as command line argument, and takes
+    precedence over any value given in the configuration file.
 
 * The title and placeholder for search box is renamed to `Filter` in 
   `lobster-html-report` tool.
