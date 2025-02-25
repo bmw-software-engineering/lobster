@@ -5,6 +5,21 @@
 
 ### 0.10.1-dev
 
+* `lobster-trlc` now requires at least version 2.0.1 of TRLC,
+  as TRLC 2.0.1 contains the important bug fix
+  [Detecting duplicated components](https://github.com/bmw-software-engineering/trlc/pull/121),
+  including an essential improvement in the
+  [Language Reference Manual](https://bmw-software-engineering.github.io/trlc/lrm.html).
+  Without the TRLC bug fix `lobster-trlc` will not detect all traces if TRLC authors exploit the bug.
+  Imagine the following TRLC snippet:
+  ```
+  Requirement Windscreen_Wiper {
+    derived_from = [Safety_Critical_Requirement]
+    derived_from = [Boring_Requirement]
+  }
+  ```
+  Here the trace from `Windscreen_Wiper` to `Safety_Critical_Requirement` will not be detected by `lobster-trlc` if the version of `trlc` is less than 2.0.0.
+
 * The `--commit` command line argument from `lobster-online-report` tool is now 
   removed and no longer available. It was redundant and is already replaced by the 
   automated git hash feature that doesn't require user intervention and is handled 
