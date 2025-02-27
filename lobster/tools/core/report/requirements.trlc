@@ -34,7 +34,23 @@ req.System_Requirement_Aspect Status_Justified {
     THEN the tool shall set the tracing status to "JUSTIFIED" of that [[Item]].
   '''
 }
+req.System_Requirement_Aspect Status_Justified_Up {
+  description = '''    
+    OTHERWISE
+    IF the "just_up" list of the [[item]] contains at least one value,
+    AND there is at least one level in "trace to" in the tracing policy for the level of the item
+    THEN the tool shall set the tracing status to "JUSTIFIED" of that [[Item]].
+  '''
+}
 
+req.System_Requirement_Aspect Status_Justified_Down {
+  description = '''
+    OTHERWISE
+    IF the "just_down" list of the [[item]] contains at least one value,
+    AND the level of the item is mentioned in at least one "trace to" entry of any other level
+    THEN the tool shall set the tracing status to "JUSTIFIED" of that [[Item]].
+  '''
+}
 req.System_Requirement_Aspect Status_Missing {
   description = '''    
     OTHERWISE, IF an [[Item]] has no references to an [[Item]] from a level mentioned in trace to,
