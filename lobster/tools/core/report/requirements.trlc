@@ -28,7 +28,7 @@ req.System_Requirement_Aspect Invalid_Trace_To {
   '''
 }
 
-req.System_Requirement_Aspect Status_Justified {
+req.System_Requirement_Aspect Status_Justified_Global {
   description = '''    
     IF the "just_global" list of the [[item]] contains at least one value,
     THEN the tool shall set the tracing status to "JUSTIFIED" of that [[Item]].
