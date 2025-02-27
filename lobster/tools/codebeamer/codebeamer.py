@@ -387,6 +387,34 @@ def ensure_array_of_strings(instance):
         return [str(instance)]
 
 
+def validate_authentication_parameters(cb_config, netrc_path=None):
+    assert isinstance(cb_config, dict)
+    assert netrc_path is None or isinstance(netrc_path, str)
+    if (cb_config["token"] is None and
+            (cb_config["user"] is None or cb_config["pass"] is None)):
+        netrc_file = netrc_path or os.path.join(os.path.expanduser("~"),
+                                                ".netrc")
+        if os.path.isfile(netrc_file):
+            netrc_config = netrc.netrc(netrc_file)
+            machine = cb_config["root"][8:]
+            auth = netrc_config.authenticators(machine)
+            if auth is not None:
+                print("Using .netrc login for %s" % cb_config["root"])
+                cb_config["user"], _, cb_config["pass"] = auth
+            else:
+                provided_machine = ", ".join(netrc_config.hosts.keys()) or "None"
+                sys.exit(f"Error parsing .netrc file."
+                         f"\nExpected '{machine}', but got '{provided_machine}'.")
+
+    if (cb_config["token"] is None and
+            (cb_config["user"] is None or cb_config["pass"] is None)):
+        sys.exit("lobster-codebeamer: please add your token to the config file, "
+                 "or use user and pass in the config file, "
+                 "or configure credentials in the .netrc file.")
+
+    return cb_config
+
+
 def parse_yaml_config(file_name: str):
     """
     Parses a YAML configuration file and returns a validated configuration dictionary.
@@ -447,7 +475,7 @@ def parse_yaml_config(file_name: str):
     return json_config
 
 
-ap = argparse.ArgumentParser()
+ap = argparse.ArgumentParser(conflict_handler='resolve')
 
 
 @get_version(ap)
@@ -483,22 +511,7 @@ def main():
     if not cb_config["root"].startswith("https://"):
         sys.exit(f"Codebeamer root {cb_config['root']} must start with https://")
 
-    if (cb_config["token"] is None and
-            (cb_config["user"] is None or cb_config["pass"] is None)):
-        netrc_file = os.path.join(os.path.expanduser("~"),
-                                  ".netrc")
-        if os.path.isfile(netrc_file):
-            netrc_config = netrc.netrc()
-            auth = netrc_config.authenticators(cb_config["root"][8:])
-            if auth is not None:
-                print("Using .netrc login for %s" % cb_config["root"])
-                cb_config["user"], _, cb_config["pass"] = auth
-
-    if (cb_config["token"] is None and
-            (cb_config["user"] is None or cb_config["pass"] is None)):
-        sys.exit("lobster-codebeamer: please set --cb-token"
-                 "or add your token to the config-file"
-                 "or use --cb-user and --cb-pass")
+    cb_config = validate_authentication_parameters(cb_config)
 
     items_to_import = set()
 

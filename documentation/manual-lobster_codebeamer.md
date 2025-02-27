@@ -28,8 +28,18 @@ envionment variables:
 
 Or, you can put a section into your `~/.netrc` file.
 
-These can also be supplied on the command-line, but configuring
-through environment variables or `.netrc` is the recommended approach.
+- Configuring through .netrc is the recommended approach.
+
+* .netrc Configuration for Codebeamer
+
+  ```.netrc
+  machine your.codebeamer.url
+  login your_username
+  password your_password
+  ```
+Note:
+- If value of root in config file is `https://codebeamer.bmwgroup.net`, then value of
+  machine in .netrc will be `codebeamer.bmwgroup.net`.
 
 ## Use-cases
 

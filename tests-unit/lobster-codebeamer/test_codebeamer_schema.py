@@ -9,11 +9,11 @@ from io import StringIO
 from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
 from lobster.location import Codebeamer_Reference
 from lobster.errors import LOBSTER_Error
-from lobster.tools.codebeamer.codebeamer import _create_common_params, _create_lobster_item, main, parse_yaml_config, ap
+from lobster.tools.codebeamer.codebeamer import _create_common_params, _create_lobster_item, main, validate_authentication_parameters
 
 class TestCreateFunctions(unittest.TestCase):
     def setUp(self):
-         # Create temporary directory and files for testing
+        # Create temporary directory and files for testing
         self.temp_dir = tempfile.TemporaryDirectory()
         self.config_path = os.path.join(self.temp_dir.name, 'codebeamer-config.yaml')
         self.root_url = 'http://root_url'
@@ -155,6 +155,40 @@ class TestCreateFunctions(unittest.TestCase):
             main()
 
         self.assertIn("Unsupported config keys", str(context.exception))
+
+    def test_cb_config_without_credentials(self):
+        cb_config = {"token": None, "user": None, "pass": None, "root": "https://codebeamer.com"}
+        with self.assertRaises(SystemExit) as cm:
+            result = validate_authentication_parameters(cb_config)
+        self.assertEqual(str(cm.exception), "lobster-codebeamer: please add your token to the config file, "
+                                            "or use user and pass in the config file, "
+                                            "or configure credentials in the .netrc file.")
+
+    def test_cb_config_with_token(self):
+        cb_config = {"token": "1234", "user": None, "pass": None, "root": "https://example.com"}
+        result = validate_authentication_parameters(cb_config)
+        self.assertEqual(result["token"], "1234")
+
+    def test_cb_config_with_user_pass(self):
+        cb_config = {"token": None, "user": "admin", "pass": "secret", "root": "https://example.com"}
+        result = validate_authentication_parameters(cb_config)
+        self.assertEqual(result["user"], "admin")
+        self.assertEqual(result["pass"], "secret")
+
+    def test_cb_config_with_netrc(self):
+        cb_config = {"token": None, "user": None, "pass": None, "root": "https://example.com"}
+        # Create a temporary .netrc file
+        self.netrc_content = "machine example.com login testuser password testpass"
+        self.netrc_file_path = os.path.join(os.getcwd(), "temp_test.netrc")
+        with open(self.netrc_file_path, "w") as f:
+            f.write(self.netrc_content)
+
+        result = validate_authentication_parameters(cb_config, self.netrc_file_path)
+        self.assertEqual(result["user"], "testuser")
+        self.assertEqual(result["pass"], "testpass")
+
+        if os.path.exists(self.netrc_file_path):
+            os.remove(self.netrc_file_path)
 
 # This block ensures that the tests are run when the script is executed directly
 if __name__ == "__main__":

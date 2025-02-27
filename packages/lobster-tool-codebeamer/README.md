@@ -57,6 +57,16 @@ Note:
 - If neither a token nor a username or password are given, then the tool tries
   to read the username and password from the `.netrc` file in the user's home
   directory.
+- If value of root in config file is `https://codebeamer.bmwgroup.net`, then value of
+  machine in .netrc will be `codebeamer.bmwgroup.net`.
+
+### .netrc Configuration for Codebeamer
+
+  ```.netrc
+  machine your.codebeamer.url
+  login your_username
+  password your_password
+  ```
 
 ### Example Configuration
 Here is an example of a configuration file:
