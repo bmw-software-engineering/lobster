@@ -10,11 +10,13 @@ enum Reason {
 }
 
 type System_Requirement {
-  description '''
+  description
+    '''
     The content of the requirement.
     A tool requirement describes the behavior of a lobster tool from the point of view of the user.
     It does not describe implementation details.
-  ''' String
+    '''
+      String
 }
 
 type System_Requirement_Aspect extends System_Requirement {
@@ -36,10 +38,16 @@ type System_Requirement_Aspect extends System_Requirement {
 }
 
 type Software_Requirement {
-  description '''
+  description
+    '''
     The content of the requirement.
     A software requirement describes the behavior of a class method or module function.
-  ''' String
+    '''
+      String
+
+  derived_from
+    '''List of system requirements that resulted into this software requirement'''
+      optional System_Requirement[1..*]
 }
 
 type Definition {

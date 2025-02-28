@@ -1,0 +1,8 @@
+{
+    "actual" : {
+	"name"   : "Single_Item",
+	"tags"   : "link-to-requirement",
+	"inputs" : [1, 2, 3],
+	"expect" : 42
+    }
+}
