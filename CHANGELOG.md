@@ -5,6 +5,8 @@
 
 ### 0.10.1-dev
 
+* Include dependency to `PyYAML` in [requirements.txt](requirements.txt).
+
 * `lobster-trlc` now requires at least version 2.0.1 of TRLC,
   as TRLC 2.0.1 contains the important bug fix
   [Detecting duplicated components](https://github.com/bmw-software-engineering/trlc/pull/121),
