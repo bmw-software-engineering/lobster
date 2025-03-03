@@ -1,2 +1,0 @@
---tag-attribute=soup
---config=config.yaml
