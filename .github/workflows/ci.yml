@@ -23,6 +23,18 @@ jobs:
       - name: Executing linter
         run: |
           make lint
+  lint-system-tests:
+    name: PyLint System Tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements_dev.txt
+      - name: Executing linter
+        run: |
+          make lint-system-tests
   trlc:
     name: TRLC
     runs-on: ubuntu-24.04
@@ -37,7 +49,7 @@ jobs:
           make trlc
   selenium-tests:
     name: Run Selenium Tests
-    needs: [lint, trlc]
+    needs: [lint, lint-system-tests, trlc]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
