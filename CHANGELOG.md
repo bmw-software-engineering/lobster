@@ -5,6 +5,9 @@
 
 ### 0.10.1-dev
 
+* Change the behavior of `lobster-codebeamer` such that an output file is always created,
+  even if the codebeamer server has returned zero items.
+
 * Include dependency to `PyYAML` in [requirements.txt](requirements.txt).
 
 * `lobster-trlc` now requires at least version 2.0.1 of TRLC,
