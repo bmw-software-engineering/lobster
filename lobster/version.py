@@ -19,7 +19,7 @@
 import sys
 from argparse import ArgumentParser
 
-VERSION_TUPLE = (0, 10, 1)
+VERSION_TUPLE = (0, 11, 0)
 VERSION_SUFFIX = ""
 
 LOBSTER_VERSION = ("%u.%u.%u" % VERSION_TUPLE) + (

@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.10.1
+### 0.11.0
 
 * Change the behavior of `lobster-codebeamer` such that an output file is always created,
   even if the codebeamer server has returned zero items.
