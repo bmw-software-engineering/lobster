@@ -38,10 +38,11 @@
 
 * Introduced YAML-based configuration for `lobster-json`, replacing individual command-line arguments.
   * Added a `--config` argument to specify a YAML configuration file.
-  * Eliminated the need for direct command-line arguments like `--out`, `--single`, `--inputs`, and `--inputs-from-file`,
-    unifying user interaction across all lobster tools.
+  * Eliminated the command-line arguments `--single`, `--inputs`, and `--inputs-from-file`,
+    unifying user interaction across all lobster tools. Values can now be specified 
+    using the YAML configuration file.
   * The argument `--out` is still supported as command line argument, and takes
-    precedence over any value given in the configuration file.
+    precedence over any value given in the YAML configuration file.
 
 * The title and placeholder for search box is renamed to `Filter` in 
   `lobster-html-report` tool.
