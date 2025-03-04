@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from unittest.mock import Mock, patch
 
-from lobster.tools.codebeamer.codebeamer import (get_query, get_single_item,
+from lobster.tools.codebeamer.codebeamer import (CodebeamerError, get_query, get_single_item,
                                                  get_many_items, to_lobster,
                                                  import_tagged, parse_yaml_config)
 
@@ -20,6 +20,13 @@ list_of_compared_attributes = [
 
 
 class QueryCodebeamerTest(unittest.TestCase):
+    def setUp(self):
+        self._mock_cb_config = {
+            "root" : "http://some.codebeamer.server",
+            "base": "protocol://base.api.url/api/v3",
+            "page_size": 10
+        }
+
     def _assertListEqualByAttributes(self, list1, list2):
         self.assertEqual(len(list1), len(list2), "Lists length are not the same")
         for obj1, obj2 in zip(list1, list2):
@@ -30,11 +37,6 @@ class QueryCodebeamerTest(unittest.TestCase):
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_ID(self, mock_query_cb_single):
         mh = Message_Handler()
-        mock_cb_config = {
-            "root" : "https://codebeamer.bmwgroup.net",
-            "base": "https://test.com",
-            "page_size": 10
-        }
         mock_query = 171619121
         item_data = [
             {
@@ -57,7 +59,7 @@ class QueryCodebeamerTest(unittest.TestCase):
                 "items": item_data
             }        
 
-        result = get_query(mh, mock_cb_config, mock_query)
+        result = get_query(mh, self._mock_cb_config, mock_query)
         self.assertEqual(len(result), 1)
 
         self.assertEqual(result[0].kind, item_data[0]["item"]["categories"][0]["name"])
@@ -72,11 +74,6 @@ class QueryCodebeamerTest(unittest.TestCase):
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_query(self, mock_query_cb_single):
         mh = Message_Handler()
-        mock_cb_config = {
-            "root" : "https://codebeamer.bmwgroup.net",
-            "base": "https://test.com",
-            "page_size": 10
-        }
         mock_query = ("TeamID IN (10833708) AND workItemStatus IN ('InProgress') "
                       "AND summary LIKE 'Vulnerable Road User'")
         item_data = [
@@ -98,7 +95,7 @@ class QueryCodebeamerTest(unittest.TestCase):
                 "items": item_data
             }        
 
-        result = get_query(mh, mock_cb_config, mock_query)
+        result = get_query(mh, self._mock_cb_config, mock_query)
         self.assertEqual(len(result), 1)
 
         self.assertEqual(result[0].kind, item_data[0]["categories"][0]["name"])
@@ -111,21 +108,16 @@ class QueryCodebeamerTest(unittest.TestCase):
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_invalid_data(self, mock_query_cb_single):
-        mock_query = 789
+        query_id = 789
         mh = Message_Handler()
-        mock_cb_config = {
-            "root" : "https://codebeamer.bmwgroup.net",
-            "base": "https://test.com",
-            "page_size": 10
-        }
         mock_query_cb_single.return_value = {
                 "page": 1,
                 "pageSize": 100,
                 "total": 1,
                 "items": []
             }  
-        with self.assertRaises(SystemExit):
-            get_query(mh, mock_cb_config, mock_query)
+        with self.assertRaises(CodebeamerError):
+            get_query(mh, self._mock_cb_config, query_id)
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_single_item(self, mock_get):

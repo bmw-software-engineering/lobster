@@ -51,6 +51,10 @@ TOKEN = 'token'
 REFERENCES = 'references'
 
 
+class CodebeamerError(Exception):
+    pass
+
+
 class SupportedConfigKeys(Enum):
     """Helper class to define supported configuration keys."""
     IMPORT_TAGGED = "import_tagged"
@@ -186,22 +190,28 @@ def get_query(mh, cb_config, query):
         assert len(data) == 4
 
         if page_id == 1 and len(data["items"]) == 0:
+            # lobster-trace: codebeamer_req.Get_Query_Zero_Items_Message
             print("This query doesn't generate items. Please check:")
             print(" * is the number actually correct?")
             print(" * do you have permissions to access it?")
-            print("You can try to access %s manually to check" % url)
-            sys.exit(1)
+            print(f"You can try to access '{url}' manually to check.")
 
-        assert page_id == data["page"]
+        if page_id != data["page"]:
+            raise CodebeamerError(f"Page mismatch in query result: expected page "
+                                  f"{page_id} from codebeamer, but got {data['page']}")
+
         if page_id == 1:
             total_items = data["total"]
-        else:
-            assert total_items == data["total"]
+        elif total_items != data["total"]:
+            raise CodebeamerError(f"Item count mismatch in query result: expected "
+                                  f"{total_items} items so far, but page "
+                                  f"{data['page']} claims to have sent {data['total']} "
+                                  f"items in total.")
 
-        if query is not None and isinstance(query, int):
+        if isinstance(query, int):
             rv += [to_lobster(cb_config, cb_item["item"])
                     for cb_item in data["items"]]
-        elif query is not None and isinstance(query, str):
+        elif isinstance(query, str):
             rv += [to_lobster(cb_config, cb_item)
                     for cb_item in data["items"]]
 
@@ -541,14 +551,16 @@ def main():
                 except ValueError:
                     pass
 
-    elif cb_config.get("import_query"):
+    elif cb_config.get("import_query") is not None:
         try:
             if isinstance(cb_config["import_query"], str):
                 if (cb_config["import_query"].startswith("-") and
                     cb_config["import_query"][1:].isdigit()):
-                    ap.error("import-query must be a positive integer")
+                    ap.error("import_query must be a positive integer")
                 elif cb_config["import_query"].startswith("-"):
-                    ap.error("import-query must be a valid cbQL query")
+                    ap.error("import_query must be a valid cbQL query")
+                elif cb_config["import_query"] == "":
+                    ap.error("import_query must either be a query string or a query ID")
                 elif cb_config["import_query"].isdigit():
                     cb_config["import_query"] = int(cb_config["import_query"])
         except ValueError as e:
