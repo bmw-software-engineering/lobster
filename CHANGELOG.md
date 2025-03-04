@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.10.1-dev
+### 0.11.0
 
 * Change the behavior of `lobster-codebeamer` such that an output file is always created,
   even if the codebeamer server has returned zero items.
@@ -23,7 +23,8 @@
     derived_from = [Boring_Requirement]
   }
   ```
-  Here the trace from `Windscreen_Wiper` to `Safety_Critical_Requirement` will not be detected by `lobster-trlc` if the version of `trlc` is less than 2.0.0.
+  Here the trace from `Windscreen_Wiper` to `Safety_Critical_Requirement` will not 
+  be detected by `lobster-trlc` if the version of `trlc` is less than 2.0.1.
 
 * The `--commit` command line argument from `lobster-online-report` tool is now 
   removed and no longer available. It was redundant and is already replaced by the 
@@ -37,10 +38,11 @@
 
 * Introduced YAML-based configuration for `lobster-json`, replacing individual command-line arguments.
   * Added a `--config` argument to specify a YAML configuration file.
-  * Eliminated the need for direct command-line arguments like `--out`, `--single`, `--inputs`, and `--inputs-from-file`,
-    unifying user interaction across all lobster tools.
+  * Eliminated the command-line arguments `--single`, `--inputs`, and `--inputs-from-file`,
+    unifying user interaction across all lobster tools. Values can now be specified 
+    using the YAML configuration file.
   * The argument `--out` is still supported as command line argument, and takes
-    precedence over any value given in the configuration file.
+    precedence over any value given in the YAML configuration file.
 
 * The title and placeholder for search box is renamed to `Filter` in 
   `lobster-html-report` tool.
