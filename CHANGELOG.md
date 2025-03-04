@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.10.1-dev
+### 0.10.1
 
 * Change the behavior of `lobster-codebeamer` such that an output file is always created,
   even if the codebeamer server has returned zero items.
@@ -23,7 +23,8 @@
     derived_from = [Boring_Requirement]
   }
   ```
-  Here the trace from `Windscreen_Wiper` to `Safety_Critical_Requirement` will not be detected by `lobster-trlc` if the version of `trlc` is less than 2.0.0.
+  Here the trace from `Windscreen_Wiper` to `Safety_Critical_Requirement` will not 
+  be detected by `lobster-trlc` if the version of `trlc` is less than 2.0.1.
 
 * The `--commit` command line argument from `lobster-online-report` tool is now 
   removed and no longer available. It was redundant and is already replaced by the 
