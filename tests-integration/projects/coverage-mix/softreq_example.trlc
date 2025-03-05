@@ -1,0 +1,8 @@
+package softreq_coverage_half_example
+import coverage_half_example
+import sysreq_coverage_half_example
+
+coverage_half_example.Software_Requirement requirement_d
+{
+   text = '''Requirement d'''
+}

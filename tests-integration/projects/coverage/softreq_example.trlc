@@ -1,0 +1,9 @@
+package softreq_coverage_example
+import coverage_example
+import sysreq_coverage_example
+
+coverage_example.Software_Requirement requirement_2
+{
+   text = '''Requirement 2'''
+   derived_from = [sysreq_coverage_example.requirement_1]
+}
