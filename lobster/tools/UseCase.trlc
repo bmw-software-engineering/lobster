@@ -57,84 +57,31 @@ req.UseCase Trace_codebeamer_cpptest_9 {
 
 req.UseCase Trace_codebeamer_cpptest_10 {
     description = '''
-        As a requirement manager I want traceability report to show the data on Component level.
+        As a requirement manager I want traceability report to be generated as html file.
     '''
 }
 
 req.UseCase Trace_codebeamer_cpptest_11 {
     description = '''
-        As a requirement manager I want traceability report to show the data on Service level.
+        As a requirement manager I want traceability report to show the git hashes of the git commit from which C++ tests were taken.
     '''
 }
 
 req.UseCase Trace_codebeamer_cpptest_12 {
     description = '''
-        As a requirement manager I want traceability report to show the data on Customer function level.
+        As a requirement manager I want traceability report to show the mapping of requirement in codebeamer to software test covering the requirement.
     '''
 }
 
 req.UseCase Trace_codebeamer_cpptest_13 {
     description = '''
-        As a requirement manager I want traceability report to be generated as html file.
+        As a requirement manager I want traceability report to show the mapping of software test to covering requirement.
     '''
 }
 
 req.UseCase Trace_codebeamer_cpptest_14 {
     description = '''
-        As a requirement manager I want traceability report to show the date on which report is generated.
+        As a requirement manager I want traceability report to show a list with all findings where the tracing policy is violated.
     '''
 }
 
-req.UseCase Trace_codebeamer_cpptest_15 {
-    description = '''
-        As a requirement manager I want traceability report to show the mapping of requirement in codebeamer to software test covering the requirement.
-    '''
-}
-
-req.UseCase Trace_codebeamer_cpptest_16 {
-    description = '''
-        As a requirement manager I want traceability report to show the mapping of software test to covering requirement.
-    '''
-}
-
-req.UseCase Trace_codebeamer_cpptest_17 {
-    description = '''
-        As a requirement manager I want traceability report to show the error list.
-    '''
-}
-
-req.UseCase Trace_codebeamer_cpptest_18 {
-    description = '''
-        As a requirement manager I want traceability report to have hyperlinks to the sections of the html report.
-    '''
-}
-
-req.UseCase Trace_codebeamer_cpptest_19 {
-    description = '''
-        As a requirement manager I want traceability report to highlight the missing traces and good traces in different colour.
-    '''
-}
-
-req.UseCase Trace_codebeamer_cpptest_20 {
-    description = '''
-        As a requirement manager I want traceability report to show the missing traces and good traces data in graphical form.
-    '''
-}
-
-req.UseCase Trace_codebeamer_cpptest_21 {
-    description = '''
-        As a requirement manager I want traceability report to show the graphical representation of coverage computation.
-    '''
-}
-
-req.UseCase Trace_codebeamer_cpptest_22 {
-    description = '''
-        As a requirement manager I want traceability report to show report overview at start of the report.
-    '''
-}
-
-req.UseCase Trace_codebeamer_cpptest_23 {
-    description = '''
-        As a requirement manager I want traceability report to be generated in English Language.
-    '''
-}
