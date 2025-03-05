@@ -57,3 +57,10 @@ type Definition {
     to prevent the need of duplicating text.
   ''' String
 }
+
+type UseCase {
+  description ''' 
+    The text of the UseCase.
+    The format shall be : As a < role > I want < description of the UseCase >
+  ''' String
+}

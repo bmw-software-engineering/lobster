@@ -1,0 +1,87 @@
+package UC
+import req
+
+req.UseCase Trace_codebeamer_cpptest_1 {
+    description = '''
+        As a requirement manager I want to have a report of traceability between requirements in codebeamer and tests in C++ tests (software test).
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_2 {
+    description = '''
+        As a requirement manager I want traceability report to show the list of requirements in codebeamer which are covered by software test.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_3 {
+    description = '''
+        As a requirement manager I want traceability report to show the list of software tests covering requirements in codebeamer.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_4 {
+    description = '''
+        As a requirement manager I want traceability report to show the coverage computation between total number of requirements in codebeamer and requirements covered in software test.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_5 {
+    description = '''
+        As a requirement manager I want traceability report to show the list of requirements in codebeamer which are not covered by software test.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_6 {
+    description = '''
+        As a requirement manager I want traceability report to show the list of software test which are not covering any requirement in codebeamer.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_7 {
+    description = '''
+        As a requirement manager I want traceability report to show the tracing policy used to generate the report.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_8 {
+    description = '''
+        As a requirement manager I want traceability report to mention the codebeamer link to requirements in codebeamer.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_9 {
+    description = '''
+        As a requirement manager I want traceability report to mention the source location of the software tests.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_10 {
+    description = '''
+        As a requirement manager I want traceability report to be generated as html file.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_11 {
+    description = '''
+        As a requirement manager I want traceability report to show the git hashes of the git commit from which C++ tests were taken.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_12 {
+    description = '''
+        As a requirement manager I want traceability report to show the mapping of requirement in codebeamer to software test covering the requirement.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_13 {
+    description = '''
+        As a requirement manager I want traceability report to show the mapping of software test to covering requirement.
+    '''
+}
+
+req.UseCase Trace_codebeamer_cpptest_14 {
+    description = '''
+        As a requirement manager I want traceability report to show a list with all findings where the tracing policy is violated.
+    '''
+}
+
