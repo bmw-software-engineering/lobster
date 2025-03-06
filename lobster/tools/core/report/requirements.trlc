@@ -34,6 +34,7 @@ req.System_Requirement_Aspect Status_Justified_Global {
     THEN the tool shall set the tracing status to "JUSTIFIED" of that [[Item]].
   '''
 }
+
 req.System_Requirement_Aspect Status_Justified_Up {
   description = '''    
     OTHERWISE
@@ -51,9 +52,17 @@ req.System_Requirement_Aspect Status_Justified_Down {
     THEN the tool shall set the tracing status to "JUSTIFIED" of that [[Item]].
   '''
 }
+
 req.System_Requirement_Aspect Status_Missing {
   description = '''    
     OTHERWISE, IF an [[Item]] has no references to an [[Item]] from a level mentioned in trace to,
     THEN the tool shall set the tracing status to "MISSING" of that [[Item]] and write "missing up reference" into the message section according to the schema.
+  '''
+}
+
+req.System_Requirement_Aspect Status_Ok {
+  description = '''    
+    OTHERWISE, IF an [[Item]] has references to an [[Item]] from a level mentioned in trace to,
+    THEN the tool shall set the tracing status to "OK" of that [[Item]]
   '''
 }
