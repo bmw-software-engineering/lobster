@@ -25,10 +25,10 @@ import multiprocessing
 from abc import ABCMeta, abstractmethod
 from functools import partial
 from typing import List, Union, Tuple
-from enum import Enum
 import yaml
 from lobster.version import FULL_NAME, get_version
-from lobster.errors import Message_Handler
+from lobster.errors import (Message_Handler, UnsupportedParametersError,
+                            MandatoryParametersError)
 from lobster.location import File_Reference
 from lobster.items import Requirement, Implementation, Activity
 from lobster.io import lobster_write
@@ -36,20 +36,44 @@ from lobster.io import lobster_write
 BUG_URL = "https://github.com/bmw-software-engineering/lobster/issues"
 
 
-class SupportedConfigKeys(Enum):
+class SupportedCommonConfigKeys:
     """Helper class to define supported configuration keys."""
     INPUT_FROM_FILE     = "inputs_from_file"
     TRAVERSE_BAZEL_DIRS = "traverse_bazel_dirs"
-    SINGLE              = "single"
     INPUTS              = "inputs"
-    OUT                 = "out"
 
     @classmethod
-    def as_set(cls) -> set:
-        return {parameter.value for parameter in cls}
+    def get_config_keys_manual(cls) -> dict:
+        help_dict = {
+            cls.INPUT_FROM_FILE     : "Read input files or directories from this file. "
+                                      "Each non-empty line is interpreted as one input."
+                                      "Supports comments starting with #.",
+            cls.TRAVERSE_BAZEL_DIRS : "Enter bazel-* directories, which are excluded "
+                                      "by default.",
+            cls.INPUTS              : "List of files to process or directories to "
+                                      "search for relevant input files.",
+        }
+        return help_dict
+
+    @abstractmethod
+    def get_mandatory_parameters(self) -> List[str]:
+        """Return the list of config file parameters that are mandatory"""
+
+    def get_formatted_help_text(self):
+        help_dict = self.get_config_keys_manual()
+        help_text = ''
+        max_length = max(len(config_key) for config_key in help_dict)
+        for config_key, help_info in help_dict.items():
+            spaces = " " * (max_length - len(config_key))
+            help_text += f"\n{config_key} {spaces}- {help_info}"
+        return help_text
+
+    @classmethod
+    def get_config_keys_as_set(cls) -> set:
+        return set(cls.get_config_keys_manual().keys())
 
 
-class LOBSTER_Tool(metaclass=ABCMeta):
+class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
     def __init__(self, name, description, extensions, official):
         assert isinstance(name, str)
         assert isinstance(description, str)
@@ -65,6 +89,7 @@ class LOBSTER_Tool(metaclass=ABCMeta):
         self.exclude_pat = []
         self.schema      = None
         self.mh          = Message_Handler()
+        self.config      = {}
 
         self.ap = argparse.ArgumentParser(
             prog         = self.name,
@@ -73,64 +98,97 @@ class LOBSTER_Tool(metaclass=ABCMeta):
                             " Please report bugs to %s." %
                             (FULL_NAME, BUG_URL)
                             if official else None),
-            allow_abbrev = False)
-
-        self.g_common = self.ap.add_argument_group("common options")
-        self.g_tool   = self.ap.add_argument_group("tool specific options")
-
-        self.g_common.add_argument(
-            "--config",
-            default = None,
-            help=("Path to YAML file with arguments, "
-                          "supported references: '%s'" %
-                          ', '.join(SupportedConfigKeys.as_set())),
+            allow_abbrev = False,
+            formatter_class=argparse.RawTextHelpFormatter
         )
 
-        self.g_common.add_argument(
+        self.ap.add_argument(
             "--out",
             default = None,
-            help    = "Write output to given file instead of stdout.")
-
-        self.add_argument = self.g_tool.add_argument
+            help    = "Write output to the given file instead of stdout."
+        )
 
     def load_yaml_config(self, config_path):
-        """Loads configuration from a YAML file."""
+        """
+        Loads configuration from a YAML file.
+        Parameters
+        ----------
+        config_path - Yaml config file path.
+
+        Returns
+        -------
+        data - Returns the
+        """
         if not config_path:
             return {}
-
         if not os.path.isfile(config_path):
             sys.exit(f"Error: Config file '{config_path}' not found.")
         with open(config_path, "r", encoding="UTF-8") as f:
             data = yaml.safe_load(f) or {}
-
-        # Validate supported keys
-        provided_config_keys = set(data.keys())
-        unsupported_keys = provided_config_keys - SupportedConfigKeys.as_set()
-        if unsupported_keys:
-            raise KeyError(
-                f"Unsupported config keys: {', '.join(unsupported_keys)}. "
-                f"Supported keys are: {', '.join(SupportedConfigKeys.as_set())}."
-            )
-
         return data
 
+    def validate_yaml_supported_config_parameters(self, data):
+        """
+        Function to check if the parameters mentioned in the Yaml config are
+        supported by the tool in execution
+        Parameters
+        ----------
+        data - Yaml config file contents
+
+        Returns
+        -------
+        Nothing
+        """
+        # Validate supported keys
+        unsupported_parameters = (' '.join(set(data.keys()) - set(
+            self.get_config_keys_as_set())))
+        try:
+            if unsupported_parameters:
+                raise UnsupportedParametersError(
+                    ', '.join(self.get_config_keys_as_set()), unsupported_parameters)
+        except UnsupportedParametersError as e:
+            print(e)
+            sys.exit()
+
+    def check_mandatory_config_parameters(self, data):
+        """
+        Function to check if the mandatory parameters are provided in the config file
+        Parameters
+        ----------
+        data - Yaml config file contents
+
+        Returns
+        -------
+        Nothing
+        """
+        mandatory_parameters = self.get_mandatory_parameters()
+        config_keys = data.keys()
+
+        try:
+            if not all(param in config_keys for param in mandatory_parameters):
+                raise MandatoryParametersError(
+                    mandatory_parameters
+                )
+        except MandatoryParametersError as e:
+            print(e)
+            sys.exit()
+
     @get_version
-    def process_commandline_options(
+    def process_commandline_and_yaml_options(
             self,
     ) -> Tuple[argparse.Namespace, List[Tuple[File_Reference, str]]]:
         """Processes all command line options"""
 
         options = self.ap.parse_args()
-        config = self.load_yaml_config(options.config)
+        self.config = self.load_yaml_config(options.config)
+        self.validate_yaml_supported_config_parameters(self.config)
+        self.check_mandatory_config_parameters(self.config)
 
         if not options.out:
-            options.out = config.get(SupportedConfigKeys.OUT.value)
-        options.inputs_from_file = config.get(SupportedConfigKeys.INPUT_FROM_FILE.value)
-        options.inputs = config.get(SupportedConfigKeys.INPUTS.value, [])
-        options.traverse_bazel_dirs = config.get(
-            SupportedConfigKeys.TRAVERSE_BAZEL_DIRS.value, False)
-        options.single = config.get(SupportedConfigKeys.SINGLE.value, False)
-
+            options.out = self.config.get("out")
+        options.inputs_from_file = self.config.get(self.INPUT_FROM_FILE)
+        options.inputs = self.config.get(self.INPUTS, [])
+        options.traverse_bazel_dirs = self.config.get(self.TRAVERSE_BAZEL_DIRS, False)
         work_list = self.process_common_options(options)
         self.process_tool_options(options, work_list)
         return options, work_list
@@ -166,7 +224,6 @@ class LOBSTER_Tool(metaclass=ABCMeta):
                                    line))
         if not options.inputs and not options.inputs_from_file:
             inputs.append((File_Reference("<config>"), "."))
-
         # Sanity check and search directories
         work_list = []
         ok        = True
@@ -263,7 +320,7 @@ class LOBSTER_Per_File_Tool(LOBSTER_Tool):
         pass
 
     def execute(self):
-        options, work_list = self.process_commandline_options()
+        options, work_list = self.process_commandline_and_yaml_options()
 
         ok    = True
         items = []

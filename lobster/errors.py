@@ -72,3 +72,22 @@ class Message_Handler:
         assert isinstance(message, str)
 
         self.emit(location, "warning", message)
+
+
+class UnsupportedParametersError(Exception):
+    def __init__(self, supported_parameters, unsupported__parameters):
+        self.supported_parameters = supported_parameters
+        self.unsupported__parameters = unsupported__parameters
+
+    def __str__(self):
+        return (f"Unsupported config parameters : {self.unsupported__parameters} \n"
+                f"Supported config parameters : {self.supported_parameters}")
+
+
+class MandatoryParametersError(Exception):
+    def __init__(self, mandatory_parameters):
+        self.mandatory_parameters = mandatory_parameters
+
+    def __str__(self):
+        return (f"Yaml config file should contain these mandatory parameters : "
+                f"{(',').join(self.mandatory_parameters)}")
