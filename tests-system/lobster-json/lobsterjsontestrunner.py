@@ -11,6 +11,8 @@ class ConfigFileData:
     single: Optional[bool] = None
     out: Optional[str] = None
     inputs: List[str] = None
+    name_attribute: Optional[str] = None
+    tag_attribute: Optional[str] = None
 
     def __post_init__(self):
         self.inputs = []
@@ -25,6 +27,8 @@ class ConfigFileData:
         append_if_not_none("single", self.single)
         append_if_not_none("out", self.out)
         append_if_not_none("inputs", self.inputs)
+        append_if_not_none("name_attribute", self.name_attribute)
+        append_if_not_none("tag_attribute", self.tag_attribute)
 
         with open(filename, mode='w', encoding="UTF-8") as file:
             yaml.dump(data, file)
@@ -33,8 +37,6 @@ class ConfigFileData:
 @dataclass
 class CmdArgs:
     out: Optional[str] = None
-    name_attribute: Optional[str] = None
-    tag_attribute: Optional[str] = None
     config: Optional[str] = "config.yaml"
 
     def as_list(self) -> List[str]:
@@ -45,8 +47,6 @@ class CmdArgs:
             if value is not None:
                 cmd_args.append(f"{parameter}={value}")
 
-        append_if_string("--name-attribute", self.name_attribute)
-        append_if_string("--tag-attribute", self.tag_attribute)
         append_if_string("--out", self.out)
         append_if_string("--config", self.config)
         return cmd_args
