@@ -81,23 +81,50 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
             description = "Extract tracing data from JSON files.",
             extensions  = ["json"],
             official    = True)
-        self.add_argument("--test-list",
-                          default = "",
-                          help    = ("Member name indicator resulting in a"
-                                     " list containing objects carrying test"
-                                     " data."))
-        self.add_argument("--name-attribute",
-                          default = None,
-                          help    = "Member name indicator for test name.")
-        self.add_argument("--tag-attribute",
-                          default  = None,
-                          required = True,
-                          help     = ("Member name indicator for test "
-                                      " tracing tags."))
-        self.add_argument("--justification-attribute",
-                          default  = None,
-                          help     = ("Member name indicator for "
-                                      " justifications."))
+
+        self.ap.add_argument(
+            "--config",
+            default=None,
+            help=(f"Path to YAML file with arguments as below,"
+                  f"{self.get_formatted_help_text()}"),
+            required=True
+        )
+
+    """Helper class to define supported configuration keys."""
+    TEST_LIST = "test_list"
+    NAME_ATTRIBUTE = "name_attribute"
+    TAG_ATTRIBUTE = "tag_attribute"
+    JUSTIFICATION_ATTRIBUTE = "justification_attribute"
+
+    @classmethod
+    def get_config_keys_manual(cls):
+        help_dict = super().get_config_keys_manual()
+        help_dict.update(
+            {
+                cls.TEST_LIST: "Member name indicator resulting in a "
+                               "list containing objects carrying test "
+                               "data.",
+                cls.NAME_ATTRIBUTE: "Member name indicator for test name.",
+                cls.TAG_ATTRIBUTE: "Member name indicator for test tracing tags.",
+                cls.JUSTIFICATION_ATTRIBUTE: "Member name indicator for justifications."
+            }
+        )
+        return help_dict
+
+    def get_mandatory_parameters(self) -> List[str]:
+        return [
+            self.TAG_ATTRIBUTE
+        ]
+
+    def process_commandline_options(
+            self,
+    ) -> Tuple[argparse.Namespace, List[Tuple[File_Reference, str]]]:
+        options, work_list = super().process_commandline_options()
+        options.test_list = self.config.get(self.TEST_LIST, '')
+        options.name_attribute = self.config.get(self.NAME_ATTRIBUTE)
+        options.tag_attribute = self.config.get(self.TAG_ATTRIBUTE)
+        options.justification_attribute = self.config.get(self.JUSTIFICATION_ATTRIBUTE)
+        return options, work_list
 
     def process_tool_options(
             self,
