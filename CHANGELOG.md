@@ -5,7 +5,9 @@
 
 ### 0.11.1-dev
 
-
+* `lobster-json` - now all the commandline arguments except `--out` are replaced by 
+  Yaml config file which means now only `--out` and `--config` are supported command 
+  line arguments.
 
 ### 0.11.0
 
