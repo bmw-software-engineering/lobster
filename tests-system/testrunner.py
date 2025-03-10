@@ -77,11 +77,7 @@ class TestRunner(ABC):
     @staticmethod
     def get_repo_root() -> Path:
         """Returns the root directory of the LOBSTER repository."""
-        root = Path(__file__).resolve().parents[1]
-        if root.name != "lobster":
-            raise RuntimeError(f"{Path(__file__).name} must be located in a child "
-                               f"directory of the repository root.")
-        return root
+        return Path(__file__).resolve().parents[1]
 
     def run_tool_test(self) -> CompletedProcess:
         """Runs the tool under test and measures the branch coverage."""
