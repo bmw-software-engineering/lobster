@@ -124,11 +124,12 @@ class LOBSTER_Tool(metaclass=ABCMeta):
         config = self.load_yaml_config(options.config)
 
         if not options.out:
-            options.out = config.get("out")
-        options.inputs_from_file = config.get("inputs_from_file")
-        options.inputs = config.get("inputs", [])
-        options.traverse_bazel_dirs = config.get("traverse_bazel_dirs", False)
-        options.single = config.get("single", False)
+            options.out = config.get(SupportedConfigKeys.OUT.value)
+        options.inputs_from_file = config.get(SupportedConfigKeys.INPUT_FROM_FILE.value)
+        options.inputs = config.get(SupportedConfigKeys.INPUTS.value, [])
+        options.traverse_bazel_dirs = config.get(
+            SupportedConfigKeys.TRAVERSE_BAZEL_DIRS.value, False)
+        options.single = config.get(SupportedConfigKeys.SINGLE.value, False)
 
         work_list = self.process_common_options(options)
         self.process_tool_options(options, work_list)
