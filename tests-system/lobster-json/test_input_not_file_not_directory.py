@@ -24,7 +24,7 @@ class InputNotFileNotDirectoryTest(LobsterJsonSystemTestCaseBase):
         super().setUp()
         self._test_runner = self.create_test_runner()
         self._test_runner.config_file_data.inputs.append(self._FILE_DOES_NOT_EXIST)
-        self._test_runner.cmd_args.tag_attribute = "pizza"
+        self._test_runner.config_file_data.tag_attribute = "pizza"
 
     def test_nothing_exists(self):
         # lobster-trace: json_req.Input_Not_File_Not_Directory
