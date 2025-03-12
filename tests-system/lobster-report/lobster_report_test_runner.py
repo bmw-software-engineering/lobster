@@ -1,8 +1,7 @@
-from subprocess import CompletedProcess
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
-from ..testrunner import TestRunner
+from ..test_runner import TestRunner
 
 
 @dataclass
@@ -38,6 +37,3 @@ class LobsterReportTestRunner(TestRunner):
         """Returns the command line arguments that shall be used to start
         'lobster-report' under test"""
         return self._cmd_args.as_list()
-
-    def run_tool_test(self) -> CompletedProcess:
-        return super().run_tool_test()

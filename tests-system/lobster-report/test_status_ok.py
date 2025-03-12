@@ -1,7 +1,4 @@
-from os import makedirs
-import shutil
-from .lobsterreportsystemtestcasebase import LobsterReportSystemTestCaseBase
-from .lobsterreportasserter import LobsterReportAsserter
+from .lobster_report_system_test_case_base import LobsterReportSystemTestCaseBase
 from ..asserter import Asserter
 
 
@@ -21,8 +18,8 @@ class ReportOkTest(LobsterReportSystemTestCaseBase):
         self._test_runner.declare_output_file(self._data_directory / out_file)
 
         completed_process = self._test_runner.run_tool_test()
-        asserter = LobsterReportAsserter(self, completed_process, self._test_runner)
+        asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(0, out_file)
+        asserter.assertNoStdOutText()
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()

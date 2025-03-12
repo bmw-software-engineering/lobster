@@ -1,6 +1,6 @@
 from pathlib import Path
 from .lobsterjsontestrunner import LobsterJsonTestRunner
-from ..systemtestcasebase import SystemTestCaseBase
+from ..system_test_case_base import SystemTestCaseBase
 
 
 class LobsterJsonSystemTestCaseBase(SystemTestCaseBase):

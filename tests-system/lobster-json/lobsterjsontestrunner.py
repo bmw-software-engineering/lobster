@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
 import yaml
-from ..testrunner import TestRunner
+from ..test_runner import TestRunner
 
 
 @dataclass

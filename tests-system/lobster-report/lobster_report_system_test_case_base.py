@@ -1,6 +1,6 @@
 from pathlib import Path
-from .lobsterreporttestrunner import LobsterReportTestRunner
-from ..systemtestcasebase import SystemTestCaseBase
+from .lobster_report_test_runner import LobsterReportTestRunner
+from ..system_test_case_base import SystemTestCaseBase
 
 
 class LobsterReportSystemTestCaseBase(SystemTestCaseBase):
