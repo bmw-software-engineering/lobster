@@ -77,6 +77,85 @@ will create a file called `system-tests.lobster` which contains LOBSTER items th
 - represent the system test cases of `lobster-json`,
 - and contain information about the linked requirements.
 
+# Discovering System Tests with VSCode
+If you want to run or debug system tests with VSCode, then you can use the following
+configuration in your `.vscode/settings.json` file:
+```json
+{
+    "makefile.configureOnOpen": false,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "tests-system",
+        "-t",
+        ".",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
+}
+```
+These settings copy the arguments from the `Makefile`.
+The argument `-t .` is needed to help `unittest` to resolve import statements.
+The argument `-s system-test` tells `unittest` to start discovery in this directory.
+
+Make sure to instruct VSCode to use the Pyton interpreter from your virtual environment,
+and install `requirements_dev.txt`:
+```
+> pip install -r requirements_dev.txt
+```
+
+# Discovering Unit Tests with VSCode
+If, on the other hand, you want to discover the unit tests, then use the following
+configuration instead:
+```json
+{
+    "makefile.configureOnOpen": false,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./tests-unit",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
+}
+```
+
+# Discovering System and Unit Tests with VSCode
+If you want to have both test types available in VSCode,
+then consider to use the current directory also for `-s`:
+```json
+{
+    "makefile.configureOnOpen": false,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        ".",
+        "-t",
+        ".",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
+}
+```
+This way the system tests along with the unit tests will be found by VSCode.
+
+Notes:
+- The file [tests-unit/\_\_init\_\_.py](../tests-unit/__init__.py) exists only to support this use case.
+- As it turns out VSCode keeps the already detected tests in the "TESTING" side panel
+  until you reload the window.
+  That means you can have the system tests along with the unit tests available in the
+  following alternative manner:
+  1. use `settings.json` for one test type only
+  2. modify `settings.json` to load the other tests, and save it
+
+  If you open the "TESTING" side panel, all tests will be visible.
+
 # Deprecated Framework
 The deprecated script `run_tool_tests.py` also executes system tests.
 It can execute system tests for all lobster tools.
