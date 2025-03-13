@@ -69,7 +69,7 @@
       "traces": [],
       "source": [
         {
-          "file": "trlc.output",
+          "file": "trlc.lobster",
           "filters": [],
           "valid_status": []
         }
@@ -90,7 +90,7 @@
       ],
       "source": [
         {
-          "file": "python.output",
+          "file": "python.lobster",
           "filters": []
         }
       ],

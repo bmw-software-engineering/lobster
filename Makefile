@@ -22,9 +22,10 @@ lint-system-tests: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
 	python3 -m pylint --rcfile=tests-system/pylint3.cfg \
 		--reports=no \
-		tests-system/systemtestcasebase.py \
+		tests-system/system_test_case_base.py \
 		tests-system/asserter.py \
-		tests-system/lobster-json
+		tests-system/lobster-json \
+		tests-system/lobster-report
 
 trlc:
 	trlc lobster --error-on-warnings --verify

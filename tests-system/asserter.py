@@ -1,6 +1,6 @@
 from subprocess import CompletedProcess
 from unittest import TestCase
-from .testrunner import TestRunner
+from .test_runner import TestRunner
 
 
 # pylint: disable=invalid-name
@@ -37,6 +37,9 @@ class Asserter:
 
     def assertNoStdErrText(self, msg="STDERR contains output"):
         self.assertStdErrText("", msg)
+
+    def assertNoStdOutText(self, msg="STDOUT contains output"):
+        self.assertStdOutText("", msg)
 
     def assertOutputFiles(self):
         """For each expected file, checks if an actual file has been created with the
