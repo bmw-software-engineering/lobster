@@ -1,5 +1,6 @@
 !**/expected-output/*
 !lobster-html-report/**/input/*.lobster
 !lobster-online-report/**/input/*.lobster
+!lobster-online-report/data/*.lobster
 !lobster-report/**/input/*.lobster
 !lobster-report/data/*.lobster
