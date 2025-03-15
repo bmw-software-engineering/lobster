@@ -1,0 +1,12 @@
+package coverage_example
+
+type System_Requirement
+{
+  text String
+}
+
+type Software_Requirement
+{
+  text String
+  derived_from optional System_Requirement [1 .. *]
+}
