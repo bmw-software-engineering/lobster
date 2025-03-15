@@ -37,20 +37,21 @@ jobs:
           python-version: "3.9"
       - name: Install dependencies
         run: |
-          sudo apt-get install -y graphviz
           python -m pip install --upgrade pip
           pip install -r requirements_dev.txt
           echo "$GITHUB_WORKSPACE" >> $GITHUB_PATH
-      - name: Generate docs
-        run: |
-          make docs
-        env:
-          PYTHONPATH: "."
       - name: Building code coverage report
         run: |
+          make lobster/html/assets.py
           make system-tests unit-tests
           make coverage
           mv htmlcov docs
+      - name: Generate docs
+        run: |
+          sudo apt-get install -y graphviz
+          make docs
+        env:
+          PYTHONPATH: "."
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
