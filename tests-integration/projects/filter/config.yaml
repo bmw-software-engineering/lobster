@@ -1,3 +1,5 @@
-out    : json.lobster
 inputs :
   - test_example.json
+name_attribute : "name"
+tag_attribute : "tags"
+justification_attribute : "justification"

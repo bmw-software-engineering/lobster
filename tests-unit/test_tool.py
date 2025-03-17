@@ -30,12 +30,12 @@ class TestLOBSTER_Tool(unittest.TestCase):
 
     def test_load_yaml_config_valid_file(self):
         with NamedTemporaryFile("w", delete=False) as temp:
-            yaml.dump({"out": "value"}, temp)
+            yaml.dump({"tag_attribute": "value"}, temp)
             temp_path = temp.name
 
         try:
             config = self.tool.load_yaml_config(temp_path)
-            self.assertEqual(config, {"out": "value"})
+            self.assertEqual(config, {"tag_attribute": "value"})
         finally:
             os.remove(temp_path)
 

@@ -21,7 +21,7 @@ import sys
 import json
 from pathlib import PurePath
 from pprint import pprint
-from typing import Tuple, List
+from typing import Tuple, List, Set
 
 from lobster.tool import LOBSTER_Per_File_Tool
 from lobster.items import Tracing_Tag, Activity
@@ -82,14 +82,6 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
             extensions  = ["json"],
             official    = True)
 
-        self.ap.add_argument(
-            "--config",
-            default=None,
-            help=(f"Path to YAML file with arguments as below,"
-                  f"{self.get_formatted_help_text()}"),
-            required=True
-        )
-
     # Supported config parameters for lobster-json
     TEST_LIST = "test_list"
     NAME_ATTRIBUTE = "name_attribute"
@@ -114,8 +106,8 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
         )
         return help_dict
 
-    def get_mandatory_parameters(self) -> List[str]:
-        return [self.TAG_ATTRIBUTE]
+    def get_mandatory_parameters(self) -> Set[str]:
+        return {self.TAG_ATTRIBUTE}
 
     def process_commandline_and_yaml_options(
             self,
@@ -127,7 +119,8 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
 
         Returns
         -------
-
+        options - command-line and yaml options
+        worklist - list of json files
         """
         options, work_list = super().process_commandline_and_yaml_options()
         options.test_list = self.config.get(self.TEST_LIST, '')

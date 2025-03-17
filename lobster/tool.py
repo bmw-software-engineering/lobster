@@ -24,11 +24,10 @@ import multiprocessing
 
 from abc import ABCMeta, abstractmethod
 from functools import partial
-from typing import List, Union, Tuple
+from typing import List, Union, Tuple, Set, Dict
 import yaml
 from lobster.version import FULL_NAME, get_version
-from lobster.errors import (Message_Handler, UnsupportedParametersError,
-                            MandatoryParametersError)
+from lobster.errors import Message_Handler
 from lobster.location import File_Reference
 from lobster.items import Requirement, Implementation, Activity
 from lobster.io import lobster_write
@@ -38,16 +37,16 @@ BUG_URL = "https://github.com/bmw-software-engineering/lobster/issues"
 
 class SupportedCommonConfigKeys:
     """Helper class to define supported configuration keys."""
-    INPUT_FROM_FILE     = "inputs_from_file"
+    INPUTS_FROM_FILE     = "inputs_from_file"
     TRAVERSE_BAZEL_DIRS = "traverse_bazel_dirs"
     INPUTS              = "inputs"
 
     @classmethod
-    def get_config_keys_manual(cls) -> dict:
+    def get_config_keys_manual(cls) -> Dict[str, str]:
         help_dict = {
-            cls.INPUT_FROM_FILE     : "Read input files or directories from this file. "
-                                      "Each non-empty line is interpreted as one input."
-                                      "Supports comments starting with #.",
+            cls.INPUTS_FROM_FILE     : "Read input files or directories from this "
+                                       "file. Each non-empty line is interpreted as "
+                                       "one input. Supports comments starting with #.",
             cls.TRAVERSE_BAZEL_DIRS : "Enter bazel-* directories, which are excluded "
                                       "by default.",
             cls.INPUTS              : "List of files to process or directories to "
@@ -56,8 +55,8 @@ class SupportedCommonConfigKeys:
         return help_dict
 
     @abstractmethod
-    def get_mandatory_parameters(self) -> List[str]:
-        """Return the list of config file parameters that are mandatory"""
+    def get_mandatory_parameters(self) -> Set[str]:
+        """Return a set of config file parameters that are mandatory"""
 
     def get_formatted_help_text(self):
         help_dict = self.get_config_keys_manual()
@@ -69,7 +68,7 @@ class SupportedCommonConfigKeys:
         return help_text
 
     @classmethod
-    def get_config_keys_as_set(cls) -> set:
+    def get_config_keys_as_set(cls) -> Set[str]:
         return set(cls.get_config_keys_manual().keys())
 
 
@@ -107,6 +106,13 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
             default = None,
             help    = "Write output to the given file instead of stdout."
         )
+        self.ap.add_argument(
+            "--config",
+            default=None,
+            help=(f"Path to YAML file with arguments as below,"
+                  f"{self.get_formatted_help_text()}"),
+            required=True
+        )
 
     def load_yaml_config(self, config_path):
         """
@@ -117,7 +123,7 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
 
         Returns
         -------
-        data - Returns the
+        data - Returns the Yaml file contents in dictionary format.
         """
         if not config_path:
             return {}
@@ -127,7 +133,7 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
             data = yaml.safe_load(f) or {}
         return data
 
-    def validate_yaml_supported_config_parameters(self, data):
+    def validate_yaml_supported_config_parameters(self, config):
         """
         Function to check if the parameters mentioned in the Yaml config are
         supported by the tool in execution
@@ -139,18 +145,14 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
         -------
         Nothing
         """
-        # Validate supported keys
-        unsupported_parameters = (' '.join(set(data.keys()) - set(
-            self.get_config_keys_as_set())))
-        try:
-            if unsupported_parameters:
-                raise UnsupportedParametersError(
-                    ', '.join(self.get_config_keys_as_set()), unsupported_parameters)
-        except UnsupportedParametersError as e:
-            print(e)
-            sys.exit()
+        with open(config, "r", encoding="UTF-8") as fd:
+            for line_no, line in enumerate(fd, 1):
+                if (':' in line and (line.split(':')[0]).strip() not in
+                        self.get_config_keys_as_set()):
+                    self.mh.error(File_Reference(line, line_no),
+                                  "Invalid yaml config parameter")
 
-    def check_mandatory_config_parameters(self, data):
+    def check_mandatory_config_parameters(self, config):
         """
         Function to check if the mandatory parameters are provided in the config file
         Parameters
@@ -161,17 +163,10 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
         -------
         Nothing
         """
-        mandatory_parameters = self.get_mandatory_parameters()
-        config_keys = data.keys()
-
-        try:
-            if not all(param in config_keys for param in mandatory_parameters):
-                raise MandatoryParametersError(
-                    mandatory_parameters
-                )
-        except MandatoryParametersError as e:
-            print(e)
-            sys.exit()
+        mandatory_parameters = self.get_mandatory_parameters() - set(config.keys())
+        if mandatory_parameters:
+            sys.exit(f"Required mandatory parameters missing - "
+                     f"{','.join(mandatory_parameters)}")
 
     @get_version
     def process_commandline_and_yaml_options(
@@ -180,13 +175,10 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
         """Processes all command line options"""
 
         options = self.ap.parse_args()
+        self.validate_yaml_supported_config_parameters(options.config)
         self.config = self.load_yaml_config(options.config)
-        self.validate_yaml_supported_config_parameters(self.config)
         self.check_mandatory_config_parameters(self.config)
-
-        if not options.out:
-            options.out = self.config.get("out")
-        options.inputs_from_file = self.config.get(self.INPUT_FROM_FILE)
+        options.inputs_from_file = self.config.get(self.INPUTS_FROM_FILE)
         options.inputs = self.config.get(self.INPUTS, [])
         options.traverse_bazel_dirs = self.config.get(self.TRAVERSE_BAZEL_DIRS, False)
         work_list = self.process_common_options(options)
