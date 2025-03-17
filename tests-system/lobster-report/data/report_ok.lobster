@@ -8,14 +8,14 @@
       "kind": "requirements",
       "items": [
         {
-          "tag": "req example.adas_100_A",
+          "tag": "req example.adas_100",
           "location": {
             "kind": "file",
             "file": "./demo.trlc",
             "line": 3,
             "column": 13
           },
-          "name": "example.adas_100_A",
+          "name": "example.adas_100",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -27,32 +27,11 @@
           "tracing_status": "OK",
           "framework": "TRLC",
           "kind": "Requirement",
-          "text": "keep the vehicle in lane for A.",
-          "status": null
-        },
-        {
-          "tag": "req example.adas_100_B",
-          "location": {
-            "kind": "file",
-            "file": "./demo.trlc",
-            "line": 8,
-            "column": 13
-          },
-          "name": "example.adas_100_B",
-          "messages": [
-            "missing reference to Code"
-          ],
-          "just_up": [],
-          "just_down": [],
-          "just_global": [],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "Requirement",
-          "text": "keep the vehicle in lane for B.",
+          "text": "keep the vehicle in lane.",
           "status": null
         }
       ],
-      "coverage": 50.0
+      "coverage": 100.0
     },
     {
       "name": "Code",
@@ -72,7 +51,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.adas_100_A"
+            "req example.adas_100"
           ],
           "ref_down": [],
           "tracing_status": "OK",
@@ -90,7 +69,7 @@
       "traces": [],
       "source": [
         {
-          "file": "trlc.output",
+          "file": "trlc_ok.lobster",
           "filters": [],
           "valid_status": []
         }
@@ -111,7 +90,7 @@
       ],
       "source": [
         {
-          "file": "python.output",
+          "file": "python_ok.lobster",
           "filters": []
         }
       ],
