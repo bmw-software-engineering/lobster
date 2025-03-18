@@ -26,6 +26,8 @@ jobs:
 
     runs-on: ubuntu-24.04
 
+    # The 'docs' target requires graphviz, but the system tests require that graphviz is NOT installed
+    # So the order is important: 1.) coverage 2.) install graphviz 3.) docs
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,20 +39,23 @@ jobs:
           python-version: "3.9"
       - name: Install dependencies
         run: |
-          sudo apt-get install -y graphviz
           python -m pip install --upgrade pip
-          pip install -r requirements_dev.txt
+          python -m pip install -r requirements_dev.txt
+          make lobster/html/assets.py
+      - name: Building code coverage report
+        run: |
+          make system-tests unit-tests
+          make coverage
+          mv htmlcov docs
+      - name: Install graphviz
+        run: |
+          sudo apt-get install -y graphviz
           echo "$GITHUB_WORKSPACE" >> $GITHUB_PATH
       - name: Generate docs
         run: |
           make docs
         env:
           PYTHONPATH: "."
-      - name: Building code coverage report
-        run: |
-          make system-tests unit-tests
-          make coverage
-          mv htmlcov docs
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
