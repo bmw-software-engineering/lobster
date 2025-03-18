@@ -71,6 +71,10 @@ selenium-tests:
 integration-tests: packages
 	(cd tests-integration/projects/basic; make)
 	(cd tests-integration/projects/filter; make)
+	(cd tests-integration/projects/coverage; make)
+	(cd tests-integration/projects/coverage-half; make)
+	(cd tests-integration/projects/coverage-mix; make)
+	(cd tests-integration/projects/coverage-zero; make)
 	rm -f MODULE.bazel MODULE.bazel.lock
 
 system-tests:

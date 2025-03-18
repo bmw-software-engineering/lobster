@@ -1,0 +1,22 @@
+package coverage_half_example
+
+type System_Requirement
+{
+  text String
+}
+
+type Software_Requirement
+{
+  text String
+  derived_from optional System_Requirement  [1 .. *]
+}
+
+type Test_Requirement
+{
+  text String
+  derived_from optional Software_Requirement  [1 .. *]
+  just_up   optional String
+  just_down optional String
+}
+
+
