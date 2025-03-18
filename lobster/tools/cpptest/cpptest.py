@@ -17,13 +17,13 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-import json
 import sys
 import argparse
 import os.path
 from copy import copy
 from enum import Enum
-
+import yaml
+from lobster.exceptions import LOBSTER_Exception
 from lobster.items import Tracing_Tag, Activity
 from lobster.location import File_Reference
 from lobster.io import lobster_write
@@ -66,19 +66,19 @@ map_test_type_to_key_name = {
 
 def parse_config_file(file_name: str) -> dict:
     """
-    Parse the configuration dictionary from given config file.
+    Parse the configuration dictionary from the given YAML config file.
 
-    The configuration dictionary for cpptest must contain the OUTPUT and
-    CODEBEAMER_URL keys.
-    Each output configuration dictionary contains a file name as key and
-    a value dictionary containing the keys MARKERS and KIND.
-    The supported values for the MARKERS list are specified in
+    The configuration dictionary for cpptest must contain the `output` and
+    `codebeamer_url` keys.
+    Each output configuration dictionary contains a file name as a key and
+    a value dictionary containing the keys `markers` and `kind`.
+    The supported values for the `markers` list are specified in
     SUPPORTED_REQUIREMENTS.
 
     Parameters
     ----------
     file_name : str
-        The file name of the cpptest config file.
+        The file name of the cpptest YAML config file.
 
     Returns
     -------
@@ -88,17 +88,20 @@ def parse_config_file(file_name: str) -> dict:
     Raises
     ------
     Exception
-        If the config dict does not contain the required keys
-        or contains not supported values.
+        If the config dictionary does not contain the required keys
+        or is improperly formatted.
     """
     if not os.path.isfile(file_name):
         raise ValueError(f'{file_name} is not an existing file!')
 
     with open(file_name, "r", encoding='utf-8') as file:
-        config_dict: dict = json.loads(file.read())
+        try:
+            config_dict = yaml.safe_load(file)
+        except yaml.scanner.ScannerError as ex:
+            raise LOBSTER_Exception(message="Invalid config file") from ex
 
-    if (OUTPUT not in config_dict.keys() or
-            CODEBEAMER_URL not in config_dict.keys()):
+    if (not config_dict or OUTPUT not in config_dict or
+            CODEBEAMER_URL not in config_dict):
         raise ValueError(f'Please follow the right config file structure! '
                          f'Missing attribute "{OUTPUT}" and '
                          f'"{CODEBEAMER_URL}"')
@@ -107,17 +110,16 @@ def parse_config_file(file_name: str) -> dict:
 
     supported_markers = ', '.join(SUPPORTED_REQUIREMENTS)
     for output_file, output_file_config_dict in output_config_dict.items():
-        if MARKERS not in output_file_config_dict.keys():
+        if MARKERS not in output_file_config_dict:
             raise ValueError(f'Please follow the right config file structure! '
                              f'Missing attribute "{MARKERS}" for output file '
                              f'"{output_file}"')
-        if KIND not in output_file_config_dict.keys():
+        if KIND not in output_file_config_dict:
             raise ValueError(f'Please follow the right config file structure! '
                              f'Missing attribute "{KIND}" for output file '
                              f'"{output_file}"')
 
-        output_file_marker_list = output_file_config_dict.get(MARKERS)
-        for output_file_marker in output_file_marker_list:
+        for output_file_marker in output_file_config_dict.get(MARKERS, []):
             if output_file_marker not in SUPPORTED_REQUIREMENTS:
                 raise ValueError(f'"{output_file_marker}" is not a supported '
                                  f'"{MARKERS}" value '
@@ -307,8 +309,6 @@ def write_lobster_items_output_dict(lobster_items_output_dict: dict):
     lobster_generator = Constants.LOBSTER_GENERATOR
     for output_file_name, lobster_items in lobster_items_output_dict.items():
         item_count = len(lobster_items)
-        if item_count <= 1:
-            continue
 
         if output_file_name:
             with open(output_file_name, "w", encoding="UTF-8") as output_file:
@@ -377,20 +377,18 @@ def main():
     and launch lobster_cpptest.
     """
     # lobster-trace: cpptest_req.Dummy_Requirement
-    ap.add_argument("files",
-                    nargs="+",
-                    metavar="FILE|DIR")
-    ap.add_argument("--config-file",
-                    help="path of the config file, it consists of "
-                         "a requirement types as keys and "
-                         "output filenames as value",
-                    required=True,
-                    default=None)
+    ap.add_argument("--config",
+                    help=("Path to YAML file with arguments, "
+                          "by default (cpptest-config.yaml)"),
+                    default="cpptest-config.yaml")
 
     options = ap.parse_args()
 
     try:
-        config_dict = parse_config_file(options.config_file)
+        config_dict = parse_config_file(options.config)
+
+        options.files = config_dict.get("files", ["."])
+        config_dict.pop("files", None)
 
         lobster_cpptest(
             file_dir_list=options.files,

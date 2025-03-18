@@ -12,7 +12,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/sysreq_example.trlc",
             "line": 4
           },
@@ -37,7 +37,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/sysreq_example.trlc",
             "line": 11
           },
@@ -61,7 +61,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/sysreq_example.trlc",
             "line": 19
           },
@@ -92,7 +92,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/softreq_example.trlc",
             "line": 5
           },
@@ -121,7 +121,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/softreq_example.trlc",
             "line": 17
           },
@@ -159,7 +159,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/foo.cpp",
             "line": 3
           },
@@ -181,7 +181,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/foo.cpp",
             "line": 9
           },
@@ -210,7 +210,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },
@@ -233,7 +233,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },
@@ -256,7 +256,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },
@@ -279,7 +279,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },
@@ -302,7 +302,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },
@@ -325,7 +325,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "main",
+            "commit": "1275eec5522ff3b78e70eff36dbe3275feca7713",
             "file": "tests-integration/projects/filter/test_example.json",
             "line": null
           },

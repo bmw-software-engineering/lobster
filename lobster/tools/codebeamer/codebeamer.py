@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_codebeamer - Extract codebeamer items for LOBSTER
-# Copyright (C) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -17,21 +17,17 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-# This tool is based on the codebeamer Rest API, as documented here:
-# https://codebeamer.com/cb/wiki/117612
+# This tool is based on the codebeamer Rest API v3, as documented here:
+# https://codebeamer.com/cb/wiki/11631738
 #
 # There are some assumptions encoded here that are not clearly
 # documented, in that items have a type and the type has a name.
 #
-# I could not find a better API for returning a specific list of
-# items, but I believe it exists.
 #
 # Main limitations:
 # * Item descriptions are ignored right now
-# * Branches (if they exists or are possible) are ignored
+# * Branches (if they exist) are ignored
 # * We only ever fetch the HEAD item
-# * We ignore any links to any other items
-# * By-tracker + filter import is not implemented yet
 #
 # However you _can_ import all the items referenced from another
 # lobster artefact.
@@ -42,8 +38,8 @@ import argparse
 import netrc
 from urllib.parse import quote
 from enum import Enum
-import json
 import requests
+import yaml
 
 from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
 from lobster.location import Codebeamer_Reference
@@ -55,16 +51,31 @@ TOKEN = 'token'
 REFERENCES = 'references'
 
 
+class CodebeamerError(Exception):
+    pass
+
+
 class SupportedConfigKeys(Enum):
-    REFS = "refs"
-    SCHEMA = "schema"
+    """Helper class to define supported configuration keys."""
+    IMPORT_TAGGED = "import_tagged"
+    IMPORT_QUERY  = "import_query"
+    VERIFY_SSL    = "verify_ssl"
+    PAGE_SIZE     = "page_size"
+    REFS          = "refs"
+    SCHEMA        = "schema"
+    CB_TOKEN      = "token"
+    CB_ROOT       = "root"
+    CB_USER       = "user"
+    CB_PASS       = "pass"
+    TIMEOUT       = "timeout"
+    OUT           = "out"
 
     @classmethod
     def as_set(cls) -> set:
         return {parameter.value for parameter in cls}
 
 
-def add_refs_refrences(req, flat_values_list):
+def add_refs_references(req, flat_values_list):
     # refs
     for value in flat_values_list:
         if value.get("id"):
@@ -73,7 +84,7 @@ def add_refs_refrences(req, flat_values_list):
 
 
 map_reference_name_to_function = {
-    SupportedConfigKeys.REFS.value: add_refs_refrences
+    SupportedConfigKeys.REFS.value: add_refs_references
 }
 
 
@@ -152,39 +163,57 @@ def get_many_items(cb_config, item_ids):
     return rv
 
 
-def get_query(mh, cb_config, query_id):
+def get_query(mh, cb_config, query):
     assert isinstance(mh, Message_Handler)
     assert isinstance(cb_config, dict)
-    assert isinstance(query_id, int)
+    assert isinstance(query, (int, str))
     rv = []
+    url = ""
     page_id = 1
     total_items = None
 
     while total_items is None or len(rv) < total_items:
         print("Fetching page %u of query..." % page_id)
-        url = "%s/reports/%u/items?page=%u&pageSize=%u" % \
-            (cb_config["base"],
-             query_id,
-             page_id,
-             cb_config["page_size"])
+        if isinstance(query, int):
+            url = ("%s/reports/%u/items?page=%u&pageSize=%u" %
+                    (cb_config["base"],
+                        query,
+                        page_id,
+                        cb_config["page_size"]))
+        elif isinstance(query, str):
+            url = ("%s/items/query?page=%u&pageSize=%u&queryString=%s" %
+                    (cb_config["base"],
+                        page_id,
+                        cb_config["page_size"],
+                        query))
         data = query_cb_single(cb_config, url)
         assert len(data) == 4
 
         if page_id == 1 and len(data["items"]) == 0:
+            # lobster-trace: codebeamer_req.Get_Query_Zero_Items_Message
             print("This query doesn't generate items. Please check:")
             print(" * is the number actually correct?")
             print(" * do you have permissions to access it?")
-            print("You can try to access %s manually to check" % url)
-            sys.exit(1)
+            print(f"You can try to access '{url}' manually to check.")
 
-        assert page_id == data["page"]
+        if page_id != data["page"]:
+            raise CodebeamerError(f"Page mismatch in query result: expected page "
+                                  f"{page_id} from codebeamer, but got {data['page']}")
+
         if page_id == 1:
             total_items = data["total"]
-        else:
-            assert total_items == data["total"]
+        elif total_items != data["total"]:
+            raise CodebeamerError(f"Item count mismatch in query result: expected "
+                                  f"{total_items} items so far, but page "
+                                  f"{data['page']} claims to have sent {data['total']} "
+                                  f"items in total.")
 
-        rv += [to_lobster(cb_config, cb_item["item"])
-               for cb_item in data["items"]]
+        if isinstance(query, int):
+            rv += [to_lobster(cb_config, cb_item["item"])
+                    for cb_item in data["items"]]
+        elif isinstance(query, str):
+            rv += [to_lobster(cb_config, cb_item)
+                    for cb_item in data["items"]]
 
         page_id += 1
 
@@ -235,12 +264,7 @@ def to_lobster(cb_config, cb_item):
     else:
         kind = "codebeamer item"
 
-    if "status" in cb_item:
-        status = cb_item["status"].get("name", None)
-    else:
-        status = None
-
-    # TODO: Parse item text
+    status = cb_item["status"].get("name", None) if "status" in cb_item else None
 
     # Get item name. Sometimes items do not have one, in which case we
     # come up with one.
@@ -271,12 +295,11 @@ def to_lobster(cb_config, cb_item):
                         isinstance(cb_item.get(displayed_name), list)) \
                         else [cb_item.get(displayed_name)]
                 else:
-                    flat_values_list = (
-                        list(value for custom_field
-                             in cb_item["customFields"]
-                             if custom_field["name"] == displayed_name and
-                             custom_field.get("values")
-                             for value in custom_field["values"]))
+                    flat_values_list = [value for custom_field
+                                        in cb_item["customFields"]
+                                        if custom_field["name"] == displayed_name and
+                                        custom_field.get("values")
+                                        for value in custom_field["values"]]
                 if not flat_values_list:
                     continue
 
@@ -374,136 +397,141 @@ def ensure_array_of_strings(instance):
         return [str(instance)]
 
 
-def parse_cb_config(file_name):
+def validate_authentication_parameters(cb_config, netrc_path=None):
+    assert isinstance(cb_config, dict)
+    assert netrc_path is None or isinstance(netrc_path, str)
+    if (cb_config["token"] is None and
+            (cb_config["user"] is None or cb_config["pass"] is None)):
+        netrc_file = netrc_path or os.path.join(os.path.expanduser("~"),
+                                                ".netrc")
+        if os.path.isfile(netrc_file):
+            netrc_config = netrc.netrc(netrc_file)
+            machine = cb_config["root"][8:]
+            auth = netrc_config.authenticators(machine)
+            if auth is not None:
+                print("Using .netrc login for %s" % cb_config["root"])
+                cb_config["user"], _, cb_config["pass"] = auth
+            else:
+                provided_machine = ", ".join(netrc_config.hosts.keys()) or "None"
+                sys.exit(f"Error parsing .netrc file."
+                         f"\nExpected '{machine}', but got '{provided_machine}'.")
+
+    if (cb_config["token"] is None and
+            (cb_config["user"] is None or cb_config["pass"] is None)):
+        sys.exit("lobster-codebeamer: please add your token to the config file, "
+                 "or use user and pass in the config file, "
+                 "or configure credentials in the .netrc file.")
+
+    return cb_config
+
+
+def parse_yaml_config(file_name: str):
+    """
+    Parses a YAML configuration file and returns a validated configuration dictionary.
+
+    Args:
+        file_name (str): Path to the YAML configuration file.
+
+    Returns:
+        Dict[str, Any]: Parsed and validated configuration.
+
+    Raises:
+        ValueError: If `file_name` is not a string.
+        FileNotFoundError: If the file does not exist.
+        KeyError: If required fields are missing or unsupported keys are present.
+    """
     assert isinstance(file_name, str)
     assert os.path.isfile(file_name)
 
+    default_values = {
+        'timeout': 30,
+        'page_size': 100,
+        'verify_ssl': False,
+        'schema': 'Requirement',
+    }
+
+    required_fields = {"import_tagged", "import_query"}
+
     with open(file_name, "r", encoding='utf-8') as file:
-        data = json.loads(file.read())
+        data = yaml.safe_load(file) or {}
 
-    json_config = {REFERENCES: {}}
+    # Ensure at least one required field is present
+    if not required_fields & data.keys():
+        raise KeyError(f"One of the required fields "
+                       f"must be present: {', '.join(required_fields)}")
 
-    if TOKEN in data:
-        json_config["token"] = data.pop(TOKEN)
+    # Build the configuration dictionary
+    json_config = {
+        "references": {
+            "refs": ensure_array_of_strings(data["refs"])
+        } if "refs" in data else {},
+        "token": data.pop("token", None),
+        "base": f"{data.get('root', '')}/api/v3",
+    }
 
+    # Validate supported keys
     provided_config_keys = set(data.keys())
-    schema = data.get("schema", "Requirement").lower()
+    unsupported_keys = provided_config_keys - SupportedConfigKeys.as_set()
+    if unsupported_keys:
+        raise KeyError(
+            f"Unsupported config keys: {', '.join(unsupported_keys)}. "
+            f"Supported keys are: {', '.join(SupportedConfigKeys.as_set())}."
+        )
 
-    if not provided_config_keys.issubset(SupportedConfigKeys.as_set()):
-        raise KeyError("The provided config keys are not supported! "
-                       "supported keys: '%s'" %
-                       ', '.join(SupportedConfigKeys.as_set()))
-
-    for key, value in data.items():
-        json_config[REFERENCES][key] = ensure_array_of_strings(value)
-
-        json_config[key] = ensure_array_of_strings(value)
-
-    json_config["schema"] = schema
+    # Merge with default values
+    json_config.update({key: data.get(key, default_values.get(key))
+                        for key in SupportedConfigKeys.as_set()})
 
     return json_config
 
 
-ap = argparse.ArgumentParser()
+ap = argparse.ArgumentParser(conflict_handler='resolve')
 
 
 @get_version(ap)
 def main():
     # lobster-trace: codebeamer_req.Dummy_Requirement
-    modes = ap.add_mutually_exclusive_group(required=True)
-    modes.add_argument("--import-tagged",
-                       metavar="LOBSTER_FILE",
-                       default=None)
-
-    modes.add_argument("--import-query",
-                       metavar="CB_QUERY_ID",
-                       default=None)
-
     ap.add_argument("--config",
-                    help=("name of codebeamer "
-                          "config file, supported references: '%s'" %
+                    help=("Path to YAML file with arguments, "
+                          "by default (codebeamer-config.yaml) "
+                          "supported references: '%s'" %
                           ', '.join(SupportedConfigKeys.as_set())),
-                    default=None)
+                    default=os.path.join(os.getcwd(), "codebeamer-config.yaml"))
 
-    ap.add_argument("--ignore-ssl-errors",
-                    action="store_true",
-                    default=False,
-                    help="ignore ssl errors and accept any certificate")
+    ap.add_argument("--out",
+                    help=("Name of output file"),
+                    default="codebeamer.lobster")
 
-    ap.add_argument("--query-size",
-                    type=int,
-                    default=100,
-                    help=("Fetch this many cb items at once (by default 100),"
-                          " reduce if you get too many timeouts."))
-
-    ap.add_argument("--timeout",
-                    type=int,
-                    default=30,
-                    help="Timeout in s (by default 30) for each REST call.")
-
-    ap.add_argument("--schema",
-                    default='requirement',
-                    help="Specify the output schema"
-                         "(Requirement, Implementation, Activity).")
-
-    ap.add_argument("--cb-root", default=os.environ.get("CB_ROOT", None))
-    ap.add_argument("--cb-user", default=os.environ.get("CB_USERNAME", None))
-    ap.add_argument("--cb-pass", default=os.environ.get("CB_PASSWORD", None))
-    ap.add_argument("--cb-token", default=None)
-    ap.add_argument("--out", default=None)
     options = ap.parse_args()
 
     mh = Message_Handler()
 
-    cb_config = {
-        'schema'     : options.schema,
-        "root"       : options.cb_root,
-        "base"       : "%s/cb/api/v3" % options.cb_root,
-        "user"       : options.cb_user,
-        "pass"       : options.cb_pass,
-        "token"      : options.cb_token,
-        "verify_ssl" : not options.ignore_ssl_errors,
-        "page_size"  : options.query_size,
-        "timeout"    : options.timeout,
-    }
+    if not os.path.isfile(options.config):
+        print((f"lobster-codebeamer: Config file '{options.config}' not found."))
+        return 1
 
-    if options.config:
-        if os.path.isfile(options.config):
-            cb_config.update(parse_cb_config(options.config))
-        else:
-            ap.error("cannot open config file '%s'" % options.config)
+    cb_config = parse_yaml_config(options.config)
+
+    if cb_config["out"] is None:
+        cb_config["out"] = options.out
 
     if cb_config["root"] is None:
-        ap.error("please set CB_ROOT or use --cb-root")
+        sys.exit("lobster-codebeamer: Please set 'root' in the config file")
 
     if not cb_config["root"].startswith("https://"):
-        ap.error("codebeamer root %s must start with https://")
+        sys.exit(f"Codebeamer root {cb_config['root']} must start with https://")
 
-    if (cb_config["token"] is None and
-            (cb_config["user"] is None or cb_config["pass"] is None)):
-        netrc_file = os.path.join(os.path.expanduser("~"),
-                                  ".netrc")
-        if os.path.isfile(netrc_file):
-            netrc_config = netrc.netrc()
-            auth = netrc_config.authenticators(cb_config["root"][8:])
-            if auth is not None:
-                print("using .netrc login for %s" % cb_config["root"])
-                cb_config["user"], _, cb_config["pass"] = auth
-
-    if (cb_config["token"] is None and
-            (cb_config["user"] is None or cb_config["pass"] is None)):
-        ap.error("please set --cb-token or add your token to the config-file"
-                 "or use --cb-user and --cb-pass")
+    cb_config = validate_authentication_parameters(cb_config)
 
     items_to_import = set()
 
-    if options.import_tagged:
-        if not os.path.isfile(options.import_tagged):
-            ap.error("%s is not a file" % options.import_tagged)
+    if cb_config.get("import_tagged"):
+        if not os.path.isfile(cb_config["import_tagged"]):
+            sys.exit(f"lobster-codebeamer: {cb_config['import_tagged']} is not a file.")
         items = {}
         try:
             lobster_read(mh       = mh,
-                         filename = options.import_tagged,
+                         filename = cb_config["import_tagged"],
                          level    = "N/A",
                          items    = items)
         except LOBSTER_Error:
@@ -523,31 +551,38 @@ def main():
                 except ValueError:
                     pass
 
-    elif options.import_query:
+    elif cb_config.get("import_query") is not None:
         try:
-            query_id = int(options.import_query)
-        except ValueError:
-            ap.error("query-id must be an integer")
-        if query_id < 1:
-            ap.error("query-id must be a positive")
+            if isinstance(cb_config["import_query"], str):
+                if (cb_config["import_query"].startswith("-") and
+                    cb_config["import_query"][1:].isdigit()):
+                    ap.error("import_query must be a positive integer")
+                elif cb_config["import_query"].startswith("-"):
+                    ap.error("import_query must be a valid cbQL query")
+                elif cb_config["import_query"] == "":
+                    ap.error("import_query must either be a query string or a query ID")
+                elif cb_config["import_query"].isdigit():
+                    cb_config["import_query"] = int(cb_config["import_query"])
+        except ValueError as e:
+            ap.error(str(e))
 
     try:
-        if options.import_tagged:
+        if cb_config.get("import_tagged"):
             items = import_tagged(mh, cb_config, items_to_import)
-        elif options.import_query:
-            items = get_query(mh, cb_config, query_id)
+        elif cb_config["import_query"]:
+            items = get_query(mh, cb_config, cb_config["import_query"])
     except LOBSTER_Error:
         return 1
 
     schema_config = get_schema_config(cb_config)
 
-    if options.out is None:
+    if cb_config["out"] is None:
         with sys.stdout as fd:
             lobster_write(fd, schema_config["class"], "lobster_codebeamer", items)
     else:
-        with open(options.out, "w", encoding="UTF-8") as fd:
+        with open(cb_config["out"], "w", encoding="UTF-8") as fd:
             lobster_write(fd, schema_config["class"], "lobster_codebeamer", items)
-        print(f"Written {len(items)} requirements to {options.out}")
+        print(f"Written {len(items)} requirements to {cb_config['out']}")
 
     return 0
 

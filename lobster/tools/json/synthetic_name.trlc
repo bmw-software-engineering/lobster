@@ -1,0 +1,31 @@
+package json_req
+import req
+
+req.System_Requirement Name_Attribute_Given {
+  description = '''
+    In addition to [[Parse_Input_File]],
+    IF the command line option "name-attribute" is given and not an empty string,
+    AND the input items contains that key
+    THEN the tool SHALL use the value of that key as tag in the serialized LOBSTER item.
+    '''
+}
+
+req.System_Requirement_Aspect Name_Attribute_Given_Key_Missing {
+  description = '''
+    OTHERWISE (if they key does not exist)
+    the tool SHALL print an error message.
+    '''
+}
+
+req.System_Requirement_Aspect Name_Attribute_Missing {
+  description = '''
+    OTHERWISE ("name-attribute" is not given or not an empty string), the tool
+    SHALL create a synthetic tag name based on the path of the JSON input file and an item counter.
+
+    Notes:
+    - "Synthetic" means that, the name does not need to be related to the data.
+    - The item counter does not need to be unique across input files,
+      but it shall be unique at least for each input file separately.
+    - No further specification is made about how to combine the path and the item counter.
+  '''
+}

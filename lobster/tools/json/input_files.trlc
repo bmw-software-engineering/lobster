@@ -1,0 +1,55 @@
+package json_req
+import req
+
+req.System_Requirement_Aspect Input_File {
+    description = '''
+      IF a list element given through the command line option "FILE_OR_DIR" is a file
+
+      (Note: Symbolic links shall be resolved.
+             The tool shall not differentiate between symbolic links and true paths.)
+    '''
+    not_tested_reason = req.Reason.Initial_Condition
+}
+
+req.System_Requirement_Aspect Input_File_Valid_JSON {
+  description = '''
+    AND IF the file content is invalid JSON,
+    THEN the tool shall exit with a non-zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect Input_File_Input_Items {
+  description = '''
+    OTHERWISE the input data
+    SHALL be written in the LOBSTER interchange format
+  '''
+  // TODO: This requirement needs more details.
+}
+
+req.System_Requirement_Aspect Input_File_To_File {
+  description = '''
+    to the file given in the command line option "out",
+    IF that option is given AND is not an empty string;
+  '''
+}
+
+req.System_Requirement_Aspect Input_File_To_Stdout {
+  description = '''
+    OTHERWISE to STDOUT.
+  '''
+}
+
+req.System_Requirement_Aspect Input_File_Output_Error {
+  description = '''
+    IF the operating system fails to fully serialize the output to a file,
+    THEN the tool shall print an error message to STDERR and exit with a non-zero return code.
+  '''
+}
+
+req.System_Requirement Input_File_JSON_Extension {
+  description = '''
+    IF [[Input_File]]
+    AND IF the file extension is not "json" (case-insensitive),
+    THEN the tool shall print a warning.
+  '''
+}

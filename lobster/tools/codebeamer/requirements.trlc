@@ -1,16 +1,23 @@
 package codebeamer_req
 import req
 
-req.Software_Requirement Dummy_Requirement {
+req.System_Requirement Empty_Query_String_Parameter {
   description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
+    IF the configuration parameter "import_query" is empty,
+    THEN the tool shall display an error message and exit with a non-zero return code.
   '''
 }
 
-req.Software_Requirement Dummy_Requirement_Unit_Test {
+req.System_Requirement Empty_Query_Message {
   description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
+    IF the codebeamer server returns an empty list as (a result of the query),
+    THEN the tool shall display a message to the user.
   '''
+}
+
+req.Software_Requirement Get_Query_Zero_Items_Message {
+  description = '''
+    The function "get_query" shall print a message to the user IF the query returns zero items.
+  '''
+  derived_from = [Empty_Query_Message]
 }

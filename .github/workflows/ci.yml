@@ -23,6 +23,18 @@ jobs:
       - name: Executing linter
         run: |
           make lint
+  lint-system-tests:
+    name: PyLint System Tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements_dev.txt
+      - name: Executing linter
+        run: |
+          make lint-system-tests
   trlc:
     name: TRLC
     runs-on: ubuntu-24.04
@@ -35,9 +47,22 @@ jobs:
       - name: Run TRLC
         run: |
           make trlc
+  selenium-tests:
+    name: Run Selenium Tests
+    needs: [lint, lint-system-tests, trlc]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements_dev.txt
+      - name: Run selenium Tests
+        run: |
+          make selenium-tests
   test:
     name: TestSuite
-    needs: [lint, trlc]
+    needs: [lint, lint-system-tests, trlc]
     strategy:
       matrix:
         os: [ubuntu-24.04, windows-2022, macos-13, macos-14]
@@ -58,6 +83,7 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
+          make lobster/html/assets.py
       - name: Install gnu make on macos
         if: startsWith(matrix.os, 'macos')
         run: |
@@ -72,10 +98,6 @@ jobs:
       - name: Coverage analysis
         run: |
           make coverage
-      - name: Check output files
-        if: always()
-        run: |
-          util/check_local_modifications.sh
   integration-tests:
     name: Integration tests
     needs: test
@@ -114,10 +136,6 @@ jobs:
       - name: Run integration tests
         run: |
           make integration-tests
-      - name: Check output files
-        if: always()
-        run: |
-          util/check_local_modifications.sh
   failure:
     name: Check all jobs
     needs: integration-tests

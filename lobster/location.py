@@ -149,19 +149,19 @@ class File_Reference(Location):
 
 
 class Github_Reference(Location):
-    def __init__(self, gh_root, commit, filename, line):
+    def __init__(self, gh_root, filename, line, commit):
         assert isinstance(gh_root, str)
         assert gh_root.startswith("http")
-        assert isinstance(commit, str)
         assert isinstance(filename, str)
         assert line is None or (isinstance(line, int) and
                                 line >= 1)
+        assert isinstance(commit, str)
 
-        self.gh_root  = gh_root.rstrip("/")
-        self.gh_repo  = self.gh_root.split("/")[-1]
-        self.commit   = commit
-        self.filename = filename
-        self.line     = line
+        self.gh_root        = gh_root.rstrip("/")
+        self.gh_repo        = self.gh_root.split("/")[-1]
+        self.commit         = commit
+        self.filename       = filename
+        self.line           = line
 
     def sorting_key(self):
         if self.line is not None:
@@ -188,11 +188,12 @@ class Github_Reference(Location):
             self.to_string())
 
     def to_json(self):
-        return {"kind"    : "github",
-                "gh_root" : self.gh_root,
-                "commit"  : self.commit,
-                "file"    : self.filename,
-                "line"    : self.line}
+        return {"kind"           : "github",
+                "gh_root"        : self.gh_root,
+                "commit"         : self.commit,
+                "file"           : self.filename,
+                "line"           : self.line
+                }
 
     @classmethod
     def from_json(cls, json):
@@ -200,10 +201,10 @@ class Github_Reference(Location):
         assert json["kind"] == "github"
 
         gh_root  = json["gh_root"]
-        commit   = json["commit"]
         filename = json["file"]
         line     = json.get("line", None)
-        return Github_Reference(gh_root, commit, filename, line)
+        commit = json.get("commit")
+        return Github_Reference(gh_root, filename, line, commit)
 
 
 class Codebeamer_Reference(Location):

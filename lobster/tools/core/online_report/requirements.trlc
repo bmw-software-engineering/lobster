@@ -14,3 +14,11 @@ req.Software_Requirement Dummy_Requirement_Unit_Test {
     It can be deleted as soon as all the tools get their real requirements.
   '''
 }
+
+req.System_Requirement_Aspect Invalid_Git_Repository {
+  description = '''
+    IF the provided repository root directory does not contain a ".git" directory,
+    THEN the tool shall exit with a non-zero return code and display an error message
+    indicating that the repository is not a valid Git repository.
+  '''
+}

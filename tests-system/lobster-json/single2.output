@@ -1,7 +1,0 @@
-{'actual': {'expect': 42,
-            'inputs': [1, 2, 3],
-            'name': 'Single_1',
-            'tags': 'example.req'}}
-./single2.json: malformed input: object does not contain name
-lobster-json: aborting due to earlier errors
-==========

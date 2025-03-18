@@ -151,9 +151,6 @@ def main():
     ap.add_argument("lobster_report",
                     nargs="?",
                     default="report.lobster")
-    ap.add_argument("--commit",
-                    help="commit SHA or branch/tag, by default main",
-                    default="main")
     ap.add_argument("--repo-root",
                     help="override git repository root",
                     default=None)
@@ -194,7 +191,6 @@ def main():
         git_m_config.read(os.path.join(repo_root, ".gitmodules"))
 
     gh_submodule_roots = {}
-    gh_submodule_sha = {}
     for item in git_config:
         if item == 'remote "origin"':
             gh_root = parse_git_root(git_config[item])
@@ -202,49 +198,45 @@ def main():
             assert re.match('submodule "(.*?)"', item)
             sm_dir = git_m_config[item]["path"]
             gh_submodule_roots[sm_dir] = parse_git_root(git_config[item])
-            _, _, sha, _ = subprocess.run(
-                ["git",
-                 "ls-tree",
-                 "HEAD",
-                 sm_dir],
-                check          = True,
-                capture_output = True,
-                cwd            = repo_root,
-                encoding       = "UTF-8").stdout.split()
-            gh_submodule_sha[sm_dir] = sha
 
     report = Report()
     report.load_report(options.lobster_report)
 
     for item in report.items.values():
         if isinstance(item.location, File_Reference):
-            assert os.path.isdir(item.location.filename) or \
-                os.path.isfile(item.location.filename)
+            assert (os.path.isdir(item.location.filename) or
+                    os.path.isfile(item.location.filename))
 
             rel_path_from_root = os.path.relpath(item.location.filename,
                                                  repo_root)
             # pylint: disable=possibly-used-before-assignment
             actual_repo = gh_root
-            actual_sha  = options.commit
             actual_path = rel_path_from_root
+            commit = subprocess.check_output(
+                ["git", "rev-parse", "HEAD"]
+            ).decode().strip()
             # pylint: disable=consider-using-dict-items
             for prefix in gh_submodule_roots:
                 if path_starts_with_subpath(rel_path_from_root, prefix):
                     actual_repo = gh_submodule_roots[prefix]
-                    actual_sha  = gh_submodule_sha[prefix]
                     actual_path = rel_path_from_root[len(prefix) + 1:]
+                    commit = subprocess.check_output(
+                        ["git", "rev-parse", "HEAD"],
+                        universal_newlines=True, cwd=prefix
+                    )
+                    commit = commit.strip()
                     break
-
             loc = Github_Reference(
-                gh_root  = actual_repo,
-                commit   = actual_sha,
-                filename = actual_path,
-                line     = item.location.line)
+                gh_root=actual_repo,
+                filename=actual_path,
+                line=item.location.line,
+                commit=commit)
             item.location = loc
 
     report.write_report(options.out if options.out else options.lobster_report)
     print("LOBSTER report %s changed to use online references" %
           options.out if options.out else options.lobster_report)
+    return 0
 
 
 if __name__ == "__main__":

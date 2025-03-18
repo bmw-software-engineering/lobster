@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023, 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -24,7 +24,9 @@ import multiprocessing
 
 from abc import ABCMeta, abstractmethod
 from functools import partial
-
+from typing import List, Union, Tuple
+from enum import Enum
+import yaml
 from lobster.version import FULL_NAME, get_version
 from lobster.errors import Message_Handler
 from lobster.location import File_Reference
@@ -32,6 +34,19 @@ from lobster.items import Requirement, Implementation, Activity
 from lobster.io import lobster_write
 
 BUG_URL = "https://github.com/bmw-software-engineering/lobster/issues"
+
+
+class SupportedConfigKeys(Enum):
+    """Helper class to define supported configuration keys."""
+    INPUT_FROM_FILE     = "inputs_from_file"
+    TRAVERSE_BAZEL_DIRS = "traverse_bazel_dirs"
+    SINGLE              = "single"
+    INPUTS              = "inputs"
+    OUT                 = "out"
+
+    @classmethod
+    def as_set(cls) -> set:
+        return {parameter.value for parameter in cls}
 
 
 class LOBSTER_Tool(metaclass=ABCMeta):
@@ -61,43 +76,71 @@ class LOBSTER_Tool(metaclass=ABCMeta):
             allow_abbrev = False)
 
         self.g_common = self.ap.add_argument_group("common options")
-        self.g_debug  = self.ap.add_argument_group("debug options")
         self.g_tool   = self.ap.add_argument_group("tool specific options")
+
+        self.g_common.add_argument(
+            "--config",
+            default = None,
+            help=("Path to YAML file with arguments, "
+                          "supported references: '%s'" %
+                          ', '.join(SupportedConfigKeys.as_set())),
+        )
 
         self.g_common.add_argument(
             "--out",
             default = None,
             help    = "Write output to given file instead of stdout.")
 
-        self.g_common.add_argument(
-            "--inputs-from-file",
-            metavar = "FILE",
-            default = None,
-            help    = ("Read input files or directories from this file."
-                       " Each non-empty line is interpreted as one input."
-                       " Supports comments starting with #."))
-
-        self.g_common.add_argument(
-            "inputs",
-            default = None,
-            nargs   = "*",
-            metavar = "FILE_OR_DIR",
-            help    = ("List of files to process or directories to search"
-                       " for relevant input files."))
-
-        self.g_common.add_argument(
-            "--traverse-bazel-dirs",
-            default = False,
-            action  = "store_true",
-            help    = ("Enter bazel-* directories, which are"
-                       " excluded by default."))
-
         self.add_argument = self.g_tool.add_argument
 
-    @get_version
-    def process_commandline_options(self):
-        options = self.ap.parse_args()
+    def load_yaml_config(self, config_path):
+        """Loads configuration from a YAML file."""
+        if not config_path:
+            return {}
 
+        if not os.path.isfile(config_path):
+            sys.exit(f"Error: Config file '{config_path}' not found.")
+        with open(config_path, "r", encoding="UTF-8") as f:
+            data = yaml.safe_load(f) or {}
+
+        # Validate supported keys
+        provided_config_keys = set(data.keys())
+        unsupported_keys = provided_config_keys - SupportedConfigKeys.as_set()
+        if unsupported_keys:
+            raise KeyError(
+                f"Unsupported config keys: {', '.join(unsupported_keys)}. "
+                f"Supported keys are: {', '.join(SupportedConfigKeys.as_set())}."
+            )
+
+        return data
+
+    @get_version
+    def process_commandline_options(
+            self,
+    ) -> Tuple[argparse.Namespace, List[Tuple[File_Reference, str]]]:
+        """Processes all command line options"""
+
+        options = self.ap.parse_args()
+        config = self.load_yaml_config(options.config)
+
+        if not options.out:
+            options.out = config.get(SupportedConfigKeys.OUT.value)
+        options.inputs_from_file = config.get(SupportedConfigKeys.INPUT_FROM_FILE.value)
+        options.inputs = config.get(SupportedConfigKeys.INPUTS.value, [])
+        options.traverse_bazel_dirs = config.get(
+            SupportedConfigKeys.TRAVERSE_BAZEL_DIRS.value, False)
+        options.single = config.get(SupportedConfigKeys.SINGLE.value, False)
+
+        work_list = self.process_common_options(options)
+        self.process_tool_options(options, work_list)
+        return options, work_list
+
+    def process_common_options(
+            self,
+            options: argparse.Namespace,
+    ) -> List[Tuple[File_Reference, str]]:
+        """Generates the exact list of files to work on later. The list is sorted
+        alphabetically."""
         # Sanity check output
         if options.out and \
            os.path.exists(options.out) and \
@@ -108,7 +151,7 @@ class LOBSTER_Tool(metaclass=ABCMeta):
         # Assemble input requests
         inputs = []
         if options.inputs:
-            inputs += [(File_Reference("<cmdline>"), item)
+            inputs += [(File_Reference("<config>"), item)
                        for item in options.inputs]
         if options.inputs_from_file:
             if not os.path.isfile(options.inputs_from_file):
@@ -122,7 +165,7 @@ class LOBSTER_Tool(metaclass=ABCMeta):
                                                   line_no),
                                    line))
         if not options.inputs and not options.inputs_from_file:
-            inputs.append((File_Reference("<cmdline>"), "."))
+            inputs.append((File_Reference("<config>"), "."))
 
         # Sanity check and search directories
         work_list = []
@@ -161,11 +204,14 @@ class LOBSTER_Tool(metaclass=ABCMeta):
 
         work_list.sort()
 
-        self.process_tool_options(options, work_list)
+        return work_list
 
-        return options, work_list
-
-    def write_output(self, ok, options, items):
+    def write_output(
+            self,
+            ok: bool,
+            options: argparse.Namespace,
+            items: List[Union[Activity, Implementation, Requirement]],
+    ):
         assert isinstance(ok, bool)
         assert isinstance(options, argparse.Namespace)
         assert isinstance(items, list)
@@ -190,7 +236,11 @@ class LOBSTER_Tool(metaclass=ABCMeta):
             return 1
 
     @abstractmethod
-    def process_tool_options(self, options, work_list):
+    def process_tool_options(
+            self,
+            options: argparse.Namespace,
+            work_list: List[Tuple[File_Reference, str]],
+    ):
         assert isinstance(options, argparse.Namespace)
         assert isinstance(work_list, list)
 
@@ -203,16 +253,14 @@ class LOBSTER_Per_File_Tool(LOBSTER_Tool):
     def __init__(self, name, description, extensions, official=False):
         super().__init__(name, description, extensions, official)
 
-        self.g_debug.add_argument(
-            "--single",
-            default = False,
-            action  = "store_true",
-            help    = "Avoid use of multiprocessing.")
-
     @classmethod
     @abstractmethod
-    def process(cls, options, file_name):
-        return True, []
+    def process(
+            cls,
+            options,
+            file_name,
+    ) -> Tuple[bool, List[Union[Activity, Implementation, Requirement]]]:
+        pass
 
     def execute(self):
         options, work_list = self.process_commandline_options()
@@ -220,6 +268,7 @@ class LOBSTER_Per_File_Tool(LOBSTER_Tool):
         ok    = True
         items = []
         pfun  = partial(self.process, options)
+
         if options.single:
             for file_name in work_list:
                 new_ok, new_items = pfun(file_name)
@@ -230,5 +279,7 @@ class LOBSTER_Per_File_Tool(LOBSTER_Tool):
                 for new_ok, new_items in pool.imap(pfun, work_list, 4):
                     ok    &= new_ok
                     items += new_items
+                pool.close()
+                pool.join()
 
         return self.write_output(ok, options, items)

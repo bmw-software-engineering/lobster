@@ -14,3 +14,55 @@ req.Software_Requirement Dummy_Requirement_Unit_Test {
     It can be deleted as soon as all the tools get their real requirements.
   '''
 }
+
+req.Definition Item {
+  description = '''
+    An item is an entry in the data section according to the schema.
+  '''
+}
+
+req.System_Requirement_Aspect Invalid_Trace_To {
+  description = '''
+    IF "trace to" is an invalid entry given in the configuration file according to the schema,
+    THEN the tool shall exit with a non-zero return code and with an error message "lobster error: unknown item".
+  '''
+}
+
+req.System_Requirement_Aspect Status_Justified_Global {
+  description = '''    
+    IF the "just_global" list of the [[item]] contains at least one value,
+    THEN the tool shall set the tracing status to "JUSTIFIED" of that [[Item]].
+  '''
+}
+
+req.System_Requirement_Aspect Status_Justified_Up {
+  description = '''    
+    OTHERWISE
+    IF the "just_up" list of the [[item]] contains at least one value
+    AND there is at least one level in "trace to" in the tracing policy for the level of the item,
+    THEN the tool shall set the tracing status to "JUSTIFIED" of that [[Item]].
+  '''
+}
+
+req.System_Requirement_Aspect Status_Justified_Down {
+  description = '''
+    OTHERWISE
+    IF the "just_down" list of the [[item]] contains at least one value
+    AND the level of the item is mentioned in at least one "trace to" entry of any other level,
+    THEN the tool shall set the tracing status to "JUSTIFIED" of that [[Item]].
+  '''
+}
+
+req.System_Requirement_Aspect Status_Missing {
+  description = '''    
+    OTHERWISE, IF an [[Item]] has no references to an [[Item]] from a level mentioned in trace to,
+    THEN the tool shall set the tracing status to "MISSING" of that [[Item]] and write "missing up reference" into the message section according to the schema.
+  '''
+}
+
+req.System_Requirement_Aspect Status_Ok {
+  description = '''    
+    OTHERWISE, IF an [[Item]] has references to an [[Item]] from a level mentioned in trace to,
+    THEN the tool shall set the tracing status to "OK" of that [[Item]]
+  '''
+}

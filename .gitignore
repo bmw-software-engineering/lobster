@@ -1,5 +1,6 @@
 *~
 *.pyc
+.vscode
 bazel-*
 launch.json
 
@@ -15,3 +16,4 @@ test_install_monolithic
 .coverage*
 *.lobster
 *.html
+.idea

@@ -3,7 +3,80 @@
 ## Changelog
 
 
-### 0.9.21-dev
+### 0.11.1-dev
+
+
+
+### 0.11.0
+
+* Change the behavior of `lobster-codebeamer` such that an output file is always created,
+  even if the codebeamer server has returned zero items.
+
+* Include dependency to `PyYAML` in [requirements.txt](requirements.txt).
+
+* `lobster-trlc` now requires at least version 2.0.1 of TRLC,
+  as TRLC 2.0.1 contains the important bug fix
+  [Detecting duplicated components](https://github.com/bmw-software-engineering/trlc/pull/121),
+  including an essential improvement in the
+  [Language Reference Manual](https://bmw-software-engineering.github.io/trlc/lrm.html).
+  Without the TRLC bug fix `lobster-trlc` will not detect all traces if TRLC authors exploit the bug.
+  Imagine the following TRLC snippet:
+  ```
+  Requirement Windscreen_Wiper {
+    derived_from = [Safety_Critical_Requirement]
+    derived_from = [Boring_Requirement]
+  }
+  ```
+  Here the trace from `Windscreen_Wiper` to `Safety_Critical_Requirement` will not 
+  be detected by `lobster-trlc` if the version of `trlc` is less than 2.0.1.
+
+* The `--commit` command line argument from `lobster-online-report` tool is now 
+  removed and no longer available. It was redundant and is already replaced by the 
+  automated git hash feature that doesn't require user intervention and is handled 
+  by the code. See changelog `0.10.0` for more information.
+
+* Removed limitation from `lobster-cpptest` which skipped output files that had
+  less than two LOBSTER items.
+
+* Minor fix of handling multithreading in `lobster-json`.
+
+* Introduced YAML-based configuration for `lobster-json`, replacing individual command-line arguments.
+  * Added a `--config` argument to specify a YAML configuration file.
+  * Eliminated the command-line arguments `--single`, `--inputs`, and `--inputs-from-file`,
+    unifying user interaction across all lobster tools. Values can now be specified 
+    using the YAML configuration file.
+  * The argument `--out` is still supported as command line argument, and takes
+    precedence over any value given in the YAML configuration file.
+
+* The title and placeholder for search box is renamed to `Filter` in 
+  `lobster-html-report` tool.
+
+* If the constraint `valid_status` is omitted in the configuration file of `lobster-report`,
+  then no status check is performed.
+
+* `lobster-html-report` gives consistent error message if the input file does not exist,
+  even if the user specified no value. In that case the tool tries to open the file
+  called `lobster.report` in the current working directory as input, and it gives the
+  same error message if that file does not exist.
+
+* `lobster-codebeamer` used to append `/cb` to the `root` parameter in config file 
+  and now the user explicitly needs to add it while specifying the `root`.
+
+### 0.10.0
+
+* `lobster-html-report` adds actual git commit hashes to the source in the HTML report.
+
+* `lobster-online-report` now contains the actual git commit hashes when the user executes the tool.
+
+* The configuration management for the following tools has been migrated from 
+  command-line arguments to YAML configuration files.
+  * `lobster-cpptest`
+  * `lobster-codebeamer`
+
+### 0.9.21
+
+* `lobster-codebeamer` now supports query string along with query ID, query string (cbQL) can be passed 
+  as a command line argument to `--import-query` for the tool `lobster-codebeamer`.
 
 * `lobster-html-report` has the following updates.
   * Filter items by status (Ok, Missing, Partial, Warning, Justified)
@@ -39,6 +112,13 @@
   The following tools are affected:
   * `lobster-codebeamer`
   * `lobster-report`
+
+* Enhanced Configuration Management: Transitioned from command-line arguments to YAML
+  configuration files for LOBSTER-Codebeamer tools.
+
+  **Rationale:** Managing numerous parameters via command-line arguments was cumbersome and error-prone for users.
+
+  **Benefits:** Improved configurability, better readability, and simplified management of tool settings.
 
 * `lobster-gtest` accepts XML nodes other than `testcase`, but ignores them.
 

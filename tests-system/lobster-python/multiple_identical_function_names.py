@@ -3,8 +3,8 @@
 flag = False
 requirements_global = None
 
-if flag == True:
-    def get_requirements(requirements): 
+if flag:
+    def get_requirements(requirements):
         return requirements
 else:
     def set_requirements(requirements):
@@ -12,8 +12,8 @@ else:
         return requirements_global
 
 
-def get_requirements(requirements): 
-        return requirements
+def get_requirements(requirements):
+    return requirements
 
 
 def display_requirements():
@@ -25,6 +25,5 @@ def set_requirements(requirements):
     return requirements_global
 
 
-def get_requirements(requirements): 
-        return requirements
-
+def get_requirements(requirements):
+    return requirements

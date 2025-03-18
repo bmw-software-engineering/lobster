@@ -6,8 +6,11 @@ from pathlib import Path
 from subprocess import CompletedProcess, PIPE, run
 from typing import Iterator, Optional, List
 
+from tests_utils.update_online_json_with_hashes import update_json
+
 # This is the folder containing the folders starting with "rbt-"
 REQUIREMENTS_BASED_TEST_PREFIX = "rbt-"
+LOBSTER_ONLINE_REPORT_TOOL = "lobster-online-report"
 
 
 class TestSetup:
@@ -17,6 +20,7 @@ class TestSetup:
     _EXIT_CODE_FILE_NAME = "exit-code.txt"
     _EXPECTED_STDOUT_FILE_NAME = "stdout.txt"
     _EXPECTED_STDERR_FILE_NAME = "stderr.txt"
+    _LOBSTER_FILE_ENDING = ".lobster"
 
     def __init__(self, test_case_path: str):
         """Constructor
@@ -29,8 +33,8 @@ class TestSetup:
         self._args = self._get_args()
         self._expected_exit_code = self._get_expected_exit_code()
         self._name = self._get_name(test_case_path)
-        self._expected_lobster_output_file_name = \
-            self._get_expected_lobster_output_file_name()
+        self._expected_lobster_output_file_names = \
+            self._get_expected_lobster_output_file_names()
 
     @property
     def test_case_path(self) -> str:
@@ -38,30 +42,27 @@ class TestSetup:
         return self._test_case_path
 
     @property
-    def expected_lobster_output_file_name(self) -> str:
-        return self._expected_lobster_output_file_name
+    def expected_lobster_output_file_names(self) -> List[str]:
+        """Returns a list of all file names of all expected lobster output files.
+
+        The tool under test is expected to generate files with these names in the
+        "input" folder.
+        """
+        return self._expected_lobster_output_file_names
 
     def get_expected_output_path(self) -> str:
         """Returns the path of the folder containing the expected output, which can be
         used to compare against the actual output"""
         return join(self._test_case_path, self._EXPECTED_OUTPUT_FOLDER_NAME)
 
-    def _get_expected_lobster_output_file_name(self) -> str:
-        """Retrieves the expected file name of the lobster output file
-
-        Note: The system test must always be prepared such that the tool under test
-        generates the lobster file in the "input" folder. Other test setups are not
-        supported. Furthermore, the tool under test must generate exactly one output
-        file. Tools like 'lobster-cpptest' are able to generate multiple files. Testing
-        that is currently not supported.
+    def _get_expected_lobster_output_file_names(self) -> List[str]:
+        """Retrieves the expected file names of all lobster output files
         """
-        for dir_entry in scandir(self.get_expected_output_path()):
-            if (not dir_entry.is_dir()) and dir_entry.name.endswith(".lobster"):
-                return dir_entry.name
-        raise ValueError(
-            f"Invalid test setup: No *.lobster file found in "
-            f"{self.get_expected_output_path()}!",
-        )
+        return [
+            dir_entry.name for dir_entry in scandir(self.get_expected_output_path())
+            if (dir_entry.is_file() and
+                dir_entry.name.endswith(self._LOBSTER_FILE_ENDING))
+        ]
 
     @staticmethod
     def _get_name(test_case_path: str) -> str:
@@ -133,17 +134,15 @@ def _run_test(setup: TestSetup, tool: str) -> CompletedProcess:
     """Runs the tool system test using the coverage command.
     The tool will be executed such that its current working directory is equal to the
     "input" folder."""
-    print(f"Starting system test '{setup.name}' with arguments {setup.args} " \
+    print(f"Starting system test '{setup.name}' with arguments {setup.args} "
           f"for tool '{tool}' with coverage.")
     root_directory = Path(__file__).resolve().parents[1]
-    coverage_config_path = root_directory / "coverage.cfg"
-    coverage_data_path = root_directory / ".coverage"
-
     coverage_command = [
         "coverage", "run", "-p",
-        f"--rcfile={coverage_config_path}",
+        f"--rcfile={root_directory / 'coverage.cfg'}",
         "--branch",
-        f"--data-file={coverage_data_path}",
+        f"--data-file={root_directory / '.coverage'}",
+        f"--source={root_directory / 'lobster'}",
         tool, *setup.args
     ]
 
@@ -167,10 +166,6 @@ def _compare_cmd_output(name: str, expected: str, actual: str) -> bool:
 
 
 def _compare_results(setup: TestSetup, completed_process: CompletedProcess):
-    assert setup.expected_exit_code == completed_process.returncode, \
-        f"{setup.name}: Expected exit code is {setup.expected_exit_code}, " \
-        f"actual is {completed_process.returncode}!"
-
     assert _compare_cmd_output(
         name="STDOUT",
         expected=setup.get_expected_stdout(),
@@ -183,37 +178,52 @@ def _compare_results(setup: TestSetup, completed_process: CompletedProcess):
         actual=completed_process.stderr,
     ), "Command line output for STDERR is different!"
 
-    expected = join(
-        setup.get_expected_output_path(),
-        setup.expected_lobster_output_file_name,
-    )
-    actual = join(setup.input_folder, setup.expected_lobster_output_file_name)
+    assert setup.expected_exit_code == completed_process.returncode, \
+        f"{setup.name}: Expected exit code is {setup.expected_exit_code}, " \
+        f"actual is {completed_process.returncode}!"
+
+    for expected_lobster_output_file_name in setup.expected_lobster_output_file_names:
+        expected = join(
+            setup.get_expected_output_path(),
+            expected_lobster_output_file_name,
+        )
+        actual = join(setup.input_folder, expected_lobster_output_file_name)
+        _compare_lobster_files(expected, actual, setup.test_case_path)
+
+
+def _compare_lobster_files(expected: str, actual: str, test_case_path: str):
+    """Compares an actual LOBSTER file with an expected LOBSTER file
+
+    Before comparing the actual text with the expected text, we do the
+    following replacements:
+    a) Replace Windows-like slashes \\ with / in order to be able to
+        compare the actual output on all OS against the expected output on
+        Linux
+    b) Replace the fixed string TEST_CASE_PATH with the absolute path to
+        the current test case directory. This is necessary for tools like
+        lobster-cpptest which write absolute paths into their *.lobster
+        output files.
+
+    :param expected: The path to the file containing the expected output
+    :param actual: The path to the file containing the actual output
+    :param test_case_path: The path containing the test case files
+    """
     with open(expected, "r", encoding="UTF-8") as expected_lobster_file:
         try:
             with open(actual, "r", encoding="UTF-8") as actual_lobster_file:
-                # Before comparing the actual text with the expected text, we do the
-                # following replacements:
-                # a) Replace Windows-like slashes \\ with / in order to be able to
-                #    compare the actual output on all OS against the expected output on
-                #    Linux
-                # b) Replace the fixed string TEST_CASE_PATH with the absolute path to
-                #    the current test case directory. This is necessary for tools like
-                #    lobster-cpptest which write absolute paths into their *.lobster
-                #    output files.
                 modified_actual = actual_lobster_file.read().replace("\\\\", "/")
                 modified_expected = expected_lobster_file.read().replace(
-                    "TEST_CASE_PATH", setup.test_case_path
+                    "TEST_CASE_PATH", test_case_path
                 )
                 assert modified_actual == modified_expected, \
-                    "Actual *.lobster file differs from expectation!"
+                    f"Actual *.lobster file differs from expectation {expected}!"
         except FileNotFoundError as ex:
-            assert True, f"File {ex.filename} was not generated by the tool under test!"
+            assert True, \
+                f"File {ex.filename} was not generated by the tool under test!"
 
 
-def _get_directories(
-        start_directory: Path,
-        startswith: Optional[str] = None,
-    ) -> Iterator[DirEntry]:
+def _get_directories(start_directory: Path,
+                     startswith: Optional[str] = None) -> Iterator[DirEntry]:
     """Returns DirEntry instances for each subdirectory found in the given start
     directory
 
@@ -232,12 +242,16 @@ def _get_directories(
 
 def _delete_generated_files(setup: TestSetup):
     """Deletes the *.lobster file that has been generated by the test"""
-    generated = join(
-        setup.input_folder,
-        setup.expected_lobster_output_file_name,
-    )
-    print(f"DELETING {generated}")
-    remove(generated)
+    for expected_lobster_output_file_name in setup.expected_lobster_output_file_names:
+        generated = join(
+            setup.input_folder,
+            expected_lobster_output_file_name,
+        )
+        print(f"DELETING {generated}")
+        try:
+            remove(generated)
+        except FileNotFoundError:
+            pass
 
 
 def _run_tests(directory: Path, tool: str) -> int:
@@ -257,18 +271,18 @@ def _run_tests(directory: Path, tool: str) -> int:
         for test_case_dir_entry in _get_directories(rbt_dir_entry.path):
             test_setup = TestSetup(test_case_dir_entry.path)
             completed_process = _run_test(test_setup, tool)
+            if basename(tool) == LOBSTER_ONLINE_REPORT_TOOL:
+                for file_name in test_setup.expected_lobster_output_file_names:
+                    expected = join(
+                        test_setup.get_expected_output_path(),
+                        file_name,
+                    )
+                    update_json(expected)
             _compare_results(test_setup, completed_process)
             _delete_generated_files(test_setup)
             counter += 1
     print(f"{counter} system tests finished successfully for {tool}.")
 
-    # TODO: the current implementation is not consistent with respect to return codes.
-    # The tests use assertion statements to indicate failures, but here we use an
-    # integer return value.
-    # Make a decision:
-    # 1) only use assertions to indicate failure
-    # 2) only raise exceptions to indicate failure
-    # 3) only use return values to indicate failure
     return 0
 
 

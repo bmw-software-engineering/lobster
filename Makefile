@@ -16,13 +16,22 @@ lint: style
 	python3 -m pylint --rcfile=pylint3.cfg \
 		--reports=no \
 		--ignore=assets.py \
-		lobster util tests-system/run_tool_tests.py
+		lobster util
+
+lint-system-tests: style
+	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
+	python3 -m pylint --rcfile=tests-system/pylint3.cfg \
+		--reports=no \
+		tests-system/system_test_case_base.py \
+		tests-system/asserter.py \
+		tests-system/lobster-json \
+		tests-system/lobster-report
 
 trlc:
 	trlc lobster --error-on-warnings --verify
 
 style:
-	@python3 -m pycodestyle lobster \
+	@python3 -m pycodestyle lobster tests-system \
 		--exclude=assets.py
 
 packages:
@@ -54,6 +63,11 @@ clang-tidy:
 	cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra' -DCMAKE_BUILD_TYPE=Release && \
 	cmake --build build --target clang-tidy
 
+selenium-tests:
+	@make lobster/html/assets.py
+	@echo "Running Selenium Tests..."
+	(cd tests-UI; make)
+
 integration-tests: packages
 	(cd tests-integration/projects/basic; make)
 	(cd tests-integration/projects/filter; make)
@@ -65,14 +79,18 @@ integration-tests: packages
 
 system-tests:
 	mkdir -p docs
-	make -B -C tests-system TOOL=lobster-json
+	python -m unittest discover -s tests-system -v -t .
+	make -B -C tests-system TOOL=lobster-report
 	make -B -C tests-system TOOL=lobster-trlc
 	make -B -C tests-system TOOL=lobster-python
+	make -B -C tests-system TOOL=lobster-online-report
+	make -B -C tests-system TOOL=lobster-html-report
 
 unit-tests:
 	coverage run -p \
 			--branch --rcfile=coverage.cfg \
 			--data-file .coverage \
+			--source=lobster \
 			-m unittest discover -s tests-unit -v
 
 upload-main: packages
@@ -99,7 +117,7 @@ full-release:
 coverage:
 	coverage combine -q
 	coverage html --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=62
+	coverage report --rcfile=coverage.cfg --fail-under=65
 
 test: clean-coverage system-tests unit-tests
 	make coverage
@@ -113,6 +131,7 @@ docs:
 	rm -rf docs
 	mkdir -p docs
 	@-make tracing
+	@-make tracing-stf
 
 tracing:
 	@mkdir -p docs
@@ -132,30 +151,51 @@ tracing-%: report.lobster-%
 report.lobster-%: lobster/tools/lobster.conf \
 				  code.lobster-% \
 				  unit-tests.lobster-% \
-				  requirements.lobster-% \
+				  system_requirements.lobster-% \
+				  software_requirements.lobster-% \
 				  system-tests.lobster-%
 	lobster-report \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
 	lobster-online-report report.lobster
 
-requirements.lobster-%: lobster/tools/requirements.rsl
+system_requirements.lobster-%: lobster/tools/requirements.rsl
 	$(eval TOOL_PATH := $(subst -,/,$*))   
-	lobster-trlc lobster/tools/$(TOOL_PATH)/requirements.trlc lobster/tools/requirements.rsl \
-	--config-file=lobster/tools/lobster-trlc.conf \
-	--out requirements.lobster
+	lobster-trlc lobster/tools/$(TOOL_PATH) lobster/tools/requirements.rsl \
+	--config-file=lobster/tools/lobster-trlc-system.conf \
+	--out system_requirements.lobster
+
+software_requirements.lobster-%: lobster/tools/requirements.rsl
+	$(eval TOOL_PATH := $(subst -,/,$*))   
+	lobster-trlc lobster/tools/$(TOOL_PATH) lobster/tools/requirements.rsl \
+	--config-file=lobster/tools/lobster-trlc-software.conf \
+	--out software_requirements.lobster
 
 code.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
 	lobster-python --out code.lobster lobster/tools/$(TOOL_PATH)
 
 unit-tests.lobster-%:
-	$(eval TOOL_PATH := $(subst -,/,$*))
-	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-$(TOOL_PATH)
+	$(eval TOOL_NAME := $(subst _,-,$(notdir $(TOOL_PATH))))
+	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-$(TOOL_NAME)
 
 system-tests.lobster-%:
-	$(eval TOOL_PATH := $(subst -,/,$*))
-	python3 tests-system/lobster-trlc-system-test.py $(TOOL_PATH);
+	lobster-python --activity --out=system-tests.lobster tests-system/lobster-$*
+
+# STF is short for System Test Framework
+STF_TRLC_FILES := $(wildcard tests-system/*.trlc)
+STF_PYTHON_FILES := $(filter-out tests-system/test_%.py tests-system/run_tool_tests.py, $(wildcard tests-system/*.py))
+
+# This target is used to generate the LOBSTER report for the requirements of the system test framework itself.
+tracing-stf: $(STF_TRLC_FILES)
+	lobster-trlc tests-system lobster/tools/requirements.rsl --config-file=lobster/tools/lobster-trlc-system.conf --out=stf_system_requirements.lobster
+	lobster-trlc tests-system lobster/tools/requirements.rsl --config-file=lobster/tools/lobster-trlc-software.conf --out=stf_software_requirements.lobster
+	lobster-python --out=stf_code.lobster --only-tagged-functions $(STF_PYTHON_FILES)
+	lobster-report --lobster-config=tests-system/stf-lobster.conf --out=stf_report.lobster
+	lobster-online-report stf_report.lobster
+	lobster-html-report stf_report.lobster --out=docs/tracing-stf.html
+	@echo "Deleting STF *.lobster files..."
+	rm -f stf_system_requirements.lobster stf_software_requirements.lobster stf_code.lobster stf_report.lobster
 
 clean-coverage:
 	@rm -rf htmlcov

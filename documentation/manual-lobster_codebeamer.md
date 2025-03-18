@@ -3,7 +3,7 @@
 ## Limitations
 
 The key limitation is item text, which is currently not
-imported. However we do plan to also import item text eventually.
+imported. However, we do plan to also import item text eventually.
 
 ## Setup and requirements
 
@@ -12,12 +12,11 @@ have API access.
 
 Create some environment variables:
 
-* `CB_ROOT` URL to point to the root codebeamer instance, this is
-  everything up to but excluding the `/cb` part of the url. For
-  example if https://codebeamer.com/cb/wiki/117612 is a valid wiki
-  page, then you would set `CB_ROOT` to `https://codebeamer.com`.
+* `CB_ROOT` URL to point to the root codebeamer instance. For
+  example if https://codebeamer.com/cb/api/v3 is a valid codebeamer URL for 
+  accessing API's, then you would set `CB_ROOT` to `https://codebeamer.com/cb`.
 
-  You can also specify this on the command-line using `--cb-root`.
+  You can also specify this in the config file using `--cb-root`.
 
 You then need to provide authentication. You can do this with two more
 envionment variables:
@@ -29,8 +28,18 @@ envionment variables:
 
 Or, you can put a section into your `~/.netrc` file.
 
-These can also be supplied on the command-line, but configuring
-through environment variables or `.netrc` is the recommended approach.
+- Configuring through .netrc is the recommended approach.
+
+* .netrc Configuration for Codebeamer
+
+  ```.netrc
+  machine your.codebeamer.url
+  login your_username
+  password your_password
+  ```
+Note:
+- If value of root in config file is `https://codebeamer.bmwgroup.net`, then value of
+  machine in .netrc will be `codebeamer.bmwgroup.net`.
 
 ## Use-cases
 
