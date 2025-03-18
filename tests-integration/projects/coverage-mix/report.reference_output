@@ -4,48 +4,48 @@
   "generator": "lobster_report",
   "levels": [
     {
-      "name": "Software Requirements",
+      "name": "Requirements A",
       "kind": "requirements",
       "items": [
         {
-          "tag": "req softreq_coverage_half_example.requirement_d",
+          "tag": "req coverage_mix.banana",
           "location": {
             "kind": "file",
-            "file": "softreq_example.trlc",
-            "line": 5,
-            "column": 44
+            "file": "req_a.trlc",
+            "line": 3,
+            "column": 15
           },
-          "name": "softreq_coverage_half_example.requirement_d",
+          "name": "coverage_mix.banana",
           "messages": [],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req testreq_coverage_half_example.requirement_f"
+            "req coverage_mix.banana_color_test"
           ],
           "tracing_status": "OK",
           "framework": "TRLC",
-          "kind": "Software_Requirement",
-          "text": "Requirement d",
+          "kind": "Requirement_A",
+          "text": "The banana must be yellow.",
           "status": null
         }
       ],
       "coverage": 100.0
     },
     {
-      "name": "System Requirements",
+      "name": "Requirements B",
       "kind": "requirements",
       "items": [
         {
-          "tag": "req sysreq_coverage_half_example.requirement_e",
+          "tag": "req coverage_mix.banana_skin",
           "location": {
             "kind": "file",
-            "file": "sysreq_example.trlc",
-            "line": 5,
-            "column": 42
+            "file": "req_b.trlc",
+            "line": 3,
+            "column": 15
           },
-          "name": "sysreq_coverage_half_example.requirement_e",
+          "name": "coverage_mix.banana_skin",
           "messages": [
             "missing up reference"
           ],
@@ -54,42 +54,40 @@
           "just_global": [],
           "tracing_status": "MISSING",
           "framework": "TRLC",
-          "kind": "System_Requirement",
-          "text": "Requirement e",
+          "kind": "Requirement_B",
+          "text": "The banana skin must be yellow.",
           "status": null
         }
       ],
       "coverage": 0.0
     },
     {
-      "name": "Test Requirements",
+      "name": "Test A",
       "kind": "requirements",
       "items": [
         {
-          "tag": "req testreq_coverage_half_example.requirement_f",
+          "tag": "req coverage_mix.banana_color_test",
           "location": {
             "kind": "file",
-            "file": "testreq_example.trlc",
-            "line": 5,
-            "column": 40
+            "file": "test_spec.trlc",
+            "line": 3,
+            "column": 20
           },
-          "name": "testreq_coverage_half_example.requirement_f",
+          "name": "coverage_mix.banana_color_test",
           "messages": [],
           "just_up": [
-            "needed"
+            "I believe this test does not need a requirement (although it has one)!"
           ],
-          "just_down": [
-            "needed"
-          ],
+          "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req softreq_coverage_half_example.requirement_d"
+            "req coverage_mix.banana"
           ],
           "ref_down": [],
           "tracing_status": "JUSTIFIED",
           "framework": "TRLC",
-          "kind": "Test_Requirement",
-          "text": "Requirement3",
+          "kind": "Test_Specification",
+          "text": "Look at the banana. Is it yellow?",
           "status": null
         }
       ],
@@ -97,13 +95,13 @@
     }
   ],
   "policy": {
-    "Software Requirements": {
-      "name": "Software Requirements",
+    "Requirements A": {
+      "name": "Requirements A",
       "kind": "requirements",
       "traces": [],
       "source": [
         {
-          "file": "softreq.lobster",
+          "file": "req_a.lobster",
           "filters": [],
           "valid_status": []
         }
@@ -112,19 +110,19 @@
       "needs_tracing_down": true,
       "breakdown_requirements": [
         [
-          "Test Requirements"
+          "Test A"
         ]
       ]
     },
-    "System Requirements": {
-      "name": "System Requirements",
+    "Requirements B": {
+      "name": "Requirements B",
       "kind": "requirements",
       "traces": [
-        "Software Requirements"
+        "Requirements A"
       ],
       "source": [
         {
-          "file": "sysreq.lobster",
+          "file": "req_b.lobster",
           "filters": [],
           "valid_status": []
         }
@@ -133,15 +131,15 @@
       "needs_tracing_down": false,
       "breakdown_requirements": []
     },
-    "Test Requirements": {
-      "name": "Test Requirements",
+    "Test A": {
+      "name": "Test A",
       "kind": "requirements",
       "traces": [
-        "Software Requirements"
+        "Requirements A"
       ],
       "source": [
         {
-          "file": "testreq.lobster",
+          "file": "test_a.lobster",
           "filters": [],
           "valid_status": []
         }
