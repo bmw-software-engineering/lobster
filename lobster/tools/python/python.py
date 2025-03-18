@@ -264,14 +264,15 @@ class Python_Function(Python_Traceable_Node):
                                     language = "Python",
                                     kind     = self.kind,
                                     name     = name_value)
-        else:
-            if not self.name.startswith("test"):
-                return
+        elif self.name.startswith("test") or self.name.startswith("_test") \
+                or self.name.endswith("test"):
             l_item = Activity(tag = Tracing_Tag("pyunit",
                                                 self.fqn()),
                               location  = self.location,
                               framework = "PyUnit",
                               kind      = "Test")
+        else:
+            return
 
         for tag in self.tags:
             l_item.add_tracing_target(tag)
