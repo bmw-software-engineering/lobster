@@ -1,0 +1,155 @@
+{
+  "schema": "lobster-report",
+  "version": 2,
+  "generator": "lobster_report",
+  "levels": [
+    {
+      "name": "Software Requirements",
+      "kind": "requirements",
+      "items": [
+        {
+          "tag": "req softreq_coverage_half_example.requirement_d",
+          "location": {
+            "kind": "file",
+            "file": "softreq_example.trlc",
+            "line": 5,
+            "column": 44
+          },
+          "name": "softreq_coverage_half_example.requirement_d",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [],
+          "ref_down": [
+            "req testreq_coverage_half_example.requirement_f"
+          ],
+          "tracing_status": "OK",
+          "framework": "TRLC",
+          "kind": "Software_Requirement",
+          "text": "Requirement d",
+          "status": null
+        }
+      ],
+      "coverage": 100.0
+    },
+    {
+      "name": "System Requirements",
+      "kind": "requirements",
+      "items": [
+        {
+          "tag": "req sysreq_coverage_half_example.requirement_e",
+          "location": {
+            "kind": "file",
+            "file": "sysreq_example.trlc",
+            "line": 5,
+            "column": 42
+          },
+          "name": "sysreq_coverage_half_example.requirement_e",
+          "messages": [
+            "missing up reference"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "MISSING",
+          "framework": "TRLC",
+          "kind": "System_Requirement",
+          "text": "Requirement e",
+          "status": null
+        }
+      ],
+      "coverage": 0.0
+    },
+    {
+      "name": "Test Requirements",
+      "kind": "requirements",
+      "items": [
+        {
+          "tag": "req testreq_coverage_half_example.requirement_f",
+          "location": {
+            "kind": "file",
+            "file": "testreq_example.trlc",
+            "line": 5,
+            "column": 40
+          },
+          "name": "testreq_coverage_half_example.requirement_f",
+          "messages": [],
+          "just_up": [
+            "needed"
+          ],
+          "just_down": [
+            "needed"
+          ],
+          "just_global": [],
+          "ref_up": [
+            "req softreq_coverage_half_example.requirement_d"
+          ],
+          "ref_down": [],
+          "tracing_status": "JUSTIFIED",
+          "framework": "TRLC",
+          "kind": "Test_Requirement",
+          "text": "Requirement3",
+          "status": null
+        }
+      ],
+      "coverage": 100.0
+    }
+  ],
+  "policy": {
+    "Software Requirements": {
+      "name": "Software Requirements",
+      "kind": "requirements",
+      "traces": [],
+      "source": [
+        {
+          "file": "softreq.lobster",
+          "filters": [],
+          "valid_status": []
+        }
+      ],
+      "needs_tracing_up": false,
+      "needs_tracing_down": true,
+      "breakdown_requirements": [
+        [
+          "Test Requirements"
+        ]
+      ]
+    },
+    "System Requirements": {
+      "name": "System Requirements",
+      "kind": "requirements",
+      "traces": [
+        "Software Requirements"
+      ],
+      "source": [
+        {
+          "file": "sysreq.lobster",
+          "filters": [],
+          "valid_status": []
+        }
+      ],
+      "needs_tracing_up": true,
+      "needs_tracing_down": false,
+      "breakdown_requirements": []
+    },
+    "Test Requirements": {
+      "name": "Test Requirements",
+      "kind": "requirements",
+      "traces": [
+        "Software Requirements"
+      ],
+      "source": [
+        {
+          "file": "testreq.lobster",
+          "filters": [],
+          "valid_status": []
+        }
+      ],
+      "needs_tracing_up": true,
+      "needs_tracing_down": false,
+      "breakdown_requirements": []
+    }
+  },
+  "matrix": []
+}
