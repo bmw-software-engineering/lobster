@@ -8,14 +8,14 @@
       "kind": "requirements",
       "items": [
         {
-          "tag": "req sysreq_coverage_example.requirement_4a",
+          "tag": "req coverage_zero.requirement_4a",
           "location": {
             "kind": "file",
             "file": "sysreq_example.trlc",
-            "line": 4,
-            "column": 37
+            "line": 3,
+            "column": 20
           },
-          "name": "sysreq_coverage_example.requirement_4a",
+          "name": "coverage_zero.requirement_4a",
           "messages": [
             "missing reference to Software Requirements"
           ],
@@ -36,14 +36,14 @@
       "kind": "requirements",
       "items": [
         {
-          "tag": "req softreq_coverage_example.requirement_3a",
+          "tag": "req coverage_zero.requirement_3a",
           "location": {
             "kind": "file",
             "file": "softreq_example.trlc",
-            "line": 5,
-            "column": 39
+            "line": 3,
+            "column": 22
           },
-          "name": "softreq_coverage_example.requirement_3a",
+          "name": "coverage_zero.requirement_3a",
           "messages": [
             "missing up reference"
           ],
@@ -57,14 +57,14 @@
           "status": null
         },
         {
-          "tag": "req softreq_coverage_example.requirement_3b",
+          "tag": "req coverage_zero.requirement_3b",
           "location": {
             "kind": "file",
             "file": "softreq_example.trlc",
-            "line": 10,
-            "column": 39
+            "line": 8,
+            "column": 22
           },
-          "name": "softreq_coverage_example.requirement_3b",
+          "name": "coverage_zero.requirement_3b",
           "messages": [
             "missing up reference"
           ],
