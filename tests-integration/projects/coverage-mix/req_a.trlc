@@ -1,0 +1,6 @@
+package coverage_mix
+
+Requirement_A banana
+{
+   text = '''The banana must be yellow.'''
+}

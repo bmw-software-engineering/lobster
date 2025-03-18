@@ -1,0 +1,6 @@
+package coverage_mix
+
+Requirement_B banana_skin
+{
+   text = '''The banana skin must be yellow.'''
+}

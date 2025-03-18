@@ -1,0 +1,8 @@
+package coverage_mix
+
+Test_Specification banana_color_test
+{
+   text = '''Look at the banana. Is it yellow?'''
+   verifies = [banana]
+   just_up = "I believe this test does not need a requirement (although it has one)!"
+}

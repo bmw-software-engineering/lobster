@@ -7,7 +7,7 @@ THIS_TEST:=$(shell realpath --relative-to $(LOBSTER_ROOT) $(PWD))
 THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
 REFERENCE_OUTPUT:=report.reference_output
 
-html_report.html: softreq.lobster sysreq.lobster testreq.lobster lobster.conf trlc-softreq.conf trlc-sysreq.conf trlc-testreq.conf
+html_report.html: req_a.lobster req_b.lobster test_a.lobster lobster.conf trlc_req_a.conf trlc_req_b.conf trlc_test_spec.conf
 	@lobster-report
 	@if diff report.lobster $(REFERENCE_OUTPUT); then \
 	    echo "Files are identical"; \
@@ -16,14 +16,14 @@ html_report.html: softreq.lobster sysreq.lobster testreq.lobster lobster.conf tr
         exit 1; \
 	fi
 
-softreq.lobster: example.rsl softreq_example.trlc sysreq_example.trlc testreq_example.trlc
-	@lobster-trlc example.rsl softreq_example.trlc sysreq_example.trlc testreq_example.trlc\
-		--out="softreq.lobster" --config-file="trlc-softreq.conf"
+req_a.lobster: example.rsl req_a.trlc req_b.trlc test_spec.trlc
+	@lobster-trlc example.rsl req_a.trlc req_b.trlc test_spec.trlc\
+		--out="req_a.lobster" --config-file="trlc_req_a.conf"
 
-sysreq.lobster: example.rsl softreq_example.trlc sysreq_example.trlc testreq_example.trlc
-	@lobster-trlc example.rsl softreq_example.trlc sysreq_example.trlc testreq_example.trlc\
-		--out="sysreq.lobster" --config-file="trlc-sysreq.conf"
+req_b.lobster: example.rsl req_a.trlc req_b.trlc test_spec.trlc
+	@lobster-trlc example.rsl req_a.trlc req_b.trlc test_spec.trlc\
+		--out="req_b.lobster" --config-file="trlc_req_b.conf"
 
-testreq.lobster: example.rsl softreq_example.trlc sysreq_example.trlc testreq_example.trlc
-	@lobster-trlc example.rsl softreq_example.trlc sysreq_example.trlc testreq_example.trlc\
-		--out="testreq.lobster" --config-file="trlc-testreq.conf"
+test_a.lobster: example.rsl req_a.trlc req_b.trlc test_spec.trlc
+	@lobster-trlc example.rsl req_a.trlc req_b.trlc test_spec.trlc\
+		--out="test_a.lobster" --config-file="trlc_test_spec.conf"

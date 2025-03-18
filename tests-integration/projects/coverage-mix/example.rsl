@@ -1,20 +1,19 @@
-package coverage_half_example
+package coverage_mix
 
-type System_Requirement
+type Requirement_A
 {
   text String
 }
 
-type Software_Requirement
+type Requirement_B
 {
   text String
-  derived_from optional System_Requirement  [1 .. *]
 }
 
-type Test_Requirement
+type Test_Specification
 {
   text String
-  derived_from optional Software_Requirement  [1 .. *]
+  verifies optional Requirement_A [1 .. *]
   just_up   optional String
   just_down optional String
 }
