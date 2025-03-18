@@ -13,6 +13,16 @@
 
 ### 0.11.0
 
+* Add a note to [lobster-python](packages/lobster-tool-python/README.md)
+  that it can be used for [Bazel](https://bazel.build/) files, too.
+
+* When running `lobster-python --activity` the tool assumes that Python methods
+  with the following name pattern are tests:
+  - name starting with `_test` or `test`
+  - or name ending with `test`
+
+  Previously only `test` was considered.
+
 * Change the behavior of `lobster-codebeamer` such that an output file is always created,
   even if the codebeamer server has returned zero items.
 
