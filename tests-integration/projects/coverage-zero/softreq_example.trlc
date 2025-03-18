@@ -1,13 +1,11 @@
-package softreq_coverage_example
-import coverage_example
-import sysreq_coverage_example
+package coverage_zero
 
-coverage_example.Software_Requirement requirement_3a
+Software_Requirement requirement_3a
 {
    text = '''Requirement 3a'''
 }
 
-coverage_example.Software_Requirement requirement_3b
+Software_Requirement requirement_3b
 {
    text = '''Requirement 3b'''
 }

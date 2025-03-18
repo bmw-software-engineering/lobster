@@ -1,4 +1,4 @@
-package coverage_example
+package coverage_zero
 
 type System_Requirement
 {
