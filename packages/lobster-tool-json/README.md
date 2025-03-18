@@ -36,7 +36,7 @@ The tool uses a YAML configuration file to define the following common parameter
         - "file1.json"
         - "file2.json"
         - "directory1/"
-    inputs-from-file: "directory1/"  # File containing a list of input files or directories
+    inputs_from_file: "files.txt"  # File containing a list of input files or directories
     single: false  # Set to true to avoid multiprocessing
     ```
 
