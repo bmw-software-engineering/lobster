@@ -1,14 +1,12 @@
-package softreq_coverage_example
-import coverage_example
-import sysreq_coverage_example
+package coverage_half
 
-coverage_example.Software_Requirement requirement_2a
+Software_Requirement requirement_2a
 {
    text = '''Requirement 2a'''
-   derived_from = [sysreq_coverage_example.requirement_1a]
+   derived_from = [requirement_1a]
 }
 
-coverage_example.Software_Requirement requirement_2b
+Software_Requirement requirement_2b
 {
    text = '''Requirement 2b'''
 }

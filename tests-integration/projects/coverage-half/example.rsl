@@ -1,4 +1,4 @@
-package coverage_example
+package coverage_half
 
 type System_Requirement
 {

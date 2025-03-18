@@ -1,7 +1,6 @@
-package sysreq_coverage_example
-import coverage_example
+package coverage_half
 
-coverage_example.System_Requirement requirement_1a
+System_Requirement requirement_1a
 {
    text = '''Requirement 1a'''
 }
