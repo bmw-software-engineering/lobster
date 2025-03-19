@@ -6,8 +6,8 @@ from ..test_runner import TestRunner
 
 @dataclass
 class CmdArgs:
-    lobster_config: Optional[str] = "lobster.conf"
-    out: Optional[str] = "report.lobster"
+    lobster_config: Optional[str] = None
+    out: Optional[str] = None
 
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list"""
