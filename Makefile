@@ -128,10 +128,12 @@ test-all: integration-tests system-tests unit-tests
 	util/check_local_modifications.sh
 
 docs:
-	rm -rf docs
 	mkdir -p docs
 	@-make tracing
 	@-make tracing-stf
+
+clean-docs:
+	rm -rf docs
 
 tracing:
 	@mkdir -p docs
