@@ -9,12 +9,12 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
     def setUp(self):
         super().setUp()
         self._test_runner = self.create_test_runner()
-        self._test_runner.cmd_args.tag_attribute = "tags"
+        self._test_runner.config_file_data.tag_attribute = "tags"
 
     def test_attribute_given(self):
         # lobster-trace: json_req.Name_Attribute_Given
         self._test_runner.declare_input_file(self._data_directory / "basic.json")
-        self._test_runner.cmd_args.name_attribute = "name"
+        self._test_runner.config_file_data.name_attribute = "name"
         out_file = "basic-with-name.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -29,7 +29,7 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
     def test_attribute_given_but_key_missing(self):
         # lobster-trace: json_req.Name_Attribute_Given_Key_Missing
         self._test_runner.declare_input_file(self._data_directory / "single2.json")
-        self._test_runner.cmd_args.name_attribute = "name-not-in-item"
+        self._test_runner.config_file_data.name_attribute = "name-not-in-item"
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()

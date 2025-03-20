@@ -19,12 +19,18 @@ your own tool for your own files.
 
 ## Configuration via YAML
 
-The tool uses a YAML configuration file to define the following common parameters:
+The tool uses a YAML configuration file to define the following parameters:
 
   1) inputs: A list of input file paths (can include directories).
   2) out: The name of the output file where results will be stored.
   3) inputs-from-file: A file containing paths to input files or directories.
   4) single: A flag to avoid the use of multiprocessing. If true, multiprocessing will be skipped.
+  5) test_list: Member name indicator resulting in a list containing objects carrying test data.
+  6) name_attribute: Member name indicator for test name.
+  7) tag_attribute: Member name indicator for test tracing tags.
+  8) justification_attribute: Member name indicator for justifications.
+
+#### Please note that the `--out` and `--config` parameters are the only parameters which are supported by the command line and rest of the parameters need to be added to a Yaml config file.
 
   * YAML Configuration Example:
 
@@ -38,6 +44,10 @@ The tool uses a YAML configuration file to define the following common parameter
         - "directory1/"
     inputs_from_file: "files.txt"  # File containing a list of input files or directories
     single: false  # Set to true to avoid multiprocessing
+    test_list: sample_list
+    name_attribute: apple
+    tag_attribute: fruit
+    justification_attribute: ignored
     ```
 
   * Command-Line Usage:
@@ -78,11 +88,15 @@ used to expose these to LOBSTER. Consider this example:
 Here we have a list of three tests. You can configure the
 `lobster-json` tool to extract the relevant information:
 
+config.yml
+```yaml
+name_attribute: "name"
+tag_attribute: "tags"
+justification_attribute: "justification"
+```
+
 ```bash
-$ lobster-json --name-attribute "name" \
-               --tag-attribute "tags" \
-               --justification-attribute "justification" \
-               --config "/path/to/config.yaml"
+$ lobster-json --config "/path/to/above/config.yaml"
 ```
 
 The name attribute is optional. If your test files do not contain
@@ -111,15 +125,19 @@ your test objects instead look like this:
 
 Then you can get to the data like so:
 
+config.yml
+```yaml
+name_attribute: "meta.name"
+tag_attribute: "meta.req"
+justification_attribute: "meta.just"
+```
+
 ```bash
-$ lobster-json --name-attribute "meta.name" \
-               --tag-attribute "meta.req" \
-               --justification-attribute "meta.just" \
-               --config "/path/to/config.yaml"
+$ lobster-json --config "/path/to/config.yaml"
 ```
 
 Finally, if your list of tests is nested more deeply in an object, you
-can use the `--test-list` flag to identify where it is. For example:
+can use the `test-list` parameter to identify where it is. For example:
 
 ```json
 { "kind"    : "tests",
@@ -134,7 +152,8 @@ can use the `--test-list` flag to identify where it is. For example:
     ...
 ```
 
-Then you can use `--test-list=vectors` to identify the correct list.
+Then you can add `test-list: vectors` in the yaml config file to identify the correct 
+list.
 
 Note: This tool is pretty limited. For the obvious cases it works
 pretty well, but if you have a more complex test definition in JSON

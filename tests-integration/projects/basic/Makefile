@@ -45,7 +45,5 @@ software-requirements.lobster: potato.rsl potato.trlc
 		--out="software-requirements.lobster"
 
 json.lobster:
-	@lobster-json --name-attribute "name" \
-		--tag-attribute "tags" \
-		--justification-attribute "justification" \
-		--config="config.yaml"
+	@lobster-json --config="config.yaml" \
+		--out="json.lobster"

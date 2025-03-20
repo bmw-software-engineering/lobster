@@ -7,8 +7,8 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         super().setUp()
         self._test_runner = self.create_test_runner()
         self._test_runner.declare_input_file(self._data_directory / "valid-json.txt")
-        self._test_runner.cmd_args.name_attribute = "fruit"
-        self._test_runner.cmd_args.tag_attribute = "vegtable"
+        self._test_runner.config_file_data.name_attribute = "fruit"
+        self._test_runner.config_file_data.tag_attribute = "vegtable"
 
     def test_single_non_json_extensions(self):
         # lobster-trace: json_req.Input_File_JSON_Extension

@@ -34,7 +34,5 @@ requirements.lobster: example.rsl softreq_example.trlc sysreq_example.trlc
 		--out="requirements.lobster"
 
 json.lobster:
-	@lobster-json --name-attribute "name" \
-		--tag-attribute "tags" \
-		--justification-attribute "justification" \
-		--config="config.yaml"
+	@lobster-json --config="config.yaml" \
+		--out="json.lobster"
