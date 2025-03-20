@@ -5,8 +5,8 @@
 
 ### 0.11.1-dev
 
-* `lobster-json` - All the command-line arguments are moved to Yaml based config 
-  file. `--config` and `--out` command-line arguments are still supported.
+* `lobster-json` - All command-line arguments except  `--config` and `--out` are 
+  moved to Yaml based config file. `--config` and `--out` command-line arguments are still supported.
 
 ### 0.11.0
 

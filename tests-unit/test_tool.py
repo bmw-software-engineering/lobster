@@ -7,7 +7,7 @@ from lobster.errors import Message_Handler
 
 from lobster.tool import LOBSTER_Tool
 
-class ConcreteLOSBER_Tool(LOBSTER_Tool):
+class ConcreteLOBSTER_Tool(LOBSTER_Tool):
     def __init__(self, name, description, extensions, official=False):
         super().__init__(name, description, extensions, official)
 
@@ -20,7 +20,7 @@ class ConcreteLOSBER_Tool(LOBSTER_Tool):
 class TestLOBSTER_Tool(unittest.TestCase):
 
     def setUp(self):
-        self.tool = ConcreteLOSBER_Tool("test", "Test description", ["lobster"], True)
+        self.tool = ConcreteLOBSTER_Tool("test", "Test description", ["lobster"], True)
 
     def test_init(self):
         self.assertEqual(self.tool.name, "lobster-test")
@@ -30,12 +30,12 @@ class TestLOBSTER_Tool(unittest.TestCase):
 
     def test_load_yaml_config_valid_file(self):
         with NamedTemporaryFile("w", delete=False) as temp:
-            yaml.dump({"tag_attribute": "value"}, temp)
+            yaml.dump({"elephant": "value"}, temp)
             temp_path = temp.name
 
         try:
             config = self.tool.load_yaml_config(temp_path)
-            self.assertEqual(config, {"tag_attribute": "value"})
+            self.assertEqual(config, {"elephant": "value"})
         finally:
             os.remove(temp_path)
 
