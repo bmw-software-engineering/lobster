@@ -163,10 +163,11 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
         -------
         Nothing
         """
-        mandatory_parameters = self.get_mandatory_parameters() - set(config.keys())
-        if mandatory_parameters:
-            sys.exit(f"Required mandatory parameters missing - "
-                     f"{','.join(mandatory_parameters)}")
+        if self.get_mandatory_parameters():
+            mandatory_parameters = self.get_mandatory_parameters() - set(config.keys())
+            if mandatory_parameters:
+                sys.exit(f"Required mandatory parameters missing - "
+                         f"{','.join(mandatory_parameters)}")
 
     @get_version
     def process_commandline_and_yaml_options(
