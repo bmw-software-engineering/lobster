@@ -16,26 +16,25 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
+
 import os
 import re
 import sys
 import argparse
 
 from copy import copy
-from typing import Tuple, List
+from typing import Tuple, List, Set
 
 from trlc.trlc import Source_Manager
 from trlc.lexer import TRLC_Lexer, Token
 from trlc.parser import Parser_Base
 from trlc.errors import Message_Handler, TRLC_Error
-
-from lobster.tool import LOBSTER_Tool
 from trlc import ast
 
+from lobster.tool import LOBSTER_Tool
 from lobster.items import Tracing_Tag, Requirement
 from lobster.location import File_Reference
 from lobster.io import lobster_write
-from lobster.version import get_version
 
 
 class Config_Parser(Parser_Base):
@@ -373,6 +372,10 @@ class LOBSTER_Trlc(LOBSTER_Tool):
             extensions  = ["rsl", "trlc"],
             official    = True)
 
+        for action in self.ap._actions:
+            if action.dest == 'config':
+                action.required = False
+
     # Supported config parameters for lobster-trlc
     TRLC_CONFIG_FILE = "trlc_config_file"
 
@@ -382,10 +385,14 @@ class LOBSTER_Trlc(LOBSTER_Tool):
         help_dict.update(
             {
                 cls.TRLC_CONFIG_FILE: "Name of lobster-trlc config file, "
-                          "by default lobster-trlc.conf"
+                                      "by default lobster-trlc.conf"
             }
         )
         return help_dict
+
+    def get_mandatory_parameters(self) -> Set[str]:
+        """As of now lobster-trlc don't have any mandatory parameters"""
+        return set()
 
     def process_commandline_and_yaml_options(
             self,
@@ -397,11 +404,12 @@ class LOBSTER_Trlc(LOBSTER_Tool):
         Returns
         -------
         options - command-line and yaml options
-        worklist - list of json files
+        worklist - list of trlc and rsl files
         """
 
         options, work_list = super().process_commandline_and_yaml_options()
-        options.trlc_config_file = self.config.get(self.TRLC_CONFIG_FILE)
+        options.trlc_config_file = self.config.get(self.TRLC_CONFIG_FILE,
+                                                   "lobster-trlc.conf")
         return options, work_list
 
     def process_tool_options(
@@ -417,10 +425,11 @@ class LOBSTER_Trlc(LOBSTER_Tool):
         sm = Source_Manager(trlc_mh)
         options, work_list = self.process_commandline_and_yaml_options()
         if not os.path.isfile(options.trlc_config_file):
-            sys.exit("cannot open config file '%s'" % options.config_file)
+            sys.exit("lobster-trlc: cannot open config file '%s'" %
+                     options.trlc_config_file)
 
         if os.path.exists(options.out) and not os.path.isfile(options.out):
-            sys.exit("output file '%s' exists and is not a file"
+            sys.exit("lobster-trlc: output file '%s' exists and is not a file"
                      % options.out)
 
         ok = True
@@ -476,6 +485,7 @@ class LOBSTER_Trlc(LOBSTER_Tool):
                           items=items)
         print("lobster-trlc: successfully wrote %u items to %s" %
               (len(items), options.out))
+        return 0
 
 
 def main():

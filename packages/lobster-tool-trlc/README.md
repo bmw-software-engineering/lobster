@@ -99,9 +99,10 @@ tracing policy will be validated at all when considering this object.
 ## Executing lobster-trlc tool
 
 `lobster-trlc` takes two command line arguments as follows:
-* `--config` - Yaml based config files to the parameters
+* `--config` - Yaml based config file path in which the following parameters can be 
+  mentioned.
   * `trlc_config_file`: trlc configuration file as mentioned in the configuration 
-    section
+    section and also in the example mentioned below see (trlc_config.conf)
   * `inputs`: A list of input file paths (can include directories).
   * `inputs_from_file`: A file containing paths to input files or directories.
   * `traverse_bazel_dirs`:  Enter bazel-* directories, which are excluded by default.
