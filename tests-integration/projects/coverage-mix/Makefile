@@ -16,14 +16,14 @@ html_report.html: req_a.lobster req_b.lobster test_a.lobster lobster.conf trlc_r
         exit 1; \
 	fi
 
-req_a.lobster: example.rsl req_a.trlc req_b.trlc test_spec.trlc
-	@lobster-trlc example.rsl req_a.trlc req_b.trlc test_spec.trlc\
-		--out="req_a.lobster" --config-file="trlc_req_a.conf"
+req_a.lobster:
+	@lobster-trlc --config="trlc_req_a.yaml" \
+		--out="req_a.lobster"
 
-req_b.lobster: example.rsl req_a.trlc req_b.trlc test_spec.trlc
-	@lobster-trlc example.rsl req_a.trlc req_b.trlc test_spec.trlc\
-		--out="req_b.lobster" --config-file="trlc_req_b.conf"
+req_b.lobster:
+	@lobster-trlc --config="trlc_req_b.yaml" \
+		--out="req_b.lobster"
 
-test_a.lobster: example.rsl req_a.trlc req_b.trlc test_spec.trlc
-	@lobster-trlc example.rsl req_a.trlc req_b.trlc test_spec.trlc\
-		--out="test_a.lobster" --config-file="trlc_test_spec.conf"
+test_a.lobster:
+	@lobster-trlc --config="trlc_test_spec.yaml" \
+		--out="test_a.lobster"

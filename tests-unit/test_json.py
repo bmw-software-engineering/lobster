@@ -39,13 +39,12 @@ class Test_Json(unittest.TestCase):
 
     def test_invalid_json_parameters(self):
         with NamedTemporaryFile("w", delete=False) as temp:
-            yaml.dump({"invalid_key": "This is a invalid key "
-                                      "which not supported by LOBSTER Json"}, temp)
-            temp_path = temp.name
+            config = {"invalid_key": "This is an invalid key "
+                                      "which is not supported by LOBSTER Json"}
         lobster_json = LOBSTER_Json()
 
-        with self.assertRaises(LOBSTER_Error):
-            lobster_json.validate_yaml_supported_config_parameters(temp_path)
+        with self.assertRaises(KeyError):
+            lobster_json.validate_yaml_supported_config_parameters(config)
 
     def test_mandatory_json_parameters(self):
         config = {"single": True, "name_attribute": "fruit"}
