@@ -1,0 +1,5 @@
+package test_default
+
+type namaste {
+    description String
+}
