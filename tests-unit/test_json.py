@@ -39,8 +39,8 @@ class Test_Json(unittest.TestCase):
 
     def test_invalid_json_parameters(self):
         with NamedTemporaryFile("w", delete=False) as temp:
-            config = {"invalid_key": "This is a invalid key "
-                                      "which not supported by LOBSTER Json"}
+            config = {"invalid_key": "This is an invalid key "
+                                      "which is not supported by LOBSTER Json"}
         lobster_json = LOBSTER_Json()
 
         with self.assertRaises(KeyError):
