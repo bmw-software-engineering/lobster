@@ -1,1 +1,1 @@
-lobster-trlc: successfully wrote 1 items to trlc.lobster
+lobster-trlc: successfully wrote 1 items to lobster-trlc.lobster

@@ -103,7 +103,7 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
 
         self.ap.add_argument(
             "--out",
-            default = None,
+            default = f'{self.name}.lobster',
             help    = "Write output to the given file instead of stdout."
         )
         self.ap.add_argument(
