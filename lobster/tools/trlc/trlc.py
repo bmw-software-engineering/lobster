@@ -23,6 +23,7 @@ import sys
 import argparse
 
 from copy import copy
+from typing import Tuple, List, Set
 
 from trlc.trlc import Source_Manager
 from trlc.lexer import TRLC_Lexer, Token
@@ -30,10 +31,10 @@ from trlc.parser import Parser_Base
 from trlc.errors import Message_Handler, TRLC_Error
 from trlc import ast
 
+from lobster.tool import LOBSTER_Tool
 from lobster.items import Tracing_Tag, Requirement
 from lobster.location import File_Reference
 from lobster.io import lobster_write
-from lobster.version import get_version
 
 
 class Config_Parser(Parser_Base):
@@ -363,38 +364,76 @@ class Config_Parser(Parser_Base):
             self.parse_tuple_type(n_typ)
 
 
-ap = argparse.ArgumentParser()
+class LOBSTER_Trlc(LOBSTER_Tool):
+    def __init__(self):
+        super().__init__(
+            name        = "trlc",
+            description = "Extract tracing data from rsl and trlc files.",
+            extensions  = ["rsl", "trlc"],
+            official    = True)
 
+        for action in self.ap._actions:
+            if action.dest == 'config':
+                action.required = False
 
-@get_version(ap)
-def main():
-    ap.add_argument("--config-file",
-                    help=("name of lobster-trlc config file, "
-                          "by default %(default)s"),
-                    default="lobster-trlc.conf")
-    # lobster-trace: trlc_req.Output_File
-    ap.add_argument("--out",
-                    help=("name of output file, "
-                          "by default %(default)s"),
-                    default="trlc.lobster")
-    ap.add_argument("items",
-                    nargs="*",
-                    metavar="DIR|FILE")
-    options = ap.parse_args()
+    # Supported config parameters for lobster-trlc
+    TRLC_CONFIG_FILE = "trlc_config_file"
 
-    mh = Message_Handler()
-    sm = Source_Manager(mh)
+    @classmethod
+    def get_config_keys_manual(cls):
+        help_dict = super().get_config_keys_manual()
+        help_dict.update(
+            {
+                cls.TRLC_CONFIG_FILE: "Name of lobster-trlc config file, "
+                                      "by default lobster-trlc.conf"
+            }
+        )
+        return help_dict
 
-    if not os.path.isfile(options.config_file):
-        ap.error("cannot open config file '%s'" % options.config_file)
+    def get_mandatory_parameters(self) -> Set[str]:
+        """As of now lobster-trlc don't have any mandatory parameters"""
+        return set()
 
-    if os.path.exists(options.out) and not os.path.isfile(options.out):
-        ap.error("output file '%s' exists and is not a file"
-                 % options.out)
+    def process_commandline_and_yaml_options(
+            self,
+    ) -> Tuple[argparse.Namespace, List[Tuple[File_Reference, str]]]:
+        """
+        Overrides the parent class method and add fetch tool specific options from the
+        yaml config
 
-    ok = True
-    if options.items:
-        for item in options.items:
+        Returns
+        -------
+        options - command-line and yaml options
+        worklist - list of trlc and rsl files
+        """
+
+        options, work_list = super().process_commandline_and_yaml_options()
+        options.trlc_config_file = self.config.get(self.TRLC_CONFIG_FILE,
+                                                   "lobster-trlc.conf")
+        return options, work_list
+
+    def process_tool_options(
+            self,
+            options: argparse.Namespace,
+            work_list: List[Tuple[File_Reference, str]],
+    ):
+        super().process_tool_options(options, work_list)
+        self.schema = Requirement
+
+    def execute(self):
+        trlc_mh = Message_Handler()
+        sm = Source_Manager(trlc_mh)
+        options, work_list = self.process_commandline_and_yaml_options()
+        if not os.path.isfile(options.trlc_config_file):
+            sys.exit("lobster-trlc: cannot open config file '%s'" %
+                     options.trlc_config_file)
+
+        if os.path.exists(options.out) and not os.path.isfile(options.out):
+            sys.exit("lobster-trlc: output file '%s' exists and is not a file"
+                     % options.out)
+
+        ok = True
+        for item in work_list:
             if os.path.isfile(item):
                 try:
                     sm.register_file(item)
@@ -409,49 +448,50 @@ def main():
                 print("lobster-trlc: neither a file or directory: '%s'" %
                       item)
                 ok = False
-    else:
+
+        if ok:
+            stab = sm.process()
+        # pylint: disable=possibly-used-before-assignment
+        if not ok or stab is None:
+            print("lobster-trlc: aborting due to earlier error")
+            return 1
+
+        config_parser = Config_Parser(trlc_mh, options.trlc_config_file, stab)
         try:
-            sm.register_directory(".")
+            config_parser.parse_config_file()
         except TRLC_Error:
-            ok = False
-    if ok:
-        stab = sm.process()
-    # pylint: disable=possibly-used-before-assignment
-    if not ok or stab is None:
-        print("lobster-trlc: aborting due to earlier error")
-        return 1
+            print("lobster-trlc: aborting due to error in"
+                  " configuration file '%s'" % options.trlc_config_file)
+            return 1
 
-    config_parser = Config_Parser(mh, options.config_file, stab)
-    try:
-        config_parser.parse_config_file()
-    except TRLC_Error:
-        print("lobster-trlc: aborting due to error in"
-              " configuration file '%s'" % options.config_file)
-        return 1
+        items = []
+        for n_obj in stab.iter_record_objects():
+            try:
+                item = config_parser.generate_lobster_object(n_obj)
+                if item:
+                    items.append(item)
+            except TRLC_Error:
+                ok = False
 
-    items = []
-    for n_obj in stab.iter_record_objects():
-        try:
-            item = config_parser.generate_lobster_object(n_obj)
-            if item:
-                items.append(item)
-        except TRLC_Error:
-            ok = False
+        if not ok:
+            print("lobster-trlc: aborting due to error during extraction")
+            return 1
 
-    if not ok:
-        print("lobster-trlc: aborting due to error during extraction")
-        return 1
+        with open(options.out, "w", encoding="UTF-8") as fd:
+            # lobster-trace: trlc_req.Output_File
+            lobster_write(fd=fd,
+                          kind=Requirement,
+                          generator="lobster-trlc",
+                          items=items)
+        print("lobster-trlc: successfully wrote %u items to %s" %
+              (len(items), options.out))
+        return 0
 
-    with open(options.out, "w", encoding="UTF-8") as fd:
-        # lobster-trace: trlc_req.Output_File
-        lobster_write(fd        = fd,
-                      kind      = Requirement,
-                      generator = "lobster-trlc",
-                      items     = items)
-    print("lobster-trlc: successfully wrote %u items to %s" %
-          (len(items), options.out))
 
-    return 0
+def main():
+    # lobster-trace: trlc_req.Dummy_Requirement
+    tool = LOBSTER_Trlc()
+    return tool.execute()
 
 
 if __name__ == "__main__":

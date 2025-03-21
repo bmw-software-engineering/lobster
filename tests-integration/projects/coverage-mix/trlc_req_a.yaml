@@ -1,0 +1,7 @@
+inputs :
+  - example.rsl
+  - req_a.trlc
+  - req_b.trlc
+  - test_spec.trlc
+
+trlc_config_file : "trlc_req_a.conf"

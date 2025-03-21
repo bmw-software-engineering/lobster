@@ -103,7 +103,7 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
 
         self.ap.add_argument(
             "--out",
-            default = None,
+            default = f'{self.name}.lobster',
             help    = "Write output to the given file instead of stdout."
         )
         self.ap.add_argument(
@@ -145,12 +145,14 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
         -------
         Nothing
         """
-        with open(config, "r", encoding="UTF-8") as fd:
-            for line_no, line in enumerate(fd, 1):
-                if (':' in line and (line.split(':')[0]).strip() not in
-                        self.get_config_keys_as_set()):
-                    self.mh.error(File_Reference(line, line_no),
-                                  "Invalid yaml config parameter")
+        if config:
+            supported_keys = self.get_config_keys_as_set()
+            unsupported_keys = set(config.keys()) - supported_keys
+            if unsupported_keys:
+                raise KeyError(
+                    f"Unsupported config keys: {', '.join(unsupported_keys)}. "
+                    f"Supported keys are: {', '.join(supported_keys)}."
+                )
 
     def check_mandatory_config_parameters(self, config):
         """
@@ -163,10 +165,11 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
         -------
         Nothing
         """
-        mandatory_parameters = self.get_mandatory_parameters() - set(config.keys())
-        if mandatory_parameters:
-            sys.exit(f"Required mandatory parameters missing - "
-                     f"{','.join(mandatory_parameters)}")
+        if self.get_mandatory_parameters():
+            mandatory_parameters = self.get_mandatory_parameters() - set(config.keys())
+            if mandatory_parameters:
+                sys.exit(f"Required mandatory parameters missing - "
+                         f"{','.join(mandatory_parameters)}")
 
     @get_version
     def process_commandline_and_yaml_options(
@@ -175,10 +178,10 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
         """Processes all command line options"""
 
         options = self.ap.parse_args()
-        self.validate_yaml_supported_config_parameters(options.config)
         self.config = self.load_yaml_config(options.config)
+        self.validate_yaml_supported_config_parameters(self.config)
         self.check_mandatory_config_parameters(self.config)
-        options.inputs_from_file = self.config.get(self.INPUTS_FROM_FILE)
+        options.inputs_from_file = self.config.get(self.INPUTS_FROM_FILE, None)
         options.inputs = self.config.get(self.INPUTS, [])
         options.traverse_bazel_dirs = self.config.get(self.TRAVERSE_BAZEL_DIRS, False)
         work_list = self.process_common_options(options)

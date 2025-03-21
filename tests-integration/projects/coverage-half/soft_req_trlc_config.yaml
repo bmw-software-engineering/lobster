@@ -1,0 +1,6 @@
+inputs :
+  - example.rsl
+  - softreq_example.trlc
+  - sysreq_example.trlc
+
+trlc_config_file : "trlc-softreq.conf"

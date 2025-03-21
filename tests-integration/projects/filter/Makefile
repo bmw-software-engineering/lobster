@@ -29,8 +29,8 @@ cppcode.lobster: foo.h foo.cpp
 	@lobster-cpp foo.cpp foo.h \
 		--out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
 
-requirements.lobster: example.rsl softreq_example.trlc sysreq_example.trlc
-	@lobster-trlc example.rsl softreq_example.trlc sysreq_example.trlc\
+requirements.lobster:
+	@lobster-trlc --config="trlc_config.yaml" \
 		--out="requirements.lobster"
 
 json.lobster:
