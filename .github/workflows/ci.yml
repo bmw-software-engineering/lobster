@@ -9,6 +9,10 @@ on:
     branches: ["main"]
     paths-ignore:
       - "**/*.md"
+    types:
+      - ready_for_review
+      - synchronize
+      - reopened
 
 permissions:
   contents: read
