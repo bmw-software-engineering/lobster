@@ -1,0 +1,58 @@
+package trlc_req
+import req
+
+req.System_Requirement Input_List_Of_Files {
+    description = '''
+      IF the list elements given through the config option "inputs" are files with extension rsl and trlc,
+      THEN all files given in "inputs" parameter shall be consumed.
+    '''
+}
+
+req.System_Requirement_Aspect Duplicate_Input_List_Of_Files {
+    description = '''
+      IF the [[Input_List_Of_Files]] are files with duplicate definitions.
+      THEN "duplicate_definition" error must be produced.
+    '''
+}
+
+req.System_Requirement_Aspect Invalid_Inputs_List_Of_Files_Extensions {
+    description = '''
+      IF the [[Input_List_Of_Files]] are with invalid extensions,
+      THEN tool shall raise an error.
+    '''
+}
+
+req.System_Requirement Inputs_From_File {
+    description = '''
+      IF the element given through the config option "inputs_from_file" is a file,
+      THEN each line in that file shall be interpreted as a path AND shall be consumed.
+    '''
+}
+
+req.System_Requirement_Aspect Duplicate_Inputs_From_File {
+    description = '''
+      IF the [[Inputs_From_File]] has files that contain duplicate definitions,
+      THEN "duplicate_definition" error must be produced.
+    '''
+}
+
+req.System_Requirement_Aspect Invalid_Inputs_From_File_Extensions {
+    description = '''
+      IF the [[Inputs_From_File]] has files with invalid extensions,
+      THEN tool shall raise an error.
+    '''
+}
+
+req.System_Requirement Input_list_Of_File_And_Inputs_From_File {
+    description = '''
+      IF both the config options [[Input_List_Of_Files]] AND [[Inputs_From_File]] are provided,
+      THEN all files given in [[Input_List_Of_Files]] AND [[Inputs_From_File]] parameter shall be consumed.
+    '''
+}
+
+req.System_Requirement_Aspect No_Inputs_And_No_Inputs_From_File {
+    description = '''
+      OTHERWISE, IF both the config options [[Input_List_Of_Files]] AND [[Inputs_From_File]] are not provided,
+      THEN all .rsl and .trlc files in current directory shall be scanned recursively and consumed.
+    '''
+}
