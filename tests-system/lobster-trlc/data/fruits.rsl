@@ -1,0 +1,5 @@
+package sweet_fruits
+
+type berry {
+    description String
+}
