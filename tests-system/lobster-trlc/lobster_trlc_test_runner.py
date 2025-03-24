@@ -24,9 +24,9 @@ class ConfigFileData:
                 data[key] = value
 
         append_if_not_none("inputs", self.inputs)
-        append_if_not_none("inputs_from_file ", self.inputs_from_file)
-        append_if_not_none("trlc_config_file ", self.trlc_config_file)
-        append_if_not_none("traverse_bazel_dirs ", self.traverse_bazel_dirs)
+        append_if_not_none("inputs_from_file", self.inputs_from_file)
+        append_if_not_none("trlc_config_file", self.trlc_config_file)
+        append_if_not_none("traverse_bazel_dirs", self.traverse_bazel_dirs)
 
         with open(filename, mode='w', encoding="UTF-8") as file:
             yaml.dump(data, file)
@@ -45,8 +45,8 @@ class CmdArgs:
             if value is not None:
                 cmd_args.append(f"{parameter}={value}")
 
-        if self.config:
-            cmd_args.append(self.config)
+        # if self.config:
+        #     cmd_args.append(self.config)
 
         append_if_string("--out", self.out)
         append_if_string("--config", self.config)
@@ -71,6 +71,14 @@ class LobsterTrlcTestRunner(TestRunner):
     def declare_input_file(self, file: Path):
         super().declare_input_file(file)
         self.config_file_data.inputs.append(file.name)
+
+    def declare_trlc_config_file(self, file: Path):
+        super().declare_input_file(file)
+        self.config_file_data.trlc_config_file = file.name
+
+    def declare_inputs_from_file(self, file: Path):
+        super().declare_input_file(file)
+        self.config_file_data.inputs_from_file = file.name
 
     def get_tool_args(self) -> List[str]:
         """Returns the command line arguments that shall be used to start 'lobster-json'
