@@ -1,0 +1,2 @@
+rsl_invalid_extension.slr
+trlc_invalid_extension.clrt

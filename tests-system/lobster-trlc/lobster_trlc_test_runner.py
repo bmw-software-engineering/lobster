@@ -45,9 +45,6 @@ class CmdArgs:
             if value is not None:
                 cmd_args.append(f"{parameter}={value}")
 
-        # if self.config:
-        #     cmd_args.append(self.config)
-
         append_if_string("--out", self.out)
         append_if_string("--config", self.config)
         return cmd_args
@@ -76,12 +73,18 @@ class LobsterTrlcTestRunner(TestRunner):
         super().declare_input_file(file)
         self.config_file_data.trlc_config_file = file.name
 
-    def declare_inputs_from_file(self, file: Path):
+    def declare_inputs_from_file(self, file: Path, data_directory: Path):
         super().declare_input_file(file)
         self.config_file_data.inputs_from_file = file.name
+        # TODO
+        #  This will only work for files and not for directories.
+        #  Traversing directories logic needs to be added
+        with open(file, "r", encoding="UTF-8") as fd:
+            for line in fd:
+                super().declare_input_file(data_directory / line.strip())
 
     def get_tool_args(self) -> List[str]:
-        """Returns the command line arguments that shall be used to start 'lobster-json'
+        """Returns the command line arguments that shall be used to start 'lobster-trlc'
            under test"""
         return self._cmd_args.as_list()
 
