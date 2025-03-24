@@ -113,18 +113,18 @@ def query_cb_single(cb_config, url):
                               timeout=cb_config["timeout"],
                               verify=cb_config["verify_ssl"])
     except requests.exceptions.ReadTimeout:
-        print("Timeout when fetching %s" % url)
+        print(f"Timeout when fetching {url}")
         print("You can either:")
         print("* increase the timeout with --timeout")
         print("* decrease the query size with --query-size")
         sys.exit(1)
     except requests.exceptions.RequestException as err:
-        print("Could not fetch %s" % url)
+        print(f"Could not fetch {url}")
         print(err)
         sys.exit(1)
 
     if result.status_code != 200:
-        print("Could not fetch %s" % url)
+        print(f"Could not fetch {url}")
         print("Status = %u" % result.status_code)
         print(result.text)
         sys.exit(1)

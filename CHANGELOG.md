@@ -5,6 +5,8 @@
 
 ### 0.11.1-dev
 
+* Update installation instructions with `pip3` and `pipx`.
+
 * `lobster-trlc` - All command-line arguments except  `--config` and `--out` are 
   moved to Yaml based config file. `--config` and `--out` command-line arguments are still supported.
 
