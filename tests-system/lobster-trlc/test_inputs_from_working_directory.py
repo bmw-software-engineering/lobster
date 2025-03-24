@@ -8,19 +8,20 @@ class InputFromWorkingDirectory(LobsterTrlcSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
         self._test_runner.declare_trlc_config_file(self._data_directory /
                                                    "lobster-trlc.conf")
-        
+
     def test_input_from_working_directory(self):
+        # lobster-trace: trlc_req.No_Inputs_And_No_Inputs_From_File
         OUT_FILE = "input_from_working_directory.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
         self._test_runner.copy_files_in_working_directory(self._data_directory /
-                                                   "fruits.trlc")
+                                                          "fruits.trlc")
         self._test_runner.copy_files_in_working_directory(self._data_directory /
-                                                   "fruits.rsl")
+                                                          "fruits.rsl")
         self._test_runner.copy_files_in_working_directory(self._data_directory /
-                                                   "default_file.trlc")
+                                                          "default_file.trlc")
         self._test_runner.copy_files_in_working_directory(self._data_directory /
-                                                   "default_file.rsl")
+                                                          "default_file.rsl")
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
