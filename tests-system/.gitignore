@@ -4,3 +4,4 @@
 !lobster-online-report/data/*.lobster
 !lobster-report/**/input/*.lobster
 !lobster-report/data/*.lobster
+!lobster-trlc/data/*.lobster
