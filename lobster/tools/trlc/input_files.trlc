@@ -50,6 +50,14 @@ req.System_Requirement Input_list_Of_File_And_Inputs_From_File {
     '''
 }
 
+req.System_Requirement_Aspect Duplicate_Content_Input_list_Of_File_And_Inputs_From_File
+{
+    description = '''
+      IF both the config options [[Input_List_Of_Files]] AND [[Inputs_From_File]] has duplicate definitions,
+      THEN "duplicate_definition" error must be produced.
+    '''
+}
+
 req.System_Requirement_Aspect No_Inputs_And_No_Inputs_From_File {
     description = '''
       OTHERWISE, IF both the config options [[Input_List_Of_Files]] AND [[Inputs_From_File]] are not provided,

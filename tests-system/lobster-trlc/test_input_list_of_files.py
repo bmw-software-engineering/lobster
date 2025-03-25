@@ -12,6 +12,7 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
                                                    "lobster-trlc.conf")
 
     def test_input_files_list(self):
+        # lobster-trace: trlc_req.Input_List_Of_Files
         OUT_FILE = "input_files_list.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
@@ -24,6 +25,7 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_duplicate_input_files_list(self):
+        # lobster-trace: trlc_req.Duplicate_Input_List_Of_Files
         self._test_runner.declare_input_file(self._data_directory /
                                              "default_file_copy.rsl")
         self._test_runner.declare_input_file(self._data_directory /
