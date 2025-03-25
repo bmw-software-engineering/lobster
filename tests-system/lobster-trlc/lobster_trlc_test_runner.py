@@ -65,6 +65,10 @@ class LobsterTrlcTestRunner(TestRunner):
     def config_file_data(self) -> ConfigFileData:
         return self._config_file_data
 
+    def copy_files_in_working_directory(self, files: List):
+        for file_path in files:
+            super().declare_input_file(file_path)
+
     def declare_input_file(self, file: Path):
         super().declare_input_file(file)
         self.config_file_data.inputs.append(file.name)
