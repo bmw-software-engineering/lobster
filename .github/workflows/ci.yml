@@ -3,8 +3,16 @@ name: LOBSTER CI
 on:
   push:
     branches: ["main"]
+    paths-ignore:
+      - "**/*.md"
   pull_request:
     branches: ["main"]
+    paths-ignore:
+      - "**/*.md"
+    types:
+      - ready_for_review
+      - synchronize
+      - reopened
 
 permissions:
   contents: read
