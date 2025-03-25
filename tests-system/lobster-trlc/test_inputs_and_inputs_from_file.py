@@ -26,3 +26,21 @@ class InputFromFilesAndInputsTest(LobsterTrlcSystemTestCaseBase):
                                   f"{OUT_FILE}\n")
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+    def test_duplicate_contents_input_from_files_and_inputs_list(self):
+        # lobster-trace: trlc_req.Duplicate_Input_list_Of_File_And_Inputs_From_File
+        self._test_runner.declare_inputs_from_file(
+            self._data_directory / "input_from_files_and_inputs_duplicate_contents.txt",
+            self._data_directory)
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutText('package test_default\n        ^^^^^^^^^^^^'
+                                  ' default_file_copy.rsl:1: error:'
+                                  ' duplicate definition, previous definition at'
+                                  ' default_file.rsl:1\nnamaste goodname {\n'
+                                  '        ^^^^^^^^ default_file_copy.trlc:3: error:'
+                                  ' duplicate definition, previous definition at'
+                                  ' default_file.trlc:3\nlobster-trlc: aborting due'
+                                  ' to earlier error\n')
+        asserter.assertExitCode(1)
