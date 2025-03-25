@@ -27,9 +27,8 @@ class InputFromFilesAndInputsTest(LobsterTrlcSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-
     def test_duplicate_contents_input_from_files_and_inputs_list(self):
-        # lobster-trace: trlc_req.Duplicate_Content_Input_list_Of_File_And_Inputs_From_File
+        # lobster-trace: trlc_req.Duplicate_Input_list_Of_File_And_Inputs_From_File
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "input_from_files_and_inputs_duplicate_contents.txt",
             self._data_directory)
