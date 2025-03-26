@@ -1,12 +1,30 @@
-from .run_report_tests import ReportTest
+from .lobster_report_system_test_case_base import LobsterReportSystemTestCaseBase
+from ..asserter import Asserter
 
 
-class ReportJustifiedTest(ReportTest):
+class ReportJustifiedTest(LobsterReportSystemTestCaseBase):
+    def setUp(self):
+        super().setUp()
+        self._test_runner = self.create_test_runner()
+
     def test_status_justified(self):
         # lobster-trace: core_report_req.Status_Justified_Global
-        self._run_test(
-            "lobster_justified.conf",
-            "trlc_justified.lobster",
-            "python_justified.lobster",
-            "report_justified.lobster"
-        )
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "lobster_justified.conf")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "trlc_justified.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "python_justified.lobster")
+
+        conf_file = "lobster_justified.conf"
+        out_file = "report_justified.lobster"
+        self._test_runner.cmd_args.lobster_config = conf_file
+        self._test_runner.cmd_args.out = out_file
+        self._test_runner.declare_output_file(self._data_directory / out_file)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertNoStdOutText()
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
