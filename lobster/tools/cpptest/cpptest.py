@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_cpptest - Extract C++ tracing tags from comments in tests for LOBSTER
-# Copyright (C) 2024 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2024-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
