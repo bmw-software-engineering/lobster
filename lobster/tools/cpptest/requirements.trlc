@@ -14,3 +14,12 @@ req.Software_Requirement Dummy_Requirement_Unit_Test {
     It can be deleted as soon as all the tools get their real requirements.
   '''
 }
+
+req.System_Requirement_Aspect Valid_Flow {
+  description = '''
+    IF a valid YAML config file with required keys is provided,
+    AND valid test files are present in the specified paths,
+    THEN the tool shall parse the test files, extract test cases,
+    generate lobster items, and write them to the configured output.
+  '''
+}
