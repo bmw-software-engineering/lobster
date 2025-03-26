@@ -8,23 +8,21 @@
       "kind": "requirements",
       "items": [
         {
-          "tag": "req example.adas_100",
+          "tag": "req example.adas_100_A",
           "location": {
             "kind": "file",
             "file": "./demo.trlc",
             "line": 3,
             "column": 13
           },
-          "name": "example.adas_100",
+          "name": "example.adas_100_A",
           "messages": [],
           "just_up": [],
           "just_down": [],
-          "just_global": [],
-          "ref_up": [],
-          "ref_down": [
-            "python software.Example"
+          "just_global": [
+            "not linked"
           ],
-          "tracing_status": "OK",
+          "tracing_status": "JUSTIFIED",
           "framework": "TRLC",
           "kind": "Requirement",
           "text": "keep the vehicle in lane.",
@@ -46,20 +44,18 @@
             "column": null
           },
           "name": "software.Example",
-          "messages": [],
+          "messages": [
+            "missing up reference"
+          ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "ref_up": [
-            "req example.adas_100"
-          ],
-          "ref_down": [],
-          "tracing_status": "OK",
+          "tracing_status": "MISSING",
           "language": "Python",
           "kind": "Function"
         }
       ],
-      "coverage": 100.0
+      "coverage": 0.0
     }
   ],
   "policy": {
@@ -69,7 +65,7 @@
       "traces": [],
       "source": [
         {
-          "file": "trlc.lobster",
+          "file": "trlc_justified.lobster",
           "filters": [],
           "valid_status": []
         }
@@ -90,7 +86,7 @@
       ],
       "source": [
         {
-          "file": "python.lobster",
+          "file": "python_justified.lobster",
           "filters": []
         }
       ],

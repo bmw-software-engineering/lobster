@@ -1,4 +1,0 @@
-DuplicateDefinitionTest.py:2: lobster error: duplicate definition of hello DuplicateDefinitionTest, previously defined at DuplicateDefinitionTest.py:1
-DuplicateDefinitionTest.py:3: lobster error: duplicate definition of hello DuplicateDefinitionTest, previously defined at DuplicateDefinitionTest.py:1
-DuplicateDefinitionTest.py:4: lobster error: duplicate definition of hello DuplicateDefinitionTest, previously defined at DuplicateDefinitionTest.py:1
-lobster: aborting due to earlier errors.
