@@ -25,7 +25,21 @@ convenient meta-package `bmw-lobster` which installs everything.
 ```
 $ pip3 install bmw-lobster
 ```
-For the HTML Report `graphviz` is also used to generate the tracing policy diagram. More on that on the user [manual](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/user-manual.md).
+Note that some distributions require to run the installation command in a
+virtual environment.
+Under Linux:
+```
+python3 -m venv my-virtual-environment
+source my-virtual-environment/bin/activate
+pip3 install bmw-lobster
+```
+
+Alternatively, use `pipx`:
+```
+$ pipx install bmw-lobster --include-deps
+```
+
+For the HTML Report `graphviz` is also used to generate the tracing policy diagram. More on that in the user [manual](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/user-manual.md).
 
 ```
 $ sudo apt-get install -y graphviz
