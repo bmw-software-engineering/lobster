@@ -52,6 +52,7 @@ The following programming languages are supported:
 
 The following verification and miscellaneous frameworks are supported:
 
+* Bazel, see [Python3](packages/lobster-tool-python/README.md)
 * [GoogleTest](packages/lobster-tool-gtest/README.md)
 * [JSON](packages/lobster-tool-json/README.md) useful if your test
   framework is encoded in JSON
