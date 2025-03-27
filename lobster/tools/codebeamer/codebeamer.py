@@ -36,9 +36,11 @@ import os
 import sys
 import argparse
 import netrc
+from typing import Union
 from urllib.parse import quote
 from enum import Enum
 import requests
+from requests.auth import HTTPBasicAuth
 import yaml
 
 from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
@@ -97,19 +99,19 @@ class BearerAuth(requests.auth.AuthBase):
         return r
 
 
-def query_cb_single(cb_config, url):
+def get_authentication(cb_config: dict) -> Union[HTTPBasicAuth, BearerAuth]:
+    if cb_config["token"]:
+        return BearerAuth(cb_config["token"])
+    return HTTPBasicAuth(cb_config["user"], cb_config["pass"])
+
+
+def query_cb_single(cb_config, url: str):
     assert isinstance(cb_config, dict)
     assert isinstance(url, str)
 
     try:
-        if cb_config["token"]:
-            auth = BearerAuth(cb_config["token"])
-        else:
-            auth = (cb_config["user"],
-                    cb_config["pass"])
-
         result = requests.get(url,
-                              auth=auth,
+                              auth=get_authentication(cb_config),
                               timeout=cb_config["timeout"],
                               verify=cb_config["verify_ssl"])
     except requests.exceptions.ReadTimeout:
