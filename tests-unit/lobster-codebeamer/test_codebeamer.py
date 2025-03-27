@@ -1,15 +1,13 @@
-import os
-import tempfile
 import unittest
 from unittest.mock import Mock, patch
 
 from lobster.tools.codebeamer.codebeamer import (CodebeamerError, get_query, get_single_item,
-                                                 get_many_items, to_lobster,
-                                                 import_tagged, parse_yaml_config)
+                                                 get_many_items, parse_config_data, to_lobster,
+                                                 import_tagged)
 
-from lobster.errors import Message_Handler
+from lobster.tools.codebeamer.config import AuthenticationConfig, Config
 
-list_of_compared_attributes = [
+LIST_OF_COMPARED_ATTRIBUTES = [
     'name',
     'kind',
     'status',
@@ -21,22 +19,32 @@ list_of_compared_attributes = [
 
 class QueryCodebeamerTest(unittest.TestCase):
     def setUp(self):
-        self._mock_cb_config = {
-            "root" : "http://some.codebeamer.server",
-            "base": "protocol://base.api.url/api/v3",
-            "page_size": 10
-        }
+        self._mock_cb_config = Config(
+            references=None,
+            import_tagged=None,
+            import_query=None,
+            verify_ssl=None,
+            page_size=10,
+            schema="Requirement",
+            timeout=123,
+            out=None,
+            cb_auth_conf=AuthenticationConfig(
+                token=None,
+                user=None,
+                password=None,
+                root="http://some.codebeamer.server",
+            )
+        )
 
     def _assertListEqualByAttributes(self, list1, list2):
         self.assertEqual(len(list1), len(list2), "Lists length are not the same")
         for obj1, obj2 in zip(list1, list2):
-            for attr in list_of_compared_attributes:
+            for attr in LIST_OF_COMPARED_ATTRIBUTES:
                 self.assertEqual(getattr(obj1, attr), getattr(obj2, attr),
                                  f"{obj1} is not like {obj2} in {attr}")
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_ID(self, mock_query_cb_single):
-        mh = Message_Handler()
         mock_query = 171619121
         item_data = [
             {
@@ -59,7 +67,7 @@ class QueryCodebeamerTest(unittest.TestCase):
                 "items": item_data
             }        
 
-        result = get_query(mh, self._mock_cb_config, mock_query)
+        result = get_query(self._mock_cb_config, mock_query)
         self.assertEqual(len(result), 1)
 
         self.assertEqual(result[0].kind, item_data[0]["item"]["categories"][0]["name"])
@@ -73,7 +81,6 @@ class QueryCodebeamerTest(unittest.TestCase):
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_query(self, mock_query_cb_single):
-        mh = Message_Handler()
         mock_query = ("TeamID IN (10833708) AND workItemStatus IN ('InProgress') "
                       "AND summary LIKE 'Vulnerable Road User'")
         item_data = [
@@ -95,7 +102,7 @@ class QueryCodebeamerTest(unittest.TestCase):
                 "items": item_data
             }        
 
-        result = get_query(mh, self._mock_cb_config, mock_query)
+        result = get_query(self._mock_cb_config, mock_query)
         self.assertEqual(len(result), 1)
 
         self.assertEqual(result[0].kind, item_data[0]["categories"][0]["name"])
@@ -109,7 +116,6 @@ class QueryCodebeamerTest(unittest.TestCase):
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_invalid_data(self, mock_query_cb_single):
         query_id = 789
-        mh = Message_Handler()
         mock_query_cb_single.return_value = {
                 "page": 1,
                 "pageSize": 100,
@@ -117,57 +123,56 @@ class QueryCodebeamerTest(unittest.TestCase):
                 "items": []
             }  
         with self.assertRaises(CodebeamerError):
-            get_query(mh, self._mock_cb_config, query_id)
+            get_query(self._mock_cb_config, query_id)
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
-    def test_get_single_item(self, mock_get):
-        _item_id = 11693324
-        _cb_config = {'base': 'https://test.com'}
-        _moch_response = Mock()
-        _expected_test_result = {
+    def test_get_single_item(self, mock_query_cb_single):
+        item_id = 11693324
+        mock_response = Mock()
+        mock_response.return_value = {
             'page': 1,
-            'pageSize': 100,
+            'pageSize': 999,
             'total': 1,
-            'items': [{'item': {'id': 11693324, 'name': 'test name'}}]
+            'items': [{'item': {'id': item_id, 'name': 'test name'}}]
         }
-        _moch_response.return_value = _expected_test_result
 
-        mock_get.return_value = _moch_response
+        mock_query_cb_single.return_value = mock_response
 
-        query_result = get_single_item(_cb_config, _item_id)
-        self.assertEqual(query_result, _moch_response)
+        query_result = get_single_item(self._mock_cb_config, item_id)
+        self.assertEqual(query_result, mock_response)
+    
+    def test_get_single_item_invalid_id(self):
+        for item_id in (None, 0, -1, "house", 123.456, "456"):
+            with self.subTest(item_id=item_id):
+                with self.assertRaises(ValueError):
+                    get_single_item(self._mock_cb_config, item_id)
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
-    def test_get_many_items(self, mock_get):
-        _item_ids = {24406947, 21747817}
-        _cb_config = {'base': 'https://test.com', 'page_size': 100}
-        _response_items = [
+    def test_get_many_items(self, mock_query_cb_single):
+        item_ids = {24406947, 21747817}
+        response_items = [
                 {'id': 24406947, 'name': 'Test name 1'},
                 {'id': 21747817, 'name': 'Test name 2'}
             ]
-        _moch_response = {
+        mock_response = {
             'page': 1,
-            'pageSize': 100,
-            'total': 2,
-            'items': _response_items
+            'pageSize': 123,
+            'total': len(response_items),
+            'items': response_items
         }
 
-        mock_get.return_value = _moch_response
+        mock_query_cb_single.return_value = mock_response
 
-        query_result = get_many_items(_cb_config, _item_ids)
-        self.assertEqual(query_result, _response_items)
+        query_result = get_many_items(self._mock_cb_config, item_ids)
+        self.assertEqual(query_result, response_items)
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
-    def test_import_tagged(self, mock_get):
+    def test_import_tagged(self, mock_query_cb_single):
         # lobster-trace: codebeamer_req.Dummy_Requirement_Unit_Test
-        _mh = Message_Handler()
-        _item_ids = {24406947, 21747817}
-        _cb_config = {'root': 'https://test.com/',
-                      'base': 'https://test.com/base',
-                      'page_size': 100}
-        _response_items = [
+        item_ids = (24406947, 21747817)
+        response_items = [
             {
-                'id': 24406947,
+                'id': item_ids[0],
                 'name': 'Test name 1',
                 'categories': [{'name': 'Folder'}],
                 'version': 7,
@@ -175,56 +180,38 @@ class QueryCodebeamerTest(unittest.TestCase):
                 'tracker': {'id': 123}
             },
             {
-                'id': 21747817,
+                'id': item_ids[1],
                 'name': 'Test name 2',
                 'categories': [{'name': 'Folder'}],
                 'version': 10,
                 'status': {'name': 'status'},
-                'tracker': {'id': 123}
+                'tracker': {'id': 124}
             }
         ]
-        _mock_response = {
+        mock_query_cb_single.return_value = {
             'page': 1,
             'pageSize': 100,
-            'total': 2,
-            'items': _response_items
+            'total': len(response_items),
+            'items': response_items
         }
-        mock_get.return_value = _mock_response
 
-        _expected_result = [to_lobster(_cb_config, items) for items in _response_items]
+        expected_result = [to_lobster(self._mock_cb_config, items) for items in response_items]
 
-        import_tagged_result = import_tagged(_mh, _cb_config, _item_ids)
+        import_tagged_result = import_tagged(self._mock_cb_config, set(item_ids))
 
-        self._assertListEqualByAttributes(import_tagged_result, _expected_result)
+        self._assertListEqualByAttributes(import_tagged_result, expected_result)
 
 
 class ParseYamlTests(unittest.TestCase):
-    def setUp(self):
-         # Create temporary directory and files for testing
-        self.temp_dir = tempfile.TemporaryDirectory()
-        self.config_path = os.path.join(self.temp_dir.name, 'codebeamer-config.yaml')
-        self.root_url = 'http://root_url'
-
-    def test_codebeamer_api_url_without_cb_after_main_domain(self):
-        with open(self.config_path, 'w', encoding='utf-8') as yaml_file:
-            yaml_file.write("""
-                            root: https://example.com
-                            schema: Requirement
-                            import_query: 1231323
-                            """)
-        json_config = parse_yaml_config(self.config_path)
-        self.assertEqual(json_config.get('base'), "https://example.com/api/v3")
-
-    def test_codebeamer_api_url_with_cb_after_main_domain(self):
-        with open(self.config_path, 'w', encoding='utf-8') as yaml_file:
-            yaml_file.write("""
-                            root: https://example.com/cb
-                            schema: Requirement
-                            import_query: 1231323
-                            """)
-        json_config = parse_yaml_config(self.config_path)
-        self.assertEqual(json_config.get('base'),
-                         "https://example.com/cb/api/v3")
+    def test_codebeamer_base(self):
+        config = parse_config_data(
+            {
+                'root': 'https://example.com',
+                'schema': 'Requirement',
+                'import_query': 1231323,
+            }
+        )
+        self.assertEqual(config.base, "https://example.com/api/v3")
 
 if __name__ == '__main__':
     unittest.main()
