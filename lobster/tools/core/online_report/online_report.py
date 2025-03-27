@@ -233,10 +233,16 @@ def main():
                 commit=commit)
             item.location = loc
 
-    report.write_report(options.out if options.out else options.lobster_report)
-    print("LOBSTER report %s changed to use online references" %
-          options.out if options.out else options.lobster_report)
+    out_file = options.out if options.out else options.lobster_report
+    report.write_report(out_file)
+    print(get_summary(options.lobster_report, out_file))
     return 0
+
+
+def get_summary(in_file: str, out_file: str):
+    if in_file == out_file:
+        return f"LOBSTER report {in_file} modified to use online references."
+    return f"LOBSTER report {out_file} created, using online references."
 
 
 if __name__ == "__main__":

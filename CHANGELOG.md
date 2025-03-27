@@ -5,6 +5,10 @@
 
 ### 0.11.1-dev
 
+* Reformulate the summary message of `lobster-online-report` so that it becomes
+  clear whether the input file has been modified, or whether a new output file has been
+  created.
+
 * Update installation instructions with `pip3` and `pipx`.
 
 * `lobster-trlc` - All command-line arguments except  `--config` and `--out` are 
