@@ -159,17 +159,25 @@ report.lobster-%: lobster/tools/lobster.conf \
 		--out=report.lobster
 	lobster-online-report report.lobster
 
-system_requirements.lobster-%: lobster/tools/requirements.rsl
-	$(eval TOOL_PATH := $(subst -,/,$*))   
-	lobster-trlc lobster/tools/$(TOOL_PATH) lobster/tools/requirements.rsl \
-	--config-file=lobster/tools/lobster-trlc-system.conf \
-	--out system_requirements.lobster
+system_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-system.conf
 
-software_requirements.lobster-%: lobster/tools/requirements.rsl
-	$(eval TOOL_PATH := $(subst -,/,$*))   
-	lobster-trlc lobster/tools/$(TOOL_PATH) lobster/tools/requirements.rsl \
-	--config-file=lobster/tools/lobster-trlc-software.conf \
-	--out software_requirements.lobster
+system_requirements.lobster-%:
+	$(eval TOOL_PATH := $(subst -,/,$*))
+	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
+	@echo "trlc_config_file: $(TRLC_CONFIG)" >> lobster/tools/config.yaml
+	lobster-trlc --config=lobster/tools/config.yaml \
+	--out=system_requirements.lobster
+	rm lobster/tools/config.yaml
+
+software_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-software.conf
+
+software_requirements.lobster-%:
+	$(eval TOOL_PATH := $(subst -,/,$*))
+	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
+	@echo "trlc_config_file: $(TRLC_CONFIG)" >> lobster/tools/config.yaml
+	lobster-trlc --config=lobster/tools/config.yaml \
+	--out=software_requirements.lobster
+	rm lobster/tools/config.yaml
 
 code.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
@@ -180,7 +188,8 @@ unit-tests.lobster-%:
 	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-$(TOOL_NAME)
 
 system-tests.lobster-%:
-	lobster-python --activity --out=system-tests.lobster tests-system/lobster-$*
+	$(eval TOOL_NAME := $(subst _,-,$(notdir $(TOOL_PATH))))
+	lobster-python --activity --out=system-tests.lobster tests-system/lobster-$(TOOL_NAME)
 
 # STF is short for System Test Framework
 STF_TRLC_FILES := $(wildcard tests-system/*.trlc)
