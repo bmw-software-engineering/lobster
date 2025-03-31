@@ -240,7 +240,7 @@ def create_lobster_items_output_dict_from_test_cases(
         lobster_items_output_dict[no_marker_output_file_name] = {}
 
     for test_case in test_case_list:
-        function_name: str = test_case.suite_name
+        function_name: str = test_case.test_name
         file_name = os.path.abspath(test_case.file_name)
         line_nr = int(test_case.docu_start_line)
         function_uid = "%s:%s:%u" % (os.path.basename(file_name),
