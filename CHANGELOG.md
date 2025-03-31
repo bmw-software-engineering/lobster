@@ -7,13 +7,8 @@
 
 * Update installation instructions with `pip3` and `pipx`.
 
-* `lobster-trlc` - All command-line arguments except  `--config` and `--out` are 
+* `lobster-trlc` and `lobster-json`: All command-line arguments except  `--config` and `--out` are 
   moved to Yaml based config file. `--config` and `--out` command-line arguments are still supported.
-
-* `lobster-json` - All command-line arguments except  `--config` and `--out` are 
-  moved to Yaml based config file. `--config` and `--out` command-line arguments are still supported.
-
-### 0.11.0
 
 * Add a note to [lobster-python](packages/lobster-tool-python/README.md)
   that it can be used for [Bazel](https://bazel.build/) files, too.
@@ -24,6 +19,8 @@
   - or name ending with `test`
 
   Previously only `test` was considered.
+
+### 0.11.0
 
 * Change the behavior of `lobster-codebeamer` such that an output file is always created,
   even if the codebeamer server has returned zero items.
