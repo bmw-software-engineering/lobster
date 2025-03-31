@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.11.1-dev
+### 0.12.0
 
 * Update installation instructions with `pip3` and `pipx`.
 
