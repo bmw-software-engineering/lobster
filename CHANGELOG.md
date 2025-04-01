@@ -5,7 +5,8 @@
 
 ### 0.12.1-dev
 
-* Add command line argument `--skip-clang-errors` to `lobster-cpp`.
+* `lobster-cpptest` now displays a test-name instead of a fixture-name
+  in the lobster-report and lobster-html-report.* Add command line argument `--skip-clang-errors` to `lobster-cpp`.
   This argument allows the user to specify a list of `clang-tidy`
   errors which shall be skipped.
 
