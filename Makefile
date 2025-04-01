@@ -197,8 +197,8 @@ STF_PYTHON_FILES := $(filter-out tests-system/test_%.py tests-system/run_tool_te
 
 # This target is used to generate the LOBSTER report for the requirements of the system test framework itself.
 tracing-stf: $(STF_TRLC_FILES)
-	lobster-trlc tests-system lobster/tools/requirements.rsl --config-file=lobster/tools/lobster-trlc-system.conf --out=stf_system_requirements.lobster
-	lobster-trlc tests-system lobster/tools/requirements.rsl --config-file=lobster/tools/lobster-trlc-software.conf --out=stf_software_requirements.lobster
+	lobster-trlc --config=lobster/tools/lobster-trlc-system-stf.yaml --out=stf_system_requirements.lobster
+	lobster-trlc --config=lobster/tools/lobster-trlc-software-stf.yaml --out=stf_software_requirements.lobster
 	lobster-python --out=stf_code.lobster --only-tagged-functions $(STF_PYTHON_FILES)
 	lobster-report --lobster-config=tests-system/stf-lobster.conf --out=stf_report.lobster
 	lobster-online-report stf_report.lobster
