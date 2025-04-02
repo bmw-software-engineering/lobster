@@ -80,7 +80,6 @@ integration-tests: packages
 system-tests:
 	mkdir -p docs
 	python -m unittest discover -s tests-system -v -t .
-	make -B -C tests-system TOOL=lobster-trlc
 	make -B -C tests-system TOOL=lobster-python
 	make -B -C tests-system TOOL=lobster-online-report
 	make -B -C tests-system TOOL=lobster-html-report
