@@ -1,1 +1,1 @@
-LOBSTER report expected-output.lobster changed to use online references
+LOBSTER report expected-output.lobster created, using online references.
