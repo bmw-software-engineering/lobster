@@ -5,7 +5,9 @@
 
 ### 0.12.1-dev
 
-
+* Add command line argument `--skip-clang-errors` to `lobster-cpp`.
+  This argument allows the user to specify a list of `clang-tidy`
+  errors which shall be skipped.
 
 ### 0.12.0
 

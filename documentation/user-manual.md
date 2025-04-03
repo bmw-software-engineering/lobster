@@ -127,7 +127,7 @@ All its final html outputs are to be seen [here](https://github.com/bmw-software
 
 ### C / C++
 
-* lobster_cpp: DOCUMENTATION TODO
+* lobster_cpp: [lobster_cpp](manual-lobster_cpp.md): for tracing tags in C++
 * [lobster_cpptest](manual-lobster_cpptest.md): for tracing requirements and/or defects from C++ tests.
 * [lobster_gtest](manual-lobster_gtest.md): for tracing tags in
   (executed) googletests.
