@@ -10,10 +10,10 @@ class SystemTestCaseBase(TestCase):
         self.maxDiff = None  # pylint: disable=invalid-name
         self._temp_dirs: List[TemporaryDirectory] = []
 
-    def create_temp_dir(self, prefix: str) -> Path:
+    def create_temp_dir(self, prefix: str, dir_path: str = None) -> Path:
         # lobster-trace: system_test.Create_Temporary_Directory
         # pylint: disable=consider-using-with
-        temp_dir = TemporaryDirectory(prefix=prefix)
+        temp_dir = TemporaryDirectory(prefix=prefix, dir=dir_path)
         self._temp_dirs.append(temp_dir)
         return Path(temp_dir.name)
 
