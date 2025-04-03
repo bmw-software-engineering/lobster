@@ -5,7 +5,8 @@
 
 ### 0.12.1-dev
 
-
+* `lobster-cpptest` now displays a test-name instead of a fixture-name
+  in the lobster-report and lobster-html-report.
 
 ### 0.12.0
 
