@@ -51,6 +51,13 @@ RE_JUST = (PREFIX + " " +
 ap = argparse.ArgumentParser()
 
 
+def extract_clang_finding_name(line: str) -> str:
+    """extracts the name of the clang finding from the end of the line"""
+    if line.endswith("]") and ("[" in line):
+        return line.split("[")[-1]
+    return None
+
+
 @get_version(ap)
 def main():
     # lobster-trace: cpp_req.Dummy_Requirement
@@ -70,6 +77,11 @@ def main():
                           "'clang tidy'. This is equal to calling 'clang tidy' "
                           "directly with its '-p' option. Refer to its official "
                           "documentation for more details."))
+    ap.add_argument("--skip-clang-errors",
+                     default=[],
+                     nargs="*",
+                     metavar="FINDINGS",
+                     help="List of all clang-tidy errors to ignore.")
     ap.add_argument("--out",
                     default=None,
                     help=("write output to this file; otherwise output to"
@@ -133,16 +145,17 @@ def main():
     )
 
     if rv.returncode != 0:
-        found_reason = False
-        for line in rv.stdout.splitlines():
-            if "error: " in line:
-                print(line)
-                found_reason = True
-        if not found_reason:
-            print(rv.stdout)
+        print(rv.stdout)
         print()
         print(rv.stderr)
-        return 1
+
+        for line in rv.stdout.splitlines():
+            if "error: " in line:
+                clang_error = extract_clang_finding_name(line)
+                if clang_error and (clang_error in options.skip_clang_errors):
+                    print("Ignoring clang-tidy error %s" % clang_error)
+                else:
+                    return 1
 
     db = {}
 
