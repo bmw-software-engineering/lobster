@@ -22,6 +22,7 @@ import argparse
 import os.path
 import subprocess
 import re
+from typing import Union
 
 from lobster.items import Tracing_Tag, Implementation
 from lobster.location import File_Reference
@@ -56,6 +57,20 @@ def extract_clang_finding_name(line: str) -> str:
     if line.endswith("]") and ("[" in line):
         return line.split("[")[-1]
     return None
+
+
+def create_tracing_tag_and_loc(filename_from_clang_out: str,
+                               function_name: str,
+                               line_nr: int) -> Union[Tracing_Tag, File_Reference]:
+    """Creates a tracing tag and a file references
+
+       The file reference uses the path of the given file relative to the
+       current working directory.
+       The tracing tag constructs the unique ID based on that path, too.
+    """
+    filename = os.path.relpath(filename_from_clang_out, os.getcwd())
+    function_uid = f"{filename}:{function_name}:{line_nr}"
+    return Tracing_Tag("cpp", function_uid), File_Reference(filename, line_nr)
 
 
 @get_version(ap)
@@ -101,8 +116,6 @@ def main():
                         file_list.append(os.path.join(path, filename))
         else:
             ap.error("%s is not a file or directory" % item)
-
-    prefix = os.getcwd()
 
     # Test if the clang-tidy can be used
 
@@ -166,13 +179,7 @@ def main():
         match = re.match(RE_NOTAGS, line)
         if match:
             filename, line_nr, kind, function_name = match.groups()
-            filename = os.path.relpath(filename, prefix)
-            line_nr = int(line_nr)
-            function_uid = "%s:%s:%u" % (os.path.basename(filename),
-                                         function_name,
-                                         line_nr)
-            tag = Tracing_Tag("cpp", function_uid)
-            loc = File_Reference(filename, line_nr)
+            tag, loc = create_tracing_tag_and_loc(filename, function_name, int(line_nr))
 
             assert tag.key() not in db
             db[tag.key()] = Implementation(
@@ -187,13 +194,7 @@ def main():
         match = re.match(RE_JUST, line)
         if match:
             filename, line_nr, kind, function_name, reason = match.groups()
-            filename = os.path.relpath(filename, prefix)
-            line_nr = int(line_nr)
-            function_uid = "%s:%s:%u" % (os.path.basename(filename),
-                                         function_name,
-                                         line_nr)
-            tag = Tracing_Tag("cpp", function_uid)
-            loc = File_Reference(filename, line_nr)
+            tag, loc = create_tracing_tag_and_loc(filename, function_name, int(line_nr))
 
             if tag.key() not in db:
                 db[tag.key()] = Implementation(
@@ -210,13 +211,7 @@ def main():
         match = re.match(RE_TAGS, line)
         if match:
             filename, line_nr, kind, function_name, ref = match.groups()
-            filename = os.path.relpath(filename, prefix)
-            line_nr = int(line_nr)
-            function_uid = "%s:%s:%u" % (os.path.basename(filename),
-                                         function_name,
-                                         line_nr)
-            tag = Tracing_Tag("cpp", function_uid)
-            loc = File_Reference(filename, line_nr)
+            tag, loc = create_tracing_tag_and_loc(filename, function_name, int(line_nr))
 
             if tag.key() not in db:
                 db[tag.key()] = Implementation(
