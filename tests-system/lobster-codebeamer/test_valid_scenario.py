@@ -19,6 +19,7 @@ class CodebeamerValidScenario(LobsterCodebeamerSystemTestCaseBase):
 
     @classmethod
     def tearDownClass(cls):
+        # lobster-trace: codebeamer_req.Valid_Query_Id_Parameter
         """Terminate the mock server after all tests."""
         if cls.mock_server:
             cls.mock_server.terminate()

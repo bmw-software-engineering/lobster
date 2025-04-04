@@ -1,9 +1,13 @@
 from flask import Flask, jsonify
+import logging
 
+# Suppress Flask development server warning
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 # Config
 CERT_PATH = 'tests-system/lobster-codebeamer/data/ssl/cert.pem'
 KEY_PATH = 'tests-system/lobster-codebeamer/data/ssl/key.pem'
-PORT = 443
+PORT = 5000
 MOCK_ROUTE = '/api/v3/reports/1234/items'
 
 
