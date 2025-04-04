@@ -1,0 +1,30 @@
+package codebeamer_req
+import req
+
+req.System_Requirement Query_Id {
+    description = '''
+      IF a element given through the yaml config file option "import_query" is a codebeamer query id
+    '''
+}
+
+req.System_Requirement Query_String {
+    description = '''
+      IF a element given through the yaml config file option "import_query" is a codebeamer query string
+    '''
+}
+
+req.System_Requirement_Aspect Valid_Query_Id_Parameter {
+  description = '''
+    AND the yaml config file option "import_query" is valid query id,
+    THEN the tool shall write the output in the LOBSTER interchange format to the file given in the "out" parameter
+    AND exit with a zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect Valid_Query_String_Parameter {
+  description = '''
+    AND the yaml config file option "import_query" is valid query string,
+    THEN the tool shall write the output in the LOBSTER interchange format to the file given in the "out" parameter
+    AND exit with a zero return code.
+  '''
+}
