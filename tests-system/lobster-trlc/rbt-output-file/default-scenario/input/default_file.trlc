@@ -1,5 +1,0 @@
-package test_default
-
-namaste goodname {
-    description = "namaste default file output"
-}
