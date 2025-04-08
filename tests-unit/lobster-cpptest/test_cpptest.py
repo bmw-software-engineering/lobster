@@ -335,9 +335,9 @@ class LobsterCpptestTests(unittest.TestCase):
 
         # just check a few refs from the written unit test lobster items
         expected_unit_test_refs_dicts = {
-            "cpp test_case.cpp:RequirementByTest1:130":
+            "cpp test_case.cpp:RequiredByWithAt:130":
                 ["req FOO0::BAR0", "req FOO1::BAR1"],
-            "cpp test_case.cpp:RequirementByTest1:135":
+            "cpp test_case.cpp:RequiredByWithAt:135":
                 ["req FOO0::BAR0", "req FOO1::BAR1", "req FOO2::BAR2", "req FOO3::BAR3", "req FOO4::BAR4",
                  "req FOO5::BAR5", "req FOO6::BAR6", "req FOO7::BAR7", "req FOO8::BAR8"]
         }
@@ -366,9 +366,9 @@ class LobsterCpptestTests(unittest.TestCase):
 
         # just check a few refs from the written component test lobster items
         expected_component_test_refs_dicts = {
-            "cpp test_case.cpp:RequirementTagTest1:70":
+            "cpp test_case.cpp:RequirementAsOneLineComments:70":
                 ["req 0815", "req 0816"],
-            "cpp test_case.cpp:RequirementTagTest1:75":
+            "cpp test_case.cpp:RequirementAsComments:75":
                 ["req 0815", "req 0816", "req 0817", "req 0818", "req 0819", "req 0820"]
         }
 
