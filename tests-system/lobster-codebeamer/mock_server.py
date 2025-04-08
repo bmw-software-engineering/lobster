@@ -4,6 +4,7 @@ import logging
 # Suppress Flask development server warning
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
+
 # Config
 CERT_PATH = 'tests-system/lobster-codebeamer/data/ssl/cert.pem'
 KEY_PATH = 'tests-system/lobster-codebeamer/data/ssl/key.pem'
@@ -29,10 +30,15 @@ def create_app():
     return app
 
 
-if __name__ == '__main__':
+def start_mock_server():
     app = create_app()
     app.run(
         host='0.0.0.0',
         port=PORT,
-        ssl_context=(CERT_PATH, KEY_PATH)
+        ssl_context=(CERT_PATH, KEY_PATH),
+        use_reloader=False
     )
+
+
+if __name__ == '__main__':
+    start_mock_server()

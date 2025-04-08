@@ -78,12 +78,19 @@ integration-tests: packages
 	rm -f MODULE.bazel MODULE.bazel.lock
 
 system-tests:
+	@echo "🔐 Generating cert.pem and key.pem for system tests..."
+	@mkdir -p tests-system/lobster-codebeamer/data/ssl
+	@openssl req -x509 -newkey rsa:2048 -nodes \
+		-keyout tests-system/lobster-codebeamer/data/ssl/key.pem \
+		-out tests-system/lobster-codebeamer/data/ssl/cert.pem \
+		-days 365 -subj "//CN=localhost" > /dev/null 2>&1
 	mkdir -p docs
 	python -m unittest discover -s tests-system -v -t .
 	make -B -C tests-system TOOL=lobster-python
 	make -B -C tests-system TOOL=lobster-online-report
 	make -B -C tests-system TOOL=lobster-html-report
-	make -B -C tests-system TOOL=lobster-codebeamer
+	@echo "🧹 Cleaning up cert.pem and key.pem..."
+	@rm -rf tests-system/lobster-codebeamer/data/ssl
 
 unit-tests:
 	coverage run -p \
