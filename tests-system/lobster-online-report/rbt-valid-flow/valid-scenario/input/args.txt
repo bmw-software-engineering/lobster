@@ -1,2 +1,0 @@
-report.lobster
---out=expected-output.lobster

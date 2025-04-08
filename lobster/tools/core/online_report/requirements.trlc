@@ -22,3 +22,11 @@ req.System_Requirement_Aspect Invalid_Git_Repository {
     indicating that the repository is not a valid Git repository.
   '''
 }
+
+req.System_Requirement_Aspect Valid_Git_Repository {
+  description = '''
+    IF the provided repository root directory contains a ".git" directory,
+    THEN the tool shall write the output in the LOBSTER interchange format to the file given in the "out" parameter
+    AND exit with a zero return code.
+  '''
+}
