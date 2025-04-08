@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 
-def update_json(filename):
+def update_json(filename, expected_location=None):
     # Load the JSON data from the file
     with open(filename, 'r') as file:
         data = json.load(file)
@@ -16,6 +16,8 @@ def update_json(filename):
                 commit = subprocess.check_output(
                     ["git", "rev-parse", "HEAD"]).decode().strip()
                 location['commit'] = commit
+                if expected_location:
+                    location['file'] = f"{expected_location}/basic.py"
 
     # Save the updated JSON data back to the same file
     with open(filename, 'w') as fd:
