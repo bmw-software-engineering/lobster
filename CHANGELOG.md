@@ -5,6 +5,10 @@
 
 ### 0.12.1-dev
 
+* Reformulate the summary message of `lobster-online-report` so that it becomes
+  clear whether the input file has been modified, or whether a new output file has been
+  created.
+
 * `lobster-cpptest` now displays a test-name instead of a fixture-name
   in the lobster-report and lobster-html-report.
 
