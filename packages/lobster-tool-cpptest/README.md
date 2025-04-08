@@ -75,6 +75,11 @@ You can also include CPP files in the YAML configuration file.
 ```
 Note: File paths are accepted only in single quotes.
 
+## Technical Aspects
+
+`lobster-cpptest` now displays a test-name instead of a fixture-name 
+in the lobster-report and lobster-html-report.
+
 ## Copyright & License information
 
 The copyright holder of LOBSTER is the Bayerische Motoren Werke
