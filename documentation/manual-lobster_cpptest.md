@@ -87,7 +87,7 @@ In addition, you have to provide the `codebeamer-url`:
                 "kind": "imp"
             }
 	},
-	"codebeamer_url": "https://codebeamer.example.com/test"
+	"codebeamer_url": "https://codebeamer.example.com/cb"
 }
  ```
 
