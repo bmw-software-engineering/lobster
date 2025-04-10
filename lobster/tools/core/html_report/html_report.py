@@ -192,19 +192,40 @@ def create_item_coverage(doc, report):
 
 def get_commit_timestamp_utc(commit_hash):
     try:
+        # Try to get timestamp from main repo
         result = subprocess.run(
             ['git', 'show', '-s', '--format=%ct', commit_hash],
             capture_output=True,
             text=True,
             check=True
         )
-        epoch_time = int(result.stdout.strip())
-        # Convert to UTC datetime
-        utc_time = datetime.fromtimestamp(epoch_time, tz=timezone.utc)
-        return utc_time
+        if result.stdout.strip():
+            epoch_time = int(result.stdout.strip())
+            utc_time = datetime.fromtimestamp(epoch_time, tz=timezone.utc)
+            return f"{utc_time}"
+    except subprocess.CalledProcessError:
+        pass  # submodule check
+
+    try:
+        # If not found, search in submodules
+        result = subprocess.run(
+            ['git', 'submodule', 'foreach', '--quiet',
+             f'if git rev-parse --verify {commit_hash} > /dev/null 2>&1; then '
+             f'echo $name; git show -s --format=%ct {commit_hash}; fi'],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        lines = result.stdout.strip().splitlines()
+        if len(lines) >= 2:
+            submodule_name = lines[0]
+            epoch_time = int(lines[1])
+            utc_time = datetime.fromtimestamp(epoch_time, tz=timezone.utc)
+            return f"{utc_time} (from submodule: {submodule_name})"
     except subprocess.CalledProcessError as e:
-        print(f"Error: {e}")
-        return None
+        print(f"Submodule check failed: {e}")
+
+    return "Unknown"
 
 
 def write_item_box_begin(doc, item):
@@ -275,10 +296,11 @@ def write_item_box_end(doc, item):
 
     if getattr(item.location, "commit", None) is not None:
         commit_hash = item.location.commit
+        timestamp = get_commit_timestamp_utc(commit_hash)
         doc.add_line(
             f'<div class="attribute">'
             f'Build Reference: <strong>{commit_hash}</strong> | '
-            f'Timestamp: {get_commit_timestamp_utc(commit_hash)}'
+            f'Timestamp: {timestamp}'
             f'</div>'
         )
     doc.add_line("</div>")
