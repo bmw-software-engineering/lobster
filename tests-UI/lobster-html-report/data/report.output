@@ -1,0 +1,87 @@
+{
+  "schema": "lobster-report",
+  "version": 2,
+  "generator": "lobster_report",
+  "levels": [
+    {
+      "name": "code",
+      "kind": "implementation",
+      "items": [
+        {
+          "tag": "python python.count_occurrence_of_last_function_from_function_name_list",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "e1981245cb1c5064d42299b59f80f4e1c3c37901",
+            "file": "lobster\\tools\\python\\python.py",
+            "line": 40
+          },
+          "name": "python.count_occurrence_of_last_function_from_function_name_list",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "OK",
+          "language": "Python",
+          "kind": "Function"
+        },
+        {
+          "tag": "python python.parse_value",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "e1981245cb1c5064d42299b59f80f4e1c3c37901",
+            "file": "lobster\\tools\\python\\python.py",
+            "line": 89
+          },
+          "name": "python.parse_value",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "OK",
+          "language": "Python",
+          "kind": "Function"
+        },
+        {
+          "tag": "python python.main",
+          "location": {
+            "kind": "github",
+            "gh_root": "https://github.com/bmw-software-engineering/lobster",
+            "commit": "e1981245cb1c5064d42299b59f80f4e1c3c37901",
+            "file": "lobster\\tools\\python\\python.py",
+            "line": 451
+          },
+          "name": "python.main",
+          "messages": [
+            "unknown tracing target req python_req.Dummy_Requirement"
+          ],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "tracing_status": "MISSING",
+          "language": "Python",
+          "kind": "Function"
+        }
+      ],
+      "coverage": 96.42857142857143
+    }
+  ],
+  "policy": {
+    "code": {
+      "name": "code",
+      "kind": "implementation",
+      "traces": [],
+      "source": [
+        {
+          "file": "python.lobster",
+          "filters": []
+        }
+      ],
+      "needs_tracing_up": false,
+      "needs_tracing_down": false,
+      "breakdown_requirements": []
+    }
+  },
+  "matrix": []
+}
