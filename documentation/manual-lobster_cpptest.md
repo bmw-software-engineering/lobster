@@ -30,6 +30,9 @@ In your test you need to also add documentation. For example:
 TEST(ImplicationTest, BasicTest) {}
 ```
 
+
+## Notes:
+
 * Each test can have multiple test-tags defined in the documentation part.
 * Test-tags can be used multiple times in the test documentation and can be written on multiple lines
 
@@ -57,7 +60,7 @@ The regex used for each test-tag is as follows:
 
 @requirement
 : ```r"(CB-#\d+)"```
-: ```r"({provided codebeamer-url in config-file}(?P<number>\d+))"```
+: ```r"({provided codebeamer-url in YAML config-file}(?P<number>\d+))"```
 
 @requiredby
 : ```r"(\w*::\w+)"```
@@ -66,45 +69,36 @@ The regex used for each test-tag is as follows:
 : ```r"(CB-#\d+)|(OCT-#\d+)"```
 
 
-## Preparing cpptest config-file
+## Preparing cpptest YAML config-file
 
-You have to provide a config-file which determines which `markers` should be extracted in which output-files.
+You have to provide a YAML config-file which determines which `markers` should be extracted in which output-files.
 The expected `kind` for each output-file should also be specified.
 
 In addition, you have to provide the `codebeamer-url`:
 
-```cpp.config
-{
-	"output": {
-		"unit_tests.lobster" : 
-            {
-                "markers": ["@requirement"],
-                "kind": "req"
-            },
-        "components_tests.lobster" :
-            {
-                "markers": ["@requiredby", "@requirement"],
-                "kind": "imp"
-            }
-	},
-	"codebeamer_url": "https://codebeamer.example.com/cb"
-}
+```cpptest-config.yaml
+output:
+  unit_tests.lobster:
+    markers: ["@requirement"]
+    kind: req
+
+  components_tests.lobster:
+    markers: ["@requiredby", "@requirement"]
+    kind: imp
+
+codebeamer_url: "https://codebeamer.example.com/cb"
  ```
 
 * Note: If you want to extract the other tests with other `markers`,
  you can use an empty list as `markers` value. Be aware in this case the tests do not have any references.
 
-```cpp.config
-{
-	"output": {
-		"tests.lobster" : 
-            {
-                "markers": [],
-                "kind": "req"
-            }
-	},
-	"codebeamer_url": "https://codebeamer.example.com/test"
-}
+```cpptest-config.yaml
+output:
+  tests.lobster:
+    markers: []
+    kind: req
+
+codebeamer_url: "https://codebeamer.example.com/test"
  ```
 
 
@@ -114,11 +108,11 @@ Run the `lobster_cpptest` tool, pointing it to one or more C/C++ files, or a dir
 
 For example `lobster_cpptest .` should find all your C/C++ files in the root directory.
 
-You have to also provide a `--config-file` file to configure the behaviour of the tool. 
+Make sure to provide the updated YAML config file using --config.
 A more complete command line might look like:
 
 ```sh
-$ lobster-cpptest . --config-file cpp.config
+$ lobster-cpptest . --config cpptest-config.yaml
 ```
 
 ## Example
@@ -130,5 +124,4 @@ The LOBSTER unit tests contains a working example:
 ## Notes & Caveats
 * This tool supports these `markers`: '@requirement', '@requiredby' and '@defect'
 * This tool supports these `kind`: 'req', 'imp' and 'act'
-
-
+* YAML configuration format is now required instead of the previous JSON-like .config format
