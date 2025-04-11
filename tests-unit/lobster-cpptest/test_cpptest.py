@@ -20,10 +20,8 @@ class LobsterCpptestTests(unittest.TestCase):
         self.test_fake_dir = str(Path(dirname(__file__), "not_existing"))
         self.test_data_dir = str(Path(dirname(__file__), "data"))
         self.test_case_file = str(Path(dirname(__file__), "data", "test_case.cpp"))
-        self.test_config_1 = str(Path(dirname(__file__), "data", "test_1.config"))
-        self.test_config_2 = str(Path(dirname(__file__), "data", "test_2.config"))
-        self.test_config_3 = str(Path(dirname(__file__), "data", "cpptest-config_1.yaml"))
-        self.test_config_4 = str(Path(dirname(__file__), "data", "cpptest-config_2.yaml"))
+        self.test_config_1 = str(Path(dirname(__file__), "data", "cpptest-config_1.yaml"))
+        self.test_config_2 = str(Path(dirname(__file__), "data", "cpptest-config_2.yaml"))
 
         self.req_test_type = [RequirementTypes.REQS.value]
         self.req_by_test_type = [RequirementTypes.REQ_BY.value]
@@ -48,7 +46,7 @@ class LobsterCpptestTests(unittest.TestCase):
                                   self.component_test_lobster_file, self.other_test_lobster_file]
 
     def test_parse_config_file_with_two_markers_for_two_outputs(self):
-        config_dict = parse_config_file(self.test_config_4)
+        config_dict = parse_config_file(self.test_config_2)
         self.assertIsNotNone(config_dict)
         self.assertIsInstance(config_dict, dict)
         self.assertEqual(2, len(config_dict))
@@ -116,7 +114,7 @@ class LobsterCpptestTests(unittest.TestCase):
         self.assertEqual('', other_test_kind_value)
 
     def test_parse_config_file_with_two_markers_for_one_output(self):
-        config_dict = parse_config_file(self.test_config_3)
+        config_dict = parse_config_file(self.test_config_1)
         self.assertIsNotNone(config_dict)
         self.assertIsInstance(config_dict, dict)
         self.assertEqual(2, len(config_dict))
@@ -316,7 +314,7 @@ class LobsterCpptestTests(unittest.TestCase):
 
     def test_separate_output_config(self):
         file_dir_list = [self.test_case_file]
-        config_dict: dict = parse_config_file(self.test_config_4)
+        config_dict: dict = parse_config_file(self.test_config_2)
 
         lobster_cpptest(
             file_dir_list=file_dir_list,
