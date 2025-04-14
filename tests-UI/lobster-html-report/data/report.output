@@ -12,7 +12,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "e1981245cb1c5064d42299b59f80f4e1c3c37901",
+            "commit": "HEAD",
             "file": "lobster\\tools\\python\\python.py",
             "line": 40
           },
@@ -30,7 +30,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "e1981245cb1c5064d42299b59f80f4e1c3c37901",
+            "commit": "HEAD",
             "file": "lobster\\tools\\python\\python.py",
             "line": 89
           },
@@ -48,7 +48,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "e1981245cb1c5064d42299b59f80f4e1c3c37901",
+            "commit": "HEAD",
             "file": "lobster\\tools\\python\\python.py",
             "line": 451
           },

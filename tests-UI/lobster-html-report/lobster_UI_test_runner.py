@@ -59,11 +59,9 @@ class LobsterUITestRunner(test_runner.TestRunner):
         chrome_options.add_argument("--disable-dev-shm-usage")
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
                                   options=chrome_options)
-        # driver.get(file_url)
-        print("Driver setup complete.")
         return driver
 
     def get_tool_args(self) -> List[str]:
         """Returns the command line arguments that shall be used to start
-        'lobster-report' under test"""
+        'lobster-html-report' under test"""
         return self._cmd_args.as_list()

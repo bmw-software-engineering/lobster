@@ -13,8 +13,9 @@ class LobsterUISystemTestCaseBase(system_test_case_base.SystemTestCaseBase):
 
     def create_test_runner(self) -> LobsterUITestRunner:
         tool_name = Path(__file__).parents[0].name
+        working_dir = Path(__file__).parents[2]
         test_runner = LobsterUITestRunner(
             tool_name,
-            self.create_temp_dir(prefix=f"test-{tool_name}-", dir_path=os.getcwd()),
+            self.create_temp_dir(prefix=f"test-{tool_name}-", dir_path=working_dir),
         )
         return test_runner

@@ -19,11 +19,6 @@ class Asserter:
         self._completed_process = completed_process
         self._test_runner = test_runner
 
-
-    def assertEqual(self, expected, actual):
-        self._test_case.assertEqual(expected, actual)
-
-
     def assertExitCode(self, expected: int, msg="Exit code differs"):
         # lobster-trace: system_test.Compare_Exit_Code
         self._test_case.assertEqual(

@@ -570,7 +570,6 @@ def main():
                    dot = options.dot,
                    high_contrast = options.high_contrast)
         print("LOBSTER HTML report written to %s" % options.out)
-        print("AAAAA ", os.path.dirname(os.path.abspath(options.out)))
 
 
 if __name__ == "__main__":
