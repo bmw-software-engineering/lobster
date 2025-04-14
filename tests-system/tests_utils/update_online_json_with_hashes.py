@@ -17,7 +17,7 @@ def update_json(filename, expected_location=None):
                     ["git", "rev-parse", "HEAD"]).decode().strip()
                 location['commit'] = commit
                 if expected_location:
-                    location['file'] = f"{expected_location}/basic.py"
+                    location['file'] = expected_location
 
     # Save the updated JSON data back to the same file
     with open(filename, 'w') as fd:
