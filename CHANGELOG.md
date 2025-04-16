@@ -5,6 +5,9 @@
 
 ### 0.12.1-dev
 
+* Fix for `.netrc`-based authentication handling in the `lobster-codebeamer` tool when
+  fetching the machine name (domain name).
+
 * Fix for git hash generation when the `lobster-online-report` tool is executed from 
   outside a git repository where the .git folder is not available.
 
