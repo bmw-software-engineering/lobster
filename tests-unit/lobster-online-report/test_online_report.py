@@ -6,8 +6,13 @@ from contextlib import redirect_stdout
 from io import StringIO
 from os.path import dirname
 from pathlib import Path
+import subprocess
 
-from lobster.tools.core.online_report.online_report import main, get_summary
+from lobster.items import Item, Tracing_Tag
+from lobster.location import File_Reference
+from lobster.tools.core.online_report.online_report import (
+    main, get_summary, get_git_commit_hash_repo_and_path
+)
 
 
 class LobsterOnlineReportTests(unittest.TestCase):
@@ -42,6 +47,20 @@ class LobsterOnlineReportTests(unittest.TestCase):
         actual = get_summary(in_file, out_file)
         self.assertEqual(actual, f"LOBSTER report {out_file} created, using online references.")
 
+    def test_commit_hash_for_main_repo(self):
+        root = " https://github.com/bmw-software-engineering/lobster"
+        submodule_roots = {}
+        repo_root = os.getcwd()
+        location = File_Reference("/data/basic.py")
+        tag = Tracing_Tag("test_namespace", "python basic.trlc_reference")
+        item = Item(tag, location)
+        expected_commit = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"],
+            universal_newlines=True, cwd=os.getcwd()
+        ).strip()
+        actual_path, actual_repo, commit = get_git_commit_hash_repo_and_path(
+            root, submodule_roots, item, repo_root)
+        self.assertEqual(expected_commit, commit)
 
 if __name__ == '__main__':
     unittest.main()
