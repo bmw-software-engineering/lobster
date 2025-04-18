@@ -5,27 +5,25 @@ from lobster.tools.core.html_report.html_report import get_commit_timestamp_utc
 
 
 class LobsterHtmlReportTests(unittest.TestCase):
-    def setUp(self):
-        self.valid_commit_hash = "HEAD"
-        self.invalid_commit_hash = "invalidhash"
-
-    def test_get_commit_timestamp_utc_valid_commit(self):
-        # Ensure a valid commit hash from the report
-        if not self.valid_commit_hash:
-            self.skipTest("No valid commit hash provided from the report")
-
+    def test_timestamp_found_in_main_repo(self):
+        """Test when commit is found in main repo"""
+        self.head_commit = "HEAD"
         result = subprocess.run(
-            ['git', 'show', '-s', '--format=%ct', self.valid_commit_hash],
+            ['git', 'show', '-s', '--format=%ct', self.head_commit],
             capture_output=True, text=True, check=True
         )
-
         epoch_time = int(result.stdout.strip())
-        expected_utc_time = datetime.fromtimestamp(epoch_time, tz=timezone.utc)
+        expected_time = datetime.fromtimestamp(epoch_time, tz=timezone.utc)
 
-        self.assertEqual(get_commit_timestamp_utc(self.valid_commit_hash), expected_utc_time)
+        returned = get_commit_timestamp_utc(self.head_commit)
+        self.assertIn(str(expected_time), returned)
+        self.assertNotIn("from submodule", returned)
 
-    def test_get_commit_timestamp_utc_invalid_commit(self):
-        self.assertIsNone(get_commit_timestamp_utc(self.invalid_commit_hash))
+    def test_timestamp_unknown_commit(self):
+        """Test when commit is not found in repo or submodules"""
+        self.invalid_commit = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
+        returned = get_commit_timestamp_utc(self.invalid_commit)
+        self.assertEqual(returned, "Unknown")
 
 
 if __name__ == "__main__":
