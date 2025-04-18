@@ -1,4 +1,4 @@
-import sys, os
+import sys
 import time
 import subprocess
 from datetime import datetime, timezone
@@ -23,18 +23,17 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         super().setUp()
         sys.path.append(self.TESTS_UI_PATH)
         self._test_runner = self.create_test_runner()
-        self.driver = self._test_runner.get_driver()
+        self.driver = self._test_runner.get_chrome_driver()
         self.OUT_FILE = "test_html_report.html"
+        self.input_file = f'file://{self._test_runner.working_dir}/{self.OUT_FILE}'
         self._test_runner.cmd_args.out = self.OUT_FILE
-        # self._test_runner.declare_input_file(self._data_directory / "report.output")
         self._test_runner.cmd_args.lobster_report = str(
             self._data_directory / "report.output")
 
     def test_show_issue_button(self):
         """Test the toggle functionality of the Show Issue button."""
         self._test_runner.run_tool_test()
-        path = f'file://{self._test_runner.working_dir}/{self.OUT_FILE}'
-        self.driver.get(path)
+        self.driver.get(self.input_file)
         for toggle in range(2):
             WebDriverWait(self.driver, self.TIMEOUT).until(
                 EC.element_to_be_clickable((By.ID, "BtnToggleIssue"))
@@ -74,7 +73,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         """Test the status buttons in the HTML report."""
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter.Asserter(self, completed_process, self._test_runner)
-        self.driver.get(f'file://{self._test_runner.working_dir}/{self.OUT_FILE}')
+        self.driver.get(self.input_file)
 
         ok = "ok"
         missing = "missing"
@@ -109,14 +108,13 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         for status, xpath in button_xpath.items():
             if self.click_and_verify(xpath, item_classes[status], status, item_count,
                                      asserter):
-                time.sleep(1)
                 self.check_hidden_elements(item_classes, status, asserter)
 
 
     def test_git_hash_timestamp(self):
         """Verify git commit timestamps in the report output."""
         self._test_runner.run_tool_test()
-        self.driver.get(f'file://{self._test_runner.working_dir}/{self.OUT_FILE}')
+        self.driver.get(self.input_file)
 
         report_path = "tests-UI/lobster-html-report/data/report.output"
 

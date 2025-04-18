@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 from .lobster_UI_test_runner import LobsterUITestRunner
 import importlib

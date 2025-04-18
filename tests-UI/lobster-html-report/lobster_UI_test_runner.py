@@ -1,4 +1,3 @@
-import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
@@ -48,17 +47,19 @@ class LobsterUITestRunner(test_runner.TestRunner):
     def cmd_args(self) -> CmdArgs:
         return self._cmd_args
 
-    def get_driver(self):
-        """
-        Set up and return a Selenium WebDriver instance.
-        """
+    def get_driver_options(self):
+        """Set and return driver options"""
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        return options
 
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
+    def get_chrome_driver(self):
+        """Set up and return a Selenium WebDriver instance for Chrome."""
+        driver_options = self.get_driver_options()
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
-                                  options=chrome_options)
+                                  options=driver_options)
         return driver
 
     def get_tool_args(self) -> List[str]:
