@@ -37,7 +37,7 @@ import sys
 import argparse
 import netrc
 from typing import List, Optional, Set, Union
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 from enum import Enum
 import requests
 import yaml
@@ -385,7 +385,7 @@ def update_authentication_parameters(
                                                 ".netrc")
         if os.path.isfile(netrc_file):
             netrc_config = netrc.netrc(netrc_file)
-            machine = auth_conf.root[8:]
+            machine = urlparse(auth_conf.root).hostname
             auth = netrc_config.authenticators(machine)
             if auth is not None:
                 print(f"Using .netrc login for {auth_conf.root}")

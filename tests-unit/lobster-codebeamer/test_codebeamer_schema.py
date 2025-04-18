@@ -113,6 +113,30 @@ class CbConfigTest(unittest.TestCase):
         self.assertEqual(auth_config.password, "the-password")
         self.assertIsNone(auth_config.token)
 
+    def test_cb_config_with_netrc_and_sub_root(self):
+        auth_config = AuthenticationConfig(
+            token=None,
+            user=None,
+            password=None,
+            root="https://example.com/cb",
+        )
+        update_authentication_parameters(auth_config, netrc_path=self._real_netrc_file)
+        self.assertEqual(auth_config.user, "the-user-name")
+        self.assertEqual(auth_config.password, "the-password")
+        self.assertIsNone(auth_config.token)
+
+    def test_cb_config_netrc_missing_machine_entry(self):
+        auth_config = AuthenticationConfig(
+            token=None,
+            user=None,
+            password=None,
+            root="https://missingmachine.com/cb",
+        )
+        with self.assertRaises(KeyError) as context:
+            update_authentication_parameters(auth_config, netrc_path=self._real_netrc_file)
+
+        self.assertIn("Error parsing .netrc file", str(context.exception))
+
 
 if __name__ == "__main__":
     unittest.main()
