@@ -190,6 +190,7 @@ def main():
     if os.path.isfile(os.path.join(repo_root, ".gitmodules")):
         git_m_config.read(os.path.join(repo_root, ".gitmodules"))
 
+    gh_root = None
     gh_submodule_roots = {}
     for item in git_config:
         if item == 'remote "origin"':
@@ -201,31 +202,24 @@ def main():
 
     report = Report()
     report.load_report(options.lobster_report)
+    if gh_root:
+        add_github_reference_to_items(gh_root, gh_submodule_roots, repo_root, report)
 
+    out_file = options.out if options.out else options.lobster_report
+    report.write_report(out_file)
+    print(get_summary(options.lobster_report, out_file))
+    return 0
+
+
+def add_github_reference_to_items(gh_root, gh_submodule_roots, repo_root, report):
+    """Function to add GitHub reference to items of the report"""
     for item in report.items.values():
         if isinstance(item.location, File_Reference):
             assert (os.path.isdir(item.location.filename) or
                     os.path.isfile(item.location.filename))
 
-            rel_path_from_root = os.path.relpath(item.location.filename,
-                                                 repo_root)
-            # pylint: disable=possibly-used-before-assignment
-            actual_repo = gh_root
-            actual_path = rel_path_from_root
-            commit = subprocess.check_output(
-                ["git", "rev-parse", "HEAD"]
-            ).decode().strip()
-            # pylint: disable=consider-using-dict-items
-            for prefix in gh_submodule_roots:
-                if path_starts_with_subpath(rel_path_from_root, prefix):
-                    actual_repo = gh_submodule_roots[prefix]
-                    actual_path = rel_path_from_root[len(prefix) + 1:]
-                    commit = subprocess.check_output(
-                        ["git", "rev-parse", "HEAD"],
-                        universal_newlines=True, cwd=prefix
-                    )
-                    commit = commit.strip()
-                    break
+            actual_path, actual_repo, commit = get_git_commit_hash_repo_and_path(
+                gh_root, gh_submodule_roots, item, repo_root)
             loc = Github_Reference(
                 gh_root=actual_repo,
                 filename=actual_path,
@@ -233,10 +227,31 @@ def main():
                 commit=commit)
             item.location = loc
 
-    out_file = options.out if options.out else options.lobster_report
-    report.write_report(out_file)
-    print(get_summary(options.lobster_report, out_file))
-    return 0
+
+def get_git_commit_hash_repo_and_path(gh_root, gh_submodule_roots, item, repo_root):
+    """Function to get git commit hash for the item file which is part of either the
+    root repo or the submodules."""
+    rel_path_from_root = os.path.relpath(item.location.filename,
+                                         repo_root)
+    # pylint: disable=possibly-used-before-assignment
+    actual_repo = gh_root
+    actual_path = rel_path_from_root
+    commit = get_hash_for_git_commit(repo_root)
+    # pylint: disable=consider-using-dict-items
+    for prefix in gh_submodule_roots:
+        if path_starts_with_subpath(rel_path_from_root, prefix):
+            actual_repo = gh_submodule_roots[prefix]
+            actual_path = rel_path_from_root[len(prefix) + 1:]
+            commit = get_hash_for_git_commit(prefix)
+            commit = commit.strip()
+            break
+    return actual_path, actual_repo, commit
+
+
+def get_hash_for_git_commit(repo_root):
+    return subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=repo_root
+    ).decode().strip()
 
 
 def get_summary(in_file: str, out_file: str):
