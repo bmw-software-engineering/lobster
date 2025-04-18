@@ -5,6 +5,9 @@
 
 ### 0.12.1-dev
 
+* Fix for git hash generation when the `lobster-online-report` tool is executed from 
+  outside a git repository where the .git folder is not available.
+
 * `lobster-cpp` uses the relative file path of a c++ file to generate
   the unique identifier of a function in that file. This way files with identical
   names (but in different folders) are supported, and they can even have
