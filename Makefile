@@ -66,7 +66,7 @@ clang-tidy:
 selenium-tests:
 	@make lobster/html/assets.py
 	@echo "Running Selenium Tests..."
-	(cd tests-UI; make)
+	python -m unittest discover -s tests-UI -v -t .
 
 integration-tests: packages
 	(cd tests-integration/projects/basic; make)
