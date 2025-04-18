@@ -73,7 +73,7 @@ def is_dir_in_git_main_module(directory):
 
     Args:
         directory (str): The path to the directory to check.
-
+c
     Returns:
         bool: True if the directory is inside a Git mainmodule,
         False otherwise.
@@ -236,21 +236,22 @@ def get_git_commit_hash_repo_and_path(gh_root, gh_submodule_roots, item, repo_ro
     # pylint: disable=possibly-used-before-assignment
     actual_repo = gh_root
     actual_path = rel_path_from_root
-    commit = subprocess.check_output(
-        ["git", "rev-parse", "HEAD"], cwd=repo_root
-    ).decode().strip()
+    commit = get_hash_for_git_commit(repo_root)
     # pylint: disable=consider-using-dict-items
     for prefix in gh_submodule_roots:
         if path_starts_with_subpath(rel_path_from_root, prefix):
             actual_repo = gh_submodule_roots[prefix]
             actual_path = rel_path_from_root[len(prefix) + 1:]
-            commit = subprocess.check_output(
-                ["git", "rev-parse", "HEAD"],
-                universal_newlines=True, cwd=prefix
-            )
+            commit = get_hash_for_git_commit(prefix)
             commit = commit.strip()
             break
     return actual_path, actual_repo, commit
+
+
+def get_hash_for_git_commit(repo_root):
+    return subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=repo_root
+    ).decode().strip()
 
 
 def get_summary(in_file: str, out_file: str):

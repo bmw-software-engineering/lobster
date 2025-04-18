@@ -1,5 +1,5 @@
 import json
-import os
+import pathlib
 import sys
 import unittest
 from contextlib import redirect_stdout
@@ -50,13 +50,13 @@ class LobsterOnlineReportTests(unittest.TestCase):
     def test_commit_hash_for_main_repo(self):
         root = " https://github.com/bmw-software-engineering/lobster"
         submodule_roots = {}
-        repo_root = os.getcwd()
+        repo_root = pathlib.Path().cwd()
         location = File_Reference("/data/basic.py")
         tag = Tracing_Tag("test_namespace", "python basic.trlc_reference")
         item = Item(tag, location)
         expected_commit = subprocess.check_output(
             ["git", "rev-parse", "HEAD"],
-            universal_newlines=True, cwd=os.getcwd()
+            universal_newlines=True, cwd=repo_root
         ).strip()
         actual_path, actual_repo, commit = get_git_commit_hash_repo_and_path(
             root, submodule_roots, item, repo_root)
