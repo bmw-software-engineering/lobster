@@ -41,6 +41,32 @@ Note:
 - If value of root in config file is `https://codebeamer.bmwgroup.net`, then value of
   machine in .netrc will be `codebeamer.bmwgroup.net`.
 
+## Generating SSL Certificates
+
+To test with HTTPS using a mock server, you will need to generate a self-signed certificate (`cert.pem`) and private key (`key.pem`).
+
+You can generate them using OpenSSL with the following command:
+
+```bash
+openssl req -x509 -newkey rsa:2048 -nodes -keyout key.pem -out cert.pem -days 365
+```
+When prompted, you can enter values or simply press Enter to skip. This will create:
+
+- cert.pem – the self-signed certificate
+- key.pem – the private key
+
+Once generated, place these files under:
+
+- tests-system/lobster-codebeamer/data/ssl/
+
+So that the paths are:
+
+tests-system/lobster-codebeamer/data/ssl/cert.pem
+
+tests-system/lobster-codebeamer/data/ssl/key.pem
+
+These are used by the Flask-based mock server during testing.
+
 ## Use-cases
 
 There are two use-cases supported right now:

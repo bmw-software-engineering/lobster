@@ -6,3 +6,4 @@ coverage>=7.2
 build>=1.2.0
 selenium
 webdriver-manager
+flask

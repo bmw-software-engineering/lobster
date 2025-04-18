@@ -46,8 +46,9 @@ from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
 from lobster.location import Codebeamer_Reference
 from lobster.errors import Message_Handler, LOBSTER_Error
 from lobster.io import lobster_read, lobster_write
+from lobster.tools.codebeamer.bearer_auth import BearerAuth
+from lobster.tools.codebeamer.config import AuthenticationConfig, Config
 from lobster.version import get_version
-from .config import AuthenticationConfig, Config
 
 
 class CodebeamerError(Exception):
@@ -87,25 +88,17 @@ map_reference_name_to_function = {
 }
 
 
-class BearerAuth(requests.auth.AuthBase):
-    def __init__(self, token):
-        self.token = token
-
-    def __call__(self, r):
-        r.headers['Authorization'] = f'Bearer {self.token}'
-        return r
+def get_authentication(cb_auth_config: AuthenticationConfig) -> requests.auth.AuthBase:
+    if cb_auth_config.token:
+        return BearerAuth(cb_auth_config.token)
+    return requests.auth.HTTPBasicAuth(cb_auth_config.user,
+                                       cb_auth_config.password)
 
 
 def query_cb_single(cb_config: Config, url: str):
     try:
-        if cb_config.cb_auth_conf.token:
-            auth = BearerAuth(cb_config.cb_auth_conf.token)
-        else:
-            auth = (cb_config.cb_auth_conf.user,
-                    cb_config.cb_auth_conf.password)
-
         result = requests.get(url,
-                              auth=auth,
+                              auth=get_authentication(cb_config.cb_auth_conf),
                               timeout=cb_config.timeout,
                               verify=cb_config.verify_ssl)
     except requests.exceptions.ReadTimeout:

@@ -5,6 +5,20 @@
 
 ### 0.12.1-dev
 
+* `lobster-cpp` uses the relative file path of a c++ file to generate
+  the unique identifier of a function in that file. This way files with identical
+  names (but in different folders) are supported, and they can even have
+  C++ functions with identical names without running into a
+  "duplicate definition" problem.
+  Previously only the file's base name was used.
+
+* Reformulate the summary message of `lobster-online-report` so that it becomes
+  clear whether the input file has been modified, or whether a new output file has been
+  created.
+
+* `lobster-cpptest` now displays a test-name instead of a fixture-name
+  in the lobster-report and lobster-html-report.
+
 * Add command line argument `--skip-clang-errors` to `lobster-cpp`.
   This argument allows the user to specify a list of `clang-tidy`
   errors which shall be skipped.
