@@ -1,5 +1,3 @@
-import os
-import shutil
 from pathlib import Path
 
 from .lobster_online_report_system_test_case_base import (
@@ -19,10 +17,10 @@ class NonGitRepositoryTest(LobsterOnlineReportSystemTestCaseBase):
         parent_dir = current_dir.parent
 
         self._test_runner = self.create_test_runner(working_dir=parent_dir)
+        self._test_runner.declare_input_file(self._data_directory / "report.lobster")
         self._test_runner.declare_input_file(self._data_directory / "basic.py")
         self._test_runner.declare_output_file(self._data_directory / self.OUT_FILE)
         self._test_runner.cmd_args.out = self.OUT_FILE
-        self._test_runner.declare_input_file(self._data_directory / "report.lobster")
 
     def test_non_git_repository_with_repo_root(self):
         self._test_runner.cmd_args.lobster_report = str(

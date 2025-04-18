@@ -73,7 +73,7 @@ def is_dir_in_git_main_module(directory):
 
     Args:
         directory (str): The path to the directory to check.
-c
+
     Returns:
         bool: True if the directory is inside a Git mainmodule,
         False otherwise.
