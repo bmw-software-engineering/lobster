@@ -9,9 +9,4 @@ output:
       - "@requiredby"
     kind: "req"
 
-  other_tests.lobster:
-    markers: []
-
-    kind: ""
-
 codebeamer_url: "https://codebeamer.com"
