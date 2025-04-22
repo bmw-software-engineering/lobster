@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, make_response, Response
 import logging
 
 # Suppress Flask development server warning
@@ -9,15 +9,18 @@ log.setLevel(logging.ERROR)
 CERT_PATH = 'tests-system/lobster-codebeamer/data/ssl/cert.pem'
 KEY_PATH = 'tests-system/lobster-codebeamer/data/ssl/key.pem'
 PORT = 5000
-MOCK_ROUTE = '/api/v3/reports/1234/items'
+MOCK_ROUTE = '/api/v3/reports/<int:report_id>/items'
 
 
 def create_app():
     app = Flask(__name__)
 
     @app.route(MOCK_ROUTE, methods=['GET'])
-    def mock_response():
-        """Return mocked item response for Codebeamer integration."""
+    def mock_response(report_id):
+        """Return mocked item response or error."""
+        if report_id != 1234:
+            return Response(status=429)
+
         return jsonify({
             "item": 5,
             "page": 1,

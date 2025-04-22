@@ -20,6 +20,8 @@ LIST_OF_COMPARED_ATTRIBUTES = [
 class QueryCodebeamerTest(unittest.TestCase):
     def setUp(self):
         self._mock_cb_config = Config(
+            num_request_retry=5,
+            retry_error_codes=[],
             references=None,
             import_tagged=None,
             import_query=None,

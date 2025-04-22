@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, List
 
 
 @dataclass
@@ -12,6 +12,8 @@ class AuthenticationConfig:
 
 @dataclass
 class Config:
+    num_request_retry: int
+    retry_error_codes: List
     references: dict
     import_tagged: str
     import_query: str
