@@ -161,7 +161,8 @@ report.lobster-%: lobster/tools/lobster.conf \
 				  unit-tests.lobster-% \
 				  system_requirements.lobster-% \
 				  software_requirements.lobster-% \
-				  system-tests.lobster-%
+				  system-tests.lobster-%\
+				  selenium-tests.lobster-%
 	lobster-report \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
@@ -194,6 +195,9 @@ code.lobster-%:
 unit-tests.lobster-%:
 	$(eval TOOL_NAME := $(subst _,-,$(notdir $(TOOL_PATH))))
 	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-$(TOOL_NAME)
+
+selenium-tests.lobster-%:
+	lobster-python --activity --out="selenium-tests.lobster" tests-UI/lobster-html-report
 
 system-tests.lobster-%:
 	$(eval TOOL_NAME := $(subst _,-,$(notdir $(TOOL_PATH))))
