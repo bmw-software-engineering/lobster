@@ -1,0 +1,107 @@
+package UseCases
+import req
+
+req.UseCase Trace_Codebeamer_to_CPP_Tests {
+    description = '''
+        As a requirements manager I want to have a report of traceability between
+        requirements in codebeamer and tests in C++.
+    '''
+}
+
+req.UseCase List_Codebeamer_to_CPP_Tests {
+    description = '''
+        As a requirements manager I want the traceability report to show the list of
+        requirements from codebeamer which are covered by C++ software test.
+    '''
+}
+
+req.UseCase List_Codebeamer_without_CPP_Tests {
+    description = '''
+        As a requirements manager I want the traceability report to show the list of
+        requirements from codebeamer which are not covered by C++ software test.
+    '''
+}
+
+req.UseCase List_CPP_Tests_to_Codebeamer {
+    description = '''
+        As a requirements manager I want the traceability report to show the list of
+        C++ software tests covering requirements in codebeamer.
+    '''
+}
+
+req.UseCase List_CPP_Tests_without_Codebeamer {
+    description = '''
+        As a requirements manager I want the traceability report to show the list of
+        C++ software test which are not covering any requirement in codebeamer.
+    '''
+}
+
+req.UseCase Requirements_to_CPP_Test_Coverage {
+    description = '''
+        As a requirements manager I want the traceability report to show the fraction of
+        the number of requirements in codebeamer which are covered by C++ software test
+        divided by the total number of requirements in codebeamer.
+        The fraction shall be shown as percentage.
+    '''
+    /* Note:
+       The current implementation computes the fraction of "OK" items vs. total items.
+       If the user defines a tracing policy where the requirements have a single downstream
+       to C++ tests only (and no upstreams), then that fraction is equal to the fraction
+       of the above use case.
+     */
+}
+
+req.UseCase Show_Tracing_Policy {
+    description = '''
+        As a requirements manager I want the traceability report to show the tracing policy used to generate the report.
+    '''
+}
+
+req.UseCase Show_codebeamer_links {
+    description = '''
+        As a requirements manager I want the traceability report to mention the codebeamer link to requirements in codebeamer.
+    '''
+}
+
+req.UseCase Item_Source {
+    description = '''
+        As a requirements manager I want the traceability report to mention the source location of each item.
+    '''
+}
+
+req.UseCase HTML_Output {
+    description = '''
+        As a requirements manager I want the traceability report to be generated as html file.
+    '''
+}
+
+req.UseCase git_hash {
+    description = '''
+        As a requirements manager I want the traceability report to show the git hashes of the git commit from which C++ tests were taken.
+    '''
+}
+
+req.UseCase List_Findings {
+    description = '''
+        As a requirements manager I want the traceability report to show a list with all findings where the tracing policy is violated.
+    '''
+}
+
+section "Nice to have" {
+    /* Use cases in this section are nice to have, but are probably not relevant for a tool qualification in the sense of ISO 26262.
+       As always, it is important to qualify a tool in the context of the project and company which uses the tool.
+       LOBSTER is an open source project and the above mentioned context is not known.
+       There may be circumstances where the below use cases are essential for a project.
+     */
+    req.UseCase race_codebeamer_cpptest_Nice_to_have_1 {
+        description = '''
+            As a requirements manager I want the traceability report to highlight the missing traces and detected traces in different color.
+        '''
+    }
+
+    req.UseCase race_codebeamer_cpptest_Nice_to_have_2 {
+        description = '''
+            As a requirements manager I want the traceability report to be generated in English language.
+        '''
+    }
+}
