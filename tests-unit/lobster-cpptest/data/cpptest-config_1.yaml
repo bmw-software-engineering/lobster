@@ -1,11 +1,7 @@
+files: ["a", "b"]
 output:
   component_tests.lobster:
     markers: ["@requirement", "@requiredby"]
     kind: "req"
-
-  other_tests.lobster:
-    markers: []
-
-    kind: ""
 
 codebeamer_url: "https://codebeamer.com"

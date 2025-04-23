@@ -89,17 +89,8 @@ output:
 codebeamer_url: "https://codebeamer.example.com/cb"
  ```
 
-* Note: If you want to extract the other tests with other `markers`,
- you can use an empty list as `markers` value. Be aware in this case the tests do not have any references.
-
-```cpptest-config.yaml
-output:
-  tests.lobster:
-    markers: []
-    kind: req
-
-codebeamer_url: "https://codebeamer.example.com/test"
- ```
+* Note: Orphan tests, that do not match any configured `markers`, will be written into all defined outputs.
+ Be aware these tests do not have any references.
 
 
 ## Creating lobster files

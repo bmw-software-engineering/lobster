@@ -5,6 +5,8 @@
 
 ### 0.12.1-dev
 
+* `lobster-cpptest` now writes orphan tests into all output files.
+
 * Fix for `.netrc`-based authentication handling in the `lobster-codebeamer` tool when
   fetching the machine name (domain name).
 
