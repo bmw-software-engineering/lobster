@@ -51,6 +51,7 @@ class LobsterOnlineReportTests(unittest.TestCase):
         root = " https://github.com/bmw-software-engineering/lobster"
         submodule_roots = {}
         repo_root = pathlib.Path().cwd()
+        git_hash_cache = {}
         location = File_Reference("/data/basic.py")
         tag = Tracing_Tag("test_namespace", "python basic.trlc_reference")
         item = Item(tag, location)
@@ -59,7 +60,7 @@ class LobsterOnlineReportTests(unittest.TestCase):
             universal_newlines=True, cwd=repo_root
         ).strip()
         actual_path, actual_repo, commit = get_git_commit_hash_repo_and_path(
-            root, submodule_roots, item, repo_root)
+            root, submodule_roots, item, repo_root, git_hash_cache)
         self.assertEqual(expected_commit, commit)
 
 if __name__ == '__main__':
