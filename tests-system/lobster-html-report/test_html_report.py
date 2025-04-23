@@ -117,7 +117,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         self._test_runner.run_tool_test()
         self.driver.get(self.input_file)
 
-        report_path = "tests-UI/lobster-html-report/data/report.output"
+        report_path = (self._data_directory / "report.output")
 
         with open(report_path) as file:
             data = json.load(file)

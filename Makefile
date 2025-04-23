@@ -63,11 +63,6 @@ clang-tidy:
 	cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra' -DCMAKE_BUILD_TYPE=Release && \
 	cmake --build build --target clang-tidy
 
-selenium-tests:
-	@make lobster/html/assets.py
-	@echo "Running Selenium Tests..."
-	python -m unittest discover -s tests-UI -v -t .
-
 integration-tests: packages
 	(cd tests-integration/projects/basic; make)
 	(cd tests-integration/projects/filter; make)
