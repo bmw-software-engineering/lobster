@@ -150,14 +150,8 @@ def add_github_reference_to_items(gh_root, gh_submodule_roots, repo_root, report
             assert (os.path.isdir(item.location.filename) or
                     os.path.isfile(item.location.filename))
 
-            git_hash_key = (gh_root, tuple(gh_submodule_roots), item.location.filename)
-            if git_hash_key not in git_hash_cache:
-                actual_path, actual_repo, commit = get_git_commit_hash_repo_and_path(
-                    gh_root, gh_submodule_roots, item, repo_root)
-                git_hash_cache[git_hash_key] = (actual_path, actual_repo, commit)
-            else:
-                actual_path, actual_repo, commit = git_hash_cache[git_hash_key]
-
+            actual_path, actual_repo, commit = get_git_commit_hash_repo_and_path(
+                gh_root, gh_submodule_roots, item, repo_root, git_hash_cache)
             loc = Github_Reference(
                 gh_root=actual_repo,
                 filename=actual_path,
@@ -166,7 +160,8 @@ def add_github_reference_to_items(gh_root, gh_submodule_roots, repo_root, report
             item.location = loc
 
 
-def get_git_commit_hash_repo_and_path(gh_root, gh_submodule_roots, item, repo_root):
+def get_git_commit_hash_repo_and_path(gh_root, gh_submodule_roots,
+                                      item, repo_root, git_hash_cache):
     """Function to get git commit hash for the item file which is part of either the
     root repo or the submodules."""
     rel_path_from_root = os.path.relpath(item.location.filename,
@@ -174,15 +169,19 @@ def get_git_commit_hash_repo_and_path(gh_root, gh_submodule_roots, item, repo_ro
     # pylint: disable=possibly-used-before-assignment
     actual_repo = gh_root
     actual_path = rel_path_from_root
-    commit = get_hash_for_git_commit(repo_root)
+    git_repo = repo_root
     # pylint: disable=consider-using-dict-items
     for prefix in gh_submodule_roots:
         if path_starts_with_subpath(rel_path_from_root, prefix):
             actual_repo = gh_submodule_roots[prefix]
             actual_path = rel_path_from_root[len(prefix) + 1:]
-            commit = get_hash_for_git_commit(prefix)
-            commit = commit.strip()
+            git_repo = prefix
             break
+    commit = git_hash_cache.get(git_repo, None)
+    if not commit:
+        commit = get_hash_for_git_commit(git_repo)
+        git_hash_cache[git_repo] = commit.strip()
+
     return actual_path, actual_repo, commit
 
 
