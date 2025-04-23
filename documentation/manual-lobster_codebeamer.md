@@ -47,29 +47,29 @@ You can now configure retry behavior for failed HTTPS requests using the followi
 
 ### Parameters:
 
-- `RETRY_ERROR_CODES`
+- `retry_error_codes`
 
   *Type*: `List[int]`
 
   *Description*: A list of HTTP status codes that should trigger a retry.
   *Example*:
   ```yaml
-  RETRY_ERROR_CODES: [502, 503, 504]
+  retry_error_codes: [502, 503, 504]
   ```
 
-- `NUM_REQUEST_RETRY`
+- `num_request_retry`
 
   *Type*: `int`
 
-  *Description*: Maximum number of retry attempts for each request that fails with a status code listed in `RETRY_ERROR_CODES`.
+  *Description*: Maximum number of retry attempts for each request that fails with a status code listed in `retry_error_codes`.
   *Example*:
   ```yaml
-  NUM_REQUEST_RETRY: 3
+  num_request_retry: 3
   ```
 
 Notes:
-- Retries will **only** be attempted if `RETRY_ERROR_CODES` parameters are defined in the config.
-- If `NUM_REQUEST_RETRY` not defined, the default value of 5 will be used.
+- Retries will **only** be attempted if `retry_error_codes` parameter is defined in the config.
+- If `num_request_retry` not defined, the default value of 5 will be used.
 - This feature enhances reliability when facing temporary connectivity issues, server errors, request timeouts, or threshold limit breaches.
 
 ## Generating SSL Certificates

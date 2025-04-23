@@ -120,14 +120,16 @@ def query_cb_single(cb_config: Config, url: str):
                 time.sleep(1)  # wait a bit before retrying
                 continue
 
-            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Failed with status "
-                  f"{result.status_code}")
+            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Failed with "
+                  f"status {result.status_code}")
             break
 
         except requests.exceptions.ReadTimeout:
-            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Timeout when fetching {url}")
+            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Timeout when "
+                  f"fetching {url}")
         except requests.exceptions.RequestException as err:
-            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Request error: {err}")
+            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Request error: "
+                  f"{err}")
         break
 
     # Final error handling after all retries
@@ -135,7 +137,8 @@ def query_cb_single(cb_config: Config, url: str):
     print("You can either:")
     print("* increase the timeout with the timeout parameter")
     print("* decrease the query size with the query_size parameter")
-    print("* increase the retry count with the parameters (num_request_retry, retry_error_codes)")
+    print("* increase the retry count with the parameters (num_request_retry, "
+          "retry_error_codes)")
     sys.exit(1)
 
 
