@@ -13,6 +13,7 @@ from .lobster_UI_system_test_case_base import LobsterUISystemTestCaseBase
 
 Asserter = importlib.import_module('tests-system.asserter')
 
+
 class LobsterUIReportTests(LobsterUISystemTestCaseBase):
     """UI Automation Tests for Lobster Report."""
 
@@ -64,7 +65,8 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
             if status != current_status:
                 if self.driver.find_elements(By.CLASS_NAME, class_name):
                     element = self.driver.find_element(By.CLASS_NAME, class_name)
-                    expected_display = "none" if current_status != "Show All" else "block"
+                    expected_display = ("none" if current_status != "Show All" else
+                                        "block")
 
                     self.assertEqual(element.value_of_css_property("display"),
                                      expected_display)
@@ -109,7 +111,6 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
             if self.click_and_verify(xpath, item_classes[status], status, item_count,
                                      asserter):
                 self.check_hidden_elements(item_classes, status, asserter)
-
 
     def test_git_hash_timestamp(self):
         """Verify git commit timestamps in the report output."""
