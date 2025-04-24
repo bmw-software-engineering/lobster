@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.12.1-dev
+### 0.12.1
 
 * `lobster-cpptest` now writes orphan tests into all output files.
 
