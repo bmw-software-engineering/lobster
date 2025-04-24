@@ -5,12 +5,15 @@
 
 ### 0.12.1
 
-* `lobster-cpptest` now writes orphan tests into all output files.
+* Fix for timestamp generation of git hashes in `lobster-html-report` for git 
+  submodules. 
 
 * Added configurable retry logic for HTTPS requests in `lobster-codebeamer`.
   Introduced support for two new YAML configuration parameters:
   - `retry_error_codes`: A list of HTTP status codes (e.g., `[429, 503, 504]`) that should trigger a retry.
   - `num_request_retry`: An integer specifying the maximum number of retry attempts if a request fails with a status code from `retry_error_codes`.
+
+* `lobster-cpptest` now writes orphan tests into all output files.
 
 * Fix for `.netrc`-based authentication handling in the `lobster-codebeamer` tool when
   fetching the machine name (domain name).
