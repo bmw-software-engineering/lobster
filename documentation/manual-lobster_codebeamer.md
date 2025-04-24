@@ -41,6 +41,37 @@ Note:
 - If value of root in config file is `https://codebeamer.bmwgroup.net`, then value of
   machine in .netrc will be `codebeamer.bmwgroup.net`.
 
+## 🔁 Retry Configuration for HTTPS Requests
+
+You can now configure retry behavior for failed HTTPS requests using the following optional parameters in your YAML configuration file:
+
+### Parameters:
+
+- `retry_error_codes`
+
+  *Type*: `List[int]`
+
+  *Description*: A list of HTTP status codes that should trigger a retry.
+  *Example*:
+  ```yaml
+  retry_error_codes: [502, 503, 504]
+  ```
+
+- `num_request_retry`
+
+  *Type*: `int`
+
+  *Description*: Maximum number of retry attempts for each request that fails with a status code listed in `retry_error_codes`.
+  *Example*:
+  ```yaml
+  num_request_retry: 3
+  ```
+
+Notes:
+- Retries will **only** be attempted if `retry_error_codes` parameter is defined in the config.
+- If `num_request_retry` not defined, the default value of 5 will be used.
+- This feature enhances reliability when facing temporary connectivity issues, server errors, request timeouts, or threshold limit breaches.
+
 ## Generating SSL Certificates
 
 To test with HTTPS using a mock server, you will need to generate a self-signed certificate (`cert.pem`) and private key (`key.pem`).
