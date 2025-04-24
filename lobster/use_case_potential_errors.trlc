@@ -1,0 +1,50 @@
+package UseCases
+import req
+
+section "Extracting requirements from codebeamer"
+{
+  req.PotentialError Incomplete_Extraction_from_Codebeamer {
+    summary = "LOBSTER extracts a requirement incompletely."
+    description = '''
+      Some requirements are not extracted completely.
+      For example, some information of a requirement is missing.
+      '''
+    impacts = [
+      '''If the ID of a codebeamer requirement is not written to the output correctly (e.g. truncated),
+         and if that wrong ID is also a real requirement in codebeamer,
+         then the user might think that a requirement is tested where in fact it is not.''',
+
+      '''If the hyperlink in the HTML output is not correct (e.g. pointing to a different requirement),
+         and a user clicks on it and does not realize that the link is wrong,
+         then the user might think that a requirement is tested where in fact it is not.''',
+
+      '''If the summary of a codebeamer requirement is not correct
+         (e.g. truncated),',
+         then the user might think that all aspects of a requirement are covered by a test,
+         where in fact they are not.''',
+    ]
+  }
+
+  req.TestSpecification Codebeamer_IDs_in_Output {
+      description = '''
+        The test shall check that the IDs downloaded from codebeamer are exactly the same
+        as written in the output.
+        
+        Example: verify that the tool does NOT truncate IDs. For example,
+        it could download 10 IDs as expected, but those ID strings could be truncated by one digit each.
+
+        Test steps:
+        - download a bunch of items from a mock server
+        - verify that the obtained IDs are the same as provided by the mock server 
+        '''
+      verifies = [Incomplete_Extraction_from_Codebeamer]
+  }
+
+  req.TestSpecification Codebeamer_Summary_in_Output {
+      description = '''
+        The test shall check that the LOBSTER items in the output file use the summary
+        as downloaded from codebeamer.
+        '''
+      verifies = [Incomplete_Extraction_from_Codebeamer]
+  }
+}

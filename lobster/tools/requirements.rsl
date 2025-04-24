@@ -66,3 +66,19 @@ type UseCase {
     The use case shall not describe the implementation of the tools.
   ''' String
 }
+
+type PotentialError {
+  summary String
+  description '''
+    The text of the potential error.
+    This shall be a description of a potential error that may occur in a tool.
+  ''' String
+  impacts String [1..*]
+}
+
+type TestSpecification {
+  description String
+  verifies
+    '''List of potential errors that resulted into this test'''
+      PotentialError[1..*]
+}
