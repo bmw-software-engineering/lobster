@@ -60,7 +60,9 @@ type Definition {
 
 type UseCase {
   description ''' 
-    The text of the UseCase.
+    The text of the use case.
     The format shall be : As a < role > I want < description of the UseCase >
+    A use case shall describe the goal that the user wants to achieve by using LOBSTER.
+    The use case shall not describe the implementation of the tools.
   ''' String
 }
