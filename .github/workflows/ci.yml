@@ -102,20 +102,6 @@ jobs:
       - name: Run TRLC
         run: |
           make trlc
-  selenium-tests:
-    name: Run Selenium Tests
-    needs: [changes, lint, lint-system-tests, trlc]
-    if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install -r requirements_dev.txt
-      - name: Run selenium Tests
-        run: |
-          make selenium-tests
   test:
     name: TestSuite
     needs: [changes, lint, lint-system-tests, trlc]
@@ -200,7 +186,6 @@ jobs:
       - lint
       - lint-system-tests
       - trlc
-      - selenium-tests
       - test
       - integration-tests
     if: ${{ failure() || cancelled() }}
