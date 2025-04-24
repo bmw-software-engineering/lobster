@@ -3,6 +3,10 @@
 ## Changelog
 
 
+### 0.12.2-dev
+
+
+
 ### 0.12.1
 
 * Fix for timestamp generation of git hashes in `lobster-html-report` for git 
