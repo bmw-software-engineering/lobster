@@ -21,3 +21,18 @@ req.Software_Requirement Get_Query_Zero_Items_Message {
   '''
   derived_from = [Empty_Query_Message]
 }
+
+req.System_Requirement Retry_On_Specific_HTTP_Status_Codes {
+  description = '''
+    IF the actual HTTPS return code is in the list specified by the configuration parameter "retry_error_codes"
+    AND the configuration parameter "num_request_retry" is greater than 0 or not defined,
+    THEN the tool shall retry the request up to a maximum of "num_request_retry" times (default is 5 if not set).
+  '''
+}
+
+req.System_Requirement Missing_Error_Code {
+  description = '''
+    IF the configuration parameter "retry_error_codes" is not defined,
+    THEN the retry logic shall not be executed, regardless of the value of "num_request_retry".
+  '''
+}

@@ -33,6 +33,7 @@
 # lobster artefact.
 
 import os
+import time
 import sys
 import argparse
 import netrc
@@ -57,6 +58,8 @@ class CodebeamerError(Exception):
 
 class SupportedConfigKeys(Enum):
     """Helper class to define supported configuration keys."""
+    NUM_REQUEST_RETRY = "num_request_retry"
+    RETRY_ERROR_CODES = "retry_error_codes"
     IMPORT_TAGGED = "import_tagged"
     IMPORT_QUERY  = "import_query"
     VERIFY_SSL    = "verify_ssl"
@@ -96,29 +99,47 @@ def get_authentication(cb_auth_config: AuthenticationConfig) -> requests.auth.Au
 
 
 def query_cb_single(cb_config: Config, url: str):
-    try:
-        result = requests.get(url,
-                              auth=get_authentication(cb_config.cb_auth_conf),
-                              timeout=cb_config.timeout,
-                              verify=cb_config.verify_ssl)
-    except requests.exceptions.ReadTimeout:
-        print(f"Timeout when fetching {url}")
-        print("You can either:")
-        print("* increase the timeout with --timeout")
-        print("* decrease the query size with --query-size")
-        sys.exit(1)
-    except requests.exceptions.RequestException as err:
-        print(f"Could not fetch {url}")
-        print(err)
-        sys.exit(1)
+    if cb_config.num_request_retry <= 0:
+        raise ValueError("Retry is disabled (num_request_retry is set to 0). "
+                         "Cannot proceed with retries.")
 
-    if result.status_code != 200:
-        print(f"Could not fetch {url}")
-        print("Status = %u" % result.status_code)
-        print(result.text)
-        sys.exit(1)
+    for attempt in range(1, cb_config.num_request_retry + 1):
+        try:
+            result = requests.get(
+                url,
+                auth=get_authentication(cb_config.cb_auth_conf),
+                timeout=cb_config.timeout,
+                verify=cb_config.verify_ssl,
+            )
+            if result.status_code == 200:
+                return result.json()
 
-    return result.json()
+            if result.status_code in cb_config.retry_error_codes:
+                print(f"[Attempt {attempt}/{cb_config.num_request_retry}] "
+                      f"Retryable error: {result.status_code}")
+                time.sleep(1)  # wait a bit before retrying
+                continue
+
+            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Failed with "
+                  f"status {result.status_code}")
+            break
+
+        except requests.exceptions.ReadTimeout:
+            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Timeout when "
+                  f"fetching {url}")
+        except requests.exceptions.RequestException as err:
+            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Request error: "
+                  f"{err}")
+        break
+
+    # Final error handling after all retries
+    print(f"Could not fetch {url}.")
+    print("You can either:")
+    print("* increase the timeout with the timeout parameter")
+    print("* decrease the query size with the query_size parameter")
+    print("* increase the retry count with the parameters (num_request_retry, "
+          "retry_error_codes)")
+    sys.exit(1)
 
 
 def get_single_item(cb_config: Config, item_id: int):
@@ -443,6 +464,8 @@ def parse_config_data(data: dict) -> Config:
         schema=data.get(SupportedConfigKeys.SCHEMA.value, "Requirement"),
         timeout=data.get(SupportedConfigKeys.TIMEOUT.value, 30),
         out=data.get(SupportedConfigKeys.OUT.value),
+        num_request_retry=data.get(SupportedConfigKeys.NUM_REQUEST_RETRY.value, 5),
+        retry_error_codes=data.get(SupportedConfigKeys.RETRY_ERROR_CODES.value, []),
         cb_auth_conf=AuthenticationConfig(
             token=data.get(SupportedConfigKeys.CB_TOKEN.value),
             user=data.get(SupportedConfigKeys.CB_USER.value),
