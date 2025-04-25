@@ -1,0 +1,58 @@
+package cpptest_req
+import req
+
+
+req.UseCase Trace_Codebeamer_to_CPP_Tests {
+    description = '''
+        As a requirements manager I want to have a report of traceability between
+        requirements in codebeamer and tests in C++.
+    '''
+}
+
+req.System_Requirement Input_Config_File {
+  description = '''
+    IF the input file "config" given though the command line parameter "--config" is a file
+  '''
+}
+
+req.System_Requirement_Aspect Valid_Config_File {
+  description = '''
+    AND IF the input file "config" has valid yaml syntax.
+    THEN the config file parameters shall be consumed.
+  '''
+}
+
+req.System_Requirement_Aspect Invalid_Config_File {
+  description = '''
+    OTHERWISE, the tool shall raise LOBSTER_Exception "Invalid config file".
+  '''
+}
+
+req.System_Requirement_Aspect Valid_Config_File_Parameters {
+  description = '''
+    IF the parameters specified in [Valid_Config_File] are valid tool parameters,
+    THEN the tool shall write the output in the LOBSTER interchange format to the file given in the "out" parameter
+    AND exit with a zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect  Invalid_Config_File_Parameters{
+  description = '''
+    OTHERWISE, the tool shall print an error message to STDERR
+    AND exit with non zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect Valid_Parameter_Codebeamer_Url {
+  description = '''
+    IF the [Valid_Config_File_Parameters] is valid codebeamer URL,
+    THEN the tool shall consume requirements from the given URL
+  '''
+}
+
+req.System_Requirement_Aspect  Invalid_Parameter_Codebeamer_Url{
+  description = '''
+    OTHERWISE, 
+    //TODO : Currently the tool does not raise any error for Invalid_Parameter_Codebeamer_Url
+  '''
+}
