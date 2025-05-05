@@ -1,0 +1,11 @@
+output:{
+  component_tests.lobster:
+    marker: ["@requirement", "@requiredby"]
+    kind: "req"
+
+  other_tests.lobster:
+    marker: []
+
+    kind: ""}
+
+codebeamer_url: "https://codebeamer.com"
