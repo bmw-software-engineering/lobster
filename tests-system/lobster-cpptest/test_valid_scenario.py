@@ -22,12 +22,27 @@ class InputFileCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_invalid_input_cpptest_file(self):
+        # lobster-trace: cpptest_req.Invalid_Config_File
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "cpptest-config-invalid-syntax.yaml")
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+
+        self.assertIn('raise LOBSTER_Exception(message="Invalid config file")',
+                      completed_process.stderr)
+        asserter.assertExitCode(1)
+        asserter.assertOutputFiles()
+
+    def test_invalid_parameters_input_cpptest_file(self):
+        # lobster-trace: cpptest_req.Invalid_Config_File_Parameters
         self._test_runner.cmd_args.config = str(
             self._data_directory / "cpptest-config-invalid.yaml")
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
 
-        asserter.assertNoStdErrText()
-        self.assertIn('lobster items to', completed_process.stdout)
-        asserter.assertExitCode(0)
-        asserter.assertOutputFiles()
+        asserter.assertStdErrText('usage: lobster-cpptest [-h] [-v, --version]'
+                                  ' [--config CONFIG]\nlobster-cpptest: error: Please'
+                                  ' follow the right config file structure! Missing'
+                                  ' attribute "markers" for output file'
+                                  ' "component_tests.lobster"\n')
+        asserter.assertExitCode(2)
