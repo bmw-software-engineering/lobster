@@ -1,17 +1,14 @@
 import sys
-import time
 import subprocess
 from datetime import datetime, timezone
 import json
-import importlib
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from lobster.tools.core.html_report.html_report import get_commit_timestamp_utc
 from .lobster_UI_system_test_case_base import LobsterUISystemTestCaseBase
-
-Asserter = importlib.import_module('tests-system.asserter')
+from ..asserter import Asserter
 
 
 class LobsterUIReportTests(LobsterUISystemTestCaseBase):
@@ -74,7 +71,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
     def test_status_buttons(self):
         """Test the status buttons in the HTML report."""
         completed_process = self._test_runner.run_tool_test()
-        asserter = Asserter.Asserter(self, completed_process, self._test_runner)
+        asserter = Asserter(self, completed_process, self._test_runner)
         self.driver.get(self.input_file)
 
         ok = "ok"
