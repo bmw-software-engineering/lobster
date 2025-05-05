@@ -2,13 +2,6 @@ package cpptest_req
 import req
 
 
-req.UseCase Trace_Codebeamer_to_CPP_Tests {
-    description = '''
-        As a requirements manager I want to have a report of traceability between
-        requirements in codebeamer and tests in C++.
-    '''
-}
-
 req.System_Requirement Input_Config_File {
   description = '''
     IF the input file "config" given though the command line parameter "--config" is a file
@@ -25,7 +18,7 @@ req.System_Requirement_Aspect Valid_Config_File {
 
 req.System_Requirement_Aspect Invalid_Config_File {
   description = '''
-    OTHERWISE, the tool shall raise LOBSTER_Exception "Invalid config file".
+    OTHERWISE, the tool shall print the following message to STDERR "Invalid config file".
   '''
 }
 
