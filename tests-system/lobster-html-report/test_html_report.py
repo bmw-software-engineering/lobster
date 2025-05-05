@@ -141,3 +141,11 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
                         expected_time = datetime.fromtimestamp(
                             int(result.stdout.strip()), tz=timezone.utc)
                         self.assertIn(str(expected_time), text)
+
+    def test_meta_tag(self):
+        """Test the status buttons in the HTML report."""
+        self._test_runner.run_tool_test()
+        self.driver.get(self.input_file)
+        element = self.driver.find_element(By.TAG_NAME, "meta")
+        self.assertEqual(element.get_attribute('http-equiv'), "Content-Type")
+        self.assertEqual(element.get_attribute('content'), "text/html; charset=utf-8")
