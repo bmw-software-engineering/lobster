@@ -1,16 +1,7 @@
 package html_req
 import req
 
-req.System_Requirement Input_File_Existance {
-    description = '''
-      IF the input file specified via the first positional command line argument is
-      not a file,
-      THEN the tool shall exit with a non-zero return code
-      AND shall print an error message to STDERR.
-    '''
-}
-
-req.System_Requirement Missing_Lobster_File_Error {
+req.System_Requirement Missing_Lobster_File {
     description = '''
       IF the input .lobster file does not exist or is missing,
       THEN the tool shall exit with a non-zero return code (2)
@@ -18,7 +9,7 @@ req.System_Requirement Missing_Lobster_File_Error {
     '''
 }
 
-req.System_Requirement Valid_Lobster_File_Success {
+req.System_Requirement Valid_Lobster_File {
     description = '''
       IF a valid .lobster file is provided as input,
       THEN the tool shall execute successfully with a zero return code (0)
