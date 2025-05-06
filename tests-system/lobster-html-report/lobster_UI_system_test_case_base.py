@@ -1,11 +1,9 @@
 from pathlib import Path
 from .lobster_UI_test_runner import LobsterUITestRunner
-import importlib
-
-system_test_case_base = importlib.import_module('tests-system.system_test_case_base')
+from ..system_test_case_base import SystemTestCaseBase
 
 
-class LobsterUISystemTestCaseBase(system_test_case_base.SystemTestCaseBase):
+class LobsterUISystemTestCaseBase(SystemTestCaseBase):
     def __init__(self, methodName):
         super().__init__(methodName)
         self._data_directory = Path(__file__).parents[0] / "data"

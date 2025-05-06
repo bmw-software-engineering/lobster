@@ -1,4 +1,0 @@
-usage: lobster-html-report [-h] [-v, --version] [--out OUT] [--dot DOT]
-                           [--high-contrast]
-                           [lobster_report]
-lobster-html-report: error: missing.lobster is not a file
