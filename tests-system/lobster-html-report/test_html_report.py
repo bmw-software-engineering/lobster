@@ -141,3 +141,13 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
                         expected_time = datetime.fromtimestamp(
                             int(result.stdout.strip()), tz=timezone.utc)
                         self.assertIn(str(expected_time), text)
+
+    def test_meta_tag(self):
+        """Test to check the presence of meta tag in the HTML report."""
+        # lobster-trace: html_req.Meta_Tag_In_Html_Report
+        self._test_runner.run_tool_test()
+        self.driver.get(self.input_file)
+        meta_element = self.driver.find_element(By.TAG_NAME, "meta")
+        self.assertEqual(meta_element.get_attribute('http-equiv'), "Content-Type")
+        self.assertEqual(
+            meta_element.get_attribute('content'), "text/html; charset=utf-8")
