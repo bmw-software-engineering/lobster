@@ -1,0 +1,10 @@
+package html_req
+import req
+
+req.System_Requirement Meta_Tag_In_Html_Report {
+    description = '''
+      IF a HTML report is generated,
+      THEN the file should contain meta tag,
+      HAVING attributes "http-equiv" and "content".
+    '''
+}
