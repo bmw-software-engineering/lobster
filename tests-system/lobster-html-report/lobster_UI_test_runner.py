@@ -1,15 +1,11 @@
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
-
+from ..test_runner import TestRunner
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-
-import importlib
-
-test_runner = importlib.import_module('tests-system.test_runner')
 
 
 @dataclass
@@ -36,7 +32,7 @@ class CmdArgs:
         return cmd_args
 
 
-class LobsterUITestRunner(test_runner.TestRunner):
+class LobsterUITestRunner(TestRunner):
     """System test runner for lobster-report"""
 
     def __init__(self, tool_name: str, working_dir: Path):
