@@ -66,3 +66,15 @@ type UseCase {
     The use case shall not describe the implementation of the tools.
   ''' String
 }
+
+type Parameter_Requirement {
+	/* A parameter requirement describes how the output is
+	   generated.
+	   A parameter requirement can be tested like this:
+	   - a valid configuration file must be provided
+	   - the output of the tool must be analyzed.
+	     Here the parameter requirement describes the details to
+		 be checked in the output.
+	  */
+	description String
+}

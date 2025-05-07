@@ -1,0 +1,44 @@
+package cpptest_req
+import req
+
+
+req.System_Requirement Input_Config_File {
+  description = '''
+    IF the input file "config" given though the command line parameter "--config" is a file
+  '''
+}
+
+req.System_Requirement_Aspect Valid_Config_File {
+  description = '''
+    AND IF the input file "config" has valid yaml syntax.
+    THEN the tool shall write the output in the LOBSTER interchange format to the file given in the "out" parameter
+    AND exit with a zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect Invalid_Config_File {
+  description = '''
+    OTHERWISE, the tool shall print the following message to STDERR "Invalid config file".
+  '''
+}
+
+req.System_Requirement_Aspect  Invalid_Config_File_Parameters{
+  description = '''
+    OTHERWISE, the tool shall print an error message to STDERR
+    AND exit with non zero return code.
+  '''
+}
+
+req.Parameter_Requirement codebeamer_url {
+	description = '''
+		IF this parameter is given, then the tool shall look for tags (inside the input files) that begin with the given URL, 
+    THEN the tool shall search for tags that match one of the following patterns:
+    * <value>/issue/<id>
+    * CB-#<id>
+    WHERE <id> is a positive integer and value is the provided parameter value.
+    These tags shall be written in the "refs" section of the LOBSTER item.
+    Example: codebeamer_url: https://server.com
+             and the C++ tests contains "@requirement https://server.com/issue/1234"
+             and the LOBSTER item shall have "req 1234" in the "refs" section.
+	'''
+}
