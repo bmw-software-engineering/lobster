@@ -25,6 +25,7 @@ section "Extracting requirements from codebeamer"
     ]
 
     link = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+    safety_impact = "Yes"
   }
 
    req.PotentialError Wrong_Extraction_from_Codebeamer{
@@ -48,6 +49,7 @@ section "Extracting requirements from codebeamer"
       ]
 
       link = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+      safety_impact = "Yes"
   }
 
   req.PotentialError Too_few_Extraction_from_Codebeamer{
@@ -57,11 +59,12 @@ section "Extracting requirements from codebeamer"
        For example, there are 100 applicable requirements in codebeamer tracker but LOBSTER extracts 75 requirements.
       '''
       impacts =[
-        '''If the ID of the codebeamer requirement is missing
+        '''If the codebeamer requirement is missing
            then user might think that all requirements are tested where in reality it is not the case.'''
       ]
 
       link = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+      safety_impact = "Yes"
   }
 
   req.PotentialError Too_many_Extraction_from_Codebeamer{
@@ -71,11 +74,12 @@ section "Extracting requirements from codebeamer"
        For example, there are 100 applicable requirements in codebeamer tracker but LOBSTER extracts 125 requirements with 25 requirements from not applicable section of tracker.
       '''
       impacts =[
-        '''If the ID of the codebeamer requirement is from not applicable section
+        '''If the codebeamer requirement is from not applicable section
            then user might think that all requirements are not tested where in reality it is not the case.'''
       ]
 
       link = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+      safety_impact = "Yes"
   }
 
   req.TestSpecification Partial_Codebeamer_IDs_in_Output {
@@ -120,104 +124,102 @@ section "Extracting requirements from codebeamer"
 
 section "Extracting tests from c++ unit test files"
 {
-  req.PotentialError Wrong_Git_Hash_Extraction_from_Git{
-      summary = "LOBSTER extracts the git hashes wrongly"
-      description = '''
-        Git hash of c++ test git commits are not extracted completely
-        example, some bits of git hashes are interchanged or missing
-        '''
-      impacts =[
-        '''If git hash is not written correctly
-           and that wrong git hash is also a valid git bash from previous commits
-           then user might think that wrong files are imported but in fact that is not the case.''',
-
-        '''if the hash is not written correctly
-           and that wrong git hash is not valid
-           then user will not able to find the correct git commit from which c++ test files are taken'''
-      ]
-
-      link = [git_hash]
-  }
-
+  
   req.PotentialError Too_few_Extraction_from_Git{
       summary = "LOBSTER extracts too few tests"
       description = '''
-        Some c++ test file are ignored and all requirement IDs from c++ tests are not extracted
-        example, requirement IDs from some c++ test files are not extracted
+        Some c++ test file are ignored
+        example, some c++ test file are ignored while extracting referance data.
         '''
       impacts =[
-        '''If requirement references are not extracted from c++ test
-           and report is generated with those test cases marked as missing requirement reference
-           then user might think that test cases are missing reference but in fact it is not.''',
+        '''If c++ test files are ignored in the extraction
+           and report is generated with missing file data
+           then user might think that some requirements are not covered in test case but in fact they are covered''',
 
-        '''If all requirement references are not extracted from c++ test case
-           and report is generated with not extracted requirement marked as missing test case reference
-           then user might think that test case implementation is missing for the requirement but in fact it is not.'''
+        '''If c++ test files are ignored in the extraction
+           and report is generated with missing file data with some of the test cases have missing referance to requirements
+           then user might think that all test cases are covering the requirements but in fact it is not.'''
       ]
 
       link = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+      safety_impact = "Yes"
+  }
+
+req.PotentialError Too_few_tests_Extraction_from_test_file{
+      summary = "LOBSTER extracts too few tests"
+      description = '''
+        Some tests from c++ test file are ignored
+        '''
+      impacts =[
+        '''If some test cases are not extracted from c++ test file
+           and report is generated with missing data
+           then user might think that all requirements are covered by test case but in fact it is not.'''
+      ]
+
+      link = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+      safety_impact = "Yes"
+  }
+
+  req.PotentialError Too_few_requirement_referance_Extraction_from_test{
+      summary = "LOBSTER extracts too few tests"
+      description = '''
+        Some requirement referances from test in c++ file are ignored
+        '''
+      impacts =[
+        '''If some requirement references are missed while extracting referances from c++ test
+           and report is generated with not extracted requirement marked as missing test case reference
+           then user might think that test case implementation is missing for the requirement but in fact it is not.''',
+
+        '''If requirement references are not extracted from c++ test
+           and report is generated with those test cases marked as missing requirement reference
+           then user might think that test cases are missing reference but in fact it is not.'''   
+      ]
+
+      link = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+      safety_impact = "Yes"
   }
 
   req.PotentialError Too_many_Extraction_from_Git{
       summary = "LOBSTER extracts too many tests"
       description = ''' 
-        Some non relevant c++ test file are extracted.
-        example, Some c++ test file are extracted from path which is not relevant.
+        Some non relevant test file are extracted.
+        example, Some test file are extracted from file which is not relevant.
         '''
       impacts =[
-        '''If the unwanted c++ test file contains relevant requirement references
+        '''If the unwanted test file contains relevant requirement references
            and report is generated with those requirement references
            then user might think that all requirements are covered by c++ tests but in fact it is not.''',
 
-        '''If unwanted c++ test file contains non relevant requirement references
+        '''If unwanted test file contains non relevant requirement references
            and report is generated with those requirement references
            then user might think that all requirements are not covered by c++ tests but in fact they are covered.'''
       ]
 
       link = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+      safety_impact = "Yes"
   }
 
-  req.PotentialError No_Git_Hash_Extraction_from_Git{
-      summary = "LOBSTER fails to extract git hashes"
+  req.PotentialError Too_many_requirement_referance_Extraction_from_test{
+      summary = "LOBSTER extracts too many tests"
       description = '''
-        Git has of the c++ test is not extracted
+        Some non referanced requirement referances from test in c++ file are extracted
+        example: While extracting requirement referances from a test case, an additional referance considered
+        with partial data from previous requirement referance.
         '''
-      impacts =[
-        '''If git hash is not available in output
-           then user might not able to verify if the c++ test belongs to correct commit'''
+      impacts = [
+        '''If the additional requirement in referance is valid requirement id and not covered in any test case
+           and report is generated with this wrong data
+           then user might think that all requirements are covered by the software tests but in fact it is not the case.'''
       ]
-
-      link = [git_hash]
-  }
-
-  req.PotentialError No_source_location_Extraction{
-      summary = "LOBSTER fails to extract the source location"
-      description = '''
-        URL for the c++ test case location is not available.
-        '''
-      impacts =[
-        '''If the hyperlink is not available in the HTML report
-           then user will not able to navigate to source location of the c++ test.''',
-
-        '''If source location is not available in the report
-           then user will not able to verify if c++ test file are taken from correct path.'''
-      ]
-
-      link = [Item_Source]
-  }
-
-  req.TestSpecification Git_Hash_in_output{
-      description = '''
-        The test shall verify git hash of c++ test file is same as downloaded data from git.
-      '''
-      verifies = [Wrong_Git_Hash_Extraction_from_Git, No_Git_Hash_Extraction_from_Git]
+      link = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+      safety_impact = "Yes"
   }
 
   req.TestSpecification Incorrect_Number_of_Cpp_Tests_in_Output{
       description = '''
-        The test shall verify number of c++ tests in output file are same as c++ test downloaded from git. 
+        The test shall verify number of tests in output file are same as available at input. 
       '''
-      verifies = [Too_few_Extraction_from_Git, Too_many_Extraction_from_Git]
+      verifies = [Too_few_Extraction_from_Git,Too_few_tests_Extraction_from_test_file, Too_many_Extraction_from_Git]
   }
 
   req.TestSpecification Incorrect_number_of_requirement_references_in_Output{
@@ -228,14 +230,7 @@ section "Extracting tests from c++ unit test files"
         example : If a test case contains 2 requirement references in c++ test file,
         then test shall verify output file contains 2 requirement references for the c++ test.
       '''
-      verifies = [Too_few_Extraction_from_Git]
-  }
-
-  req.TestSpecification No_Source_location_in_output{
-      description = '''
-        The test shall verify output file contains source location URL from which c++ test file is taken.
-      '''
-      verifies = [No_source_location_Extraction]
+      verifies = [Too_few_requirement_referance_Extraction_from_test,Too_many_requirement_referance_Extraction_from_test]
   }
 }
 
@@ -250,10 +245,15 @@ section "Generating LOBSTER report"
       impacts =[
         '''If there is error in coverage number calculation
            and the error results in showing 100% coverage
+           then user might think that all requirements are covered but in fact it is not.''',
+
+        '''If there are 1000 requirements and 999 requirements are covered and 1 is not covered
+           and due to coverage calculation error coverage is shown as 100% instead of 99.9%
            then user might think that all requirements are covered but in fact it is not.'''
       ]
 
       link = [Requirements_to_CPP_Test_Coverage]
+      safety_impact = "Yes"
   }
 
   req.PotentialError Wrong_Mapping_of_Requirement_to_Software_Test{
@@ -269,6 +269,7 @@ section "Generating LOBSTER report"
       ]
 
       link = [List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+      safety_impact = "Yes"
   }
 
   req.PotentialError Wrong_Mapping_of_Software_Test_to_Requirement{
@@ -284,6 +285,7 @@ section "Generating LOBSTER report"
       ]
 
       link = [List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer]
+      safety_impact = "Yes"
   }
 
   req.TestSpecification Coverage_calculation_in_Output{
@@ -311,6 +313,78 @@ section "Generating LOBSTER report"
   }
 }
 
+section "GIT"
+{
+  req.PotentialError Wrong_Git_Hash_Extraction_from_Git{
+      summary = "LOBSTER extracts the git hashes wrongly"
+      description = '''
+        Git hash of c++ test git commits are not extracted completely
+        example, some bits of git hashes are interchanged or missing
+        '''
+      impacts =[
+        '''If git hash is not written correctly
+           and that wrong git hash is also a valid git hash from previous commits
+           then user might think that wrong files are imported but in fact that is not the case.''',
+
+        '''if the hash is not written correctly
+           and that wrong git hash is not valid
+           then user will not able to find the correct git commit from which c++ test files are taken''',
+
+        '''If git hash is not written correctly
+           and that wrong git hash is also a valid git hash from previous commits
+           then user might give a release clearence for wrong hash.'''
+      ]
+
+      link = [git_hash]
+      safety_impact = "Yes"
+  }
+
+  req.PotentialError No_Git_Hash_Extraction_from_Git{
+        summary = "LOBSTER fails to extract git hashes"
+        description = '''
+          Git hash of the c++ test is not extracted
+          '''
+        impacts =[
+          '''If git hash is not available in output
+            then user might not able to verify if the c++ test belongs to correct commit'''
+        ]
+
+        link = [git_hash]
+        safety_impact = "No"
+  }
+
+    req.PotentialError No_source_location_Extraction{
+      summary = "LOBSTER fails to extract the source location"
+      description = '''
+        URL for the c++ test case location is not available.
+        '''
+      impacts =[
+        '''If the hyperlink is not available in the HTML report
+           then user will not able to navigate to source location of the c++ test.''',
+
+        '''If source location is not available in the report
+           then user will not able to verify if c++ test file are taken from correct path.'''
+      ]
+
+      link = [Item_Source]
+      safety_impact = "No"
+  }
+
+  req.TestSpecification Git_Hash_in_output{
+      description = '''
+        The test shall verify git hash of c++ test file is same as data from git.
+      '''
+      verifies = [Wrong_Git_Hash_Extraction_from_Git, No_Git_Hash_Extraction_from_Git]
+  }
+
+  req.TestSpecification No_Source_location_in_output{
+      description = '''
+        The test shall verify output file contains source location URL from which c++ test file is taken.
+      '''
+      verifies = [No_source_location_Extraction]
+  }
+}
+
 section "Generating the final HTML report"
 {
   req.PotentialError Requirements_not_listed_correctly{
@@ -330,6 +404,7 @@ section "Generating the final HTML report"
       ]
 
       link = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+      safety_impact = "Yes"
   }
 
   req.PotentialError Software_tests_not_listed_correctly{
@@ -349,6 +424,7 @@ section "Generating the final HTML report"
       ]
 
       link = [Trace_Codebeamer_to_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer]
+      safety_impact = "Yes"
   }
 
   req.PotentialError Incorrect_mapping_in_HTML_File{
@@ -365,6 +441,7 @@ section "Generating the final HTML report"
       ]
 
       link = [Trace_Codebeamer_to_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+      safety_impact = "Yes"
   }
 
   req.PotentialError HTML_report_not_Generated{
@@ -378,6 +455,7 @@ section "Generating the final HTML report"
       ]
 
       link = [HTML_Output]
+      safety_impact = "No"
   }
 
   req.PotentialError Input_file_location_missing{
@@ -396,6 +474,7 @@ section "Generating the final HTML report"
       ]
 
       link = [Item_Source, Show_codebeamer_links]
+      safety_impact = "No"
   }
 
   req.PotentialError Incorrect_syntax_in_HTML_report{
@@ -413,6 +492,7 @@ section "Generating the final HTML report"
       ]
 
       link = [HTML_Output]
+      safety_impact = "No"
   }
 
   req.PotentialError Too_few_findings_in_HTML_report{
@@ -428,6 +508,7 @@ section "Generating the final HTML report"
       ]
 
       link = [HTML_Output, List_Findings]
+      safety_impact = "Yes"
   }
 
   req.PotentialError Wrong_tracing_policy_in_HTML_report{
@@ -441,12 +522,13 @@ section "Generating the final HTML report"
         ]
 
         link = [List_Findings]
+        safety_impact = "Yes"
   }
 
   req.PotentialError Wrong_Input_file_location{
       summary = "LOBSTER shows the wrong location of the input files"
       description = '''
-        Source location of the input file is incorrect in HTML file.
+        Source location of the input file is incorrect in HTML report.
       '''
       impacts = [
         '''If URL of the git repo is not correct in HTML report
@@ -458,6 +540,7 @@ section "Generating the final HTML report"
       ]
 
       link = [Item_Source, Show_codebeamer_links]
+      safety_impact = "No"
   }
 
   req.TestSpecification Covered_Requirement_list_in_HTML_file{
