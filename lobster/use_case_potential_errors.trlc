@@ -23,6 +23,8 @@ section "Extracting requirements from codebeamer"
          then the user might think that all aspects of a requirement are covered by a test,
          where in fact they are not.''',
     ]
+
+    link = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
   }
 
    req.PotentialError Wrong_Extraction_from_Codebeamer{
@@ -44,6 +46,8 @@ section "Extracting requirements from codebeamer"
          then the user might think that all aspects of a requirement are covered by a test,
          where in fact they are not.'''
       ]
+
+      link = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
   }
 
   req.PotentialError Too_few_Extraction_from_Codebeamer{
@@ -56,6 +60,8 @@ section "Extracting requirements from codebeamer"
         '''If the ID of the codebeamer requirement is missing
            then user might think that all requirements are tested where in reality it is not the case.'''
       ]
+
+      link = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
   }
 
   req.PotentialError Too_many_Extraction_from_Codebeamer{
@@ -68,6 +74,8 @@ section "Extracting requirements from codebeamer"
         '''If the ID of the codebeamer requirement is from not applicable section
            then user might think that all requirements are not tested where in reality it is not the case.'''
       ]
+
+      link = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
   }
 
   req.TestSpecification Partial_Codebeamer_IDs_in_Output {
@@ -115,7 +123,7 @@ section "Extracting tests from c++ unit test files"
   req.PotentialError Wrong_Git_Hash_Extraction_from_Git{
       summary = "LOBSTER extracts the git hashes wrongly"
       description = '''
-        Git hases of c++ test git commits are not extracted completely
+        Git hash of c++ test git commits are not extracted completely
         example, some bits of git hashes are interchanged or missing
         '''
       impacts =[
@@ -127,6 +135,8 @@ section "Extracting tests from c++ unit test files"
            and that wrong git hash is not valid
            then user will not able to find the correct git commit from which c++ test files are taken'''
       ]
+
+      link = [git_hash]
   }
 
   req.PotentialError Too_few_Extraction_from_Git{
@@ -136,7 +146,7 @@ section "Extracting tests from c++ unit test files"
         example, requirement IDs from some c++ test files are not extracted
         '''
       impacts =[
-        '''If requirement referances are not extracted from c++ test
+        '''If requirement references are not extracted from c++ test
            and report is generated with those test cases marked as missing requirement reference
            then user might think that test cases are missing reference but in fact it is not.''',
 
@@ -144,23 +154,27 @@ section "Extracting tests from c++ unit test files"
            and report is generated with not extracted requirement marked as missing test case reference
            then user might think that test case implementation is missing for the requirement but in fact it is not.'''
       ]
+
+      link = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
   }
 
   req.PotentialError Too_many_Extraction_from_Git{
       summary = "LOBSTER extracts too many tests"
       description = ''' 
-        Some not relevent c++ test file are extracted.
+        Some non relevant c++ test file are extracted.
         example, Some c++ test file are extracted from path which is not relevant.
         '''
       impacts =[
         '''If the unwanted c++ test file contains relevant requirement references
-         and report is generated with those requirement references
-         then user might think that all requirements are covered by c++ tests but in fact it is not.''',
+           and report is generated with those requirement references
+           then user might think that all requirements are covered by c++ tests but in fact it is not.''',
 
-        ''' if unwanted c++ test file contains non relevant requirement references
-         and report is generated with those requirement references
-         then user might think that all requirements are not covered by c++ tests but in fact they are covered.'''
+        '''If unwanted c++ test file contains non relevant requirement references
+           and report is generated with those requirement references
+           then user might think that all requirements are not covered by c++ tests but in fact they are covered.'''
       ]
+
+      link = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
   }
 
   req.PotentialError No_Git_Hash_Extraction_from_Git{
@@ -170,8 +184,10 @@ section "Extracting tests from c++ unit test files"
         '''
       impacts =[
         '''If git hash is not available in output
-         then user might not able to verify if the c++ test belongs to correct commit'''
+           then user might not able to verify if the c++ test belongs to correct commit'''
       ]
+
+      link = [git_hash]
   }
 
   req.PotentialError No_source_location_Extraction{
@@ -181,11 +197,13 @@ section "Extracting tests from c++ unit test files"
         '''
       impacts =[
         '''If the hyperlink is not available in the HTML report
-         then user will not able to navigate to source location of the c++ test.''',
+           then user will not able to navigate to source location of the c++ test.''',
 
-         '''If source location is not available in the report
-         then user will not able to verify if c++ test file are taken from correct path.'''
+        '''If source location is not available in the report
+           then user will not able to verify if c++ test file are taken from correct path.'''
       ]
+
+      link = [Item_Source]
   }
 
   req.TestSpecification Git_Hash_in_output{
@@ -197,7 +215,7 @@ section "Extracting tests from c++ unit test files"
 
   req.TestSpecification Incorrect_Number_of_Cpp_Tests_in_Output{
       description = '''
-        The test shall verify number of c++ tests in output file are same as c++ test donwloaded from git. 
+        The test shall verify number of c++ tests in output file are same as c++ test downloaded from git. 
       '''
       verifies = [Too_few_Extraction_from_Git, Too_many_Extraction_from_Git]
   }
@@ -205,7 +223,7 @@ section "Extracting tests from c++ unit test files"
   req.TestSpecification Incorrect_number_of_requirement_references_in_Output{
       description = '''
         The test shall verify number of requirement references available for a c++ test in output file
-        are same as as requirement references availble in download from git.
+        are same as as requirement references available in download from git.
 
         example : If a test case contains 2 requirement references in c++ test file,
         then test shall verify output file contains 2 requirement references for the c++ test.
@@ -218,5 +236,307 @@ section "Extracting tests from c++ unit test files"
         The test shall verify output file contains source location URL from which c++ test file is taken.
       '''
       verifies = [No_source_location_Extraction]
+  }
+}
+
+section "Generating LOBSTER report"
+{
+  req.PotentialError Incorrect_Coverage_Calculation{
+      summary = "LOBSTER calculates the coverage number wrongly"
+      description = '''
+        Calculation of total number of requirements and requirements covered is not correct.
+        example, error while converting to percentage value.
+        '''
+      impacts =[
+        '''If there is error in coverage number calculation
+           and the error results in showing 100% coverage
+           then user might think that all requirements are covered but in fact it is not.'''
+      ]
+
+      link = [Requirements_to_CPP_Test_Coverage]
+  }
+
+  req.PotentialError Wrong_Mapping_of_Requirement_to_Software_Test{
+      summary = "LOBSTER maps the requirement wrongly to software tests"
+      description = '''
+        Some Requirements are not mapped to the tests correctly.
+        example, requirement mapping is missed or requirements are swapped while mapping.
+        '''
+      impacts = [
+        '''If a requirement is wrongly mapped to a test case
+           and that test case does not contains any requirement reference
+           then user might think all requirements are covered by tests but in fact it is not'''
+      ]
+
+      link = [List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+  }
+
+  req.PotentialError Wrong_Mapping_of_Software_Test_to_Requirement{
+      summary = "LOBSTER maps the software tests wrongly to the requirements"
+      description = '''
+        Some software tests are not mapped to the requirements correctly.
+        example, software test mapping is missed or software tests are swapped while mapping.
+        '''
+      impacts = [
+        '''if a software test is wrongly mapped to a requirement
+           and that requirement is not covered by any software test
+           then user moght think test case is written for all requirements but in fact it is not'''
+      ]
+
+      link = [List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer]
+  }
+
+  req.TestSpecification Coverage_calculation_in_Output{
+      description = '''
+        The test shall verify the output file contains correct coverage calculation
+        based on total number of requirements and number of covered requirements.
+      '''
+      verifies = [Incorrect_Coverage_Calculation]
+  }
+
+  req.TestSpecification Requirement_to_software_Test_Mapping_in_Output{
+      description = '''
+        The test shall verify output file contains correct mapping of requirement to software tests
+        based on requirement reference mentioned in software tests.
+      '''
+      verifies = [Wrong_Mapping_of_Requirement_to_Software_Test]
+  }
+
+  req.TestSpecification Software_Test_to_Requirement_Mapping_in_output{
+      description = '''
+        The test shall verify output file contains correct mapping of software tests to requirement
+        based on requirement reference mentioned in software tests.
+      '''
+      verifies = [Wrong_Mapping_of_Software_Test_to_Requirement]
+  }
+}
+
+section "Generating the final HTML report"
+{
+  req.PotentialError Requirements_not_listed_correctly{
+      summary = "LOBSTER does not list the requirements correctly"
+      description = '''
+        Some requirements are not listed correctly
+        example, 
+        - Some requirements which are not covered are not listed in the HTML report.
+        - Some requirements which are covered are not listed in the HTML report.
+      '''
+      impacts =[
+        '''If the requirements not covered by tests are not listed in HTML report
+           then user might think that all requirements are covered by the tests but in fact it is not.''',
+
+        '''If the requirements covered by the tests are not listed in HTM report
+           then user might think that all requirements are not covered by the tests but in fact it is not the case.'''
+      ]
+
+      link = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+  }
+
+  req.PotentialError Software_tests_not_listed_correctly{
+      summary = "LOBSTER does not list the software tests correctly"
+      description = '''
+        Some software tests are not listed correctly.
+        example, 
+        - Some software tests which are not covering any requirement are not listed in the HTML report.
+        - Some software tests which are covering the requirement are not listed in the HTML report.
+      '''
+      impacts = [
+        '''If the software tests not covering any requirement are not listed in HTML report
+        then user might think that all requirements are covered by software tests but in fact it is not.''',
+
+        '''If software tests covered covering requirements are not listed in HTML report
+           then user might think that all requirements are not covered by software tests but in fact that is not the case.'''
+      ]
+
+      link = [Trace_Codebeamer_to_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer]
+  }
+
+  req.PotentialError Incorrect_mapping_in_HTML_File{
+      summary = "LOBSTER does not show the mapping between requirements software tests correctly"
+      description ='''
+        Mapping between requirements and software tests is not shown correctly HTML report
+        example, while generating html report rows are interchanged or
+        incomplete data is written in html file.
+      '''
+      impacts = [
+        '''If mapping is not shown correctly in HTML file
+           and non covered requirements is shown as covered
+           then user might think that requirement is covered but in fact it is not.'''
+      ]
+
+      link = [Trace_Codebeamer_to_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+  }
+
+  req.PotentialError HTML_report_not_Generated{
+      summary = "LOBSTER fails to generate HTML report"
+      description = '''
+        HTML report is not generated.
+      '''
+      impacts = [
+        '''If HTML report is not generated then user will not able to verify the traceability results
+           between requirements and software tests.'''
+      ]
+
+      link = [HTML_Output]
+  }
+
+  req.PotentialError Input_file_location_missing{
+      summary = "LOBSTER fails to show the location of the input files"
+      description = '''
+        Source location of the input file is missing in HTML report.
+        example, URL for git repo of software test is not shown in HTML report.
+      '''
+      impacts = [
+        '''If URL for Git repo is missing in HTML report
+           then user will not be able to verify the git repo from which software tests are taken.''',
+
+        '''If Hyperlink to requirement item is missing 
+           and user clicks on requirement item to get more information on requirement item
+           then user will not be able to access the codebeamer item'''
+      ]
+
+      link = [Item_Source, Show_codebeamer_links]
+  }
+
+  req.PotentialError Incorrect_syntax_in_HTML_report{
+      summary = "LOBSTER generates report syntax incorrectly"
+      description = '''
+        Syntax of the generated HTML report is not correct
+        example, some content of the report is not readable(e.g. Non readable charachters in lines like string of &,*,.. etc.)
+      '''
+      impacts = [
+        '''If HTML report contains unreadbale content
+           then user might not be able to analyze the report correctly.''',
+
+        '''If HTML report contains some unwanted special character in between the lines
+           then user migh not extract correct information from report.'''
+      ]
+
+      link = [HTML_Output]
+  }
+
+  req.PotentialError Too_few_findings_in_HTML_report{
+      summary = "LOBSTER lists too few findings"
+      description = '''
+        All Tracing policy violations are not listed.
+        example, for software test the requirement reference is missing but tracing policy violation
+        is not detected.
+      '''
+      impacts = [
+        '''If all tracing policy violations are not listed in HTML report
+           then user might think that traceability policy is followed in all test cases but in fact it is not.'''
+      ]
+
+      link = [HTML_Output, List_Findings]
+  }
+
+  req.PotentialError Wrong_tracing_policy_in_HTML_report{
+      summary = "LOBSTER shows the tracing policy wrongly"
+      description = '''
+        Tracing policy not shown correctly in HTML report.
+      '''
+      impacts = [
+        '''If tracing policy is not shown correctly in HTML report
+           then user might not able understand the traceability data shown in report'''
+        ]
+
+        link = [List_Findings]
+  }
+
+  req.PotentialError Wrong_Input_file_location{
+      summary = "LOBSTER shows the wrong location of the input files"
+      description = '''
+        Source location of the input file is incorrect in HTML file.
+      '''
+      impacts = [
+        '''If URL of the git repo is not correct in HTML report
+           and user clicks on the url then user will be redirected to wrong git location.''',
+
+        '''If hyperlink to requirement item is wrong
+           and user clicks on the hyperlink to access the requirement item in codebeamer
+           then user will be redirected to wrong requirements item in codebeamer.'''
+      ]
+
+      link = [Item_Source, Show_codebeamer_links]
+  }
+
+  req.TestSpecification Covered_Requirement_list_in_HTML_file{
+      description = '''
+        The test shall verify that requirements covered by software tests are correctly listed in the HTML file.
+      '''
+      verifies = [Requirements_not_listed_correctly]
+  }
+
+  req.TestSpecification Not_covered_Requirement_list_in_Output{
+      description = '''
+        The test shall verify that requirements not covered by software tests are correctly listed in the HTML file.
+      '''
+      verifies = [Requirements_not_listed_correctly]
+  }
+
+  req.TestSpecification List_of_Software_tests_covering_requirements_in_HTML_file{
+      description = '''
+        The test shall verify that software tests covering requirement are correctly listed in the HTML file.
+      '''
+      verifies = [Software_tests_not_listed_correctly]
+  }
+
+   req.TestSpecification List_of_Software_tests_Not_covering_requirements_in_HTML_file{
+      description = '''
+        The test shall verify that software tests not covering any requirement are correctly listed in the HTML file.
+      '''
+      verifies = [Software_tests_not_listed_correctly]
+  }
+
+  req.TestSpecification Mapping_in_HTML_file{
+      description = '''
+        The test shall verify that mapping between requirements and software tests is correct in HTML file.
+      '''
+      verifies = [Incorrect_mapping_in_HTML_File]
+  }
+
+  req.TestSpecification HTML_file_generation{
+      description = '''
+        The test shall verify that HTML report file is generated.
+      '''
+      verifies = [HTML_report_not_Generated]
+  }
+
+  req.TestSpecification Source_location_in_output{
+      description = '''
+        The test shall verify that correct source locations of the input files are mentioned in the HTML report.
+        
+        example: Verify HTML file contains correct source location URL from which c++ test file is taken
+      '''
+      verifies = [Input_file_location_missing, Wrong_Input_file_location]
+  }
+
+  req.TestSpecification readable_data_in_output{
+      description = '''
+        The test shall verify html report contains readable data.
+
+        example : Verify the context is in human readable format.
+      '''
+      verifies = [Incorrect_syntax_in_HTML_report]
+  }
+
+  req.TestSpecification Missing_tracing_policy_violation_in_output{
+      description = '''
+        The test shall verify items where tracing policy is violated are listed correctly.
+
+        example: Finding shall be listed under violation of tracing policy if requirement reference is
+        missing in software test.
+      '''
+      verifies = [Too_few_findings_in_HTML_report]
+  }
+
+  req.TestSpecification Tracing_policy_in_output{
+      description = '''
+        The test shall verify correct tracing policy is mentioned in the HTML report.
+
+        example: For requirements in CB and software tests in C++ files,
+        the test shall verify tracing policy between requirements and software tests is correctly shown in the HTML report. 
+      '''
+      verifies = [Wrong_tracing_policy_in_HTML_report]
   }
 }

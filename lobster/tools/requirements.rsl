@@ -74,6 +74,9 @@ type PotentialError {
     This shall be a description of a potential error that may occur in a tool.
   ''' String
   impacts String [1..*]
+  link 
+    '''List of use cases for which potential error is listed'''
+      UseCase[1..*]
 }
 
 type TestSpecification {
