@@ -88,7 +88,7 @@ The individual PyPI packages that `bmw-lobster` depends on are:
   other tools depend on this [Link](https://pypi.org/project/bmw-lobster-core)
 * `bmw-lobster-tool-codebeamer` (for requirements in Codebeamer) [Link](https://pypi.org/project/bmw-lobster-tool-codebeamer)
 * `bmw-lobster-tool-cpp` (for C/C++ code) [Link](https://pypi.org/project/bmw-lobster-tool-cpp)
-* `bmw-lobster-tool-cpptest` (for C/C++ code) [Link](https://pypi.org/project/bmw-lobster-tool-cpp)
+* `bmw-lobster-tool-cpptest` (for C++ code) [Link](https://pypi.org/project/bmw-lobster-tool-cpptest)
 * `bmw-lobster-tool-gtest` (for GoogleTest tests) [Link](https://pypi.org/project/bmw-lobster-tool-gtest)
 * `bmw-lobster-tool-json` (for activities in JSON) [Link](https://pypi.org/project/bmw-lobster-tool-json)
 * `bmw-lobster-tool-python` (for Python3 code) [Link](https://pypi.org/project/bmw-lobster-tool-python)
