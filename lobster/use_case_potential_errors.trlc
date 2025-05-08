@@ -521,7 +521,7 @@ section "Generating the final HTML report"
            then user might not able understand the traceability data shown in report'''
         ]
 
-        link = [List_Findings]
+        link = [Show_Tracing_Policy]
         safety_impact = "Yes"
   }
 
