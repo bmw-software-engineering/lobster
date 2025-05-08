@@ -26,7 +26,7 @@
           "tracing_status": "MISSING",
           "framework": "TRLC",
           "kind": "Requirement",
-          "text": "# Test",
+          "text": "# Test\n\n## List\n\n- first\n- second\n- third\n\n### Table\n\n|H1|H2|\n|-|-|\n|B1|B2|\n\n*italic*  \n**bold**",
           "status": "status1"
         }
       ],
