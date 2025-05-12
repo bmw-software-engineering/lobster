@@ -22,7 +22,7 @@ req.Software_Requirement Get_Query_Zero_Items_Message {
   derived_from = [Empty_Query_Message]
 }
 
-req.System_Requirement Retry_On_Specific_HTTP_Status_Codes {
+req.System_Requirement Retry_On_Specific_HTTPS_Status_Codes {
   description = '''
     IF the actual HTTPS return code is in the list specified by the configuration parameter "retry_error_codes"
     AND the configuration parameter "num_request_retry" is greater than 0 or not defined,
