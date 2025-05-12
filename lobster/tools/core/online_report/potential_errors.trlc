@@ -1,0 +1,74 @@
+package UseCases
+import req
+
+section "GIT"
+{
+  req.PotentialError Wrong_Git_Hash_Extraction_from_Git{
+      summary = "LOBSTER extracts the git hashes wrongly"
+      description = '''
+        Git hash of c++ test git commits are not extracted completely
+        example, some bits of git hashes are interchanged or missing
+        '''
+      impacts =[
+        '''If git hash is not written correctly
+           and that wrong git hash is also a valid git hash from previous commits
+           then user might think that wrong files are imported but in fact that is not the case.''',
+
+        '''if the hash is not written correctly
+           and that wrong git hash is not valid
+           then user will not able to find the correct git commit from which c++ test files are taken''',
+
+        '''If git hash is not written correctly
+           and that wrong git hash is also a valid git hash from previous commits
+           then user might give a release clearence for wrong hash.'''
+      ]
+
+      affects = [git_hash]
+      impact_type = req.Impact_Type.Safety
+  }
+
+  req.PotentialError No_Git_Hash_Extraction_from_Git{
+        summary = "LOBSTER fails to extract git hashes"
+        description = '''
+          Git hash of the c++ test is not extracted
+          '''
+        impacts =[
+          '''If git hash is not available in output
+            then user might not able to verify if the c++ test belongs to correct commit'''
+        ]
+
+        affects = [git_hash]
+        impact_type = req.Impact_Type.Financial
+  }
+
+    req.PotentialError No_source_location_Extraction{
+      summary = "LOBSTER fails to extract the source location"
+      description = '''
+        URL for the c++ test case location is not available.
+        '''
+      impacts =[
+        '''If the hyperaffects is not available in the HTML report
+           then user will not able to navigate to source location of the c++ test.''',
+
+        '''If source location is not available in the report
+           then user will not able to verify if c++ test file are taken from correct path.'''
+      ]
+
+      affects = [Item_Source]
+      impact_type = req.Impact_Type.Financial
+  }
+
+  req.TestSpecification Git_Hash_in_output{
+      description = '''
+        The test shall verify git hash of c++ test file is same as data from git.
+      '''
+      verifies = [Wrong_Git_Hash_Extraction_from_Git, No_Git_Hash_Extraction_from_Git]
+  }
+
+  req.TestSpecification No_Source_location_in_output{
+      description = '''
+        The test shall verify output file contains source location URL from which c++ test file is taken.
+      '''
+      verifies = [No_source_location_Extraction]
+  }
+}
