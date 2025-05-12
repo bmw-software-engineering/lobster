@@ -66,3 +66,34 @@ type UseCase {
     The use case shall not describe the implementation of the tools.
   ''' String
 }
+
+enum Impact_Type {
+  Safety
+    ''' 
+    The potential error has a safety impact.
+    '''
+  Financial
+    '''
+    The potential error has a security impact.
+    '''
+}
+
+type PotentialError {
+  summary String
+  description '''
+    The text of the potential error.
+    This shall be a description of a potential error that may occur in a tool.
+  ''' String
+  impacts String [1..*]
+  affects 
+    '''List of use cases which the potential error could affect'''
+      UseCase[1..*]
+  impact_type Impact_Type
+}
+
+type TestSpecification {
+  description String
+  verifies
+    '''List of potential errors that resulted into this test'''
+      PotentialError[1..*]
+}
