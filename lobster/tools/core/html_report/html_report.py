@@ -361,14 +361,14 @@ def write_html(fd, report, dot, high_contrast, render_md):
 
     # Render MD
     if render_md:
-        doc.style[".trlc_description"] = {
+        doc.style[".md_description"] = {
             "font-style" : "unset",
         }
-        doc.style[".trlc_description h1"] = {
+        doc.style[".md_description h1"] = {
             "padding" : "unset",
             "margin"  : "unset"
         }
-        doc.style[".trlc_description h2"] = {
+        doc.style[".md_description h2"] = {
             "padding"       : "unset",
             "margin"        : "unset",
             "border-bottom" : "unset",
@@ -533,7 +533,7 @@ def write_html(fd, report, dot, high_contrast, render_md):
                         doc.add_line('</div>')
                     if isinstance(item, Requirement) and item.text:
                         if render_md:
-                            bq_class = ' class="trlc_description"'
+                            bq_class = ' class="md_description"'
                             bq_text = markdown.markdown(item.text,
                                                         extensions=['tables'])
                         else:

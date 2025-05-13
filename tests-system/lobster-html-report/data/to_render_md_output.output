@@ -72,14 +72,14 @@ h2 {
 .attribute {
   margin-top: 0.5em;
 }
-.trlc_description {
+.md_description {
   font-style: unset;
 }
-.trlc_description h1 {
+.md_description h1 {
   padding: unset;
   margin: unset;
 }
-.trlc_description h2 {
+.md_description h2 {
   padding: unset;
   margin: unset;
   border-bottom: unset;
@@ -435,7 +435,7 @@ blockquote {
 Status: status1
 </div>
 <div class="attribute">
-<blockquote class="trlc_description"><h1>Test</h1>
+<blockquote class="md_description"><h1>Test</h1>
 <h2>List</h2>
 <ul>
 <li>first</li>
