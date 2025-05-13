@@ -5,7 +5,9 @@
 
 ### 0.12.2-dev
 
-
+* `lobster-html-report`
+  - Added MD rendering support for the description field in the HTML report.
+    - Added a new command line flag `--render-md` to enable this feature.
 
 ### 0.12.1
 
