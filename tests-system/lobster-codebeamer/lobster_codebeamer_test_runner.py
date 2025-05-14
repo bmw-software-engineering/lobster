@@ -71,8 +71,8 @@ class LobsterCodebeamerTestRunner(TestRunner):
         return self._config_file_data
 
     def get_tool_args(self) -> List[str]:
-        """Returns the command line arguments that shall be used to start 'lobster-json'
-           under test"""
+        """Returns the command line arguments that shall be used to
+        start 'lobster-codebeamer' under test"""
         return self._cmd_args.as_list()
 
     def run_tool_test(self) -> CompletedProcess:
