@@ -6,13 +6,25 @@ req.UseCase Trace_Codebeamer_to_CPP_Tests {
         As a requirements manager I want to have a report of traceability between
         requirements in codebeamer and tests in C++.
     '''
+    affected_tools = [
+        req.Tools.lobster_codebeamer,
+        req.Tools.lobster_cpptest,
+        req.Tools.lobster_report,
+        req.Tools.lobster_html_report
+    ]
 }
 
 req.UseCase List_Codebeamer_to_CPP_Tests {
     description = '''
         As a requirements manager I want the traceability report to show the list of
-        requirements from codebeamer which are covered by C++ software test.
+        requirements from codebeamer which are covered by C++ software tests.
     '''
+    affected_tools = [
+        req.Tools.lobster_codebeamer,
+        req.Tools.lobster_cpptest,
+        req.Tools.lobster_report,
+        req.Tools.lobster_html_report
+    ]
 }
 
 req.UseCase List_Codebeamer_without_CPP_Tests {
@@ -20,6 +32,12 @@ req.UseCase List_Codebeamer_without_CPP_Tests {
         As a requirements manager I want the traceability report to show the list of
         requirements from codebeamer which are not covered by C++ software test.
     '''
+    affected_tools = [
+        req.Tools.lobster_codebeamer,
+        req.Tools.lobster_cpptest,
+        req.Tools.lobster_report,
+        req.Tools.lobster_html_report
+    ]
 }
 
 req.UseCase List_CPP_Tests_to_Codebeamer {
@@ -27,6 +45,12 @@ req.UseCase List_CPP_Tests_to_Codebeamer {
         As a requirements manager I want the traceability report to show the list of
         C++ software tests covering requirements in codebeamer.
     '''
+    affected_tools = [
+        req.Tools.lobster_codebeamer,
+        req.Tools.lobster_cpptest,
+        req.Tools.lobster_report,
+        req.Tools.lobster_html_report
+    ]
 }
 
 req.UseCase List_CPP_Tests_without_Codebeamer {
@@ -34,6 +58,12 @@ req.UseCase List_CPP_Tests_without_Codebeamer {
         As a requirements manager I want the traceability report to show the list of
         C++ software test which are not covering any requirement in codebeamer.
     '''
+    affected_tools = [
+        req.Tools.lobster_codebeamer,
+        req.Tools.lobster_cpptest,
+        req.Tools.lobster_report,
+        req.Tools.lobster_html_report
+    ]
 }
 
 req.UseCase Requirements_to_CPP_Test_Coverage {
@@ -49,42 +79,85 @@ req.UseCase Requirements_to_CPP_Test_Coverage {
        to C++ tests only (and no upstreams), then that fraction is equal to the fraction
        of the above use case.
      */
+    affected_tools = [
+        req.Tools.lobster_codebeamer,
+        req.Tools.lobster_cpptest,
+        req.Tools.lobster_report,
+        req.Tools.lobster_html_report
+    ]
 }
 
 req.UseCase Show_Tracing_Policy {
     description = '''
         As a requirements manager I want the traceability report to show the tracing policy used to generate the report.
     '''
+    affected_tools = [
+        req.Tools.lobster_report,
+        req.Tools.lobster_html_report
+    ]
 }
 
 req.UseCase Show_codebeamer_links {
     description = '''
         As a requirements manager I want the traceability report to mention the codebeamer link to requirements in codebeamer.
     '''
+    affected_tools = [
+        req.Tools.lobster_codebeamer,
+        req.Tools.lobster_report,
+        req.Tools.lobster_html_report
+    ]
 }
 
 req.UseCase Item_Source {
     description = '''
-        As a requirements manager I want the traceability report to mention the source location of each item.
+        As a requirements manager
+        I want the traceability report
+        between requirements in codebeamer and C++ tests
+        to mention the source location of each item.
     '''
+    affected_tools = [
+        req.Tools.lobster_codebeamer,
+        req.Tools.lobster_cpptest,
+        req.Tools.lobster_report,
+        req.Tools.lobster_html_report
+    ]
 }
 
 req.UseCase HTML_Output {
     description = '''
         As a requirements manager I want the traceability report to be generated as html file.
     '''
+    affected_tools = [
+        req.Tools.lobster_html_report
+    ]
 }
 
 req.UseCase git_hash {
     description = '''
-        As a requirements manager I want the traceability report to show the git hashes of the git commit from which C++ tests were taken.
+        As a requirements manager I want the traceability report
+        between requirements in codebeamer and C++ tests
+        to show the git hashes of the
+        git commit from which C++ tests were taken.
     '''
+    affected_tools = [
+        req.Tools.lobster_cpptest,
+        req.Tools.lobster_report,
+        req.Tools.lobster_online_report,
+        req.Tools.lobster_html_report
+    ]
 }
 
 req.UseCase List_Findings {
     description = '''
-        As a requirements manager I want the traceability report to show a list with all findings where the tracing policy is violated.
+        As a requirements manager I want the traceability report
+        between requirements in codebeamer and C++ tests
+        to show a list with all findings
+        where the tracing policy is violated.
     '''
+    affected_tools = [
+        req.Tools.lobster_report,
+        req.Tools.lobster_html_report
+    ]
 }
 
 section "Nice to have" {
@@ -93,15 +166,23 @@ section "Nice to have" {
        LOBSTER is an open source project and the above mentioned context is not known.
        There may be circumstances where the below use cases are essential for a project.
      */
-    req.UseCase race_codebeamer_cpptest_Nice_to_have_1 {
+    req.UseCase Colored_Findings {
         description = '''
-            As a requirements manager I want the traceability report to highlight the missing traces and detected traces in different color.
+            As a requirements manager I want the traceability report
+            to highlight the missing traces and detected traces in different color.
         '''
+        affected_tools = [
+            req.Tools.lobster_html_report
+        ]
     }
 
-    req.UseCase race_codebeamer_cpptest_Nice_to_have_2 {
+    req.UseCase English_Language {
         description = '''
-            As a requirements manager I want the traceability report to be generated in English language.
+            As a requirements manager I want the traceability report
+            to be generated in English language.
         '''
+        affected_tools = [
+            req.Tools.lobster_html_report
+        ]
     }
 }
