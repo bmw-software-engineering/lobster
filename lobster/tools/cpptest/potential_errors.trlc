@@ -1,0 +1,114 @@
+package UseCases
+import req
+
+section "Extracting tests from c++ unit test files"
+{
+  
+  req.PotentialError Too_few_Extraction_from_Git{
+      summary = "LOBSTER extracts too few tests"
+      description = '''
+        Some c++ test file are ignored
+        example, some c++ test file are ignored while extracting referance data.
+        '''
+      impacts =[
+        '''If c++ test files are ignored in the extraction
+           and report is generated with missing file data
+           then user might think that some requirements are not covered in test case but in fact they are covered''',
+
+        '''If c++ test files are ignored in the extraction
+           and report is generated with missing file data with some of the test cases have missing referance to requirements
+           then user might think that all test cases are covering the requirements but in fact it is not.'''
+      ]
+
+      affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+      impact_type = req.Impact_Type.Safety
+  }
+
+req.PotentialError Too_few_tests_Extraction_from_test_file{
+      summary = "LOBSTER extracts too few tests"
+      description = '''
+        Some tests from c++ test file are ignored
+        '''
+      impacts =[
+        '''If some test cases are not extracted from c++ test file
+           and report is generated with missing data
+           then user might think that all requirements are covered by test case but in fact it is not.'''
+      ]
+
+      affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+      impact_type = req.Impact_Type.Safety
+  }
+
+  req.PotentialError Too_few_requirement_referance_Extraction_from_test{
+      summary = "LOBSTER extracts too few tests"
+      description = '''
+        Some requirement referances from test in c++ file are ignored
+        '''
+      impacts =[
+        '''If some requirement references are missed while extracting referances from c++ test
+           and report is generated with not extracted requirement marked as missing test case reference
+           then user might think that test case implementation is missing for the requirement but in fact it is not.''',
+
+        '''If requirement references are not extracted from c++ test
+           and report is generated with those test cases marked as missing requirement reference
+           then user might think that test cases are missing reference but in fact it is not.'''   
+      ]
+
+      affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+      impact_type = req.Impact_Type.Safety
+  }
+
+  req.PotentialError Too_many_Extraction_from_Git{
+      summary = "LOBSTER extracts too many tests"
+      description = ''' 
+        Some non relevant test file are extracted.
+        example, Some test file are extracted from file which is not relevant.
+        '''
+      impacts =[
+        '''If the unwanted test file contains relevant requirement references
+           and report is generated with those requirement references
+           then user might think that all requirements are covered by c++ tests but in fact it is not.''',
+
+        '''If unwanted test file contains non relevant requirement references
+           and report is generated with those requirement references
+           then user might think that all requirements are not covered by c++ tests but in fact they are covered.'''
+      ]
+
+      affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+      impact_type = req.Impact_Type.Safety
+  }
+
+  req.PotentialError Too_many_requirement_referance_Extraction_from_test{
+      summary = "LOBSTER extracts too many tests"
+      description = '''
+        Some non referanced requirement referances from test in c++ file are extracted
+        example: While extracting requirement referances from a test case, an additional referance considered
+        with partial data from previous requirement referance.
+        '''
+      impacts = [
+        '''If the additional requirement in referance is valid requirement id and not covered in any test case
+           and report is generated with this wrong data
+           then user might think that all requirements are covered by the software tests but in fact it is not the case.'''
+      ]
+      affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+      impact_type = req.Impact_Type.Safety
+  }
+
+  req.TestSpecification Incorrect_Number_of_Cpp_Tests_in_Output{
+      description = '''
+        The test shall verify number of tests in output file are same as available at input. 
+      '''
+      verifies = [Too_few_Extraction_from_Git,Too_few_tests_Extraction_from_test_file, Too_many_Extraction_from_Git]
+  }
+
+  req.TestSpecification Incorrect_number_of_requirement_references_in_Output{
+      description = '''
+        The test shall verify number of requirement references available for a c++ test in output file
+        are same as as requirement references available in download from git.
+
+        example : If a test case contains 2 requirement references in c++ test file,
+        then test shall verify output file contains 2 requirement references for the c++ test.
+      '''
+      verifies = [Too_few_requirement_referance_Extraction_from_test,Too_many_requirement_referance_Extraction_from_test]
+  }
+}

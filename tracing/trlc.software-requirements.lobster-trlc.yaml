@@ -1,0 +1,4 @@
+inputs:
+  - "lobster/requirements.rsl"
+  - "lobster/tools/trlc/requirements"
+trlc_config_file: "tracing/software-requirements.lobster-trlc.conf"

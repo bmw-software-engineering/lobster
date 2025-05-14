@@ -1,0 +1,4 @@
+inputs:
+  - "lobster/use_cases.trlc"
+  - "lobster/requirements.rsl"
+trlc_config_file: "tracing/use-cases.lobster-trlc.conf"

@@ -1,0 +1,5 @@
+inputs:
+  - "lobster/use_cases.trlc"
+  - "lobster/requirements.rsl"
+  - "lobster/tools/cpptest/potential_errors.trlc"
+trlc_config_file: "tracing/potential-errors.lobster-trlc.conf"
