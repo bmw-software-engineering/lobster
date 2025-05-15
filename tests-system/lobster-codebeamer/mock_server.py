@@ -55,8 +55,8 @@ if __name__ == '__main__':
     # locally
     app = create_app()
     response_data = {
-        'item': 1,
         'page': 1,
+        'pageSize': 1,
         'total': 1,
         'items': [
             {

@@ -22,11 +22,13 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
 
     def test_valid_query_id(self):
         # lobster-trace: codebeamer_req.Query_Id_Parameter
-        self.add_config_file_data()
+        self.set_config_file()
+        self._test_runner.declare_output_file(
+            self._data_directory / self._test_runner.config_file_data.out)
 
         response_data = {
-            'item': 1,
             'page': 1,
+            'pageSize': 1,
             'total': 1,
             'items': [
                 {
@@ -48,12 +50,6 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
                     }
                 }
             ]
-        }
-        response_data = {
-            "item": 1,
-            "page": 1,
-            "total": 1,
-            "items": [{"item": {"id": 8, "version": 9, "tracker": {"id": 10}}}],
         }
 
         self.codebeamer_flask.responses = [
