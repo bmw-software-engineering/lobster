@@ -5,7 +5,10 @@
 
 ### 0.12.2-dev
 
-
+* `lobster-html-report`:
+  - Fix bug where `/cb` appeared twice in codebeamer URLs, leading to an incorrect URL.
+  - Fix bug where codebeamer URLs always pointed to the HEAD version of the codebeamer item,
+    even if a specific version was given.
 
 ### 0.12.1
 
