@@ -27,6 +27,7 @@ from lobster.exceptions import LOBSTER_Exception
 from lobster.items import Tracing_Tag, Activity
 from lobster.location import File_Reference
 from lobster.io import lobster_write
+from lobster.tools.cpptest.file_tag_generator import FileTagGenerator
 from lobster.tools.cpptest.parser.constants import Constants
 from lobster.tools.cpptest.parser.requirements_parser import \
     ParserForRequirements
@@ -234,11 +235,12 @@ def create_lobster_items_output_dict_from_test_cases(
         if isinstance(marker_list, list) and len(marker_list) >= 1:
             marker_output_config_dict[output_file_name] = output_config_dict
 
+    file_tag_generator = FileTagGenerator()
     for test_case in test_case_list:
         function_name: str = test_case.test_name
         file_name = os.path.abspath(test_case.file_name)
         line_nr = int(test_case.docu_start_line)
-        function_uid = "%s:%s:%u" % (os.path.basename(file_name),
+        function_uid = "%s:%s:%u" % (file_tag_generator.get_tag(file_name),
                                      function_name,
                                      line_nr)
         tag = Tracing_Tag(NAMESPACE_CPP, function_uid)
