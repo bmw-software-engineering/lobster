@@ -22,7 +22,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
 
     def test_valid_query_id(self):
         # lobster-trace: codebeamer_req.Query_Id_Parameter
-        self.set_config_file()
+        self.set_config_file_data()
         self._test_runner.declare_output_file(
             self._data_directory / self._test_runner.config_file_data.out)
 

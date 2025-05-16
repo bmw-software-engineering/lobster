@@ -27,7 +27,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         # lobster-trace: codebeamer_req.Retry_On_Specific_HTTPS_Status_Codes
 
         self.codebeamer_flask.responses = [Response(status=429)] * 3
-        self.set_config_file(retry_codes=[429], num_retries=3)
+        self.set_config_file_data(retry_codes=[429], num_retries=3)
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
@@ -76,7 +76,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
             Response(status=429),
             Response(json.dumps(response_data), status=200),
         ]
-        self.set_config_file(retry_codes=[429], num_retries=3)
+        self.set_config_file_data(retry_codes=[429], num_retries=3)
         self._test_runner.declare_output_file(
             self._data_directory / self._test_runner.config_file_data.out)
 
@@ -96,7 +96,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         """Ensure the tool does NOT retry if RETRY_ERROR_CODES is not defined."""
         # lobster-trace: codebeamer_req.Missing_Error_Code
         self.codebeamer_flask.responses = [Response(status=429)]
-        self.set_config_file()
+        self.set_config_file_data()
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
