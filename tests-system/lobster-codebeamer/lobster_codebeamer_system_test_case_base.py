@@ -17,7 +17,7 @@ class LobsterCodebeamerSystemTestCaseBase(SystemTestCaseBase):
         )
         return test_runner
 
-    def set_config_file(self, retry_codes=None, num_retries=None):
+    def set_config_file_data(self, retry_codes=None, num_retries=None):
         cfg = self._test_runner.config_file_data
         cfg.import_query = 1234458
         cfg.root = "https://localhost:8999"
@@ -27,3 +27,35 @@ class LobsterCodebeamerSystemTestCaseBase(SystemTestCaseBase):
             cfg.retry_error_codes = retry_codes
         if num_retries is not None:
             cfg.num_request_retry = num_retries
+
+    @staticmethod
+    def create_mock_response_items(page: int, page_size: int, total: int):
+        """Create a mock response like codebeamer API paginated items."""
+        items = [
+            {
+                "item": {
+                    "id": i,
+                    "name": f"Requirement {i}: Dynamic name",
+                    "description": f"Dynamic description for requirement {i}.",
+                    "status": {
+                        "id": i,
+                        "name": f"Status {i}",
+                        "type": "ChoiceOptionReference",
+                    },
+                    'tracker': {
+                        'id': i,
+                        'name': f'Tracker_{i}',
+                        'type': 'TrackerReference',
+                    },
+                    'version': 1
+                }
+            }
+            for i in range(
+                (page - 1) * page_size + 1, min(page * page_size + 1, total + 1))
+        ]
+        return {
+            "page": page,
+            "pageSize": page_size,
+            "total": total,
+            "items": items
+        }
