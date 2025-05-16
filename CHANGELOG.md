@@ -6,6 +6,9 @@
 ### 0.12.2-dev
 
 * `lobster-html-report`
+  - Fix bug where `/cb` appeared twice in codebeamer URLs, leading to an incorrect URL.
+  - Fix bug where codebeamer URLs always pointed to the HEAD version of the codebeamer item,
+    even if a specific version was given.
   - Added MD rendering support for the description field in the HTML report.
     - Added a new command line flag `--render-md` to enable this feature.
 

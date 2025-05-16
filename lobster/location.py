@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023, 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -18,9 +18,8 @@
 # <https://www.gnu.org/licenses/>.
 
 from abc import ABCMeta, abstractmethod
-
 import html
-
+from typing import Optional
 from lobster.exceptions import LOBSTER_Exception
 
 
@@ -208,7 +207,8 @@ class Github_Reference(Location):
 
 
 class Codebeamer_Reference(Location):
-    def __init__(self, cb_root, tracker, item, version, name=None):
+    def __init__(self, cb_root: str, tracker: int, item: int,
+                 version: Optional[int] = None, name: Optional[str] = None):
         assert isinstance(cb_root, str)
         assert cb_root.startswith("http")
         assert isinstance(tracker, int) and tracker >= 1
@@ -227,22 +227,18 @@ class Codebeamer_Reference(Location):
         return (self.cb_root, self.tracker, self.item)
 
     def to_string(self):
+        # lobster-trace: Codebeamer_Item_as_String
         if self.name:
             return "cb item %u '%s'" % (self.item, self.name)
         else:
             return "cb item %u" % self.item
 
     def to_html(self):
+        # lobster-trace: Codebeamer_URL
         url = self.cb_root
-        # This is supposed to open the document view, but it doesn't
-        # always work.
-        #
-        # url += "/cb/tracker/%u" % self.tracker
-        # url += "?view_id=-11&selectedItemId=%u" % self.item
-        # url += "&forceDocumentViewLayout=true"
-
-        # We can just open the item directly
-        url += "/cb/issue/%u" % self.item
+        url += "/issue/%u" % self.item
+        if self.version:
+            url += "?version=%u" % self.version
         return '<a href="%s" target="_blank">%s</a>' % (url, self.to_string())
 
     def to_json(self):
