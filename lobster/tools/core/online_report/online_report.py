@@ -180,14 +180,10 @@ def get_git_commit_hash_repo_and_path(gh_root, gh_submodule_roots,
     commit = git_hash_cache.get(git_repo, None)
     if not commit:
         git_repo_path = repo_root
-        try:
-            if git_repo and git_repo != repo_root:
-                git_repo_path = os.path.normpath(os.path.join(repo_root, git_repo))
-            commit = get_hash_for_git_commit(git_repo_path)
-            print(f'get_hash_for_git_commit({git_repo_path}) return hash: {commit}')
-            git_hash_cache[git_repo] = commit.strip()
-        except Exception as exception:
-            print(f'get_hash_for_git_commit({git_repo_path}) exception: {exception}')
+        if git_repo and git_repo != repo_root:
+            git_repo_path = os.path.normpath(os.path.join(repo_root, git_repo))
+        commit = get_hash_for_git_commit(git_repo_path)
+        git_hash_cache[git_repo] = commit.strip()
 
     return actual_path, actual_repo, commit
 

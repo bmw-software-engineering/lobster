@@ -7,7 +7,7 @@
 
 * `lobster-online-report`
   - Fix for git hash generation for submodules when the tool is executed from 
-  outside a git repository where the submodule is specified as a relative path.
+    outside a git repository where the submodule is specified as a relative path.
 
 ### 0.12.1
 
