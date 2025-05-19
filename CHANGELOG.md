@@ -23,6 +23,8 @@
   - Fix bug where `/cb` appeared twice in codebeamer URLs, leading to an incorrect URL.
   - Fix bug where codebeamer URLs always pointed to the HEAD version of the codebeamer item,
     even if a specific version was given.
+  - Add encoding tag to HTML header.
+    This fixes rendering issues of symbols in the generated HTML file.
 
 ### 0.12.1
 
