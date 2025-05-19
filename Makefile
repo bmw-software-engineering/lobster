@@ -144,7 +144,15 @@ tracing:
 	done
 
 tracing-tools-%: tracing-%
+	rm -f usecases.lobster
 	@echo "Finished processing tool: $*"
+
+usecases.lobster-%:
+	python3 tracing/usecases.py \
+		--target=lobster_$(subst -,_,$*) \
+		--out=usecases.lobster \
+		lobster/tools/requirements.rsl \
+		lobster/use_cases.trlc \
 
 tracing-%: report.lobster-%
 	$(eval TOOL_PATH := $(subst -,_,$*))
@@ -156,7 +164,8 @@ report.lobster-%: lobster/tools/lobster.conf \
 				  unit-tests.lobster-% \
 				  system_requirements.lobster-% \
 				  software_requirements.lobster-% \
-				  system-tests.lobster-%
+				  system-tests.lobster-% \
+				  usecases.lobster-%
 	lobster-report \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
