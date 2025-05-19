@@ -6,7 +6,7 @@ export PATH:=$(LOBSTER_ROOT):$(PATH)
 ASSETS=$(wildcard assets/*.svg)
 TOOL_FOLDERS := $(shell find ./lobster/tools -mindepth 1 -maxdepth 2 -type d | grep -v -E '^./lobster/tools/core$$|__pycache__|parser' | sed 's|^./lobster/tools/||; s|/|-|g')
 
-.PHONY: packages docs
+.PHONY: packages docs tracing
 
 lobster/html/assets.py: $(ASSETS) util/mkassets.py
 	util/mkassets.py lobster/html/assets.py $(ASSETS)
@@ -191,7 +191,7 @@ tracing-tools-%: tracing-%
 	@echo "Finished processing tool: $*"
 
 usecases.lobster-%:
-	python3 tracing/usecases.py \
+	python3 util/tracing/usecases.py \
 		--target=lobster_$(subst -,_,$*) \
 		--out=usecases.lobster \
 		lobster/tools/requirements.rsl \
