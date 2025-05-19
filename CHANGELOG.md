@@ -9,6 +9,21 @@
   - Fix for git hash generation for submodules when the tool is executed from 
     outside a git repository where the submodule is specified as a relative path.
 
+* `lobster-cpptest`
+  - Add support for identical test case files in different folders:
+    If test cases exist in different files with the same file names, same test case names
+    and same line numbers, then previously these were treated as duplicate definitions
+    by `lobster-report`.
+    Now `lobster-cpptest` generates a unique ID by appending a counter to the file base
+    name, which is used as tag in the final report.
+    An alternative had been to use the absolute or relative path of the file instead of
+    just the file base name, but that would have decreased the readability of the report.
+
+* `lobster-html-report`:
+  - Fix bug where `/cb` appeared twice in codebeamer URLs, leading to an incorrect URL.
+  - Fix bug where codebeamer URLs always pointed to the HEAD version of the codebeamer item,
+    even if a specific version was given.
+
 ### 0.12.1
 
 * `lobster-html-report`
