@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.12.2-dev
+### 0.12.2
 
 * `lobster-online-report`
   - Fix for git hash generation for submodules when the tool is executed from 
