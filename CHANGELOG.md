@@ -5,6 +5,10 @@
 
 ### 0.12.2-dev
 
+* `lobster-online-report`
+  - Fix for git hash generation for submodules when the tool is executed from 
+    outside a git repository where the submodule is specified as a relative path.
+
 * `lobster-cpptest`
   - Add support for identical test case files in different folders:
     If test cases exist in different files with the same file names, same test case names
