@@ -9,6 +9,9 @@
 
 ### 0.12.2
 
+* `Separate Coverage Reports`
+  - Separate coverage reports for unit tests (`.coverage.unit`) and system tests (`.coverage.system`).
+
 * `lobster-online-report`
   - Fix for git hash generation for submodules when the tool is executed from 
     outside a git repository where the submodule is specified as a relative path.
