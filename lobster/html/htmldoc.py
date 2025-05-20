@@ -319,31 +319,10 @@ class Document:
         rv.append('<svg style="display: none;">')
         rv.append('<defs>')
         rv.append('<symbol id="svg-check-square" viewBox="0 0 24 24">')
-        rv.append('<svg width="24" height="24" viewBox="0 0 456 461"'
-                  ' xmlns="http://www.w3.org/2000/svg"'
-                  ' xmlns:xlink="http://www.w3.org/1999/xlink"'
-                  ' xml:space="preserve" overflow="hidden">'
-                  '<g transform="translate(-825 -84)">'
-                  '<path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 '
-                  '98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 '
-                  '934.811 523 839 427.86 839 310.5Z" stroke="#008000" '
-                  'stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E"'
-                  ' fill-rule="evenodd"/>'
-                  '<text font-family="Segoe UI Symbol,Segoe UI'
-                  ' Symbol_MSFontService,sans-serif" font-weight="400" font-size="202"'
-                  ' transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg>')
+        rv.append(assets.SVG_CHECK_SQUARE)
         rv.append('</symbol>')
         rv.append('<symbol id="svg-alert-triangle" viewBox="0 0 24 24">')
-        rv.append('<svg width="24" height="24" viewBox="0 0 520 516"'
-                  ' xmlns="http://www.w3.org/2000/svg"'
-                  ' xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"'
-                  ' overflow="hidden"><g transform="translate(-137 -85)">'
-                  '<path d="M162 506 397 113 632 506Z" stroke="#000000"'
-                  ' stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900"'
-                  ' fill-rule="evenodd"/>'
-                  '<text font-family="Aptos,Aptos_MSFontService,sans-serif"'
-                  ' font-weight="700" font-size="202"'
-                  ' transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg>')
+        rv.append(assets.SVG_ALERT_TRIANGLE)
         rv.append('</symbol>')
         rv.append('</defs>')
         rv.append('</svg>')
