@@ -5,12 +5,10 @@
 
 ### 0.12.3-dev
 
-
-
-### 0.12.2
-
 * `Separate Coverage Reports`
   - Separate coverage reports for unit tests (`.coverage.unit`) and system tests (`.coverage.system`).
+
+### 0.12.2
 
 * `lobster-online-report`
   - Fix for git hash generation for submodules when the tool is executed from 
