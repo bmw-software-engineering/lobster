@@ -20,6 +20,17 @@ class CodebeamerFlask(Flask):
         super().__init__(__name__)
         self._responses = []
         self._lock = Lock()
+        self._counter = 0
+
+    @property
+    def counter(self):
+        with self._lock:
+            return self._counter
+
+    @counter.setter
+    def counter(self, value):
+        with self._lock:
+            self._counter = value
 
     @property
     def responses(self):
@@ -46,6 +57,7 @@ def create_app():
     @app.route(MOCK_ROUTE, methods=['GET'])
     def mock_response(report_id):
         """Return mocked item response or error."""
+        app.counter += 1
         return app.responses.pop(0)
     return app
 
