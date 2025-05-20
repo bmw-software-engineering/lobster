@@ -52,16 +52,18 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
                 self.codebeamer_flask.counter = 0
                 total_items = case["total_items"]
                 out_file = case.get("output")
-                if out_file:
-                    self._test_runner.config_file_data.out = out_file
-                    self._test_runner.declare_output_file(
-                        self._data_directory / out_file)
+
+                self._test_runner.config_file_data.out = out_file
+                self._test_runner.declare_output_file(
+                    self._data_directory / out_file)
 
                 responses = []
-                # if total_items == 0 then an empty response is created
+                # if total_items == 0 then an response with 0 items is created else
+                # the number of responses are created based on the PAGE_SIZE
+                # and total_items to simulate the pagination
                 if total_items == 0:
-                    responses.append(
-                        self.create_mock_response_items(1, PAGE_SIZE, total_items))
+                    responses = [self.create_mock_response_items(
+                        1, PAGE_SIZE, total_items)]
                 else:
                     for i in range(
                         1, (total_items // PAGE_SIZE) +
