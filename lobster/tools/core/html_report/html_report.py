@@ -230,10 +230,10 @@ def write_item_box_begin(doc, item):
                   item.tag.hash()))
 
     doc.add_line('<div class="item-name">%s %s</div>' %
-                 (assets.SVG_CHECK_SQUARE
+                 ('<svg class="icon"><use href="#svg-check-square"></use></svg>'
                   if item.tracing_status in (Tracing_Status.OK,
                                              Tracing_Status.JUSTIFIED)
-                  else assets.SVG_ALERT_TRIANGLE,
+                  else '<svg class="icon"><use href="#svg-alert-triangle"></use></svg>',
                   xref_item(item, link=False)))
 
     doc.add_line('<div class="attribute">Source: ')
