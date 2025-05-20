@@ -45,7 +45,8 @@ jobs:
       - name: Building code coverage report
         run: |
           make system-tests unit-tests
-          make coverage
+          make coverage-system
+          make coverage-unit
           mv htmlcov docs
       - name: Install graphviz
         run: |
