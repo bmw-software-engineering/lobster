@@ -19,10 +19,10 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
         self._test_runner = self.create_test_runner()
 
     def test_extract_requirements_scenarios(self):
-        # lobster-trace: codebeamer_req.Partial_Codebeamer_IDs_in_Output
-        # lobster-trace: codebeamer_req.Codebeamer_Summary_in_Output
-        # lobster-trace: codebeamer_req.Wrong_Codebeamer_IDs_in_Output
-        # lobster-trace: codebeamer_req.Incorrect_Number_of_Codebeamer_IDs_in_Output
+        # lobster-trace: UseCases.Partial_Codebeamer_IDs_in_Output
+        # lobster-trace: UseCases.Codebeamer_Summary_in_Output
+        # lobster-trace: UseCases.Wrong_Codebeamer_IDs_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_IDs_in_Output
 
         self.set_config_file_data()
         PAGE_SIZE = 5
