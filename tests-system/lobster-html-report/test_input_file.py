@@ -66,7 +66,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
             output = "records_20k_DOT_present.output"
         else:
             output = "records_20k.output"
-        input = self._data_directory / "report_20K.lobster"
+        input = self._data_directory / "report_20k.lobster"
 
         self.test_runner.declare_output_file(self._data_directory / output)
         self.test_runner.cmd_args.out = output
