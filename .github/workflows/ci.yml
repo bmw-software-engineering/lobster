@@ -140,7 +140,8 @@ jobs:
           make system-tests
       - name: Coverage analysis
         run: |
-          make coverage
+          make coverage-system
+          make coverage-unit
   integration-tests:
     name: Integration tests
     needs: [changes, lint, lint-system-tests, trlc]
