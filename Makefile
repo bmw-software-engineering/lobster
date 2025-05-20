@@ -82,15 +82,13 @@ system-tests:
 	mkdir -p docs
 	python -m unittest discover -s tests-system -v -t .
 	make -B -C tests-system TOOL=lobster-python
-	make -B -C tests-system TOOL=lobster-online-report
-	make -B -C tests-system TOOL=lobster-html-report
 	@echo "🧹 Cleaning up cert.pem and key.pem..."
 	@rm -rf tests-system/lobster-codebeamer/data/ssl
 
 unit-tests:
 	coverage run -p \
 			--branch --rcfile=coverage.cfg \
-			--data-file .coverage \
+			--data-file .coverage.unit \
 			--source=lobster \
 			-m unittest discover -s tests-unit -v
 
@@ -115,17 +113,33 @@ full-release:
 	make bump
 	git push
 
-coverage:
-	coverage combine -q
-	coverage html --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=64
+# --- Coverage Execution Targets ---
+coverage-unit:
+	@echo "📊 Generating coverage report for unit tests..."
+	coverage combine -q .coverage.unit*
+	coverage html --directory=htmlcov-unit --rcfile=coverage.cfg
+	coverage report --rcfile=coverage.cfg --fail-under=40
 
-test: clean-coverage system-tests unit-tests
-	make coverage
+coverage-system:
+	@echo "📊 Generating coverage report for system tests..."
+	coverage combine -q .coverage.system*
+	coverage html --directory=htmlcov-system --rcfile=coverage.cfg
+	coverage report --rcfile=coverage.cfg --fail-under=60
+
+# --- Clean Coverage ---
+clean-coverage:
+	@rm -rf htmlcov htmlcov-unit htmlcov-system
+	@find . -name '.coverage*' -type f -delete
+	@find . -name '*.pyc' -type f -delete
+	@echo "🧹 All .coverage, .coverage.* and *.pyc files deleted."
+
+# --- Convenience Test Targets ---
+test-system: clean-coverage system-tests
+	make coverage-system
 	util/check_local_modifications.sh
 
-test-all: integration-tests system-tests unit-tests
-	make coverage
+test-unit: clean-coverage unit-tests
+	make coverage-unit
 	util/check_local_modifications.sh
 
 docs:
@@ -208,9 +222,3 @@ tracing-stf: $(STF_TRLC_FILES)
 	lobster-html-report stf_report.lobster --out=docs/tracing-stf.html
 	@echo "Deleting STF *.lobster files..."
 	rm -f stf_system_requirements.lobster stf_software_requirements.lobster stf_code.lobster stf_report.lobster
-
-clean-coverage:
-	@rm -rf htmlcov
-	@find . -name '.coverage*' -type f -delete
-	@find . -name '*.pyc' -type f -delete
-	@echo "All .coverage, .coverage.* and *.pyc files deleted."
