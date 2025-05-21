@@ -47,7 +47,8 @@ jobs:
           make system-tests unit-tests
           make coverage-system
           make coverage-unit
-          mv htmlcov docs
+          mv htmlcov-system docs
+          mv htmlcov-unit docs
       - name: Install graphviz
         run: |
           sudo apt-get install -y graphviz
