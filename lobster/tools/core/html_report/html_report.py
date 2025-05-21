@@ -237,7 +237,8 @@ def write_item_box_begin(doc, item):
                   xref_item(item, link=False)))
 
     doc.add_line('<div class="attribute">Source: ')
-    doc.add_line(assets.SVG_EXTERNAL_LINK)
+    doc.add_line('<svg class="icon"><use href="#svg-external-link"></use></svg>')
+
     doc.add_line(item.location.to_html())
     doc.add_line("</div>")
 
