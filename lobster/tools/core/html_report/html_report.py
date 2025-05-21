@@ -24,7 +24,7 @@ import hashlib
 import tempfile
 from datetime import datetime, timezone
 
-from lobster.html import htmldoc, assets
+from lobster.html import htmldoc
 from lobster.report import Report
 from lobster.location import (Void_Reference,
                               File_Reference,

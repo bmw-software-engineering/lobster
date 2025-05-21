@@ -5,6 +5,11 @@
 
 ### 0.12.3-dev
 
+* `lobster-html-report`
+  - The SVG's in the HTML report were rendered on every use. Now the SVGs
+    are rendered once and reused for at all the remaining occurences. 
+    This will reduce the overall HTML file size.
+
 * `Separate Coverage Reports`
   - Separate coverage reports for unit tests (`.coverage.unit`) and system tests (`.coverage.system`).
 
