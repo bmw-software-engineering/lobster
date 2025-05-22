@@ -10,9 +10,9 @@ from ..test_runner import TestRunner
 class ConfigFileData:
     import_query: Optional[bool] = None
     root: Optional[str] = None
-    token: List[str] = None
+    token: Optional[List[str]] = None
     out: Optional[str] = None
-    page_size: Optional[str] = None
+    page_size: Optional[int] = None
     num_request_retry: Optional[bool] = None
     retry_error_codes: Optional[bool] = None
 

@@ -28,9 +28,12 @@ class LobsterCodebeamerSystemTestCaseBase(SystemTestCaseBase):
         if num_retries is not None:
             cfg.num_request_retry = num_retries
 
-    @staticmethod
-    def create_mock_response_items(page: int, page_size: int, total: int):
+    def create_mock_response_items(self, page: int, page_size: int, total: int):
         """Create a mock response like codebeamer API paginated items."""
+        MULTIPLICATOR = 100
+        if (total > MULTIPLICATOR):
+            self.fail(
+                f"Total items {total} exceeds multiplicator {MULTIPLICATOR}.")
         items = [
             {
                 "item": {
@@ -43,15 +46,15 @@ class LobsterCodebeamerSystemTestCaseBase(SystemTestCaseBase):
                         "type": "ChoiceOptionReference",
                     },
                     'tracker': {
-                        'id': i,
+                        'id': i * MULTIPLICATOR * MULTIPLICATOR,
                         'name': f'Tracker_{i}',
                         'type': 'TrackerReference',
                     },
-                    'version': 1
+                    'version': i * MULTIPLICATOR
                 }
             }
             for i in range(
-                (page - 1) * page_size + 1, min(page * page_size + 1, total + 1))
+                (page - 1) * page_size + 1, min(page * page_size, total) + 1)
         ]
         return {
             "page": page,
