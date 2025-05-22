@@ -63,7 +63,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
 
         dot_present = is_dot_available(dot=None)
         if dot_present:
-            output = "records_20k_DOT_present.output"
+            output = "records_20k_tracing_policy.output"
         else:
             output = "records_20k.output"
         input = self._data_directory / "report_20k.lobster"
