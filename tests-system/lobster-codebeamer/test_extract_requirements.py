@@ -2,7 +2,7 @@ import json
 from flask import Response
 from .lobster_codebeamer_system_test_case_base import (
     LobsterCodebeamerSystemTestCaseBase)
-from ..asserter import Asserter
+from .lobster_codebeamer_asserter import LobsterCodebeamerAsserter
 from .mock_server_setup import start_mock_server, get_mock_app
 
 
@@ -81,8 +81,13 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
                     self.assertEqual(self.codebeamer_flask.counter, 1)
                 else:
                     self.assertEqual(self.codebeamer_flask.counter, len(responses))
-                asserter = Asserter(self, completed_process, self._test_runner)
-                self.assertIn(f"Written {total_items} requirements to {out_file}",
-                              completed_process.stdout)
+                asserter = LobsterCodebeamerAsserter(self,
+                                                     completed_process,
+                                                     self._test_runner,
+                                                     )
+                asserter.assertStdOutNumAndFile(total_items,
+                                                self._test_runner.config_file_data.out,
+                                                PAGE_SIZE,
+                                                )
                 asserter.assertExitCode(0)
                 asserter.assertOutputFiles()

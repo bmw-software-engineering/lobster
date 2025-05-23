@@ -2,7 +2,7 @@ import json
 from flask import Response
 from .lobster_codebeamer_system_test_case_base import (
     LobsterCodebeamerSystemTestCaseBase)
-from ..asserter import Asserter
+from .lobster_codebeamer_asserter import LobsterCodebeamerAsserter
 from .mock_server_setup import start_mock_server, get_mock_app
 
 
@@ -57,7 +57,53 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         ]
 
         completed_process = self._test_runner.run_tool_test()
-        asserter = Asserter(self, completed_process, self._test_runner)
-        self.assertIn("requirements to codebeamer.lobster", completed_process.stdout)
+        asserter = LobsterCodebeamerAsserter(self, completed_process, self._test_runner)
+        asserter.assertStdOutNumAndFile()
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_references_tracing_tag_added(self):
+        # lobster-trace: codebeamer_req.References_Field_Support
+        self.set_config_file_data()
+        self._test_runner.config_file_data.refs = ["Wife", "Husband"]
+
+        response_data = {
+            'page': 1,
+            'pageSize': 1,
+            'total': 1,
+            'items': [
+                {
+                    'item': {
+                        'id': 42,
+                        'name': 'Alpha',
+                        'status': {
+                            'id': 1,
+                            'name': 'Married',
+                            'type': 'ChoiceOptionReference'
+                        },
+                        'tracker': {
+                            'id': 5,
+                            'name': 'Beta',
+                            'type': 'TrackerReference'
+                        },
+                        'version': 1,
+                        'Wife': [
+                            {"id": 1001, "name": "Delta"}
+                        ],
+                        'Husband': [
+                            {"id": 1002, "name": "Charly"}
+                        ],
+                    }
+                }
+            ]
+        }
+
+        self.codebeamer_flask.responses = [
+            Response(json.dumps(response_data), status=200),
+        ]
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = LobsterCodebeamerAsserter(self, completed_process, self._test_runner)
+        asserter.assertStdOutNumAndFile()
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
