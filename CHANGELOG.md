@@ -5,6 +5,9 @@
 
 ### 0.12.3-dev
 
+* `lobster-codebeamer`
+  - Fix for handling `references` as a list of field names instead of a dictionary.
+
 * `lobster-html-report`
   - The SVG's in the HTML report were rendered on every use. Now the SVGs
     are rendered once and reused for at all the remaining occurences. 
