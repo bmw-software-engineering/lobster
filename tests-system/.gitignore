@@ -6,3 +6,4 @@
 !lobster-trlc/data/*.lobster
 !lobster-codebeamer/data/*.lobster
 lobster-codebeamer/data/ssl/
+!lobster-html-report/data/*.lobster
