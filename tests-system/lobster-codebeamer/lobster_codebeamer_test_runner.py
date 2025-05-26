@@ -10,7 +10,7 @@ from ..test_runner import TestRunner
 class ConfigFileData:
     import_query: Optional[bool] = None
     root: Optional[str] = None
-    token: List[str] = None
+    token: Optional[str] = None
     out: Optional[str] = None
     refs: Optional[List[str]] = None
     page_size: Optional[str] = None

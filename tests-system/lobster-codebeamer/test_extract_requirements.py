@@ -19,39 +19,19 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
         self._test_runner = self.create_test_runner()
 
     def test_extract_requirements_scenarios(self):
-        # lobster-trace: UseCases.Partial_Codebeamer_IDs_in_Output
+        """Validate Codebeamer report generation with mock data using subtests."""
         # lobster-trace: UseCases.Codebeamer_Summary_in_Output
         # lobster-trace: UseCases.Wrong_Codebeamer_IDs_in_Output
-        # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_IDs_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_Items_in_Output
 
         self.set_config_file_data()
         PAGE_SIZE = 5
         self._test_runner.config_file_data.page_size = PAGE_SIZE
 
-        """Validate Codebeamer report generation with mock data using subtests."""
-        test_cases = [
-            {"total_items": 0, "output": "zero_item.lobster"},
-            {"total_items": 1, "output": "one_item.lobster"},
-            {"total_items": 4, "output": "four_items.lobster"},
-            {"total_items": 5, "output": "five_items.lobster"},
-
-            {"total_items": 6, "output": "six_items.lobster"},
-            {"total_items": 9, "output": "nine_items.lobster"},
-            {"total_items": 10, "output": "ten_items.lobster"},
-
-            {"total_items": 11, "output": "eleven_items.lobster"},
-
-            {"total_items": 74, "output": "seventy_four_items.lobster"},
-            {"total_items": 75, "output": "seventy_five_items.lobster"},
-
-            {"total_items": 76, "output": "seventy_six_items.lobster"},
-        ]
-
-        for case in test_cases:
-            with self.subTest(total_items=case["total_items"]):
+        for total_items in [0, 1, 4, 5, 6, 9, 10, 11, 74, 75, 76]:
+            with self.subTest(total_items=total_items):
                 self.codebeamer_flask.counter = 0
-                total_items = case["total_items"]
-                out_file = case.get("output")
+                out_file = f"{total_items}_items.lobster"
 
                 self._test_runner.config_file_data.out = out_file
                 self._test_runner.declare_output_file(
@@ -77,10 +57,7 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
                 ]
                 completed_process = self._test_runner.run_tool_test()
 
-                if total_items == 0:
-                    self.assertEqual(self.codebeamer_flask.counter, 1)
-                else:
-                    self.assertEqual(self.codebeamer_flask.counter, len(responses))
+                self.assertEqual(self.codebeamer_flask.counter, len(responses))
                 asserter = LobsterCodebeamerAsserter(self,
                                                      completed_process,
                                                      self._test_runner,
