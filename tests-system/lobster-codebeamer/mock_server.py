@@ -1,6 +1,6 @@
 import json
 from typing import List
-from flask import Flask, Response
+from flask import Flask, Response, request
 from threading import Lock
 import logging
 
@@ -18,19 +18,25 @@ MOCK_ROUTE = '/api/v3/reports/<int:report_id>/items'
 class CodebeamerFlask(Flask):
     def __init__(self):
         super().__init__(__name__)
-        self._responses = []
         self._lock = Lock()
-        self._counter = 0
+        self._responses = []
+        self._received_requests = []
+
+    def reset(self):
+        """Reset the server state."""
+        with self._lock:
+            self._responses = []
+            self._received_requests = []
 
     @property
-    def counter(self):
+    def received_requests(self):
         with self._lock:
-            return self._counter
+            return self._received_requests
 
-    @counter.setter
-    def counter(self, value):
+    @received_requests.setter
+    def received_requests(self, value: List):
         with self._lock:
-            self._counter = value
+            self._received_requests = value
 
     @property
     def responses(self):
@@ -57,7 +63,14 @@ def create_app():
     @app.route(MOCK_ROUTE, methods=['GET'])
     def mock_response(report_id):
         """Return mocked item response or error."""
-        app.counter += 1
+        app.received_requests.append({
+            "url": request.url,
+            "method": request.method,
+            "args": request.args.to_dict(flat=False),
+            "headers": dict(request.headers),
+            "data": request.get_data(as_text=True),
+            "json": request.get_json(silent=True),
+        })
         return app.responses.pop(0)
     return app
 
