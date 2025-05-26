@@ -1,6 +1,6 @@
 import json
 from typing import List
-from flask import Flask, Response
+from flask import Flask, Response, request
 from threading import Lock
 import logging
 
@@ -21,16 +21,28 @@ class CodebeamerFlask(Flask):
         self._responses = []
         self._lock = Lock()
         self._counter = 0
+        self._received_requests = []
+
+    def reset(self):
+        """Reset the server state."""
+        with self._lock:
+            with self._lock:
+                self._responses = []
+                self._received_requests = []
 
     @property
     def counter(self):
-        with self._lock:
-            return self._counter
+        return len(self.received_requests)
 
-    @counter.setter
-    def counter(self, value):
+    @property
+    def received_requests(self):
         with self._lock:
-            self._counter = value
+            return self._received_requests
+    
+    @received_requests.setter
+    def received_requests(self, value: List):
+        with self._lock:
+            self._received_requests = value
 
     @property
     def responses(self):
@@ -57,7 +69,7 @@ def create_app():
     @app.route(MOCK_ROUTE, methods=['GET'])
     def mock_response(report_id):
         """Return mocked item response or error."""
-        app.counter += 1
+        app.received_requests.append(request.args)
         return app.responses.pop(0)
     return app
 
