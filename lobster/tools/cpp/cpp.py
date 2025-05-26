@@ -68,7 +68,7 @@ def create_tracing_tag_and_loc(filename_from_clang_out: str,
        current working directory.
        The tracing tag constructs the unique ID based on that path, too.
     """
-    filename = os.path.relpath(filename_from_clang_out, os.getcwd())
+    filename = os.path.abspath(filename_from_clang_out)
     function_uid = f"{filename}:{function_name}:{line_nr}"
     return Tracing_Tag("cpp", function_uid), File_Reference(filename, line_nr)
 
