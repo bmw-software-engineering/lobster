@@ -125,21 +125,21 @@ def path_starts_with_subpath(path, subpath):
     return path.startswith(subpath)
 
 
-def parse_git_root(cfg):
-    gh_root = cfg["url"]
-    if not gh_root.endswith(".git"):
-        gh_root += ".git"
-
-    if gh_root.startswith("http"):
-        gh_root = gh_root[:-4]
-    else:
-        match = re.match(r"^(.*)@(.*):(.*)\.git$", gh_root)
-        if match is None:
-            raise Parse_Error("could not understand git origin %s" % gh_root)
-        gh_root = "https://%s/%s" % (match.group(2),
-                                     match.group(3))
-
-    return gh_root
+def parse_git_root(cfg, submodule_root: str):
+    result = subprocess.run(
+        ['git', 'remote', 'get-url', 'origin'],
+        capture_output=True,
+        text=True,
+        #stdout=subprocess.PIPE,
+        #stderr=subprocess.PIPE,
+        cwd=submodule_root,
+    )
+    
+    # Store the output in a variable
+    output = result.stdout[:-4]
+    
+    print(output)
+    return output
 
 
 def add_github_reference_to_items(gh_root, gh_submodule_roots, repo_root, report):
@@ -147,11 +147,10 @@ def add_github_reference_to_items(gh_root, gh_submodule_roots, repo_root, report
     git_hash_cache = {}
     for item in report.items.values():
         if isinstance(item.location, File_Reference):
-            assert (os.path.isdir(item.location.filename) or
-                    os.path.isfile(item.location.filename))
-
             actual_path, actual_repo, commit = get_git_commit_hash_repo_and_path(
                 gh_root, gh_submodule_roots, item, repo_root, git_hash_cache)
+            if len(actual_path) > len(item.location.filename):
+                actual_path = item.location.filename
             loc = Github_Reference(
                 gh_root=actual_repo,
                 filename=actual_path,
@@ -239,11 +238,6 @@ def main():
             repo_root = new_root
 
     git_config = configparser.ConfigParser()
-    git_config.read(os.path.join(repo_root, ".git", "config"))
-    if 'remote "origin"' not in git_config.sections():
-        print("error: could not find remote \"origin\" in git config")
-        return 1
-
     git_m_config = configparser.ConfigParser()
     if os.path.isfile(os.path.join(repo_root, ".gitmodules")):
         git_m_config.read(os.path.join(repo_root, ".gitmodules"))
@@ -252,11 +246,12 @@ def main():
     gh_submodule_roots = {}
     for item in git_config:
         if item == 'remote "origin"':
-            gh_root = parse_git_root(git_config[item])
+            gh_root = parse_git_root(git_config[item], repo_root)
         elif item.startswith('submodule "'):
             assert re.match('submodule "(.*?)"', item)
             sm_dir = git_m_config[item]["path"]
-            gh_submodule_roots[sm_dir] = parse_git_root(git_config[item])
+            gh_submodule_roots[sm_dir] = parse_git_root(git_config[item], 
+                                                        os.path.join(repo_root, sm_dir))
 
     report = Report()
     report.load_report(options.lobster_report)
