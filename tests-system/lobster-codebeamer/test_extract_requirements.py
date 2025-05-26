@@ -24,13 +24,14 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
         # lobster-trace: UseCases.Wrong_Codebeamer_IDs_in_Output
         # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_Items_in_Output
 
-        self.set_config_file_data()
-        PAGE_SIZE = 5
-        self._test_runner.config_file_data.page_size = PAGE_SIZE
+        cfg = self._test_runner.config_file_data
+        cfg.set_default_root_token_out()
+        cfg.import_query = 54321
+        cfg.page_size = 5
 
         for total_items in [0, 1, 4, 5, 6, 9, 10, 11, 74, 75, 76]:
             with self.subTest(total_items=total_items):
-                self.codebeamer_flask.counter = 0
+                self.codebeamer_flask.reset()
                 out_file = f"{total_items}_items.lobster"
 
                 self._test_runner.config_file_data.out = out_file
@@ -43,28 +44,43 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
                 # and total_items to simulate the pagination
                 if total_items == 0:
                     responses = [self.create_mock_response_items(
-                        1, PAGE_SIZE, total_items)]
+                        1, cfg.page_size, total_items)]
                 else:
                     for i in range(
-                        1, (total_items // PAGE_SIZE) +
-                        (2 if total_items % PAGE_SIZE > 0 else 1)
+                        1, (total_items // cfg.page_size) +
+                        (2 if total_items % cfg.page_size > 0 else 1)
                     ):
                         responses.append(self.create_mock_response_items(
-                            i, PAGE_SIZE, total_items))
+                            i, cfg.page_size, total_items))
 
                 self.codebeamer_flask.responses = [
                     Response(json.dumps(response), status=200) for response in responses
                 ]
                 completed_process = self._test_runner.run_tool_test()
 
-                self.assertEqual(self.codebeamer_flask.counter, len(responses))
+                self.assertEqual(
+                    len(self.codebeamer_flask.received_requests),
+                    len(responses),
+                )
+
+                for i, request in enumerate(self.codebeamer_flask.received_requests,
+                                            start=1):
+                    actual_url = request['url']
+                    expected_url = (
+                        f"{cfg.root}/api/v3/reports/"
+                        f"{cfg.import_query}/items?page={i}&pageSize={cfg.page_size}"
+                    )
+                    self.assertEqual(actual_url, expected_url)
+
                 asserter = LobsterCodebeamerAsserter(self,
                                                      completed_process,
                                                      self._test_runner,
                                                      )
-                asserter.assertStdOutNumAndFile(total_items,
-                                                self._test_runner.config_file_data.out,
-                                                PAGE_SIZE,
-                                                )
+                asserter.assertStdOutNumAndFile(
+                    num_items=total_items,
+                    out_file=self._test_runner.config_file_data.out,
+                    page_size=cfg.page_size,
+                    import_query=cfg.import_query,
+                )
                 asserter.assertExitCode(0)
                 asserter.assertOutputFiles()

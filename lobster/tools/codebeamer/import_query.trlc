@@ -3,7 +3,8 @@ import req
 
 req.System_Requirement Query_Id_Parameter {
   description = '''
-    IF an element given through the yaml config file option "import_query" is a valid codebeamer query id,
+    IF an element given through the yaml config file option "import_query" is a valid codebeamer query id
+    (integer greater than zero),
     THEN the tool shall request items from the codebeamer server with the given query id
     AND write the obtained codebeamer items in the LOBSTER interchange format to the file given in the "out" parameter
   '''
