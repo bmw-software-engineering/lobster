@@ -1,16 +1,48 @@
 package core_html_report_req
 import req
 
-req.Software_Requirement Dummy_Requirement {
+req.System_Requirement Clickable_Codebeamer_Item {
   description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
+    If the input LOBSTER report file contains codebeamer items
+    THEN the generated HTML report
+    SHALL represent these as hyperlinks to the item on the codebeamer server,
+    where the codebeamer server URL is taken from the repo_root configuration parameter.
   '''
 }
 
-req.Software_Requirement Dummy_Requirement_Unit_Test {
+req.Software_Requirement Codebeamer_URL {
   description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
+    The "to_html" method of the Codebeamer_Reference class
+    SHALL return a string representation of an HTML anchor element
+    to the codebeamer item by constructing the URL as follows:
+    
+    "<repo_roo>/issue/<item_id><version_addon>"
+    
+    where  <repo_root> is taken from the configuration file,
+    and <item_id> is the codebeamer item ID taken from the LOBSTER input file,
+    and <version_addon> is "?version=<version>"
+    IF the version number of the codebeamer item is given,
+    OTHERWISE <version_addon> is an empty string.
+  '''
+  derived_from = [Clickable_Codebeamer_Item]
+}
+
+req.System_Requirement Codebeamer_Item_Name {
+  description = '''
+    If the input LOBSTER report file contains codebeamer items
+    THEN the generated HTML report
+    SHALL represent these by their codebeamer item name, if it is given.
   '''
 }
+
+req.Software_Requirement Codebeamer_Item_as_String {
+    description = '''
+      The "to_string" method of the Codebeamer_Reference class
+      SHALL return the following string:
+      
+      "cb item <ITEM_ID> '<NAME>'"
+
+      where <ITEM_ID> is the codebeamer item ID
+      and <NAME> the codebeamer item name given to the class constructor.
+      '''
+    }
