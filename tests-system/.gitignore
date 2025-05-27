@@ -4,4 +4,6 @@
 !lobster-online-report/data/*.lobster
 !lobster-report/data/*.lobster
 !lobster-trlc/data/*.lobster
+!lobster-codebeamer/data/*.lobster
 lobster-codebeamer/data/ssl/
+!lobster-html-report/data/*.lobster

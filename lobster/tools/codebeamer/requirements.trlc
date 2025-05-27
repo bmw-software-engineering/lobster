@@ -36,3 +36,11 @@ req.System_Requirement Missing_Error_Code {
     THEN the retry logic shall not be executed, regardless of the value of "num_request_retry".
   '''
 }
+
+req.System_Requirement References_Field_Support {
+  description = '''
+    IF an element given through the yaml config file option "refs" is list of codebeamer field names,
+    THEN the tool shall extract the corresponding references from the given codebeamer item fields
+    AND add a Tracing_Tag entry to the LOBSTER item for each referenced item ID
+  '''
+}

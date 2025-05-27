@@ -10,8 +10,9 @@ from ..test_runner import TestRunner
 class ConfigFileData:
     import_query: Optional[bool] = None
     root: Optional[str] = None
-    token: List[str] = None
+    token: Optional[str] = None
     out: Optional[str] = None
+    refs: Optional[List[str]] = None
     page_size: Optional[str] = None
     num_request_retry: Optional[bool] = None
     retry_error_codes: Optional[bool] = None
@@ -27,6 +28,7 @@ class ConfigFileData:
         append_if_not_none("root", self.root)
         append_if_not_none("token", self.token)
         append_if_not_none("out", self.out)
+        append_if_not_none("refs", self.refs)
         append_if_not_none("page_size", self.page_size)
         append_if_not_none("num_request_retry", self.num_request_retry)
         append_if_not_none("retry_error_codes", self.retry_error_codes)

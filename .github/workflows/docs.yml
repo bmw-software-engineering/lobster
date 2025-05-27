@@ -45,8 +45,10 @@ jobs:
       - name: Building code coverage report
         run: |
           make system-tests unit-tests
-          make coverage
-          mv htmlcov docs
+          make coverage-system
+          make coverage-unit
+          mv htmlcov-system docs
+          mv htmlcov-unit docs
       - name: Install graphviz
         run: |
           sudo apt-get install -y graphviz

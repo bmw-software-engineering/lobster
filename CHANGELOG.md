@@ -5,9 +5,18 @@
 
 ### 0.12.3-dev
 
+* `lobster-codebeamer`
+  - Fix for handling `references` as a list of field names instead of a dictionary.
+
 * `lobster-html-report`
+  - The SVG's in the HTML report were rendered on every use. Now the SVGs
+    are rendered once and reused for at all the remaining occurences. 
+    This will reduce the overall HTML file size.
   - Added MD rendering support for the description field in the HTML report.
     - Added a new command line flag `--render-md` to enable this feature.
+
+* `Separate Coverage Reports`
+  - Separate coverage reports for unit tests (`.coverage.unit`) and system tests (`.coverage.system`).
 
 ### 0.12.2
 
@@ -29,8 +38,6 @@
   - Fix bug where `/cb` appeared twice in codebeamer URLs, leading to an incorrect URL.
   - Fix bug where codebeamer URLs always pointed to the HEAD version of the codebeamer item,
     even if a specific version was given.
-  - Added MD rendering support for the description field in the HTML report.
-    - Added a new command line flag `--render-md` to enable this feature.
   - Add encoding tag to HTML header.
     This fixes rendering issues of symbols in the generated HTML file.
 

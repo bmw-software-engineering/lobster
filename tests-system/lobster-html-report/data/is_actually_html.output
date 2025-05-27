@@ -29,6 +29,11 @@ h2 {
 .content {
   padding: 0.5em;
 }
+.icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
 .item-ok, .item-partial, .item-missing, .item-justified {
   border: 1px solid black;
   border-radius: 0.5em;
@@ -318,7 +323,7 @@ blockquote {
 <a href="#sec-overview">Overview</a>
 <a href="#sec-issues">Issues</a>
 <div class="dropdown">
-<button class="dropbtn">Detailed report<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+<button class="dropbtn">Detailed report<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
 <div class="dropdown-content">
 <a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</a>
 <a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a>
@@ -326,16 +331,44 @@ blockquote {
 </div>
 <div class="navbar-right">
 <div class="dropdown">
-<button class="dropbtn">LOBSTER<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+<button class="dropbtn">LOBSTER<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
 <div class="dropdown-content">
-<a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> Documentation</a>
-<a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> License</a>
-<a href="https://github.com/bmw-software-engineering/lobster"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> Source</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md"><svg class="icon"><use href="#svg-external-link"></use></svg> Documentation</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md"><svg class="icon"><use href="#svg-external-link"></use></svg> License</a>
+<a href="https://github.com/bmw-software-engineering/lobster"><svg class="icon"><use href="#svg-external-link"></use></svg> Source</a>
 </div>
 </div>
 </div>
 </div>
 <div class="htmlbody">
+<svg style="display: none;">
+<defs>
+<symbol id="svg-check-square" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-alert-triangle" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-external-link" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-chevron-down" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</symbol>
+</defs>
+</svg>
 <h2 id="sec-overview">Overview</h2>
 <div class="content">
 <div class="columns">
@@ -413,9 +446,9 @@ blockquote {
 <h5>.\demo.trlc</h5>
 <!-- begin item req example.adas_100_A -->
 <div class="item-missing" id="item-ae6eef0f9ce6a72c16e8546860450b94d5499085">
-<div class="item-name"><svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg> TRLC Requirement example.adas_100_A</div>
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC Requirement example.adas_100_A</div>
 <div class="attribute">Source: 
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<svg class="icon"><use href="#svg-external-link"></use></svg>
 <a href=".\demo.trlc" target="_blank">.\demo.trlc</a>
 </div>
 <div class="attribute">
@@ -439,9 +472,9 @@ Status: status1
 <h5>.\software.py</h5>
 <!-- begin item python software.Example -->
 <div class="item-missing" id="item-b08d67b92006da35eaff57131eb330052bacbfb7">
-<div class="item-name"><svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg> Python Function software.Example</div>
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Python Function software.Example</div>
 <div class="attribute">Source: 
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+<svg class="icon"><use href="#svg-external-link"></use></svg>
 <a href=".\software.py" target="_blank">.\software.py</a>
 </div>
 <div class="attribute">

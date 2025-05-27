@@ -89,7 +89,7 @@ class TestRunner(ABC):
             "run",
             "-p",
             f"--rcfile={root_directory / 'coverage.cfg'}",
-            f"--data-file={root_directory / '.coverage'}",
+            f"--data-file={root_directory / '.coverage.system'}",
             f"--source={root_directory / 'lobster'}",
             "--branch",
             self._tool_main_path,

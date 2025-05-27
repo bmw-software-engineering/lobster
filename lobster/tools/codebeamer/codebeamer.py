@@ -78,19 +78,6 @@ class SupportedConfigKeys(Enum):
         return {parameter.value for parameter in cls}
 
 
-def add_refs_references(req, flat_values_list):
-    # refs
-    for value in flat_values_list:
-        if value.get("id"):
-            ref_id = value.get("id")
-            req.add_tracing_target(Tracing_Tag("req", str(ref_id)))
-
-
-map_reference_name_to_function = {
-    SupportedConfigKeys.REFS.value: add_refs_references
-}
-
-
 def get_authentication(cb_auth_config: AuthenticationConfig) -> requests.auth.AuthBase:
     if cb_auth_config.token:
         return BearerAuth(cb_auth_config.token)
@@ -289,27 +276,20 @@ def to_lobster(cb_config: Config, cb_item: dict):
         common_params, item_name, status)
 
     if cb_config.references:
-        for reference_name, displayed_chosen_names in (
-                cb_config.references.items()):
-            if reference_name not in map_reference_name_to_function:
-                continue
+        for displayed_name in cb_config.references:
+            if cb_item.get(displayed_name):
+                item_references = cb_item.get(displayed_name) if (
+                    isinstance(cb_item.get(displayed_name), list)) \
+                    else [cb_item.get(displayed_name)]
+            else:
+                item_references = [value for custom_field
+                                   in cb_item["customFields"]
+                                   if custom_field["name"] == displayed_name and
+                                   custom_field.get("values")
+                                   for value in custom_field["values"]]
 
-            for displayed_name in displayed_chosen_names:
-                if cb_item.get(displayed_name):
-                    flat_values_list = cb_item.get(displayed_name) if (
-                        isinstance(cb_item.get(displayed_name), list)) \
-                        else [cb_item.get(displayed_name)]
-                else:
-                    flat_values_list = [value for custom_field
-                                        in cb_item["customFields"]
-                                        if custom_field["name"] == displayed_name and
-                                        custom_field.get("values")
-                                        for value in custom_field["values"]]
-                if not flat_values_list:
-                    continue
-
-                (map_reference_name_to_function[reference_name]
-                 (item, flat_values_list))
+            for value in item_references:
+                item.add_tracing_target(Tracing_Tag("req", str(value["id"])))
 
     return item
 
