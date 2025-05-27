@@ -55,36 +55,6 @@ def name_hash(name):
     return hobj.hexdigest()
 
 
-# def write_stm(doc, xref, levels, stm):
-#     assert isinstance(doc, htmldoc.Document)
-
-#     doc.add_line('<table width="100%">')
-#     doc.add_line("<thead>")
-#     doc.add_line("<tr>")
-#     for level in levels:
-#         doc.add_line("<td>%s</td>" % html.escape(level["name"]))
-#     doc.add_line("</tr>")
-#     doc.add_line("</thead>")
-#     doc.add_line("<tbody>")
-#     for n, row in enumerate(stm):
-#         if n % 2:
-#             doc.add_line("<tr>")
-#         else:
-#             doc.add_line('<tr class="alt">')
-#         for level in levels:
-#             doc.add_line("<td>")
-#             for item_name in row[level["name"]]:
-#                 doc.add_line(
-#                     '<div class="subtle-%s">%s</div>' %
-#                     (xref[item_name]["tracing_status"].lower(),
-#                      xref_item(xref, item_name,
-#                                brief = level["kind"] != "implementation")))
-#             doc.add_line("</td>")
-#         doc.add_line("</tr>")
-#     doc.add_line("</tbody>")
-#     doc.add_line("</table>")
-
-
 def xref_item(item, link=True, brief=False):
     assert isinstance(item, Item)
     assert isinstance(link, bool)
@@ -544,10 +514,6 @@ def write_html(fd, report, dot, high_contrast):
             filename = os.path.join(file_path, filename)
             with open(filename, "r", encoding="UTF-8") as scripts:
                 doc.scripts.append("".join(scripts.readlines()))
-
-    ### STM
-    # doc.add_heading(2, "Software traceability matrix", "matrix")
-    # write_stm(doc, xref, levels, stm)
 
     fd.write(doc.render() + "\n")
 
