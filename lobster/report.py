@@ -102,12 +102,10 @@ class Report:
 
     def compute_coverage_for_items(self):
         for level_obj in self.coverage.values():
-            if level_obj.ok == level_obj.items:
-                level_obj.coverage = 100.0
+            if level_obj.items == 0:
+                level_obj.coverage = 0.0
             else:
-                level_obj.coverage = (
-                    float(level_obj.ok * 100) / float(level_obj.items)
-                )
+                level_obj.coverage = float(level_obj.ok * 100) / float(level_obj.items)
 
     def compute_item_count_and_status(self):
         for level in self.config:
