@@ -1,0 +1,8 @@
+output:
+  no_references.lobster:
+    markers: ["@requirement", "@requiredby"]
+    kind: "req"
+
+files: 
+  - 'no_references.cpp'
+codebeamer_url: "https://codebeamer.com"
