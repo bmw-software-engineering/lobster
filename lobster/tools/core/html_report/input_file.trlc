@@ -24,3 +24,12 @@ req.System_Requirement HTML_Report_with_20k_records {
       AND shall write a valid HTML report to the specified output file.
     '''
 }
+
+req.System_Requirement HTML_Report_Displays_Custom_data {
+    description = '''
+      IF a valid .lobster file containing a "custom_data" field with keys such as "component", "branch", and "ci_run" is provided as input,
+      THEN the tool shall extract these values from the file
+      AND shall render them in the top-right corner of the generated HTML report
+      AND shall exit successfully with a zero return code (0).
+    '''
+}

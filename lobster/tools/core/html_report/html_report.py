@@ -269,6 +269,20 @@ def write_item_box_end(doc, item):
     doc.add_line('<!-- end item -->')
 
 
+def generate_header(report):
+    lines = [
+        f"{label}: {report.custom_data.get(key)}<br>"
+        for label, key in [("Component", "component"), ("Branch", "branch"), ("CI Run", "ci_run")]
+        if report.custom_data.get(key)
+    ]
+
+    content = "".join(lines)
+    return f'''
+    <div style="position: absolute; top: 1em; right: 2em; font-size: 0.9em; color: white;">
+        {content}
+    </div>'''
+
+
 def write_html(fd, report, dot, high_contrast):
     assert isinstance(report, Report)
 
@@ -276,6 +290,10 @@ def write_html(fd, report, dot, high_contrast):
         "L.O.B.S.T.E.R.",
         "Lightweight Open BMW Software Traceability Evidence Report"
     )
+
+    if report.custom_data:
+        header_html = generate_header(report)
+        doc.add_line(header_html)
 
     # Item styles
     doc.style[".item-ok, .item-partial, .item-missing, .item-justified"] = {
