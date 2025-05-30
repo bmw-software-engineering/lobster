@@ -34,19 +34,20 @@ TEST(TestCommentedTest, IAMCommented) {
 // @requirement CB-#0815 CB-#0816
 TEST(TestWithSingleReference, SingleReference) {}
 
-///
-/// @requirement https://codebeamer.company.net/cb/issue/0815
-///
+//
+// @requirement https://codebeamer.company.net/cb/issue/0815
+//  @requirement CB-#0219
+//
 TEST(RequirementTagTest2, URLRequirement) {}
 
-///
-/// @requirement https://codebeamer.company.net/cb/issue/0815,
-///              https://codebeamer.company.net/cb/issue/0816
-///
+//
+// @requirement https://codebeamer.company.net/cb/issue/0815,
+//              https://codebeamer.company.net/cb/issue/0816
+//
 TEST(RequirementTagTest2, URLRequirementsCommaSeparated) {}
 
 /**
- *  @requirement https://codebeamer.company.net/cb/issue/0815
+ *  @requirement https://codebeamer.company.net/cb/issue/0815, @requirement CB-#0304
  *               https://codebeamer.company.net/cb/issue/0816
  */
 TEST(RequirementTagTest2, URLRequirementsAsCommentsSpaceSeparated) {}
@@ -58,13 +59,13 @@ TEST(RequirementTagTest2, URLRequirementsAsCommentsSpaceSeparated) {}
  */
 TEST(RequirementTagTest2, MultipleURLRequirements) {}
 
-///
-/// @requirement https://codebeamer.company.net/cb/issue/0815
-/// @requirement CB-#0816
-///
+//
+// @requirement https://codebeamer.company.net/cb/issue/0815
+// @requirement CB-#0816
+//
 TEST(RequirementTagTest3, MixedRequirements) {}
 
-///
-/// @requirement something_arbitrary
-///
+//
+// @requirement something_arbitrary
+//
 TEST(RequirementTagTest4, InvalidRequirement) {}

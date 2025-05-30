@@ -22,14 +22,54 @@
       "status": null
     },
     {
-      "tag": "cpp many_references.cpp:1:MixedRequirements:61",
+      "tag": "cpp many_references.cpp:1:URLRequirement:37",
       "location": {
         "kind": "file",
         "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
-        "line": 61,
+        "line": 37,
         "column": null
       },
-      "name": "many_references.cpp:1:MixedRequirements:61",
+      "name": "many_references.cpp:1:URLRequirement:37",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req 0219"
+      ],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp many_references.cpp:1:URLRequirementsAsCommentsSpaceSeparated:49",
+      "location": {
+        "kind": "file",
+        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "line": 49,
+        "column": null
+      },
+      "name": "many_references.cpp:1:URLRequirementsAsCommentsSpaceSeparated:49",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req 0304"
+      ],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp many_references.cpp:1:MixedRequirements:62",
+      "location": {
+        "kind": "file",
+        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "line": 62,
+        "column": null
+      },
+      "name": "many_references.cpp:1:MixedRequirements:62",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -144,14 +184,14 @@
       "status": null
     },
     {
-      "tag": "cpp many_references.cpp:1:URLRequirement:37",
+      "tag": "cpp many_references.cpp:1:URLRequirementsCommaSeparated:43",
       "location": {
         "kind": "file",
         "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
-        "line": 37,
+        "line": 43,
         "column": null
       },
-      "name": "many_references.cpp:1:URLRequirement:37",
+      "name": "many_references.cpp:1:URLRequirementsCommaSeparated:43",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -161,14 +201,14 @@
       "status": null
     },
     {
-      "tag": "cpp many_references.cpp:1:URLRequirementsCommaSeparated:42",
+      "tag": "cpp many_references.cpp:1:MultipleURLRequirements:55",
       "location": {
         "kind": "file",
         "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
-        "line": 42,
+        "line": 55,
         "column": null
       },
-      "name": "many_references.cpp:1:URLRequirementsCommaSeparated:42",
+      "name": "many_references.cpp:1:MultipleURLRequirements:55",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -178,48 +218,14 @@
       "status": null
     },
     {
-      "tag": "cpp many_references.cpp:1:URLRequirementsAsCommentsSpaceSeparated:48",
+      "tag": "cpp many_references.cpp:1:InvalidRequirement:68",
       "location": {
         "kind": "file",
         "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
-        "line": 48,
+        "line": 68,
         "column": null
       },
-      "name": "many_references.cpp:1:URLRequirementsAsCommentsSpaceSeparated:48",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp many_references.cpp:1:MultipleURLRequirements:54",
-      "location": {
-        "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
-        "line": 54,
-        "column": null
-      },
-      "name": "many_references.cpp:1:MultipleURLRequirements:54",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp many_references.cpp:1:InvalidRequirement:67",
-      "location": {
-        "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
-        "line": 67,
-        "column": null
-      },
-      "name": "many_references.cpp:1:InvalidRequirement:67",
+      "name": "many_references.cpp:1:InvalidRequirement:68",
       "messages": [],
       "just_up": [],
       "just_down": [],
