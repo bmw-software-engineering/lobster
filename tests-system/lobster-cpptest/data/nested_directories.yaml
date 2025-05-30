@@ -1,0 +1,6 @@
+output:
+  nested_directories.lobster:
+    markers: ["@requirement"]
+    kind: "req"
+
+codebeamer_url: "https://codebeamer.com"
