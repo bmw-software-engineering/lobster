@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
+import shutil
 from typing import List, Optional
 from ..test_runner import TestRunner
 
@@ -34,3 +35,14 @@ class LobsterCpptestTestRunner(TestRunner):
     def get_tool_args(self) -> List[str]:
         """Returns the command line arguments for 'lobster-cpptest'"""
         return self._cmd_args.as_list()
+
+    def create_output_directory_and_copy_expected(self, output_dir: Path,
+                                                  expected_file: Path):
+        """
+        Creates an output directory and copies the expected output file to it.
+        The output directory is created in the working directory.
+        """
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        # Copy Expected output to temperory folder to compare with the output
+        shutil.copy(expected_file, output_dir)

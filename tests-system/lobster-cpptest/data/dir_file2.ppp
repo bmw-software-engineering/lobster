@@ -1,0 +1,7 @@
+/** ensure requirement tags are parse correctly */
+
+/// @requirement CB-#0815
+TEST(RequirementTagTestDIR2, RequirementDIR2) {}
+
+/** @requirement CB-#0815 CB-#0816 */
+TEST(RequirementTagTestDIR2, RequirementAsOneLineCommentsDIR2) {}
