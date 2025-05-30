@@ -5,6 +5,9 @@
 
 ### 0.12.3-dev
 
+* `lobster-html-report`
+  - Displays `component`, `branch`, and `ci_run` custom data (if available) in the top-right corner of the HTML report.
+
 * `lobster-codebeamer`
   - Fix for handling `references` as a list of field names instead of a dictionary.
 
