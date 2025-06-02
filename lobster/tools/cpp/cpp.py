@@ -26,7 +26,7 @@ from typing import Optional
 
 from lobster.items import Tracing_Tag, Implementation
 from lobster.io import lobster_write
-from lobster.tools.cpp.tag_location_generator import TagLocationGenerator
+from lobster.tools.cpp.implementation_builder import ImplementationBuilder
 from lobster.meta_data_tool_base import MetaDataToolBase
 
 FILE_LINE_PATTERN = r"(.*):(\d+):\d+:"
@@ -169,7 +169,7 @@ class CppTool(MetaDataToolBase):
                         return 1
 
         db = {}
-        tag_location_generator = TagLocationGenerator()
+        implementation_builder = ImplementationBuilder()
 
         for line in rv.stdout.splitlines():
             if not line.endswith("[lobster-tracing]"):
@@ -177,60 +177,28 @@ class CppTool(MetaDataToolBase):
 
             match = re.match(RE_NOTAGS, line)
             if match:
-                filename, line_nr, kind, function_name = match.groups()
-                line_nr = int(line_nr)
-                tag = tag_location_generator.get_tag(filename, function_name, line_nr)
-
-                assert tag.key() not in db
-                db[tag.key()] = Implementation(
-                    tag      = tag,
-                    location = tag_location_generator.get_location(filename, line_nr),
-                    language = "C/C++",
-                    kind     = kind,
-                    name     = function_name)
-
+                impl = implementation_builder.from_match(match)
+                assert impl.tag.key() not in db
+                db[impl.tag.key()] = impl
                 continue
 
             match = re.match(RE_JUST, line)
             if match:
-                filename, line_nr, kind, function_name, reason = match.groups()
-                line_nr = int(line_nr)
-                tag = tag_location_generator.get_tag(filename, function_name, line_nr)
-
-                if tag.key() not in db:
-                    db[tag.key()] = Implementation(
-                        tag      = tag,
-                        location = tag_location_generator.get_location(
-                            filename,
-                            line_nr,
-                        ),
-                        language = "C/C++",
-                        kind     = kind,
-                        name     = function_name)
-
-                db[tag.key()].just_up.append(reason)
-
+                impl = implementation_builder.from_match_if_new(db, match)
+                impl.just_up.append(
+                    match.group(implementation_builder.REASON_GROUP_NUM),
+                )
                 continue
 
             match = re.match(RE_TAGS, line)
             if match:
-                filename, line_nr, kind, function_name, ref = match.groups()
-                line_nr = int(line_nr)
-                tag = tag_location_generator.get_tag(filename, function_name, line_nr)
-
-                if tag.key() not in db:
-                    db[tag.key()] = Implementation(
-                        tag      = tag,
-                        location = tag_location_generator.get_location(
-                            filename,
-                            line_nr,
-                        ),
-                        language = "C/C++",
-                        kind     = kind,
-                        name     = function_name)
-
-                db[tag.key()].add_tracing_target(Tracing_Tag("req", ref))
-
+                impl = implementation_builder.from_match_if_new(db, match)
+                impl.add_tracing_target(
+                    Tracing_Tag(
+                        "req",
+                        match.group(implementation_builder.REFERENCE_GROUP_NUM),
+                    ),
+                )
                 continue
 
             print("could not parse line")
