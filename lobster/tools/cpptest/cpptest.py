@@ -27,7 +27,7 @@ from lobster.exceptions import LOBSTER_Exception
 from lobster.items import Tracing_Tag, Activity
 from lobster.location import File_Reference
 from lobster.io import lobster_write
-from lobster.tools.cpptest.file_tag_generator import FileTagGenerator
+from lobster.file_tag_generator import FileTagGenerator
 from lobster.tools.cpptest.parser.constants import Constants
 from lobster.tools.cpptest.parser.requirements_parser import \
     ParserForRequirements

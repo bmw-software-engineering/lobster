@@ -106,7 +106,7 @@
             "req sysreq_example.lobster_example"
           ],
           "ref_down": [
-            "cpp foo.cpp:implication:3",
+            "cpp foo.cpp:1:implication:3",
             "json test_example.json:Implication Test 1",
             "json test_example.json:Implication Test 2"
           ],
@@ -135,7 +135,7 @@
             "req sysreq_example.lobster_example"
           ],
           "ref_down": [
-            "cpp foo.cpp:exclusive_or:9",
+            "cpp foo.cpp:1:exclusive_or:9",
             "json test_example.json:XOR Test 1",
             "json test_example.json:XOR Test 2",
             "json test_example.json:XOR Test 3",
@@ -155,7 +155,7 @@
       "kind": "implementation",
       "items": [
         {
-          "tag": "cpp foo.cpp:implication:3",
+          "tag": "cpp foo.cpp:1:implication:3",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -177,7 +177,7 @@
           "kind": "function"
         },
         {
-          "tag": "cpp foo.cpp:exclusive_or:9",
+          "tag": "cpp foo.cpp:1:exclusive_or:9",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
