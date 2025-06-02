@@ -22,11 +22,11 @@ import argparse
 import os.path
 import subprocess
 import re
-from typing import Union
+from typing import Optional
 
 from lobster.items import Tracing_Tag, Implementation
-from lobster.location import File_Reference
 from lobster.io import lobster_write
+from lobster.tools.cpp.tag_location_generator import TagLocationGenerator
 from lobster.version import get_version
 
 FILE_LINE_PATTERN = r"(.*):(\d+):\d+:"
@@ -52,25 +52,11 @@ RE_JUST = (PREFIX + " " +
 ap = argparse.ArgumentParser()
 
 
-def extract_clang_finding_name(line: str) -> str:
+def extract_clang_finding_name(line: str) -> Optional[str]:
     """extracts the name of the clang finding from the end of the line"""
     if line.endswith("]") and ("[" in line):
         return line.split("[")[-1]
     return None
-
-
-def create_tracing_tag_and_loc(filename_from_clang_out: str,
-                               function_name: str,
-                               line_nr: int) -> Union[Tracing_Tag, File_Reference]:
-    """Creates a tracing tag and a file references
-
-       The file reference uses the path of the given file relative to the
-       current working directory.
-       The tracing tag constructs the unique ID based on that path, too.
-    """
-    filename = os.path.relpath(filename_from_clang_out, os.getcwd())
-    function_uid = f"{filename}:{function_name}:{line_nr}"
-    return Tracing_Tag("cpp", function_uid), File_Reference(filename, line_nr)
 
 
 @get_version(ap)
@@ -171,6 +157,7 @@ def main():
                     return 1
 
     db = {}
+    tag_location_generator = TagLocationGenerator()
 
     for line in rv.stdout.splitlines():
         if not line.endswith("[lobster-tracing]"):
@@ -179,12 +166,13 @@ def main():
         match = re.match(RE_NOTAGS, line)
         if match:
             filename, line_nr, kind, function_name = match.groups()
-            tag, loc = create_tracing_tag_and_loc(filename, function_name, int(line_nr))
+            line_nr = int(line_nr)
+            tag = tag_location_generator.get_tag(filename, function_name, line_nr)
 
             assert tag.key() not in db
             db[tag.key()] = Implementation(
                 tag      = tag,
-                location = loc,
+                location = tag_location_generator.get_location(filename, line_nr),
                 language = "C/C++",
                 kind     = kind,
                 name     = function_name)
@@ -194,12 +182,13 @@ def main():
         match = re.match(RE_JUST, line)
         if match:
             filename, line_nr, kind, function_name, reason = match.groups()
-            tag, loc = create_tracing_tag_and_loc(filename, function_name, int(line_nr))
+            line_nr = int(line_nr)
+            tag = tag_location_generator.get_tag(filename, function_name, line_nr)
 
             if tag.key() not in db:
                 db[tag.key()] = Implementation(
                     tag      = tag,
-                    location = loc,
+                    location = tag_location_generator.get_location(filename, line_nr),
                     language = "C/C++",
                     kind     = kind,
                     name     = function_name)
@@ -211,12 +200,13 @@ def main():
         match = re.match(RE_TAGS, line)
         if match:
             filename, line_nr, kind, function_name, ref = match.groups()
-            tag, loc = create_tracing_tag_and_loc(filename, function_name, int(line_nr))
+            line_nr = int(line_nr)
+            tag = tag_location_generator.get_tag(filename, function_name, line_nr)
 
             if tag.key() not in db:
                 db[tag.key()] = Implementation(
                     tag      = tag,
-                    location = loc,
+                    location = tag_location_generator.get_location(filename, line_nr),
                     language = "C/C++",
                     kind     = kind,
                     name     = function_name)
