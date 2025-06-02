@@ -43,10 +43,10 @@ class Tracing_Tag:
             rv += "@%s" % str(self.version)
         return rv
 
-    def key(self):
+    def key(self) -> str:
         return self.namespace + " " + self.tag
 
-    def to_json(self):
+    def to_json(self) -> str:
         return str(self)
 
     @classmethod

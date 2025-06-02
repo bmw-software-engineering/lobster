@@ -5,6 +5,16 @@
 
 ### 0.12.3-dev
 
+* `lobster-cpp`
+  * The file basename is used to construct the function UID.
+    A counter is then appended to the basename to handle situations where files in
+    different folders have the same basename.
+    Now `lobster-cpp` and `lobster-cpptest` use the same logic to generate function UIDs.
+  * The `*.lobster` output file uses the absolute path for location entries instead of a
+    relative path.
+    This simplifies the usage of the LOBSTER tools, for instance in a CI system, where
+    different tools are called from different working directories.
+
 * `lobster-codebeamer`
   - Fix for handling `references` as a list of field names instead of a dictionary.
 
