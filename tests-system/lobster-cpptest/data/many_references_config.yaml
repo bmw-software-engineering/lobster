@@ -3,6 +3,6 @@ output:
     markers: ["@requirement"]
     kind: "req"
 
-files: 
+files:
   - 'many_references.cpp'
 codebeamer_url: "https://codebeamer.com"

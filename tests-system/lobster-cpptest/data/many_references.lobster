@@ -4,7 +4,7 @@
       "tag": "cpp many_references.cpp:1:SingleReference:33",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 33,
         "column": null
       },
@@ -25,7 +25,7 @@
       "tag": "cpp many_references.cpp:1:URLRequirement:37",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 37,
         "column": null
       },
@@ -45,7 +45,7 @@
       "tag": "cpp many_references.cpp:1:URLRequirementsAsCommentsSpaceSeparated:49",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 49,
         "column": null
       },
@@ -65,7 +65,7 @@
       "tag": "cpp many_references.cpp:1:MixedRequirements:62",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 62,
         "column": null
       },
@@ -85,7 +85,7 @@
       "tag": "cpp many_references.cpp:1:TestTest:3",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 3,
         "column": null
       },
@@ -102,7 +102,7 @@
       "tag": "cpp many_references.cpp:1:TestMultiLine:5",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 5,
         "column": null
       },
@@ -119,7 +119,7 @@
       "tag": "cpp many_references.cpp:1:EmptyImplementation:10",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 10,
         "column": null
       },
@@ -136,7 +136,7 @@
       "tag": "cpp many_references.cpp:1:ImplementationMultipleLines:12",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 12,
         "column": null
       },
@@ -153,7 +153,7 @@
       "tag": "cpp many_references.cpp:1:MultipleLinesWithComments:16",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 16,
         "column": null
       },
@@ -170,7 +170,7 @@
       "tag": "cpp many_references.cpp:1:IAMCommented:28",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 28,
         "column": null
       },
@@ -187,7 +187,7 @@
       "tag": "cpp many_references.cpp:1:URLRequirementsCommaSeparated:43",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 43,
         "column": null
       },
@@ -204,7 +204,7 @@
       "tag": "cpp many_references.cpp:1:MultipleURLRequirements:55",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 55,
         "column": null
       },
@@ -221,7 +221,7 @@
       "tag": "cpp many_references.cpp:1:InvalidRequirement:68",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\many_references.cpp",
+        "file": "many_references.cpp",
         "line": 68,
         "column": null
       },

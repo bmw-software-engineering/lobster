@@ -1,35 +1,14 @@
 {
   "data": [
     {
-      "tag": "cpp 1_reference.cpp:1:SingleReference:33",
+      "tag": "cpp invalid_extension.xyz:1:RequirementModified:64",
       "location": {
         "kind": "file",
-        "file": "1_reference.cpp",
-        "line": 33,
-        "column": null
-      },
-      "name": "1_reference.cpp:1:SingleReference:33",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "refs": [
-        "req 0815",
-        "req 0816"
-      ],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp car_test_cases.cpp:1:LaneKeepAssist:64",
-      "location": {
-        "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 64,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:LaneKeepAssist:64",
+      "name": "invalid_extension.xyz:1:RequirementModified:64",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -42,14 +21,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:BlindSpotMonitoring:67",
+      "tag": "cpp invalid_extension.xyz:1:RequirementAsOneLineCommentsModified:67",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 67,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:BlindSpotMonitoring:67",
+      "name": "invalid_extension.xyz:1:RequirementAsOneLineCommentsModified:67",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -63,14 +42,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:ParkingSensors:70",
+      "tag": "cpp invalid_extension.xyz:1:RequirementAsCommentsModified:70",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 70,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:ParkingSensors:70",
+      "name": "invalid_extension.xyz:1:RequirementAsCommentsModified:70",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -84,14 +63,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:TrafficSignRecognition:75",
+      "tag": "cpp invalid_extension.xyz:1:RequirementsAsMultipleCommentsModified:75",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 75,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:TrafficSignRecognition:75",
+      "name": "invalid_extension.xyz:1:RequirementsAsMultipleCommentsModified:75",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -109,14 +88,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:MultiZoneClimateControl:107",
+      "tag": "cpp invalid_extension.xyz:1:MixedRequirementsModified:107",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 107,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:MultiZoneClimateControl:107",
+      "name": "invalid_extension.xyz:1:MixedRequirementsModified:107",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -129,14 +108,35 @@
       "status": null
     },
     {
-      "tag": "cpp 1_reference.cpp:1:TestTest:3",
+      "tag": "cpp invalid_extension.xyz:1:ImplementationMultipleLinesModified:187",
       "location": {
         "kind": "file",
-        "file": "1_reference.cpp",
+        "file": "invalid_extension.xyz",
+        "line": 187,
+        "column": null
+      },
+      "name": "invalid_extension.xyz:1:ImplementationMultipleLinesModified:187",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req 0815",
+        "req 0816"
+      ],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp invalid_extension.xyz:1:TestPInstanceModified:3",
+      "location": {
+        "kind": "file",
+        "file": "invalid_extension.xyz",
         "line": 3,
         "column": null
       },
-      "name": "1_reference.cpp:1:TestTest:3",
+      "name": "invalid_extension.xyz:1:TestPInstanceModified:3",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -146,218 +146,14 @@
       "status": null
     },
     {
-      "tag": "cpp 1_reference.cpp:1:TestMultiLine:5",
+      "tag": "cpp invalid_extension.xyz:1:TestTestModified:4",
       "location": {
         "kind": "file",
-        "file": "1_reference.cpp",
-        "line": 5,
-        "column": null
-      },
-      "name": "1_reference.cpp:1:TestMultiLine:5",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp 1_reference.cpp:1:EmptyImplementation:10",
-      "location": {
-        "kind": "file",
-        "file": "1_reference.cpp",
-        "line": 10,
-        "column": null
-      },
-      "name": "1_reference.cpp:1:EmptyImplementation:10",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp 1_reference.cpp:1:ImplementationMultipleLines:12",
-      "location": {
-        "kind": "file",
-        "file": "1_reference.cpp",
-        "line": 12,
-        "column": null
-      },
-      "name": "1_reference.cpp:1:ImplementationMultipleLines:12",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp 1_reference.cpp:1:MultipleLinesWithComments:16",
-      "location": {
-        "kind": "file",
-        "file": "1_reference.cpp",
-        "line": 16,
-        "column": null
-      },
-      "name": "1_reference.cpp:1:MultipleLinesWithComments:16",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp 1_reference.cpp:1:IAMCommented:28",
-      "location": {
-        "kind": "file",
-        "file": "1_reference.cpp",
-        "line": 28,
-        "column": null
-      },
-      "name": "1_reference.cpp:1:IAMCommented:28",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp no_references.cpp:1:TestTest:3",
-      "location": {
-        "kind": "file",
-        "file": "no_references.cpp",
-        "line": 3,
-        "column": null
-      },
-      "name": "no_references.cpp:1:TestTest:3",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp no_references.cpp:1:TestMultiLine:5",
-      "location": {
-        "kind": "file",
-        "file": "no_references.cpp",
-        "line": 5,
-        "column": null
-      },
-      "name": "no_references.cpp:1:TestMultiLine:5",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp no_references.cpp:1:EmptyImplementation:10",
-      "location": {
-        "kind": "file",
-        "file": "no_references.cpp",
-        "line": 10,
-        "column": null
-      },
-      "name": "no_references.cpp:1:EmptyImplementation:10",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp no_references.cpp:1:ImplementationMultipleLines:12",
-      "location": {
-        "kind": "file",
-        "file": "no_references.cpp",
-        "line": 12,
-        "column": null
-      },
-      "name": "no_references.cpp:1:ImplementationMultipleLines:12",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp no_references.cpp:1:MultipleLinesWithComments:16",
-      "location": {
-        "kind": "file",
-        "file": "no_references.cpp",
-        "line": 16,
-        "column": null
-      },
-      "name": "no_references.cpp:1:MultipleLinesWithComments:16",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp no_references.cpp:1:IAMCommented:27",
-      "location": {
-        "kind": "file",
-        "file": "no_references.cpp",
-        "line": 27,
-        "column": null
-      },
-      "name": "no_references.cpp:1:IAMCommented:27",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp car_test_cases.cpp:1:LeatherSeats:3",
-      "location": {
-        "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 3,
-        "column": null
-      },
-      "name": "car_test_cases.cpp:1:LeatherSeats:3",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp car_test_cases.cpp:1:Sunroof:4",
-      "location": {
-        "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 4,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:Sunroof:4",
+      "name": "invalid_extension.xyz:1:TestTestModified:4",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -367,14 +163,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:HeatedSteeringWheel:5",
+      "tag": "cpp invalid_extension.xyz:1:TestTestModifiedF:5",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 5,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:HeatedSteeringWheel:5",
+      "name": "invalid_extension.xyz:1:TestTestModifiedF:5",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -384,14 +180,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:AdaptiveCruiseControl:6",
+      "tag": "cpp invalid_extension.xyz:1:TestTestModifiedP:6",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 6,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:AdaptiveCruiseControl:6",
+      "name": "invalid_extension.xyz:1:TestTestModifiedP:6",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -401,14 +197,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:SurroundSoundSystem:7",
+      "tag": "cpp invalid_extension.xyz:1:TestTypedTestModified:7",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 7,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:SurroundSoundSystem:7",
+      "name": "invalid_extension.xyz:1:TestTypedTestModified:7",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -418,14 +214,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:PanoramicRoof:8",
+      "tag": "cpp invalid_extension.xyz:1:TestTypedTestModifiedP:8",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 8,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:PanoramicRoof:8",
+      "name": "invalid_extension.xyz:1:TestTypedTestModifiedP:8",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -435,14 +231,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:MassageSeats:9",
+      "tag": "cpp invalid_extension.xyz:1:TestTypedTestModifiedSuite:9",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 9,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:MassageSeats:9",
+      "name": "invalid_extension.xyz:1:TestTypedTestModifiedSuite:9",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -452,14 +248,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:AmbientLighting:10",
+      "tag": "cpp invalid_extension.xyz:1:TestFInstanceModified:10",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 10,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:AmbientLighting:10",
+      "name": "invalid_extension.xyz:1:TestFInstanceModified:10",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -469,14 +265,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:WirelessCharging:14",
+      "tag": "cpp invalid_extension.xyz:1:TestMultiLineModified:14",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 14,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:WirelessCharging:14",
+      "name": "invalid_extension.xyz:1:TestMultiLineModified:14",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -486,14 +282,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:KeylessEntry:19",
+      "tag": "cpp invalid_extension.xyz:1:EmptyImplementation:19",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 19,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:KeylessEntry:19",
+      "name": "invalid_extension.xyz:1:EmptyImplementation:19",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -503,14 +299,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:AutomaticParking:21",
+      "tag": "cpp invalid_extension.xyz:1:ImplementationMultipleLines:21",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 21,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:AutomaticParking:21",
+      "name": "invalid_extension.xyz:1:ImplementationMultipleLines:21",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -520,14 +316,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:HeadsUpDisplay:25",
+      "tag": "cpp invalid_extension.xyz:1:MultipleLinesWithCommentsModified:25",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 25,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:HeadsUpDisplay:25",
+      "name": "invalid_extension.xyz:1:MultipleLinesWithCommentsModified:25",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -537,14 +333,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:VentilatedSeats:34",
+      "tag": "cpp invalid_extension.xyz:1:TestTagInOnlineModified:34",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 34,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:VentilatedSeats:34",
+      "name": "invalid_extension.xyz:1:TestTagInOnlineModified:34",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -554,14 +350,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:DigitalCockpit:37",
+      "tag": "cpp invalid_extension.xyz:1:TestTagPrecededByCommentModified:37",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 37,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:DigitalCockpit:37",
+      "name": "invalid_extension.xyz:1:TestTagPrecededByCommentModified:37",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -571,14 +367,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:GestureControl:41",
+      "tag": "cpp invalid_extension.xyz:1:TestTagFollowedByCommentModified:41",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 41,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:GestureControl:41",
+      "name": "invalid_extension.xyz:1:TestTagFollowedByCommentModified:41",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -588,14 +384,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:NightVision:45",
+      "tag": "cpp invalid_extension.xyz:1:TestTagWithCommentsAroundModified:45",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 45,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:NightVision:45",
+      "name": "invalid_extension.xyz:1:TestTagWithCommentsAroundModified:45",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -605,14 +401,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:PremiumSoundSystem:50",
+      "tag": "cpp invalid_extension.xyz:1:TestTagAsTextModified:50",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 50,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:PremiumSoundSystem:50",
+      "name": "invalid_extension.xyz:1:TestTagAsTextModified:50",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -622,14 +418,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:AutomaticClimateControl:55",
+      "tag": "cpp invalid_extension.xyz:1:BriefTagInOnlineModified:55",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 55,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:AutomaticClimateControl:55",
+      "name": "invalid_extension.xyz:1:BriefTagInOnlineModified:55",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -639,14 +435,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:RearSeatEntertainment:58",
+      "tag": "cpp invalid_extension.xyz:1:BriefTagMultipleLinesModified:58",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 58,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:RearSeatEntertainment:58",
+      "name": "invalid_extension.xyz:1:BriefTagMultipleLinesModified:58",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -656,14 +452,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:AutomaticEmergencyBraking:83",
+      "tag": "cpp invalid_extension.xyz:1:URLRequirementModified:83",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 83,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:AutomaticEmergencyBraking:83",
+      "name": "invalid_extension.xyz:1:URLRequirementModified:83",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -673,14 +469,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:DriverAttentionMonitoring:88",
+      "tag": "cpp invalid_extension.xyz:1:URLRequirementsCommaSeparatedModified:88",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 88,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:DriverAttentionMonitoring:88",
+      "name": "invalid_extension.xyz:1:URLRequirementsCommaSeparatedModified:88",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -690,14 +486,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:RemoteStart:94",
+      "tag": "cpp invalid_extension.xyz:1:URLRequirementsAsCommentsSpaceSeparatedModified:94",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 94,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:RemoteStart:94",
+      "name": "invalid_extension.xyz:1:URLRequirementsAsCommentsSpaceSeparatedModified:94",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -707,14 +503,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:PowerTailgate:100",
+      "tag": "cpp invalid_extension.xyz:1:MultipleURLRequirementsModified:100",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 100,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:PowerTailgate:100",
+      "name": "invalid_extension.xyz:1:MultipleURLRequirementsModified:100",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -724,14 +520,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:SoftCloseDoors:113",
+      "tag": "cpp invalid_extension.xyz:1:InvalidRequirementModified:113",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 113,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:SoftCloseDoors:113",
+      "name": "invalid_extension.xyz:1:InvalidRequirementModified:113",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -741,14 +537,167 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:AcousticGlass:118",
+      "tag": "cpp invalid_extension.xyz:1:MissingRequirementReferenceModified:118",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "invalid_extension.xyz",
         "line": 118,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:AcousticGlass:118",
+      "name": "invalid_extension.xyz:1:MissingRequirementReferenceModified:118",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp invalid_extension.xyz:1:RequiredByWithAtModified:125",
+      "location": {
+        "kind": "file",
+        "file": "invalid_extension.xyz",
+        "line": 125,
+        "column": null
+      },
+      "name": "invalid_extension.xyz:1:RequiredByWithAtModified:125",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp invalid_extension.xyz:1:MultipleRequiredByCommaSeparatedModified:130",
+      "location": {
+        "kind": "file",
+        "file": "invalid_extension.xyz",
+        "line": 130,
+        "column": null
+      },
+      "name": "invalid_extension.xyz:1:MultipleRequiredByCommaSeparatedModified:130",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp invalid_extension.xyz:1:MultipleRequiredByAsCommentsModified:135",
+      "location": {
+        "kind": "file",
+        "file": "invalid_extension.xyz",
+        "line": 135,
+        "column": null
+      },
+      "name": "invalid_extension.xyz:1:MultipleRequiredByAsCommentsModified:135",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp invalid_extension.xyz:1:RequiredByWithNewLinesModified:145",
+      "location": {
+        "kind": "file",
+        "file": "invalid_extension.xyz",
+        "line": 145,
+        "column": null
+      },
+      "name": "invalid_extension.xyz:1:RequiredByWithNewLinesModified:145",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp invalid_extension.xyz:1:TestMethodModified:160",
+      "location": {
+        "kind": "file",
+        "file": "invalid_extension.xyz",
+        "line": 160,
+        "column": null
+      },
+      "name": "invalid_extension.xyz:1:TestMethodModified:160",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp invalid_extension.xyz:1:TestMethodAsCommentsSpaceSeparatedModified:163",
+      "location": {
+        "kind": "file",
+        "file": "invalid_extension.xyz",
+        "line": 163,
+        "column": null
+      },
+      "name": "invalid_extension.xyz:1:TestMethodAsCommentsSpaceSeparatedModified:163",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp invalid_extension.xyz:1:TestMethodAsCommentsCommaSeparatedModified:168",
+      "location": {
+        "kind": "file",
+        "file": "invalid_extension.xyz",
+        "line": 168,
+        "column": null
+      },
+      "name": "invalid_extension.xyz:1:TestMethodAsCommentsCommaSeparatedModified:168",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp invalid_extension.xyz:1:InvalidTestMethodModified:175",
+      "location": {
+        "kind": "file",
+        "file": "invalid_extension.xyz",
+        "line": 175,
+        "column": null
+      },
+      "name": "invalid_extension.xyz:1:InvalidTestMethodModified:175",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp invalid_extension.xyz:1:MissingTestMethodModified:180",
+      "location": {
+        "kind": "file",
+        "file": "invalid_extension.xyz",
+        "line": 180,
+        "column": null
+      },
+      "name": "invalid_extension.xyz:1:MissingTestMethodModified:180",
       "messages": [],
       "just_up": [],
       "just_down": [],

@@ -1,6 +1,7 @@
 import json
-from pathlib import Path
+import platform
 import sys
+from pathlib import Path
 
 
 def update_cpptest_output_file(filename: Path, working_dir: Path) -> None:
@@ -28,12 +29,20 @@ def update_cpptest_output_file(filename: Path, working_dir: Path) -> None:
             if 'file' in location:
                 file_path = Path(location['file'])
                 try:
-                    # Find the relative path starting from the "data" folder
-                    relative_path = file_path.relative_to(
-                        *file_path.parts[:file_path.parts.index("data") + 1])
-                    # Update the file path with the expected location
-                    location['file'] = (str(Path(working_dir) /
-                                             relative_path).replace("\\", "/"))
+                    # Construct the absolute path of the file by combining the working
+                    # directory and file path, and expand any user-specific components
+                    # like '~' to the full path.
+                    file_abs_path = Path(working_dir / file_path).expanduser()
+
+                    # If the operating system is not Windows, resolve the path to its
+                    # absolute canonical form(e.g., resolving symlinksor relative paths)
+                    if platform.system() != "Windows":
+                        file_abs_path = file_abs_path.resolve()
+
+                    # Convert the absolute path to a string and replace backslashes
+                    # with forward slashes (to ensure a consistent format
+                    # across platforms), then store it in the 'location' dictionary.
+                    location['file'] = str(file_abs_path).replace("\\", "/")
                 except ValueError:
                     print(f"Error: 'data' folder not found in path {file_path}")
 

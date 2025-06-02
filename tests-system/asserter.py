@@ -86,13 +86,14 @@ class Asserter:
                                     sort_json(modified_actual_json),
                                     sort_json(modified_expected_json),
                                     f'File differs from expectation '
-                                    f'{expected_file_ref}!',)
+                                    f'{expected_file_ref}!',
+                                )
                             else:
                                 self._test_case.assertEqual(
                                     modified_actual,
                                     modified_expected,
-                                    f'File differs from expectation'
-                                    f' {expected_file_ref}!',
+                                    f'File differs from expectation '
+                                    f'{expected_file_ref}!',
                                 )
                     except FileNotFoundError:
                         self._test_case.fail(f"File {expected_file_ref} was not "

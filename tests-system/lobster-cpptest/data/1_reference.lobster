@@ -4,7 +4,7 @@
       "tag": "cpp 1_reference.cpp:1:SingleReference:33",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\1_reference.cpp",
+        "file": "1_reference.cpp",
         "line": 33,
         "column": null
       },
@@ -25,7 +25,7 @@
       "tag": "cpp 1_reference.cpp:1:TestTest:3",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\1_reference.cpp",
+        "file": "1_reference.cpp",
         "line": 3,
         "column": null
       },
@@ -42,7 +42,7 @@
       "tag": "cpp 1_reference.cpp:1:TestMultiLine:5",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\1_reference.cpp",
+        "file": "1_reference.cpp",
         "line": 5,
         "column": null
       },
@@ -59,7 +59,7 @@
       "tag": "cpp 1_reference.cpp:1:EmptyImplementation:10",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\1_reference.cpp",
+        "file": "1_reference.cpp",
         "line": 10,
         "column": null
       },
@@ -76,7 +76,7 @@
       "tag": "cpp 1_reference.cpp:1:ImplementationMultipleLines:12",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\1_reference.cpp",
+        "file": "1_reference.cpp",
         "line": 12,
         "column": null
       },
@@ -93,7 +93,7 @@
       "tag": "cpp 1_reference.cpp:1:MultipleLinesWithComments:16",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\1_reference.cpp",
+        "file": "1_reference.cpp",
         "line": 16,
         "column": null
       },
@@ -110,7 +110,7 @@
       "tag": "cpp 1_reference.cpp:1:IAMCommented:28",
       "location": {
         "kind": "file",
-        "file": "C:\\Users\\KedarNavare\\Projects\\lobster\\tests-system\\lobster-cpptest\\data\\1_reference.cpp",
+        "file": "1_reference.cpp",
         "line": 28,
         "column": null
       },

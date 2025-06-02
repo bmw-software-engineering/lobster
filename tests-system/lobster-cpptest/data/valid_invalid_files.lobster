@@ -1,14 +1,14 @@
 {
   "data": [
     {
-      "tag": "cpp car_test_cases.cpp:1:LaneKeepAssist:64",
+      "tag": "cpp multi2.cpp:1:RequirementB:3",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 64,
+        "file": "multi2.cpp",
+        "line": 3,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:LaneKeepAssist:64",
+      "name": "multi2.cpp:1:RequirementB:3",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -21,14 +21,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:BlindSpotMonitoring:67",
+      "tag": "cpp multi2.cpp:1:RequirementAsOneLineCommentsB:6",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 67,
+        "file": "multi2.cpp",
+        "line": 6,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:BlindSpotMonitoring:67",
+      "name": "multi2.cpp:1:RequirementAsOneLineCommentsB:6",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -42,14 +42,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:ParkingSensors:70",
+      "tag": "cpp multi2.cpp:1:RequirementAsCommentsB:9",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 70,
+        "file": "multi2.cpp",
+        "line": 9,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:ParkingSensors:70",
+      "name": "multi2.cpp:1:RequirementAsCommentsB:9",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -63,14 +63,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:TrafficSignRecognition:75",
+      "tag": "cpp multi2.cpp:1:RequirementsAsMultipleCommentsB:14",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 75,
+        "file": "multi2.cpp",
+        "line": 14,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:TrafficSignRecognition:75",
+      "name": "multi2.cpp:1:RequirementsAsMultipleCommentsB:14",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -88,14 +88,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:MultiZoneClimateControl:107",
+      "tag": "cpp multi2.cpp:1:MixedRequirementsB:46",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 107,
+        "file": "multi2.cpp",
+        "line": 46,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:MultiZoneClimateControl:107",
+      "name": "multi2.cpp:1:MixedRequirementsB:46",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -108,150 +108,228 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:LeatherSeats:3",
+      "tag": "cpp multi3.cpp:1:RequirementC:3",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "multi3.cpp",
         "line": 3,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:LeatherSeats:3",
+      "name": "multi3.cpp:1:RequirementC:3",
       "messages": [],
       "just_up": [],
       "just_down": [],
       "just_global": [],
+      "refs": [
+        "req 0815"
+      ],
       "framework": "cpptest",
       "kind": "Function",
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:Sunroof:4",
+      "tag": "cpp multi3.cpp:1:RequirementAsOneLineCommentsC:6",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 4,
-        "column": null
-      },
-      "name": "car_test_cases.cpp:1:Sunroof:4",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp car_test_cases.cpp:1:HeatedSteeringWheel:5",
-      "location": {
-        "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 5,
-        "column": null
-      },
-      "name": "car_test_cases.cpp:1:HeatedSteeringWheel:5",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp car_test_cases.cpp:1:AdaptiveCruiseControl:6",
-      "location": {
-        "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "multi3.cpp",
         "line": 6,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:AdaptiveCruiseControl:6",
+      "name": "multi3.cpp:1:RequirementAsOneLineCommentsC:6",
       "messages": [],
       "just_up": [],
       "just_down": [],
       "just_global": [],
+      "refs": [
+        "req 0815",
+        "req 0816"
+      ],
       "framework": "cpptest",
       "kind": "Function",
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:SurroundSoundSystem:7",
+      "tag": "cpp multi3.cpp:1:RequirementAsCommentsC:9",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 7,
-        "column": null
-      },
-      "name": "car_test_cases.cpp:1:SurroundSoundSystem:7",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp car_test_cases.cpp:1:PanoramicRoof:8",
-      "location": {
-        "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 8,
-        "column": null
-      },
-      "name": "car_test_cases.cpp:1:PanoramicRoof:8",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp car_test_cases.cpp:1:MassageSeats:9",
-      "location": {
-        "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "multi3.cpp",
         "line": 9,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:MassageSeats:9",
+      "name": "multi3.cpp:1:RequirementAsCommentsC:9",
       "messages": [],
       "just_up": [],
       "just_down": [],
       "just_global": [],
+      "refs": [
+        "req 0815",
+        "req 0816"
+      ],
       "framework": "cpptest",
       "kind": "Function",
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:AmbientLighting:10",
+      "tag": "cpp multi3.cpp:1:RequirementsAsMultipleCommentsC:14",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 10,
-        "column": null
-      },
-      "name": "car_test_cases.cpp:1:AmbientLighting:10",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "cpptest",
-      "kind": "Function",
-      "status": null
-    },
-    {
-      "tag": "cpp car_test_cases.cpp:1:WirelessCharging:14",
-      "location": {
-        "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
+        "file": "multi3.cpp",
         "line": 14,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:WirelessCharging:14",
+      "name": "multi3.cpp:1:RequirementsAsMultipleCommentsC:14",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req 0815",
+        "req 0816",
+        "req 0817",
+        "req 0818",
+        "req 0819",
+        "req 0820"
+      ],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp multi3.cpp:1:MixedRequirementsC:46",
+      "location": {
+        "kind": "file",
+        "file": "multi3.cpp",
+        "line": 46,
+        "column": null
+      },
+      "name": "multi3.cpp:1:MixedRequirementsC:46",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req 0816"
+      ],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp multi1.cpp:1:RequirementA:3",
+      "location": {
+        "kind": "file",
+        "file": "multi1.cpp",
+        "line": 3,
+        "column": null
+      },
+      "name": "multi1.cpp:1:RequirementA:3",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req 0815"
+      ],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp multi1.cpp:1:RequirementAsOneLineCommentsA:6",
+      "location": {
+        "kind": "file",
+        "file": "multi1.cpp",
+        "line": 6,
+        "column": null
+      },
+      "name": "multi1.cpp:1:RequirementAsOneLineCommentsA:6",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req 0815",
+        "req 0816"
+      ],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp multi1.cpp:1:RequirementAsCommentsA:9",
+      "location": {
+        "kind": "file",
+        "file": "multi1.cpp",
+        "line": 9,
+        "column": null
+      },
+      "name": "multi1.cpp:1:RequirementAsCommentsA:9",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req 0815",
+        "req 0816"
+      ],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp multi1.cpp:1:RequirementsAsMultipleCommentsA:14",
+      "location": {
+        "kind": "file",
+        "file": "multi1.cpp",
+        "line": 14,
+        "column": null
+      },
+      "name": "multi1.cpp:1:RequirementsAsMultipleCommentsA:14",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req 0815",
+        "req 0816",
+        "req 0817",
+        "req 0818",
+        "req 0819",
+        "req 0820"
+      ],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp multi1.cpp:1:MixedRequirementsA:46",
+      "location": {
+        "kind": "file",
+        "file": "multi1.cpp",
+        "line": 46,
+        "column": null
+      },
+      "name": "multi1.cpp:1:MixedRequirementsA:46",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req 0816"
+      ],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp multi2.cpp:1:URLRequirementB:22",
+      "location": {
+        "kind": "file",
+        "file": "multi2.cpp",
+        "line": 22,
+        "column": null
+      },
+      "name": "multi2.cpp:1:URLRequirementB:22",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -261,14 +339,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:KeylessEntry:19",
+      "tag": "cpp multi2.cpp:1:URLRequirementsCommaSeparatedB:27",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 19,
+        "file": "multi2.cpp",
+        "line": 27,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:KeylessEntry:19",
+      "name": "multi2.cpp:1:URLRequirementsCommaSeparatedB:27",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -278,14 +356,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:AutomaticParking:21",
+      "tag": "cpp multi2.cpp:1:URLRequirementsAsCommentsSpaceSeparatedB:33",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 21,
+        "file": "multi2.cpp",
+        "line": 33,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:AutomaticParking:21",
+      "name": "multi2.cpp:1:URLRequirementsAsCommentsSpaceSeparatedB:33",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -295,14 +373,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:HeadsUpDisplay:25",
+      "tag": "cpp multi2.cpp:1:MultipleURLRequirementsB:39",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 25,
+        "file": "multi2.cpp",
+        "line": 39,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:HeadsUpDisplay:25",
+      "name": "multi2.cpp:1:MultipleURLRequirementsB:39",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -312,14 +390,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:VentilatedSeats:34",
+      "tag": "cpp multi2.cpp:1:InvalidRequirementB:52",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 34,
+        "file": "multi2.cpp",
+        "line": 52,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:VentilatedSeats:34",
+      "name": "multi2.cpp:1:InvalidRequirementB:52",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -329,14 +407,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:DigitalCockpit:37",
+      "tag": "cpp multi2.cpp:1:MissingRequirementReferenceB:57",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 37,
+        "file": "multi2.cpp",
+        "line": 57,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:DigitalCockpit:37",
+      "name": "multi2.cpp:1:MissingRequirementReferenceB:57",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -346,14 +424,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:GestureControl:41",
+      "tag": "cpp multi3.cpp:1:URLRequirementC:22",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 41,
+        "file": "multi3.cpp",
+        "line": 22,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:GestureControl:41",
+      "name": "multi3.cpp:1:URLRequirementC:22",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -363,14 +441,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:NightVision:45",
+      "tag": "cpp multi3.cpp:1:URLRequirementsCommaSeparatedC:27",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 45,
+        "file": "multi3.cpp",
+        "line": 27,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:NightVision:45",
+      "name": "multi3.cpp:1:URLRequirementsCommaSeparatedC:27",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -380,14 +458,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:PremiumSoundSystem:50",
+      "tag": "cpp multi3.cpp:1:URLRequirementsAsCommentsSpaceSeparatedC:33",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 50,
+        "file": "multi3.cpp",
+        "line": 33,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:PremiumSoundSystem:50",
+      "name": "multi3.cpp:1:URLRequirementsAsCommentsSpaceSeparatedC:33",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -397,14 +475,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:AutomaticClimateControl:55",
+      "tag": "cpp multi3.cpp:1:MultipleURLRequirementsC:39",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 55,
+        "file": "multi3.cpp",
+        "line": 39,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:AutomaticClimateControl:55",
+      "name": "multi3.cpp:1:MultipleURLRequirementsC:39",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -414,14 +492,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:RearSeatEntertainment:58",
+      "tag": "cpp multi3.cpp:1:InvalidRequirementC:52",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 58,
+        "file": "multi3.cpp",
+        "line": 52,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:RearSeatEntertainment:58",
+      "name": "multi3.cpp:1:InvalidRequirementC:52",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -431,14 +509,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:AutomaticEmergencyBraking:83",
+      "tag": "cpp multi3.cpp:1:MissingRequirementReferenceC:57",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 83,
+        "file": "multi3.cpp",
+        "line": 57,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:AutomaticEmergencyBraking:83",
+      "name": "multi3.cpp:1:MissingRequirementReferenceC:57",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -448,14 +526,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:DriverAttentionMonitoring:88",
+      "tag": "cpp multi1.cpp:1:URLRequirementA:22",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 88,
+        "file": "multi1.cpp",
+        "line": 22,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:DriverAttentionMonitoring:88",
+      "name": "multi1.cpp:1:URLRequirementA:22",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -465,14 +543,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:RemoteStart:94",
+      "tag": "cpp multi1.cpp:1:URLRequirementsCommaSeparatedA:27",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 94,
+        "file": "multi1.cpp",
+        "line": 27,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:RemoteStart:94",
+      "name": "multi1.cpp:1:URLRequirementsCommaSeparatedA:27",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -482,14 +560,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:PowerTailgate:100",
+      "tag": "cpp multi1.cpp:1:URLRequirementsAsCommentsSpaceSeparatedA:33",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 100,
+        "file": "multi1.cpp",
+        "line": 33,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:PowerTailgate:100",
+      "name": "multi1.cpp:1:URLRequirementsAsCommentsSpaceSeparatedA:33",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -499,14 +577,14 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:SoftCloseDoors:113",
+      "tag": "cpp multi1.cpp:1:MultipleURLRequirementsA:39",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 113,
+        "file": "multi1.cpp",
+        "line": 39,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:SoftCloseDoors:113",
+      "name": "multi1.cpp:1:MultipleURLRequirementsA:39",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -516,14 +594,31 @@
       "status": null
     },
     {
-      "tag": "cpp car_test_cases.cpp:1:AcousticGlass:118",
+      "tag": "cpp multi1.cpp:1:InvalidRequirementA:52",
       "location": {
         "kind": "file",
-        "file": "cpp_test_files/car_test_cases.cpp",
-        "line": 118,
+        "file": "multi1.cpp",
+        "line": 52,
         "column": null
       },
-      "name": "car_test_cases.cpp:1:AcousticGlass:118",
+      "name": "multi1.cpp:1:InvalidRequirementA:52",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "cpptest",
+      "kind": "Function",
+      "status": null
+    },
+    {
+      "tag": "cpp multi1.cpp:1:MissingRequirementReferenceA:57",
+      "location": {
+        "kind": "file",
+        "file": "multi1.cpp",
+        "line": 57,
+        "column": null
+      },
+      "name": "multi1.cpp:1:MissingRequirementReferenceA:57",
       "messages": [],
       "just_up": [],
       "just_down": [],

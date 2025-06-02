@@ -173,7 +173,7 @@ section "Extracting tests from c++ unit test files"
       impact_type = req.Impact_Type.Safety
   }
 
-  req.PotentialError Too_many_Extraction_from_Git{
+  req.PotentialError Too_many_Extraction_from_CPP_Test_Files{
       summary = "LOBSTER extracts too many tests"
       description = ''' 
         Some non relevant test file are extracted.
@@ -213,7 +213,7 @@ section "Extracting tests from c++ unit test files"
       description = '''
         The test shall verify number of tests in output file are same as available at input. 
       '''
-      verifies = [Too_few_Extraction_from_CPP_Test_Files, Too_few_tests_Extraction_from_test_file, Too_many_Extraction_from_Git]
+      verifies = [Too_few_Extraction_from_CPP_Test_Files, Too_few_tests_Extraction_from_test_file, Too_many_Extraction_from_CPP_Test_Files]
   }
 
   req.TestSpecification Incorrect_number_of_requirement_references_in_Output{
