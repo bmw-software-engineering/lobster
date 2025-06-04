@@ -5,6 +5,20 @@
 
 ### 0.12.3-dev
 
+* `lobster-report`
+  - If there are zero items in one level of the tracing policy, then this level now
+    shows a coverage of 0%.
+    Previously its coverage was 100%.
+    Note that the coverage ratio cannot be computed in a mathematical way if there
+    are zero items, because the formula requires to divide by the total number of items.
+    If this denominator is zero, obviously the division cannot be performed.
+    So neither 100% nor 0% makes sense, but choosing 0% is the safe decision
+    when the tool is used in a safety-critical context.
+    Having zero input items is probably not what the user intended to do,
+    and shall be notified about this empty input.
+    The user has a greater chance to detect this empty input if the report shows 0% coverage
+    compared to 100%, which indicates that everything is okay.
+
 * `lobster-cpp`
   * The file basename is used to construct the function UID.
     A counter is then appended to the basename to handle situations where files in
