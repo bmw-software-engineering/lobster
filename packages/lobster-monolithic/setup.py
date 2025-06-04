@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-import os
 import re
-import sys
 import setuptools
-import glob
 
 from lobster import version
 
@@ -71,6 +68,7 @@ setuptools.setup(
             "lobster-report=lobster.tools.core.report.report:main",
             "lobster-html-report=lobster.tools.core.html_report.html_report:main",
             "lobster-online-report=lobster.tools.core.online_report.online_report:main",
+            "lobster-online-report-nogit=lobster.tools.core.online_report_nogit.online_report_nogit:main",
             "lobster-ci-report=lobster.tools.core.ci_report.ci_report:main",
             "lobster-codebeamer = lobster.tools.codebeamer.codebeamer:main",
             "lobster-python = lobster.tools.python.python:main",
