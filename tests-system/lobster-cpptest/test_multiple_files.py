@@ -40,7 +40,6 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         )
 
         completed_process = self._test_runner.run_tool_test()
-        self.assertIn('lobster items to', completed_process.stdout)
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFile(22, self.OUT_FILE)
@@ -75,7 +74,6 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         )
 
         completed_process = self._test_runner.run_tool_test()
-        self.assertIn('lobster items to', completed_process.stdout)
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFile(33, self.OUT_FILE)
