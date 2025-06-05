@@ -39,7 +39,6 @@ MARKERS = "markers"
 KIND    = "kind"
 
 NAMESPACE_CPP = "cpp"
-LANGUAGE_CPP = "C/C++"
 FRAMEWORK_CPP_TEST = "cpptest"
 KIND_FUNCTION = "Function"
 CB_PREFIX = "CB-#"
