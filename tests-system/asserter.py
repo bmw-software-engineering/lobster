@@ -50,7 +50,7 @@ class Asserter:
         a) Replace Windows-like slashes \\ with / in order to be able to
            compare the actual output on all OS against the expected output on
            Linux
-        b) Replace the fixed string TEST_CASE_PATH with the absolute path to
+        b) Replace the fixed string CURRENT_WORKING_DIRECTORY with the absolute path to
            the current working directory. This is necessary for tools like
            lobster-cpptest which write absolute paths into their *.lobster
            output files.

@@ -19,25 +19,25 @@
 
 from abc import ABCMeta, abstractmethod
 import html
-from typing import Optional
+from typing import Any, Dict, Optional, Tuple
 from lobster.exceptions import LOBSTER_Exception
 
 
 class Location(metaclass=ABCMeta):
     @abstractmethod
-    def sorting_key(self):
+    def sorting_key(self) -> Tuple:
         pass
 
     @abstractmethod
-    def to_string(self):
+    def to_string(self) -> str:
         pass
 
     @abstractmethod
-    def to_html(self):
+    def to_html(self) -> str:
         pass
 
     @abstractmethod
-    def to_json(self):
+    def to_json(self) -> Dict[str, Any]:
         pass
 
     @classmethod

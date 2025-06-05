@@ -5,6 +5,13 @@
 
 ### 0.12.3-dev
 
+* `lobster-online-report-nogit`
+
+  This new tool is similar to `lobster-online-report`, but does not
+  call the `git` tool to obtain information about the repository.
+  Instead it relies solely on information provided by the user through
+  command line arguments.
+
 * `lobster-report`
   - If there are zero items in one level of the tracing policy, then this level now
     shows a coverage of 0%.
@@ -20,11 +27,11 @@
     compared to 100%, which indicates that everything is okay.
 
 * `lobster-cpp`
-  * The file basename is used to construct the function UID.
+  - The file basename is used to construct the function UID.
     A counter is then appended to the basename to handle situations where files in
     different folders have the same basename.
     Now `lobster-cpp` and `lobster-cpptest` use the same logic to generate function UIDs.
-  * The `*.lobster` output file uses the absolute path for location entries instead of a
+  - The `*.lobster` output file uses the absolute path for location entries instead of a
     relative path.
     This simplifies the usage of the LOBSTER tools, for instance in a CI system, where
     different tools are called from different working directories.

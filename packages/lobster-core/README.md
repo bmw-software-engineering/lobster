@@ -14,14 +14,34 @@ You can generate a report linking everything together with `lobster-report`.
 The report is in JSON, but you can generate more readable versions of it
 with additional tools:
 
-* `lobster-online-report`: Preprocess a JSON report to contain github
-  references instead of local file references
+* `lobster-online-report`:
+  Preprocess a JSON report to contain github references instead of local file
+  references.
+  Repository information is retrieved by calling the `git` tool.
+* `lobster-online-report-nogit`:
+  This tool is similar to `lobster-online-report`, but it does not
+  call the `git` tool to obtain information about the repository.
+  Instead, it relies solely on information provided by the user through
+  command line arguments.
+  The user has to provide
+  - the git hash,
+  - the remote repository URL,
+  - the local path to the repository.
+  
+  The tool then replaces local paths in a given LOBSTER report file
+  with URLs to the corresponding files in the remote repository.
+  
+  This tool is handy when `lobster-online-report` cannot be used.
+  This could be the case in a continuous integration (CI) system where
+  access to `git` is restricted for security reasons.
+  Imagine a CI job that runs with high credentials.
+  It could be important to prevent manipulations of the git history by the CI job,
+  and as a consequence access to `git` is restricted for the job runner.
 * `lobster-html-report`: Generate an HTML report
 * `lobster-ci-report`: Generate a compiler-message like output, useful for CI
 
 ## Requirements
-* `lobster-online-report`: This tool needs `git 1.7.8` or higher to support 
-  git submodules
+`lobster-online-report` needs `git 1.7.8` or higher to support git submodules.
 
 ## Copyright & License information
 
