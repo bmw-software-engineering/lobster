@@ -35,7 +35,7 @@ style:
 		--exclude=assets.py
 
 packages:
-	git clean -xdf
+	git clean -xdf packages test_install test_install_monolithic
 	make lobster/html/assets.py
 	make -C packages/lobster-core
 	make -C packages/lobster-tool-trlc
