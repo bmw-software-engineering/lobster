@@ -5,6 +5,6 @@ output:
         kind: "req"
 
 files:
-- 'invalid_extension.xyz'
+  - 'invalid_extension.xyz'
 
 codebeamer_url: "https://codebeamer.com"

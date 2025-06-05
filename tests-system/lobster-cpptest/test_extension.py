@@ -13,14 +13,14 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         self.output_dir = Path(Path(__file__).parents[0] / "temp_data")
 
     def test_valid_extension_file(self):
-
+        # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
+        # lobster-trace: Usecases.Incorrect_number_of_requirement_references_in_Output
         self._test_runner.cmd_args.config = str(
             self._data_directory / "valid_extension_config.yaml")
         self._test_runner.declare_input_file(
             self._data_directory / "valid_extension.cpp"
         )
         self.OUT_FILE = "valid_extension.lobster"
-        self._test_runner.cmd_args.out = self.OUT_FILE
 
         self._test_runner.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / self.OUT_FILE))
@@ -40,14 +40,12 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_invalid_extension_file(self):
-
         self._test_runner.cmd_args.config = str(
             self._data_directory / "invalid_extension_config.yaml")
         self._test_runner.declare_input_file(
             self._data_directory / "invalid_extension.xyz"
         )
         self.OUT_FILE = "invalid_extension.lobster"
-        self._test_runner.cmd_args.out = self.OUT_FILE
 
         self._test_runner.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / self.OUT_FILE))
@@ -67,7 +65,6 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_no_input_file(self):
-
         self._test_runner.cmd_args.config = str(
             self._data_directory / "no_input_file_config.yaml")
 

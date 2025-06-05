@@ -10,7 +10,6 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
     def setUp(self):
         super().setUp()
         self._test_runner = self.create_test_runner()
-        # self.out_file_path = None
 
     def test_all_files_from_current_directory_consumed_cpptest(self):
         # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output

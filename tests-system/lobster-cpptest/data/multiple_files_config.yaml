@@ -5,7 +5,7 @@ output:
         kind: "req"
 
 files:
-    - 'multi1.cpp'
-    - 'multi2.cpp'
+  - 'multi1.cpp'
+  - 'multi2.cpp'
 
 codebeamer_url: "https://codebeamer.com"

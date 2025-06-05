@@ -1,6 +1,5 @@
 import shutil
 from pathlib import Path
-
 from .lobster_cpptest_asserter import LobsterCppTestAsserter as Asserter
 from .lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
 from ..tests_utils.update_cpptest_expected_output import update_cpptest_output_file

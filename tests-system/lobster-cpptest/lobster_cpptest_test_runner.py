@@ -22,7 +22,7 @@ class CmdArgs:
 
 
 class LobsterCpptestTestRunner(TestRunner):
-    """System test runner for lobster-cpptest-report"""
+    """System test runner for lobster-cpptest"""
 
     def __init__(self, tool_name: str, working_dir: Path):
         super().__init__(tool_name, working_dir)
@@ -44,7 +44,7 @@ class LobsterCpptestTestRunner(TestRunner):
         Args:
             output_dir (Path): The directory where the expected output file will be
                                stored.
-            expected_file (Path): The path path of the expected file to be copies
+            expected_file (Path): The path of the expected file to be copied
                                   in output_dir.
         """
         output_dir.mkdir(parents=True, exist_ok=True)

@@ -5,6 +5,6 @@ output:
         kind: "req"
 
 files:
-- 'no_input_file.cpp'
+  - 'no_input_file.cpp'
 
 codebeamer_url: "https://codebeamer.com"
