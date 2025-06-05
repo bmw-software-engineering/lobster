@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.12.3-dev
+### 0.13.0
 
 * `lobster-online-report-nogit`
 
