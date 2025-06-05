@@ -376,6 +376,9 @@ blockquote {
 </symbol>
 </defs>
 </svg>
+<div class="content">
+<div id="custom-data-banner">component: LSS<br>branch: stable-25<br>ci_run: 2025-05-21 01:00 UTC<br></div>
+</div>
 <h2 id="sec-overview">Overview</h2>
 <div class="content">
 <div class="columns">
