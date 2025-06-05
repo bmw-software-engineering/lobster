@@ -219,7 +219,7 @@ section "Extracting tests from c++ unit test files"
   req.TestSpecification Incorrect_number_of_requirement_references_in_Output{
       description = '''
         The test shall verify number of requirement references available for a c++ test in output file
-        are same as as requirement references available in download from git.
+        are same as as requirement references available in c++ tests file.
 
         example : If a test case contains 2 requirement references in c++ test file,
         then test shall verify output file contains 2 requirement references for the c++ test.
