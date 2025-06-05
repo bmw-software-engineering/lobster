@@ -14,6 +14,7 @@ class CmdArgs:
     out: Optional[str] = None
     dot: Optional[str] = None
     high_contrast: Optional[str] = None
+    render_md: bool = False
 
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list"""
@@ -25,6 +26,9 @@ class CmdArgs:
 
         if self.lobster_report:
             cmd_args.append(self.lobster_report)
+
+        if self.render_md:
+            cmd_args.append("--render-md")
 
         append_if_string("--out", self.out)
         append_if_string("--dot", self.dot)

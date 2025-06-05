@@ -17,6 +17,14 @@ req.System_Requirement Valid_Lobster_File {
     '''
 }
 
+req.System_Requirement Valid_Lobster_File_With_Md_Content {
+    description = '''
+      IF a valid .lobster file with MD content is provided as input,
+      THEN the tool shall execute successfully with a zero return code (0)
+      AND shall write a valid HTML report to the specified output file with the rendered MD content.
+    '''
+}
+
 req.System_Requirement HTML_Report_with_20k_records {
     description = '''
       IF a valid .lobster file containing approximate 20 thousand items is provided as input,
