@@ -1,6 +1,6 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import List
+from typing import List, Optional, Union
 from unittest import TestCase
 
 
@@ -10,7 +10,10 @@ class SystemTestCaseBase(TestCase):
         self.maxDiff = None  # pylint: disable=invalid-name
         self._temp_dirs: List[TemporaryDirectory] = []
 
-    def create_temp_dir(self, prefix: str, dir_path: str = None) -> Path:
+    def create_temp_dir(
+            self,
+            prefix: str, dir_path: Optional[Union[str, Path]] = None,
+    ) -> Path:
         # lobster-trace: system_test.Create_Temporary_Directory
         # pylint: disable=consider-using-with
         temp_dir = TemporaryDirectory(prefix=prefix, dir=dir_path)

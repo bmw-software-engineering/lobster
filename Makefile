@@ -56,6 +56,23 @@ packages:
 	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
 	diff -Naur test_install/bin test_install_monolithic/bin
 
+	# Very basic smoke tests to ensure the core tools are available
+	test_install_monolithic/bin/lobster-report --version
+	test_install_monolithic/bin/lobster-ci-report --version
+	test_install_monolithic/bin/lobster-html-report --version
+	test_install_monolithic/bin/lobster-online-report --version
+	test_install_monolithic/bin/lobster-online-report-nogit --version
+
+	# Very basic smoke tests to ensure the other tools are available
+	test_install_monolithic/bin/lobster-cpp --version
+	test_install_monolithic/bin/lobster-cpptest --version
+	test_install_monolithic/bin/lobster-codebeamer --version
+	test_install_monolithic/bin/lobster-gtest --version
+	test_install_monolithic/bin/lobster-json --version
+	test_install_monolithic/bin/lobster-python --version
+	test_install_monolithic/bin/lobster-trlc --version
+
+
 clang-tidy:
 	cd .. && \
 	git clone https://github.com/bmw-software-engineering/llvm-project && \
