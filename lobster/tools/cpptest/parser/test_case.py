@@ -8,8 +8,8 @@ class TestCase:
     """
     Class to represent a test case.
 
-    In case of a c/c++ file a test case is considered
-    to be the combination of a gtest macro, e.g.
+    In case of a c++ file a test case is considered
+    to be the combination of a gtest fixture, e.g.
     TEST(TestSuite, TestName) and its corresponding doxygen
     style documentation.
     The documentation is assumed to contain references to

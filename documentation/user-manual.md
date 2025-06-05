@@ -125,7 +125,7 @@ All its final html outputs are to be seen [here](https://github.com/bmw-software
 * [lobster_codebeamer](manual-lobster_codebeamer.md): for tracing to
   codebeamer requirements.
 
-### C / C++
+### C++
 
 * lobster_cpp: [lobster_cpp](manual-lobster_cpp.md): for tracing tags in C++
 * [lobster_cpptest](manual-lobster_cpptest.md): for tracing requirements and/or defects from C++ tests.

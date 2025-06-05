@@ -56,7 +56,7 @@ The following requirements frameworks are supported:
 
 The following programming languages are supported:
 
-* C/C++
+* C++
   * [lobster-cpp](packages/lobster-tool-cpp/README.md) (to extract tags from target code)
   * [lobster-cpptest](packages/lobster-tool-cpptest/README.md) (to extract tags from test code)
 * [Python3](packages/lobster-tool-python/README.md)

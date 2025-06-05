@@ -1,22 +1,28 @@
-# Tracing to C/C++ tests
+# Tracing to C++ tests
 
 ## Setup and requirements
 
-You will need a C/C++ file or a directory containing these files.
-* Note: The tool also supports a combination of files and folders.
+You will need a C++ file or a directory containing these files.
 
-C/C++ files should have one of these extensions to be evaluated by this tool: `.cpp`, `.cc`, `.c` or `.h`
+Note: The tool also supports a combination of files and folders.
 
-## Preparing C/C++ test documentation with requirements
-The test functions should be specified with one the following `macros`: 
-        `TEST`,
-        `TEST_P`,
-        `TEST_F`,
-        `TYPED_TEST`,
-        `TYPED_TEST_P`,
-        `TYPED_TEST_SUITE`,
-        `TEST_P_INSTANCE` or
-        `TEST_F_INSTANCE`
+C++ files should have one of these extensions to be evaluated by this tool: `.cpp`, `.cc`, `.c` or `.h`
+
+## Preparing C++ test documentation with requirements
+The test functions must be specified with one the following fixture names: 
+`TEST`,
+`TEST_P`,
+`TEST_F`,
+`TYPED_TEST`,
+`TYPED_TEST_P`,
+`TYPED_TEST_SUITE`,
+`TEST_P_INSTANCE` or
+`TEST_F_INSTANCE`.
+Currently these names are hardcoded and are not configurable.
+
+This tool has been developed to support C++, where C was not in the focus.
+You can use it for C as well, if your test functions are all defined using macros
+that use the above names, and hence mimic the C++ style.
 
 In your test you need to also add documentation. For example:
 
@@ -83,7 +89,7 @@ output:
     kind: req
 
   components_tests.lobster:
-    markers: ["@requiredby", "@requirement"]
+    markers: ["@requirement"]
     kind: imp
 
 codebeamer_url: "https://codebeamer.example.com/cb"
@@ -95,15 +101,12 @@ codebeamer_url: "https://codebeamer.example.com/cb"
 
 ## Creating lobster files
 
-Run the `lobster_cpptest` tool, pointing it to one or more C/C++ files, or a directory containing one or more C/C++ files. 
-
-For example `lobster_cpptest .` should find all your C/C++ files in the root directory.
-
-Make sure to provide the updated YAML config file using --config.
-A more complete command line might look like:
+Make sure to provide the YAML configuration file using `--config`.
+This configuration file must also contain a list of input files or directories.
+Here is a complete command:
 
 ```sh
-$ lobster-cpptest . --config cpptest-config.yaml
+$ lobster-cpptest --config cpptest-config.yaml
 ```
 
 ## Example
@@ -113,6 +116,5 @@ The LOBSTER unit tests contains a working example:
 * Test [test_case.cpp](../test-unit/lobster-cpptest/data/test_case.cpp) containing requirement tags
 
 ## Notes & Caveats
-* This tool supports these `markers`: '@requirement', '@requiredby' and '@defect'
+* This tool supports these `markers`: '@requirement'
 * This tool supports these `kind`: 'req', 'imp' and 'act'
-* YAML configuration format is now required instead of the previous JSON-like .config format
