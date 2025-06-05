@@ -269,6 +269,15 @@ def write_item_box_end(doc, item):
     doc.add_line('<!-- end item -->')
 
 
+def generate_custom_data(report) -> str:
+    content = [
+        f"{key}: {value}<br>"
+        for key, value in report.custom_data.items()
+        if value
+    ]
+    return "".join(content)
+
+
 def write_html(fd, report, dot, high_contrast):
     assert isinstance(report, Report)
 
@@ -278,6 +287,13 @@ def write_html(fd, report, dot, high_contrast):
     )
 
     # Item styles
+    doc.style["#custom-data-banner"] = {
+        "position": "absolute",
+        "top": "1em",
+        "right": "2em",
+        "font-size": "0.9em",
+        "color": "white",
+    }
     doc.style[".item-ok, .item-partial, .item-missing, .item-justified"] = {
         "border"        : "1px solid black",
         "border-radius" : "0.5em",
@@ -359,6 +375,9 @@ def write_html(fd, report, dot, high_contrast):
     for level in report.config.values():
         menu.add_link(level["name"], "#sec-" + name_hash(level["name"]))
     # doc.navbar.add_link("Software Traceability Matrix", "#matrix")
+    if report.custom_data:
+        content = generate_custom_data(report)
+        doc.add_line(f'<div id="custom-data-banner">{content}</div>')
     menu = doc.navbar.add_dropdown("LOBSTER", "right")
     menu.add_link("Documentation",
                   "%s/blob/main/README.md" % LOBSTER_GH)

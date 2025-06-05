@@ -6,10 +6,11 @@ Each LOBSTER JSON file shares the following common structure:
 
 ```
 {
-    "data"      : LIST,
-    "generator" : STRING,
-    "schema"    : STRING,
-    "version"   : INTEGER
+    "data"        : LIST,
+    "generator"   : STRING,
+    "schema"      : STRING,
+    "version"     : INTEGER,
+    "custom_data" : DICTIONARY object(optional)
 }
 ```
 
@@ -23,6 +24,20 @@ Each LOBSTER JSON file shares the following common structure:
 * _version_ is the version ID for this report; later version of LOBSTER
   may change data in an incompatible way and the version ID allows us
   to generate more useful error messages in this case
+* _custom_data_ (optional) is an object containing high-level metadata related to the report, such as:
+  * component : the component name
+  * branch : the branch name
+  * ci_run : a timestamp or CI run identifier
+
+  Example:
+  ```
+  "custom_data": {
+    "component": "LSS",
+    "branch": "stable-25",
+    "ci_run": "2025-05-21 01:00 UTC"
+  }
+  ```
+  This information is used to help users identify the origin and context of the report and will be displayed in the top-right corner of the generated HTML output if provided.
 
 Some schemas may add additional top-level items, but these four are
 always present.
