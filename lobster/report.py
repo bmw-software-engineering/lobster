@@ -187,7 +187,9 @@ class Report:
         """
         self.config = data["policy"]
         for level in data["levels"]:
-            assert level["name"] in self.config
+            assert level["name"] in self.config, (
+                f"level '{level['name']}' not found in config"
+            )
             coverage = Coverage(
                 level=level["name"], items=0, ok=0, coverage=level["coverage"]
             )
@@ -203,7 +205,9 @@ class Report:
                                                     item_data,
                                                     3)
                 else:
-                    assert level["kind"] == "activity"
+                    assert level["kind"] == "activity", (
+                        f"unknown level kind '{level['kind']}'"
+                    )
                     item = Activity.from_json(level["name"],
                                               item_data,
                                               3)
