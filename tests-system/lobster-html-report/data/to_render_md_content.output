@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<title>L.O.B.S.T.E.R.</title>
+<style>
+html {
+  scroll-padding-top: 5em;
+}
+body {
+  margin: 0;
+}
+.title {
+  background-color: #009ada;
+  color: white;
+  padding: 0.5em;
+  margin: 0;
+}
+h1 {
+  padding: 0;
+  margin: 0;
+}
+h2 {
+  padding: 0.5em;
+  margin: 0;
+  border-bottom: 0.25em solid #009ada;
+  text-align: right;
+}
+.content {
+  padding: 0.5em;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+#custom-data-banner {
+  position: absolute;
+  top: 1em;
+  right: 2em;
+  font-size: 0.9em;
+  color: white;
+}
+.item-ok, .item-partial, .item-missing, .item-justified {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  margin-top: 0.4em;
+  padding: 0.25em;
+}
+.item-ok:target, .item-partial:target, .item-missing:target, .item-justified:target {
+  border: 3px solid black;
+}
+.subtle-ok, .subtle-partial, .subtle-missing, .subtle-justified {
+  padding-left: 0.2em;
+}
+.item-ok {
+  background-color: #efe;
+}
+.item-partial {
+  background-color: #ffe;
+}
+.item-missing {
+  background-color: #fee;
+}
+.item-justified {
+  background-color: #eee;
+}
+.subtle-ok {
+  border-left: 0.2em solid #8f8;
+}
+.subtle-partial {
+  border-left: 0.2em solid #ff8;
+}
+.subtle-missing {
+  border-left: 0.2em solid #f88;
+}
+.subtle-justified {
+  border-left: 0.2em solid #888;
+}
+.item-name {
+  font-size: 125%;
+  font-weight: bold;
+}
+.attribute {
+  margin-top: 0.5em;
+}
+.md_description {
+  font-style: unset;
+}
+.md_description h1 {
+  padding: unset;
+  margin: unset;
+}
+.md_description h2 {
+  padding: unset;
+  margin: unset;
+  border-bottom: unset;
+  text-align: unset;
+}
+.columns {
+  display: flex;
+}
+.columns .column {
+  flex: 45%;
+}
+thead tr {
+  font-weight: bold;
+}
+tbody tr.alt {
+  background-color: #eee;
+}
+blockquote {
+  font-style: italic;
+  border-left: 0.2em solid gray;
+  padding-left: 0.4em;
+  margin-left: 0.5em;
+}
+#navbar {
+  overflow: hidden;
+  background-color: #009ada;
+}
+.navbar-right {
+  float: right;
+}
+#navbar a {
+  float: left;
+  display: block;
+  color: white;
+  padding: 14px;
+  text-decoration: none;
+}
+#navbar a:hover {
+  background-color: white;
+  color: #009ada;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.sticky + .htmlbody {
+  padding-top: 60px;
+}
+#navbar .dropdown {
+  float: left;
+  overflow: hidden;
+}
+.navbar-right .dropdown {
+  float: right;
+  overflow: hidden;
+}
+.dropdown .dropbtn {
+  font-size: inherit;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  background-color: inherit;
+  color: white;
+  font-family: inherit;
+  margin: 0;
+}
+.dropdown:hover .dropbtn {
+  background-color: white;
+  color: #009ada;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #009ada;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.navbar-right .dropdown-content {
+  right: 0;
+}
+.dropdown-content a {
+  float: none;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+.dropdown-content a:hover {
+  color: #009ada;
+  background-color: white;
+}
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+.sticky .dropdown-content {
+  position: fixed;
+}
+.button {
+    background-color: #818589;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 12px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer
+}
+
+.button active:before {
+    content: ;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 15px 0 0;
+    border-color: #333 transparent transparent transparent
+}
+
+.buttonActive.button {
+    text-decoration: none;
+    border: 5px solid #000000
+}
+
+.buttonOK {
+    background-color: #04AA6D;
+    color: white;
+    border: 2px solid #04AA6D;
+    border-radius: 5px
+}
+
+.buttonOK:hover {
+    background-color: #026641;
+    color: white;
+    border: 2px solid #026641
+}
+
+.buttonActive.buttonOK {
+    text-decoration: none;
+    border: 5px solid #026641
+}
+
+.buttonPartial {
+    background-color: #17a2b8;
+    color: white;
+    border: 2px solid #17a2b8;
+    border-radius: 5px
+}
+
+.buttonPartial:hover {
+    background-color: #0e616e;
+    color: white;
+    border: 2px solid #0e616e
+}
+
+.buttonActive.buttonPartial {
+    text-decoration: none;
+    border: 5px solid #0e616e
+}
+
+.buttonMissing {
+    background-color: #f44336;
+    color: white;
+    border: 2px solid #f44336;
+    border-radius: 5px
+}
+
+.buttonMissing:hover {
+    background-color: #a91409;
+    color: white;
+    border: 2px solid #a91409
+}
+
+.buttonActive.buttonMissing {
+    text-decoration: none;
+    border: 5px solid #a91409
+}
+
+.buttonJustified {
+    background-color: #6c757d;
+    color: white;
+    border: 2px solid #6c757d;
+    border-radius: 5px
+}
+
+.buttonJustified:hover {
+    background-color: #41464b;
+    color: white;
+    border: 2px solid #41464b
+}
+
+.buttonActive.buttonJustified {
+    text-decoration: none;
+    border: 5px solid #41464b
+}
+
+.buttonWarning {
+    background-color: #ffbf00;
+    color: white;
+    border: 2px solid #ffbf00;
+    border-radius: 5px
+}
+
+.buttonWarning:hover {
+    background-color: #997300;
+    color: white;
+    border: 2px solid #997300
+}
+
+.buttonActive.buttonWarning {
+    text-decoration: none;
+    border: 5px solid #997300
+}
+
+.buttonBlue {
+    background-color: #0000ff;
+    color: white;
+    border: 2px solid #0000ff;
+    border-radius: 5px
+}
+
+.buttonBlue:hover {
+    background-color: #000099;
+    color: white;
+    border: 2px solid #000099
+}
+
+.buttonActive.buttonBlue {
+    text-decoration: none;
+    border: 5px solid #000099
+}
+
+</style>
+</head>
+<body>
+<div class="title">
+<h1>L.O.B.S.T.E.R.</h1>
+<div class="subtitle">Lightweight Open BMW Software Traceability Evidence Report</div>
+</div>
+<div id="navbar">
+<a href="#sec-overview">Overview</a>
+<a href="#sec-issues">Issues</a>
+<div class="dropdown">
+<button class="dropbtn">Detailed report<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
+<div class="dropdown-content">
+<a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</a>
+<a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a>
+</div>
+</div>
+<div class="navbar-right">
+<div class="dropdown">
+<button class="dropbtn">LOBSTER<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
+<div class="dropdown-content">
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md"><svg class="icon"><use href="#svg-external-link"></use></svg> Documentation</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md"><svg class="icon"><use href="#svg-external-link"></use></svg> License</a>
+<a href="https://github.com/bmw-software-engineering/lobster"><svg class="icon"><use href="#svg-external-link"></use></svg> Source</a>
+</div>
+</div>
+</div>
+</div>
+<div class="htmlbody">
+<svg style="display: none;">
+<defs>
+<symbol id="svg-check-square" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-alert-triangle" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-external-link" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-chevron-down" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</symbol>
+</defs>
+</svg>
+<h2 id="sec-overview">Overview</h2>
+<div class="content">
+<div class="columns">
+<div class="column">
+<h3>Coverage</h3>
+<table>
+<thead><tr>
+<td>Category</td>
+<td>Ratio</td>
+<td>Coverage</td>
+<td>OK Items</td>
+<td>Total Items</td>
+</tr><thead>
+<tbody>
+</tbody>
+<tr>
+<td><a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</a></td>
+<td>0.0%</td>
+<td>
+<progress value="0" max="1">
+0.00%
+</progress>
+</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td><a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a></td>
+<td>0.0%</td>
+<td>
+<progress value="0" max="1">
+0.00%
+</progress>
+</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<h2 id="sec-filtering-options">Filtering</h2>
+<div class="content">
+<h3>Item Filters</h3>
+<div id = "btnFilterItem">
+<button class="button buttonAll buttonActive" onclick="buttonFilter('all')"> Show All </button>
+<button class ="button buttonOK" onclick="buttonFilter('ok')" > OK </button>
+<button class ="button buttonMissing" onclick="buttonFilter('missing')" > Missing </button>
+<button class ="button buttonPartial" onclick="buttonFilter('partial')" > Partial </button>
+<button class ="button buttonJustified" onclick="buttonFilter('justified')" > Justified </button>
+<button class ="button buttonWarning" onclick="buttonFilter('warning')" > Warning </button>
+</div>
+<h3>Show Issues</h3>
+<div id = "ContainerBtnToggleIssue">
+<button class ="button buttonBlue" id="BtnToggleIssue" onclick="ToggleIssues()"> Show Issues </button>
+</div>
+<h3 id="sec-filter">Filter</h3>
+<input type="text" id="search" placeholder="Filter..." onkeyup="searchItem()">
+<div id="search-sec-id"
+</div>
+<h2 id="sec-issues">Issues</h2>
+<div class="content">
+<div id="issues-section" style="display:none">
+<ul>
+<li class="issue issue-missing">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: status is status1, expected abc or def</li>
+<li class="issue issue-missing">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: missing reference to Code</li>
+<li class="issue issue-missing">Python Function <a href='#item-b08d67b92006da35eaff57131eb330052bacbfb7'>software.Example</a>: missing up reference</li>
+</ul>
+</div>
+</div>
+<h2 id="sec-detailed-report">Detailed report</h2>
+<div class="content">
+<h3>Requirements and Specification</h3>
+<h4 id="sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</h4>
+<h5>.\demo.trlc</h5>
+<!-- begin item req example.adas_100_A -->
+<div class="item-missing" id="item-ae6eef0f9ce6a72c16e8546860450b94d5499085">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC Requirement example.adas_100_A</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href=".\demo.trlc" target="_blank">.\demo.trlc</a>
+</div>
+<div class="attribute">
+Status: status1
+</div>
+<div class="attribute">
+<blockquote class="md_description"><h1>Test</h1>
+<h2>List</h2>
+<ul>
+<li>first</li>
+<li>second</li>
+<li>third</li>
+</ul>
+<h3>Table</h3>
+<table>
+<thead>
+<tr>
+<th>H1</th>
+<th>H2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1</td>
+<td>B2</td>
+</tr>
+</tbody>
+</table>
+<p><em>italic</em><br />
+<strong>bold</strong></p></blockquote>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>status is status1, expected abc or def</li>
+<li>missing reference to Code</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h3>Implementation</h3>
+<h4 id="sec-ca0dbad92a874b2f69b549293387925e">Code</h4>
+<h5>.\software.py</h5>
+<!-- begin item python software.Example -->
+<div class="item-missing" id="item-b08d67b92006da35eaff57131eb330052bacbfb7">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Python Function software.Example</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href=".\software.py" target="_blank">.\software.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h3>Verification and Validation</h3>
+</div>
+</div>
+</div>
+<script>
+function buttonFilter(filter) {
+    var elms = document.getElementsByTagName("div");
+    var issue_elms = document.getElementsByClassName("issue");
+    for (i = 0; i < elms.length; i++) {
+        if (elms[i].id.startsWith("item-")) {
+            console.log("elms[i].className ", elms[i].className)
+            if (filter == "all") {
+                elms[i].style.display = "block";
+            } else if (elms[i].className == "item-" + filter) {
+                elms[i].style.display = "block";
+            } else {
+                elms[i].style.display = "none";
+            }
+        }
+    }
+    // filter the issues list based on the issue filter button clicked
+    for (i = 0; i < issue_elms.length; i++) {
+        console.log("log ", issue_elms[i].className)
+        if (filter == "all") {
+            issue_elms[i].style.display = "list-item";
+        } else if (issue_elms[i].className == "issue issue-" + filter) {
+            issue_elms[i].style.display = "list-item";
+        } else {
+            issue_elms[i].style.display = "none";
+        }
+    }
+    activeButton(filter);
+    //call the search filering which could have been overwritten by the current filtering
+    searchItem();
+}
+
+
+function activeButton(filter) {
+    var elms = document.getElementsByTagName("button");
+    console.log("the click buitton is " + filter);
+    for (i = 0; i < elms.length; i++) {
+        if (elms[i].className.includes("buttonActive")) {
+            console.log("elem active found : " + elms[i].className);
+            elms[i].className = elms[i].className.replace("buttonActive", "");
+        } else if (elms[i].className.toLowerCase().includes("button" + filter.toLowerCase())) {
+            console.log("elem to be activated found : " + elms[i].className);
+            elms[i].className = elms[i].className + " buttonActive";
+        }
+    }
+}
+
+
+function ToggleIssues() {
+    var div_issue = document.getElementById("issues-section");
+    if (div_issue.style.display == "block" || div_issue.style.display == "") {
+        div_issue.style.display = "none";
+        document.getElementById("BtnToggleIssue").innerHTML = "Show Issues";
+        document.getElementById("BtnToggleIssue").className = document.getElementById("BtnToggleIssue").className + " buttonActive";
+    } else {
+        div_issue.style = 'display: block; flex-direction: column; height: 200px;' +
+            'overflow:auto;';
+        document.getElementById("BtnToggleIssue").innerHTML = "Hide Issues";
+        document.getElementById("BtnToggleIssue").className = document.getElementById("BtnToggleIssue").className.replace("buttonActive", "");
+    }
+}
+
+
+function searchItem() {
+    var input = document.getElementById('search').value
+    input = input.toLowerCase();
+
+    var divs = document.getElementsByClassName('item-name');
+    for (i = 0; i < divs.length; i++) {
+        var title = divs[i].parentNode.getAttribute("title");
+        // get requirement name: 2nd part when we cut the long string with /svg
+        var reqname = divs[i].innerHTML.toLowerCase().split("</svg>").pop();
+        reqname = reqname.split(" ").pop();
+        if (reqname.includes(input)) {
+            // the search pattern has been found, if this elem has the title "hidden-not-matching", put it back to diplayed
+            if (title) {
+                if (title.startsWith("hidden-not-matching")) {
+                    divs[i].parentNode.style.display = "block";
+                }
+            }
+            divs[i].parentNode.setAttribute("title", "matching-" + input)
+        } else {
+            // not maching, we hide
+            divs[i].parentNode.setAttribute("title", "hidden-not-matching")
+            divs[i].parentNode.style.display = "none";
+        }
+    }
+}
+</script>
+<script>
+
+window.onscroll = function() {stickyNavbar()};
+
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+function stickyNavbar() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+</body>
+</html>

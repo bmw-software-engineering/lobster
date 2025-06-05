@@ -24,6 +24,8 @@ import hashlib
 import tempfile
 from datetime import datetime, timezone
 
+import markdown
+
 from lobster.html import htmldoc
 from lobster.report import Report
 from lobster.location import (Void_Reference,
@@ -278,7 +280,7 @@ def generate_custom_data(report) -> str:
     return "".join(content)
 
 
-def write_html(fd, report, dot, high_contrast):
+def write_html(fd, report, dot, high_contrast, render_md):
     assert isinstance(report, Report)
 
     doc = htmldoc.Document(
@@ -343,6 +345,22 @@ def write_html(fd, report, dot, high_contrast):
     doc.style[".attribute"] = {
         "margin-top" : "0.5em",
     }
+
+    # Render MD
+    if render_md:
+        doc.style[".md_description"] = {
+            "font-style" : "unset",
+        }
+        doc.style[".md_description h1"] = {
+            "padding" : "unset",
+            "margin"  : "unset"
+        }
+        doc.style[".md_description h2"] = {
+            "padding"       : "unset",
+            "margin"        : "unset",
+            "border-bottom" : "unset",
+            "text-align"    : "unset"
+        }
 
     # Columns
     doc.style[".columns"] = {
@@ -504,10 +522,16 @@ def write_html(fd, report, dot, high_contrast):
                         doc.add_line("Status: %s" % html.escape(item.status))
                         doc.add_line('</div>')
                     if isinstance(item, Requirement) and item.text:
+                        if render_md:
+                            bq_class = ' class="md_description"'
+                            bq_text = markdown.markdown(item.text,
+                                                        extensions=['tables'])
+                        else:
+                            bq_class = ""
+                            bq_text = html.escape(item.text).replace("\n", "<br>")
+
                         doc.add_line('<div class="attribute">')
-                        doc.add_line(
-                            "<blockquote>%s</blockquote>" %
-                            html.escape(item.text).replace("\n", "<br>"))
+                        doc.add_line(f"<blockquote{bq_class}>{bq_text}</blockquote>")
                         doc.add_line('</div>')
                     write_item_tracing(doc, report, item)
                     write_item_box_end(doc, item)
@@ -555,6 +579,9 @@ def main():
     ap.add_argument("--high-contrast",
                     action="store_true",
                     help="Uses a color palette with a higher contrast.")
+    ap.add_argument("--render-md",
+                    action="store_true",
+                    help="Renders MD in description.")
     options = ap.parse_args()
 
     if not os.path.isfile(options.lobster_report):
@@ -567,7 +594,8 @@ def main():
         write_html(fd     = fd,
                    report = report,
                    dot = options.dot,
-                   high_contrast = options.high_contrast)
+                   high_contrast = options.high_contrast,
+                   render_md = options.render_md)
         print("LOBSTER HTML report written to %s" % options.out)
 
 

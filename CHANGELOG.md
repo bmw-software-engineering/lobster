@@ -44,6 +44,8 @@
     are rendered once and reused for at all the remaining occurences.
     This will reduce the overall HTML file size.
   - Displays custom data (if provided) in the top-right corner of the HTML report.
+  - Added Markdown rendering support for the description field in the HTML report.
+    Added a new command line flag `--render-md` to enable this feature.
 
 * `Separate Coverage Reports`
   - Separate coverage reports for unit tests (`.coverage.unit`) and system tests (`.coverage.system`).
@@ -64,7 +66,7 @@
     An alternative had been to use the absolute or relative path of the file instead of
     just the file base name, but that would have decreased the readability of the report.
 
-* `lobster-html-report`:
+* `lobster-html-report`
   - Fix bug where `/cb` appeared twice in codebeamer URLs, leading to an incorrect URL.
   - Fix bug where codebeamer URLs always pointed to the HEAD version of the codebeamer item,
     even if a specific version was given.
