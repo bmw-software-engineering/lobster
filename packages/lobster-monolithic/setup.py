@@ -50,10 +50,11 @@ setuptools.setup(
     },
     install_requires=[
         "miss-hit>=0.9.42",
-        "requests>=2.22", 
-        "libcst>=1.0.1",
-        "trlc>=1.2.2",
-        "Markdown~=3.7"
+        "requests>=2.31.0",
+        "libcst>=1.1.0",
+        "trlc>=2.0.1",
+        "Markdown~=3.7",
+        "PyYAML>=6.0",
     ],
     python_requires=">=3.7, <4",
     classifiers=[

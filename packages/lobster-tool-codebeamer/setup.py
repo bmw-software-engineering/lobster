@@ -46,7 +46,7 @@ setuptools.setup(
     project_urls=project_urls,
     license="GNU Affero General Public License v3",
     packages=["lobster.tools.codebeamer"],
-    install_requires=["requests>=2.22", "bmw-lobster-core>=%s" % version.LOBSTER_VERSION],
+    install_requires=["requests>=2.31", "bmw-lobster-core>=%s" % version.LOBSTER_VERSION],
     python_requires=">=3.7, <4",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
