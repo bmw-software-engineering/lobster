@@ -52,7 +52,8 @@ setuptools.setup(
         "miss-hit>=0.9.42",
         "requests>=2.22", 
         "libcst>=1.0.1",
-        "trlc>=1.2.2"
+        "trlc>=1.2.2",
+        "Markdown~=3.7"
     ],
     python_requires=">=3.7, <4",
     classifiers=[
