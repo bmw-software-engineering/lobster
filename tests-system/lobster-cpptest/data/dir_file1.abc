@@ -1,0 +1,10 @@
+/** ensure all desired test macros are parsed */
+
+TEST_P_INSTANCE(TestMacrosTestModifiedDIR, TestPInstanceModifiedDIR) {}
+TEST(TestMacrosTestModifiedDIR, TestTestModifiedDIR) {}
+TEST_F(TestMacrosTestModified1DIR, TestTestModifiedFDIR) {}
+TEST_P(TestMacrosTestModified1DIR, TestTestModifiedPDIR) {}
+TYPED_TEST(TestMacrosTestModified2DIR, TestTypedTestModifiedDIR) {}
+TYPED_TEST_P(TestMacrosTestModified2DIR, TestTypedTestModifiedPDIR) {}
+TYPED_TEST_SUITE(TestMacrosTestModified2DIR, TestTypedTestModifiedSuiteDIR) {}
+TEST_F_INSTANCE(TestMacrosTestModified3DIR, TestFInstanceModifiedDIR) {}

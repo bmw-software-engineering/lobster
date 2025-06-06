@@ -1,0 +1,10 @@
+output:
+    invalid_extension.lobster:
+        markers:
+        - "@requirement"
+        kind: "req"
+
+files:
+  - 'invalid_extension.xyz'
+
+codebeamer_url: "https://codebeamer.com"

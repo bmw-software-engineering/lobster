@@ -119,7 +119,7 @@ section "Extracting requirements from codebeamer"
 section "Extracting tests from c++ unit test files"
 {
   
-  req.PotentialError Too_few_Extraction_from_Git{
+  req.PotentialError Too_few_Extraction_from_CPP_Test_Files{
       summary = "LOBSTER extracts too few tests"
       description = '''
         Some c++ test file are ignored
@@ -139,7 +139,7 @@ section "Extracting tests from c++ unit test files"
       impact_type = req.Impact_Type.Safety
   }
 
-req.PotentialError Too_few_tests_Extraction_from_test_file{
+  req.PotentialError Too_few_tests_Extraction_from_test_file{
       summary = "LOBSTER extracts too few tests"
       description = '''
         Some tests from c++ test file are ignored
@@ -173,7 +173,7 @@ req.PotentialError Too_few_tests_Extraction_from_test_file{
       impact_type = req.Impact_Type.Safety
   }
 
-  req.PotentialError Too_many_Extraction_from_Git{
+  req.PotentialError Too_many_Extraction_from_CPP_Test_Files{
       summary = "LOBSTER extracts too many tests"
       description = ''' 
         Some non relevant test file are extracted.
@@ -213,13 +213,13 @@ req.PotentialError Too_few_tests_Extraction_from_test_file{
       description = '''
         The test shall verify number of tests in output file are same as available at input. 
       '''
-      verifies = [Too_few_Extraction_from_Git,Too_few_tests_Extraction_from_test_file, Too_many_Extraction_from_Git]
+      verifies = [Too_few_Extraction_from_CPP_Test_Files, Too_few_tests_Extraction_from_test_file, Too_many_Extraction_from_CPP_Test_Files]
   }
 
   req.TestSpecification Incorrect_number_of_requirement_references_in_Output{
       description = '''
         The test shall verify number of requirement references available for a c++ test in output file
-        are same as as requirement references available in download from git.
+        are same as as requirement references available in c++ tests file.
 
         example : If a test case contains 2 requirement references in c++ test file,
         then test shall verify output file contains 2 requirement references for the c++ test.
