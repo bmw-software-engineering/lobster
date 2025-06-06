@@ -56,7 +56,8 @@ setuptools.setup(
         "lobster.tools.core.html_report":["assets/*"]
     },
     install_requires=[
-        "Markdown~=3.7"
+        "Markdown~=3.7",
+        "PyYAML>=6.0",
     ],
     python_requires=">=3.7, <4",
     classifiers=[
