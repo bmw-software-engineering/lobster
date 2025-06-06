@@ -55,7 +55,9 @@ setuptools.setup(
     package_data={
         "lobster.tools.core.html_report":["assets/*"]
     },
-    install_requires=[],
+    install_requires=[
+        "Markdown~=3.7"
+    ],
     python_requires=">=3.7, <4",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
