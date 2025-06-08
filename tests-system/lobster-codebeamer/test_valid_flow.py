@@ -17,12 +17,14 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
 
     def setUp(self):
         super().setUp()
+        self.codebeamer_flask.reset()
         self._test_runner = self.create_test_runner()
-        self.codebeamer_flask.responses = []
 
     def test_valid_query_id(self):
         # lobster-trace: codebeamer_req.Query_Id_Parameter
-        self.set_config_file_data()
+        cfg = self._test_runner.config_file_data
+        cfg.set_default_root_token_out()
+        cfg.import_query = 10203
         self._test_runner.declare_output_file(
             self._data_directory / self._test_runner.config_file_data.out)
 
@@ -58,13 +60,18 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterCodebeamerAsserter(self, completed_process, self._test_runner)
-        asserter.assertStdOutNumAndFile()
+        asserter.assertStdOutNumAndFile(
+            num_items=len(response_data['items']),
+            page_size=1,
+        )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
     def test_references_tracing_tag_added(self):
         # lobster-trace: codebeamer_req.References_Field_Support
-        self.set_config_file_data()
+        cfg = self._test_runner.config_file_data
+        cfg.set_default_root_token_out()
+        cfg.import_query = 424242
         self._test_runner.config_file_data.refs = ["Wife", "Husband"]
 
         response_data = {
@@ -104,6 +111,9 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterCodebeamerAsserter(self, completed_process, self._test_runner)
-        asserter.assertStdOutNumAndFile()
+        asserter.assertStdOutNumAndFile(
+            num_items=len(response_data['items']),
+            page_size=1,
+        )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()

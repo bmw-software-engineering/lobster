@@ -474,7 +474,6 @@ ap = argparse.ArgumentParser(conflict_handler='resolve')
 
 @get_version(ap)
 def main():
-    # lobster-trace: codebeamer_req.Dummy_Requirement
     ap.add_argument("--config",
                     help=("Path to YAML file with arguments, "
                           "by default (codebeamer-config.yaml) "
