@@ -22,22 +22,20 @@ your own tool for your own files.
 The tool uses a YAML configuration file to define the following parameters:
 
   1) inputs: A list of input file paths (can include directories).
-  2) out: The name of the output file where results will be stored.
-  3) inputs-from-file: A file containing paths to input files or directories.
-  4) single: A flag to avoid the use of multiprocessing. If true, multiprocessing will be skipped.
-  5) test_list: Member name indicator resulting in a list containing objects carrying test data.
-  6) name_attribute: Member name indicator for test name.
-  7) tag_attribute: Member name indicator for test tracing tags.
-  8) justification_attribute: Member name indicator for justifications.
+  2) inputs-from-file: A file containing paths to input files or directories.
+  3) single: A flag to avoid the use of multiprocessing. If true, multiprocessing will be skipped.
+  4) test_list: Member name indicator resulting in a list containing objects carrying test data.
+  5) name_attribute: Member name indicator for test name.
+  6) tag_attribute: Member name indicator for test tracing tags.
+  7) justification_attribute: Member name indicator for justifications.
 
-#### Please note that the `--out` and `--config` parameters are the only parameters which are supported by the command line and rest of the parameters need to be added to a Yaml config file.
+#### Only the `--out` and `--config` parameters are supported on the command line. All other parameters must be specified in the YAML configuration file.
 
   * YAML Configuration Example:
 
     Below is an example of how you can define these parameters in the YAML configuration file:
 
     ```yaml
-    out: "output.lobster"  # Output file where results will be written
     inputs:
         - "file1.json"
         - "file2.json"
@@ -55,7 +53,7 @@ The tool uses a YAML configuration file to define the following parameters:
     To run the tool with the specified YAML configuration file, use the following command:
 
     ```bash
-    lobster-json --config /path/to/config.yaml
+    lobster-json --config /path/to/config.yaml --out "<file path where the output will be stored>"
     ```
 
     Where /path/to/config.yaml is the path to your YAML configuration file.
@@ -96,7 +94,7 @@ justification_attribute: "justification"
 ```
 
 ```bash
-$ lobster-json --config "/path/to/above/config.yaml"
+$ lobster-json --config "/path/to/above/config.yaml" --out "json.lobster"
 ```
 
 The name attribute is optional. If your test files do not contain
@@ -133,7 +131,7 @@ justification_attribute: "meta.just"
 ```
 
 ```bash
-$ lobster-json --config "/path/to/config.yaml"
+$ lobster-json --config "/path/to/config.yaml" --out "json.lobster"
 ```
 
 Finally, if your list of tests is nested more deeply in an object, you
