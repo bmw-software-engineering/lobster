@@ -164,8 +164,10 @@ def get_git_commit_hash_repo_and_path(gh_root, gh_submodule_roots,
                                       item, repo_root, git_hash_cache):
     """Function to get git commit hash for the item file which is part of either the
     root repo or the submodules."""
-    rel_path_from_root = os.path.relpath(item.location.filename,
-                                         repo_root)
+    rel_path_from_root = os.path.relpath(
+        os.path.realpath(item.location.filename),
+        os.path.realpath(repo_root),
+    )
     # pylint: disable=possibly-used-before-assignment
     actual_repo = gh_root
     actual_path = rel_path_from_root
