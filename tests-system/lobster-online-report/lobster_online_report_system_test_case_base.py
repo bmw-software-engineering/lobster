@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Optional, Union
 from .lobster_online_report_test_runner import LobsterOnlineReportTestRunner
 from ..system_test_case_base import SystemTestCaseBase
 
@@ -8,7 +9,7 @@ class LobsterOnlineReportSystemTestCaseBase(SystemTestCaseBase):
         super().__init__(methodName)
         self._data_directory = Path(__file__).parents[0] / "data"
 
-    def create_test_runner(self, working_dir: str = None) -> (
+    def create_test_runner(self, working_dir: Optional[Union[str, Path]] = None) -> (
             LobsterOnlineReportTestRunner):
         tool_name = Path(__file__).parents[0].name
         if not working_dir:

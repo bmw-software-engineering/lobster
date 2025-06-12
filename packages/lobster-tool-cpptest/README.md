@@ -5,14 +5,14 @@ The **L**ightweight **O**pen **B**MW **S**oftware **T**raceability
 and requirements coverage, which is essential for meeting standards
 such as ISO 26262.
 
-This package contains a tool extract tracing tags from ISO C or C++
+This package contains a tool extract tracing tags from ISO C++
 test code. The tracing tags are identified by searching for configurable 
 markers in the comments above the test code.
 
 ## Tools
 
 This LOBSTER package contains only one tool, `lobster-cpptest`.
-It can be used to extract references from C/C++ tests.
+It can be used to extract references from C++ tests.
 The most frequent use case is that, the references point to requirements.
 But `lobstser-cpptest` is agnostic to that, and the references can point to any kind
 of artefact.
@@ -28,8 +28,8 @@ You must provide this file when running the tool to specify parameters to proces
 
 ## Usage
 
-This tool supports C/C++ code.
-For this your C/C++ tests must have a documentation with `markers`:
+This tool supports C++ code.
+For this your C++ tests must have a documentation with `markers`:
 They can either be `@requirement`, `@requiredby` or `@defect`.
 Here is an example:
 ```cpp
@@ -82,21 +82,8 @@ in the lobster-report and lobster-html-report.
 
 ## Known Issues
 
-- The tool considers commented test cases as valid test cases and they are included in the lobster report.
-
-  Example:
-  
-  Commented test case in cpp test file
-  ```cpp
-  /* 
-  @requirement
-  TEST(LayoutTest1, SingleComment){}
-  */
-  ```
-
-- If list of cpp test files are provided then the tool ignores the extensions of files.
-- Also, if the input files with invalid file extensions contain valid cpp tests
-then the tool considers all the test cases from these files and are included in the lobster report.
+Please refer to [lobster-cpptest documentation](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/manual-lobster_cpptest.md#known-issues)
+for a full list of known issues.
 
 ## Copyright & License information
 

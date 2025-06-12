@@ -3,15 +3,53 @@
 ## Changelog
 
 
-### 0.12.3-dev
+### 0.13.1-dev
+
+
+
+### 0.13.0
+
+* `lobster-online-report-nogit`
+
+  This new tool is similar to `lobster-online-report`, but does not
+  call the `git` tool to obtain information about the repository.
+  Instead it relies solely on information provided by the user through
+  command line arguments.
+
+* `lobster-report`
+  - If there are zero items in one level of the tracing policy, then this level now
+    shows a coverage of 0%.
+    Previously its coverage was 100%.
+    Note that the coverage ratio cannot be computed in a mathematical way if there
+    are zero items, because the formula requires to divide by the total number of items.
+    If this denominator is zero, obviously the division cannot be performed.
+    So neither 100% nor 0% makes sense, but choosing 0% is the safe decision
+    when the tool is used in a safety-critical context.
+    Having zero input items is probably not what the user intended to do,
+    and shall be notified about this empty input.
+    The user has a greater chance to detect this empty input if the report shows 0% coverage
+    compared to 100%, which indicates that everything is okay.
+
+* `lobster-cpp`
+  - The file basename is used to construct the function UID.
+    A counter is then appended to the basename to handle situations where files in
+    different folders have the same basename.
+    Now `lobster-cpp` and `lobster-cpptest` use the same logic to generate function UIDs.
+  - The `*.lobster` output file uses the absolute path for location entries instead of a
+    relative path.
+    This simplifies the usage of the LOBSTER tools, for instance in a CI system, where
+    different tools are called from different working directories.
 
 * `lobster-codebeamer`
   - Fix for handling `references` as a list of field names instead of a dictionary.
 
 * `lobster-html-report`
   - The SVG's in the HTML report were rendered on every use. Now the SVGs
-    are rendered once and reused for at all the remaining occurences. 
+    are rendered once and reused for at all the remaining occurences.
     This will reduce the overall HTML file size.
+  - Displays custom data (if provided) in the top-right corner of the HTML report.
+  - Added Markdown rendering support for the description field in the HTML report.
+    Added a new command line flag `--render-md` to enable this feature.
 
 * `Separate Coverage Reports`
   - Separate coverage reports for unit tests (`.coverage.unit`) and system tests (`.coverage.system`).
@@ -32,7 +70,7 @@
     An alternative had been to use the absolute or relative path of the file instead of
     just the file base name, but that would have decreased the readability of the report.
 
-* `lobster-html-report`:
+* `lobster-html-report`
   - Fix bug where `/cb` appeared twice in codebeamer URLs, leading to an incorrect URL.
   - Fix bug where codebeamer URLs always pointed to the HEAD version of the codebeamer item,
     even if a specific version was given.

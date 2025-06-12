@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import re
-import sys
 import setuptools
 
 from lobster import version
@@ -51,11 +50,15 @@ setuptools.setup(
               "lobster.tools.core.ci_report",
               "lobster.tools.core.html_report",
               "lobster.tools.core.online_report",
+              "lobster.tools.core.online_report_nogit",
               "lobster.tools.core.report"],
     package_data={
         "lobster.tools.core.html_report":["assets/*"]
     },
-    install_requires=[],
+    install_requires=[
+        "Markdown~=3.7",
+        "PyYAML>=6.0",
+    ],
     python_requires=">=3.7, <4",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -70,6 +73,7 @@ setuptools.setup(
             "lobster-report=lobster.tools.core.report.report:main",
             "lobster-html-report=lobster.tools.core.html_report.html_report:main",
             "lobster-online-report=lobster.tools.core.online_report.online_report:main",
+            "lobster-online-report-nogit=lobster.tools.core.online_report_nogit.online_report_nogit:main",
             "lobster-ci-report=lobster.tools.core.ci_report.ci_report:main"
         ]
     },

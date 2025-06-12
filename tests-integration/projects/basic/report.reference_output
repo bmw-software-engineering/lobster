@@ -61,7 +61,7 @@
             "req 12345"
           ],
           "ref_down": [
-            "cpp foo.cpp:implication:3",
+            "cpp foo.cpp:1:implication:3",
             "gtest ImplicationTest:BasicTest"
           ],
           "tracing_status": "OK",
@@ -217,7 +217,7 @@
       "kind": "implementation",
       "items": [
         {
-          "tag": "cpp foo.cpp:implication:3",
+          "tag": "cpp foo.cpp:1:implication:3",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -239,7 +239,7 @@
           "kind": "function"
         },
         {
-          "tag": "cpp foo.cpp:exclusive_or:9",
+          "tag": "cpp foo.cpp:1:exclusive_or:9",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -259,7 +259,7 @@
           "kind": "function"
         },
         {
-          "tag": "cpp foo.cpp:potato:14",
+          "tag": "cpp foo.cpp:1:potato:14",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",

@@ -11,6 +11,7 @@ meta_dist
 
 test_install
 test_install_monolithic
+test_install_monolithic_venv
 
 # Project ignores
 .coverage*

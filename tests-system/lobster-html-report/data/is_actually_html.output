@@ -34,6 +34,13 @@ h2 {
   height: 24px;
   vertical-align: middle;
 }
+#custom-data-banner {
+  position: absolute;
+  top: 1em;
+  right: 2em;
+  font-size: 0.9em;
+  color: white;
+}
 .item-ok, .item-partial, .item-missing, .item-justified {
   border: 1px solid black;
   border-radius: 0.5em;

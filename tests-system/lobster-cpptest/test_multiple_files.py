@@ -5,14 +5,14 @@ from .lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseB
 from ..tests_utils.update_cpptest_expected_output import update_cpptest_output_file
 
 
-class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
+class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
 
     def setUp(self):
         super().setUp()
         self._test_runner = self.create_test_runner()
         self.output_dir = Path(Path(__file__).parents[0])
 
-    def test_multiple_file(self):
+    def test_multiple_files(self):
         """
         Test case for processing multiple input files.
         Test to ensure that the tool runs on the files

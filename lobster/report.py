@@ -43,6 +43,7 @@ class Report:
         self.config   = OrderedDict()
         self.items    = {}
         self.coverage = {}
+        self.custom_data = {}
 
     def parse_config(self, filename):
         """
@@ -102,12 +103,10 @@ class Report:
 
     def compute_coverage_for_items(self):
         for level_obj in self.coverage.values():
-            if level_obj.ok == level_obj.items:
-                level_obj.coverage = 100.0
+            if level_obj.items == 0:
+                level_obj.coverage = 0.0
             else:
-                level_obj.coverage = (
-                    float(level_obj.ok * 100) / float(level_obj.items)
-                )
+                level_obj.coverage = float(level_obj.ok * 100) / float(level_obj.items)
 
     def compute_item_count_and_status(self):
         for level in self.config:
@@ -169,6 +168,9 @@ class Report:
         # Validate indicated schema
         self.validate_indicated_schema(data, loc)
 
+        # Validate and parse custom data
+        self.validate_and_parse_custom_data(data, loc)
+
         # Read in data
         self.compute_items_and_coverage_for_items(data)
 
@@ -185,7 +187,9 @@ class Report:
         """
         self.config = data["policy"]
         for level in data["levels"]:
-            assert level["name"] in self.config
+            assert level["name"] in self.config, (
+                f"level '{level['name']}' not found in config"
+            )
             coverage = Coverage(
                 level=level["name"], items=0, ok=0, coverage=level["coverage"]
             )
@@ -201,7 +205,9 @@ class Report:
                                                     item_data,
                                                     3)
                 else:
-                    assert level["kind"] == "activity"
+                    assert level["kind"] == "activity", (
+                        f"unknown level kind '{level['kind']}'"
+                    )
                     item = Activity.from_json(level["name"],
                                               item_data,
                                               3)
@@ -211,6 +217,34 @@ class Report:
                 if item.tracing_status in (Tracing_Status.OK,
                                            Tracing_Status.JUSTIFIED):
                     self.coverage[item.level].ok += 1
+
+    def validate_and_parse_custom_data(self, data, loc):
+        """
+        Function validates the optional 'custom_data' field in the lobster report.
+        Ensures that if present, it is a dictionary with string keys and string values.
+
+        Parameters
+        ----------
+        data - contents of lobster json file.
+        loc  - location from where the error was raised.
+
+        Returns - Nothing
+        -------
+        """
+        self.custom_data = data.get('custom_data', None)
+        if self.custom_data:
+            if not isinstance(self.custom_data, dict):
+                self.mh.error(loc, "'custom_data' must be an object (dictionary).")
+
+            for key, value in self.custom_data.items():
+                if not isinstance(key, str):
+                    self.mh.error(loc,
+                                  f"Key in 'custom_data' must be a "
+                                  f"string, got {type(key).__name__}.")
+                if not isinstance(value, str):
+                    self.mh.error(loc,
+                                  f"Value for key '{key}' in 'custom_data' "
+                                  f"must be a string, got {type(value).__name__}.")
 
     def validate_indicated_schema(self, data, loc):
         """

@@ -35,7 +35,7 @@ style:
 		--exclude=assets.py
 
 packages:
-	git clean -xdf
+	git clean -xdf packages test_install test_install_monolithic test_install_monolithic_venv
 	make lobster/html/assets.py
 	make -C packages/lobster-core
 	make -C packages/lobster-tool-trlc
@@ -56,6 +56,24 @@ packages:
 	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
 	diff -Naur test_install/bin test_install_monolithic/bin
 
+	# Very basic smoke test to ensure the tools are packaged properly
+	python3 -m venv test_install_monolithic_venv
+	. test_install_monolithic_venv/bin/activate && \
+		pip install --upgrade pip && \
+		pip install packages/lobster-monolithic/meta_dist/*.whl && \
+		lobster-report --version && \
+		lobster-ci-report --version && \
+		lobster-html-report --version && \
+		lobster-online-report --version && \
+		lobster-online-report-nogit --version && \
+		lobster-cpp --version && \
+		lobster-cpptest --version && \
+		lobster-codebeamer --version && \
+		lobster-gtest --version && \
+		lobster-json --version && \
+		lobster-python --version && \
+		lobster-trlc --version
+	
 clang-tidy:
 	cd .. && \
 	git clone https://github.com/bmw-software-engineering/llvm-project && \

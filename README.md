@@ -56,7 +56,7 @@ The following requirements frameworks are supported:
 
 The following programming languages are supported:
 
-* C/C++
+* C++
   * [lobster-cpp](packages/lobster-tool-cpp/README.md) (to extract tags from target code)
   * [lobster-cpptest](packages/lobster-tool-cpptest/README.md) (to extract tags from test code)
 * [Python3](packages/lobster-tool-python/README.md)
@@ -84,8 +84,11 @@ The following verification and miscellaneous frameworks are supported:
 
 The individual PyPI packages that `bmw-lobster` depends on are:
 
-* `bmw-lobster-core` the core API and various report generators. All
-  other tools depend on this [Link](https://pypi.org/project/bmw-lobster-core)
+* `bmw-lobster-core` the core API and various report generators.
+  All other tools depend on this.
+  The package also contains core tools.
+  See the package description for more details.
+  [Link](https://pypi.org/project/bmw-lobster-core)
 * `bmw-lobster-tool-codebeamer` (for requirements in Codebeamer) [Link](https://pypi.org/project/bmw-lobster-tool-codebeamer)
 * `bmw-lobster-tool-cpp` (for C/C++ code) [Link](https://pypi.org/project/bmw-lobster-tool-cpp)
 * `bmw-lobster-tool-cpptest` (for C/C++ code) [Link](https://pypi.org/project/bmw-lobster-tool-cpp)
@@ -118,6 +121,7 @@ Here are the links to the individual requirement coverage reports:
 * [Requirement Coverage Report Core CI Report](https://bmw-software-engineering.github.io/lobster/tracing-core_ci_report.html)
 * [Requirement Coverage Report Core HTML Report](https://bmw-software-engineering.github.io/lobster/tracing-core_html_report.html)
 * [Requirement Coverage Report Core Online Report](https://bmw-software-engineering.github.io/lobster/tracing-core_online_report.html)
+* Requirement Coverge Report Core Online Report Nogit: not yet available
 * [Requirement Coverage Report Core Report](https://bmw-software-engineering.github.io/lobster/tracing-core_report.html)
 * [Requirement Coverage Report Codebeamer](https://bmw-software-engineering.github.io/lobster/tracing-codebeamer.html)
 
