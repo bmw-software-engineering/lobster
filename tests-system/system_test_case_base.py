@@ -36,8 +36,9 @@ class SystemTestCaseBase(TestCase):
         output_dir = TemporaryDirectory(dir=output_dir)
         self._temp_dirs.append(output_dir)
         # Copy Expected output to temporary folder to compare with the output
-        shutil.copy(expected_file, Path(output_dir.name))
-        return output_dir
+        output_dir_path = Path(output_dir.name)
+        shutil.copy(expected_file, output_dir_path)
+        return output_dir_path
 
     def tearDown(self):
         # lobster-trace: system_test.Delete_Temporary_Directory
