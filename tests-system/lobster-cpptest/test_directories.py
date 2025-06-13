@@ -11,10 +11,10 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         super().setUp()
         self._test_runner = self.create_test_runner()
 
-    def test_all_files_from_current_directory_consumed_cpptest(self):
+    def test_all_files_from_current_directory_consumed(self):
         # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
         OUT_FILE = "nested_directories.lobster"
-        self._test_runner.cmd_args.out = OUT_FILE
+
         self._test_runner.declare_input_file(self._data_directory / "no_references.cpp")
         self._test_runner.declare_input_file(
             self._data_directory / "many_references.cpp")
@@ -47,10 +47,9 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_files_from_specified_directory_consumed_cpptest(self):
+    def test_files_from_specified_directory_consumed(self):
         # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
         OUT_FILE = "specific_directory.lobster"
-        self._test_runner.cmd_args.out = OUT_FILE
 
         # Copy the "cpp_test_files" directory into the working directory
         source_dir = Path(self._data_directory / "cpp_test_files")
@@ -78,10 +77,9 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_specified_directory_and_files_consumed_cpptest(self):
+    def test_specified_directory_and_files_consumed(self):
         # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
         OUT_FILE = "directory_files.lobster"
-        self._test_runner.cmd_args.out = OUT_FILE
 
         self._test_runner.declare_input_file(self._data_directory / "no_references.cpp")
         self._test_runner.declare_input_file(self._data_directory / "1_reference.cpp")
@@ -114,7 +112,6 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
 
     def test_no_cpptest_file(self):
         OUT_FILE = "no_cpptest_file.lobster"
-        self._test_runner.cmd_args.out = OUT_FILE
 
         self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
         self._test_runner.cmd_args.config = str(
