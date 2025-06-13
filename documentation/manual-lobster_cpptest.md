@@ -118,3 +118,22 @@ The LOBSTER unit tests contains a working example:
 ## Notes & Caveats
 * This tool supports these `markers`: '@requirement'
 * This tool supports these `kind`: 'req', 'imp' and 'act'
+* YAML configuration format is now required instead of the previous JSON-like .config format
+
+## Known Issues
+
+- The tool considers commented test cases as valid test cases and they are included in the lobster report.
+
+  Example:
+  
+  Commented test case in cpp test file
+  ```cpp
+  /* 
+  @requirement
+  TEST(LayoutTest1, SingleComment){}
+  */
+  ```
+
+- If list of cpp test files are provided then the tool ignores the extensions of files.
+- Also, if the input files with invalid file extensions contain valid cpp tests
+then the tool considers all the test cases from these files and are included in the lobster report.
