@@ -80,6 +80,11 @@ Note: File paths are accepted only in single quotes.
 `lobster-cpptest` now displays a test-name instead of a fixture-name 
 in the lobster-report and lobster-html-report.
 
+## Known Issues
+
+Please refer to [lobster-cpptest documentation](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/manual-lobster_cpptest.md#known-issues)
+for a full list of known issues.
+
 ## Copyright & License information
 
 The copyright holder of LOBSTER is the Bayerische Motoren Werke

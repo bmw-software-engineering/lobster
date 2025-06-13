@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
+import shutil
 from typing import List, Optional
 from ..test_runner import TestRunner
 
@@ -21,7 +22,7 @@ class CmdArgs:
 
 
 class LobsterCpptestTestRunner(TestRunner):
-    """System test runner for lobster-cpptest-report"""
+    """System test runner for lobster-cpptest"""
 
     def __init__(self, tool_name: str, working_dir: Path):
         super().__init__(tool_name, working_dir)

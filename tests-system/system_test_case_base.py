@@ -1,4 +1,5 @@
 from pathlib import Path
+import shutil
 from tempfile import TemporaryDirectory
 from typing import List, Optional, Union
 from unittest import TestCase
@@ -19,6 +20,24 @@ class SystemTestCaseBase(TestCase):
         temp_dir = TemporaryDirectory(prefix=prefix, dir=dir_path)
         self._temp_dirs.append(temp_dir)
         return Path(temp_dir.name)
+
+    def create_output_directory_and_copy_expected(self, output_dir: Path,
+                                                  expected_file: Path):
+        """
+        Creates an output directory and copies the expected output file to it.
+        The output directory is created in the working directory.
+        Args:
+            output_dir (Path): The directory where the expected output file will be
+                               stored.
+            expected_file (Path): The path of the expected file to be copied
+                                  in output_dir.
+        """
+        # pylint: disable=consider-using-with
+        output_dir = TemporaryDirectory(dir=output_dir)
+        self._temp_dirs.append(output_dir)
+        # Copy Expected output to temporary folder to compare with the output
+        shutil.copy(expected_file, Path(output_dir.name))
+        return output_dir
 
     def tearDown(self):
         # lobster-trace: system_test.Delete_Temporary_Directory
