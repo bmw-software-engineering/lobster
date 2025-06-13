@@ -1,0 +1,21 @@
+[
+    {
+	"name"   : "Test_1",
+	"tags"   : ["example.req1"],
+	"inputs" : [1, 2],
+	"expect" : 3
+    },
+    {
+	"name"   : "Test_2",
+	"tags"   : [],
+	"inputs" : [1, 0],
+	"expect" : 1
+    },
+    {
+	"name"   : "Test_3",
+	"tags"   : ["example.req2",
+		    "example.req3"],
+	"inputs" : [1, 0],
+	"expect" : 1
+    }
+]
