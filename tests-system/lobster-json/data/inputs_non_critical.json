@@ -1,0 +1,17 @@
+{
+  "Name": "Car Features Test Suite",
+  "TestCases": [
+    {
+      "Name": "Non_Critical_1",
+      "RequirementIDs": ["Blind Spot Monitoring", "Rear Cross Traffic Alert"]
+    },
+    {
+      "Name": "Non_Critical_2",
+      "RequirementIDs": ["Automatic Emergency Braking", "Collision Warning"]
+    },
+    {
+      "Name": "Non_Critical_3",
+      "RequirementIDs": ["Parking Sensors", "Rearview Camera"]
+    }
+  ]
+}

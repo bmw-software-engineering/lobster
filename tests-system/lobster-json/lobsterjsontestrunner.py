@@ -13,6 +13,9 @@ class ConfigFileData:
     inputs: List[str] = None
     name_attribute: Optional[str] = None
     tag_attribute: Optional[str] = None
+    justification_attribute: Optional[str] = None
+    inputs_from_file: Optional[str] = None
+    test_list: Optional[str] = None
 
     def __post_init__(self):
         self.inputs = []
@@ -29,6 +32,9 @@ class ConfigFileData:
         append_if_not_none("inputs", self.inputs)
         append_if_not_none("name_attribute", self.name_attribute)
         append_if_not_none("tag_attribute", self.tag_attribute)
+        append_if_not_none("justification_attribute", self.justification_attribute)
+        append_if_not_none("inputs_from_file", self.inputs_from_file)
+        append_if_not_none("test_list", self.test_list)
 
         with open(filename, mode='w', encoding="UTF-8") as file:
             yaml.dump(data, file)
