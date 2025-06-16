@@ -12,6 +12,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.config_file_data.tag_attribute = "RequirementIDs"
         self._test_runner.config_file_data.justification_attribute = "Justification"
         self._test_runner.config_file_data.test_list = "TestCases"
+        self._test_runner.config_file_data.name_attribute = "Name"
 
     def test_inputs(self):
         self._test_runner.declare_input_file(
@@ -20,7 +21,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
             self._data_directory / "inputs_non_critical.json")
         self._test_runner.declare_input_file(
             self._data_directory / "inputs_cosmetic.json")
-        self._test_runner.config_file_data.name_attribute = "Name"
+
         out_file = "inputs.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -36,7 +37,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.config_file_data.inputs_from_file = "inputs_from_file.txt"
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "inputs_from_file.txt", self._data_directory)
-        self._test_runner.config_file_data.name_attribute = "Name"
+
         out_file = "inputs_from_file.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -53,7 +54,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
             self._data_directory / "inputs_non_critical.json")
         self._test_runner.copy_file_to_working_directory(
             self._data_directory / "inputs_safety.json")
-        self._test_runner.config_file_data.name_attribute = "Name"
+
         out_file = "files_from_cwd.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -76,7 +77,6 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         dest_dir = Path(self._test_runner.working_dir / "nested_directory_data")
         shutil.copytree(source_dir, dest_dir)
 
-        self._test_runner.config_file_data.name_attribute = "Name"
         out_file = "file_and_nested_directories.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)

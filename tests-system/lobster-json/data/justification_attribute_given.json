@@ -1,0 +1,32 @@
+[
+    {
+        "Name": "Safety_Features_1",
+        "RequirementIDs": ["Air Conditioning", "Climate Control"]
+    },
+    {
+        "Name": "Safety_Features_2",
+        "RequirementIDs": ["Cruise Control", "Adaptive Cruise Control"]
+    },
+    {
+        "Name": "Safety_Features_3",
+        "Properties": ["Lane Assist", "Lane Departure Warning"],
+        "Justification": "Testing justification attribute which is only relevant for tag_attribute and not name_attribute"
+    },
+    {
+        "Name": "Safety_Features_4",
+        "RequirementIDs": ["Blind Spot Monitoring", "Rear Cross Traffic Alert"]
+    },
+    {
+        "Name": "Safety_Features_5",
+        "RequirementIDs": ["Automatic Emergency Braking", "Collision Warning"]
+    },
+    {
+        "Name": "Safety_Features_6",
+        "RequirementIDs": ["Parking Sensors", "Rearview Camera"]
+    },
+    {
+        "Name": "Safety_Features_7",
+        "Features": ["Adaptive Headlights", "Automatic High Beams"],
+        "Justification": "Testing justification attribute which is only relevant for tag_attribute and not name_attribute"
+    }
+]
