@@ -7,7 +7,7 @@ from ..test_runner import TestRunner
 
 
 @dataclass
-class ConfigFileData:
+class ConfigFileData:  # pylint: disable=too-many-instance-attributes
     single: Optional[bool] = None
     out: Optional[str] = None
     inputs: List[str] = None

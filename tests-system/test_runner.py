@@ -73,7 +73,7 @@ class TestRunner(ABC):
 
     def declare_output_file(self, file: Path):
         self._tool_output_files.append(file)
-    
+
     def copy_file_to_working_directory(self, file: Path):
         """Declares a file from the 'data' folder to be used as an input file.
 
@@ -86,23 +86,23 @@ class TestRunner(ABC):
 
     def declare_inputs_from_file(self, file: Path, data_directory: Path):
         """
-        Copies input from file, input files and directories listed in a file to 
+        Copies input from file, input files and directories listed in a file to
         the working directory.
         Args:
-            file: Path to a text file containing relative paths (one per line) 
+            file: Path to a text file containing relative paths (one per line)
                   to input files or directories.
-                         
-            data_directory: Base directory to resolve the relative paths listed 
+
+            data_directory: Base directory to resolve the relative paths listed
                             in the file.
         Behavior:
-            - For each line in the input file, constructs the full path by joining 
+            - For each line in the input file, constructs the full path by joining
               `data_directory` with the line.
             - If the resolved path is a file, copies it to the working directory.
-            - If the resolved path is a directory, recursively copies all files 
+            - If the resolved path is a directory, recursively copies all files
               within that directory to the working directory.
         """
 
-        self.copy_file_to_working_directory(file)        
+        self.copy_file_to_working_directory(file)
         with open(file, "r", encoding="UTF-8") as fd:
             for line in fd:
                 input_path = data_directory / line.strip()
