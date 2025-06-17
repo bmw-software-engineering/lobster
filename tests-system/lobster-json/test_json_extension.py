@@ -46,7 +46,7 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
 
     def test_invalid_json_content(self):
         self._test_runner.declare_input_file(
-            self._data_directory / "valid-extension-invalid-json.json"
+            self._data_directory / "valid_extension_invalid_json.json"
         )
 
         completed_process = self._test_runner.run_tool_test()

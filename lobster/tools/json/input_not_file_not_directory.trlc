@@ -1,20 +1,6 @@
 package json_req
 import req
 
-req.System_Requirement Input_Empty_Directory {
-    description = '''
-      IF a directory specified in the configuration file under "inputs" exists but contains no input files,
-      THEN the tool shall not report any error and shall generate an empty LOBSTER output file.
-    '''
-}
-
-req.System_Requirement Input_Directory_Consumption {
-    description = '''
-      IF a valid directory is specified in the configuration file under "inputs",
-      THEN the tool shall process all valid input files contained within that directory.
-    '''
-}
-
 req.System_Requirement Input_Not_File_Not_Directory {
     description = '''
       IF a list element given through the configuration file under "inputs" is not a file nor a directory,
