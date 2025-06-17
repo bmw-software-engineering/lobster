@@ -66,10 +66,7 @@ class TestRunner(ABC):
 
         This file will be copied into the execution directory immediately.
         """
-        shutil.copy(
-            src=file,
-            dst=self._working_dir,
-        )
+        self.copy_file_to_working_directory(file)
 
     def declare_output_file(self, file: Path):
         self._tool_output_files.append(file)
@@ -98,8 +95,8 @@ class TestRunner(ABC):
             - For each line in the input file, constructs the full path by joining
               `data_directory` with the line.
             - If the resolved path is a file, copies it to the working directory.
-            - If the resolved path is a directory, recursively copies all files
-              within that directory to the working directory.
+            - If the resolved path is a directory, then it copies the whole directory
+              into the working directory.
         """
 
         self.copy_file_to_working_directory(file)
@@ -109,8 +106,7 @@ class TestRunner(ABC):
                 if input_path.is_file():
                     self.copy_file_to_working_directory(input_path)
                 elif input_path.is_dir():
-                    for file in Path(input_path).rglob('*'):
-                        self.copy_file_to_working_directory(file)
+                    shutil.copytree(input_path, self._working_dir)
 
     @staticmethod
     def get_repo_root() -> Path:

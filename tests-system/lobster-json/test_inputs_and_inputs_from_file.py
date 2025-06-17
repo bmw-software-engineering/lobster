@@ -34,7 +34,6 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_inputs_from_file(self):
-        self._test_runner.config_file_data.inputs_from_file = "inputs_from_file.txt"
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "inputs_from_file.txt", self._data_directory)
 

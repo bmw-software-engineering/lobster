@@ -7,9 +7,8 @@ from ..test_runner import TestRunner
 
 
 @dataclass
-class ConfigFileData:  # pylint: disable=too-many-instance-attributes
+class ConfigFileData:
     single: Optional[bool] = None
-    out: Optional[str] = None
     inputs: List[str] = None
     name_attribute: Optional[str] = None
     tag_attribute: Optional[str] = None
@@ -28,7 +27,6 @@ class ConfigFileData:  # pylint: disable=too-many-instance-attributes
                 data[key] = value
 
         append_if_not_none("single", self.single)
-        append_if_not_none("out", self.out)
         append_if_not_none("inputs", self.inputs)
         append_if_not_none("name_attribute", self.name_attribute)
         append_if_not_none("tag_attribute", self.tag_attribute)
@@ -76,6 +74,10 @@ class LobsterJsonTestRunner(TestRunner):
     def declare_input_file(self, file: Path):
         super().declare_input_file(file)
         self.config_file_data.inputs.append(file.name)
+    
+    def declare_inputs_from_file(self, file, data_directory):
+        super().declare_inputs_from_file(file, data_directory)
+        self.config_file_data.inputs_from_file = file.name
 
     def get_tool_args(self) -> List[str]:
         """Returns the command line arguments that shall be used to start 'lobster-json'
