@@ -4,7 +4,10 @@
 
 
 ### 0.13.1-dev
+* `lobster-cpptest`
 
+  Improve the requirement detection regex. The sub-comment-blocks which start
+  with "@requirement" and end with "@" would be considered.
 
 
 ### 0.13.0

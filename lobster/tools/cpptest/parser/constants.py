@@ -5,9 +5,7 @@ class Constants:
     def __init__(self, codebeamer_url = ''):
 
         self.codebeamer_link = codebeamer_url + "/issue/"
-        self.requirement = re.compile(r".*[@\\]requirement\s+"
-                                      r"([\s*/]*(((CB-#)|({}))\d+)\s*,?)+"
-                                      .format(self.codebeamer_link))
+        self.requirement = re.compile(r'@requirement[\s\S]*?(?=@|\Z)')
         self.requirement_tag_http = ((r"([@\\]requirement(\s+"
                                       r"(CB-#\d+\s+)*({}\d+\s*,?\s*/*\*?)+)+)")
                                      .format(self.codebeamer_link))
