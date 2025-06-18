@@ -147,8 +147,8 @@ coverage-system:
 # --- Clean Coverage ---
 clean-coverage:
 	@rm -rf htmlcov htmlcov-unit htmlcov-system
-	@find . -name '.coverage*' -type f -delete
-	@find . -name '*.pyc' -type f -delete
+	@find . -type f -name ".coverage*" -delete
+	@find . -type f -name "*.pyc" -delete
 	@echo "🧹 All .coverage, .coverage.* and *.pyc files deleted."
 
 # --- Convenience Test Targets ---
