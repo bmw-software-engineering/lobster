@@ -32,11 +32,11 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
 
         self.output_dir = self.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / OUT_FILE))
-        self._test_runner.declare_output_file(Path(self.output_dir.name) /
+        self._test_runner.declare_output_file(self.output_dir /
                                               OUT_FILE)
 
         update_cpptest_output_file(
-            Path(self.output_dir.name) / OUT_FILE,
+            self.output_dir / OUT_FILE,
             self._test_runner.working_dir
         )
 
@@ -67,11 +67,11 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
 
         self.output_dir = self.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / OUT_FILE))
-        self._test_runner.declare_output_file(Path(self.output_dir.name) /
+        self._test_runner.declare_output_file(self.output_dir /
                                               OUT_FILE)
 
         update_cpptest_output_file(
-            Path(self.output_dir.name) / OUT_FILE,
+            self.output_dir / OUT_FILE,
             self._test_runner.working_dir
         )
 
