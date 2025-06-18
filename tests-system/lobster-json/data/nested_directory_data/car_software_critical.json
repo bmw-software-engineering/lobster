@@ -1,0 +1,30 @@
+{
+  "Name": "Car software Critical Test Suite",
+  "TestCases": [
+    {
+        "RequirementIDs": ["ADSF-001"],
+        "Name": "Emergency Braking System Activation",
+        "Description": "Verify emergency braking system activates when obstacle detected"
+    },
+    {
+        "RequirementIDs": ["ADSF-002"],
+        "Name": "Lane Keeping Assist on Curved Roads",
+        "Description": "Test lane keeping assist on curved roads"
+    },
+    {
+        "RequirementIDs": ["ADSF-003"],
+        "Name": "Adaptive Cruise Control Distance Maintenance",
+        "Description": "Check adaptive cruise control maintains safe distance"
+    },
+    {
+        "RequirementIDs": ["ADSF-004"],
+        "Name": "Pedestrian Detection and Response",
+        "Description": "Validate pedestrian detection and response"
+    },
+    {
+        "RequirementIDs": ["ADSF-005"],
+        "Name": "Driver Alertness Monitoring System Assessment",
+        "Description": "Assess driver alertness monitoring system"
+    }
+    ]
+}

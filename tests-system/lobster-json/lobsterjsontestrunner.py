@@ -9,10 +9,12 @@ from ..test_runner import TestRunner
 @dataclass
 class ConfigFileData:
     single: Optional[bool] = None
-    out: Optional[str] = None
     inputs: List[str] = None
     name_attribute: Optional[str] = None
     tag_attribute: Optional[str] = None
+    justification_attribute: Optional[str] = None
+    inputs_from_file: Optional[str] = None
+    test_list: Optional[str] = None
 
     def __post_init__(self):
         self.inputs = []
@@ -25,10 +27,12 @@ class ConfigFileData:
                 data[key] = value
 
         append_if_not_none("single", self.single)
-        append_if_not_none("out", self.out)
         append_if_not_none("inputs", self.inputs)
         append_if_not_none("name_attribute", self.name_attribute)
         append_if_not_none("tag_attribute", self.tag_attribute)
+        append_if_not_none("justification_attribute", self.justification_attribute)
+        append_if_not_none("inputs_from_file", self.inputs_from_file)
+        append_if_not_none("test_list", self.test_list)
 
         with open(filename, mode='w', encoding="UTF-8") as file:
             yaml.dump(data, file)
@@ -70,6 +74,10 @@ class LobsterJsonTestRunner(TestRunner):
     def declare_input_file(self, file: Path):
         super().declare_input_file(file)
         self.config_file_data.inputs.append(file.name)
+
+    def declare_inputs_from_file(self, file, data_directory):
+        super().declare_inputs_from_file(file, data_directory)
+        self.config_file_data.inputs_from_file = file.name
 
     def get_tool_args(self) -> List[str]:
         """Returns the command line arguments that shall be used to start 'lobster-json'
