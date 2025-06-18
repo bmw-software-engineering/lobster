@@ -1,0 +1,11 @@
+output:
+    multiple_files.lobster:
+        markers:
+        - "@requirement"
+        kind: "req"
+
+files:
+  - 'multi1.cpp'
+  - 'multi2.cpp'
+
+codebeamer_url: "https://codebeamer.com"

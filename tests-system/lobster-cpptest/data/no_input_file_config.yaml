@@ -1,0 +1,10 @@
+output:
+    no_input_file.lobster:
+        markers:
+        - "@requirement"
+        kind: "req"
+
+files:
+  - 'no_input_file.cpp'
+
+codebeamer_url: "https://codebeamer.com"
