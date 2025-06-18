@@ -15,6 +15,10 @@
     LOBSTER interchange format to a file.
     This is similar to running the tool `lobster-codebeamer`.
 
+* `lobster-cpptest`
+  - Improve the requirement detection regex. The sub-comment-blocks starting
+    with `@requirement` and ending with `@` would be considered.
+
 * `lobster-cpp`:
   - Fixed handling of `--skip-clang-errors` where a closing bracket `]`
     needed to be appended to the error names.

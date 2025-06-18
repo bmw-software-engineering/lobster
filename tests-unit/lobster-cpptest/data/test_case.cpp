@@ -234,3 +234,21 @@ TEST(InvalidTest1,) {}
 TEST(, InvalidTest2) {}
 TEST(,) {}
 TEST() {}
+
+///
+/// @note: CB-#0000
+///
+/// @requirement CB-#0814
+/// @note: CB-#1111
+///
+///
+/// @requirement CB-#0815, CB-#0816 CB-#0817
+///  CB-#0818, CB-#0819
+/// @requirement CB-#0820
+///
+/// @requirement https://codebeamer.company.net/cb/issue/0821
+/// @note: CB-#9999
+///
+/// @requirement CB-#0822
+///
+TEST(RequirementTest1, TestMultipleComments) {}
