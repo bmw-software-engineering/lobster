@@ -62,8 +62,8 @@ class TestRunner(ABC):
         pass
 
     def declare_input_file(self, file: Path):
-        """Declares a file from the 'data' folder to be used as an input file.
-
+        """
+        Declares a file from the 'data' folder to be used as an input file.
         This file will be copied into the execution directory immediately.
         """
         self.copy_file_to_working_directory(file)
@@ -72,8 +72,8 @@ class TestRunner(ABC):
         self._tool_output_files.append(file)
 
     def copy_file_to_working_directory(self, file: Path):
-        """Declares a file from the 'data' folder to be used as an input file.
-
+        """
+        Declares a file from the 'data' folder to be used as an input file.
         This file will be copied into the execution directory immediately.
         """
         shutil.copy(
@@ -83,8 +83,7 @@ class TestRunner(ABC):
 
     def declare_inputs_from_file(self, file: Path, data_directory: Path):
         """
-        Copies input from file, input files and directories listed in a file to
-        the working directory.
+        Copies files and directories listed in a file to the working directory.
         Args:
             file: Path to a text file containing relative paths (one per line)
                   to input files or directories.

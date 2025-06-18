@@ -74,7 +74,7 @@ class LobsterJsonTestRunner(TestRunner):
     def declare_input_file(self, file: Path):
         super().declare_input_file(file)
         self.config_file_data.inputs.append(file.name)
-    
+
     def declare_inputs_from_file(self, file, data_directory):
         super().declare_inputs_from_file(file, data_directory)
         self.config_file_data.inputs_from_file = file.name
