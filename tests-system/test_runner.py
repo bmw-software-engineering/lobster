@@ -62,8 +62,18 @@ class TestRunner(ABC):
         pass
 
     def declare_input_file(self, file: Path):
-        """Declares a file from the 'data' folder to be used as an input file.
+        """
+        Declares a file from the 'data' folder to be used as an input file.
+        This file will be copied into the execution directory immediately.
+        """
+        self.copy_file_to_working_directory(file)
 
+    def declare_output_file(self, file: Path):
+        self._tool_output_files.append(file)
+
+    def copy_file_to_working_directory(self, file: Path):
+        """
+        Declares a file from the 'data' folder to be used as an input file.
         This file will be copied into the execution directory immediately.
         """
         shutil.copy(
@@ -71,8 +81,31 @@ class TestRunner(ABC):
             dst=self._working_dir,
         )
 
-    def declare_output_file(self, file: Path):
-        self._tool_output_files.append(file)
+    def declare_inputs_from_file(self, file: Path, data_directory: Path):
+        """
+        Copies files and directories listed in a file to the working directory.
+        Args:
+            file: Path to a text file containing relative paths (one per line)
+                  to input files or directories.
+
+            data_directory: Base directory to resolve the relative paths listed
+                            in the file.
+        Behavior:
+            - For each line in the input file, constructs the full path by joining
+              `data_directory` with the line.
+            - If the resolved path is a file, copies it to the working directory.
+            - If the resolved path is a directory, then it copies the whole directory
+              into the working directory.
+        """
+
+        self.copy_file_to_working_directory(file)
+        with open(file, "r", encoding="UTF-8") as fd:
+            for line in fd:
+                input_path = data_directory / line.strip()
+                if input_path.is_file():
+                    self.copy_file_to_working_directory(input_path)
+                elif input_path.is_dir():
+                    shutil.copytree(input_path, self._working_dir)
 
     @staticmethod
     def get_repo_root() -> Path:

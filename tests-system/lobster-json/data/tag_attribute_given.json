@@ -1,0 +1,35 @@
+[
+    {
+      "Name": "Dance",
+      "Requirements": ["FunnyCar.BoogieMode", "FunnyCar.PartyHorn"]
+    },
+    {
+      "Name": "NapTime",
+      "Requirements": ["FunnyCar.AutoBlanket", "FunnyCar.SnoreDetector"]
+    },
+    {
+      "Name": "PizzaRun",
+      "Requirements": ["FunnyCar.PizzaOven", "FunnyCar.SodaDispenser"]
+    },
+    {
+      "Name": "SingAlong",
+      "Requirements": ["FunnyCar.KaraokeMachine", "FunnyCar.MicrophoneAutoTune"]
+    },
+    {
+      "Name": "CoffeeBreak",
+      "Requirements": ["FunnyCar.CoffeeMaker"]
+    },
+    {
+      "Name": "LaughTrack",
+      "Requirements": ["FunnyCar.JokeGenerator"]
+    },
+    {
+      "Name": "ChairMassage",
+      "Requirements": ["FunnyCar.MassageSeat", "FunnyCar.NeckRoller"]
+    },
+    {
+      "Name": "CatPatrol",
+      "TestCaseDefinitionFile": "bin\\cat.json",
+      "Requirements": ["FunnyCar.CatDetector", "FunnyCar.LaserPointer"]
+    }
+]

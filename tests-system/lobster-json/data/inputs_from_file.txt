@@ -1,0 +1,3 @@
+inputs_cosmetic.json
+inputs_non_critical.json
+inputs_safety.json
