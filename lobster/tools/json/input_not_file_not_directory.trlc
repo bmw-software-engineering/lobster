@@ -3,7 +3,7 @@ import req
 
 req.System_Requirement Input_Not_File_Not_Directory {
     description = '''
-      IF a list element given through the command line option "FILE_OR_DIR" is not a file nor a directory,
+      IF a list element given through the configuration file under "inputs" is not a file nor a directory,
       THEN the tool shall exit with a non-zero return code.
 
       Note: This could happen if a path does not exist.
