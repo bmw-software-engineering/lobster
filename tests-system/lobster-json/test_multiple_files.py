@@ -7,40 +7,14 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
     def setUp(self):
         super().setUp()
         self._test_runner = self.create_test_runner()
-
-    def test_multiple_files(self):
-        """
-        Tests the processing of multiple input files by the tool,
-        including handling of non-JSON files.
-        """
-        self._test_runner.config_file_data.name_attribute = "name"
         self._test_runner.config_file_data.tag_attribute = "tags"
-        out_file = "multiple_files.lobster"
-        self._test_runner.cmd_args.out = out_file
-
-        self._test_runner.declare_output_file(self._data_directory / out_file)
-        self._test_runner.declare_input_file(self._data_directory / "basic.json")
-        self._test_runner.declare_input_file(self._data_directory / "multi1.json")
-        self._test_runner.declare_input_file(
-            self._data_directory / "multi2_invalid.txt"
-        )
-
-        completed_process = self._test_runner.run_tool_test()
-        asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
-        asserter.assertNoStdErrText()
-        asserter.assertStdOutText(
-            f"<config>: lobster warning: not a .json file\n"
-            f"lobster-json: wrote 9 items to {out_file}\n"
-        )
-        asserter.assertExitCode(0)
-        asserter.assertOutputFiles()
-
-    def test_multiple_files_specified_in_config(self):
-        """
-        Tests the processing of multiple input files specified in a configuration file
-        """
         self._test_runner.config_file_data.name_attribute = "name"
-        self._test_runner.config_file_data.tag_attribute = "tags"
+
+    def test_multiple_input_files_specified_in_config(self):
+        """
+        Tests the processing of input files specified in a configuration file
+        using the 'inputs' parameter.
+        """
         self._test_runner.config_file_data.inputs = [
             "basic.json",
             "multi1.json",
@@ -49,18 +23,15 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.cmd_args.out = out_file
 
         self._test_runner.declare_output_file(self._data_directory / out_file)
-        self._test_runner.copy_file_to_working_directory(
-            self._data_directory / "basic.json"
-        )
-        self._test_runner.copy_file_to_working_directory(
-            self._data_directory / "multi1.json"
-        )
-        self._test_runner.copy_file_to_working_directory(
-            self._data_directory / "single2.json"
-        )
-        self._test_runner.copy_file_to_working_directory(
-            self._data_directory / "input_with_attributes.json"
-        )
+        for filename in [
+            "basic.json",
+            "multi1.json",
+            "single2.json",
+            "input_with_attributes.json",
+        ]:
+            self._test_runner.copy_file_to_working_directory(
+                self._data_directory / filename
+            )
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
@@ -69,34 +40,45 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_empty_dir_file(self):
-        """ Tests the handling of an empty directory file."""
-        self._test_runner.config_file_data.name_attribute = "name"
-        self._test_runner.config_file_data.tag_attribute = "tags"
+    def test_directory_with_empty_invalid_file(self):
+        """
+        Tests the processing of a directory containing an empty invalid file.
+        """
+        out_file = "empty.lobster"
+        self._test_runner.cmd_args.out = out_file
+        self._test_runner.config_file_data.inputs.append("one")
 
-        self._test_runner.config_file_data.inputs.append("empty_file_dir")
-
-        source_dir = self._data_directory / "empty_file_dir"
-        dest_dir = self._test_runner.working_dir / "empty_file_dir"
+        source_dir = self._data_directory / "one"
+        dest_dir = self._test_runner.working_dir / "one"
         shutil.copytree(source_dir, dest_dir)
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
-        self.assertIn("json.decoder.JSONDecodeError:", completed_process.stderr)
-        asserter.assertExitCode(1)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(0, out_file)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
 
-    def test_valid_dir_file(self):
+    def test_inputs_from_file_specified_in_config(self):
         """
-        Tests the processing of a valid directory file with multiple input files.
+        Tests the processing of input files specified in a configuration file
+        using the 'inputs_from_file' parameter.
         """
-        self._test_runner.config_file_data.name_attribute = "name"
-        self._test_runner.config_file_data.tag_attribute = "tags"
         out_file = "valid_dir.lobster"
         self._test_runner.cmd_args.out = out_file
 
         self._test_runner.declare_output_file(self._data_directory / out_file)
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "input_files.txt", self._data_directory)
+        for filename in [
+            "basic.json",
+            "multi1.json",
+            "single2.json",
+            "input_with_attributes.json",
+        ]:
+            self._test_runner.copy_file_to_working_directory(
+                self._data_directory / filename
+            )
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
@@ -105,13 +87,12 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_inputs_and_inputs_from_file(self):
+    def test_inputs_and_inputs_from_file_With_extra_valid_files(self):
         """
-        Tests the combination of inputs declared directly and those from a file.
+        Tests the processing of both 'inputs' and 'inputs_from_file' parameters
+        in the configuration file, including additional valid files.
         """
-        self._test_runner.config_file_data.name_attribute = "name"
-        self._test_runner.config_file_data.tag_attribute = "tags"
-        out_file = "inputs_and_inputs_from_file.lobster"
+        out_file = "both_inputs_with_extra_files.lobster"
         self._test_runner.cmd_args.out = out_file
 
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -119,6 +100,15 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.declare_input_file(self._data_directory / "multi1.json")
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "input_files.txt", self._data_directory)
+        for filename in [
+            "basic.json",
+            "multi1.json",
+            "single2.json",
+            "input_with_attributes.json",
+        ]:
+            self._test_runner.copy_file_to_working_directory(
+                self._data_directory / filename
+            )
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)

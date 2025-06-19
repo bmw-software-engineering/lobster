@@ -1,0 +1,13 @@
+[
+    {
+        "name": "Sunset",
+        "tags": ["cool.things"]
+    },
+    {
+        "name": "sunrise",
+        "tags": []
+    },
+    {
+        "name": "Blueberry"
+    }
+]

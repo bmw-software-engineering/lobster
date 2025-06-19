@@ -113,6 +113,60 @@
       "status": null
     },
     {
+      "tag": "json maroon.json:Chill_1",
+      "location": {
+        "kind": "file",
+        "file": "maroon.json",
+        "line": null,
+        "column": null
+      },
+      "name": "maroon.json:Chill_1",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req fun.stuff"
+      ],
+      "framework": "JSON",
+      "kind": "Test Vector",
+      "status": null
+    },
+    {
+      "tag": "json maroon.json:Buddy_2",
+      "location": {
+        "kind": "file",
+        "file": "maroon.json",
+        "line": null,
+        "column": null
+      },
+      "name": "maroon.json:Buddy_2",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "JSON",
+      "kind": "Test Vector",
+      "status": null
+    },
+    {
+      "tag": "json maroon.json:Hangout_6",
+      "location": {
+        "kind": "file",
+        "file": "maroon.json",
+        "line": null,
+        "column": null
+      },
+      "name": "maroon.json:Hangout_6",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "JSON",
+      "kind": "Test Vector",
+      "status": null
+    },
+    {
       "tag": "json multi1.json:apple",
       "location": {
         "kind": "file",
@@ -165,6 +219,60 @@
       "refs": [
         "req green"
       ],
+      "framework": "JSON",
+      "kind": "Test Vector",
+      "status": null
+    },
+    {
+      "tag": "json multi3_invalid.abc:Sunset",
+      "location": {
+        "kind": "file",
+        "file": "multi3_invalid.abc",
+        "line": null,
+        "column": null
+      },
+      "name": "multi3_invalid.abc:Sunset",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req cool.things"
+      ],
+      "framework": "JSON",
+      "kind": "Test Vector",
+      "status": null
+    },
+    {
+      "tag": "json multi3_invalid.abc:sunrise",
+      "location": {
+        "kind": "file",
+        "file": "multi3_invalid.abc",
+        "line": null,
+        "column": null
+      },
+      "name": "multi3_invalid.abc:sunrise",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "JSON",
+      "kind": "Test Vector",
+      "status": null
+    },
+    {
+      "tag": "json multi3_invalid.abc:Blueberry",
+      "location": {
+        "kind": "file",
+        "file": "multi3_invalid.abc",
+        "line": null,
+        "column": null
+      },
+      "name": "multi3_invalid.abc:Blueberry",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
       "framework": "JSON",
       "kind": "Test Vector",
       "status": null
