@@ -53,3 +53,36 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         asserter = Asserter(self, completed_process, self._test_runner)
         self.assertIn("json.decoder.JSONDecodeError:", completed_process.stderr)
         asserter.assertExitCode(1)
+
+    def test_inputs_and_inputs_from_files_with_mixed_extension(self):
+        """
+        Tests the processing of multiple input files with mixed extensions,
+        including both valid and invalid JSON files.
+        """
+        self._test_runner.config_file_data.tag_attribute = "tags"
+        self._test_runner.config_file_data.name_attribute = "name"
+        out_file = "multiple_files_mixed_ext.lobster"
+        self._test_runner.cmd_args.out = out_file
+
+        self._test_runner.declare_output_file(self._data_directory / out_file)
+        self._test_runner.declare_inputs_from_file(
+            self._data_directory / "valid_invalid.txt", self._data_directory)
+        for filename in [
+            "basic.json",
+            "multi1.json",
+            "multi2_invalid.txt",
+        ]:
+            self._test_runner.declare_input_file(
+                self._data_directory / filename
+            )
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutText(
+            f"<config>: lobster warning: not a .json file\n"
+            f"valid_invalid.txt:1: lobster warning: not a .json file\n"
+            f"lobster-json: wrote 15 items to {out_file}\n"
+        )
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
