@@ -13,6 +13,7 @@ class LobsterCpptestTests(unittest.TestCase):
     # unit tests for lobster-cpptest
 
     def setUp(self):
+        self.codebeamer_url = 'https://codebeamer.company.net/cb'
         self.lobster_generator = Constants.LOBSTER_GENERATOR
         self.unit_test_lobster_file = 'unit_tests.lobster'
         self.component_test_lobster_file = 'component_tests.lobster'
@@ -43,6 +44,20 @@ class LobsterCpptestTests(unittest.TestCase):
         self.output_file_names = [self.output_file_name, self.output_fake_file_name,
                                   self.output_data_file_name, self.unit_test_lobster_file,
                                   self.component_test_lobster_file]
+
+    def test_collect_test_cases_from_test_files(self):
+
+        test_case_list = \
+            collect_test_cases_from_test_files(
+                test_file_list=[self.test_case_file],
+                codebeamer_url=self.codebeamer_url
+            )
+
+        expected_requirements = ['CB-#0814', 'CB-#0815', 'CB-#0816', 'CB-#0817', 'CB-#0818', 'CB-#0819', 'CB-#0820', 'CB-#0822', 'CB-#0821']
+        self.assertIsNotNone(test_case_list)
+        self.assertIsInstance(test_case_list, list)
+        self.assertEqual(46, len(test_case_list))
+        self.assertEqual(expected_requirements, test_case_list[-1].requirements)
 
     def test_parse_config_file_with_two_markers_for_two_outputs(self):
         config_dict = parse_config_file(self.test_config_2)

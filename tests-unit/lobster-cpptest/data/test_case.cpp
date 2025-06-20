@@ -246,9 +246,9 @@ TEST() {}
 ///  CB-#0818, CB-#0819
 /// @requirement CB-#0820
 ///
-///
+/// @requirement https://codebeamer.company.net/cb/issue/0821
 /// @note: CB-#9999
 ///
-/// @requirement CB-#0821
+/// @requirement CB-#0822
 ///
 TEST(RequirementTest1, TestMultipleComments) {}
