@@ -1,0 +1,13 @@
+{
+    "name": "testDef",
+    "ExcludeArgumentation": "argument.json",
+    "TestCases": [
+        {
+            "Name": "variable",
+            "TestCaseDefinitionFile": "testcases/variable.json",
+            "RequirementsID": [
+                "variable.dummy_variable"
+            ]
+        }
+    ]
+}

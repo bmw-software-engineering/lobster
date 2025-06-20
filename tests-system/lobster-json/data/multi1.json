@@ -1,0 +1,14 @@
+[
+    {
+	"name"   : "apple",
+	"tags"   : ["example.req1"],
+	"inputs" : [1, 2],
+	"expect" : 3
+    },
+    {
+	"name"   : "banana",
+	"tags"   : [],
+	"inputs" : [1, 0],
+	"expect" : 1
+    }
+]
