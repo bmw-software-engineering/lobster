@@ -382,12 +382,15 @@ class TestCase:
         of the match that correspond to the filter.
         If the match is empty an empty list is returned.
 
-        match -- re.match object
+        match -- re.match object or string
         filter_regex -- filter to apply to the match
         """
 
         if not match:
             return []
+
+        if isinstance(match, re.Match):
+            return re.findall(filter_regex, match.group(0))
 
         return re.findall(filter_regex, match)
 
