@@ -1,6 +1,6 @@
 import json
 import re
-import shutil
+import os
 from .lobster_online_report_nogit_system_test_case_base import (
     LobsterOnlineReportNogitSystemTestCaseBase
 )
@@ -133,6 +133,25 @@ class OnlineReportNogitTest(LobsterOnlineReportNogitSystemTestCaseBase):
         self.assertIn(
             f"No such file or directory: '{input_file}'",
             completed_process.stderr,
+        )
+        asserter.assertNoStdOutText()
+        asserter.assertExitCode(1)
+
+    def test_referenced_file_not_found(self):
+        cmd_args = self._test_runner.cmd_args
+        cmd_args.out = "output.lobster"
+        cmd_args.lobster_report = str(self._data_directory / "invalid-ref.lobster")
+        cmd_args.commit = "abc"
+        cmd_args.repo_root = str(self._test_runner.working_dir)
+        cmd_args.remote_url = "https://A.B.C"
+        completed_process = self._test_runner.run_tool_test()
+
+        asserter = Asserter(self, completed_process, self._test_runner)
+        expected_path = str(self._test_runner.working_dir)
+        asserter.assertStdErrText(
+            f"Error: File 'does-not-exist.file' does not exist.\n"
+            f"Note: Relative paths are resolved with respect to the "
+            f"current working directory '{expected_path}'.\n",
         )
         asserter.assertNoStdOutText()
         asserter.assertExitCode(1)
