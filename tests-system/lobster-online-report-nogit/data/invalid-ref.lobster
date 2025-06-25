@@ -1,14 +1,14 @@
 {
   "schema": "lobster-report",
   "version": 2,
-  "generator": "lobster_report",
+  "generator": "sparrow",
   "levels": [
     {
       "name": "code",
       "kind": "implementation",
       "items": [
         {
-          "tag": "imp tag1",
+          "tag": "imp tag-in-file-which-does-not-exist",
           "location": {
             "kind": "file",
             "file": "does-not-exist.file",
@@ -17,8 +17,8 @@
           },
           "name": "name of file which does not exist",
           "tracing_status": "JUSTIFIED",
-          "language": "Python",
-          "kind": "Expert"
+          "language": "French",
+          "kind": "beautiful"
         }
       ],
       "coverage": 0.0

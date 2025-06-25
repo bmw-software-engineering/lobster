@@ -147,8 +147,7 @@ class OnlineReportNogitTest(LobsterOnlineReportNogitSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
 
         asserter = Asserter(self, completed_process, self._test_runner)
-        expected_path = os.path.normcase(os.path.normpath(
-            os.path.realpath(self._test_runner.working_dir)))
+        expected_path = str(self._test_runner.working_dir)
         asserter.assertStdErrText(
             f"Error: File 'does-not-exist.file' does not exist.\n"
             f"Note: Relative paths are resolved with respect to the "
