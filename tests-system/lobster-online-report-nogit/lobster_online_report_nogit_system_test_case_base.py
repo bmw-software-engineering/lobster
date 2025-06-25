@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Optional, Union
 from .lobster_online_report_nogit_test_runner import LobsterOnlineReportNogitTestRunner
 from ..system_test_case_base import SystemTestCaseBase
 

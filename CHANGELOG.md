@@ -5,7 +5,9 @@
 
 ### 0.13.1-dev
 
-
+* `lobster-online-report-nogit`:
+  - Improved the error message in case a file is not found.
+    The tool exits with return code 1 instead of crashing with an exception.
 
 ### 0.13.0
 
