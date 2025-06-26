@@ -5,6 +5,12 @@
 
 ### 0.13.1-dev
 
+* `lobster-online-report`:
+  - Fixed issue on MacOS: The computation of the relative path between a file
+    and the repository root failed unless all paths were given in a normalized
+    form.
+    Now paths are resolved before computing the relative path.
+
 * `lobster-online-report-nogit`:
   - Improved the error message in case a file is not found.
     The tool exits with return code 1 instead of crashing with an exception.
