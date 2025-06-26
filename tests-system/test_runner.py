@@ -105,7 +105,11 @@ class TestRunner(ABC):
                 if input_path.is_file():
                     self.copy_file_to_working_directory(input_path)
                 elif input_path.is_dir():
-                    shutil.copytree(input_path, self._working_dir)
+                    shutil.copytree(
+                        input_path,
+                        self._working_dir / input_path.name,
+                        dirs_exist_ok=True
+                    )
 
     @staticmethod
     def get_repo_root() -> Path:

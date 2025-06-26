@@ -19,7 +19,7 @@ class SystemTestCaseBase(TestCase):
         # pylint: disable=consider-using-with
         temp_dir = TemporaryDirectory(prefix=prefix, dir=dir_path)
         self._temp_dirs.append(temp_dir)
-        return Path(temp_dir.name)
+        return Path(temp_dir.name).resolve()
 
     def create_output_directory_and_copy_expected(self, output_dir: Path,
                                                   expected_file: Path):

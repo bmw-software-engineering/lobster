@@ -1,7 +1,10 @@
 import argparse
 import os.path
+import sys
+
 from dataclasses import dataclass
 from typing import Iterable
+
 from lobster.items import Item
 from lobster.location import File_Reference, Github_Reference
 from lobster.report import Report
@@ -45,7 +48,7 @@ def file_ref_to_remote_ref(file_ref: File_Reference, repo_data: RepoData) -> (
             line=file_ref.line,
             commit=repo_data.commit,
         )
-    raise FileNotFoundError(f"File {file_ref.filename} does not exist.")
+    raise FileNotFoundError(f"File '{file_ref.filename}' does not exist.")
 
 
 def update_items(items: Iterable[Item], repo_data: RepoData):
@@ -92,12 +95,22 @@ def main():
                          "It can be the same as the input file in order to "
                          "overwrite the input file.",)
     options = ap.parse_args()
-    update_lobster_file(
-        file=options.report,
-        repo_data=RepoData(
-            remote_url=options.remote_url,
-            root=options.repo_root,
-            commit=options.commit,
-        ),
-        out_file=options.out,
-    )
+
+    try:
+        update_lobster_file(
+            file=options.report,
+            repo_data=RepoData(
+                remote_url=options.remote_url,
+                root=options.repo_root,
+                commit=options.commit,
+            ),
+            out_file=options.out,
+        )
+    except FileNotFoundError as e:
+        print(
+            f"Error: {e}\n"
+            f"Note: Relative paths are resolved with respect to the "
+            f"current working directory '{os.getcwd()}'.",
+            file=sys.stderr,
+        )
+        sys.exit(1)

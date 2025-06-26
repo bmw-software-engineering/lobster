@@ -1,0 +1,16 @@
+{
+  "name": "testDef_demo",
+  "TestCases": [
+    {
+      "name": "T_01",
+      "TestCaseDefinitionFile": "bin\\T_01.json",
+      "RequirementsID": ["demo.demo", "demo.demo"]
+    },
+    {
+      "name": "T_08",
+      "TestCaseDefinitionFile": "bin\\T_08.json",
+      "InformationID": ["demo.Signaldemo"],
+      "justification": "Used for coverage"
+    }
+  ]
+}
