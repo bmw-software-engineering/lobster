@@ -13,6 +13,7 @@ class LobsterCpptestTests(unittest.TestCase):
     # unit tests for lobster-cpptest
 
     def setUp(self):
+        self.codebeamer_url = 'https://codebeamer.company.net/cb'
         self.lobster_generator = Constants.LOBSTER_GENERATOR
         self.unit_test_lobster_file = 'unit_tests.lobster'
         self.component_test_lobster_file = 'component_tests.lobster'
@@ -43,6 +44,20 @@ class LobsterCpptestTests(unittest.TestCase):
         self.output_file_names = [self.output_file_name, self.output_fake_file_name,
                                   self.output_data_file_name, self.unit_test_lobster_file,
                                   self.component_test_lobster_file]
+
+    def test_collect_test_cases_from_test_files(self):
+
+        test_case_list = \
+            collect_test_cases_from_test_files(
+                test_file_list=[self.test_case_file],
+                codebeamer_url=self.codebeamer_url
+            )
+
+        expected_requirements = ['CB-#0814', 'CB-#0815', 'CB-#0816', 'CB-#0817', 'CB-#0818', 'CB-#0819', 'CB-#0820', 'CB-#0822', 'CB-#0821']
+        self.assertIsNotNone(test_case_list)
+        self.assertIsInstance(test_case_list, list)
+        self.assertEqual(46, len(test_case_list))
+        self.assertEqual(expected_requirements, test_case_list[-1].requirements)
 
     def test_parse_config_file_with_two_markers_for_two_outputs(self):
         config_dict = parse_config_file(self.test_config_2)
@@ -333,7 +348,7 @@ class LobsterCpptestTests(unittest.TestCase):
         lobster_items = component_test_lobster_file_dict.get('data')
         self.assertIsNotNone(lobster_items)
         self.assertIsInstance(lobster_items, list)
-        self.assertEqual(41, len(lobster_items))
+        self.assertEqual(42, len(lobster_items))
 
         for lobster_item in lobster_items:
             if 'refs' in lobster_item.keys():
@@ -343,7 +358,7 @@ class LobsterCpptestTests(unittest.TestCase):
 
         self.assertIsNotNone(component_test_lobster_items)
         self.assertIsInstance(component_test_lobster_items, list)
-        self.assertEqual(9, len(component_test_lobster_items))
+        self.assertEqual(10, len(component_test_lobster_items))
 
         self.assertIsNotNone(orphan_test_lobster_items)
         self.assertIsInstance(orphan_test_lobster_items, list)
@@ -470,11 +485,13 @@ class LobsterCpptestTests(unittest.TestCase):
              "docu_start": 207, "docu_end": 214, "def_start": 215, "def_end": 217, "version": ["42", "2"],
              "test": "foo", "brief": "this test tests something",
              "req": ["CB-#0815", "CB-#0816"],
-             "req_by": ["FOO0::BAR0"], "testmethods": ["TM_BOUNDARY", "TM_REQUIREMENT"]}
+             "req_by": ["FOO0::BAR0"], "testmethods": ["TM_BOUNDARY", "TM_REQUIREMENT"]},
+            {"suite": "RequirementTest1", "test_name": "TestMultipleComments",
+             "docu_start": 238, "docu_end": 253, "def_start": 254, "def_end": 254}
         ]
 
         test_cases = ParserForRequirements.collect_test_cases(self.test_case_file, codebeamer_url)
-        self.assertEqual(len(test_cases), 45)
+        self.assertEqual(len(test_cases), 46)
 
         for i in range(0, len(expect)):
             self.assertEqual(test_cases[i].file_name, self.test_case_file)
