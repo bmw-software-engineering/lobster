@@ -6,9 +6,8 @@
 ### 0.13.1-dev
 
 * `lobster-cpptest`
-
-  Improve the requirement detection regex. The sub-comment-blocks which start
-  with "@requirement" and end with "@" would be considered.
+  - Improved the requirement detection regex. The sub-comment-blocks which start
+    with `@requirement` and end with `@` would be considered.
 
 * `lobster-online-report-nogit`:
   - Improved the error message in case a file is not found.

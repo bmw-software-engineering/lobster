@@ -174,7 +174,7 @@ class TestCase:
         tag_http_named -- named http pattern to be searched in docu
         """
         blocks = general_pattern.findall(self.docu_lines)
-        if not blocks or blocks is None:
+        if not blocks:
             return
         else:
             http_requirements = []
