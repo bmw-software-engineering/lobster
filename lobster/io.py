@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023, 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -21,6 +21,7 @@ import os.path
 import io
 from collections.abc import Iterable
 import json
+from typing import Dict, Sequence, Union
 
 from lobster.errors import Message_Handler
 from lobster.location import File_Reference
@@ -52,7 +53,13 @@ def lobster_write(fd, kind, generator, items):
     fd.write("\n")
 
 
-def lobster_read(mh, filename, level, items, source_info=None):
+def lobster_read(
+        mh,
+        filename,
+        level,
+        items: Dict[str, Union[Activity, Implementation, Requirement]],
+        source_info=None,
+):
     assert isinstance(mh, Message_Handler)
     assert isinstance(filename, str)
     assert isinstance(level, str)
@@ -132,11 +139,24 @@ def lobster_read(mh, filename, level, items, source_info=None):
             else:
                 items[item.tag.key()] = item
 
+    signal_duplicate_items(mh, items, duplicate_items)
+
+
+def signal_duplicate_items(
+        mh: Message_Handler,
+        items,
+        duplicate_items: Sequence[Union[Activity, Implementation, Requirement]],
+):
+    """
+    Report errors for duplicate items to the message handler.
+    If there are any duplicate items, the last one is considered fatal.
+    """
     if duplicate_items:
         for counter, item in enumerate(duplicate_items, start=1):
             mh.error(
-                item.location,
-                f"duplicate definition of {item.tag.key()}, "
-                f"previously defined at {items[item.tag.key()].location.to_string()}",
+                location=item.location,
+                message=f"duplicate definition of {item.tag.key()}, "
+                        f"previously defined at "
+                        f"{items[item.tag.key()].location.to_string()}",
                 fatal=(counter == len(duplicate_items)),
             )
