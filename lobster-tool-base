@@ -1,0 +1,21 @@
+from argparse import Namespace
+import sys
+from lobster.tool_base import ToolBase
+
+
+# This is a simple script to run the ToolBase class. That class is not a ready-to-use
+# lobster tool, but a base class for creating lobster tools.
+# This script is meant to be used for system tests only.
+
+
+IMPLEMENTATION_MESSAGE = "This is the AppleBanana tool."
+
+
+class AppleBananaTool(ToolBase):
+    def _run_impl(self, options: Namespace) -> int:
+        print(IMPLEMENTATION_MESSAGE)
+        return 0
+
+
+if __name__ == "__main__":
+    sys.exit(AppleBananaTool(name="apple", description="banana", official=True).run())

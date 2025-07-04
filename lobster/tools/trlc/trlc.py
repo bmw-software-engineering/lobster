@@ -370,9 +370,10 @@ class LOBSTER_Trlc(LOBSTER_Tool):
             name        = "trlc",
             description = "Extract tracing data from rsl and trlc files.",
             extensions  = ["rsl", "trlc"],
-            official    = True)
+            official    = True,
+        )
 
-        for action in self.ap._actions:
+        for action in self._argument_parser._actions:
             if action.dest == 'config':
                 action.required = False
 
@@ -396,7 +397,8 @@ class LOBSTER_Trlc(LOBSTER_Tool):
 
     def process_commandline_and_yaml_options(
             self,
-    ) -> Tuple[argparse.Namespace, List[Tuple[File_Reference, str]]]:
+            options: argparse.Namespace,
+    ) -> List[Tuple[File_Reference, str]]:
         """
         Overrides the parent class method and add fetch tool specific options from the
         yaml config
@@ -407,10 +409,10 @@ class LOBSTER_Trlc(LOBSTER_Tool):
         worklist - list of trlc and rsl files
         """
 
-        options, work_list = super().process_commandline_and_yaml_options()
+        work_list = super().process_commandline_and_yaml_options(options)
         options.trlc_config_file = self.config.get(self.TRLC_CONFIG_FILE,
                                                    "lobster-trlc.conf")
-        return options, work_list
+        return work_list
 
     def process_tool_options(
             self,
@@ -420,10 +422,10 @@ class LOBSTER_Trlc(LOBSTER_Tool):
         super().process_tool_options(options, work_list)
         self.schema = Requirement
 
-    def execute(self):
+    def _run_impl(self, options: argparse.Namespace):
         trlc_mh = Message_Handler()
         sm = Source_Manager(trlc_mh)
-        options, work_list = self.process_commandline_and_yaml_options()
+        work_list = self.process_commandline_and_yaml_options(options)
         if not os.path.isfile(options.trlc_config_file):
             sys.exit("lobster-trlc: cannot open config file '%s'" %
                      options.trlc_config_file)
@@ -489,10 +491,4 @@ class LOBSTER_Trlc(LOBSTER_Tool):
 
 
 def main():
-    # lobster-trace: trlc_req.Dummy_Requirement
-    tool = LOBSTER_Trlc()
-    return tool.execute()
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+    return LOBSTER_Trlc().run()
