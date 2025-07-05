@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from lobster.tools.codebeamer.codebeamer import (CodebeamerError, get_query, get_single_item,
+from lobster.tools.codebeamer.codebeamer import (MismatchException, get_query, get_single_item,
                                                  get_many_items, parse_config_data, to_lobster,
                                                  import_tagged)
 
@@ -124,7 +124,7 @@ class QueryCodebeamerTest(unittest.TestCase):
                 "total": 1,
                 "items": []
             }  
-        with self.assertRaises(CodebeamerError):
+        with self.assertRaises(MismatchException):
             get_query(self._mock_cb_config, query_id)
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
