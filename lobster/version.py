@@ -16,57 +16,12 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
-import sys
-from argparse import ArgumentParser
 
 VERSION_TUPLE = (0, 13, 1)
 VERSION_SUFFIX = "dev"
 
-LOBSTER_VERSION = ("%u.%u.%u" % VERSION_TUPLE) + (
+LOBSTER_VERSION = ".".join(str(x) for x in VERSION_TUPLE) + (
     "-%s" % VERSION_SUFFIX if VERSION_SUFFIX else ""
 )
 
 FULL_NAME = "LOBSTER %s" % LOBSTER_VERSION
-
-
-def get_version(obj):
-    """
-    This decorator function is used on function wherever we are parsing
-    the command line arguments which then adds a version argument to the function.
-    If a version flag is passed to the command line arguments then the LOBSTER version
-    is printed.
-    Parameters
-    ----------
-    obj - obj can be an ArgumentParser object or a Function object.
-
-    Returns - Nothing
-    -------
-
-    """
-    if isinstance(obj, ArgumentParser):
-        obj.add_argument("-v, --version", action="store_true",
-                         default=None,
-                         help="Get version for the tool")
-
-        def version(func):
-            def execution():
-                if (len(sys.argv)  > 1 and
-                        (sys.argv[1] == "--version" or sys.argv[1] == "-v")):
-                    print(FULL_NAME)
-                    return sys.exit(0)
-                else:
-                    return func()
-            return execution
-        return version
-    else:
-        def version(func):
-            if not isinstance(obj, ArgumentParser):
-                func.ap.add_argument("-v, --version", action="store_true",
-                                     default=None,
-                                     help="Get version for the tool")
-                if (len(sys.argv)  > 1 and
-                        (sys.argv[1] == "--version" or sys.argv[1] == "-v")):
-                    print(FULL_NAME)
-                    return sys.exit(0)
-            return obj(func)
-        return version

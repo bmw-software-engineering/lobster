@@ -34,8 +34,10 @@ style:
 	@python3 -m pycodestyle lobster tests-system \
 		--exclude=assets.py
 
-packages:
+clean-packages:
 	git clean -xdf packages test_install test_install_monolithic test_install_monolithic_venv
+
+packages: clean-packages
 	make lobster/html/assets.py
 	make -C packages/lobster-core
 	make -C packages/lobster-tool-trlc

@@ -286,7 +286,7 @@ def _run_tests(directory: Path, tool: str) -> int:
     return 0
 
 
-def _get_tool(test_dir: str) -> str:
+def _get_tool(test_dir: Path) -> str:
     """Determines the path to the tool which shall be tested, given the test case path.
 
     The tool under test is determined by assuming that the parent folder name is equal

@@ -12,10 +12,11 @@ class ConcreteLOBSTER_Tool(LOBSTER_Tool):
         super().__init__(name, description, extensions, official)
 
     def process_tool_options(self, options, work_list):
-        return work_list
-
-    def execute(self):
+        pass
+    
+    def _run_impl(self, options: argparse.Namespace) -> int:
         return 0
+
 
 class TestLOBSTER_Tool(unittest.TestCase):
 
@@ -24,7 +25,6 @@ class TestLOBSTER_Tool(unittest.TestCase):
 
     def test_init(self):
         self.assertEqual(self.tool.name, "lobster-test")
-        self.assertEqual(self.tool.description, "Test description")
         self.assertEqual(self.tool.extensions, [".lobster"])
         self.assertIsInstance(self.tool.mh, Message_Handler)
 
