@@ -111,26 +111,16 @@ def lobster_read(mh, filename, level, items, source_info=None):
         else:
             item = Activity.from_json(level, raw, data["version"])
 
-        filter_conditions = []
-
         if source_info is not None:
             item.perform_source_checks(source_info)
 
-            # evaluate source_info filters
-            for f, v in source_info['filters']:
-                if f == 'prefix':
-                    filter_conditions.append(item.tag.tag.startswith(v))
-                if f == 'kind':
-                    filter_conditions.append(item.kind == v)
-
-        if all(filter_conditions):
-            if item.tag.key() in items:
-                # 'duplicate definition' errors are fatal, but the user wants to see all
-                # of them. So store the affected items in a list first, and create
-                # errors later.
-                duplicate_items.append(item)
-            else:
-                items[item.tag.key()] = item
+        if item.tag.key() in items:
+            # 'duplicate definition' errors are fatal, but the user wants to see all
+            # of them. So store the affected items in a list first, and create
+            # errors later.
+            duplicate_items.append(item)
+        else:
+            items[item.tag.key()] = item
 
     if duplicate_items:
         for counter, item in enumerate(duplicate_items, start=1):

@@ -5,6 +5,20 @@
 
 ### 0.13.1-dev
 
+* `lobster-report`:
+  - Removed the feature to use the `with` filter expressions in the
+    tracing policy.
+    It is no longer posisble to use `with kind`, `with prefix` and
+    `with valid_status`.
+    We have made a design decision that filtering the input items bevore computing
+    the coverage value is not the duty of LOBSTER.
+    The LOBSTER tools shall follow the philosophy to "do one thing only".
+    If a user wants to filter out certain items, then the user has to take care
+    to prepare the input data accordingly.
+    The reason behind this decision is to focus more on tool stability and tool
+    qualification in the sense of ISO 26262.
+    A tool with less features and less lines of code is easier to qualify.
+
 * `lobster-online-report`:
   - Fixed issue on MacOS: The computation of the relative path between a file
     and the repository root failed unless all paths were given in a normalized
