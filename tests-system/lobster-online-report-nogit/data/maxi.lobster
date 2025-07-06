@@ -133,8 +133,7 @@
       "traces": [],
       "source": [
         {
-          "file": "level_a.lobster",
-          "filters": []
+          "file": "level_a.lobster"
         }
       ]
     },
@@ -144,8 +143,7 @@
       "traces": [],
       "source": [
         {
-          "file": "level_b.lobster",
-          "filters": []
+          "file": "level_b.lobster"
         }
       ]
     },
@@ -155,8 +153,7 @@
       "traces": [],
       "source": [
         {
-          "file": "level_c.lobster",
-          "filters": []
+          "file": "level_c.lobster"
         }
       ]
     },
@@ -166,8 +163,7 @@
       "traces": [],
       "source": [
         {
-          "file": "level_d.lobster",
-          "filters": []
+          "file": "level_d.lobster"
         }
       ]
     }

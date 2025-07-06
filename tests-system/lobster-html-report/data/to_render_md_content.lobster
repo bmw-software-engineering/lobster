@@ -66,12 +66,7 @@
       "traces": [],
       "source": [
         {
-          "file": "requirements.lobster",
-          "filters": [],
-          "valid_status": [
-            "abc",
-            "def"
-          ]
+          "file": "requirements.lobster"
         }
       ],
       "needs_tracing_up": false,
@@ -90,8 +85,7 @@
       ],
       "source": [
         {
-          "file": "code.lobster",
-          "filters": []
+          "file": "code.lobster"
         }
       ],
       "needs_tracing_up": true,

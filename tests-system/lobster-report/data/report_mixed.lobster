@@ -90,9 +90,7 @@
       "traces": [],
       "source": [
         {
-          "file": "trlc_mixed.lobster",
-          "filters": [],
-          "valid_status": []
+          "file": "trlc_mixed.lobster"
         }
       ],
       "needs_tracing_up": false,
@@ -111,8 +109,7 @@
       ],
       "source": [
         {
-          "file": "python_mixed.lobster",
-          "filters": []
+          "file": "python_mixed.lobster"
         }
       ],
       "needs_tracing_up": true,
