@@ -74,8 +74,7 @@
       "traces": [],
       "source": [
         {
-          "file": "python.lobster",
-          "filters": []
+          "file": "python.lobster"
         }
       ],
       "needs_tracing_up": false,
