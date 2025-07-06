@@ -88,9 +88,7 @@
       "traces": [],
       "source": [
         {
-          "file": "sysreq.lobster",
-          "filters": [],
-          "valid_status": []
+          "file": "sysreq.lobster"
         }
       ],
       "needs_tracing_up": false,
@@ -109,9 +107,7 @@
       ],
       "source": [
         {
-          "file": "softreq.lobster",
-          "filters": [],
-          "valid_status": []
+          "file": "softreq.lobster"
         }
       ],
       "needs_tracing_up": true,
