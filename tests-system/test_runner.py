@@ -32,7 +32,6 @@ class TestRunner(ABC):
         directory before running the tool.
         """
         self._tool_main_path = Path(__file__).resolve().parents[1] / tool_name
-        self._tool_name = tool_name
         self._tool_output_files: List[Path] = []
         self._working_dir = working_dir
 
