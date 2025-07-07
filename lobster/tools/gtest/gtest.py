@@ -17,134 +17,138 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+from argparse import Namespace
 import sys
-import argparse
 import os.path
 import xml.etree.ElementTree as ET
 
 from lobster.items import Tracing_Tag, Activity
 from lobster.location import Void_Reference, File_Reference
 from lobster.io import lobster_write
-from lobster.version import get_version
-
-ap = argparse.ArgumentParser()
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
-@get_version(ap)
-def main():
-    # lobster-trace: gtest_req.Dummy_Requirement
-    ap.add_argument("files",
-                    nargs="+",
-                    metavar="FILE|DIR")
-    ap.add_argument("--out", default=None)
+class GtestTool(MetaDataToolBase):
+    def __init__(self):
+        super().__init__(
+            name = "gtest",
+            description = "Extract tracing tags from GoogleTest XML output",
+            official = True,
+        )
+        self._argument_parser.add_argument(
+            "files",
+            nargs="+",
+            metavar="FILE|DIR",
+        )
+        self._argument_parser.add_argument("--out", default=None)
 
-    options = ap.parse_args()
-
-    c_files_rel = {}
-    file_list = []
-    for item in options.files:
-        if os.path.isfile(item):
-            file_list.append(item)
-        elif os.path.isdir(item):
-            for path, _, files in os.walk(item, followlinks=True):
-                for filename in files:
-                    if not os.path.isfile(os.path.join(path, filename)):
-                        continue
-                    _, ext = os.path.splitext(filename)
-                    if ext in (".xml", ):
-                        file_list.append(os.path.join(path, filename))
-                    elif ext in (".cpp", ".cc", ".c"):
-                        fullname = os.path.relpath(
-                            os.path.realpath(os.path.join(path, filename)))
-                        if ".cache" in fullname:
+    def _run_impl(self, options: Namespace) -> int:
+        c_files_rel = {}
+        file_list = []
+        for item in options.files:
+            if os.path.isfile(item):
+                file_list.append(item)
+            elif os.path.isdir(item):
+                for path, _, files in os.walk(item, followlinks=True):
+                    for filename in files:
+                        if not os.path.isfile(os.path.join(path, filename)):
                             continue
-                        if filename not in c_files_rel:
-                            c_files_rel[filename] = set()
-                        c_files_rel[filename].add(fullname)
+                        _, ext = os.path.splitext(filename)
+                        if ext in (".xml", ):
+                            file_list.append(os.path.join(path, filename))
+                        elif ext in (".cpp", ".cc", ".c"):
+                            fullname = os.path.relpath(
+                                os.path.realpath(os.path.join(path, filename)))
+                            if ".cache" in str(fullname):
+                                continue
+                            if filename not in c_files_rel:
+                                c_files_rel[filename] = set()
+                            c_files_rel[filename].add(fullname)
 
-        else:
-            ap.error("%s is not a file or directory" % item)
+            else:
+                self._argument_parser.error("%s is not a file or directory" % item)
 
-    file_list = {os.path.realpath(os.path.abspath(f))
-                 for f in file_list}
+        file_list = {os.path.realpath(os.path.abspath(f)) for f in file_list}
 
-    items = []
+        items = []
 
-    for filename in file_list:
-        tree = ET.parse(filename)
-        root = tree.getroot()
-        if root.tag != "testsuites":
-            continue
-        for suite in root:
-            assert suite.tag == "testsuite"
-            suite_name = suite.attrib["name"]
-            for testcase in suite:
-                if testcase.tag != "testcase":
-                    continue
-                test_name     = testcase.attrib["name"]
-                test_executed = testcase.attrib["status"] == "run"
-                test_ok       = True
-                test_tags     = []
-                source_file   = testcase.attrib.get("file", None)
-                source_line   = int(testcase.attrib["line"]) \
-                    if "line" in testcase.attrib \
-                    else None
-                for props in testcase:
-                    if props.tag == "failure":
-                        test_ok = False
-                    elif props.tag == "properties":
-                        for prop in props:
-                            assert prop.tag == "property"
-                            if prop.attrib["name"] == "lobster-tracing":
-                                test_tags += [
-                                    x.strip()
-                                    for x in prop.attrib["value"].split(",")]
-                            elif prop.attrib["name"] == "lobster-tracing-file":
-                                source_file = prop.attrib["value"]
-                            elif prop.attrib["name"] == "lobster-tracing-line":
-                                source_line = int(prop.attrib["value"])
+        for filename in file_list:
+            tree = ET.parse(filename)
+            root = tree.getroot()
+            if root.tag != "testsuites":
+                continue
+            for suite in root:
+                assert suite.tag == "testsuite"
+                suite_name = suite.attrib["name"]
+                for testcase in suite:
+                    if testcase.tag != "testcase":
+                        continue
+                    test_name     = testcase.attrib["name"]
+                    test_executed = testcase.attrib["status"] == "run"
+                    test_ok       = True
+                    test_tags     = []
+                    source_file   = testcase.attrib.get("file", None)
+                    source_line   = int(testcase.attrib["line"]) \
+                        if "line" in testcase.attrib \
+                        else None
+                    for props in testcase:
+                        if props.tag == "failure":
+                            test_ok = False
+                        elif props.tag == "properties":
+                            for prop in props:
+                                assert prop.tag == "property"
+                                if prop.attrib["name"] == "lobster-tracing":
+                                    test_tags += [
+                                        x.strip()
+                                        for x in prop.attrib["value"].split(",")]
+                                elif prop.attrib["name"] == "lobster-tracing-file":
+                                    source_file = prop.attrib["value"]
+                                elif prop.attrib["name"] == "lobster-tracing-line":
+                                    source_line = int(prop.attrib["value"])
 
-                if source_file in c_files_rel and \
-                   len(c_files_rel[source_file]) == 1:
-                    test_source = File_Reference(
-                        filename = list(c_files_rel[source_file])[0],
-                        line     = source_line)
-                elif source_file is None:
-                    test_source = Void_Reference()
-                else:
-                    test_source = File_Reference(
-                        filename = source_file,
-                        line     = source_line)
+                    if source_file in c_files_rel \
+                            and (len(c_files_rel[source_file]) == 1):
 
-                uid = "%s:%s" % (suite_name, test_name)
-                if test_executed:
-                    if test_ok:
-                        status = "ok"
+                        test_source = File_Reference(
+                            filename = list(c_files_rel[source_file])[0],
+                            line     = source_line)
+                    elif source_file is None:
+                        test_source = Void_Reference()
                     else:
-                        status = "fail"
-                else:
-                    status = "not run"
+                        test_source = File_Reference(
+                            filename = source_file,
+                            line     = source_line)
 
-                tag  = Tracing_Tag("gtest", uid)
-                item = Activity(tag       = tag,
-                                location  = test_source,
-                                framework = "GoogleTest",
-                                kind      = "test",
-                                status    = status)
-                for ref in test_tags:
-                    item.add_tracing_target(Tracing_Tag("req", ref))
+                    uid = "%s:%s" % (suite_name, test_name)
+                    if test_executed:
+                        if test_ok:
+                            status = "ok"
+                        else:
+                            status = "fail"
+                    else:
+                        status = "not run"
 
-                items.append(item)
+                    tag  = Tracing_Tag("gtest", uid)
+                    item = Activity(tag       = tag,
+                                    location  = test_source,
+                                    framework = "GoogleTest",
+                                    kind      = "test",
+                                    status    = status)
+                    for ref in test_tags:
+                        item.add_tracing_target(Tracing_Tag("req", ref))
 
-    if options.out:
-        with open(options.out, "w", encoding="UTF-8") as fd:
-            lobster_write(fd, Activity, "lobster_gtest", items)
-        print("Written output for %u items to %s" % (len(items),
-                                                     options.out))
-    else:
-        lobster_write(sys.stdout, Activity, "lobster_gtest", items)
-        print()
+                    items.append(item)
+
+        if options.out:
+            with open(options.out, "w", encoding="UTF-8") as fd:
+                lobster_write(fd, Activity, "lobster_gtest", items)
+            print(f"Written output for {len(items)} items to {options.out}")
+        else:
+            lobster_write(sys.stdout, Activity, "lobster_gtest", items)
+            print()
+
+        return 0
 
 
-if __name__ == "__main__":
-    sys.exit(main())
+def main() -> int:
+    return GtestTool().run()

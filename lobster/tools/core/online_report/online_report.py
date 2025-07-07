@@ -18,7 +18,6 @@
 # <https://www.gnu.org/licenses/>.
 
 import re
-import sys
 import os
 import argparse
 import configparser
@@ -26,7 +25,7 @@ import subprocess
 
 from lobster.report import Report
 from lobster.location import File_Reference, Github_Reference
-from lobster.version import get_version
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
 class Parse_Error(Exception):
@@ -202,74 +201,83 @@ def get_summary(in_file: str, out_file: str):
     return f"LOBSTER report {out_file} created, using online references."
 
 
-ap = argparse.ArgumentParser()
+class OnlineReportTool(MetaDataToolBase):
+    def __init__(self):
+        super().__init__(
+            name="lobster-online-report",
+            description="Update file locations in LOBSTER report to GitHub references.",
+            official=True,
+        )
+        self._argument_parser.add_argument(
+            "lobster_report",
+            nargs="?",
+            default="report.lobster",
+        )
+        self._argument_parser.add_argument(
+            "--repo-root",
+            help="override git repository root",
+            default=None,
+        )
+        self._argument_parser.add_argument(
+            "--out",
+            help="output file, by default overwrite input",
+            default=None,
+        )
 
+    def _run_impl(self, options: argparse.Namespace) -> int:
+        if not os.path.isfile(options.lobster_report):
+            if options.lobster_report == "report.lobster":
+                self._argument_parser.error("specify report file")
+            else:
+                self._argument_parser.error(f"{options.lobster_report} is not a file")
 
-@get_version(ap)
-def main():
-    # lobster-trace: core_online_report_req.Dummy_Requirement
-    ap.add_argument("lobster_report",
-                    nargs="?",
-                    default="report.lobster")
-    ap.add_argument("--repo-root",
-                    help="override git repository root",
-                    default=None)
-    ap.add_argument("--out",
-                    help="output file, by default overwrite input",
-                    default=None)
-    options = ap.parse_args()
-
-    if not os.path.isfile(options.lobster_report):
-        if options.lobster_report == "report.lobster":
-            ap.error("specify report file")
+        if options.repo_root:
+            repo_root = os.path.abspath(os.path.expanduser(options.repo_root))
+            if not is_git_main_module(repo_root):
+                self._argument_parser.error(
+                    f"cannot find .git directory in {options.repo_root}")
         else:
-            ap.error("%s is not a file" % options.lobster_report)
+            repo_root = find_repo_main_root(options.lobster_report)
+            while True:
+                if is_git_main_module(repo_root):
+                    break
+                new_root = os.path.dirname(repo_root)
+                if new_root == repo_root:
+                    print("error: could not find .git directory")
+                    return 1
+                repo_root = new_root
 
-    if options.repo_root:
-        repo_root = os.path.abspath(os.path.expanduser(options.repo_root))
-        if not is_git_main_module(repo_root):
-            ap.error("cannot find .git directory in %s" % options.repo_root)
-    else:
-        repo_root = find_repo_main_root(options.lobster_report)
-        while True:
-            if is_git_main_module(repo_root):
-                break
-            new_root = os.path.dirname(repo_root)
-            if new_root == repo_root:
-                print("error: could not find .git directory")
-                return 1
-            repo_root = new_root
+        git_config = configparser.ConfigParser()
+        git_config.read(os.path.join(repo_root, ".git", "config"))
+        if 'remote "origin"' not in git_config.sections():
+            print("error: could not find remote \"origin\" in git config")
+            return 1
 
-    git_config = configparser.ConfigParser()
-    git_config.read(os.path.join(repo_root, ".git", "config"))
-    if 'remote "origin"' not in git_config.sections():
-        print("error: could not find remote \"origin\" in git config")
-        return 1
+        git_m_config = configparser.ConfigParser()
+        if os.path.isfile(os.path.join(repo_root, ".gitmodules")):
+            git_m_config.read(os.path.join(repo_root, ".gitmodules"))
 
-    git_m_config = configparser.ConfigParser()
-    if os.path.isfile(os.path.join(repo_root, ".gitmodules")):
-        git_m_config.read(os.path.join(repo_root, ".gitmodules"))
+        gh_root = None
+        gh_submodule_roots = {}
+        for item in git_config:
+            if item == 'remote "origin"':
+                gh_root = parse_git_root(git_config[item])
+            elif item.startswith('submodule "'):
+                assert re.match('submodule "(.*?)"', item)
+                sm_dir = git_m_config[item]["path"]
+                gh_submodule_roots[sm_dir] = parse_git_root(git_config[item])
 
-    gh_root = None
-    gh_submodule_roots = {}
-    for item in git_config:
-        if item == 'remote "origin"':
-            gh_root = parse_git_root(git_config[item])
-        elif item.startswith('submodule "'):
-            assert re.match('submodule "(.*?)"', item)
-            sm_dir = git_m_config[item]["path"]
-            gh_submodule_roots[sm_dir] = parse_git_root(git_config[item])
+        report = Report()
+        report.load_report(options.lobster_report)
+        if gh_root:
+            add_github_reference_to_items(gh_root, gh_submodule_roots,
+                                          repo_root, report)
 
-    report = Report()
-    report.load_report(options.lobster_report)
-    if gh_root:
-        add_github_reference_to_items(gh_root, gh_submodule_roots, repo_root, report)
-
-    out_file = options.out if options.out else options.lobster_report
-    report.write_report(out_file)
-    print(get_summary(options.lobster_report, out_file))
-    return 0
+        out_file = options.out if options.out else options.lobster_report
+        report.write_report(out_file)
+        print(get_summary(options.lobster_report, out_file))
+        return 0
 
 
-if __name__ == "__main__":
-    sys.exit(main())
+def main() -> int:
+    return OnlineReportTool().run()

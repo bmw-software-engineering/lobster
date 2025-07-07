@@ -47,9 +47,9 @@ from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
 from lobster.location import Codebeamer_Reference
 from lobster.errors import Message_Handler, LOBSTER_Error
 from lobster.io import lobster_read, lobster_write
+from lobster.meta_data_tool_base import MetaDataToolBase
 from lobster.tools.codebeamer.bearer_auth import BearerAuth
 from lobster.tools.codebeamer.config import AuthenticationConfig, Config
-from lobster.version import get_version
 
 
 class CodebeamerError(Exception):
@@ -469,101 +469,108 @@ def parse_config_data(data: dict) -> Config:
     return config
 
 
-ap = argparse.ArgumentParser(conflict_handler='resolve')
+class CodebeamerTool(MetaDataToolBase):
+    def __init__(self):
+        super().__init__(
+            name="codebeamer",
+            description="Extract codebeamer items for LOBSTER",
+            official=True,
+        )
+        self._argument_parser.add_argument(
+            "--config",
+            help=(f"Path to YAML file with arguments, "
+                  f"by default (codebeamer-config.yaml) "
+                  f"supported references: '{', '.join(SupportedConfigKeys.as_set())}'"),
+            default=os.path.join(os.getcwd(), "codebeamer-config.yaml"))
 
+        self._argument_parser.add_argument(
+            "--out",
+            help=("Name of output file"),
+            default="codebeamer.lobster",
+        )
 
-@get_version(ap)
-def main():
-    # lobster-trace: codebeamer_req.Dummy_Requirement
-    ap.add_argument("--config",
-                    help=("Path to YAML file with arguments, "
-                          "by default (codebeamer-config.yaml) "
-                          "supported references: '%s'" %
-                          ', '.join(SupportedConfigKeys.as_set())),
-                    default=os.path.join(os.getcwd(), "codebeamer-config.yaml"))
+    def _run_impl(self, options: argparse.Namespace) -> int:
+        mh = Message_Handler()
 
-    ap.add_argument("--out",
-                    help=("Name of output file"),
-                    default="codebeamer.lobster")
+        if not os.path.isfile(options.config):
+            print((f"lobster-codebeamer: Config file '{options.config}' not found."))
+            return 1
 
-    options = ap.parse_args()
+        cb_config = parse_yaml_config(options.config)
 
-    mh = Message_Handler()
+        if cb_config.out is None:
+            cb_config.out = options.out
 
-    if not os.path.isfile(options.config):
-        print((f"lobster-codebeamer: Config file '{options.config}' not found."))
-        return 1
+        update_authentication_parameters(cb_config.cb_auth_conf)
 
-    cb_config = parse_yaml_config(options.config)
+        items_to_import = set()
 
-    if cb_config.out is None:
-        cb_config.out = options.out
+        if cb_config.import_tagged:
+            if not os.path.isfile(cb_config.import_tagged):
+                sys.exit(f"lobster-codebeamer: {cb_config.import_tagged} "
+                         f"is not a file.")
+            items = {}
+            try:
+                lobster_read(
+                    mh = mh,
+                    filename = cb_config.import_tagged,
+                    level = "N/A",
+                    items = items,
+                )
+            except LOBSTER_Error:
+                return 1
+            for item in items.values():
+                for tag in item.unresolved_references:
+                    if tag.namespace != "req":
+                        continue
+                    try:
+                        item_id = int(tag.tag, 10)
+                        if item_id > 0:
+                            items_to_import.add(item_id)
+                        else:
+                            mh.warning(item.location,
+                                       f"invalid codebeamer reference to {item_id}")
+                    except ValueError:
+                        pass
 
-    update_authentication_parameters(cb_config.cb_auth_conf)
+        elif cb_config.import_query is not None:
+            try:
+                if isinstance(cb_config.import_query, str):
+                    if (cb_config.import_query.startswith("-") and
+                        cb_config.import_query[1:].isdigit()):
+                        self._argument_parser.error(
+                            "import_query must be a positive integer")
+                    elif cb_config.import_query.startswith("-"):
+                        self._argument_parser.error(
+                            "import_query must be a valid cbQL query")
+                    elif cb_config.import_query == "":
+                        self._argument_parser.error(
+                            "import_query must either be a query string or a query ID")
+                    elif cb_config.import_query.isdigit():
+                        cb_config.import_query = int(cb_config.import_query)
+            except ValueError as e:
+                self._argument_parser.error(str(e))
 
-    items_to_import = set()
-
-    if cb_config.import_tagged:
-        if not os.path.isfile(cb_config.import_tagged):
-            sys.exit(f"lobster-codebeamer: {cb_config.import_tagged} is not a file.")
-        items = {}
         try:
-            lobster_read(mh       = mh,
-                         filename = cb_config.import_tagged,
-                         level    = "N/A",
-                         items    = items)
+            if cb_config.import_tagged:
+                items = import_tagged(cb_config, items_to_import)
+            elif cb_config.import_query:
+                items = get_query(cb_config, cb_config.import_query)
         except LOBSTER_Error:
             return 1
-        for item in items.values():
-            for tag in item.unresolved_references:
-                if tag.namespace != "req":
-                    continue
-                try:
-                    item_id = int(tag.tag, 10)
-                    if item_id > 0:
-                        items_to_import.add(item_id)
-                    else:
-                        mh.warning(item.location,
-                                   "invalid codebeamer reference to %i" %
-                                   item_id)
-                except ValueError:
-                    pass
 
-    elif cb_config.import_query is not None:
-        try:
-            if isinstance(cb_config.import_query, str):
-                if (cb_config.import_query.startswith("-") and
-                    cb_config.import_query[1:].isdigit()):
-                    ap.error("import_query must be a positive integer")
-                elif cb_config.import_query.startswith("-"):
-                    ap.error("import_query must be a valid cbQL query")
-                elif cb_config.import_query == "":
-                    ap.error("import_query must either be a query string or a query ID")
-                elif cb_config.import_query.isdigit():
-                    cb_config.import_query = int(cb_config.import_query)
-        except ValueError as e:
-            ap.error(str(e))
+        schema_config = get_schema_config(cb_config)
 
-    try:
-        if cb_config.import_tagged:
-            items = import_tagged(cb_config, items_to_import)
-        elif cb_config.import_query:
-            items = get_query(cb_config, cb_config.import_query)
-    except LOBSTER_Error:
-        return 1
+        if cb_config.out is None:
+            with sys.stdout as fd:
+                lobster_write(fd, schema_config["class"], "lobster_codebeamer", items)
+        else:
+            with open(cb_config.out, "w", encoding="UTF-8") as fd:
+                lobster_write(fd, schema_config["class"], "lobster_codebeamer", items)
+            print(f"Written {len(items)} requirements to {cb_config.out}")
 
-    schema_config = get_schema_config(cb_config)
-
-    if cb_config.out is None:
-        with sys.stdout as fd:
-            lobster_write(fd, schema_config["class"], "lobster_codebeamer", items)
-    else:
-        with open(cb_config.out, "w", encoding="UTF-8") as fd:
-            lobster_write(fd, schema_config["class"], "lobster_codebeamer", items)
-        print(f"Written {len(items)} requirements to {cb_config.out}")
-
-    return 0
+        return 0
 
 
-if __name__ == "__main__":
-    sys.exit(main())
+def main() -> int:
+    return CodebeamerTool().run()

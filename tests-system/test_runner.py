@@ -31,7 +31,6 @@ class TestRunner(ABC):
         directory for the tool under test. Input files will be copied into this
         directory before running the tool.
         """
-        self._test_suite_directory = Path(__file__).resolve().parents[0] / tool_name
         self._tool_main_path = Path(__file__).resolve().parents[1] / tool_name
         self._tool_name = tool_name
         self._tool_output_files: List[Path] = []
@@ -129,8 +128,8 @@ class TestRunner(ABC):
             f"--data-file={root_directory / '.coverage.system'}",
             f"--source={root_directory / 'lobster'}",
             "--branch",
-            self._tool_main_path,
-            *tool_args
+            str(self._tool_main_path),
+            *tool_args,
         ]
         completed_process = run(
             coverage_command,

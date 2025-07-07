@@ -17,8 +17,8 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+from argparse import Namespace
 import sys
-import argparse
 import os.path
 from copy import copy
 from enum import Enum
@@ -31,7 +31,7 @@ from lobster.file_tag_generator import FileTagGenerator
 from lobster.tools.cpptest.parser.constants import Constants
 from lobster.tools.cpptest.parser.requirements_parser import \
     ParserForRequirements
-from lobster.version import get_version
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 OUTPUT  = "output"
 CODEBEAMER_URL = "codebeamer_url"
@@ -239,9 +239,8 @@ def create_lobster_items_output_dict_from_test_cases(
         function_name: str = test_case.test_name
         file_name = os.path.abspath(test_case.file_name)
         line_nr = int(test_case.docu_start_line)
-        function_uid = "%s:%s:%u" % (file_tag_generator.get_tag(file_name),
-                                     function_name,
-                                     line_nr)
+        function_uid = f"{file_tag_generator.get_tag(file_name)}" \
+                       f":{function_name}:{line_nr}"
         tag = Tracing_Tag(NAMESPACE_CPP, function_uid)
         loc = File_Reference(file_name, line_nr)
         key = tag.key()
@@ -369,37 +368,39 @@ def lobster_cpptest(file_dir_list: list, config_dict: dict):
     )
 
 
-ap = argparse.ArgumentParser()
-
-
-@get_version(ap)
-def main():
-    """
-    Main function to parse arguments, read configuration
-    and launch lobster_cpptest.
-    """
-    # lobster-trace: cpptest_req.Dummy_Requirement
-    ap.add_argument("--config",
-                    help=("Path to YAML file with arguments, "
-                          "by default (cpptest-config.yaml)"),
-                    default="cpptest-config.yaml")
-
-    options = ap.parse_args()
-
-    try:
-        config_dict = parse_config_file(options.config)
-
-        options.files = config_dict.get("files", ["."])
-        config_dict.pop("files", None)
-
-        lobster_cpptest(
-            file_dir_list=options.files,
-            config_dict=config_dict
+class CppTestTool(MetaDataToolBase):
+    def __init__(self):
+        super().__init__(
+            name="cpptest",
+            description="Extract C++ tracing tags from comments in tests for LOBSTER",
+            official=True,
+        )
+        self._argument_parser.add_argument(
+            "--config",
+            help=("Path to YAML file with arguments, "
+                  "by default (cpptest-config.yaml)"),
+            default="cpptest-config.yaml",
         )
 
-    except ValueError as exception:
-        ap.error(exception)
+    def _run_impl(self, options: Namespace) -> int:
+        options = self._argument_parser.parse_args()
+
+        try:
+            config_dict = parse_config_file(options.config)
+
+            options.files = config_dict.get("files", ["."])
+            config_dict.pop("files", None)
+
+            lobster_cpptest(
+                file_dir_list=options.files,
+                config_dict=config_dict
+            )
+
+        except ValueError as exception:
+            self._argument_parser.error(str(exception))
+
+        return 0
 
 
-if __name__ == "__main__":
-    sys.exit(main())
+def main() -> int:
+    return CppTestTool().run()

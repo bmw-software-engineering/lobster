@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2023-2024 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -17,56 +17,59 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+from argparse import Namespace
 import os
-import sys
-import argparse
 
 from lobster.exceptions import LOBSTER_Exception
 from lobster.errors import LOBSTER_Error
 from lobster.report import Report
-from lobster.version import get_version
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
-ap = argparse.ArgumentParser()
+class ReportTool(MetaDataToolBase):
+    def __init__(self):
+        super().__init__(
+            name="lobster-report",
+            description="Generate a LOBSTER report from a lobster.conf file",
+            official=True,
+        )
+        self._argument_parser.add_argument(
+            "--lobster-config",
+            metavar="FILE",
+            default="lobster.conf",
+        )
+        self._argument_parser.add_argument(
+            "--out",
+            metavar="FILE",
+            default="report.lobster",
+        )
+
+    def _run_impl(self, options: Namespace) -> int:
+        if not os.path.isfile(options.lobster_config):
+            print(f"error: cannot read config file '{options.lobster_config}'")
+            return 1
+
+        if os.path.exists(options.out) and not os.path.isfile(options.out):
+            print(f"error: cannot write to '{options.out}'")
+            print(f"error: '{options.out}' exists and is not a file")
+            return 1
+
+        report = Report()
+
+        try:
+            report.parse_config(options.lobster_config)
+        except LOBSTER_Error:
+            print(f"{self.name}: aborting due to earlier errors.")
+            return 1
+        except LOBSTER_Exception as err:
+            print(f"{self.name}: aborting due to earlier errors.")
+            print(f"{self.name}: Additional data for debugging:")
+            err.dump()
+            return 1
+
+        report.write_report(options.out)
+        return 0
 
 
-@get_version(ap)
-def main():
-    # lobster-trace: core_report_req.Dummy_Requirement
-    ap.add_argument("--lobster-config",
-                    metavar="FILE",
-                    default="lobster.conf")
-    ap.add_argument("--out",
-                    metavar="FILE",
-                    default="report.lobster")
-
-    options = ap.parse_args()
-
-    if not os.path.isfile(options.lobster_config):
-        print("error: cannot read config file '%s'" % options.lobster_config)
-        return 1
-
-    if os.path.exists(options.out) and not os.path.isfile(options.out):
-        print("error: cannot write to '%s'" % options.out)
-        print("error: '%s' exists and is not a file" % options.out)
-        return 1
-
-    report = Report()
-
-    try:
-        report.parse_config(options.lobster_config)
-    except LOBSTER_Error:
-        print("lobster: aborting due to earlier errors.")
-        return 1
-    except LOBSTER_Exception as err:
-        print("lobster: aborting due to earlier errors.")
-        print("lobster: Additional data for debugging:")
-        err.dump()
-        return 1
-
-    report.write_report(options.out)
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+def main() -> int:
+    return ReportTool().run()
