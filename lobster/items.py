@@ -20,12 +20,18 @@
 from enum import Enum, auto
 from abc import ABCMeta
 from hashlib import sha1
+from typing import Optional
 
 from lobster.location import Location
 
 
 class Tracing_Tag:
-    def __init__(self, namespace, tag, version=None):
+    def __init__(
+            self,
+            namespace: str,
+            tag: str,
+            version: Optional[str] = None,
+    ):
         assert isinstance(namespace, str) and " " not in namespace
         assert isinstance(tag, str)
         assert version is None or isinstance(version, (str, int))
@@ -84,7 +90,7 @@ class Tracing_Status(Enum):
 
 
 class Item(metaclass=ABCMeta):
-    def __init__(self, tag, location):
+    def __init__(self, tag: Tracing_Tag, location: Location):
         assert isinstance(tag, Tracing_Tag)
         assert isinstance(location, Location)
 
@@ -220,8 +226,16 @@ class Item(metaclass=ABCMeta):
 
 
 class Requirement(Item):
-    def __init__(self, tag, location, framework, kind, name,
-                 text=None, status=None):
+    def __init__(
+            self,
+            tag: Tracing_Tag,
+            location: Location,
+            framework: str,
+            kind: str,
+            name: str,
+            text: Optional[str] = None,
+            status: Optional[str] = None,
+    ):
         super().__init__(tag, location)
         assert isinstance(framework, str)
         assert isinstance(kind, str)
@@ -270,7 +284,14 @@ class Requirement(Item):
 
 
 class Implementation(Item):
-    def __init__(self, tag, location, language, kind, name):
+    def __init__(
+            self,
+            tag: Tracing_Tag,
+            location: Location,
+            language: str,
+            kind: str,
+            name: str,
+    ):
         super().__init__(tag, location)
         assert isinstance(language, str)
         assert isinstance(kind, str)
@@ -303,7 +324,14 @@ class Implementation(Item):
 
 
 class Activity(Item):
-    def __init__(self, tag, location, framework, kind, status=None):
+    def __init__(
+            self,
+            tag: Tracing_Tag,
+            location: Location,
+            framework: str,
+            kind: str,
+            status: Optional[str] = None,
+    ):
         super().__init__(tag, location)
         assert isinstance(framework, str)
         assert isinstance(kind, str)
