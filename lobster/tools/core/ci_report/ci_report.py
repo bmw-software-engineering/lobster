@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_ci_report - Visualise LOBSTER issues for CI
-# Copyright (C) 2023-2024 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -17,49 +17,52 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-import sys
+from argparse import Namespace
 import os.path
-import argparse
 
 from lobster.report import Report
 from lobster.items import Tracing_Status
-from lobster.version import get_version
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
-ap = argparse.ArgumentParser()
+class CiReportTool(MetaDataToolBase):
+    def __init__(self):
+        super().__init__(
+            name="lobster-ci-report",
+            description="Command line tool to check a LOBSTER report",
+            official=True,
+        )
 
+        self._argument_parser.add_argument(
+            "lobster_report",
+            nargs="?",
+            default="report.lobster",
+        )
 
-@get_version(ap)
-def main():
-    # lobster-trace: core_ci_report_req.Dummy_Requirement
-    ap.add_argument("lobster_report",
-                    nargs="?",
-                    default="report.lobster")
-    options = ap.parse_args()
+    def _run_impl(self, options: Namespace) -> int:
+        if not os.path.isfile(options.lobster_report):
+            if options.lobster_report == "report.lobster":
+                self._argument_parser.error("specify report file")
+            else:
+                self._argument_parser.error(f"{options.lobster_report} is not a file")
 
-    if not os.path.isfile(options.lobster_report):
-        if options.lobster_report == "report.lobster":
-            ap.error("specify report file")
+        report = Report()
+        report.load_report(options.lobster_report)
+
+        for uid in sorted(report.items):
+            item = report.items[uid]
+            if item.tracing_status not in (Tracing_Status.OK,
+                                           Tracing_Status.JUSTIFIED):
+                for message in item.messages:
+                    report.mh.error(item.location,
+                                    message,
+                                    fatal = False)
+
+        if report.mh.errors:
+            return 1
         else:
-            ap.error("%s is not a file" % options.lobster_report)
-
-    report = Report()
-    report.load_report(options.lobster_report)
-
-    for uid in sorted(report.items):
-        item = report.items[uid]
-        if item.tracing_status not in (Tracing_Status.OK,
-                                       Tracing_Status.JUSTIFIED):
-            for message in item.messages:
-                report.mh.error(item.location,
-                                message,
-                                fatal = False)
-
-    if report.mh.errors:
-        return 1
-    else:
-        return 0
+            return 0
 
 
-if __name__ == "__main__":
-    sys.exit(main())
+def main() -> int:
+    return CiReportTool().run()

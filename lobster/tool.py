@@ -24,15 +24,13 @@ import multiprocessing
 
 from abc import ABCMeta, abstractmethod
 from functools import partial
-from typing import List, Union, Tuple, Set, Dict
+from typing import List, Sequence, Union, Tuple, Set, Dict
 import yaml
-from lobster.version import FULL_NAME, get_version
 from lobster.errors import Message_Handler
 from lobster.location import File_Reference
 from lobster.items import Requirement, Implementation, Activity
 from lobster.io import lobster_write
-
-BUG_URL = "https://github.com/bmw-software-engineering/lobster/issues"
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
 class SupportedCommonConfigKeys:
@@ -72,41 +70,29 @@ class SupportedCommonConfigKeys:
         return set(cls.get_config_keys_manual().keys())
 
 
-class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
+class LOBSTER_Tool(MetaDataToolBase, SupportedCommonConfigKeys, metaclass=ABCMeta):
     def __init__(self, name, description, extensions, official):
-        assert isinstance(name, str)
-        assert isinstance(description, str)
+        super().__init__(
+            name=name,
+            description=description,
+            official=official,
+        )
         assert isinstance(extensions, (list, set, frozenset, tuple))
         assert all(isinstance(extension, str)
                    for extension in extensions)
-        assert isinstance(official, bool)
 
-        self.name        = "lobster-%s" % name
-        self.description = description
-        self.extensions  = [".%s" % extension
-                            for extension in sorted(extensions)]
+        self.extensions  = [f".{extension}" for extension in (sorted(extensions))]
         self.exclude_pat = []
         self.schema      = None
         self.mh          = Message_Handler()
         self.config      = {}
 
-        self.ap = argparse.ArgumentParser(
-            prog         = self.name,
-            description  = description,
-            epilog       = ("Part of %s, licensed under the AGPLv3."
-                            " Please report bugs to %s." %
-                            (FULL_NAME, BUG_URL)
-                            if official else None),
-            allow_abbrev = False,
-            formatter_class=argparse.RawTextHelpFormatter
-        )
-
-        self.ap.add_argument(
+        self._argument_parser.add_argument(
             "--out",
             default = f'{self.name}.lobster',
             help    = "Write output to the given file instead of stdout."
         )
-        self.ap.add_argument(
+        self._argument_parser.add_argument(
             "--config",
             default=None,
             help=(f"Path to YAML file with arguments as below,"
@@ -171,13 +157,12 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
                 sys.exit(f"Required mandatory parameters missing - "
                          f"{','.join(mandatory_parameters)}")
 
-    @get_version
     def process_commandline_and_yaml_options(
             self,
-    ) -> Tuple[argparse.Namespace, List[Tuple[File_Reference, str]]]:
+            options: argparse.Namespace,
+    ) -> List[Tuple[File_Reference, str]]:
         """Processes all command line options"""
 
-        options = self.ap.parse_args()
         self.config = self.load_yaml_config(options.config)
         self.validate_yaml_supported_config_parameters(self.config)
         self.check_mandatory_config_parameters(self.config)
@@ -186,7 +171,7 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
         options.traverse_bazel_dirs = self.config.get(self.TRAVERSE_BAZEL_DIRS, False)
         work_list = self.process_common_options(options)
         self.process_tool_options(options, work_list)
-        return options, work_list
+        return work_list
 
     def process_common_options(
             self,
@@ -198,8 +183,9 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
         if options.out and \
            os.path.exists(options.out) and \
            not os.path.isfile(options.out):
-            self.ap.error("output %s already exists and is not a file" %
-                          options.out)
+            self._argument_parser.error(
+                f"output {options.out} already exists and is not a file",
+            )
 
         # Assemble input requests
         inputs = []
@@ -208,7 +194,7 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
                        for item in options.inputs]
         if options.inputs_from_file:
             if not os.path.isfile(options.inputs_from_file):
-                self.ap.error("cannot open %s" % options.inputs_from_file)
+                self._argument_parser.error(f"cannot open {options.inputs_from_file}")
             with open(options.inputs_from_file, "r", encoding="UTF-8") as fd:
                 for line_no, raw_line in enumerate(fd, 1):
                     line = raw_line.split("#", 1)[0].strip()
@@ -226,8 +212,7 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
             if os.path.isfile(item):
                 if os.path.splitext(item)[1] not in self.extensions:
                     self.mh.warning(location,
-                                    "not a %s file" %
-                                    " or ".join(self.extensions))
+                                    f"not a {' or '.join(self.extensions)} file")
                 work_list.append(item)
 
             elif os.path.isdir(item):
@@ -247,7 +232,7 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
 
             else:
                 self.mh.error(location,
-                              "%s is not a file or directory" % item,
+                              f"{item} is not a file or directory",
                               fatal = False)
                 ok = False
 
@@ -260,11 +245,9 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
 
     def write_output(
             self,
-            ok: bool,
             options: argparse.Namespace,
             items: List[Union[Activity, Implementation, Requirement]],
     ):
-        assert isinstance(ok, bool)
         assert isinstance(options, argparse.Namespace)
         assert isinstance(items, list)
         assert all(isinstance(item, (Requirement,
@@ -272,20 +255,12 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
                                      Activity))
                    for item in items)
 
-        if ok:
-            if options.out:
-                with open(options.out, "w", encoding="UTF-8") as fd:
-                    lobster_write(fd, self.schema, self.name, items)
-                print("%s: wrote %u items to %s" % (self.name,
-                                                    len(items),
-                                                    options.out))
-            else:
-                lobster_write(sys.stdout, self.schema, self.name, items)
-            return 0
-
+        if options.out:
+            with open(options.out, "w", encoding="UTF-8") as fd:
+                lobster_write(fd, self.schema, self.name, items)
+            print(f"{self.name}: wrote {len(items)} items to {options.out}")
         else:
-            print("%s: aborting due to earlier errors" % self.name)
-            return 1
+            lobster_write(sys.stdout, self.schema, self.name, items)
 
     @abstractmethod
     def process_tool_options(
@@ -295,10 +270,6 @@ class LOBSTER_Tool(SupportedCommonConfigKeys, metaclass=ABCMeta):
     ):
         assert isinstance(options, argparse.Namespace)
         assert isinstance(work_list, list)
-
-    @abstractmethod
-    def execute(self):
-        pass
 
 
 class LOBSTER_Per_File_Tool(LOBSTER_Tool):
@@ -311,11 +282,11 @@ class LOBSTER_Per_File_Tool(LOBSTER_Tool):
             cls,
             options,
             file_name,
-    ) -> Tuple[bool, List[Union[Activity, Implementation, Requirement]]]:
+    ) -> Tuple[bool, Sequence[Union[Activity, Implementation, Requirement]]]:
         pass
 
-    def execute(self):
-        options, work_list = self.process_commandline_and_yaml_options()
+    def _run_impl(self, options: argparse.Namespace) -> int:
+        work_list = self.process_commandline_and_yaml_options(options)
 
         ok    = True
         items = []
@@ -334,4 +305,9 @@ class LOBSTER_Per_File_Tool(LOBSTER_Tool):
                 pool.close()
                 pool.join()
 
-        return self.write_output(ok, options, items)
+        if ok:
+            self.write_output(options, items)
+        else:
+            print(f"{self.name}: aborting due to earlier errors")
+
+        return int(not ok)

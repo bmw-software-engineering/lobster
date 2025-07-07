@@ -17,7 +17,6 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 import argparse
-import sys
 import json
 from pathlib import PurePath
 from pprint import pprint
@@ -111,7 +110,8 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
 
     def process_commandline_and_yaml_options(
             self,
-    ) -> Tuple[argparse.Namespace, List[Tuple[File_Reference, str]]]:
+            options: argparse.Namespace,
+    ) -> List[Tuple[File_Reference, str]]:
         """
         Overrides the parent class method and add fetch tool specific options from the
         yaml
@@ -122,13 +122,13 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
         options - command-line and yaml options
         worklist - list of json files
         """
-        options, work_list = super().process_commandline_and_yaml_options()
+        work_list = super().process_commandline_and_yaml_options(options)
         options.test_list = self.config.get(self.TEST_LIST, '')
         options.name_attribute = self.config.get(self.NAME_ATTRIBUTE)
         options.tag_attribute = self.config.get(self.TAG_ATTRIBUTE)
         options.justification_attribute = self.config.get(self.JUSTIFICATION_ATTRIBUTE)
         options.single = self.config.get(self.SINGLE, False)
-        return options, work_list
+        return work_list
 
     def process_tool_options(
             self,
@@ -229,10 +229,4 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
 
 
 def main():
-    # lobster-trace: json_req.Dummy_Requirement
-    tool = LOBSTER_Json()
-    return tool.execute()
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+    return LOBSTER_Json().run()

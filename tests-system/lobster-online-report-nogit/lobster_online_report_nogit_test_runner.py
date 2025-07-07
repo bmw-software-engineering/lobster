@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, List, Optional, Tuple
 from ..test_runner import TestRunner
+from ..args_to_list import arguments_to_list
 
 
 @dataclass
@@ -12,15 +13,10 @@ class CmdArgs:
     commit: Optional[str] = None
     out: Optional[str] = None
 
-    @staticmethod
-    def _arguments_to_list(argument_map: Iterable[Tuple[str, Optional[str]]]):
-        return [f"{param}={value}"
-                for param, value in argument_map if value is not None]
-
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list"""
-        cmd_args = self._arguments_to_list(
-            (
+        cmd_args = arguments_to_list(
+            key_value_args=(
                 ("--repo-root", self.repo_root),
                 ("--remote-url", self.remote_url),
                 ("--commit", self.commit),

@@ -34,7 +34,7 @@ from lobster.location import (Void_Reference,
                               Codebeamer_Reference)
 from lobster.items import (Tracing_Status, Item,
                            Requirement, Implementation, Activity)
-from lobster.version import get_version
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
 
@@ -561,43 +561,50 @@ def write_html(fd, report, dot, high_contrast, render_md):
     fd.write(doc.render() + "\n")
 
 
-ap = argparse.ArgumentParser()
+class HtmlReportTool(MetaDataToolBase):
+    def __init__(self):
+        super().__init__(
+            name="html-report",
+            description="Visualise LOBSTER report in HTML",
+            official=True,
+        )
+
+        ap = self._argument_parser
+        ap.add_argument("lobster_report",
+                        nargs="?",
+                        default="report.lobster")
+        ap.add_argument("--out",
+                        default="lobster_report.html")
+        ap.add_argument("--dot",
+                        help="path to dot utility (https://graphviz.org), \
+                        by default expected in PATH",
+                        default=None)
+        ap.add_argument("--high-contrast",
+                        action="store_true",
+                        help="Uses a color palette with a higher contrast.")
+        ap.add_argument("--render-md",
+                        action="store_true",
+                        help="Renders MD in description.")
+
+    def _run_impl(self, options: argparse.Namespace) -> int:
+        if not os.path.isfile(options.lobster_report):
+            self._argument_parser.error(f"{options.lobster_report} is not a file")
+
+        report = Report()
+        report.load_report(options.lobster_report)
+
+        with open(options.out, "w", encoding="UTF-8") as fd:
+            write_html(
+                fd = fd,
+                report = report,
+                dot = options.dot,
+                high_contrast = options.high_contrast,
+                render_md = options.render_md,
+            )
+            print("LOBSTER HTML report written to %s" % options.out)
+
+        return 0
 
 
-@get_version(ap)
-def main():
-    # lobster-trace: core_html_report_req.Dummy_Requirement
-    ap.add_argument("lobster_report",
-                    nargs="?",
-                    default="report.lobster")
-    ap.add_argument("--out",
-                    default="lobster_report.html")
-    ap.add_argument("--dot",
-                    help="path to dot utility (https://graphviz.org), \
-                    by default expected in PATH",
-                    default=None)
-    ap.add_argument("--high-contrast",
-                    action="store_true",
-                    help="Uses a color palette with a higher contrast.")
-    ap.add_argument("--render-md",
-                    action="store_true",
-                    help="Renders MD in description.")
-    options = ap.parse_args()
-
-    if not os.path.isfile(options.lobster_report):
-        ap.error(f"{options.lobster_report} is not a file")
-
-    report = Report()
-    report.load_report(options.lobster_report)
-
-    with open(options.out, "w", encoding="UTF-8") as fd:
-        write_html(fd     = fd,
-                   report = report,
-                   dot = options.dot,
-                   high_contrast = options.high_contrast,
-                   render_md = options.render_md)
-        print("LOBSTER HTML report written to %s" % options.out)
-
-
-if __name__ == "__main__":
-    main()
+def main() -> int:
+    return HtmlReportTool().run()
