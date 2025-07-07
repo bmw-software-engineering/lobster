@@ -25,7 +25,7 @@ import subprocess
 
 from lobster.report import Report
 from lobster.location import File_Reference, Github_Reference
-from lobster.tool_base import ToolBase
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
 class Parse_Error(Exception):
@@ -201,7 +201,7 @@ def get_summary(in_file: str, out_file: str):
     return f"LOBSTER report {out_file} created, using online references."
 
 
-class OnlineReportTool(ToolBase):
+class OnlineReportTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
             name="lobster-online-report",

@@ -34,7 +34,7 @@ from lobster.location import (Void_Reference,
                               Codebeamer_Reference)
 from lobster.items import (Tracing_Status, Item,
                            Requirement, Implementation, Activity)
-from lobster.tool_base import ToolBase
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
 
@@ -561,7 +561,7 @@ def write_html(fd, report, dot, high_contrast, render_md):
     fd.write(doc.render() + "\n")
 
 
-class HtmlReportTool(ToolBase):
+class HtmlReportTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
             name="html-report",

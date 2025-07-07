@@ -25,10 +25,10 @@ import xml.etree.ElementTree as ET
 from lobster.items import Tracing_Tag, Activity
 from lobster.location import Void_Reference, File_Reference
 from lobster.io import lobster_write
-from lobster.tool_base import ToolBase
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
-class GtestTool(ToolBase):
+class GtestTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
             name = "gtest",

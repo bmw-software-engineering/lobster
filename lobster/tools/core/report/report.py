@@ -23,10 +23,10 @@ import os
 from lobster.exceptions import LOBSTER_Exception
 from lobster.errors import LOBSTER_Error
 from lobster.report import Report
-from lobster.tool_base import ToolBase
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
-class ReportTool(ToolBase):
+class ReportTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
             name="lobster-report",

@@ -1,13 +1,13 @@
 # Tool Class Inheritance
 
-All classes representing LOBSTER tools shall inherit from `ToolBase`.
+All classes representing LOBSTER tools shall inherit from `MetaDataToolBase`.
 
 ## Command Line Arguments
 The class offers an instance of `ArgumentParser` via `self._argument_parser`,
 which can be used to define command line arguments for the subclass.
 Defining more arguments must happen in the constructor of the subclass.
 
-The following arguments are added by the `ToolBase` class:
+The following arguments are added by the `MetaDataToolBase` class:
 - "-h" and "--help"
 - "-v" and "--version"
 

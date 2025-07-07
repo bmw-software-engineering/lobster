@@ -47,7 +47,7 @@ from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
 from lobster.location import Codebeamer_Reference
 from lobster.errors import Message_Handler, LOBSTER_Error
 from lobster.io import lobster_read, lobster_write
-from lobster.tool_base import ToolBase
+from lobster.meta_data_tool_base import MetaDataToolBase
 from lobster.tools.codebeamer.bearer_auth import BearerAuth
 from lobster.tools.codebeamer.config import AuthenticationConfig, Config
 
@@ -469,7 +469,7 @@ def parse_config_data(data: dict) -> Config:
     return config
 
 
-class CodebeamerTool(ToolBase):
+class CodebeamerTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
             name="codebeamer",

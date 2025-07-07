@@ -6,7 +6,7 @@ from lobster.version import FULL_NAME
 BUG_URL = "https://github.com/bmw-software-engineering/lobster/issues"
 
 
-class ToolBase(metaclass=ABCMeta):
+class MetaDataToolBase(metaclass=ABCMeta):
     def __init__(
             self,
             name: str,

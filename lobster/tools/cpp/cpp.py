@@ -27,7 +27,7 @@ from typing import Optional
 from lobster.items import Tracing_Tag, Implementation
 from lobster.io import lobster_write
 from lobster.tools.cpp.tag_location_generator import TagLocationGenerator
-from lobster.tool_base import ToolBase
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 FILE_LINE_PATTERN = r"(.*):(\d+):\d+:"
 KIND_PATTERN = r"(function|main function|method)"
@@ -56,7 +56,7 @@ def extract_clang_finding_name(line: str) -> Optional[str]:
     return None
 
 
-class CppTool(ToolBase):
+class CppTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
             name = "cpp",

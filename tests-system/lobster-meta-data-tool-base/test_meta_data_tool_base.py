@@ -1,12 +1,15 @@
 from dataclasses import dataclass
 from typing import Tuple, Type
-from .lobster_tool_base_system_test_case_base import LobsterToolBaseSystemTestCaseBase
-from .asserters import (SpecialAsserter, HelpAsserter, VersionAsserter,
-                        IMPLEMENTATION_MESSAGE)
+from .lobster_meta_data_tool_base_system_test_case_base import (
+    LobsterMetaDataToolBaseSystemTestCaseBase,
+)
+from .lobster_meta_data_tool_base_asserters import (
+    SpecialAsserter, HelpAsserter, VersionAsserter, IMPLEMENTATION_MESSAGE
+)
 from ..asserter import Asserter
 
 
-class ToolBaseTest(LobsterToolBaseSystemTestCaseBase):
+class ToolBaseTest(LobsterMetaDataToolBaseSystemTestCaseBase):
     def setUp(self) -> None:
         super().setUp()
         self._test_runner = self.create_test_runner()

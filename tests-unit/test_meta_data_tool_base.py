@@ -1,14 +1,14 @@
 from argparse import Namespace
 from unittest import TestCase
-from lobster.tool_base import ToolBase
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
-class CherryPineappleTool(ToolBase):
+class CherryPineappleTool(MetaDataToolBase):
     def _run_impl(self, options: Namespace) -> int:
         return 0
 
 
-class ToolBaseTest(TestCase):
+class MetaDataToolBaseTest(TestCase):
     def setUp(self):
         self.tool = CherryPineappleTool(name="Knorrstraße", description="A test tool", official=True)
 

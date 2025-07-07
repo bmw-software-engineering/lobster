@@ -1,10 +1,10 @@
 from pathlib import Path
 from typing import List
-from .lobster_tool_base_cmd_args import CmdArgs
+from .lobster_meta_data_tool_base_cmd_args import CmdArgs
 from ..test_runner import TestRunner
 
 
-class LobsterToolBaseTestRunner(TestRunner):
+class LobsterMetaDataToolBaseTestRunner(TestRunner):
     """System test runner for abstract lobster base tool"""
 
     def __init__(self, tool_name: str, working_dir: Path):

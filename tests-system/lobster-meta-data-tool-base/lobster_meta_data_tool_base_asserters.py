@@ -1,8 +1,8 @@
-from ..asserter import Asserter
 from abc import ABCMeta, abstractmethod
+from lobster.version import FULL_NAME
+from ..asserter import Asserter
 
 
-EXPECTED_FULL_NAME = "LOBSTER 0.13.1-dev"
 IMPLEMENTATION_MESSAGE = "This is the AppleBanana tool."
 
 
@@ -29,7 +29,7 @@ class HelpAsserter(SpecialAsserter):
         self._test_case.assertIn("banana", self._completed_process.stdout)
 
         self._test_case.assertIn(
-            f"Part of {EXPECTED_FULL_NAME}, licensed under the AGPLv3. "
+            f"Part of {FULL_NAME}, licensed under the AGPLv3. "
             f"Please report bugs to "
             f"https://github.com/bmw-software-engineering/lobster/issues.",
             self._completed_process.stdout,
@@ -50,5 +50,5 @@ class VersionAsserter(SpecialAsserter):
           - the exit code is 0
         """
         self.assertNoStdErrText()
-        self.assertStdOutText(f"{EXPECTED_FULL_NAME}\n")
+        self.assertStdOutText(f"{FULL_NAME}\n")
         self.assertExitCode(0)

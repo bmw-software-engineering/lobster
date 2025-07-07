@@ -31,7 +31,7 @@ from lobster.file_tag_generator import FileTagGenerator
 from lobster.tools.cpptest.parser.constants import Constants
 from lobster.tools.cpptest.parser.requirements_parser import \
     ParserForRequirements
-from lobster.tool_base import ToolBase
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 OUTPUT  = "output"
 CODEBEAMER_URL = "codebeamer_url"
@@ -368,7 +368,7 @@ def lobster_cpptest(file_dir_list: list, config_dict: dict):
     )
 
 
-class CppTestTool(ToolBase):
+class CppTestTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
             name="cpptest",

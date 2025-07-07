@@ -8,7 +8,7 @@ from typing import Iterable
 from lobster.items import Item
 from lobster.location import File_Reference, Github_Reference
 from lobster.report import Report
-from lobster.tool_base import ToolBase
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
 @dataclass
@@ -74,7 +74,7 @@ def update_lobster_file(file: str, repo_data: RepoData, out_file: str):
     print(f"LOBSTER report {out_file} created, using remote URL references.")
 
 
-class OnlineReportNogitTool(ToolBase):
+class OnlineReportNogitTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
             name="lobster-online-report-nogit",

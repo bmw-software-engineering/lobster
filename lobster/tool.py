@@ -30,7 +30,7 @@ from lobster.errors import Message_Handler
 from lobster.location import File_Reference
 from lobster.items import Requirement, Implementation, Activity
 from lobster.io import lobster_write
-from lobster.tool_base import ToolBase
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
 class SupportedCommonConfigKeys:
@@ -70,7 +70,7 @@ class SupportedCommonConfigKeys:
         return set(cls.get_config_keys_manual().keys())
 
 
-class LOBSTER_Tool(ToolBase, SupportedCommonConfigKeys, metaclass=ABCMeta):
+class LOBSTER_Tool(MetaDataToolBase, SupportedCommonConfigKeys, metaclass=ABCMeta):
     def __init__(self, name, description, extensions, official):
         super().__init__(
             name=name,

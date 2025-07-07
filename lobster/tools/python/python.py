@@ -30,7 +30,7 @@ import libcst as cst
 from lobster.items import Tracing_Tag, Implementation, Activity
 from lobster.location import File_Reference
 from lobster.io import lobster_write
-from lobster.tool_base import ToolBase
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 LOBSTER_TRACE_PREFIX = "# lobster-trace: "
 LOBSTER_JUST_PREFIX = "# lobster-exclude: "
@@ -445,7 +445,7 @@ def process_file(file_name, options):
         raise
 
 
-class PythonTool(ToolBase):
+class PythonTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
             name="python",
