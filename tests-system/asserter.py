@@ -1,4 +1,6 @@
 import json
+import re
+
 from subprocess import CompletedProcess
 from unittest import TestCase
 from .test_runner import TestRunner
@@ -55,8 +57,17 @@ class Asserter:
            the current working directory. This is necessary for tools like
            lobster-cpptest which write absolute paths into their *.lobster
            output files.
+        c) Normalize Plotly-generated div ids to avoid false negatives in HTML output comparison.
         """
         # lobster-trace: system_test.Compare_Output_Files
+
+        def normalize_plotly_ids(html):
+            # Replace all plotly div ids with a fixed string
+            html = re.sub(r'id="[^"]+" class="plotly-graph-div"', 'id="PLOTLY_ID" class="plotly-graph-div"', html)
+            html = re.sub(r'Plotly\.newPlot\(\s*"[^"]+"', 'Plotly.newPlot("PLOTLY_ID"', html)
+            html = re.sub(r'document\.getElementById\("([^"]+)"\)', 'document.getElementById("PLOTLY_ID")', html)
+            return html
+
         for expected_file_ref in self._test_runner.tool_output_files:
             expected_location = self._test_runner.working_dir / expected_file_ref.name
             try:
@@ -79,6 +90,10 @@ class Asserter:
                                 "CURRENT_WORKING_DIRECTORY",
                                 str(self._test_runner.working_dir),
                             )
+                            # Normalize Plotly div ids if this is an HTML file
+                            if expected_file_ref.name.endswith(".html") or expected_file_ref.name.endswith(".output"):
+                                modified_actual = normalize_plotly_ids(modified_actual)
+                                modified_expected = normalize_plotly_ids(modified_expected)
                             modified_actual_json = is_valid_json(modified_actual)
                             modified_expected_json = is_valid_json(modified_expected)
                             if modified_actual_json and modified_expected_json:

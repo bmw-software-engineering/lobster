@@ -1,6 +1,5 @@
 from .lobster_UI_system_test_case_base import LobsterUISystemTestCaseBase
 from ..asserter import Asserter
-from lobster.tools.core.html_report.html_report import is_dot_available
 
 
 class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
@@ -21,8 +20,8 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         asserter = Asserter(self, completed_process, self.test_runner)
 
         expected_stderr = (
-            "usage: lobster-html-report [-h] [-v, --version] [--out OUT] [--dot DOT]\n"
-            "                           [--high-contrast] [--render-md]\n"
+            "usage: lobster-html-report [-h] [-v, --version] [--out OUT] [--high-contrast]\n"
+            "                           [--render-md]\n"
             "                           [lobster_report]\n"
             f"lobster-html-report: error: {str(missing_lobster_file)} is not a file\n"
         )
@@ -43,16 +42,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
-        if is_dot_available(dot=None):
-            expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
-
-        else:
-            expected_stdout = (
-                "warning: dot utility not found, report will not include "
-                "the tracing policy visualisation\n"
-                "> please install Graphviz (https://graphviz.org)\n"
-                f"LOBSTER HTML report written to {output_filename}\n"
-            )
+        expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
 
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
@@ -61,11 +51,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
     def test_lobster_file_with_20k_records(self):
         # lobster-trace: html_req.HTML_Report_with_20k_records
 
-        dot_present = is_dot_available(dot=None)
-        if dot_present:
-            output = "records_20k_tracing_policy.output"
-        else:
-            output = "records_20k.output"
+        output = "records_20k_tracing_policy.output"
         input = self._data_directory / "report_20k.lobster"
 
         self.test_runner.declare_output_file(self._data_directory / output)
@@ -75,16 +61,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
-        if dot_present:
-            expected_stdout = f"LOBSTER HTML report written to {output}\n"
-
-        else:
-            expected_stdout = (
-                "warning: dot utility not found, report will not include "
-                "the tracing policy visualisation\n"
-                "> please install Graphviz (https://graphviz.org)\n"
-                f"LOBSTER HTML report written to {output}\n"
-            )
+        expected_stdout = f"LOBSTER HTML report written to {output}\n"
 
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
@@ -94,11 +71,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         # lobster-trace: html_req.HTML_Report_Displays_Custom_data
         """Verify that 'custom_data' values are correctly
         displayed in the HTML report header."""
-        dot_present = is_dot_available(dot=None)
-        if dot_present:
-            output = "custom_data_tracing_policy.output"
-        else:
-            output = "custom_data.output"
+        output = "custom_data_tracing_policy.output"
         input = self._data_directory / "custom_data_report.lobster"
 
         self.test_runner.declare_output_file(self._data_directory / output)
@@ -107,15 +80,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
 
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
-        if dot_present:
-            expected_stdout = f"LOBSTER HTML report written to {output}\n"
-        else:
-            expected_stdout = (
-                "warning: dot utility not found, report will not include "
-                "the tracing policy visualisation\n"
-                "> please install Graphviz (https://graphviz.org)\n"
-                f"LOBSTER HTML report written to {output}\n"
-            )
+        expected_stdout = f"LOBSTER HTML report written to {output}\n"
 
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
@@ -135,16 +100,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
-        if is_dot_available(dot=None):
-            expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
-
-        else:
-            expected_stdout = (
-                "warning: dot utility not found, report will not include "
-                "the tracing policy visualisation\n"
-                "> please install Graphviz (https://graphviz.org)\n"
-                f"LOBSTER HTML report written to {output_filename}\n"
-            )
+        expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
 
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)

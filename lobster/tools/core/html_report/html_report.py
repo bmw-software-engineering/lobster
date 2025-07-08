@@ -20,8 +20,6 @@ import os.path
 import argparse
 import html
 import subprocess
-import hashlib
-import tempfile
 from datetime import datetime, timezone
 
 import markdown
@@ -34,27 +32,10 @@ from lobster.location import (Void_Reference,
                               Codebeamer_Reference)
 from lobster.items import (Tracing_Status, Item,
                            Requirement, Implementation, Activity)
+from lobster.tools.core.html_report.diagram_generator import create_policy_diagram_plotly, name_hash
 from lobster.version import get_version
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
-
-
-def is_dot_available(dot):
-    try:
-        subprocess.run([dot if dot else "dot", "-V"],
-                       stdout=subprocess.PIPE,
-                       stderr=subprocess.PIPE,
-                       encoding="UTF-8",
-                       check=True)
-        return True
-    except FileNotFoundError:
-        return False
-
-
-def name_hash(name):
-    hobj = hashlib.md5()
-    hobj.update(name.encode("UTF-8"))
-    return hobj.hexdigest()
 
 
 def xref_item(item, link=True, brief=False):
@@ -84,49 +65,6 @@ def xref_item(item, link=True, brief=False):
         rv += "%s" % item.name
 
     return rv
-
-
-def create_policy_diagram(doc, report, dot):
-    assert isinstance(doc, htmldoc.Document)
-    assert isinstance(report, Report)
-
-    graph = 'digraph "LOBSTER Tracing Policy" {\n'
-    for level in report.config.values():
-        if level["kind"] == "requirements":
-            style = 'shape=box, style=rounded'
-        elif level["kind"] == "implementation":
-            style = 'shape=box'
-        else:
-            assert level["kind"] == "activity"
-            style = 'shape=hexagon'
-        style += ', href="#sec-%s"' % name_hash(level["name"])
-
-        graph += '  n_%s [label="%s", %s];\n' % \
-            (name_hash(level["name"]),
-             level["name"],
-             style)
-
-    for level in report.config.values():
-        source = name_hash(level["name"])
-        for target in map(name_hash, level["traces"]):
-            # Not a mistake; we want to show the tracing down, whereas
-            # in the config file we indicate how we trace up.
-            graph += '  n_%s -> n_%s;\n' % (target, source)
-    graph += "}\n"
-
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        graph_name = os.path.join(tmp_dir, "graph.dot")
-        with open(graph_name, "w", encoding="UTF-8") as tmp_fd:
-            tmp_fd.write(graph)
-        svg = subprocess.run([dot if dot else "dot", "-Tsvg", graph_name],
-                             stdout=subprocess.PIPE,
-                             encoding="UTF-8",
-                             check=True)
-        assert svg.returncode == 0
-        image = svg.stdout[svg.stdout.index("<svg "):]
-
-    for line in image.splitlines():
-        doc.add_line(line)
 
 
 def create_item_coverage(doc, report):
@@ -280,7 +218,7 @@ def generate_custom_data(report) -> str:
     return "".join(content)
 
 
-def write_html(fd, report, dot, high_contrast, render_md):
+def write_html(fd, report, high_contrast, render_md):
     assert isinstance(report, Report)
 
     doc = htmldoc.Document(
@@ -386,6 +324,12 @@ def write_html(fd, report, dot, high_contrast, render_md):
         "margin-left"  : "0.5em",
     }
 
+    # Plotly graph
+    doc.style[".js-plotly-plot"] = {
+        "z-index": "1",
+        "position": "relative"
+    }
+
     ### Menu & Navigation
     doc.navbar.add_link("Overview", "#sec-overview")
     doc.navbar.add_link("Issues", "#sec-issues")
@@ -410,15 +354,10 @@ def write_html(fd, report, dot, high_contrast, render_md):
     doc.add_heading(3, "Coverage")
     create_item_coverage(doc, report)
     doc.add_line('</div>')
-    if is_dot_available(dot):
-        doc.add_line('<div class="column">')
-        doc.add_heading(3, "Tracing policy")
-        create_policy_diagram(doc, report, dot)
-        doc.add_line('</div>')
-    else:
-        print("warning: dot utility not found, report will not "
-              "include the tracing policy visualisation")
-        print("> please install Graphviz (https://graphviz.org)")
+    doc.add_line('<div class="column">')
+    doc.add_heading(3, "Tracing policy")
+    create_policy_diagram_plotly(doc, report)
+    doc.add_line('</div>')
     doc.add_line('</div>')
 
     ### Filtering
@@ -572,10 +511,6 @@ def main():
                     default="report.lobster")
     ap.add_argument("--out",
                     default="lobster_report.html")
-    ap.add_argument("--dot",
-                    help="path to dot utility (https://graphviz.org), \
-                    by default expected in PATH",
-                    default=None)
     ap.add_argument("--high-contrast",
                     action="store_true",
                     help="Uses a color palette with a higher contrast.")
@@ -593,7 +528,6 @@ def main():
     with open(options.out, "w", encoding="UTF-8") as fd:
         write_html(fd     = fd,
                    report = report,
-                   dot = options.dot,
                    high_contrast = options.high_contrast,
                    render_md = options.render_md)
         print("LOBSTER HTML report written to %s" % options.out)

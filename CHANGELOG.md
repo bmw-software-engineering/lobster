@@ -15,6 +15,9 @@
   - Improved the error message in case a file is not found.
     The tool exits with return code 1 instead of crashing with an exception.
 
+* `lobster-html-report`:
+  - Recreating tracing policy diagram using Plotly.
+
 ### 0.13.0
 
 * `lobster-online-report-nogit`
