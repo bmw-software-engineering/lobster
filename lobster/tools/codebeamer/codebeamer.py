@@ -50,10 +50,9 @@ from lobster.io import lobster_read, lobster_write
 from lobster.meta_data_tool_base import MetaDataToolBase
 from lobster.tools.codebeamer.bearer_auth import BearerAuth
 from lobster.tools.codebeamer.config import AuthenticationConfig, Config
-
-
-class CodebeamerError(Exception):
-    pass
+from lobster.tools.codebeamer.exceptions import (
+    MismatchException, NotFileException, QueryException,
+)
 
 
 class SupportedConfigKeys(Enum):
@@ -120,13 +119,7 @@ def query_cb_single(cb_config: Config, url: str):
         break
 
     # Final error handling after all retries
-    print(f"Could not fetch {url}.")
-    print("You can either:")
-    print("* increase the timeout with the timeout parameter")
-    print("* decrease the query size with the query_size parameter")
-    print("* increase the retry count with the parameters (num_request_retry, "
-          "retry_error_codes)")
-    sys.exit(1)
+    raise QueryException(f"Could not fetch {url}.")
 
 
 def get_single_item(cb_config: Config, item_id: int):
@@ -190,16 +183,20 @@ def get_query(cb_config: Config, query: Union[int, str]):
             print(f"You can try to access '{url}' manually to check.")
 
         if page_id != data["page"]:
-            raise CodebeamerError(f"Page mismatch in query result: expected page "
-                                  f"{page_id} from codebeamer, but got {data['page']}")
+            raise MismatchException(
+                f"Page mismatch in query result: expected page "
+                f"{page_id} from codebeamer, but got {data['page']}"
+            )
 
         if page_id == 1:
             total_items = data["total"]
         elif total_items != data["total"]:
-            raise CodebeamerError(f"Item count mismatch in query result: expected "
-                                  f"{total_items} items so far, but page "
-                                  f"{data['page']} claims to have sent {data['total']} "
-                                  f"items in total.")
+            raise MismatchException(
+                f"Item count mismatch in query result: expected "
+                f"{total_items} items so far, but page "
+                f"{data['page']} claims to have sent {data['total']} "
+                f"items in total."
+            )
 
         if isinstance(query, int):
             rv += [to_lobster(cb_config, cb_item["item"])
@@ -490,6 +487,20 @@ class CodebeamerTool(MetaDataToolBase):
         )
 
     def _run_impl(self, options: argparse.Namespace) -> int:
+        try:
+            return self._execute(options)
+        except NotFileException as ex:
+            print(ex)
+        except QueryException as query_ex:
+            print(query_ex)
+            print("You can either:")
+            print("* increase the timeout with the timeout parameter")
+            print("* decrease the query size with the query_size parameter")
+            print("* increase the retry count with the parameters (num_request_retry, "
+                  "retry_error_codes)")
+        return 1
+
+    def _execute(self, options: argparse.Namespace) -> int:
         mh = Message_Handler()
 
         if not os.path.isfile(options.config):
@@ -507,8 +518,8 @@ class CodebeamerTool(MetaDataToolBase):
 
         if cb_config.import_tagged:
             if not os.path.isfile(cb_config.import_tagged):
-                sys.exit(f"lobster-codebeamer: {cb_config.import_tagged} "
-                         f"is not a file.")
+                raise NotFileException(f"lobster-codebeamer: {cb_config.import_tagged} "
+                                       f"is not a file.")
             items = {}
             try:
                 lobster_read(
