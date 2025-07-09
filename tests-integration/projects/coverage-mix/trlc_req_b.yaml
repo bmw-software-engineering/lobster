@@ -4,4 +4,7 @@ inputs :
   - req_b.trlc
   - test_spec.trlc
 
-trlc_config_file : "trlc_req_b.conf"
+trlc_config : |
+  coverage_mix.Requirement_B {
+    description = text
+  }
