@@ -3,4 +3,8 @@ inputs :
   - softreq_example.trlc
   - sysreq_example.trlc
 
-trlc_config_file : "trlc-softreq.conf"
+trlc_config : |
+  coverage_example.Software_Requirement {
+    description = text
+    tags "req"  = derived_from
+  }

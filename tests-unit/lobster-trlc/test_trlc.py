@@ -19,7 +19,8 @@ class LobsterTrlcTests(unittest.TestCase):
         self.mh = Message_Handler()
         self.sm = Source_Manager(self.mh)
         self.stab = Symbol_Table()
-        self.config_parser = Config_Parser(self.mh, self.file_name, self.stab)
+        self.config_string = "example.Requirement {description = description}"
+        self.config_parser = Config_Parser(self.mh, self.config_string, self.stab)
         self.location = Location(self.file_name)
         self.n_package = Package(self.name, self.location, self.stab, False)
         self.n_typ = Record_Type(self.name, self.description, self.location, self.n_package, None, False)
