@@ -7,8 +7,7 @@ class InputFromFilesTest(LobsterTrlcSystemTestCaseBase):
         super().setUp()
         self._test_runner = self.create_test_runner()
         config_string = self._test_runner.read_config_from_file(
-            self._data_directory / "lobster-trlc.conf"
-            )
+            self._data_directory / "lobster-trlc.conf")
         self._test_runner.declare_trlc_config(config_string)
 
     def test_input_from_files(self):
@@ -31,8 +30,7 @@ class InputFromFilesTest(LobsterTrlcSystemTestCaseBase):
         # lobster-trace: trlc_req.Duplicate_Inputs_From_File
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "input_from_file_duplicate_data.txt",
-            self._data_directory
-            )
+            self._data_directory)
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()

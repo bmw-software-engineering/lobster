@@ -9,8 +9,7 @@ class InputFromFilesAndInputsTest(LobsterTrlcSystemTestCaseBase):
         self._test_runner.declare_input_file(self._data_directory / "default_file.rsl")
         self._test_runner.declare_input_file(self._data_directory / "default_file.trlc")
         config_string = self._test_runner.read_config_from_file(
-            self._data_directory / "inputs-from-files-and-inputs.conf"
-            )
+            self._data_directory / "inputs-from-files-and-inputs.conf")
         self._test_runner.declare_trlc_config(config_string)
 
     def test_input_from_files_and_inputs_list(self):

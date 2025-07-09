@@ -29,8 +29,7 @@ class TrlcInvalidExtensionsTest(LobsterTrlcSystemTestCaseBase):
             "test_default.namaste {\n"
             "^^^^^^^^^^^^ :1: error: unknown symbol test_default\n"
             "lobster-trlc: aborting due to error in configuration string "
-            "'test_default.namaste {\n  description = description\n}\n'\n"
-            )
+            "'test_default.namaste {\n  description = description\n}\n'\n")
         asserter.assertExitCode(1)
 
     def test_invalid_extensions_input_from_file(self):
@@ -53,6 +52,5 @@ class TrlcInvalidExtensionsTest(LobsterTrlcSystemTestCaseBase):
             "test_default.namaste {\n"
             "^^^^^^^^^^^^ :1: error: unknown symbol test_default\n"
             "lobster-trlc: aborting due to error in configuration string "
-            "'test_default.namaste {\n  description = description\n}\n'\n"
-            )
+            "'test_default.namaste {\n  description = description\n}\n'\n")
         asserter.assertExitCode(1)
