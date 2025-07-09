@@ -5,6 +5,23 @@
 
 ### 0.13.1-dev
 
+* `lobster-trlc`:
+  - The lobster-trlc tool uses now a single yaml config file.
+    Remove old config parameter 'trlc_config_file' holding just the file name 
+    of the 'lobster-trlc.conf' config file.
+    Add new supported config parameter 'trlc_config' to specify the trlc 
+    configuration directly inside the yaml config file using the block scalar 
+    style (|) for multi line strings. 
+
+    Example entry for the yaml config file:
+    trlc_config: |
+      package.typename {
+        description = field_name
+        tags "test" = field_name
+      }
+
+    For more details read packages/lobster-tool-trlc/README.md
+
 * `lobster-online-report`:
   - Fixed issue on MacOS: The computation of the relative path between a file
     and the repository root failed unless all paths were given in a normalized
