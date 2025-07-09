@@ -31,9 +31,7 @@ class TestRunner(ABC):
         directory for the tool under test. Input files will be copied into this
         directory before running the tool.
         """
-        self._test_suite_directory = Path(__file__).resolve().parents[0] / tool_name
         self._tool_main_path = Path(__file__).resolve().parents[1] / tool_name
-        self._tool_name = tool_name
         self._tool_output_files: List[Path] = []
         self._working_dir = working_dir
 
@@ -105,7 +103,11 @@ class TestRunner(ABC):
                 if input_path.is_file():
                     self.copy_file_to_working_directory(input_path)
                 elif input_path.is_dir():
-                    shutil.copytree(input_path, self._working_dir)
+                    shutil.copytree(
+                        input_path,
+                        self._working_dir / input_path.name,
+                        dirs_exist_ok=True
+                    )
 
     @staticmethod
     def get_repo_root() -> Path:
@@ -125,8 +127,8 @@ class TestRunner(ABC):
             f"--data-file={root_directory / '.coverage.system'}",
             f"--source={root_directory / 'lobster'}",
             "--branch",
-            self._tool_main_path,
-            *tool_args
+            str(self._tool_main_path),
+            *tool_args,
         ]
         completed_process = run(
             coverage_command,

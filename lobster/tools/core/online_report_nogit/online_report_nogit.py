@@ -1,11 +1,14 @@
 import argparse
 import os.path
+import sys
+
 from dataclasses import dataclass
 from typing import Iterable
+
 from lobster.items import Item
 from lobster.location import File_Reference, Github_Reference
 from lobster.report import Report
-from lobster.version import get_version
+from lobster.meta_data_tool_base import MetaDataToolBase
 
 
 @dataclass
@@ -45,7 +48,7 @@ def file_ref_to_remote_ref(file_ref: File_Reference, repo_data: RepoData) -> (
             line=file_ref.line,
             commit=repo_data.commit,
         )
-    raise FileNotFoundError(f"File {file_ref.filename} does not exist.")
+    raise FileNotFoundError(f"File '{file_ref.filename}' does not exist.")
 
 
 def update_items(items: Iterable[Item], repo_data: RepoData):
@@ -71,33 +74,49 @@ def update_lobster_file(file: str, repo_data: RepoData, out_file: str):
     print(f"LOBSTER report {out_file} created, using remote URL references.")
 
 
-ap = argparse.ArgumentParser(
-    description="Update file locations in LOBSTER report to GitHub references.",
-)
+class OnlineReportNogitTool(MetaDataToolBase):
+    def __init__(self):
+        super().__init__(
+            name="lobster-online-report-nogit",
+            description="Update file locations in LOBSTER report to GitHub references.",
+            official=True,
+        )
+        ap = self._argument_parser
+        ap.add_argument(dest="report",
+                        metavar="LOBSTER_REPORT",
+                        help="Path to the input LOBSTER report file.")
+        ap.add_argument("--repo-root", required=True,
+                        help="Local path to the root of the repository.")
+        ap.add_argument("--remote-url", required=True,
+                        help="GitHub repository root URL.")
+        ap.add_argument("--commit", required=True,
+                        help="Git commit hash to use for the references.")
+        ap.add_argument("--out", required=True, metavar="OUTPUT_FILE",
+                        help="Output file for the updated LOBSTER report."
+                            "It can be the same as the input file in order to "
+                            "overwrite the input file.",)
+
+    def _run_impl(self, options: argparse.Namespace) -> int:
+        try:
+            update_lobster_file(
+                file=options.report,
+                repo_data=RepoData(
+                    remote_url=options.remote_url,
+                    root=options.repo_root,
+                    commit=options.commit,
+                ),
+                out_file=options.out,
+            )
+        except FileNotFoundError as e:
+            print(
+                f"Error: {e}\n"
+                f"Note: Relative paths are resolved with respect to the "
+                f"current working directory '{os.getcwd()}'.",
+                file=sys.stderr,
+            )
+            return 1
+        return 0
 
 
-@get_version(ap)
-def main():
-    ap.add_argument(dest="report",
-                    metavar="LOBSTER_REPORT",
-                    help="Path to the input LOBSTER report file.")
-    ap.add_argument("--repo-root", required=True,
-                    help="Local path to the root of the repository.")
-    ap.add_argument("--remote-url", required=True,
-                    help="GitHub repository root URL.")
-    ap.add_argument("--commit", required=True,
-                    help="Git commit hash to use for the references.")
-    ap.add_argument("--out", required=True, metavar="OUTPUT_FILE",
-                    help="Output file for the updated LOBSTER report."
-                         "It can be the same as the input file in order to "
-                         "overwrite the input file.",)
-    options = ap.parse_args()
-    update_lobster_file(
-        file=options.report,
-        repo_data=RepoData(
-            remote_url=options.remote_url,
-            root=options.repo_root,
-            commit=options.commit,
-        ),
-        out_file=options.out,
-    )
+def main() -> int:
+    return OnlineReportNogitTool().run()

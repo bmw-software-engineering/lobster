@@ -1,0 +1,8 @@
+[
+    {
+	"name"   : "empty_test",
+	"tags"   : ["empty.req1"],
+	"inputs" : [1, 2],
+	"expect" : 3
+    }
+]
