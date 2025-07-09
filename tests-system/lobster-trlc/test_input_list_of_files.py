@@ -8,7 +8,7 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
         self._test_runner.declare_input_file(self._data_directory / "default_file.rsl")
         self._test_runner.declare_input_file(self._data_directory / "default_file.trlc")
-        config_string = self._test_runner.read_config_from_file(self._data_directory / 
+        config_string = self._test_runner.read_config_from_file(self._data_directory /
                                                                 "lobster-trlc.conf")
         self._test_runner.declare_trlc_config(config_string)
 
@@ -36,11 +36,11 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
         asserter.assertNoStdErrText()
         asserter.assertStdOutText('package test_default\n'
                                   '        ^^^^^^^^^^^^ default_file_copy.rsl:1: '
-                                  'error: duplicate definition, previous definition at '
-                                  'default_file.rsl:1\n'
+                                  'error: duplicate definition, previous definition at'
+                                  ' default_file.rsl:1\n'
                                   'namaste goodname {\n'
                                   '        ^^^^^^^^ default_file_copy.trlc:3: '
-                                  'error: duplicate definition, previous definition at '
-                                  'default_file.trlc:3\n'
+                                  'error: duplicate definition, previous definition at'
+                                  ' default_file.trlc:3\n'
                                   'lobster-trlc: aborting due to earlier error\n')
         asserter.assertExitCode(1)

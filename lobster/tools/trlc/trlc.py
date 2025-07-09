@@ -43,7 +43,8 @@ class Config_Parser(Parser_Base):
         assert isinstance(config_string, str)
         assert isinstance(stab, ast.Symbol_Table)
         super().__init__(mh        = mh,
-                         lexer     = TRLC_Lexer(mh, file_name="", file_content=config_string),
+                         lexer     = TRLC_Lexer(mh, file_name="", 
+                                                file_content=config_string),
                          eoc_name  = "end of config string",
                          token_map = Token.KIND,
                          keywords  = TRLC_Lexer.KEYWORDS)

@@ -6,7 +6,6 @@ import yaml
 from ..test_runner import TestRunner
 
 
-
 class LiteralString(str):
     pass
 
@@ -89,7 +88,7 @@ class LobsterTrlcTestRunner(TestRunner):
             config_string = fd.read()
 
         return config_string
-        
+
     def declare_trlc_config(self, trlc_config: str):
         self.config_file_data.trlc_config = LiteralString(trlc_config)
 
