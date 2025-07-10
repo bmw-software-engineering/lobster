@@ -38,13 +38,14 @@ from lobster.io import lobster_write
 
 
 class Config_Parser(Parser_Base):
-    def __init__(self, mh, file_name, stab):
+    def __init__(self, mh, config_string, stab):
         assert isinstance(mh, Message_Handler)
-        assert os.path.isfile(file_name)
+        assert isinstance(config_string, str)
         assert isinstance(stab, ast.Symbol_Table)
         super().__init__(mh        = mh,
-                         lexer     = TRLC_Lexer(mh, file_name),
-                         eoc_name  = "end of file",
+                         lexer     = TRLC_Lexer(mh, file_name="",
+                                                file_content=config_string),
+                         eoc_name  = "end of config string",
                          token_map = Token.KIND,
                          keywords  = TRLC_Lexer.KEYWORDS)
         self.stab       = stab
@@ -378,15 +379,14 @@ class LOBSTER_Trlc(LOBSTER_Tool):
                 action.required = False
 
     # Supported config parameters for lobster-trlc
-    TRLC_CONFIG_FILE = "trlc_config_file"
+    TRLC_CONFIG = "trlc_config"
 
     @classmethod
     def get_config_keys_manual(cls):
         help_dict = super().get_config_keys_manual()
         help_dict.update(
             {
-                cls.TRLC_CONFIG_FILE: "Name of lobster-trlc config file, "
-                                      "by default lobster-trlc.conf"
+                cls.TRLC_CONFIG: "lobster-trlc config string"
             }
         )
         return help_dict
@@ -408,10 +408,9 @@ class LOBSTER_Trlc(LOBSTER_Tool):
         options - command-line and yaml options
         worklist - list of trlc and rsl files
         """
-
         work_list = super().process_commandline_and_yaml_options(options)
-        options.trlc_config_file = self.config.get(self.TRLC_CONFIG_FILE,
-                                                   "lobster-trlc.conf")
+        options.trlc_config = self.config.get(self.TRLC_CONFIG, {})
+
         return work_list
 
     def process_tool_options(
@@ -426,9 +425,9 @@ class LOBSTER_Trlc(LOBSTER_Tool):
         trlc_mh = Message_Handler()
         sm = Source_Manager(trlc_mh)
         work_list = self.process_commandline_and_yaml_options(options)
-        if not os.path.isfile(options.trlc_config_file):
-            sys.exit("lobster-trlc: cannot open config file '%s'" %
-                     options.trlc_config_file)
+        if not len(options.trlc_config):
+            sys.exit("lobster-trlc: cannot read trlc_config from file '%s'" %
+                     options.config)
 
         if os.path.exists(options.out) and not os.path.isfile(options.out):
             sys.exit("lobster-trlc: output file '%s' exists and is not a file"
@@ -458,12 +457,12 @@ class LOBSTER_Trlc(LOBSTER_Tool):
             print("lobster-trlc: aborting due to earlier error")
             return 1
 
-        config_parser = Config_Parser(trlc_mh, options.trlc_config_file, stab)
+        config_parser = Config_Parser(trlc_mh, options.trlc_config, stab)
         try:
             config_parser.parse_config_file()
         except TRLC_Error:
             print("lobster-trlc: aborting due to error in"
-                  " configuration file '%s'" % options.trlc_config_file)
+                  " configuration string '%s'" % options.trlc_config)
             return 1
 
         items = []
