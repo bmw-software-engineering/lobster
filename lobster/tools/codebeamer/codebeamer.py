@@ -32,8 +32,8 @@
 # However you _can_ import all the items referenced from another
 # lobster artefact.
 
+import logging
 import os
-import time
 import sys
 import argparse
 import netrc
@@ -41,7 +41,9 @@ from typing import List, Optional, Set, Union
 from urllib.parse import quote, urlparse
 from enum import Enum
 import requests
+from requests.adapters import HTTPAdapter
 import yaml
+from urllib3.util.retry import Retry
 
 from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
 from lobster.location import Codebeamer_Reference
@@ -89,34 +91,33 @@ def query_cb_single(cb_config: Config, url: str):
         raise ValueError("Retry is disabled (num_request_retry is set to 0). "
                          "Cannot proceed with retries.")
 
-    for attempt in range(1, cb_config.num_request_retry + 1):
-        try:
-            result = requests.get(
-                url,
-                auth=get_authentication(cb_config.cb_auth_conf),
-                timeout=cb_config.timeout,
-                verify=cb_config.verify_ssl,
-            )
-            if result.status_code == 200:
-                return result.json()
+    # Set up a Retry object with exponential backoff
+    retry_strategy = Retry(
+        total=cb_config.num_request_retry,
+        backoff_factor=0.5,  # Exponential backoff: 1s, 2s, 4s, etc.
+        status_forcelist=cb_config.retry_error_codes,
+        allowed_methods=["GET"],
+        raise_on_status=False,
+    )
+    
+    logging.basicConfig(level=logging.INFO)
+    logging.getLogger("urllib3").setLevel(logging.DEBUG)
 
-            if result.status_code in cb_config.retry_error_codes:
-                print(f"[Attempt {attempt}/{cb_config.num_request_retry}] "
-                      f"Retryable error: {result.status_code}")
-                time.sleep(1)  # wait a bit before retrying
-                continue
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session = requests.Session()
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
 
-            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Failed with "
-                  f"status {result.status_code}")
-            break
-
-        except requests.exceptions.ReadTimeout:
-            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Timeout when "
-                  f"fetching {url}")
-        except requests.exceptions.RequestException as err:
-            print(f"[Attempt {attempt}/{cb_config.num_request_retry}] Request error: "
-                  f"{err}")
-        break
+    response = session.get(
+        url,
+        auth=get_authentication(cb_config.cb_auth_conf),
+        timeout=cb_config.timeout,
+        verify=cb_config.verify_ssl,
+    )
+    print(response.raw.retries.total)  # Number of retries allowed
+    print(response.raw.retries.history)  # List of previous responses (retries)
+    if response.status_code == 200:
+        return response.json()
 
     # Final error handling after all retries
     raise QueryException(f"Could not fetch {url}.")
