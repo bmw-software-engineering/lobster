@@ -27,15 +27,12 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         # lobster-trace: codebeamer_req.Retry_On_Specific_HTTPS_Status_Codes
 
         self.codebeamer_flask.responses = [Response(status=429)] * 3
-        self.set_config_file_data(retry_codes=[429], num_retries=3)
+        self.set_config_file_data(retry_codes=[429], num_retries=2)
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
-
         self.assertIn(
-            "[Attempt 1/3] Retryable error: 429\n"
-            "[Attempt 2/3] Retryable error: 429\n"
-            "[Attempt 3/3] Retryable error: 429\n"
+            "Fetching page 1 of query...\n"
             f"Could not fetch {self._test_runner.config_file_data.root}/api/"
             "v3/reports/1234458/items?page=1&pageSize=100.\n",
             completed_process.stdout,
@@ -76,16 +73,13 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
             Response(status=429),
             Response(json.dumps(response_data), status=200),
         ]
-        self.set_config_file_data(retry_codes=[429], num_retries=3)
+        self.set_config_file_data(retry_codes=[429], num_retries=2)
         self._test_runner.declare_output_file(
             self._data_directory / self._test_runner.config_file_data.out)
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
-
         self.assertIn(
-            "[Attempt 1/3] Retryable error: 429\n"
-            "[Attempt 2/3] Retryable error: 429\n"
             "Written 1 requirements to codebeamer.lobster\n",
             completed_process.stdout,
         )
@@ -100,9 +94,8 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
-
         self.assertIn(
-            "[Attempt 1/5] Failed with status 429\n"
+            "Fetching page 1 of query...\n"
             f"Could not fetch {self._test_runner.config_file_data.root}/"
             "api/v3/reports/1234458/items?page=1&pageSize=100.\n",
             completed_process.stdout,

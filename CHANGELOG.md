@@ -5,6 +5,11 @@
 
 ### 0.13.1-dev
 
+* `lobster-codebeamer`
+  - The retry logic uses exponential backoff feature instead of retrying successively
+    without any time gap. The exponential backoff factor is set to 1 so the 
+    interval of calls will be 1s, 2s, 4s, 8s and so on.
+
 * `lobster-online-report`:
   - Fixed issue on MacOS: The computation of the relative path between a file
     and the repository root failed unless all paths were given in a normalized
