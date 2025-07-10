@@ -30,13 +30,13 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         self.output_dir = self.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / OUT_FILE))
 
-        self._test_runner.declare_output_file(Path(self.output_dir.name) /
+        self._test_runner.declare_output_file(self.output_dir /
                                               OUT_FILE)
         self._test_runner.cmd_args.config = str(
             self._data_directory / "nested_directories.yaml")
 
         update_cpptest_output_file(
-            Path(self.output_dir.name) / OUT_FILE,
+            self.output_dir / OUT_FILE,
             self._test_runner.working_dir
         )
 
@@ -60,13 +60,13 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         self.output_dir = self.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / OUT_FILE))
 
-        self._test_runner.declare_output_file(Path(self.output_dir.name) /
+        self._test_runner.declare_output_file(self.output_dir /
                                               OUT_FILE)
         self._test_runner.cmd_args.config = str(
             self._data_directory / "specific_directory_config.yaml")
 
         update_cpptest_output_file(
-            Path(self.output_dir.name) / OUT_FILE,
+            self.output_dir / OUT_FILE,
             self._test_runner.working_dir
         )
 
@@ -93,13 +93,13 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         self.output_dir = self.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / OUT_FILE))
 
-        self._test_runner.declare_output_file(Path(self.output_dir.name) /
+        self._test_runner.declare_output_file(self.output_dir /
                                               OUT_FILE)
         self._test_runner.cmd_args.config = str(
             self._data_directory / "directory_files_config.yaml")
 
         update_cpptest_output_file(
-            Path(self.output_dir.name) / OUT_FILE,
+            self.output_dir / OUT_FILE,
             self._test_runner.working_dir
         )
 
