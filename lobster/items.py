@@ -259,11 +259,6 @@ class Requirement(Item):
 
     def perform_source_checks(self, source_info):
         assert isinstance(source_info, dict)
-        if source_info.get("valid_status"):
-            if self.status not in source_info["valid_status"]:
-                self.error("status is %s, expected %s" %
-                           (self.status,
-                            " or ".join(sorted(source_info["valid_status"]))))
 
     @classmethod
     def from_json(cls, level, data, schema_version):

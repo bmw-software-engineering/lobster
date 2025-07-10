@@ -101,9 +101,7 @@
       "traces": [],
       "source": [
         {
-          "file": "req_a.lobster",
-          "filters": [],
-          "valid_status": []
+          "file": "req_a.lobster"
         }
       ],
       "needs_tracing_up": false,
@@ -122,9 +120,7 @@
       ],
       "source": [
         {
-          "file": "req_b.lobster",
-          "filters": [],
-          "valid_status": []
+          "file": "req_b.lobster"
         }
       ],
       "needs_tracing_up": true,
@@ -139,9 +135,7 @@
       ],
       "source": [
         {
-          "file": "test_a.lobster",
-          "filters": [],
-          "valid_status": []
+          "file": "test_a.lobster"
         }
       ],
       "needs_tracing_up": true,
