@@ -5,13 +5,31 @@
 
 ### 0.13.1-dev
 
+* API:
+  Introduced an API function called `apply_github_urls`.
+  Instead of running the tool `lobster-online-report-nogit` users
+  can write their own Python scripts and import the function there
+  to achieve the same result as when running the tool.
+
+  ```python
+  from lobster.tools.core.online_report_nogit.online_report_nogit import apply_github_urls
+  ```
+
 * `lobster-online-report`:
+  - Fixed escaping of characters in paths.
+    If a path contained whitespace or other characters that are not
+    allowed in a URL, these are now properly converted.
+    For example, whitespace becomes `%20`, or `ß` becomes `%C3%9F`.
   - Fixed issue on MacOS: The computation of the relative path between a file
     and the repository root failed unless all paths were given in a normalized
     form.
     Now paths are resolved before computing the relative path.
 
 * `lobster-online-report-nogit`:
+  - Fixed escaping of characters in paths.
+    If a path contained whitespace or other characters that are not
+    allowed in a URL, these are now properly converted.
+    For example, whitespace becomes `%20`, or `ß` becomes `%C3%9F`.
   - Improved the error message in case a file is not found.
     The tool exits with return code 1 instead of crashing with an exception.
 

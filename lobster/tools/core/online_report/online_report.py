@@ -22,6 +22,7 @@ import os
 import argparse
 import configparser
 import subprocess
+from urllib.parse import quote
 
 from lobster.report import Report
 from lobster.location import File_Reference, Github_Reference
@@ -153,7 +154,7 @@ def add_github_reference_to_items(gh_root, gh_submodule_roots, repo_root, report
                 gh_root, gh_submodule_roots, item, repo_root, git_hash_cache)
             loc = Github_Reference(
                 gh_root=actual_repo,
-                filename=actual_path,
+                filename=quote(actual_path.replace(os.sep, "/")),
                 line=item.location.line,
                 commit=commit)
             item.location = loc
