@@ -25,8 +25,7 @@ class LobsterOnlineReportTests(unittest.TestCase):
                     f'--out={online_report}']
         with StringIO() as stdout, redirect_stdout(stdout):
             exit_code = main()
-            output = stdout.getvalue()
-        with open(online_report, 'r') as file:
+        with open(online_report, 'r', encoding="UTF-8") as file:
             data = json.load(file)
             for level in data['levels']:
                 for item in level['items']:
@@ -59,7 +58,7 @@ class LobsterOnlineReportTests(unittest.TestCase):
             ["git", "rev-parse", "HEAD"],
             universal_newlines=True, cwd=repo_root
         ).strip()
-        actual_path, actual_repo, commit = get_git_commit_hash_repo_and_path(
+        _, _, commit = get_git_commit_hash_repo_and_path(
             root, submodule_roots, item, repo_root, git_hash_cache)
         self.assertEqual(expected_commit, commit)
 

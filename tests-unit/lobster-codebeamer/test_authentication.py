@@ -2,7 +2,8 @@ import unittest
 from requests.auth import HTTPBasicAuth
 from lobster.tools.codebeamer.bearer_auth import BearerAuth
 from lobster.tools.codebeamer.codebeamer import get_authentication
-from lobster.tools.codebeamer.config import AuthenticationConfig, Config
+from lobster.tools.codebeamer.config import AuthenticationConfig
+
 
 class AuthenticationTest(unittest.TestCase):
 
@@ -24,7 +25,7 @@ class AuthenticationTest(unittest.TestCase):
                     )
                     auth = get_authentication(cb_auth_conf)
                     self.assertIsInstance(auth, BearerAuth)
-    
+
     def test_get_basic_auth(self):
         # This test verifies that the basic authentication is returned,
         # even if the user name and/or password are missing.

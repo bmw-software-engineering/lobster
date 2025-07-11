@@ -1,10 +1,10 @@
 import unittest
 import os
 import argparse
-import yaml
 from tempfile import NamedTemporaryFile, TemporaryDirectory
-from lobster.errors import Message_Handler
+import yaml
 
+from lobster.errors import Message_Handler
 from lobster.tool import LOBSTER_Tool
 
 class ConcreteLOBSTER_Tool(LOBSTER_Tool):
@@ -13,7 +13,7 @@ class ConcreteLOBSTER_Tool(LOBSTER_Tool):
 
     def process_tool_options(self, options, work_list):
         pass
-    
+
     def _run_impl(self, options: argparse.Namespace) -> int:
         return 0
 
@@ -51,10 +51,10 @@ class TestLOBSTER_Tool(unittest.TestCase):
                 self.tool.process_common_options(options)
 
     def test_process_common_options_valid_inputs(self):
-        with TemporaryDirectory() as temp_dir:
+        with TemporaryDirectory():
             with  NamedTemporaryFile("w", delete=False) as temp:
                 temp_path = temp.name
-        
+
         options = argparse.Namespace(out=None, inputs=[temp_path], inputs_from_file=None)
         work_list = self.tool.process_common_options(options)
         self.assertEqual(work_list, [temp_path])

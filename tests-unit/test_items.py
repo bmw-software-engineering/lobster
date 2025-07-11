@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock,create_autospec
-from lobster.items import Tracing_Tag, Tracing_Status, Item, Requirement, Implementation, Activity
 from hashlib import sha1
+from lobster.items import Tracing_Tag, Tracing_Status, Item, Requirement, Implementation, Activity
 from lobster.location import Location
 
 class ItemsTests(unittest.TestCase):
@@ -48,12 +48,11 @@ class ItemsTests(unittest.TestCase):
             location_data = {
                 "kind": location_type
             }
+        else:
+            raise NotImplementedError(f"No logic implemented for {location_type=}!")
         return location_data
 
 class TestTracingTag(ItemsTests):
-    def setUp(self):
-        super().setUp()
-
     def test_key(self):
         expected_key = "mock_namespace mock_tag"
         actual_key = self.tracing_tag.key()
@@ -117,9 +116,6 @@ class TestTracingTag(ItemsTests):
         self.assertEqual(hash_val, expected_hash)
 
 class TestItem(ItemsTests):
-    def setUp(self):
-        super().setUp()
-
     def test_set_level_valid_string(self):
         mock_level = "mock_level"
         self.item.set_level(mock_level)
@@ -130,7 +126,7 @@ class TestItem(ItemsTests):
         invalid_level = 10
 
         with self.assertRaises(AssertionError):
-            result = self.item.set_level(invalid_level)
+            self.item.set_level(invalid_level)
 
     def test_error(self):
         mock_message = "mock_message"
@@ -316,9 +312,6 @@ class TestItem(ItemsTests):
         self.assertEqual(result, expected_json)
 
 class TestRequirement(ItemsTests):
-    def setUp(self):
-        super().setUp()
-        
     @patch("lobster.items.Item.to_json")
     def test_to_json(self, mock_super_to_json):
         mock_super_to_json.return_value = {
@@ -391,7 +384,7 @@ class TestRequirement(ItemsTests):
                 self.assertEqual(result.text, "text_data")
                 self.assertEqual(result.status, "status_data")
                 if location_type == "file":
-                            self.assertEqual(result.location.filename, location_data["file"])
+                    self.assertEqual(result.location.filename, location_data["file"])
                 elif location_type == "github":
                     self.assertEqual(result.location.gh_root, location_data["gh_root"])
                     self.assertEqual(result.location.filename, location_data["file"])
@@ -405,9 +398,6 @@ class TestRequirement(ItemsTests):
                     self.assertEqual(result.location.name, location_data["name"])
 
 class TestImplementation(ItemsTests):
-    def setUp(self):
-        super().setUp()
-
     @patch("lobster.items.Item.to_json")
     def test_to_json(self, mock_super_to_json):
         mock_super_to_json.return_value = {
@@ -445,7 +435,7 @@ class TestImplementation(ItemsTests):
                 self.assertEqual(result.kind, "kind_data")
                 self.assertEqual(result.name, "name_data")
                 if location_type == "file":
-                            self.assertEqual(result.location.filename, location_data["file"])
+                    self.assertEqual(result.location.filename, location_data["file"])
                 elif location_type == "github":
                     self.assertEqual(result.location.gh_root, location_data["gh_root"])
                     self.assertEqual(result.location.filename, location_data["file"])
@@ -459,9 +449,6 @@ class TestImplementation(ItemsTests):
                     self.assertEqual(result.location.name, location_data["name"])
 
 class TestActivity(ItemsTests):
-    def setUp(self):
-        super().setUp()
-
     @patch("lobster.items.Item.to_json")
     def test_to_json(self, mock_super_to_json):
         mock_super_to_json.return_value = {
