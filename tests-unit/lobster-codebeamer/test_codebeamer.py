@@ -67,7 +67,7 @@ class QueryCodebeamerTest(unittest.TestCase):
                 "pageSize": 100,
                 "total": 1,
                 "items": item_data
-            }        
+            }
 
         result = get_query(self._mock_cb_config, mock_query)
         self.assertEqual(len(result), 1)
@@ -95,14 +95,14 @@ class QueryCodebeamerTest(unittest.TestCase):
                     },
                 "categories": [{"name": "Requirement"}],
                 "status": {"name": "Content Review",}
-            }            
+            }
         ]
         mock_query_cb_single.return_value = {
                 "page": 1,
                 "pageSize": 100,
                 "total": 1,
                 "items": item_data
-            }        
+            }
 
         result = get_query(self._mock_cb_config, mock_query)
         self.assertEqual(len(result), 1)
@@ -123,7 +123,7 @@ class QueryCodebeamerTest(unittest.TestCase):
                 "pageSize": 100,
                 "total": 1,
                 "items": []
-            }  
+            }
         with self.assertRaises(MismatchException):
             get_query(self._mock_cb_config, query_id)
 
@@ -142,7 +142,7 @@ class QueryCodebeamerTest(unittest.TestCase):
 
         query_result = get_single_item(self._mock_cb_config, item_id)
         self.assertEqual(query_result, mock_response)
-    
+
     def test_get_single_item_invalid_id(self):
         for item_id in (None, 0, -1, "house", 123.456, "456"):
             with self.subTest(item_id=item_id):

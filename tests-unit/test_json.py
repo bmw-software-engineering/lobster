@@ -1,11 +1,7 @@
 import unittest
-import re
 from pathlib import PurePosixPath, PureWindowsPath
 from tempfile import NamedTemporaryFile
 
-import yaml
-
-from lobster.errors import LOBSTER_Error
 from lobster.tools.json import json
 from lobster.tools.json.json import LOBSTER_Json
 
@@ -38,7 +34,7 @@ class Test_Json(unittest.TestCase):
             "foo.bar")
 
     def test_invalid_json_parameters(self):
-        with NamedTemporaryFile("w", delete=False) as temp:
+        with NamedTemporaryFile("w", delete=False):
             config = {"invalid_key": "This is an invalid key "
                                       "which is not supported by LOBSTER Json"}
         lobster_json = LOBSTER_Json()

@@ -1,13 +1,14 @@
 import unittest
 from os.path import dirname
 from pathlib import Path
-from unittest.mock import patch, MagicMock, create_autospec, call, Mock, ANY
+from unittest.mock import ANY, MagicMock, Mock, patch
+
 from trlc import ast
+from trlc.ast import Package, Record_Object, Record_Type, Symbol_Table
+from trlc.errors import Location, Message_Handler, TRLC_Error
+from trlc.trlc import Source_Manager
 from lobster.items import Requirement
 from lobster.tools.trlc.trlc import Config_Parser
-from trlc.ast import Symbol_Table, Record_Object, Package, Record_Type
-from trlc.errors import Message_Handler, Location, TRLC_Error
-from trlc.trlc import Source_Manager
 
 
 class LobsterTrlcTests(unittest.TestCase):
@@ -207,7 +208,7 @@ class LobsterTrlcTests(unittest.TestCase):
 
         with self.assertRaises(TRLC_Error):
             self.config_parser.generate_text(n_typ, mock_value)
-            self.mh.error.assert_called_with(ANY, "please define a to_string function that can render %s" % mock_value)
+            self.mh.error.assert_called_with(ANY, f"please define a to_string function that can render {mock_value}")
 
 if __name__ == '__main__':
     unittest.main()
