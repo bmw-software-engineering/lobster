@@ -1,6 +1,5 @@
 import json
 import re
-import os
 from .lobster_online_report_nogit_system_test_case_base import (
     LobsterOnlineReportNogitSystemTestCaseBase
 )
@@ -41,7 +40,7 @@ class OnlineReportNogitTest(LobsterOnlineReportNogitSystemTestCaseBase):
                       f"touched!")
 
         for file_name in needed_dummy_files:
-            destination = self._test_runner._working_dir / file_name
+            destination = self._test_runner.working_dir / file_name
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.touch()
 

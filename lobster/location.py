@@ -170,8 +170,7 @@ class Github_Reference(Location):
 
     def to_string(self):
         if self.line:
-            return "%s:%u" % (self.filename,
-                              self.line)
+            return f"{self.filename}:{self.line}"
         else:
             return self.filename
 
@@ -180,11 +179,8 @@ class Github_Reference(Location):
         if self.line:
             file_ref += "#L%u" % self.line
 
-        return '<a href="%s/blob/%s/%s" target="_blank">%s</a>' % (
-            self.gh_root,
-            self.commit,
-            file_ref,
-            self.to_string())
+        return f'<a href="{self.gh_root}/blob/{self.commit}/{file_ref}" ' \
+               f'target="_blank">{self.to_string()}</a>'
 
     def to_json(self):
         return {"kind"           : "github",

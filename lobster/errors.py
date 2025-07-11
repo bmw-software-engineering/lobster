@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2022-2023 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2022-2023, 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -48,9 +48,7 @@ class Message_Handler:
         else:
             self.errors += 1
 
-        print("%s: lobster %s: %s" % (location.to_string(),
-                                      severity,
-                                      message))
+        print(f"{location.to_string()}: lobster {severity}: {message}")
 
     def lex_error(self, location, message):
         assert isinstance(location, Location)
