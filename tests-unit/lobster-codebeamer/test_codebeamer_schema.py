@@ -1,10 +1,11 @@
 from pathlib import Path
-from os.path import isfile
+from os.path import isfile, isdir
 import unittest
-import sys
-from contextlib import redirect_stdout
-from io import StringIO
-from lobster.tools.codebeamer.codebeamer import main, update_authentication_parameters, parse_config_data
+from lobster.tools.codebeamer.codebeamer import (
+    load_config,
+    parse_config_data,
+    update_authentication_parameters,
+)
 from lobster.tools.codebeamer.config import AuthenticationConfig
 
 
@@ -13,20 +14,28 @@ class CbConfigTest(unittest.TestCase):
         self._real_netrc_file=Path(__file__).resolve().parents[0] / "test.netrc"
         assert isfile(self._real_netrc_file), f"Invalid test setup: netrc file {self._real_netrc_file} does not exist!"
 
-    def test_main_missing_yaml_file(self):
+    def test_missing_config_file(self):
         """
-        Test the main function with a non-existent YAML file.
-        This checks if the main function raises a FileNotFoundError when the file is missing.
+        Tests that FileNotFoundError is raised if config file is missing.
         """
         missing_config_path = "missing-config.yaml"
+        self.assertFalse(isfile(missing_config_path), "Invalid test setup: file must not exist!")
 
-        sys.argv = ['codebeamer.py', '--config', missing_config_path]
-        with StringIO() as stdout, redirect_stdout(stdout):
-            exit_code = main()
-            output = stdout.getvalue()
+        with self.assertRaises(FileNotFoundError):
+            load_config(missing_config_path)
 
-        self.assertEqual(exit_code, 1)
-        self.assertIn(f"Config file '{missing_config_path}' not found", output)
+    def test_directory_given_as_config(self):
+        """
+        Tests that FileNotFoundError is raised if path is a directory instead of a file.
+        """
+        real_path = str(Path(__file__).parent)
+        self.assertTrue(
+            isdir(real_path),
+            "Invalid test setup: path shall be a real directory!",
+        )
+        # Note: PermissionError is raised on Windows, IsADirectoryError on other OS
+        with self.assertRaises((IsADirectoryError, PermissionError)):
+            load_config(real_path)
 
     def test_missing_config_field(self):
         with self.assertRaises(KeyError) as context:

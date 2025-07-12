@@ -5,17 +5,15 @@
 
 ### 0.13.1-dev
 
-* API:
-  Introduced an API function called `apply_github_urls`.
-  Instead of running the tool `lobster-online-report-nogit` users
-  can write their own Python scripts and import the function
-  to achieve the same result as when running the tool.
-
-* `lobster-codebeamer`:
-  - Add warning message if the file given through the configuration parameter
-    `import_tagged` contains references which cannot be converted to integer
-    in base 10. Codebeamer IDs are always integer values, so such a reference
-    cannot represent a Codebamer item.
+* Introduced API functions:
+  - `apply_github_urls`:
+    Instead of running the tool `lobster-online-report-nogit` users
+    can write their own Python scripts and import the function
+    to achieve the same result as when running the tool.
+  - `cb_query_to_lobster_file`:
+    This function downloads items from codebeamer and serializes them in the
+    LOBSTER interchange format to a file.
+    This is similar to running the tool `lobster-codebeamer`.
 
 * `lobster-cpp`:
   - Fixed handling of `--skip-clang-errors` where a closing bracket `]`
@@ -29,6 +27,16 @@
     --skip-clang-errors=clang-diagnostic-error
     ```
     See also [issue 276](https://github.com/bmw-software-engineering/lobster/issues/276).
+
+* `lobster-codebeamer`:
+  - Improved error message in case the specified path to the configuration file
+    is a directory and not a path.
+  - Added error message if neither `import_query` nor `import_tagged` is specified
+    in the configuration file.
+  - Add warning message if the file given through the configuration parameter
+    `import_tagged` contains references which cannot be converted to integer
+    in base 10. Codebeamer IDs are always integer values, so such a reference
+    cannot represent a Codebamer item.
 
 * `lobster-online-report`:
   - Fixed escaping of characters in paths.

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, List
+from typing import Optional, List, Union
 
 
 @dataclass
@@ -16,7 +16,7 @@ class Config:
     retry_error_codes: List
     references: dict
     import_tagged: str
-    import_query: str
+    import_query: Union[str, int]
     verify_ssl: bool
     page_size: int
     schema: str
