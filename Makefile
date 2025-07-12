@@ -93,13 +93,15 @@ integration-tests: packages
 	(cd tests-integration/projects/coverage-zero; make)
 	rm -f MODULE.bazel MODULE.bazel.lock
 
-system-tests:
-	@echo "🔐 Generating cert.pem and key.pem for system tests..."
+codebeamer-pem:
+	@echo "🔐 Generating cert.pem and key.pem for codebeamer system tests..."
 	@mkdir -p tests-system/lobster-codebeamer/data/ssl
 	@openssl req -x509 -newkey rsa:2048 -nodes \
 		-keyout tests-system/lobster-codebeamer/data/ssl/key.pem \
 		-out tests-system/lobster-codebeamer/data/ssl/cert.pem \
 		-days 365 -subj "//CN=localhost" > /dev/null 2>&1
+
+system-tests: codebeamer-pem
 	mkdir -p docs
 	python -m unittest discover -s tests-system -v -t .
 	make -B -C tests-system TOOL=lobster-python
