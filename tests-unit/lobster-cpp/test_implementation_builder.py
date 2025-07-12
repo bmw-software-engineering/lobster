@@ -1,7 +1,7 @@
 from os import getcwd
-from os.path import abspath, join, expanduser
+from os.path import abspath, join
 import re
-from unittest import TestCase, main
+from unittest import TestCase
 from lobster.location import File_Reference
 from lobster.tools.cpp.implementation_builder import ImplementationBuilder
 
@@ -21,7 +21,8 @@ class ImplementationBuilderTest(TestCase):
 
     def test_get_location_from_abs_path(self):
         impl_builder = ImplementationBuilder()
-        path = join(self._get_os_independent_abspath_start(), "path", "to", "the", "baking soda.NaHCO3")
+        path = join(self._get_os_independent_abspath_start(),
+                    "path", "to", "the", "baking soda.NaHCO3")
         result = impl_builder._get_location(path, 420)
         self.assertEqual(result.filename, path)
         self.assertEqual(result.line, 420)
@@ -33,10 +34,13 @@ class ImplementationBuilderTest(TestCase):
         self.assertEqual(result.filename, abspath("water.H2O"))
         self.assertEqual(result.line, 1)
         self.assertIsNone(result.column)
-    
+
     def test_get_tag(self):
         impl_builder = ImplementationBuilder()
-        for duplicate_file_counter, parent_folder in enumerate(("cake", "pie"), start=1):
+        for duplicate_file_counter, parent_folder in enumerate(
+            ("cake", "pie"),
+            start=1,
+        ):
             FILE = "ingredients.txt"
             path = join(parent_folder, FILE)
             function_names = ["Sodium Chloride (NaCl)", "Glucose (C6H12O6)"]
@@ -44,7 +48,10 @@ class ImplementationBuilderTest(TestCase):
                 with self.subTest(path=path, function_name=function_name):
                     tracing_tag = impl_builder._get_tag(path, function_name, line_nr)
                     self.assertEqual(tracing_tag.namespace, "cpp")
-                    self.assertEqual(tracing_tag.tag, f"{FILE}:{duplicate_file_counter}:{function_name}:{line_nr}")
+                    self.assertEqual(
+                        tracing_tag.tag,
+                        f"{FILE}:{duplicate_file_counter}:{function_name}:{line_nr}",
+                    )
                     self.assertIsNone(tracing_tag.version)
 
     def test_from_match(self):
@@ -64,7 +71,8 @@ class ImplementationBuilderTest(TestCase):
                 if not match:
                     self.fail("Invalid test setup: regex match failed!")
                 if len(match.groups()) != num_groups:
-                    self.fail(f"Invalid test setup: expected {num_groups} groups, got {len(match.groups())}!")
+                    self.fail(f"Invalid test setup: expected {num_groups} groups, "
+                              f"got {len(match.groups())}!")
                 impl = impl_builder.from_match(match)
 
                 self.assertEqual(impl.tag.namespace, "cpp")
@@ -87,8 +95,8 @@ class ImplementationBuilderTest(TestCase):
         if not match:
             self.fail("Invalid test setup: regex match failed!")
         if len(match.groups()) != impl_builder.MIN_NUM_GROUPS:
-            self.fail(f"Invalid test setup: expected {impl_builder.MIN_NUM_GROUPS} groups, "
-                      f"got {len(match.groups())}!")
+            self.fail(f"Invalid test setup: expected {impl_builder.MIN_NUM_GROUPS} "
+                      f"groups, got {len(match.groups())}!")
         with self.assertRaises(ValueError):
             impl_builder.from_match(match)
 

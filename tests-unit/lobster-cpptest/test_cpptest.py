@@ -467,7 +467,11 @@ class LobsterCpptestTests(unittest.TestCase):
             {"suite": "TestMethodsTagTest4", "test_name": "MissingTestMethod", "testmethods": []},
             # Verify that the version tag is correctly parsed
             {"suite": "VersionTagTest", "test_name": "VersionTagTestInOnline", "version": ["1"]},
-            {"suite": "VersionTagTest", "test_name": "MultipleVersionTagTestInOnline", "version": ["1", "42"]},
+            {
+                "suite": "VersionTagTest",
+                "test_name": "MultipleVersionTagTestInOnline",
+                "version": ["1", "42"],
+            },
             {"suite": "VersionTagTest", "test_name": "MoreVersionsThanRequirements", "version": ["12", "70"],
              "req": ["CB-#0815"]},
             {"suite": "VersionTagTest", "test_name": "MoreRequirementsThanVersions", "version": ["28", "28"],

@@ -20,9 +20,26 @@ class LobsterWriteReadTests(unittest.TestCase):
         self.mock_language = "mock_language"
         self.mock_location = create_autospec(Location, instance = True)
         self.tracing_tag = Tracing_Tag(self.mock_namespace, self.mock_tag)
-        self.requirement = Requirement(self.tracing_tag, self.mock_location, self.mock_framework, self.mock_kind, self.mock_name)
-        self.implementation = Implementation(self.tracing_tag, self.mock_location, self.mock_language, self.mock_kind, self.mock_name)
-        self.activity = Activity(self.tracing_tag, self.mock_location, self.mock_framework, self.mock_kind)
+        self.requirement = Requirement(
+            self.tracing_tag,
+            self.mock_location,
+            self.mock_framework,
+            self.mock_kind,
+            self.mock_name,
+        )
+        self.implementation = Implementation(
+            self.tracing_tag,
+            self.mock_location,
+            self.mock_language,
+            self.mock_kind,
+            self.mock_name,
+        )
+        self.activity = Activity(
+            self.tracing_tag,
+            self.mock_location,
+            self.mock_framework,
+            self.mock_kind,
+        )
         self.mh = Message_Handler()
         self.filename = "test.json"
         self.level = "test_level"
@@ -139,12 +156,19 @@ class LobsterWriteReadTests(unittest.TestCase):
             with patch("builtins.open", mock_open(read_data=read_data)):
                 lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
                 self.assertEqual(len(self.items), 1)
-                mock_additional_data_from_json.assert_called_once_with(self.level, self.source_data, mock_data_req["version"])
+                mock_additional_data_from_json.assert_called_once_with(
+                    self.level,
+                    self.source_data, mock_data_req["version"],
+                )
 
     @patch("lobster.items.Item.additional_data_from_json")
     @patch("lobster.items.Tracing_Tag.key")
     @patch("lobster.items.Tracing_Tag.from_json")
-    def test_lobster_read_valid_implementation(self, mock_from_json, mock_key, mock_additional_data_from_json):
+    def test_lobster_read_valid_implementation(
+        self,
+        mock_from_json, mock_key,
+        mock_additional_data_from_json,
+    ):
         mock_key.return_value = "mock_namespace mock_tag"
         mock_from_json.return_value = self.tracing_tag
         self.source_data.update({"location" : {
@@ -165,7 +189,10 @@ class LobsterWriteReadTests(unittest.TestCase):
             with patch("builtins.open", mock_open(read_data=read_data)):
                 lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
                 self.assertEqual(len(self.items), 1)
-                mock_additional_data_from_json.assert_called_once_with(self.level, self.source_data, mock_data_imp["version"])
+                mock_additional_data_from_json.assert_called_once_with(
+                    self.level,
+                    self.source_data, mock_data_imp["version"],
+                )
 
     @patch("lobster.items.Item.additional_data_from_json")
     @patch("lobster.items.Tracing_Tag.key")
@@ -192,24 +219,42 @@ class LobsterWriteReadTests(unittest.TestCase):
             with patch("builtins.open", mock_open(read_data=read_data)):
                 lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
                 self.assertEqual(len(self.items), 1)
-                mock_additional_data_from_json.assert_called_once_with(self.level, self.source_data, mock_data_act["version"])
+                mock_additional_data_from_json.assert_called_once_with(
+                    self.level,
+                    self.source_data, mock_data_act["version"],
+                )
 
     @patch("os.path.isfile", return_value=True)
-    @patch("builtins.open", new_callable=unittest.mock.mock_open, read_data='{"schema": "lobster-req-trace", "version": 4, "generator": "mock_generator"}')
+    @patch(
+        "builtins.open",
+        new_callable=unittest.mock.mock_open,
+        read_data='{"schema": "lobster-req-trace", "version": 4, "generator": "mock_generator"}',
+    )
     def test_lobster_read_missing_data_key(self, mock_file_open, mock_isfile):
         with self.assertRaises(LOBSTER_Error):
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
             self.mh.error.assert_called_with(ANY, "required top-level key data not present")
 
     @patch("os.path.isfile", return_value=True)
-    @patch("builtins.open", new_callable=unittest.mock.mock_open, read_data='{"schema": "lobster-req-trace", "version": 5, "generator": "test_gen", "data": []}')
+    @patch(
+        "builtins.open",
+        new_callable=unittest.mock.mock_open,
+        read_data='{"schema": "lobster-req-trace", "version": 5, "generator": "test_gen", "data": []}',
+    )
     def test_lobster_read_unsupported_version(self, mock_file_open, mock_isfile):
         with self.assertRaises(LOBSTER_Error):
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
-            self.mh.error.assert_called_with(File_Reference(self.filename), "version 5 for schema lobster-req-trace is not supported")
+            self.mh.error.assert_called_with(
+                File_Reference(self.filename),
+                "version 5 for schema lobster-req-trace is not supported",
+            )
 
     @patch("os.path.isfile", return_value=True)
-    @patch("builtins.open", new_callable=unittest.mock.mock_open, read_data='{"schema": "unknown-schema", "version": 4, "generator": "test_gen", "data": []}')
+    @patch(
+        "builtins.open",
+        new_callable=unittest.mock.mock_open,
+        read_data='{"schema": "unknown-schema", "version": 4, "generator": "test_gen", "data": []}',
+    )
     def test_lobster_read_unknown_schema(self, mock_file_open, mock_isfile):
         with self.assertRaises(LOBSTER_Error):
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)

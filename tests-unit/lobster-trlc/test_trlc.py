@@ -104,7 +104,11 @@ class LobsterTrlcTests(unittest.TestCase):
 
     @patch("lobster.tools.trlc.trlc.Config_Parser.generate_text")
     @patch("trlc.ast.Record_Object.to_python_dict")
-    def test_generate_lobster_object_trace_true_with_tag_field(self, mock_to_python_dict, mock_generate_text):
+    def test_generate_lobster_object_trace_true_with_tag_field(
+        self,
+        mock_to_python_dict,
+        mock_generate_text,
+    ):
         # Test case 4: When there are tag fields
         tag_field = Mock(spec=ast.Composite_Component)
         tag_field.name = "tag_field"
@@ -136,7 +140,11 @@ class LobsterTrlcTests(unittest.TestCase):
 
     @patch("lobster.tools.trlc.trlc.Config_Parser.generate_text")
     @patch("trlc.ast.Record_Object.to_python_dict")
-    def test_generate_lobster_object_trace_true_with_just_up_field(self, mock_to_python_dict, mock_generate_text):
+    def test_generate_lobster_object_trace_true_with_just_up_field(
+        self,
+        mock_to_python_dict,
+        mock_generate_text,
+    ):
         # Test case 4: When there are just_up field
         just_up_field = Mock(spec=ast.Composite_Component)
         just_up_field.name = "just_up_field"
@@ -173,7 +181,10 @@ class LobsterTrlcTests(unittest.TestCase):
 
         with self.assertRaises(TRLC_Error):
             self.config_parser.generate_text(n_typ, mock_value)
-            self.config_parser.mh.error.assert_called_once_with(ANY, "please define a to_string function for this type in the lobster-trlc configuration file")
+            self.config_parser.mh.error.assert_called_once_with(
+                ANY,
+                "please define a to_string function for this type in the lobster-trlc configuration file",
+            )
 
     @patch("trlc.trlc.ast")
     def test_generate_text_with_non_tuple_type(self, mock_ast):
@@ -208,7 +219,10 @@ class LobsterTrlcTests(unittest.TestCase):
 
         with self.assertRaises(TRLC_Error):
             self.config_parser.generate_text(n_typ, mock_value)
-            self.mh.error.assert_called_with(ANY, f"please define a to_string function that can render {mock_value}")
+            self.mh.error.assert_called_with(
+                ANY,
+                f"please define a to_string function that can render {mock_value}",
+            )
 
 if __name__ == '__main__':
     unittest.main()
