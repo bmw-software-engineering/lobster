@@ -5,6 +5,18 @@
 
 ### 0.13.1-dev
 
+* API:
+  Introduced API function called `cb_query_to_lobster_file` to download items from
+  codebeamer and serialize them in the LOBSTER interchange format to a file.
+  Instead of running the tool `lobster-codebeamer` users can now achieve the same
+  with the above API function.
+
+* `lobster-codebeamer`:
+  - Improved error message in case the specified path to the configuration file
+    is a directory and not a path.
+  - Added error message if neither `import_query` nor `import_tagged` is specified
+    in the configuration file.
+
 * `lobster-online-report`:
   - Fixed issue on MacOS: The computation of the relative path between a file
     and the repository root failed unless all paths were given in a normalized
