@@ -222,5 +222,5 @@ class LobsterWriteReadTests(unittest.TestCase):
 
     @patch("os.path.isfile", return_value=False)
     def test_lobster_read_file_not_found(self, mock_isfile):
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(FileNotFoundError):
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
