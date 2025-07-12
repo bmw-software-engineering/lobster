@@ -542,7 +542,11 @@ class CodebeamerTool(MetaDataToolBase):
                             mh.warning(item.location,
                                        f"invalid codebeamer reference to {item_id}")
                     except ValueError:
-                        pass
+                        mh.warning(
+                            item.location,
+                            f"cannot convert reference '{tag.tag}' to integer "
+                            f"Codebeamer ID",
+                        )
 
         elif cb_config.import_query is not None:
             try:
