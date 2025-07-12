@@ -5,6 +5,12 @@
 
 ### 0.13.1-dev
 
+* `lobster-codebeamer`:
+  - Add warning message if the file given through the configuration parameter
+    `import_tagged` contains references which cannot be converted to integer
+    in base 10. Codebeamer IDs are always integer values, so such a reference
+    cannot represent a Codebamer item.
+
 * `lobster-online-report`:
   - Fixed issue on MacOS: The computation of the relative path between a file
     and the repository root failed unless all paths were given in a normalized
