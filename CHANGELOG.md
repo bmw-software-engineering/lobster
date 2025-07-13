@@ -5,6 +5,19 @@
 
 ### 0.13.1-dev
 
+* `lobster-cpp`:
+  - Fixed handling of `--skip-clang-errors` where a closing bracket `]`
+    needed to be appended to the error names.
+    Previously the command line option had to be specified like this:
+    ```
+    --skip-clang-errors=clang-diagnostic-error]
+    ```
+    With this fix the bracket is not needed, as one would expect:
+    ```
+    --skip-clang-errors=clang-diagnostic-error
+    ```
+    See also [issue 276](https://github.com/bmw-software-engineering/lobster/issues/276).
+
 * `lobster-online-report`:
   - Fixed issue on MacOS: The computation of the relative path between a file
     and the repository root failed unless all paths were given in a normalized
