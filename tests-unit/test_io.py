@@ -10,7 +10,7 @@ from lobster.location import Location
 
 class LobsterWriteReadTests(unittest.TestCase):
     # unit tests for io.py file
-    
+
     def setUp(self):
         self.mock_namespace = "mock_namespace"
         self.mock_tag = "mock_tag"
@@ -45,7 +45,7 @@ class LobsterWriteReadTests(unittest.TestCase):
     @patch("lobster.items.Tracing_Tag.to_json")
     @patch("lobster.items.Item.to_json")
     def test_lobster_write_requirement(self, mock_item_to_json, mock_tracing_tag_to_json, mock_json):
-        self.generator = "mock_generator"
+        generator = "mock_generator"
         mock_tracing_tag_to_json.return_value = "mock_value"
         self.source_data["tracing_status"] = "mock_status"
         mock_item_to_json.return_value = self.source_data
@@ -58,11 +58,11 @@ class LobsterWriteReadTests(unittest.TestCase):
         fd_req = io.StringIO()
         mock_data = {
             "data" : [self.source_data],
-            "generator" : self.generator,
+            "generator" : generator,
             "schema" : "lobster-req-trace",
             "version" : 4
         }
-        lobster_write(fd_req, Requirement, self.generator, items)
+        lobster_write(fd_req, Requirement, generator, items)
         fd_req.seek(0)
         mock_json.dump.assert_called_once_with(mock_data, fd_req, indent=2)
 
@@ -70,7 +70,7 @@ class LobsterWriteReadTests(unittest.TestCase):
     @patch("lobster.items.Tracing_Tag.to_json")
     @patch("lobster.items.Item.to_json")
     def test_lobster_write_implementation(self, mock_item_to_json, mock_tracing_tag_to_json, mock_json):
-        self.generator = "mock_generator"
+        generator = "mock_generator"
         mock_tracing_tag_to_json.return_value = "mock_value"
         self.source_data["tracing_status"] = "mock_status"
         mock_item_to_json.return_value = self.source_data
@@ -79,11 +79,11 @@ class LobsterWriteReadTests(unittest.TestCase):
         self.source_data["language"] = "mock_language"
         self.source_data["kind"] = "mock_kind"
         fd_imp = io.StringIO()
-        lobster_write(fd_imp, Implementation, self.generator, items)
+        lobster_write(fd_imp, Implementation, generator, items)
         fd_imp.seek(0)
         mock_data = {
             "data" : [self.source_data],
-            "generator" : self.generator,
+            "generator" : generator,
             "schema" : "lobster-imp-trace",
             "version" : 3
         }
@@ -93,7 +93,7 @@ class LobsterWriteReadTests(unittest.TestCase):
     @patch("lobster.items.Tracing_Tag.to_json")
     @patch("lobster.items.Item.to_json")
     def test_lobster_write_activity(self, mock_item_to_json, mock_tracing_tag_to_json, mock_json):
-        self.generator = "mock_generator"
+        generator = "mock_generator"
         mock_tracing_tag_to_json.return_value = "mock_value"
         self.source_data["tracing_status"] = "mock_status"
         mock_item_to_json.return_value = self.source_data
@@ -103,11 +103,11 @@ class LobsterWriteReadTests(unittest.TestCase):
         self.source_data["kind"] = "mock_kind"
         self.source_data["status"] = None
         fd_act = io.StringIO()
-        lobster_write(fd_act, Activity, self.generator, items)
+        lobster_write(fd_act, Activity, generator, items)
         fd_act.seek(0)
         mock_data = {
             "data" : [self.source_data],
-            "generator" : self.generator,
+            "generator" : generator,
             "schema" : "lobster-act-trace",
             "version" : 3
         }
@@ -196,27 +196,27 @@ class LobsterWriteReadTests(unittest.TestCase):
 
     @patch("os.path.isfile", return_value=True)
     @patch("builtins.open", new_callable=unittest.mock.mock_open, read_data='{"schema": "lobster-req-trace", "version": 4, "generator": "mock_generator"}')
-    def test_lobster_read_missing_data_key(self, mock_open, mock_isfile):
+    def test_lobster_read_missing_data_key(self, mock_file_open, mock_isfile):
         with self.assertRaises(LOBSTER_Error):
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
             self.mh.error.assert_called_with(ANY, "required top-level key data not present")
 
     @patch("os.path.isfile", return_value=True)
     @patch("builtins.open", new_callable=unittest.mock.mock_open, read_data='{"schema": "lobster-req-trace", "version": 5, "generator": "test_gen", "data": []}')
-    def test_lobster_read_unsupported_version(self, mock_open, mock_isfile):
+    def test_lobster_read_unsupported_version(self, mock_file_open, mock_isfile):
         with self.assertRaises(LOBSTER_Error):
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
             self.mh.error.assert_called_with(File_Reference(self.filename), "version 5 for schema lobster-req-trace is not supported")
 
     @patch("os.path.isfile", return_value=True)
     @patch("builtins.open", new_callable=unittest.mock.mock_open, read_data='{"schema": "unknown-schema", "version": 4, "generator": "test_gen", "data": []}')
-    def test_lobster_read_unknown_schema(self, mock_open, mock_isfile):
+    def test_lobster_read_unknown_schema(self, mock_file_open, mock_isfile):
         with self.assertRaises(LOBSTER_Error):
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
 
     @patch("os.path.isfile", return_value=True)
     @patch("builtins.open", new_callable=mock_open, read_data='invalid')
-    def test_lobster_read_invalid_json(self, mock_open, mock_isfile):
+    def test_lobster_read_invalid_json(self, mock_file_open, mock_isfile):
         with self.assertRaises(LOBSTER_Error):
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
 

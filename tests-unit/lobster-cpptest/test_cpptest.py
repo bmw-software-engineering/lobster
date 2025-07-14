@@ -4,7 +4,16 @@ import unittest
 from os.path import dirname
 from pathlib import Path
 
-from lobster.tools.cpptest.cpptest import *
+from lobster.tools.cpptest.cpptest import (
+    CODEBEAMER_URL,
+    KIND,
+    MARKERS,
+    OUTPUT,
+    RequirementTypes,
+    get_test_file_list,
+    lobster_cpptest,
+    parse_config_file,
+)
 from lobster.tools.cpptest.parser.constants import Constants
 from lobster.tools.cpptest.parser.requirements_parser import ParserForRequirements
 
@@ -201,7 +210,7 @@ class LobsterCpptestTests(unittest.TestCase):
         self.assertTrue(file_exists)
 
         # Open and read the JSON output file to validate all file paths are absolute
-        with open(self.output_file_name, 'r') as output_file:
+        with open(self.output_file_name, 'r', encoding="UTF-8") as output_file:
             data = json.load(output_file)
             tag_list = data.get('data')
 
@@ -278,7 +287,7 @@ class LobsterCpptestTests(unittest.TestCase):
 
         self.assertEqual(os.path.exists(self.unit_test_lobster_file), True)
 
-        with open(self.unit_test_lobster_file, "r") as unit_test_file:
+        with open(self.unit_test_lobster_file, "r", encoding="UTF-8") as unit_test_file:
             unit_test_lobster_file_dict = json.loads(unit_test_file.read())
 
         unit_test_lobster_items = []
@@ -319,13 +328,13 @@ class LobsterCpptestTests(unittest.TestCase):
             tag = lobster_item.get('tag')
             refs = lobster_item.get('refs')
             self.assertIsInstance(refs, list)
-            if tag in expected_unit_test_refs_dicts.keys():
+            if tag in expected_unit_test_refs_dicts:
                 expected_refs = expected_unit_test_refs_dicts.get(tag)
                 self.assertListEqual(expected_refs, refs)
 
         self.assertEqual(os.path.exists(self.component_test_lobster_file), True)
 
-        with open(self.component_test_lobster_file, "r") as component_test_file:
+        with open(self.component_test_lobster_file, "r", encoding="UTF-8") as component_test_file:
             component_test_lobster_file_dict = json.loads(component_test_file.read())
 
         component_test_lobster_items = []
@@ -365,7 +374,7 @@ class LobsterCpptestTests(unittest.TestCase):
             tag = lobster_item.get('tag')
             refs = lobster_item.get('refs')
             self.assertIsInstance(refs, list)
-            if tag in expected_component_test_refs_dicts.keys():
+            if tag in expected_component_test_refs_dicts:
                 expected_refs = expected_component_test_refs_dicts.get(tag)
                 self.assertListEqual(expected_refs, refs)
 
@@ -476,65 +485,65 @@ class LobsterCpptestTests(unittest.TestCase):
         test_cases = ParserForRequirements.collect_test_cases(self.test_case_file, codebeamer_url)
         self.assertEqual(len(test_cases), 45)
 
-        for i in range(0, len(expect)):
+        for i, expectation in enumerate(expect):
             self.assertEqual(test_cases[i].file_name, self.test_case_file)
-            self.assertEqual(test_cases[i].suite_name, expect[i]["suite"])
-            self.assertEqual(test_cases[i].test_name, expect[i]["test_name"])
-            if "docu_start" in expect[i]:
+            self.assertEqual(test_cases[i].suite_name, expectation["suite"])
+            self.assertEqual(test_cases[i].test_name, expectation["test_name"])
+            if "docu_start" in expectation:
                 self.assertEqual(
                     test_cases[i].docu_start_line,
-                    expect[i]["docu_start"],
+                    expectation["docu_start"],
                     "docu_start does not match for test_name " + test_cases[i].test_name,
                 )
                 self.assertEqual(
                     test_cases[i].docu_end_line,
-                    expect[i]["docu_end"],
+                    expectation["docu_end"],
                     "docu_end does not match for test_name " + test_cases[i].test_name,
                 )
                 self.assertEqual(
                     test_cases[i].definition_start_line,
-                    expect[i]["def_start"],
+                    expectation["def_start"],
                     "def_start does not match for test_name " + test_cases[i].test_name,
                 )
                 self.assertEqual(
                     test_cases[i].definition_end_line,
-                    expect[i]["def_end"],
+                    expectation["def_end"],
                     "def_end does not match for test_name " + test_cases[i].test_name,
                 )
-            if "req" in expect[i]:
+            if "req" in expectation:
                 self.assertEqual(
                     test_cases[i].requirements,
-                    expect[i]["req"],
+                    expectation["req"],
                     "req does not match for test_name " + test_cases[i].test_name,
                 )
-            if "req_by" in expect[i]:
+            if "req_by" in expectation:
                 self.assertEqual(
                     test_cases[i].required_by,
-                    expect[i]["req_by"],
+                    expectation["req_by"],
                     "req_by does not match for test_name " + test_cases[i].test_name,
                 )
-            if "version" in expect[i]:
+            if "version" in expectation:
                 self.assertEqual(
                     test_cases[i].version_id,
-                    expect[i]["version"],
+                    expectation["version"],
                     "version does not match for test_name " + test_cases[i].test_name,
                 )
-            if "test" in expect[i]:
+            if "test" in expectation:
                 self.assertEqual(
                     test_cases[i].test,
-                    expect[i]["test"],
+                    expectation["test"],
                     "test does not match for test_name " + test_cases[i].test_name,
                 )
-            if "testmethods" in expect[i]:
+            if "testmethods" in expectation:
                 self.assertEqual(
                     test_cases[i].testmethods,
-                    expect[i]["testmethods"],
+                    expectation["testmethods"],
                     "testmethods does not match for test_name " + test_cases[i].test_name,
                 )
-            if "brief" in expect[i]:
+            if "brief" in expectation:
                 self.assertEqual(
                     test_cases[i].brief,
-                    expect[i]["brief"],
+                    expectation["brief"],
                     "brief does not match for test_name " + test_cases[i].test_name,
                 )
 

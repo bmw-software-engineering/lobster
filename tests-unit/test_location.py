@@ -44,4 +44,3 @@ class CodebeamerReferenceTests(TestCase):
         )
         expected_key = (self._CB_ROOT, cb_ref.tracker, cb_ref.item)
         self.assertEqual(expected_key, cb_ref.sorting_key())
-
