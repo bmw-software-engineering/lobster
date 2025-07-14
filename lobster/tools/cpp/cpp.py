@@ -52,7 +52,7 @@ RE_JUST = (PREFIX + " " +
 def extract_clang_finding_name(line: str) -> Optional[str]:
     """extracts the name of the clang finding from the end of the line"""
     if line.endswith("]") and ("[" in line):
-        return line.split("[")[-1]
+        return line.split("[")[-1].rstrip("]")
     return None
 
 
