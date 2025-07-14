@@ -5,6 +5,12 @@
 
 ### 0.13.1-dev
 
+* `lobster-codebeamer`:
+  - Add warning message if the file given through the configuration parameter
+    `import_tagged` contains references which cannot be converted to integer
+    in base 10. Codebeamer IDs are always integer values, so such a reference
+    cannot represent a Codebamer item.
+
 * `lobster-cpp`:
   - Fixed handling of `--skip-clang-errors` where a closing bracket `]`
     needed to be appended to the error names.
