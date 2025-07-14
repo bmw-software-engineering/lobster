@@ -1,4 +1,3 @@
-from itertools import islice
 from typing import List
 from unittest import TestCase
 from unittest.mock import Mock
@@ -20,7 +19,7 @@ class SignalDuplicateItemsTest(TestCase):
                     "name",
                 )
             self._items[req.tag.key()] = req
-    
+
     def _create_duplicates(self, source: List[Requirement], count) -> List[Requirement]:
         """
         Create a list of duplicate items based on the existing items.
