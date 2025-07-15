@@ -26,7 +26,10 @@ lint-system-tests: style
 		tests-system/asserter.py \
 		tests-system/lobster-json \
 		tests-system/lobster-report \
-		tests-system/lobster-meta-data-tool-base
+		tests-system/lobster-meta-data-tool-base \
+		tests-system/lobster-online-report \
+		tests-system/lobster-online-report-nogit \
+		tests-system/lobster-report
 
 trlc:
 	trlc lobster --error-on-warnings --verify
