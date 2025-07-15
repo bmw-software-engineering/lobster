@@ -25,7 +25,6 @@ lint-system-tests: style
 		tests-system/system_test_case_base.py \
 		tests-system/asserter.py \
 		tests-system/lobster-json \
-		tests-system/lobster-report \
 		tests-system/lobster-meta-data-tool-base \
 		tests-system/lobster-online-report \
 		tests-system/lobster-online-report-nogit \
