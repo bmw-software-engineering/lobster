@@ -37,7 +37,7 @@ import time
 import sys
 import argparse
 import netrc
-from typing import List, Optional, Set, Union
+from typing import Dict, Iterable, List, Optional, TextIO, Union
 from urllib.parse import quote, urlparse
 from enum import Enum
 import requests
@@ -53,6 +53,9 @@ from lobster.tools.codebeamer.config import AuthenticationConfig, Config
 from lobster.tools.codebeamer.exceptions import (
     MismatchException, NotFileException, QueryException,
 )
+
+
+TOOL_NAME = "lobster-codebeamer"
 
 
 class SupportedConfigKeys(Enum):
@@ -129,9 +132,7 @@ def get_single_item(cb_config: Config, item_id: int):
     return query_cb_single(cb_config, url)
 
 
-def get_many_items(cb_config: Config, item_ids: Set[int]):
-    assert isinstance(item_ids, set)
-
+def get_many_items(cb_config: Config, item_ids: Iterable[int]):
     rv = []
 
     page_id = 1
@@ -152,7 +153,11 @@ def get_many_items(cb_config: Config, item_ids: Set[int]):
 
 
 def get_query(cb_config: Config, query: Union[int, str]):
-    assert isinstance(query, (int, str))
+    if (not query) or (not isinstance(query, (int, str))):
+        raise ValueError(
+            "The query must either be a real positive integer or a non-empty string!",
+        )
+
     rv = []
     url = ""
     page_id = 1
@@ -173,7 +178,11 @@ def get_query(cb_config: Config, query: Union[int, str]):
                         cb_config.page_size,
                         query))
         data = query_cb_single(cb_config, url)
-        assert len(data) == 4
+        if len(data) != 4:
+            raise MismatchException(
+                f"Expected codebeamer response with 4 data entries, but instead "
+                f"received {len(data)}!",
+            )
 
         if page_id == 1 and len(data["items"]) == 0:
             # lobster-trace: codebeamer_req.Get_Query_Zero_Items_Message
@@ -207,7 +216,11 @@ def get_query(cb_config: Config, query: Union[int, str]):
 
         page_id += 1
 
-    assert total_items == len(rv)
+    if total_items != len(rv):
+        raise MismatchException(
+            f"Expected to receive {total_items} items in total from codebeamer, "
+            f"but actually received {len(rv)}!",
+        )
 
     return rv
 
@@ -220,7 +233,7 @@ def get_schema_config(cb_config: Config) -> dict:
     If there is no match, it raises a KeyError.
 
     Positional arguments:
-    cb_config -- configuration dictionary containing the schema.
+    cb_config -- configuration object containing the schema.
 
     Returns:
     A dictionary containing the namespace and class associated with the schema.
@@ -242,7 +255,10 @@ def get_schema_config(cb_config: Config) -> dict:
 
 
 def to_lobster(cb_config: Config, cb_item: dict):
-    assert isinstance(cb_item, dict) and "id" in cb_item
+    if not isinstance(cb_item, dict):
+        raise ValueError("'cb_item' must be of type 'dict'!")
+    if "id" not in cb_item:
+        raise KeyError("Codebeamer item does not contain ID!")
 
     # This looks like it's business logic, maybe we should make this
     # configurable?
@@ -260,7 +276,7 @@ def to_lobster(cb_config: Config, cb_item: dict):
     if "name" in cb_item:
         item_name = cb_item["name"]
     else:
-        item_name = "Unnamed item %u" % cb_item["id"]
+        item_name = f"Unnamed item {cb_item['id']}"
 
     schema_config = get_schema_config(cb_config)
 
@@ -356,8 +372,7 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
         )
 
 
-def import_tagged(cb_config: Config, items_to_import: Set[int]):
-    assert isinstance(items_to_import, set)
+def import_tagged(cb_config: Config, items_to_import: Iterable[int]):
     rv = []
 
     cb_items = get_many_items(cb_config, items_to_import)
@@ -400,23 +415,21 @@ def update_authentication_parameters(
                        "or configure credentials in the .netrc file.")
 
 
-def parse_yaml_config(file_name: str) -> Config:
+def load_config(file_name: str) -> Config:
     """
-    Parses a YAML configuration file and returns a validated configuration dictionary.
+    Parses a YAML configuration file and returns a validated configuration object.
 
     Args:
         file_name (str): Path to the YAML configuration file.
 
     Returns:
-        Dict[str, Any]: Parsed and validated configuration.
+        Config: validated configuration.
 
     Raises:
         ValueError: If `file_name` is not a string.
         FileNotFoundError: If the file does not exist.
         KeyError: If required fields are missing or unsupported keys are present.
     """
-    assert os.path.isfile(file_name)
-
     with open(file_name, "r", encoding='utf-8') as file:
         return parse_config_data(yaml.safe_load(file) or {})
 
@@ -488,7 +501,8 @@ class CodebeamerTool(MetaDataToolBase):
 
     def _run_impl(self, options: argparse.Namespace) -> int:
         try:
-            return self._execute(options)
+            self._execute(options)
+            return 0
         except NotFileException as ex:
             print(ex)
         except QueryException as query_ex:
@@ -498,16 +512,27 @@ class CodebeamerTool(MetaDataToolBase):
             print("* decrease the query size with the query_size parameter")
             print("* increase the retry count with the parameters (num_request_retry, "
                   "retry_error_codes)")
+        except FileNotFoundError as file_ex:
+            self._print_error(f"File '{file_ex.filename}' not found.")
+        except IsADirectoryError as isdir_ex:
+            self._print_error(
+                f"Path '{isdir_ex.filename}' is a directory, but a file was expected.",
+            )
+        except ValueError as value_error:
+            self._print_error(value_error)
+        except LOBSTER_Error as lobster_error:
+            self._print_error(lobster_error)
+
         return 1
 
-    def _execute(self, options: argparse.Namespace) -> int:
+    @staticmethod
+    def _print_error(error: Union[Exception, str]):
+        print(f"{TOOL_NAME}: {error}", file=sys.stderr)
+
+    def _execute(self, options: argparse.Namespace) -> None:
         mh = Message_Handler()
 
-        if not os.path.isfile(options.config):
-            print((f"lobster-codebeamer: Config file '{options.config}' not found."))
-            return 1
-
-        cb_config = parse_yaml_config(options.config)
+        cb_config = load_config(options.config)
 
         if cb_config.out is None:
             cb_config.out = options.out
@@ -517,20 +542,15 @@ class CodebeamerTool(MetaDataToolBase):
         items_to_import = set()
 
         if cb_config.import_tagged:
-            if not os.path.isfile(cb_config.import_tagged):
-                raise NotFileException(f"lobster-codebeamer: {cb_config.import_tagged} "
-                                       f"is not a file.")
-            items = {}
-            try:
-                lobster_read(
-                    mh = mh,
-                    filename = cb_config.import_tagged,
-                    level = "N/A",
-                    items = items,
-                )
-            except LOBSTER_Error:
-                return 1
-            for item in items.values():
+            source_items = {}
+            lobster_read(
+                mh = mh,
+                filename = cb_config.import_tagged,
+                level = "N/A",
+                items = source_items,
+            )
+
+            for item in source_items.values():
                 for tag in item.unresolved_references:
                     if tag.namespace != "req":
                         continue
@@ -547,6 +567,8 @@ class CodebeamerTool(MetaDataToolBase):
                             f"cannot convert reference '{tag.tag}' to integer "
                             f"Codebeamer ID",
                         )
+
+            items = import_tagged(cb_config, items_to_import)
 
         elif cb_config.import_query is not None:
             try:
@@ -566,25 +588,39 @@ class CodebeamerTool(MetaDataToolBase):
             except ValueError as e:
                 self._argument_parser.error(str(e))
 
-        try:
-            if cb_config.import_tagged:
-                items = import_tagged(cb_config, items_to_import)
-            elif cb_config.import_query:
-                items = get_query(cb_config, cb_config.import_query)
-        except LOBSTER_Error:
-            return 1
-
-        schema_config = get_schema_config(cb_config)
-
-        if cb_config.out is None:
-            with sys.stdout as fd:
-                lobster_write(fd, schema_config["class"], "lobster_codebeamer", items)
+            items = get_query(cb_config, cb_config.import_query)
         else:
-            with open(cb_config.out, "w", encoding="UTF-8") as fd:
-                lobster_write(fd, schema_config["class"], "lobster_codebeamer", items)
+            raise ValueError(
+                f"Unclear what to do, because neither "
+                f"'{SupportedConfigKeys.IMPORT_QUERY.value}' nor "
+                f"'{SupportedConfigKeys.IMPORT_TAGGED.value}' is specified!",
+            )
+
+        with _get_out_stream(cb_config.out) as out_stream:
+            _cb_items_to_lobster(items, cb_config, out_stream)
+        if cb_config.out:
             print(f"Written {len(items)} requirements to {cb_config.out}")
 
-        return 0
+
+def _get_out_stream(config_out: Optional[str]) -> TextIO:
+    if config_out:
+        return open(config_out, "w", encoding="UTF-8")
+    return sys.stdout
+
+
+def _cb_items_to_lobster(items: List[Dict], config: Config, out_file: TextIO) -> None:
+    schema_config = get_schema_config(config)
+    lobster_write(out_file, schema_config["class"], TOOL_NAME.replace("-", "_"), items)
+
+
+def cb_query_to_lobster_file(config: Config, out_file: str) -> None:
+    """Loads items from codebeamer and serializes them in the LOBSTER interchange
+       format to the given file.
+    """
+    # This is an API function.
+    items = get_query(config, config.import_query)
+    with open(out_file, "w", encoding="UTF-8") as fd:
+        _cb_items_to_lobster(items, config, fd)
 
 
 def main() -> int:
