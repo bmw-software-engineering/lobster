@@ -17,17 +17,6 @@ class LobsterCodebeamerSystemTestCaseBase(SystemTestCaseBase):
         )
         return test_runner
 
-    def set_config_file_data(self, retry_codes=None, num_retries=None):
-        cfg = self._test_runner.config_file_data
-        cfg.import_query = 1234458
-        cfg.root = "https://localhost:8999"
-        cfg.token = "abcdef1234567890"
-        cfg.out = "codebeamer.lobster"
-        if retry_codes is not None:
-            cfg.retry_error_codes = retry_codes
-        if num_retries is not None:
-            cfg.num_request_retry = num_retries
-
     def create_mock_response_items(self, page: int, page_size: int, total: int):
         """Create a mock response like codebeamer API paginated items."""
         MULTIPLICATOR = 100

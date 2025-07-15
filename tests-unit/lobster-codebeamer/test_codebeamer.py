@@ -170,7 +170,6 @@ class QueryCodebeamerTest(unittest.TestCase):
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_import_tagged(self, mock_query_cb_single):
-        # lobster-trace: codebeamer_req.Dummy_Requirement_Unit_Test
         item_ids = (24406947, 21747817)
         response_items = [
             {

@@ -1,21 +1,27 @@
 from subprocess import CompletedProcess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Union
 import yaml
+from .mock_server import PORT
 from ..test_runner import TestRunner
 
 
 @dataclass
 class ConfigFileData:
-    import_query: Optional[bool] = None
+    import_query: Optional[Union[int, str]] = None
     root: Optional[str] = None
     token: Optional[str] = None
     out: Optional[str] = None
     refs: Optional[List[str]] = None
-    page_size: Optional[str] = None
-    num_request_retry: Optional[bool] = None
-    retry_error_codes: Optional[bool] = None
+    page_size: Optional[int] = None
+    num_request_retry: Optional[int] = None
+    retry_error_codes: Optional[List[int]] = None
+
+    def set_default_root_token_out(self):
+        self.root = f"https://localhost:{PORT}"
+        self.token = "abcdef1234567890"
+        self.out = "codebeamer.lobster"
 
     def dump(self, filename: str):
         data = {}
