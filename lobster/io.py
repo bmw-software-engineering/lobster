@@ -17,23 +17,25 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-import os.path
-import io
 from collections.abc import Iterable
 import json
-from typing import Dict, Sequence, Union
+from typing import Dict, Optional, Sequence, TextIO, Type, Union
 
 from lobster.errors import Message_Handler
 from lobster.location import File_Reference
 from lobster.items import Requirement, Implementation, Activity
 
 
-def lobster_write(fd, kind, generator, items):
-    assert isinstance(fd, io.TextIOBase)
-    assert kind in (Requirement, Implementation, Activity)
-    assert isinstance(generator, str)
-    assert isinstance(items, Iterable)
-    assert all(isinstance(item, kind) for item in items)
+def lobster_write(
+        fd: TextIO,
+        kind: Union[Type[Requirement], Type[Implementation], Type[Activity]],
+        generator: str,
+        items: Iterable,
+):
+    if not all(isinstance(item, kind) for item in items):
+        raise ValueError(
+            f"All elements in 'items' must be of the type {kind.__name__}!",
+        )
 
     if kind is Requirement:
         schema  = "lobster-req-trace"
@@ -55,17 +57,11 @@ def lobster_write(fd, kind, generator, items):
 
 def lobster_read(
         mh,
-        filename,
-        level,
+        filename: str,
+        level: str,
         items: Dict[str, Union[Activity, Implementation, Requirement]],
-        source_info=None,
+        source_info: Optional[Dict] = None,
 ):
-    assert isinstance(mh, Message_Handler)
-    assert isinstance(filename, str)
-    assert isinstance(level, str)
-    assert os.path.isfile(filename)
-    assert isinstance(source_info, dict) or source_info is None
-
     loc = File_Reference(filename)
 
     # Read and validate JSON
