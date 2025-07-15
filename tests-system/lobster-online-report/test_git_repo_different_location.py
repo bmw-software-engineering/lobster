@@ -44,5 +44,5 @@ class NonGitRepositoryTest(LobsterOnlineReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"error: could not find .git directory\n")
+        asserter.assertStdOutText("error: could not find .git directory\n")
         asserter.assertExitCode(1)

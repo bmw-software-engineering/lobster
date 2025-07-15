@@ -4,6 +4,7 @@ import sys
 
 from dataclasses import dataclass
 from typing import Iterable
+from urllib.parse import quote
 
 from lobster.items import Item
 from lobster.location import File_Reference, Github_Reference
@@ -41,9 +42,11 @@ def file_ref_to_remote_ref(file_ref: File_Reference, repo_data: RepoData) -> (
     if os.path.isfile(file_ref.filename) or os.path.isdir(file_ref.filename):
         return Github_Reference(
             gh_root=repo_data.remote_url,
-            filename=os.path.relpath(
-                os.path.realpath(file_ref.filename),
-                os.path.realpath(repo_data.root),
+            filename=quote(
+                os.path.relpath(
+                    os.path.realpath(file_ref.filename),
+                    os.path.realpath(repo_data.root),
+                ).replace(os.sep, "/")
             ),
             line=file_ref.line,
             commit=repo_data.commit,
