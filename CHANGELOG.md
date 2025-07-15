@@ -5,6 +5,12 @@
 
 ### 0.13.1-dev
 
+* API:
+  Introduced an API function called `apply_github_urls`.
+  Instead of running the tool `lobster-online-report-nogit` users
+  can write their own Python scripts and import the function
+  to achieve the same result as when running the tool.
+
 * `lobster-codebeamer`:
   - Add warning message if the file given through the configuration parameter
     `import_tagged` contains references which cannot be converted to integer
