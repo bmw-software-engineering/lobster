@@ -9,8 +9,12 @@ class ReportTests(TestCase):
 
         MAX_SUPPORTED_ITEMS = 100000000
 
-        for num_items in list(range(0, 10000)) + [MAX_SUPPORTED_ITEMS / 2, MAX_SUPPORTED_ITEMS]:
-            for ok_items in set((0, 1, 2, int(num_items / 2), max(num_items - 1, 0), num_items)):
+        for num_items in list(range(0, 10000)) \
+            + [MAX_SUPPORTED_ITEMS / 2, MAX_SUPPORTED_ITEMS]:
+            for ok_items in set(
+                (0, 1, 2, int(num_items / 2), max(num_items - 1, 0),
+                 num_items),
+                 ):
                 if num_items < ok_items:
                     continue
 

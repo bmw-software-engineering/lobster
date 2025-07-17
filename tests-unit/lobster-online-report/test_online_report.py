@@ -38,13 +38,19 @@ class LobsterOnlineReportTests(unittest.TestCase):
     def test_print_summary_same_values(self):
         value = "marble"
         actual = get_summary(value, value)
-        self.assertEqual(actual, f"LOBSTER report {value} modified to use online references.")
+        self.assertEqual(
+            actual,
+            f"LOBSTER report {value} modified to use online references.",
+        )
 
     def test_print_summary_different_values(self):
         in_file = "basalt"
         out_file = "granite"
         actual = get_summary(in_file, out_file)
-        self.assertEqual(actual, f"LOBSTER report {out_file} created, using online references.")
+        self.assertEqual(
+            actual,
+            f"LOBSTER report {out_file} created, using online references.",
+        )
 
     def test_commit_hash_for_main_repo(self):
         root = " https://github.com/bmw-software-engineering/lobster"

@@ -17,8 +17,22 @@ class ItemsTests(unittest.TestCase):
         self.mock_location = create_autospec(Location, instance=True)
         self.tracing_tag = Tracing_Tag(self.mock_namespace, self.mock_tag)
         self.item = Item(self.tracing_tag, self.mock_location)
-        self.requirement = Requirement(self.tracing_tag, self.mock_location, self.mock_framework,self. mock_kind, self.mock_name, self.mock_text, self.mock_status)
-        self.implementation = Implementation(self.tracing_tag, self.mock_location, self.mock_language, self.mock_kind, self.mock_name)
+        self.requirement = Requirement(
+            self.tracing_tag,
+            self.mock_location,
+            self.mock_framework,
+            self. mock_kind,
+            self.mock_name,
+            self.mock_text,
+            self.mock_status,
+        )
+        self.implementation = Implementation(
+            self.tracing_tag,
+            self.mock_location,
+            self.mock_language,
+            self.mock_kind,
+            self.mock_name,
+        )
         self.activity = Activity(self.tracing_tag, self.mock_location, self.mock_framework, self.mock_kind)
 
     def set_location_data(self, location_type):
