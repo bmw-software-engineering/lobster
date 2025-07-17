@@ -94,7 +94,6 @@ clang-tidy:
 
 integration-tests: packages
 	(cd tests-integration/projects/basic; make)
-	(cd tests-integration/projects/filter; make)
 	(cd tests-integration/projects/coverage; make)
 	(cd tests-integration/projects/coverage-half; make)
 	(cd tests-integration/projects/coverage-mix; make)

@@ -36,8 +36,7 @@
       "traces": [],
       "source": [
         {
-          "file": "implementation.lobster",
-          "filters": []
+          "file": "implementation.lobster"
         }
       ]
     }

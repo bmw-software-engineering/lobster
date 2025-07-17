@@ -73,8 +73,7 @@
       "traces": [],
       "source": [
         {
-          "file": "basic.lobster",
-          "filters": []
+          "file": "basic.lobster"
         }
       ],
       "needs_tracing_up": false,
