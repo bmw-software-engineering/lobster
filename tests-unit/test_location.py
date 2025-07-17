@@ -17,7 +17,8 @@ class CodebeamerReferenceTests(TestCase):
                         name=name,
                     )
                     version_addon = f"?version={version}" if version else ""
-                    expected_html = f'<a href="{self._CB_ROOT}/issue/{cb_ref.item}{version_addon}" target="_blank">{cb_ref.to_string()}</a>'
+                    expected_html = f'<a href="{self._CB_ROOT}/issue/{cb_ref.item}' \
+                        f'{version_addon}" target="_blank">{cb_ref.to_string()}</a>'
                     self.assertEqual(expected_html, cb_ref.to_html())
 
     def test_codebeamer_reference_to_string(self):

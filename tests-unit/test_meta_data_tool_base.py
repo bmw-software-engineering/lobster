@@ -10,7 +10,11 @@ class CherryPineappleTool(MetaDataToolBase):
 
 class MetaDataToolBaseTest(TestCase):
     def setUp(self):
-        self.tool = CherryPineappleTool(name="Knorrstraße", description="A test tool", official=True)
+        self.tool = CherryPineappleTool(
+            name="Knorrstraße",
+            description="A test tool",
+            official=True,
+        )
 
     def test_name(self):
         self.assertEqual(self.tool.name, "lobster-Knorrstraße")

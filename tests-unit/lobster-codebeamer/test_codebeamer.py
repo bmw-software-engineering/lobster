@@ -1,9 +1,12 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from lobster.tools.codebeamer.codebeamer import (MismatchException, get_query, get_single_item,
-                                                 get_many_items, parse_config_data, to_lobster,
-                                                 import_tagged)
+from lobster.tools.codebeamer.codebeamer import (
+    MismatchException,
+    get_query, get_single_item,
+    get_many_items, parse_config_data, to_lobster,
+    import_tagged,
+)
 
 from lobster.tools.codebeamer.config import AuthenticationConfig, Config
 
@@ -196,7 +199,8 @@ class QueryCodebeamerTest(unittest.TestCase):
             'items': response_items
         }
 
-        expected_result = [to_lobster(self._mock_cb_config, items) for items in response_items]
+        expected_result = [to_lobster(self._mock_cb_config, items)
+                           for items in response_items]
 
         import_tagged_result = import_tagged(self._mock_cb_config, set(item_ids))
 

@@ -12,14 +12,20 @@ from lobster.tools.codebeamer.config import AuthenticationConfig
 class CbConfigTest(unittest.TestCase):
     def setUp(self):
         self._real_netrc_file=Path(__file__).resolve().parents[0] / "test.netrc"
-        assert isfile(self._real_netrc_file), f"Invalid test setup: netrc file {self._real_netrc_file} does not exist!"
+        self.assertTrue(
+            isfile(self._real_netrc_file),
+            f"Invalid test setup: netrc file {self._real_netrc_file} does not exist!",
+        )
 
     def test_missing_config_file(self):
         """
         Tests that FileNotFoundError is raised if config file is missing.
         """
         missing_config_path = "missing-config.yaml"
-        self.assertFalse(isfile(missing_config_path), "Invalid test setup: file must not exist!")
+        self.assertFalse(
+            isfile(missing_config_path),
+            "Invalid test setup: file must not exist!",
+        )
 
         with self.assertRaises(FileNotFoundError):
             load_config(missing_config_path)
@@ -45,7 +51,10 @@ class CbConfigTest(unittest.TestCase):
                     'schema': 'Requirement',
                 }
             )
-        self.assertIn("Either import_tagged or import_query must be provided!", str(context.exception))
+        self.assertIn(
+            "Either import_tagged or import_query must be provided!",
+            str(context.exception),
+        )
 
     def test_unsupported_config_keys(self):
         with self.assertRaises(KeyError) as context:
@@ -142,7 +151,10 @@ class CbConfigTest(unittest.TestCase):
             root="https://missingmachine.com/cb",
         )
         with self.assertRaises(KeyError) as context:
-            update_authentication_parameters(auth_config, netrc_path=self._real_netrc_file)
+            update_authentication_parameters(
+                auth_config,
+                netrc_path=self._real_netrc_file,
+            )
 
         self.assertIn("Error parsing .netrc file", str(context.exception))
 

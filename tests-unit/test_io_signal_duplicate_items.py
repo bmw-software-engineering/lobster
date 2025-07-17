@@ -65,7 +65,8 @@ class SignalDuplicateItemsTest(TestCase):
             self.assertEqual(
                 call.kwargs.get("message"),
                 f"duplicate definition of {duplicated_key}, "
-                f"previously defined at {self._items[duplicated_key].location.to_string()}",
+                f"previously defined at "
+                f"{self._items[duplicated_key].location.to_string()}",
             )
             self.assertIs(duplicate_items[i].location, call.kwargs.get("location"))
 

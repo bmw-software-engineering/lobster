@@ -42,7 +42,8 @@ class TestLOBSTER_Tool(unittest.TestCase):
     def test_load_yaml_config_missing_file(self):
         with self.assertRaises(SystemExit) as context:
             self.tool.load_yaml_config("non_existent.yaml")
-        self.assertEqual(str(context.exception), "Error: Config file 'non_existent.yaml' not found.")
+        self.assertEqual(str(context.exception),
+                         "Error: Config file 'non_existent.yaml' not found.")
 
     def test_process_common_options_output_exits_not_file(self):
         with TemporaryDirectory() as temp_dir:
@@ -55,12 +56,20 @@ class TestLOBSTER_Tool(unittest.TestCase):
             with  NamedTemporaryFile("w", delete=False) as temp:
                 temp_path = temp.name
 
-        options = argparse.Namespace(out=None, inputs=[temp_path], inputs_from_file=None)
+        options = argparse.Namespace(
+            out=None,
+            inputs=[temp_path],
+            inputs_from_file=None,
+        )
         work_list = self.tool.process_common_options(options)
         self.assertEqual(work_list, [temp_path])
 
     def test_process_common_options_invalid_inputs(self):
-        options = argparse.Namespace(out=None, inputs=["invalid.txt"], inputs_from_file=None)
+        options = argparse.Namespace(
+            out=None,
+            inputs=["invalid.txt"],
+            inputs_from_file=None,
+        )
         with self.assertRaises(SystemExit):
             self.tool.process_common_options(options)
 

@@ -3,7 +3,10 @@ import os
 from pathlib import Path
 from unittest import TestCase
 from urllib.parse import quote
-from lobster.tools.core.online_report_nogit.online_report_nogit import _file_ref_to_github_ref, RepoInfo
+from lobster.tools.core.online_report_nogit.online_report_nogit import (
+    _file_ref_to_github_ref,
+    RepoInfo,
+)
 from lobster.location import File_Reference, Github_Reference
 
 
@@ -46,12 +49,16 @@ class LobsterOnlineReportNogitTest(TestCase):
                     self.assertEqual(result.commit, repo_info.commit)
                     self.assertEqual(result.line, file_ref.line)
                     escaped_char = quote("ß")
-                    self.assertEqual(result.filename, f"Munich/Dostlerstra{escaped_char}e.werk")
+                    self.assertEqual(
+                        result.filename,
+                        f"Munich/Dostlerstra{escaped_char}e.werk",
+                    )
                     self.assertEqual(
                         result.to_html(),
                         f'<a href="{gh_root}/blob/{repo_info.commit}/' \
-                        f'Munich/Dostlerstra{escaped_char}e.werk#L{file_ref.line}" target="_blank">' \
-                        f'Munich/Dostlerstra{escaped_char}e.werk:{file_ref.line}</a>',
+                        f'Munich/Dostlerstra{escaped_char}e.werk#L{file_ref.line}" ' \
+                        f'target="_blank">Munich/Dostlerstra{escaped_char}e.werk:' \
+                        f'{file_ref.line}</a>',
                     )
 
     def test_real_file_conversion(self):

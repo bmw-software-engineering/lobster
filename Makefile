@@ -30,6 +30,12 @@ lint-system-tests: style
 		tests-system/lobster-online-report-nogit \
 		tests-system/lobster-report
 
+lint-unit-tests: style
+	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
+	python3 -m pylint --rcfile=tests-unit/pylint3.cfg \
+		--reports=no \
+		tests-unit
+
 trlc:
 	trlc lobster --error-on-warnings --verify
 

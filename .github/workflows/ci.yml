@@ -59,8 +59,8 @@ jobs:
         echo "trlc any_modified: ${{ steps.changed-trlc-files.outputs.any_modified }}"
         echo "docu only_modified: ${{ steps.changed-docu-files.outputs.only_modified }}"
 
-  lint:
-    name: PyLint
+  lint-code:
+    name: PyLint Code
     needs: changes
     if: ${{ needs.changes.outputs.py_modified == 'true' }}
     runs-on: ubuntu-24.04
@@ -85,9 +85,23 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
-      - name: Executing linter
+      - name: Executing system test linter
         run: |
           make lint-system-tests
+  lint-unit-tests:
+    name: PyLint Unit Tests
+    needs: changes
+    if: ${{ needs.changes.outputs.py_modified == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements_dev.txt
+      - name: Executing unit test linter
+        run: |
+          make lint-unit-tests
   trlc:
     name: TRLC
     needs: changes
@@ -104,7 +118,7 @@ jobs:
           make trlc
   test:
     name: TestSuite
-    needs: [changes, lint, lint-system-tests, trlc]
+    needs: [changes, lint-code, lint-system-tests, trlc]
     if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
     strategy:
       matrix:
@@ -144,7 +158,7 @@ jobs:
           make coverage-unit
   integration-tests:
     name: Integration tests
-    needs: [changes, lint, lint-system-tests, trlc]
+    needs: [changes, lint-code, lint-system-tests, trlc]
     if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
     runs-on: ubuntu-24.04
     steps:
@@ -184,7 +198,7 @@ jobs:
   failure:
     name: Check all jobs
     needs:
-      - lint
+      - lint-code
       - lint-system-tests
       - trlc
       - test
