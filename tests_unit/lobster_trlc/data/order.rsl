@@ -1,0 +1,35 @@
+package order_test
+
+tuple Other_Value {
+  item Integer
+  separator @
+  version optional Integer
+}
+
+type ZZ_Type
+{
+  text               String
+  just_up   optional String
+  just_down optional String
+}
+
+type Some_Unused_Type
+{
+  text String
+}
+
+type AA_Type extends ZZ_Type
+{
+  extra_text optional String
+  trace_1 optional Other_Value [1 .. *]
+}
+
+type BB_Type extends ZZ_Type
+{
+  trace_2 optional ZZ_Type [1 .. *]
+}
+
+checks ZZ_Type {
+  // just a random check to ensure that other elements in the TRLC symbol table (like a check) do not cause problems
+   len(text) >= 10, warning "this is a bit short", text
+}

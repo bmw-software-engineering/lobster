@@ -1,5 +1,8 @@
-trlc_config: |
-  req.Software_Requirement {
-    description = description
-    tags = derived_from
-  }
+conversion-rules:
+  - package: req
+    record-type: Software_Requirement
+    namespace: req
+    description-fields:
+      - description
+    tags:
+      - derived_from

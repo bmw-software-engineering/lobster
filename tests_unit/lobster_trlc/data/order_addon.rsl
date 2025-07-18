@@ -1,0 +1,5 @@
+package order_test_addon
+import order_test
+
+
+type AA_Type_Addon extends order_test.AA_Type {}

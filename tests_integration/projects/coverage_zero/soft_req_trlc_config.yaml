@@ -3,8 +3,11 @@ inputs :
   - softreq_example.trlc
   - sysreq_example.trlc
 
-trlc_config : |
-  coverage_zero.Software_Requirement {
-    description = text
-    tags "req"  = derived_from
-  }
+conversion-rules:
+  - package: coverage_zero
+    record-type: Software_Requirement
+    namespace: req
+    description-fields:
+      - text
+    tags:
+      - derived_from

@@ -1,20 +1,36 @@
-trlc_config: | 
-  example.Codebeamer_Id {
-    to_string = "$(item)@$(version)"
-    to_string = "$(item)"
-  }
+inputs: 
+  - "."
 
-  example.Requirement {
-    description = text
-    just_up     = just_up
-    just_down   = just_down
-  }
+to-string-rules:
+  - package: example
+    tuple-type: Codebeamer_Id
+    to-string:
+      - "$(item)@$(version)"
+      - "$(item)"
 
-  example.Tagged_Requirement {
-    description = extra_text
-    tags "req"  = trace_cb
-  }
+conversion-rules:
+  - package: example
+    record-type: Requirement
+    namespace: req
+    description-fields:
+      - text
+    justification-up-fields:
+      - just_up
+    justification-down-fields:
+      - just_down
+  
+  - package: example
+    record-type: Tagged_Requirement
+    namespace: req
+    description-fields:
+      - extra_text
+    tags:
+      - field: trace_cb
+        namespace: req
 
-  example.Linked_Requirement {
-    tags "req" = trace_trlc
-  }
+  - package: example
+    record-type: Linked_Requirement
+    namespace: req
+    tags:
+      - field: trace_trlc
+        namespace: req

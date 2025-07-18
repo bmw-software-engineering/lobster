@@ -1,0 +1,36 @@
+conversion-rules: list(include('conversion_rule'))
+to-string-rules: list(include('to_string_rule'), required=False)
+inputs-from-file: str(required=False)
+inputs: list(str(), required=False)
+---
+to_string_rule: include('to_string_rule_properties')
+
+---
+to_string_rule_properties:
+    package: str()
+    tuple-type: str()
+    to-string: any(str(), list(str()))
+
+---
+conversion_rule: include('conversion_rule_properties')
+
+---
+conversion_rule_properties:
+    package: str()
+    record-type: str()
+    namespace: str()
+    description-fields: any(str(), list(str()), required=False)
+    justification-down-fields: any(str(), list(str()), required=False)
+    justification-up-fields: any(str(), list(str()), required=False)
+    justification-global-fields: any(str(), list(str()), required=False)
+    tags: list(any(str(), include('tag_entry')), required=False)
+    applies-to-derived-types: bool(required=False, default=False)
+---
+tag_entry:
+    field: str(required=True)
+    namespace: str(required=False)
+
+---
+field_with_namespace:
+    field: str(required=True)
+    namespace: str(required=False)
