@@ -27,14 +27,15 @@ like this marks this type (and all its extensions) as things to trace.
 The `description` marks which field carries the description text that
 can be optionally included in LOBSTER.
 
-The tags field identifies the field carrying a tags field. In LOBSTER
+The tags field identifies the field carrying tags. In LOBSTER
 all tags are namespaced, and by default the namespace is "req" as that
-is generally what you want to do. But you can change this by including
-the namespace like so:
+is generally what you want to do with TRLC.
+But you can change this by including the namespace like so:
 
 ```
-   tags "franka" = field_name
+   tags "imp" = field_name
 ```
+where `imp` is the namespace for "implementation".
 
 For tuple types like this one:
 
@@ -66,7 +67,7 @@ not apply and we move to the next, and so on. When none apply an error
 is created.
 
 If you need to justify requirements not being linked or implemented,
-then you can also defined up to three extra fields (using `just_up`,
+then you can also define up to three extra fields (using `just_up`,
 `just_down`, and `just_global`) that should carry this
 information. For example:
 

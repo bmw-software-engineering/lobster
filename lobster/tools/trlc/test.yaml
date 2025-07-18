@@ -1,0 +1,22 @@
+inputs-from-file: other.txt
+extractions:
+  - package.typename:
+      description_fields: text
+      justification_down_fields: the-just-down-field
+      justification_up_fields:
+        - the-just-up-field1
+        - the-just-up-field2
+      justification_global_fields: [the-just-global-field, the-other-field]
+      tags:
+        - field: value1
+          namespace: value2
+        - asdfffff
+        - field: whatever! space
+
+  - package2.typename2:
+      description_fields: text2
+
+to-string-rules:
+  - example.Codebeamer_ID:
+    - "$(item)@$(version)"
+    - "$(item)"

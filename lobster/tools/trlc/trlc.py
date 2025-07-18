@@ -18,7 +18,6 @@
 # <https://www.gnu.org/licenses/>.
 
 import os
-import re
 import sys
 import argparse
 
@@ -35,6 +34,7 @@ from lobster.tool import LOBSTER_Tool
 from lobster.items import Tracing_Tag, Requirement
 from lobster.location import File_Reference
 from lobster.io import lobster_write
+from .config import load_config
 
 
 class Config_Parser(Parser_Base):
@@ -232,138 +232,6 @@ class Config_Parser(Parser_Base):
             }
             self.build_config(n_extension, new_context)
 
-    def parse_record_type(self, n_typ):
-        assert isinstance(n_typ, ast.Record_Type)
-
-        if n_typ in self.entries:
-            self.lexer.mh.error(self.ct.location,
-                                "duplicate configuration block")
-        else:
-            self.entries[n_typ] = {
-                "description_fields" : [],
-                "tag_fields"         : [],
-                "just_up_fields"     : [],
-                "just_down_fields"   : [],
-                "just_global_fields" : [],
-            }
-
-        self.match("C_BRA")
-
-        while self.peek("IDENTIFIER"):
-            self.match("IDENTIFIER")
-            if self.ct.value in ("description",
-                                 "just_up",
-                                 "just_down",
-                                 "just_global"):
-                field = self.ct.value
-                self.match("ASSIGN")
-                self.match("IDENTIFIER")
-                n_comp = n_typ.components.lookup(
-                    mh                = self.lexer.mh,
-                    referencing_token = self.ct,
-                    required_subclass = ast.Composite_Component)
-                self.entries[n_typ]["%s_fields" % field].append(n_comp)
-            elif self.ct.value == "tags":
-                if self.peek("STRING"):
-                    self.match("STRING")
-                    tag_namespace = self.ct.value
-                else:
-                    tag_namespace = "req"
-                self.match("ASSIGN")
-                self.match("IDENTIFIER")
-                n_comp = n_typ.components.lookup(
-                    mh                = self.lexer.mh,
-                    referencing_token = self.ct,
-                    required_subclass = ast.Composite_Component)
-                self.entries[n_typ]["tag_fields"].append((tag_namespace,
-                                                          n_comp))
-            else:
-                self.lexer.mh.error(
-                    self.ct.location,
-                    "expected description|tags|just_up|just_down|just_global")
-
-        self.match("C_KET")
-
-    def parse_text_generator(self, n_typ):
-        assert isinstance(n_typ, ast.Composite_Type)
-
-        function = []
-
-        if self.peek("STRING"):
-            self.match("STRING")
-            cpos = 0
-            function = []
-            for match in re.finditer(r"\$\([a-z][a-z0-9_]*\)",
-                                     self.ct.value):
-                if match.span()[0] > cpos:
-                    function.append(("text",
-                                     self.ct.value[cpos:match.span()[0]]))
-                n_comp = n_typ.components.lookup_direct(
-                    mh                = self.lexer.mh,
-                    name              = match.group(0)[2:-1],
-                    error_location    = self.ct.location,
-                    required_subclass = ast.Composite_Component)
-                function.append(("field", n_comp))
-                cpos = match.span()[1]
-            if cpos < len(self.ct.value):
-                function.append(("text",
-                                 self.ct.value[cpos:]))
-            # for kind, value in function:
-            #     if kind == "text" and not re.match("^[a-zA-Z_0-9@]+$",
-            #                                        value):
-            #         self.lexer.mh.error(
-            #             self.ct.location,
-            #             "text segment '%s' can only contain letters,"
-            #             " numbers, underscores, or @" % value)
-
-        else:
-            self.match("IDENTIFIER")
-            n_comp = n_typ.components.lookup(
-                mh                = self.lexer.mh,
-                referencing_token = self.ct,
-                required_subclass = ast.Composite_Component)
-            function.append(("field", n_comp))
-
-        return function
-
-    def parse_tuple_type(self, n_typ):
-        assert isinstance(n_typ, ast.Tuple_Type)
-
-        if n_typ in self.to_string:
-            self.lexer.mh.error(self.ct.location,
-                                "duplicate configuration block")
-        else:
-            self.to_string[n_typ] = []
-
-        self.match("C_BRA")
-
-        while self.peek("IDENTIFIER"):
-            self.match("IDENTIFIER")
-            if self.ct.value == "to_string":
-                self.match("ASSIGN")
-                self.to_string[n_typ].append(
-                    self.parse_text_generator(n_typ))
-            else:
-                self.lexer.mh.error(self.ct.location,
-                                    "expected to_string")
-
-        self.match("C_KET")
-
-    def parse_directive(self):
-        self.match("IDENTIFIER")
-        n_pkg = self.stab.lookup(mh                = self.lexer.mh,
-                                 referencing_token = self.ct,
-                                 required_subclass = ast.Package)
-        self.match("DOT")
-        self.match("IDENTIFIER")
-        n_typ = n_pkg.symbols.lookup(mh                = self.lexer.mh,
-                                     referencing_token = self.ct,
-                                     required_subclass = ast.Composite_Type)
-        if isinstance(n_typ, ast.Record_Type):
-            self.parse_record_type(n_typ)
-        else:
-            self.parse_tuple_type(n_typ)
-
 
 class LOBSTER_Trlc(LOBSTER_Tool):
     def __init__(self):
@@ -380,20 +248,6 @@ class LOBSTER_Trlc(LOBSTER_Tool):
 
     # Supported config parameters for lobster-trlc
     TRLC_CONFIG = "trlc_config"
-
-    @classmethod
-    def get_config_keys_manual(cls):
-        help_dict = super().get_config_keys_manual()
-        help_dict.update(
-            {
-                cls.TRLC_CONFIG: "lobster-trlc config string"
-            }
-        )
-        return help_dict
-
-    def get_mandatory_parameters(self) -> Set[str]:
-        """As of now lobster-trlc don't have any mandatory parameters"""
-        return set()
 
     def process_commandline_and_yaml_options(
             self,
