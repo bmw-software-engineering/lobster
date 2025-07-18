@@ -3,7 +3,9 @@ inputs :
   - softreq_example.trlc
   - sysreq_example.trlc
 
-trlc_config : |
-  coverage_zero.System_Requirement {
-    description = text
-  }
+conversion-rules:
+  - package: coverage_zero
+    record-type: System_Requirement
+    namespace: req
+    description-fields:
+      - text

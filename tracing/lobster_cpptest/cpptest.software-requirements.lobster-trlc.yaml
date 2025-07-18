@@ -2,7 +2,11 @@ inputs:
   - "lobster/requirements.rsl"
   - "lobster/use_cases.trlc"
   - "lobster/tools/cpptest"
-trlc_config: |
-  req.Software_Requirement {
-    description = description
-  }
+conversion-rules:
+  - package: req
+    record-type: Software_Requirement
+    namespace: req
+    description-fields:
+      - description
+    tags:
+    - derived_from

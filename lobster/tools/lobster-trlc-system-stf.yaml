@@ -1,10 +1,7 @@
 inputs: ['lobster/requirements.rsl', 'tests_system/system_test_framework.trlc']
-trlc_config: |
-  req.System_Requirement {
-    description = description
-  }
-
-  req.System_Requirement_Aspect {
-    description = description
-    just_down = not_tested_reason
-  }
+conversion-rules:
+  - package: req
+    record-type: System_Requirement
+    namespace: req
+    description-fields:
+      - description

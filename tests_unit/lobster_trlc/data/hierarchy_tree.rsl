@@ -1,0 +1,46 @@
+package hierarchy_tree_test
+
+tuple TwoValues {
+    tuple_member1 Integer
+    tuple_member2 Integer
+}
+
+tuple ThreeValues {
+    tuple_member1 Integer
+    separator @
+    tuple_member2 Integer
+    separator @
+    tuple_member3 Integer
+}
+
+
+tuple FourValues {
+    tuple_member1 Integer
+    separator a
+    tuple_member2 Integer
+    separator c  // cannot use 'b' as separator, because it is reserved for binary values
+    tuple_member3 Integer
+    separator d
+    tuple_member4 Integer
+}
+
+type Level1 {
+    field1 String
+    field2 String
+    reference_field1 "Keep this field empty in all test objects!" optional Level1[0..*]
+    reference_field2 "Always reference Level1_Item in all test objects!" optional Level1[0..*]
+    tuple_field1 optional ThreeValues
+    TUPLE_FIELD2 optional ThreeValues
+    string_array_field1 optional String[0..*]
+    integer_array_field1 optional Integer[0..*]
+    decimal_array_field1 optional Decimal[0..*]
+    boolean_array_field1 optional Boolean[0..*]
+}
+
+type Level2A extends Level1 {}
+type Level3A extends Level2A {}
+type Level4A extends Level3A {}
+
+type Level2B extends Level1 {}
+type Level3B extends Level2B {}
+type Level4B extends Level3B {}
