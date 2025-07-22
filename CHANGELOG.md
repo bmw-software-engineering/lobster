@@ -84,6 +84,12 @@
   - Improved the error message in case a file is not found.
     The tool exits with return code 1 instead of crashing with an exception.
 
+* `lobster-html-report`:
+  - Fixed rendering of HTML in case the input data contained HTML code.
+    If a LOBSTER item in the input file contained for example the text `<s>`
+    in its name, then that was injected into the generated HTML.
+    This caused an HTML injection issue.
+
 ### 0.13.0
 
 * `lobster-online-report-nogit`
