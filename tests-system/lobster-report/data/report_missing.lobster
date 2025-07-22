@@ -65,9 +65,7 @@
       "traces": [],
       "source": [
         {
-          "file": "trlc_missing.lobster",
-          "filters": [],
-          "valid_status": []
+          "file": "trlc_missing.lobster"
         }
       ],
       "needs_tracing_up": false,
@@ -86,8 +84,7 @@
       ],
       "source": [
         {
-          "file": "python_missing.lobster",
-          "filters": []
+          "file": "python_missing.lobster"
         }
       ],
       "needs_tracing_up": true,

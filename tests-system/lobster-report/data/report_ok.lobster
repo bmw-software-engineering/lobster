@@ -69,9 +69,7 @@
       "traces": [],
       "source": [
         {
-          "file": "trlc_ok.lobster",
-          "filters": [],
-          "valid_status": []
+          "file": "trlc_ok.lobster"
         }
       ],
       "needs_tracing_up": false,
@@ -90,8 +88,7 @@
       ],
       "source": [
         {
-          "file": "python_ok.lobster",
-          "filters": []
+          "file": "python_ok.lobster"
         }
       ],
       "needs_tracing_up": true,

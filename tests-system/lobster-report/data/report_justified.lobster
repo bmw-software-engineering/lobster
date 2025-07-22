@@ -65,9 +65,7 @@
       "traces": [],
       "source": [
         {
-          "file": "trlc_justified.lobster",
-          "filters": [],
-          "valid_status": []
+          "file": "trlc_justified.lobster"
         }
       ],
       "needs_tracing_up": false,
@@ -86,8 +84,7 @@
       ],
       "source": [
         {
-          "file": "python_justified.lobster",
-          "filters": []
+          "file": "python_justified.lobster"
         }
       ],
       "needs_tracing_up": true,

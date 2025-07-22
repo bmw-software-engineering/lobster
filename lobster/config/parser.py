@@ -121,10 +121,7 @@ class Parser:
                 self.match("STRING")
                 source_info = {
                     "file"    : self.ct.value(),
-                    "filters" : [],
                 }
-                if level_kind == "requirements":
-                    source_info["valid_status"] = []
                 if not os.path.isfile(source_info["file"]):
                     self.error(self.ct.loc,
                                "cannot find file %s" % source_info["file"])
@@ -132,44 +129,6 @@ class Parser:
 
                 if self.peek("KEYWORD", "with"):
                     self.match("KEYWORD", "with")
-
-                    while not self.peek("SEMI"):
-                        self.match("KEYWORD")
-                        if self.ct.value() == "prefix":
-                            self.match("STRING")
-                            source_info["filters"].append(("prefix",
-                                                           self.ct.value()))
-
-                        elif self.ct.value() == "kind":
-                            self.match("STRING")
-                            source_info["filters"].append(("kind",
-                                                           self.ct.value()))
-
-                        elif self.ct.value() == "valid_status":
-                            if level_kind != "requirements":
-                                self.error(self.ct.loc,
-                                           "property valid_status is only "
-                                           "applicable for requirements")
-                            self.match("C_BRA")
-                            while True:
-                                self.match("STRING")
-                                value = self.ct.value()
-                                if value in source_info["valid_status"]:
-                                    self.warning(self.ct.loc,
-                                                 "duplicate status %s" %
-                                                 value)
-                                else:
-                                    source_info["valid_status"].append(value)
-                                if self.peek("COMMA"):
-                                    self.match("COMMA")
-                                else:
-                                    break
-                            self.match("C_KET")
-
-                        else:
-                            self.error(self.ct.loc,
-                                       "unknown property '%s'" %
-                                       self.ct.value())
 
                 self.match("SEMI")
 
