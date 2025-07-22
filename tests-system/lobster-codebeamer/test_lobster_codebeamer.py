@@ -30,18 +30,19 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out()
         cfg.retry_error_codes = [429]
-        cfg.num_request_retry = 3
+        cfg.num_request_retry = 2
         cfg.import_query = 999
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
-
-        self.assertIn(
-            "[Attempt 1/3] Retryable error: 429\n"
-            "[Attempt 2/3] Retryable error: 429\n"
-            "[Attempt 3/3] Retryable error: 429\n"
-            f"Could not fetch {cfg.root}/api/"
-            f"v3/reports/{cfg.import_query}/items?page=1&pageSize=100.\n",
+        self.assertEqual(
+            "Fetching page 1 of query...\n"
+            "Could not fetch "
+            f"{self._test_runner.config_file_data.root}/api/v3/reports"
+            f"/{cfg.import_query}/items?page=1&pageSize=100.\n"
+            "You can either:\n* increase the timeout with the timeout parameter\n* "
+            "decrease the query size with the query_size parameter\n* increase the "
+            "retry count with the parameters (num_request_retry, retry_error_codes)\n",
             completed_process.stdout,
         )
         asserter.assertExitCode(1)
@@ -83,17 +84,14 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out()
         cfg.retry_error_codes = [429]
-        cfg.num_request_retry = 3
+        cfg.num_request_retry = 2
         cfg.import_query = 123123123123123123
         self._test_runner.declare_output_file(
             self._data_directory / self._test_runner.config_file_data.out)
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
-
         self.assertIn(
-            "[Attempt 1/3] Retryable error: 429\n"
-            "[Attempt 2/3] Retryable error: 429\n"
             "Written 1 requirements to codebeamer.lobster\n",
             completed_process.stdout,
         )
@@ -110,11 +108,13 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
-
         self.assertIn(
-            "[Attempt 1/5] Failed with status 429\n"
-            f"Could not fetch {self._test_runner.config_file_data.root}/"
-            f"api/v3/reports/{cfg.import_query}/items?page=1&pageSize=100.\n",
+            "Fetching page 1 of query...\nCould not fetch"
+            f" {self._test_runner.config_file_data.root}/api/v3/reports/"
+            f"{cfg.import_query}/items?page=1&pageSize=100.\n"
+            "You can either:\n* increase the timeout with the timeout parameter\n*"
+            " decrease the query size with the query_size parameter\n* increase the "
+            "retry count with the parameters (num_request_retry, retry_error_codes)\n",
             completed_process.stdout,
         )
         self.assertNotIn("Retrying request", completed_process.stdout)

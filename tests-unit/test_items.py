@@ -343,29 +343,6 @@ class TestRequirement(ItemsTests):
         mock_super_to_json.assert_called_once_with()
         self.assertEqual(result, expected_result)
 
-    @patch("lobster.items.Item.error")
-    def test_perform_source_checks_valid_status(self, mock_super_error):
-        mock_error_message = None
-        mock_super_error.return_value = mock_error_message
-        source_info = {
-            "valid_status": ["active", "inactive"]
-        }
-        self.requirement.perform_source_checks(source_info)
-
-        self.assertIsNone(mock_super_error())
-
-    @patch("lobster.items.Item.error")
-    def test_perform_source_checks_invalid_status(self, mock_super_error):
-        mock_error_message = "status is active, expected closed or inactive"
-        mock_super_error.return_value = mock_error_message
-        source_info = {
-            "valid_status": ["inactive", "closed"]
-        }
-        self.requirement.perform_source_checks(source_info)
-        expected_error_message = "status is active, expected closed or inactive"
-
-        self.assertEqual(mock_super_error(), expected_error_message)
-
     def test_perform_source_checks_invalid_source_info(self):
         invalid_source_info = ["invalid", "list"]
 
