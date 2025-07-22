@@ -168,17 +168,20 @@ class TestCase:
         """
         Function to search for requirements from docu lines
 
-        general_pattern -- pattern to search for requirements
+        general_pattern -- pattern to search for requirement comment blocks
         tag -- CB-# tag pattern to be searched in docu
         tag_http -- http pattern to be searched in docu
         tag_http_named -- named http pattern to be searched in docu
         """
-        search_result = general_pattern.search(self.docu_lines)
-        if search_result is None:
+        blocks = general_pattern.findall(self.docu_lines)
+        if not blocks:
             return
         else:
-            self.requirements = self._get_require_tags(search_result, tag)
-            http_requirements = self._get_require_tags(search_result, tag_http)
+            http_requirements = []
+            for block in blocks:
+                self.requirements.extend(self._get_require_tags(block, tag))
+                http_requirements.extend(self._get_require_tags(block, tag_http))
+
             for requirements_listed_behind_one_tag in http_requirements:
                 for requirement in requirements_listed_behind_one_tag:
                     requirement_uri = self._get_uri_from_requirement_detection(
@@ -379,14 +382,17 @@ class TestCase:
         of the match that correspond to the filter.
         If the match is empty an empty list is returned.
 
-        match -- re.match object
+        match -- re.match object or string
         filter_regex -- filter to apply to the match
         """
 
         if not match:
             return []
 
-        return re.findall(filter_regex, match.group(0))
+        if isinstance(match, re.Match):
+            return re.findall(filter_regex, match.group(0))
+
+        return re.findall(filter_regex, match)
 
     @staticmethod
     def notracing_special_case(lines, the_range):
