@@ -78,10 +78,9 @@ def xref_item(item, link=True, brief=False):
         rv += " "
 
     if link:
-        rv += "<a href='#item-%s'>%s</a>" % (item.tag.hash(),
-                                             item.name)
+        rv += f"<a href='#item-{item.tag.hash()}'>{html.escape(item.name)}</a>"
     else:
-        rv += "%s" % item.name
+        rv += html.escape(item.name)
 
     return rv
 
@@ -99,7 +98,7 @@ def create_policy_diagram(doc, report, dot):
         else:
             assert level["kind"] == "activity"
             style = 'shape=hexagon'
-        style += ', href="#sec-%s"' % name_hash(level["name"])
+        style += f', href="#sec-{name_hash(level["name"])}"'
 
         graph += '  n_%s [label="%s", %s];\n' % \
             (name_hash(level["name"]),
@@ -195,11 +194,10 @@ def write_item_box_begin(doc, item):
     assert isinstance(doc, htmldoc.Document)
     assert isinstance(item, Item)
 
-    doc.add_line('<!-- begin item %s -->' % html.escape(item.tag.key()))
+    doc.add_line(f'<!-- begin item {html.escape(item.tag.key())} -->')
 
-    doc.add_line('<div class="item-%s" id="item-%s">' %
-                 (item.tracing_status.name.lower(),
-                  item.tag.hash()))
+    doc.add_line(f'<div class="item-{html.escape(item.tracing_status.name.lower())}" '
+                 f'id="item-{item.tag.hash()}">')
 
     doc.add_line('<div class="item-name">%s %s</div>' %
                  ('<svg class="icon"><use href="#svg-check-square"></use></svg>'
