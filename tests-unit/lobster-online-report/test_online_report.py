@@ -1,7 +1,6 @@
-import pathlib
 import unittest
 from pathlib import Path
-import subprocess
+from unittest.mock import patch
 
 from lobster.items import Item, Tracing_Tag
 from lobster.location import File_Reference
@@ -28,22 +27,21 @@ class LobsterOnlineReportTests(unittest.TestCase):
             f"LOBSTER report {out_file} created, using online references.",
         )
 
-    def test_commit_hash_for_main_repo(self):
-        root = "abc"
-        submodule_roots = {}
-        repo_root = pathlib.Path().cwd()
-        git_hash_cache = {}
-        location = File_Reference("123.def")
-        tag = Tracing_Tag("test_namespace", "ÄÖÜ")
-        item = Item(tag, location)
-        expected_commit = subprocess.check_output(
-            ["git", "rev-parse", "HEAD"],
-            universal_newlines=True,
-            cwd=Path(__file__).parent,
-        ).strip()
+    @patch('lobster.tools.core.online_report.online_report.get_hash_for_git_commit')
+    def test_commit_hash_for_main_repo(self, mock_get_hash):
+        mock_get_hash.return_value = "mocked_commit_hash"
+        item = Item(
+            Tracing_Tag("test_namespace", "ÄÖÜ"),
+            File_Reference("123.def"),
+        )
         _, _, commit = get_git_commit_hash_repo_and_path(
-            root, submodule_roots, item, repo_root, git_hash_cache)
-        self.assertEqual(expected_commit, commit)
+            gh_root="abc",
+            gh_submodule_roots={},
+            item=item,
+            repo_root=Path(__file__).parent,
+            git_hash_cache={},
+        )
+        self.assertEqual("mocked_commit_hash", commit)
 
 if __name__ == '__main__':
     unittest.main()
