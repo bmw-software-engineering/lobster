@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.13.1-dev
+### 0.13.1
 
 * Introduced API functions:
   - `apply_github_urls`:
