@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_cpp - Extract C/C++ tracing tags for LOBSTER
-# Copyright (C) 2023-2024 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -31,7 +31,7 @@ from lobster.meta_data_tool_base import MetaDataToolBase
 
 FILE_LINE_PATTERN = r"(.*):(\d+):\d+:"
 KIND_PATTERN = r"(function|main function|method)"
-NAME_PATTERN = r"([a-zA-Z0-9_:~]+)"
+NAME_PATTERN = r"([a-zA-Z0-9_:~^()&\s<>,=*!+-.|[\]/\"]+)"
 PREFIX = "^%s warning:" % FILE_LINE_PATTERN
 SUFFIX = r"\[lobster-tracing\]$"
 

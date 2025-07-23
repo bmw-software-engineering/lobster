@@ -13,6 +13,10 @@
     without any time gap. The exponential backoff factor is set to 1 so the 
     interval of calls will be 1s, 2s, 4s, 8s and so on.
 
+* `lobster-cpp`:
+  Include more characters like `<` and `>` as valid C++ function name characters,
+  which are needed e.g. for C++ templating.
+
 ### 0.13.1
 
 * Introduced API functions:
