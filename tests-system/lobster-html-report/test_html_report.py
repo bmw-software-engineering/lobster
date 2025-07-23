@@ -135,8 +135,8 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
                             ['git', 'show', '-s', '--format=%ct', commit],
                             capture_output=True, text=True, check=True
                         )
-                        expected_time = datetime.fromtimestamp(
-                            int(result.stdout.strip()), tz=timezone.utc)
+                        expected_time = str(datetime.fromtimestamp(
+                            int(result.stdout.strip()), tz=timezone.utc)) + " UTC"
                         self.assertIn(str(expected_time), text)
 
     def test_meta_tag(self):
