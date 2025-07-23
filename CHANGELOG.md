@@ -5,6 +5,9 @@
 
 ### 0.13.2-dev
 
+* `lobster-html-report`
+  - The timestamp for git SHA now appends `UTC` to make it clear about the timeszone.
+
 * `lobster-codebeamer`
   - The retry logic uses exponential backoff feature instead of retrying successively
     without any time gap. The exponential backoff factor is set to 1 so the 
