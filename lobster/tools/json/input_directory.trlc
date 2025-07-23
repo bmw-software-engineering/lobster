@@ -1,6 +1,6 @@
 package json_req
 import req
-/*
+
 req.System_Requirement Parse_Input_File {
     description = '''
       IF a list element given through the command line option "FILE_OR_DIR" is a file,
@@ -47,4 +47,3 @@ req.System_Requirement_Aspect Parse_Input_File_To_File {
     OTHERWISE to STDOUT.
   '''
 }
-*/
