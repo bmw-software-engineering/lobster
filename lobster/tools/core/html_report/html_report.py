@@ -169,7 +169,7 @@ def run_git_show(commit_hash, path=None):
         output = subprocess.run(cmd, capture_output=True, text=True, check=True)
         if output.stdout.strip():
             epoch = int(output.stdout.strip())
-            return datetime.fromtimestamp(epoch, tz=timezone.utc)
+            return str(datetime.fromtimestamp(epoch, tz=timezone.utc)) + " UTC"
     except subprocess.CalledProcessError:
         location = f"submodule path: {path}" if path else "main repository"
         print(f"[Warning] Could not find commit {commit_hash} in {location}.")
