@@ -15,7 +15,24 @@
 
 * `lobster-cpp`:
   Include more characters like `<` and `>` as valid C++ function name characters,
-  which are needed e.g. for C++ templating.
+  which are needed e.g. for C++ templating and operator overloading.
+  That is, now an operator overload can be traced against a requirement.
+  Here is an example:
+
+  ```cpp
+  std::ostream& operator<<(std::ostream& os, const Fruit<double>& fruit) {
+    // lobster-trace: namespace.requirement_id
+    os << "Hi there!";
+    return os;
+  }
+  ```
+
+  With an earlier version this would result in a message like this:
+
+  ```
+  could not parse line
+  file.cpp:10:15: warning: function operator<< traces to namespace.requirement_id [lobster-tracing]
+  ```
 
 ### 0.13.1
 

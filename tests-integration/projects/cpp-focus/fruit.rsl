@@ -1,0 +1,10 @@
+package fruits
+
+type FruityRequirement
+{
+  description String
+}
+
+checks FruityRequirement {
+   len(description) >= 10, warning "this is a bit short", description
+}
