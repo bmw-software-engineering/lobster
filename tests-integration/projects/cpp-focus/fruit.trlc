@@ -1,0 +1,53 @@
+package fruits
+
+FruityRequirement Buy_Banana1
+{
+   description = "Add one banana to the basket!"
+}
+
+FruityRequirement Buy_Banana2
+{
+   description = "Add one banana to the basket quickly!"
+}
+
+FruityRequirement Sell_Banana1
+{
+   description = "Sell one banana from the basket!"
+}
+
+FruityRequirement Sell_Banana2
+{
+   description = "Sell one banana from the basket quickly!"
+}
+
+FruityRequirement Clear_Basket
+{
+   description = "Clear the basket upon request."
+}
+
+FruityRequirement Check_Basket
+{
+   description = "Only go shopping if the basket is empty."
+}
+
+FruityRequirement Throw_Banana
+{
+   description = "Throw the banana away!"
+}
+
+FruityRequirement Sweet_Banana
+{
+  description = """The banana shall contain at least 12 grams of natural sugar
+            per 100 grams of fruit.
+         """
+}
+
+FruityRequirement Fruit_Insertion_Operator
+{
+  description = "The operator << shall print the fruit name to the output stream."
+}
+
+FruityRequirement Fruit_Copy_Constructor
+{
+  description = "The operator = shall copy the name and weight of the fruit."
+}

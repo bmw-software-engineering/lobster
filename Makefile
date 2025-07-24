@@ -98,6 +98,7 @@ integration-tests: packages
 	(cd tests-integration/projects/coverage-half; make)
 	(cd tests-integration/projects/coverage-mix; make)
 	(cd tests-integration/projects/coverage-zero; make)
+	(cd tests-integration/projects/cpp-focus; make)
 	rm -f MODULE.bazel MODULE.bazel.lock
 
 codebeamer-pem:
