@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 0.13.2-dev
+### 0.13.2
 
 * `lobster-html-report`
   - The timestamp for git SHA now appends `UTC` to make it clear about the timeszone.
