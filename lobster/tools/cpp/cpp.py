@@ -40,8 +40,8 @@ RE_NOTAGS = (PREFIX + " " +
                                              NAME_PATTERN) +
              " " + SUFFIX)
 RE_TAGS = (PREFIX + " " +
-           r"%s %s traces to +(.+) +" % (KIND_PATTERN,
-                                         NAME_PATTERN) +
+           r"%s %s traces to +([^,\n]+(?:\s*,\s*[^,\n]+)*) +" % (KIND_PATTERN,
+                                                                 NAME_PATTERN) +
            SUFFIX)
 RE_JUST = (PREFIX + " " +
            r"%s %s exempt from tracing: +(.+) +" % (KIND_PATTERN,
@@ -194,12 +194,15 @@ class CppTool(MetaDataToolBase):
             match = re.match(RE_TAGS, line)
             if match:
                 impl = implementation_builder.from_match_if_new(db, match)
-                impl.add_tracing_target(
-                    Tracing_Tag(
-                        "req",
-                        match.group(implementation_builder.REFERENCE_GROUP_NUM),
-                    ),
-                )
+                all_tags = match.group(implementation_builder.REFERENCE_GROUP_NUM)
+                for tag in re.split(r"[, ]+", all_tags.strip()):
+                    if tag:
+                        impl.add_tracing_target(
+                            Tracing_Tag(
+                                "req",
+                                tag,
+                            ),
+                        )
                 continue
 
             print("could not parse line")

@@ -14,6 +14,9 @@
     interval of calls will be 1s, 2s, 4s, 8s and so on.
 
 * `lobster-cpp`:
+  - Supporting comma-separated lists of tags in one line.
+    The code snippet below shows that there are two tags, `namespace.requirement_id1` and
+    `namespace.requirement_id2` in the same line.
   - If `clang-tidy` reports an error which is not part of the exclusion list given through
     `--skip-clang-errors`, then `lobster-cpp` repeats this error and prints it to standard out.
   - Include more characters like `<` and `>` as valid C++ function name characters,
@@ -23,7 +26,7 @@
 
     ```cpp
     std::ostream& operator<<(std::ostream& os, const Fruit<double>& fruit) {
-      // lobster-trace: namespace.requirement_id
+      // lobster-trace: namespace.requirement_id1, namespace.requirement_id2
       os << "Hi there!";
       return os;
     }
