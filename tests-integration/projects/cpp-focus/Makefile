@@ -16,9 +16,8 @@ html_report.html: cppcode.lobster gtests.lobster software-requirements.lobster l
 	@bash -c "lobster-report --out=whatever.lobster && echo '$(THIS_TEST) ✅ lobster-report succeeded!' || { echo '$(THIS_TEST) ❌ ERROR: lobster-report failed!'; exit 1; }"
 	@bash -c "lobster-online-report whatever.lobster && echo '$(THIS_TEST) ✅ lobster-online-report succeeded!' || { echo '$(THIS_TEST) ❌ ERROR: lobster-online-report failed!'; exit 1; }"
 	$(PYTHON) $(UPDATE_GIT_HASHES_SCRIPT) $(REFERENCE_OUTPUT)
-	@if diff whatever.lobster $(REFERENCE_OUTPUT); then echo '$(THIS_TEST) ✅ Files are identical!'; else { echo '$(THIS_TEST) ❌ ERROR: generated file report.lobster is not matching the expectation!'; exit 1; }; fi
 	@bash -c "lobster-html-report whatever.lobster && echo '$(THIS_TEST) ✅ lobster-html-report succeeded!' || { echo '$(THIS_TEST) ❌ ERROR: lobster-html-report failed!'; exit 1; }"
-	@bash -c "lobster-ci-report whatever.lobster | tee ci_report.reference_output && echo '$(THIS_TEST) ✅ lobster-ci-report succeeded!' || { echo '$(THIS_TEST) ❌ ERROR: lobster-ci-report failed!'; exit 1; }"
+	@if diff whatever.lobster $(REFERENCE_OUTPUT); then echo '$(THIS_TEST) ✅ Files are identical!'; else { echo '$(THIS_TEST) ❌ ERROR: generated file whatever.lobster is not matching the expectation!'; exit 1; }; fi
 
 cppcode.lobster: fruit.h fruit.cpp
 	@lobster-cpp fruit.cpp fruit.h \

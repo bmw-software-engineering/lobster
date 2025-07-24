@@ -14,7 +14,7 @@ using namespace orchard;
 // Operator overloads and special functions for Fruit
 
 std::ostream& operator<<(std::ostream& os, const Fruit<double>& fruit) {
-    // lobster-trace: fruits.Fruit_Insertion_Operator
+    // lobster-trace: fruits.Fruit_Insertion_Operator, fruits.Magic
     os << "Fruit: " << fruit.getName() << ", Weight: " << fruit.getWeight();
     return os;
 }
@@ -22,6 +22,8 @@ std::ostream& operator<<(std::ostream& os, const Fruit<double>& fruit) {
 template<>
 Fruit<double>& Fruit<double>::operator=(const Fruit<double>& other) {
     // lobster-trace: fruits.Fruit_Copy_Constructor
+    // lobster-trace: fruits.SameLine1, fruits.SameLine2, fruits.SameLine3, fruits.SameLine4
+    //                fruits.NextLineNotSupported
     if (this != &other) {
         name_ = other.name_;
         weight_ = other.weight_;
@@ -31,6 +33,7 @@ Fruit<double>& Fruit<double>::operator=(const Fruit<double>& other) {
 
 template<>
 Fruit<double> Fruit<double>::operator*(double factor) const {
+    // lobster-trace: 123, 456, 89, ab-123, cd-456
     return Fruit<double>(name_, weight_ * factor);
 }
 

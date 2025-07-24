@@ -14,7 +14,7 @@ TEST(FruitTest, BasicProperties)
 
 TEST(CitrusTest, Sweetness)
 {
-    LOBSTER_TRACE("fruits.Clear_Basket");
+    LOBSTER_TRACE("fruits.Clear_Basket, fruits.SameLine1");
     Citrus<double> orange("Orange", 120.5, true);
     Citrus<double> lemon("Lemon", 100.0, false);
 
@@ -26,6 +26,7 @@ TEST(CitrusTest, Sweetness)
 
 TEST(BasketTest, AddAndShowContents)
 {
+    LOBSTER_TRACE("fruits.Magic");
     Basket<double> basket;
     basket.addFruit(new Fruit<double>("Apple", 150.0));
     basket.addFruit(new Citrus<double>("Orange", 120.5, true));
