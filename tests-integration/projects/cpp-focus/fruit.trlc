@@ -51,3 +51,29 @@ FruityRequirement Fruit_Copy_Constructor
 {
   description = "The operator = shall copy the name and weight of the fruit."
 }
+
+FruityRequirement Magic
+{
+   description = "The one who eats the fruit shall be happy!"
+}
+
+FruityRequirement SameLine1
+{
+   description = "lobster-cpp shall support comma-separated lists of tags in one line."
+}
+
+FruityRequirement SameLine2
+{
+   description = "see SameLine1"
+}
+
+FruityRequirement SameLine3
+{
+   description = "see SameLine1"
+}
+
+FruityRequirement SameLine4
+{
+   description = "see SameLine1"
+}
+
