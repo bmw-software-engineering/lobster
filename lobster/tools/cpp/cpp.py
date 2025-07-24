@@ -166,6 +166,7 @@ class CppTool(MetaDataToolBase):
                     if clang_error and (clang_error in options.skip_clang_errors):
                         print(f"Ignoring clang-tidy error {clang_error}")
                     else:
+                        print("Found clang-tidy error: ", clang_error)
                         return 1
 
         db = {}
