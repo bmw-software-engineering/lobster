@@ -59,8 +59,5 @@ of the [Feather Icons](https://feathericons.com) in the report it
 generates. The Feather Icons are licensed under the [MIT
 License](https://github.com/feathericons/feather/blob/master/LICENSE).
 
-The LOBSTER HTML report generator `lobster-html-report` uses `dot`
-from the [graphviz project](https://graphviz.org/) to produce some of
-the pictures it includes in the report it generates. Graphviz is
-licensed under the [Common Public License, Version
-1.0](https://graphviz.org/license).
+The LOBSTER HTML report generator `lobster-html-report` uses `plotly` to produce some of
+the pictures it includes in the report it generates.

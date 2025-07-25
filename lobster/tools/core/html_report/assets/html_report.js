@@ -85,3 +85,19 @@ function searchItem() {
         }
     }
 }
+
+document.querySelectorAll('.annotation').forEach(function(ann) {
+    ann.style.cursor = "pointer";
+    ann.addEventListener('click', function(e) {
+        var textElem = ann.querySelector('text.annotation-text');
+        if (textElem) {
+            var unformatted = textElem.getAttribute('data-unformatted');
+            // Extract the section anchor from the <span section="...">
+            var match = unformatted && unformatted.match(/section="([^"]+)"/);
+            if (match && match[1].startsWith("#sec-")) {
+                window.location.hash = match[1];
+                e.preventDefault();
+            }
+        }
+    });
+});

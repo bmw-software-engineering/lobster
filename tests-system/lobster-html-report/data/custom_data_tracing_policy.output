@@ -102,6 +102,10 @@ blockquote {
   padding-left: 0.4em;
   margin-left: 0.5em;
 }
+.js-plotly-plot {
+  z-index: 1;
+  position: relative;
+}
 #navbar {
   overflow: hidden;
   background-color: #009ada;
@@ -124,6 +128,7 @@ blockquote {
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 1000;
 }
 .sticky + .htmlbody {
   padding-top: 60px;
@@ -420,37 +425,13 @@ blockquote {
 </div>
 <div class="column">
 <h3>Tracing policy</h3>
-<svg width="100pt" height="116pt"
- viewBox="0.00 0.00 99.75 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
-<title>LOBSTER Tracing Policy</title>
-<polygon fill="white" stroke="none" points="-4,4 -4,-112 95.75,-112 95.75,4 -4,4"/>
-<!-- n_5a2ebfb8baa378cfcfcba58bbb1380c2 -->
-<g id="node1" class="node">
-<title>n_5a2ebfb8baa378cfcfcba58bbb1380c2</title>
-<g id="a_node1"><a xlink:href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2" xlink:title="Requirements">
-<path fill="none" stroke="black" d="M79.75,-108C79.75,-108 12,-108 12,-108 6,-108 0,-102 0,-96 0,-96 0,-84 0,-84 0,-78 6,-72 12,-72 12,-72 79.75,-72 79.75,-72 85.75,-72 91.75,-78 91.75,-84 91.75,-84 91.75,-96 91.75,-96 91.75,-102 85.75,-108 79.75,-108"/>
-<text text-anchor="middle" x="45.88" y="-84.95" font-family="Times New Roman,serif" font-size="14.00">Requirements</text>
-</a>
-</g>
-</g>
-<!-- n_ca0dbad92a874b2f69b549293387925e -->
-<g id="node2" class="node">
-<title>n_ca0dbad92a874b2f69b549293387925e</title>
-<g id="a_node2"><a xlink:href="#sec-ca0dbad92a874b2f69b549293387925e" xlink:title="Code">
-<polygon fill="none" stroke="black" points="72.88,-36 18.88,-36 18.88,0 72.88,0 72.88,-36"/>
-<text text-anchor="middle" x="45.88" y="-12.95" font-family="Times New Roman,serif" font-size="14.00">Code</text>
-</a>
-</g>
-</g>
-<!-- n_5a2ebfb8baa378cfcfcba58bbb1380c2&#45;&gt;n_ca0dbad92a874b2f69b549293387925e -->
-<g id="edge1" class="edge">
-<title>n_5a2ebfb8baa378cfcfcba58bbb1380c2&#45;&gt;n_ca0dbad92a874b2f69b549293387925e</title>
-<path fill="none" stroke="black" d="M45.88,-71.7C45.88,-64.41 45.88,-55.73 45.88,-47.54"/>
-<polygon fill="black" stroke="black" points="49.38,-47.62 45.88,-37.62 42.38,-47.62 49.38,-47.62"/>
-</g>
-</g>
-</svg>
+<html>
+<head><meta charset="utf-8" /></head>
+<body>
+    <div>                        <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.0.1.min.js" integrity="sha256-oy6Be7Eh6eiQFs5M7oXuPxxm9qbJXEtTpfSI93dW16Q=" crossorigin="anonymous"></script>                <div id="8cfe7807-95b3-4479-bfc6-7d02ade36760" class="plotly-graph-div" style="height:500px; width:900px;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("8cfe7807-95b3-4479-bfc6-7d02ade36760")) {                    Plotly.newPlot(                        "8cfe7807-95b3-4479-bfc6-7d02ade36760",                        [],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"shapes":[{"fillcolor":"white","line":{"color":"black"},"type":"rect","x0":0.33,"x1":0.6699999999999999,"y0":0.9,"y1":1.1},{"fillcolor":"white","line":{"color":"black"},"type":"rect","x0":0.36,"x1":0.64,"y0":0.5,"y1":0.7}],"annotations":[{"font":{"size":12},"hoverlabel":{"bgcolor":"white"},"hovertext":"#sec-5a2ebfb8baa378cfcfcba58bbb1380c2","showarrow":false,"text":"\u003cspan section=\"#sec-5a2ebfb8baa378cfcfcba58bbb1380c2\"\u003eRequirements\u003c\u002fspan\u003e","x":0.5,"y":1.0},{"font":{"size":12},"hoverlabel":{"bgcolor":"white"},"hovertext":"#sec-ca0dbad92a874b2f69b549293387925e","showarrow":false,"text":"\u003cspan section=\"#sec-ca0dbad92a874b2f69b549293387925e\"\u003eCode\u003c\u002fspan\u003e","x":0.5,"y":0.6},{"arrowcolor":"black","arrowhead":2,"arrowsize":2,"arrowwidth":1,"ax":0.5,"axref":"x","ay":0.9,"ayref":"y","showarrow":true,"x":0.5,"y":0.7},{"align":"center","bgcolor":"white","font":{"color":"black","size":11},"opacity":0.85,"showarrow":false,"text":"trace to","x":0.5,"y":0.8}],"xaxis":{"visible":false,"range":[0.5,0.5],"scaleanchor":"y","scaleratio":1},"yaxis":{"visible":false,"range":[0.52,1.08]},"height":500,"width":900,"plot_bgcolor":"white"},                        {"responsive": true}                    )                };            </script>        </div>
+</body>
+</html>
 </div>
 </div>
 </div>
@@ -622,6 +603,22 @@ function searchItem() {
         }
     }
 }
+
+document.querySelectorAll('.annotation').forEach(function(ann) {
+    ann.style.cursor = "pointer";
+    ann.addEventListener('click', function(e) {
+        var textElem = ann.querySelector('text.annotation-text');
+        if (textElem) {
+            var unformatted = textElem.getAttribute('data-unformatted');
+            // Extract the section anchor from the <span section="...">
+            var match = unformatted && unformatted.match(/section="([^"]+)"/);
+            if (match && match[1].startsWith("#sec-")) {
+                window.location.hash = match[1];
+                e.preventDefault();
+            }
+        }
+    });
+});
 </script>
 <script>
 

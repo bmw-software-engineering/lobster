@@ -39,6 +39,9 @@
     file.cpp:10:15: warning: function operator<< traces to namespace.requirement_id [lobster-tracing]
     ```
 
+* `lobster-html-report`:
+  - Recreating tracing policy diagram using Plotly.
+
 ### 0.13.1
 
 * Introduced API functions:
