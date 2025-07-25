@@ -1,5 +1,3 @@
-cppcode.lobster
-gtests.lobster
-report.lobster
-software-requirements.lobster
+!*reference_output.lobster
+ci_report.log
 lobster_report.html

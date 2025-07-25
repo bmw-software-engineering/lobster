@@ -1,10 +1,4 @@
-cppcode.lobster
-mcode.lobster
+!*reference_output.lobster
+ci_report.log
 mh_trace.json
-gtests.lobster
-mtests.lobster
-report.lobster
-software-requirements.lobster
 lobster_report.html
-pycode.lobster
-json.lobster

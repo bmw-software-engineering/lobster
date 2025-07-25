@@ -12,7 +12,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 3
           },
@@ -38,7 +38,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 8
           },
@@ -64,7 +64,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 13
           },
@@ -90,7 +90,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 18
           },
@@ -116,7 +116,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 23
           },
@@ -142,7 +142,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 28
           },
@@ -168,7 +168,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 33
           },
@@ -194,7 +194,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 38
           },
@@ -220,7 +220,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 45
           },
@@ -245,7 +245,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 50
           },
@@ -271,7 +271,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 55
           },
@@ -296,7 +296,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 60
           },
@@ -321,7 +321,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 65
           },
@@ -347,7 +347,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 70
           },
@@ -373,7 +373,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 75
           },
@@ -406,7 +406,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 16
           },
@@ -429,7 +429,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 23
           },
@@ -455,7 +455,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 35
           },
@@ -480,7 +480,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 42
           },
@@ -500,7 +500,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 47
           },
@@ -520,7 +520,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 52
           },
@@ -540,7 +540,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 57
           },
@@ -560,7 +560,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 62
           },
@@ -580,7 +580,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 67
           },
@@ -600,7 +600,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 72
           },
@@ -620,7 +620,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 87
           },
@@ -640,7 +640,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 92
           },
@@ -660,7 +660,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 97
           },
@@ -680,7 +680,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 101
           },
@@ -703,7 +703,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 108
           },
@@ -726,7 +726,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 122
           },
@@ -748,7 +748,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 131
           },
@@ -770,7 +770,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 142
           },
@@ -792,7 +792,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
             "line": 155
           },
@@ -819,7 +819,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit_test.cpp",
             "line": 9
           },
@@ -842,7 +842,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit_test.cpp",
             "line": 17
           },
@@ -866,7 +866,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit_test.cpp",
             "line": 29
           },
@@ -889,7 +889,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit_test.cpp",
             "line": 47
           },
@@ -912,7 +912,7 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during execution",
+            "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit_test.cpp",
             "line": 63
           },
