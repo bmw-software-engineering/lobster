@@ -13,7 +13,6 @@ from tests_system.testrunner import TestRunner
 class CmdArgs:
     lobster_report: Optional[str] = None
     out: Optional[str] = None
-    dot: Optional[str] = None
     high_contrast: Optional[str] = None
     render_md: bool = False
 
@@ -32,7 +31,6 @@ class CmdArgs:
             cmd_args.append("--render-md")
 
         append_if_string("--out", self.out)
-        append_if_string("--dot", self.dot)
         append_if_string("--high-contrast", self.high_contrast)
         return cmd_args
 
