@@ -52,6 +52,18 @@
     The feature has been removed to simplify the tool qualification in the sense of ISO 26262.
     If a feature is not available, then it does not need to be qualified.
 
+* `lobster-html-report`:
+  - The tracing policy diagram is always included in the HTML report.
+    The `dot` tool from the [Graphviz](https://graphviz.org) project is no longer
+    needed.
+    The python package `plotly` is required instead.
+    If `lobster-html-report` is installed with the help of `pip`, then `plotly` will be
+    installed automatically.
+
+    (For installation instructions, see the [Installing](README.md#installing) section
+    in the README.)
+
+
 ### 0.13.1
 
 * Introduced API functions:
