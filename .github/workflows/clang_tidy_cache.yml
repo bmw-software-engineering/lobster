@@ -1,0 +1,27 @@
+name: Build and Cache clang-tidy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-clang-tidy-cache:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install cmake ninja-build
+
+      - name: Cache clang-tidy
+        id: cache-clang-tidy
+        uses: actions/cache@v4
+        with:
+          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
+          key: cache-clang-tidy
+
+      - name: Build clang-tidy
+        if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
+        run: |
+          make clang-tidy
