@@ -59,6 +59,8 @@ The following programming languages are supported:
 * C++
   * [lobster-cpp](packages/lobster-tool-cpp/README.md) (to extract tags from target code)
   * [lobster-cpptest](packages/lobster-tool-cpptest/README.md) (to extract tags from test code)
+* C/C++
+  * [lobster-doxygen](https://github.com/NewTec-GmbH/lobster-doxygen) to extract tags from doxygen generated XML.
 * [Python3](packages/lobster-tool-python/README.md)
 * [SIMULINK and MATLAB](https://misshit.org) using the 3rd-party tool
   MISS_HIT; supports both code and tests
