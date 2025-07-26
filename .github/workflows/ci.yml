@@ -17,7 +17,7 @@ permissions:
 jobs:
   # Job to run change detection
   changes:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       pull-requests: read
     outputs:
@@ -163,6 +163,14 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Restore clang-tidy cache
+        id: restore-clang-tidy
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
+          key: cache-clang-tidy
+          fail-on-cache-miss: true
+
       - name: Install python version
         uses: actions/setup-python@v5
         with:
@@ -172,22 +180,6 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
           sudo apt install cmake ninja-build graphviz
-      - name: Cache clang-tidy
-        id: cache-clang-tidy
-        uses: actions/cache@v4
-        with:
-          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
-          key: cache-clang-tidy
-      - if: ${{ steps.cache-clang-tidy.outputs.cache-hit != 'true' }}
-        name: Build clang-tidy
-        run: |
-          make clang-tidy
-      - if: ${{ steps.cache-clang-tidy.outputs.cache-hit != 'true' }}
-        name: Save cache
-        uses: actions/cache/save@v4
-        with:
-          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
-          key: cache-clang-tidy
       - name: Setup bazel (for lobster-gtest)
         uses: jwlawson/actions-setup-bazel@v2
         with:
@@ -208,4 +200,3 @@ jobs:
     steps:
       - name: Failure
         run: exit 1
-

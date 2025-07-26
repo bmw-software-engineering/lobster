@@ -115,11 +115,12 @@ class CppTool(MetaDataToolBase):
             else:
                 self._argument_parser.error(f"{item} is not a file or directory")
 
-        # Test if the clang-tidy can be used
+        clang_tidy_path = os.path.expanduser(options.clang_tidy)
 
+        # Test if the clang-tidy can be used
         rv = subprocess.run(
             [
-                os.path.expanduser(options.clang_tidy),
+                clang_tidy_path,
                 "-checks=-*,lobster-tracing",
                 "--list-checks",
             ],
@@ -138,7 +139,7 @@ class CppTool(MetaDataToolBase):
             return 1
 
         subprocess_args = [
-            os.path.expanduser(options.clang_tidy),
+            clang_tidy_path,
             "-checks=-*,lobster-tracing",
         ]
         if options.compile_commands:
