@@ -1,5 +1,7 @@
 from unittest import TestCase
-from lobster.report import Coverage, Report
+from unittest.mock import patch
+from lobster.report import Coverage, Report, generate_report_file
+from lobster.tools.core.report.report import ReportTool
 
 
 class ReportTests(TestCase):
@@ -45,3 +47,22 @@ class ReportTests(TestCase):
                         f"items to be {expected_coverage}, but got "
                         f"{report.coverage[level_name].coverage}",
                     )
+
+
+    def test_generate_report_file(self):
+        """Test run_lobster_report_api with custom parameters"""
+        tool = ReportTool()
+        apple_config = "apple.conf"
+        banana_output = "banana.lobster"
+
+        with patch.object(Report, 'parse_config') as mock_parse_config, \
+             patch.object(Report, 'write_report') as mock_write_report:
+
+            generate_report_file(
+                lobster_config=apple_config,
+                output_file=banana_output
+            )
+
+            # Verify custom parameters were used
+            mock_parse_config.assert_called_once_with(apple_config)
+            mock_write_report.assert_called_once_with(banana_output)
