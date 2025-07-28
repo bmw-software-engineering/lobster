@@ -1,0 +1,28 @@
+tests-integration/projects/cpp-focus/fruit.cpp:155: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.cpp:87: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.cpp:97: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.cpp:52: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.cpp:35: lobster error: unknown tracing target req cd-456
+tests-integration/projects/cpp-focus/fruit.cpp:35: lobster error: unknown tracing target req ab-123
+tests-integration/projects/cpp-focus/fruit.cpp:35: lobster error: unknown tracing target req 89
+tests-integration/projects/cpp-focus/fruit.cpp:35: lobster error: unknown tracing target req 456
+tests-integration/projects/cpp-focus/fruit.cpp:35: lobster error: unknown tracing target req 123
+tests-integration/projects/cpp-focus/fruit.cpp:35: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.cpp:62: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.cpp:42: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.cpp:47: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.cpp:67: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.cpp:57: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.cpp:72: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.cpp:92: lobster error: missing up reference
+tests-integration/projects/cpp-focus/fruit.trlc:3: lobster error: missing reference to Verification Test
+tests-integration/projects/cpp-focus/fruit.trlc:8: lobster error: missing reference to Verification Test
+tests-integration/projects/cpp-focus/fruit.trlc:28: lobster error: missing reference to Verification Test
+tests-integration/projects/cpp-focus/fruit.trlc:50: lobster error: missing reference to Verification Test
+tests-integration/projects/cpp-focus/fruit.trlc:65: lobster error: missing reference to Verification Test
+tests-integration/projects/cpp-focus/fruit.trlc:70: lobster error: missing reference to Verification Test
+tests-integration/projects/cpp-focus/fruit.trlc:75: lobster error: missing reference to Verification Test
+tests-integration/projects/cpp-focus/fruit.trlc:13: lobster error: missing reference to Verification Test
+tests-integration/projects/cpp-focus/fruit.trlc:18: lobster error: missing reference to Verification Test
+tests-integration/projects/cpp-focus/fruit.trlc:38: lobster error: missing reference to Code
+tests-integration/projects/cpp-focus/fruit.trlc:33: lobster error: missing reference to Verification Test
