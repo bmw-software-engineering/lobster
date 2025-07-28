@@ -23,7 +23,7 @@ import sys
 
 from lobster.exceptions import LOBSTER_Exception
 from lobster.errors import LOBSTER_Error
-from lobster.report import Report
+from lobster.report import generate_report_file
 from lobster.meta_data_tool_base import MetaDataToolBase
 
 
@@ -46,29 +46,33 @@ class ReportTool(MetaDataToolBase):
         )
 
     def _run_impl(self, options: Namespace) -> int:
+
         if not os.path.isfile(options.lobster_config):
-            print(f"error: cannot read config file '{options.lobster_config}'")
-            return 1
+            raise LOBSTER_Exception(
+                f"Cannot read config file '{options.lobster_config}'"
+            )
 
         if os.path.exists(options.out) and not os.path.isfile(options.out):
-            print(f"error: cannot write to '{options.out}'")
-            print(f"error: '{options.out}' exists and is not a file")
-            return 1
-
-        report = Report()
+            raise LOBSTER_Exception(
+                f"Cannot write to '{options.out}': exists and is not a file"
+            )
 
         try:
-            report.parse_config(options.lobster_config)
-        except LOBSTER_Error:
-            print(f"{self.name}: aborting due to earlier errors.")
-            return 1
+            generate_report_file(
+                lobster_config=options.lobster_config,
+                output_file=options.out
+            )
+        except LOBSTER_Error as err:
+            raise LOBSTER_Exception(
+                f"{self.name}: aborting due to earlier errors."
+            ) from err
         except LOBSTER_Exception as err:
-            print(f"{self.name}: aborting due to earlier errors.")
-            print(f"{self.name}: Additional data for debugging:")
             err.dump()
-            return 1
+            raise LOBSTER_Exception(
+                f"{self.name}: aborting due to earlier errors. "
+                "See additional data above."
+            ) from err
 
-        report.write_report(options.out)
         return 0
 
 
