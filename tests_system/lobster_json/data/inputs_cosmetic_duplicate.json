@@ -1,0 +1,21 @@
+{
+  "Name": "Car Features Test Suite",
+  "TestCases": [
+    {
+      "Name": "Cosmetic_Features_1",
+      "RequirementIDs": ["Keyless Entry", "Push Button Start"]
+    },
+    {
+      "Name": "Cosmetic_Features_2",
+      "RequirementIDs": ["Navigation System", "Touchscreen Display"]
+    },
+    {
+      "Name": "Cosmetic_Features_3",
+      "RequirementIDs": ["Bluetooth Connectivity", "Voice Control"]
+    },
+    {
+      "Name": "Cosmetic_Features_4",
+      "RequirementIDs": ["Heated Seats", "Ventilated Seats"]
+    }
+  ]
+}
