@@ -18,7 +18,7 @@ jobs:
         id: cache-clang-tidy
         uses: actions/cache@v4
         with:
-          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
+          path: ../llvm-project/build/bin/clang-tidy
           key: cache-clang-tidy
 
       - name: Build clang-tidy

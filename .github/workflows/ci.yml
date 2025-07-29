@@ -179,6 +179,13 @@ jobs:
           path: ~/work/lobster/llvm-project/build/bin/clang-tidy
           key: cache-clang-tidy
           fail-on-cache-miss: true
+      - name: Verify clang-tidy binary exists
+        run: |
+          if [ ! -f ~/work/lobster/llvm-project/build/bin/clang-tidy ]; then
+            echo "ERROR: clang-tidy binary not found at ~/work/lobster/llvm-project/build/bin/clang-tidy"
+            exit 1
+          fi
+          echo "clang-tidy binary found at ~/work/lobster/llvm-project/build/bin/clang-tidy"
       - name: Setup bazel (for lobster-gtest)
         uses: jwlawson/actions-setup-bazel@v2
         with:
@@ -199,4 +206,3 @@ jobs:
     steps:
       - name: Failure
         run: exit 1
-
