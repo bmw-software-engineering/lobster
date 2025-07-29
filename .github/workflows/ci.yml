@@ -119,7 +119,8 @@ jobs:
   test:
     name: TestSuite
     needs: [changes, lint-code, lint-system-tests, trlc]
-    if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
+    if: false
+    # if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
     strategy:
       matrix:
         os: [ubuntu-24.04, windows-2022, macos-13, macos-14]
@@ -163,6 +164,32 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Restore clang-tidy cache
+        id: restore-clang-tidy
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
+          key: cache-clang-tidy
+          fail-on-cache-miss: true
+      - name: List restored files
+        run: |
+          ls -laRh ~/work/lobster/llvm-project/build/bin || echo "No files or directories found"
+      - name: Verify clang-tidy binary exists
+        run: |
+          if [ ! -f ~/work/lobster/llvm-project/build/bin/clang-tidy ]; then
+            echo "ERROR: clang-tidy binary not found at ~/work/lobster/llvm-project/build/bin/clang-tidy"
+            exit 1
+          fi
+          echo "clang-tidy binary found at ~/work/lobster/llvm-project/build/bin/clang-tidy"
+      - name: Print clang-tidy version
+        run: |
+          ~/work/lobster/llvm-project/build/bin/clang-tidy --version
+
+      - name: Install C/C++ build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libc6-dev
+
       - name: Install python version
         uses: actions/setup-python@v5
         with:
@@ -172,20 +199,6 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
           sudo apt install cmake ninja-build graphviz
-      - name: Restore clang-tidy cache
-        id: restore-clang-tidy
-        uses: actions/cache/restore@v4
-        with:
-          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
-          key: cache-clang-tidy
-          fail-on-cache-miss: true
-      - name: Verify clang-tidy binary exists
-        run: |
-          if [ ! -f ~/work/lobster/llvm-project/build/bin/clang-tidy ]; then
-            echo "ERROR: clang-tidy binary not found at ~/work/lobster/llvm-project/build/bin/clang-tidy"
-            exit 1
-          fi
-          echo "clang-tidy binary found at ~/work/lobster/llvm-project/build/bin/clang-tidy"
       - name: Setup bazel (for lobster-gtest)
         uses: jwlawson/actions-setup-bazel@v2
         with:

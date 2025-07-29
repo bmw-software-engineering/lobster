@@ -18,11 +18,13 @@
 # <https://www.gnu.org/licenses/>.
 
 from argparse import Namespace
+from pathlib import Path
 import sys
 import os.path
 import subprocess
 import re
 from typing import Optional
+from pprint import pprint
 
 from lobster.items import Tracing_Tag, Implementation
 from lobster.io import lobster_write
@@ -99,8 +101,28 @@ class CppTool(MetaDataToolBase):
             help="write output to this file; otherwise output to to stdout",
         )
 
+    @staticmethod
+    def _print_clang_tidy_version(clang_tidy_path: str) -> None:
+        """Prints the version of clang-tidy."""
+        print(f"Using clang-tidy at '{clang_tidy_path}'.")
+        try:
+            rv = subprocess.run(
+                [clang_tidy_path, "--version"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                encoding="UTF-8",
+                check=True,
+            )
+            print(rv.stdout.strip())
+        except subprocess.CalledProcessError as e:
+            print("Error running clang-tidy:", e.stderr.strip())
+            sys.exit(1)
+
     def _run_impl(self, options: Namespace) -> int:
         options = self._argument_parser.parse_args()
+
+        print("Options:")
+        pprint(vars(options))
 
         file_list = []
         for item in options.files:
@@ -115,11 +137,13 @@ class CppTool(MetaDataToolBase):
             else:
                 self._argument_parser.error(f"{item} is not a file or directory")
 
-        # Test if the clang-tidy can be used
+        clang_tidy_path = str(Path(os.path.expanduser(options.clang_tidy)).resolve())
+        self._print_clang_tidy_version(clang_tidy_path)
 
+        # Test if the clang-tidy can be used
         rv = subprocess.run(
             [
-                os.path.expanduser(options.clang_tidy),
+                clang_tidy_path,
                 "-checks=-*,lobster-tracing",
                 "--list-checks",
             ],
@@ -138,7 +162,7 @@ class CppTool(MetaDataToolBase):
             return 1
 
         subprocess_args = [
-            os.path.expanduser(options.clang_tidy),
+            clang_tidy_path,
             "-checks=-*,lobster-tracing",
         ]
         if options.compile_commands:

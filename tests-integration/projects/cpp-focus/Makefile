@@ -4,7 +4,7 @@ LOBSTER_WIP:=$(LOBSTER_ROOT)/work-in-progress
 PATH:=$(LOBSTER_ROOT)/test_install/bin:$(PATH)
 PYTHONPATH:=$(wildcard $(LOBSTER_ROOT)/test_install/lib/python*/site-packages)
 
-CLANG_TIDY:=$(LOBSTER_ROOT)/../llvm-project/build/bin/clang-tidy
+CLANG_TIDY:=$(shell realpath $(LOBSTER_ROOT)/../llvm-project/build/bin/clang-tidy)
 
 THIS_TEST:=$(shell realpath --relative-to $(LOBSTER_ROOT) $(PWD))
 THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
@@ -18,6 +18,14 @@ html_report.html: cppcode.lobster gtests.lobster software-requirements.lobster l
 	@bash -c "lobster-report && echo '$(THIS_TEST) ✅ lobster-report succeeded!' || { echo '$(THIS_TEST) ❌ ERROR: lobster-report failed!'; exit 1; }"
 	@bash -c "lobster-online-report && echo '$(THIS_TEST) ✅ lobster-online-report succeeded!' || { echo '$(THIS_TEST) ❌ ERROR: lobster-online-report failed!'; exit 1; }"
 	$(PYTHON) $(UPDATE_GIT_HASHES_SCRIPT) $(REFERENCE_OUTPUT) $(REFERENCE_OUTPUT_WITH_HASH)
+
+	@echo "===== Absolute path of cppcode.lobster ====="
+	@realpath cppcode.lobster
+	@echo "===== Contents of cppcode.lobster ====="
+	@cat cppcode.lobster
+	@sleep 2
+
+	@echo "===== Starting diff ====="
 	@if diff report.lobster $(REFERENCE_OUTPUT_WITH_HASH); then echo '✅ Files are identical!'; else { echo '❌ ERROR: Files are different!'; exit 1; }; fi
 	rm $(REFERENCE_OUTPUT_WITH_HASH)
 	@bash -c "lobster-html-report && echo '$(THIS_TEST) ✅ lobster-html-report succeeded!' || { echo '$(THIS_TEST) ❌ ERROR: lobster-html-report failed!'; exit 1; }"
@@ -26,6 +34,12 @@ html_report.html: cppcode.lobster gtests.lobster software-requirements.lobster l
 	rm ci_report.log
 
 cppcode.lobster: fruit.h fruit.cpp
+	@if [ ! -f $(CLANG_TIDY) ]; then \
+		echo "❌ ERROR: clang-tidy binary not found at $(CLANG_TIDY)"; \
+		exit 1; \
+	else \
+		echo "✅ clang-tidy binary found at $(CLANG_TIDY)"; \
+	fi
 	@lobster-cpp fruit.cpp fruit.h \
 		--out="cppcode.lobster" --clang-tidy $(CLANG_TIDY) --skip-clang-errors clang-diagnostic-error Wunused-value
 

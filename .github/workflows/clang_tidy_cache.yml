@@ -18,10 +18,19 @@ jobs:
         id: cache-clang-tidy
         uses: actions/cache@v4
         with:
-          path: ../llvm-project/build/bin/clang-tidy
+          path: ~/work/lobster/llvm-project/build/bin/clang-tidy
           key: cache-clang-tidy
 
       - name: Build clang-tidy
         if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
         run: |
           make clang-tidy
+
+      - name: List files in parent bin folder
+        if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
+        run: |
+          ls -laRh ~/work/lobster/llvm-project/build/bin || echo "No files or directories found"
+
+      - name: Print clang-tidy version
+        run: |
+          ~/work/lobster/llvm-project/build/bin/clang-tidy --version
