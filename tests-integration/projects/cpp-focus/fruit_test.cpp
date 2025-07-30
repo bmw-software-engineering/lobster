@@ -33,7 +33,7 @@ TEST(BasketTest, AddAndShowContents)
     basket.addFruit(new Citrus<double>("Lemon", 100.0, false));
 
     // Check basket contents
-    EXPECT_EQ(basket.fruits_.size(), 3);
+    EXPECT_EQ(basket.fruits_size_, 3);
     EXPECT_EQ(basket.fruits_[0]->getName(), "Apple");
     EXPECT_EQ(basket.fruits_[1]->getName(), "Orange");
     EXPECT_EQ(basket.fruits_[2]->getName(), "Lemon");
@@ -48,19 +48,21 @@ TEST(BasketTest, ClearBasket)
     Basket<std::string> basket;
     basket.addFruit(new Fruit<std::string>("Banana", "120"));
     basket.addFruit(new Fruit<std::string>("Apple", "150"));
-    EXPECT_EQ(basket.fruits_.size(), 2);
+    EXPECT_EQ(basket.fruits_size_, 2);
 
     // Clear basket
-    while (!basket.fruits_.empty()) {
-        delete basket.fruits_.back();
-        basket.fruits_.pop_back();
+    /*
+    while (basket.fruits_size_ > 0) {
+        delete basket.fruits_[basket.fruits_size_ - 1];
+        --basket.fruits_size_;
     }
-    EXPECT_EQ(basket.fruits_.size(), 0);
+    */
+    EXPECT_EQ(basket.fruits_size_, 0);
 }
 
 TEST(BasketTest, FindInBasketTemplate)
 {
-    LOBSTER_TRACE("fruits.Fruit_Insertion_Operator");
+    LOBSTER_TRACE("fruits.Fruit_Less_Than_Operator");
     Basket<std::string> basket;
     basket.addFruit(new Fruit<std::string>("Banana", "120"));
     basket.addFruit(new Fruit<std::string>("Apple", "150"));

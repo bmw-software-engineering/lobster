@@ -1,29 +1,24 @@
 #ifndef FRUIT_H
 #define FRUIT_H
 
-#include <iostream>
-#include <string>
-#include <vector>
-
 namespace orchard {
 
 template <typename T>
 class Fruit {
 public:
-    Fruit(const std::string& name, T weight)
-        : name_(name), weight_(weight) {}
+    Fruit(const char* name, T weight)
+        : name_(name), weight_(weight), basket_size_(0) {}
 
     virtual ~Fruit() = default;
 
     virtual void print() const {
-        std::cout << "Fruit: " << name_ << ", Weight: " << weight_ << std::endl;
+        // print a message
     }
 
     T getWeight() const { return weight_; }
-    std::string getName() const { return name_; }
+    const char* getName() const { return name_; }
 
     // Operator overloads with special characters
-    friend std::ostream& operator<<(std::ostream& os, const Fruit& fruit); // <<
     Fruit& operator=(const Fruit& other);                                  // =
     Fruit operator*(double factor) const;                                  // *
     bool operator<(const Fruit& other) const;                              // <
@@ -31,17 +26,17 @@ public:
     bool operator&(const Fruit& other) const;                              // &
     bool operator|(const Fruit& other) const;                              // |
     Fruit operator/(double divisor) const;                                 // /
-    Fruit& operator[](size_t idx);                                         // []
+    Fruit& operator[](int idx);                                         // []
     Fruit& operator~();                                                    // ~
 
     // Function with template and angle brackets
     template <typename U>
     void doSomethingWithTemplate(const U& value) {
-        std::cout << "doSomethingWithTemplate called with: " << value << std::endl;
+        //std::cout << "doSomethingWithTemplate called with: " << value << std::endl;
     }
 
     // Function with parentheses, comma, and default argument
-    void complicatedFunc(int a, double b = 3.14, const std::string& s = "banana");
+    void complicatedFunc(int a, double b = 3.14, const char* s = "banana");
 
     // Function with reference and pointer
     void refAndPtrFunc(int& a, double* b);
@@ -50,20 +45,20 @@ public:
     void crazySignature(const int a, volatile double b) noexcept;
 
 protected:
-    std::string name_;
+    const char* name_;
     T weight_;
-    std::vector<Fruit<T>> basket_;
+    Fruit<T>* basket_[10];
+    int basket_size_;   // track the number of elements manually
 };
 
 template <typename T>
 class Citrus : public Fruit<T> {
 public:
-    Citrus(const std::string& name, T weight, bool isSweet)
+    Citrus(const char* name, T weight, bool isSweet)
         : Fruit<T>(name, weight), isSweet_(isSweet) {}
 
     void print() const override {
-        std::cout << "Citrus: " << this->name_ << ", Weight: " << this->weight_
-                  << ", Sweet: " << (isSweet_ ? "Yes" : "No") << std::endl;
+        // print a message
     }
 
     bool isSweet() const { return isSweet_; }
@@ -75,32 +70,36 @@ private:
 template <typename T>
 class Basket {
 public:
-    void addFruit(Fruit<T>* fruit) {
-        fruits_.push_back(fruit);
+void addFruit(Fruit<T>* fruit) {
+    if (fruits_size_ < 10) {
+        fruits_[fruits_size_++] = fruit;
     }
+}
 
     void showContents() const {
-        std::cout << "Basket contains:" << std::endl;
-        for (const auto& fruit : fruits_) {
-            fruit->print();
+        for (int i = 0; i < fruits_size_; ++i) {
+            if (fruits_[i]) {
+                fruits_[i]->print();
+            }
         }
     }
 
     ~Basket() {
-        for (auto fruit : fruits_) {
-            delete fruit;
+        for (int i = 0; i < this->fruits_size_; ++i) {
+            delete this->fruits_[i];
         }
+        this->fruits_size_ = 0;
     }
 
-    // Make fruits_ public for direct access in system tests
-    std::vector<Fruit<T>*> fruits_;
+    Fruit<T>* fruits_[10];
+    int fruits_size_ = 0; // track the number of elements
 };
 
 template <typename T>
-Fruit<T>* findInBasket(const Basket<T>& basket, const std::string& name) {
-    for (const auto& fruit : basket.fruits_) {
-        if (fruit->getName() == name) {
-            return fruit;
+Fruit<T>* findInBasket(const Basket<T>& basket, const char* name) {
+    for (int i = 0; i < basket.fruits_size_; ++i) {
+        if (basket.fruits_[i]->getName() == name) {
+            return basket.fruits_[i];
         }
     }
     return nullptr;

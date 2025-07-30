@@ -1,0 +1,7 @@
+[
+    {
+        "directory": ".",
+        "file": "fruit.cpp",
+        "command": "clang++ -x c++ -c fruit.cpp -I."
+    }
+]

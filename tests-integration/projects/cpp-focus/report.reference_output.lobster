@@ -25,7 +25,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:buyBanana:101"
+            "cpp fruit.cpp:1:buyBanana:90"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -51,7 +51,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:buyBanana:101"
+            "cpp fruit.cpp:1:buyBanana:90"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -77,7 +77,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:sellBanana:108"
+            "cpp fruit.cpp:1:sellBanana:96"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -103,7 +103,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:sellBanana:108"
+            "cpp fruit.cpp:1:sellBanana:96"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -127,7 +127,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:clearBasket:122",
+            "cpp fruit.cpp:1:clearBasket:113",
             "gtest FruitTest:BasicProperties",
             "gtest CitrusTest:Sweetness"
           ],
@@ -155,7 +155,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:checkBasket:131"
+            "cpp fruit.cpp:1:checkBasket:121"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -181,7 +181,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:throwBanana:142"
+            "cpp fruit.cpp:1:throwBanana:132"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -216,7 +216,7 @@
           "status": null
         },
         {
-          "tag": "req fruits.Fruit_Insertion_Operator",
+          "tag": "req fruits.Fruit_Less_Than_Operator",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -224,20 +224,20 @@
             "file": "tests-integration/projects/cpp-focus/fruit.trlc",
             "line": 45
           },
-          "name": "fruits.Fruit_Insertion_Operator",
+          "name": "fruits.Fruit_Less_Than_Operator",
           "messages": [],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:operator<<:16",
+            "cpp fruit.cpp:1:orchard::Fruit<double>::operator<:33",
             "gtest BasketTest:FindInBasketTemplate"
           ],
           "tracing_status": "OK",
           "framework": "TRLC",
           "kind": "FruityRequirement",
-          "text": "The operator << shall print the fruit name to the output stream.",
+          "text": "The operator < shall compare the weight of two fruits.",
           "status": null
         },
         {
@@ -258,7 +258,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:23"
+            "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -282,7 +282,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:operator<<:16",
+            "cpp fruit.cpp:1:orchard::Fruit<double>::operator<:33",
             "gtest BasketTest:AddAndShowContents"
           ],
           "tracing_status": "OK",
@@ -307,7 +307,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:23",
+            "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14",
             "gtest CitrusTest:Sweetness"
           ],
           "tracing_status": "OK",
@@ -334,7 +334,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:23"
+            "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -360,7 +360,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:23"
+            "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -386,7 +386,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:23"
+            "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
           "tracing_status": "MISSING",
           "framework": "TRLC",
@@ -402,36 +402,13 @@
       "kind": "implementation",
       "items": [
         {
-          "tag": "cpp fruit.cpp:1:operator<<:16",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 16
-          },
-          "name": "operator<<",
-          "messages": [],
-          "just_up": [],
-          "just_down": [],
-          "just_global": [],
-          "ref_up": [
-            "req fruits.Magic",
-            "req fruits.Fruit_Insertion_Operator"
-          ],
-          "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
-        },
-        {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:23",
-          "location": {
-            "kind": "github",
-            "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 23
+            "line": 14
           },
           "name": "orchard::Fruit<double>::operator=",
           "messages": [],
@@ -451,13 +428,13 @@
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator*:35",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator*:26",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 35
+            "line": 26
           },
           "name": "orchard::Fruit<double>::operator*",
           "messages": [
@@ -476,33 +453,36 @@
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator<:42",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator<:33",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 42
+            "line": 33
           },
           "name": "orchard::Fruit<double>::operator<",
-          "messages": [
-            "missing up reference"
-          ],
+          "messages": [],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
+          "ref_up": [
+            "req fruits.Magic",
+            "req fruits.Fruit_Less_Than_Operator"
+          ],
+          "ref_down": [],
+          "tracing_status": "OK",
           "language": "C/C++",
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator>:47",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator>:39",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 47
+            "line": 39
           },
           "name": "orchard::Fruit<double>::operator>",
           "messages": [
@@ -516,13 +496,13 @@
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator&:52",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator&:44",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 52
+            "line": 44
           },
           "name": "orchard::Fruit<double>::operator&",
           "messages": [
@@ -536,13 +516,13 @@
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator|:57",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator|:49",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 57
+            "line": 49
           },
           "name": "orchard::Fruit<double>::operator|",
           "messages": [
@@ -556,13 +536,13 @@
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator/:62",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator/:54",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 62
+            "line": 54
           },
           "name": "orchard::Fruit<double>::operator/",
           "messages": [
@@ -576,13 +556,13 @@
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator[]:67",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator[]:59",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 67
+            "line": 59
           },
           "name": "orchard::Fruit<double>::operator[]",
           "messages": [
@@ -596,13 +576,13 @@
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator~:72",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator~:64",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 72
+            "line": 64
           },
           "name": "orchard::Fruit<double>::operator~",
           "messages": [
@@ -616,13 +596,13 @@
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::complicatedFunc:87",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::complicatedFunc:79",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 87
+            "line": 79
           },
           "name": "orchard::Fruit<double>::complicatedFunc",
           "messages": [
@@ -636,13 +616,13 @@
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::refAndPtrFunc:92",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::refAndPtrFunc:83",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 92
+            "line": 83
           },
           "name": "orchard::Fruit<double>::refAndPtrFunc",
           "messages": [
@@ -656,13 +636,13 @@
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::crazySignature:97",
+          "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::crazySignature:87",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 97
+            "line": 87
           },
           "name": "orchard::Fruit<double>::crazySignature",
           "messages": [
@@ -676,13 +656,13 @@
           "kind": "method"
         },
         {
-          "tag": "cpp fruit.cpp:1:buyBanana:101",
+          "tag": "cpp fruit.cpp:1:buyBanana:90",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 101
+            "line": 90
           },
           "name": "buyBanana",
           "messages": [],
@@ -699,13 +679,13 @@
           "kind": "function"
         },
         {
-          "tag": "cpp fruit.cpp:1:sellBanana:108",
+          "tag": "cpp fruit.cpp:1:sellBanana:96",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 108
+            "line": 96
           },
           "name": "sellBanana",
           "messages": [],
@@ -722,13 +702,13 @@
           "kind": "function"
         },
         {
-          "tag": "cpp fruit.cpp:1:clearBasket:122",
+          "tag": "cpp fruit.cpp:1:clearBasket:113",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 122
+            "line": 113
           },
           "name": "clearBasket",
           "messages": [],
@@ -744,13 +724,13 @@
           "kind": "function"
         },
         {
-          "tag": "cpp fruit.cpp:1:checkBasket:131",
+          "tag": "cpp fruit.cpp:1:checkBasket:121",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 131
+            "line": 121
           },
           "name": "checkBasket",
           "messages": [],
@@ -766,13 +746,13 @@
           "kind": "function"
         },
         {
-          "tag": "cpp fruit.cpp:1:throwBanana:142",
+          "tag": "cpp fruit.cpp:1:throwBanana:132",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 142
+            "line": 132
           },
           "name": "throwBanana",
           "messages": [],
@@ -788,13 +768,13 @@
           "kind": "function"
         },
         {
-          "tag": "cpp fruit.cpp:1:main:155",
+          "tag": "cpp fruit.cpp:1:main:148",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit.cpp",
-            "line": 155
+            "line": 148
           },
           "name": "main",
           "messages": [
@@ -808,7 +788,7 @@
           "kind": "main function"
         }
       ],
-      "coverage": 36.8421052631579
+      "coverage": 38.888888888888886
     },
     {
       "name": "Verification Test",
@@ -905,7 +885,7 @@
           "tracing_status": "OK",
           "framework": "GoogleTest",
           "kind": "test",
-          "status": "ok"
+          "status": "fail"
         },
         {
           "tag": "gtest BasketTest:FindInBasketTemplate",
@@ -914,7 +894,7 @@
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
             "file": "tests-integration/projects/cpp-focus/fruit_test.cpp",
-            "line": 63
+            "line": 65
           },
           "name": "BasketTest:FindInBasketTemplate",
           "messages": [],
@@ -922,7 +902,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Fruit_Insertion_Operator"
+            "req fruits.Fruit_Less_Than_Operator"
           ],
           "ref_down": [],
           "tracing_status": "OK",

@@ -42,9 +42,9 @@ FruityRequirement Sweet_Banana
          """
 }
 
-FruityRequirement Fruit_Insertion_Operator
+FruityRequirement Fruit_Less_Than_Operator
 {
-  description = "The operator << shall print the fruit name to the output stream."
+  description = "The operator < shall compare the weight of two fruits."
 }
 
 FruityRequirement Fruit_Copy_Constructor

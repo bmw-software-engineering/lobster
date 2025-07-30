@@ -25,3 +25,7 @@ jobs:
         if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
         run: |
           make clang-tidy
+
+      - name: Print clang-tidy version (debug step)
+        run: |
+          ~/work/lobster/llvm-project/build/bin/clang-tidy --version

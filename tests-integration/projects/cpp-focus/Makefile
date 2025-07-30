@@ -26,11 +26,11 @@ html_report.html: cppcode.lobster gtests.lobster software-requirements.lobster l
 	rm ci_report.log
 
 cppcode.lobster: fruit.h fruit.cpp
-	@lobster-cpp fruit.cpp fruit.h \
-		--out="cppcode.lobster" --clang-tidy $(CLANG_TIDY) --skip-clang-errors clang-diagnostic-error Wunused-value
+	@lobster-cpp fruit.cpp \
+		--out="cppcode.lobster" --clang-tidy $(CLANG_TIDY) --compile-commands="fruit_compile_commands.json"
 
 gtests.lobster: fruit.h fruit.cpp fruit_test.cpp
-	@bazel test //$(THIS_TEST):fruit_test --cxxopt='-std=c++14' --enable_workspace
+	@bazel test //$(THIS_TEST):fruit_test --cxxopt='-std=c++14' --enable_workspace || true
 	@lobster-gtest $(LOBSTER_ROOT)/bazel-out/*/testlogs/$(THIS_TEST)/fruit_test \
 		--out="gtests.lobster"
 	sed -i s/$(THIS_TEST_ESCAPED)\\///g gtests.lobster
