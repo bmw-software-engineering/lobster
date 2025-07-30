@@ -20,27 +20,27 @@ lint: style
 
 lint-system-tests: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
-	python3 -m pylint --rcfile=tests-system/pylint3.cfg \
+	python3 -m pylint --rcfile=tests_system/pylint3.cfg \
 		--reports=no \
-		tests-system/system_test_case_base.py \
-		tests-system/asserter.py \
-		tests-system/lobster-json \
-		tests-system/lobster-meta-data-tool-base \
-		tests-system/lobster-online-report \
-		tests-system/lobster-online-report-nogit \
-		tests-system/lobster-report
+		tests_system/system_test_case_base.py \
+		tests_system/asserter.py \
+		tests_system/lobster_json \
+		tests_system/lobster_meta_data_tool_base \
+		tests_system/lobster_online_report \
+		tests_system/lobster_online_report_nogit \
+		tests_system/lobster_report
 
 lint-unit-tests: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
-	python3 -m pylint --rcfile=tests-unit/pylint3.cfg \
+	python3 -m pylint --rcfile=tests_unit/pylint3.cfg \
 		--reports=no \
-		tests-unit
+		tests_unit
 
 trlc:
 	trlc lobster --error-on-warnings --verify
 
 style:
-	@python3 -m pycodestyle lobster tests-system \
+	@python3 -m pycodestyle lobster tests_system \
 		--exclude=assets.py
 
 clean-packages:
@@ -93,35 +93,35 @@ clang-tidy:
 	cmake --build build --target clang-tidy
 
 integration-tests: packages
-	(cd tests-integration/projects/basic; make)
-	(cd tests-integration/projects/coverage; make)
-	(cd tests-integration/projects/coverage-half; make)
-	(cd tests-integration/projects/coverage-mix; make)
-	(cd tests-integration/projects/coverage-zero; make)
-	(cd tests-integration/projects/cpp-focus; make)
+	(cd tests_integration/projects/basic; make)
+	(cd tests_integration/projects/coverage; make)
+	(cd tests_integration/projects/coverage_half; make)
+	(cd tests_integration/projects/coverage_mix; make)
+	(cd tests_integration/projects/coverage_zero; make)
+	(cd tests_integration/projects/cpp_focus; make)
 	rm -f MODULE.bazel MODULE.bazel.lock
 
 codebeamer-pem:
 	@echo "🔐 Generating cert.pem and key.pem for codebeamer system tests..."
-	@mkdir -p tests-system/lobster-codebeamer/data/ssl
+	@mkdir -p tests_system/lobster_codebeamer/data/ssl
 	@openssl req -x509 -newkey rsa:2048 -nodes \
-		-keyout tests-system/lobster-codebeamer/data/ssl/key.pem \
-		-out tests-system/lobster-codebeamer/data/ssl/cert.pem \
+		-keyout tests_system/lobster_codebeamer/data/ssl/key.pem \
+		-out tests_system/lobster_codebeamer/data/ssl/cert.pem \
 		-days 365 -subj "//CN=localhost" > /dev/null 2>&1
 
 system-tests: codebeamer-pem
 	mkdir -p docs
-	python -m unittest discover -s tests-system -v -t .
-	make -B -C tests-system TOOL=lobster-python
+	python -m unittest discover -s tests_system -v -t .
+	make -B -C tests_system TOOL=lobster-python
 	@echo "🧹 Cleaning up cert.pem and key.pem..."
-	@rm -rf tests-system/lobster-codebeamer/data/ssl
+	@rm -rf tests_system/lobster_codebeamer/data/ssl
 
 unit-tests:
 	coverage run -p \
 			--branch --rcfile=coverage.cfg \
 			--data-file .coverage.unit \
 			--source=lobster \
-			-m unittest discover -s tests-unit -v
+			-m unittest discover -s tests_unit -v
 
 upload-main: packages
 	python3 -m twine upload --repository pypi packages/*/dist/*
@@ -233,22 +233,22 @@ code.lobster-%:
 
 unit-tests.lobster-%:
 	$(eval TOOL_NAME := $(subst _,-,$(notdir $(TOOL_PATH))))
-	lobster-python --activity --out unit-tests.lobster tests-unit/lobster-$(TOOL_NAME)
+	lobster-python --activity --out unit-tests.lobster tests_unit/lobster-$(TOOL_NAME)
 
 system-tests.lobster-%:
 	$(eval TOOL_NAME := $(subst _,-,$(notdir $(TOOL_PATH))))
-	lobster-python --activity --out=system-tests.lobster tests-system/lobster-$(TOOL_NAME)
+	lobster-python --activity --out=system-tests.lobster tests_system/lobster-$(TOOL_NAME)
 
 # STF is short for System Test Framework
-STF_TRLC_FILES := $(wildcard tests-system/*.trlc)
-STF_PYTHON_FILES := $(filter-out tests-system/test_%.py tests-system/run_tool_tests.py, $(wildcard tests-system/*.py))
+STF_TRLC_FILES := $(wildcard tests_system/*.trlc)
+STF_PYTHON_FILES := $(filter-out tests_system/test_%.py tests_system/run_tool_tests.py, $(wildcard tests_system/*.py))
 
 # This target is used to generate the LOBSTER report for the requirements of the system test framework itself.
 tracing-stf: $(STF_TRLC_FILES)
 	lobster-trlc --config=lobster/tools/lobster-trlc-system-stf.yaml --out=stf_system_requirements.lobster
 	lobster-trlc --config=lobster/tools/lobster-trlc-software-stf.yaml --out=stf_software_requirements.lobster
 	lobster-python --out=stf_code.lobster --only-tagged-functions $(STF_PYTHON_FILES)
-	lobster-report --lobster-config=tests-system/stf-lobster.conf --out=stf_report.lobster
+	lobster-report --lobster-config=tests_system/stf-lobster.conf --out=stf_report.lobster
 	lobster-online-report stf_report.lobster
 	lobster-html-report stf_report.lobster --out=docs/tracing-stf.html
 	@echo "Deleting STF *.lobster files..."

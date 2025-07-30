@@ -12,7 +12,7 @@ REFERENCE_OUTPUT:='report.reference_output.lobster'
 REFERENCE_OUTPUT_WITH_HASH := report.reference_output_with_hash.lobster
 REFERENCE_OUTPUT_CI:='ci_report.reference_output.log'
 PYTHON = python3
-UPDATE_GIT_HASHES_SCRIPT:='../../../tests-system/tests_utils/update_online_json_with_hashes.py'
+UPDATE_GIT_HASHES_SCRIPT:='../../../tests_system/tests_utils/update_online_json_with_hashes.py'
 
 html_report.html: cppcode.lobster gtests.lobster software-requirements.lobster lobster.conf
 	@bash -c "lobster-report && echo '$(THIS_TEST) ✅ lobster-report succeeded!' || { echo '$(THIS_TEST) ❌ ERROR: lobster-report failed!'; exit 1; }"

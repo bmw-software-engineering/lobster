@@ -9,8 +9,8 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 # Config
-CERT_PATH = 'tests-system/lobster-codebeamer/data/ssl/cert.pem'
-KEY_PATH = 'tests-system/lobster-codebeamer/data/ssl/key.pem'
+CERT_PATH = 'tests_system/lobster_codebeamer/data/ssl/cert.pem'
+KEY_PATH = 'tests_system/lobster_codebeamer/data/ssl/key.pem'
 PORT = 8999
 MOCK_ROUTE = '/api/v3/reports/<int:report_id>/items'
 

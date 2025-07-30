@@ -86,7 +86,7 @@ configuration in your `.vscode/settings.json` file:
     "python.testing.unittestArgs": [
         "-v",
         "-s",
-        "tests-system",
+        "tests_system",
         "-t",
         ".",
         "-p",
@@ -115,7 +115,7 @@ configuration instead:
     "python.testing.unittestArgs": [
         "-v",
         "-s",
-        "./tests-unit",
+        "./tests_unit",
         "-p",
         "test_*.py"
     ],
@@ -146,7 +146,7 @@ then consider to use the current directory also for `-s`:
 This way the system tests along with the unit tests will be found by VSCode.
 
 Notes:
-- The file [tests-unit/\_\_init\_\_.py](../tests-unit/__init__.py) exists only to support this use case.
+- The file [tests_unit/\_\_init\_\_.py](../tests_unit/__init__.py) exists only to support this use case.
 - As it turns out VSCode keeps the already detected tests in the "TESTING" side panel
   until you reload the window.
   That means you can have the system tests along with the unit tests available in the

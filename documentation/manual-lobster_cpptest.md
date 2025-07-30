@@ -113,7 +113,7 @@ $ lobster-cpptest --config cpptest-config.yaml
 
 The LOBSTER unit tests contains a working example:
 
-* Test [test_case.cpp](../test-unit/lobster-cpptest/data/test_case.cpp) containing requirement tags
+* Test [test_case.cpp](../tests_unit/lobster_cpptest/data/test_case.cpp) containing requirement tags
 
 ## Notes & Caveats
 * This tool supports these `markers`: '@requirement'

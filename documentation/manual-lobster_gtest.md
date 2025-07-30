@@ -55,11 +55,11 @@ $ lobster_gtest . --out gtests.lobster
 
 The LOBSTER testsuite contains a working example:
 
-* Bazel [BUILD](../integration-tests/projects/basic/BUILD) file to set up
-* Test [test.cpp](../integration-tests/projects/basic/test.cpp) containing tracing tags
-* Requrements [potato.trlc](../integration-tests/projects/basic/potato.trlc)
+* Bazel [BUILD](../tests_integration/projects/basic/BUILD) file to set up
+* Test [test.cpp](../tests_integration/projects/basic/test.cpp) containing tracing tags
+* Requrements [potato.trlc](../tests_integration/projects/basic/potato.trlc)
   containing tracing the requirements mentioned by the test
-* [Makefile](../integration-tests/projects/basic/Makefile) gluing everything
+* [Makefile](../tests_integration/projects/basic/Makefile) gluing everything
   together
 
 ## Notes & Caveats

@@ -4,7 +4,7 @@ import json
 """This helper script can generate the test data for the
    test_extract_requirements_scenarios test case"""
 
-folder = "tests-system/lobster-codebeamer/data"
+folder = "tests_system/lobster_codebeamer/data"
 
 for filename in os.listdir(folder):
     if filename.endswith(".lobster") and filename != "codebeamer.lobster":

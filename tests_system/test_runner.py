@@ -31,7 +31,8 @@ class TestRunner(ABC):
         directory for the tool under test. Input files will be copied into this
         directory before running the tool.
         """
-        self._tool_main_path = Path(__file__).resolve().parents[1] / tool_name
+        self._tool_main_path = (Path(__file__).resolve().parents[1] /
+                                tool_name.replace('_', '-'))
         self._tool_output_files: List[Path] = []
         self._working_dir = working_dir
 
