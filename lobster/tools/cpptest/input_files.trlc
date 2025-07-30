@@ -14,3 +14,11 @@ req.System_Requirement_Aspect Input_File_Valid_Cpp_Test_File {
     AND exit with a zero return code.
   '''
 }
+
+req.System_Requirement_Aspect Input_File_Invalid_Cpp_Test_File {
+  description = '''
+    OTHERWISE IF the file content is invalid,
+    THEN the tool shall write an error message to stderr
+    AND exit with a non-zero return code.
+  '''
+}

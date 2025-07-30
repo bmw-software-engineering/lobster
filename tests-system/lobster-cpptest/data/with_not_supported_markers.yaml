@@ -1,0 +1,7 @@
+output:
+  component_tests.lobster:
+    markers: ["@marker1"]
+    kind: "req"
+
+
+codebeamer_url: "https://codebeamer.com"

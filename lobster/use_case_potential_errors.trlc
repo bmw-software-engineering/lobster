@@ -617,3 +617,70 @@ section "Generating the final HTML report"
       verifies = [Wrong_tracing_policy_in_HTML_report]
   }
 }
+
+section "Using invalid config file"
+{
+
+  req.PotentialError Output_Despite_Missing_Config_File {
+    summary = "Output generated without configuration file"
+    description = '''
+      The user does not provide a valid path to a configuration file,
+      but the lobster-cpptest generates valid output nevertheless, potentially based on
+      irrelevant C++ files.
+      For example, the lobster-cpptest might consider the current working directory
+      as source of C++ files, and these do in fact contain links to real requirements,
+      such that lobster-report would compute a non-zero coverage value.
+    '''
+    impacts = [
+      '''If the lobster-cpptest generates a valid output file, then the invalid input path could
+        remain undetected, and subsequent tools of the LOBSTER tool chain
+        could consume unqualified input data.''',
+    ]
+
+    affects = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer, Requirements_to_CPP_Test_Coverage, List_Findings]
+    impact_type = req.Impact_Type.Safety
+}
+
+  req.TestSpecification Config_File_Missing {
+      description = '''
+        The test shall verify that the lobster-cpptest exits with a non-zero return code when the config file does not exist.
+        Example: Verify that the lobster-cpptest throws an error when a non-existent config file is provided.
+      '''
+      verifies = [Output_Despite_Missing_Config_File]
+  }
+
+  req.PotentialError  Output_Despite_Config_File_Error {
+      summary = "Output generated with an invalid configuration file"
+      description = '''
+          The user provides an invalid configuration file, but the lobster-cpptest
+          generates valid output nevertheless, potentially based on
+          irrelevant C++ files.
+          This includes cases where the config file:
+          - contains invalid YAML syntax (e.g., incorrect indentation, missing colons, or other formatting errors),
+          - is missing required keys or attributes,
+      '''
+      impacts = [
+        '''If the lobster-cpptest generates a valid output file, then the invalid configuration file could
+          remain undetected, and subsequent tools of the LOBSTER tool chain
+          could consume unqualified input data.''',
+      ]
+      affects = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer, Requirements_to_CPP_Test_Coverage, List_Findings]
+      impact_type = req.Impact_Type.Safety
+  }
+
+  req.TestSpecification Config_File_Syntax_Error {
+      description = '''
+          The test shall verify that lobster-cpptest tool exits with a non-zero return code when the config file contains a syntax error.
+          Example: Verify that lobster-cpptest throws an error when a config file with invalid YAML is provided.
+      '''
+      verifies = [Output_Despite_Config_File_Error]
+  }
+
+  req.TestSpecification Config_File_Key_Error {
+    description = '''
+        The test shall verify that lobster-cpptest tool exits with a non-zero return code when the config file is missing required keys.
+    '''
+    verifies = [Output_Despite_Config_File_Error]
+  }
+}
+

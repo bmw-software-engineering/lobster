@@ -18,7 +18,6 @@
 # <https://www.gnu.org/licenses/>.
 
 from argparse import Namespace
-import sys
 import os.path
 from copy import copy
 from enum import Enum
@@ -259,9 +258,6 @@ def create_lobster_items_output_dict_from_test_cases(
             tracing_target_list = []
             tracing_target_kind = output_config_dict.get(KIND)
             for marker in output_config_dict.get(MARKERS):
-                if marker not in map_test_type_to_key_name:
-                    continue
-
                 for test_case_marker_value in getattr(
                         test_case,
                         map_test_type_to_key_name.get(marker)
@@ -321,15 +317,6 @@ def write_lobster_items_output_dict(lobster_items_output_dict: dict):
                 )
             print(f'Written {item_count} lobster items to '
                   f'"{output_file_name}".')
-
-        else:
-            lobster_write(
-                sys.stdout,
-                Activity,
-                lobster_generator,
-                lobster_items_dict.values()
-            )
-            print(f'Written {item_count} lobster items to stdout.')
 
 
 def lobster_cpptest(file_dir_list: list, config_dict: dict):

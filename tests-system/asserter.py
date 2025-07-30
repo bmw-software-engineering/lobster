@@ -42,6 +42,21 @@ class Asserter:
     def assertNoStdOutText(self, msg="STDOUT contains output"):
         self.assertStdOutText("", msg)
 
+    def assertInStdErr(self, expected_substring: str,
+                             msg="STDERR does not contain expected text"):
+        """
+        Assert that the expected_substring appears somewhere in the stderr output.
+        """
+        self._test_case.assertIn(
+            expected_substring,
+            self._completed_process.stderr,
+            (
+                f"{msg}\n"
+                f"Expected to find: {expected_substring!r}\n"
+                f"STDERR was: {self._completed_process.stderr!r}"
+            )
+        )
+
     def assertOutputFiles(self):
         """For each expected file, checks if an actual file has been created with the
         expected content

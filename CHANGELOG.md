@@ -43,6 +43,15 @@
     file.cpp:10:15: warning: function operator<< traces to namespace.requirement_id [lobster-tracing]
     ```
 
+* `lobster-cpptest`:
+  - Remove undocumented feature to print the output to `stdout` instead to a file.
+    If the user specified an empty string `""` as `output` value in the configuration
+    file, then previously the output was written to `stdout`.
+    Now the tool assumes that a valid file name is provided, and raises an error if that
+    file cannot be opened for writing.
+    The feature has been removed to simplify the tool qualification in the sense of ISO 26262.
+    If a feature is not available, then it does not need to be qualified.
+
 ### 0.13.1
 
 * Introduced API functions:
