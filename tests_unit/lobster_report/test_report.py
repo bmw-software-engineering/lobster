@@ -1,7 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
 from lobster.report import Coverage, Report, generate_report_file
-from lobster.tools.core.report.report import ReportTool
 
 
 class ReportTests(TestCase):
@@ -50,8 +49,6 @@ class ReportTests(TestCase):
 
 
     def test_generate_report_file(self):
-        """Test run_lobster_report_api with custom parameters"""
-        tool = ReportTool()
         apple_config = "apple.conf"
         banana_output = "banana.lobster"
 
