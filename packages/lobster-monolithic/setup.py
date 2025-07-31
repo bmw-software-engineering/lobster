@@ -55,6 +55,7 @@ setuptools.setup(
         "trlc>=2.0.1",
         "Markdown~=3.7",
         "PyYAML>=6.0",
+        "plotly>=6.2.0",
     ],
     python_requires=">=3.7, <4",
     classifiers=[

@@ -6,9 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from lobster.tools.core.html_report.html_report import get_commit_timestamp_utc
 from .lobster_UI_system_test_case_base import LobsterUISystemTestCaseBase
-from ..asserter import Asserter
+from .obster_UI_system_asserter import LobsterUIAsserter as Asserter
 
 
 class LobsterUIReportTests(LobsterUISystemTestCaseBase):

@@ -219,3 +219,7 @@ The following inputs are planned but not implemented yet:
 The copyright holder of LOBSTER is the Bayerische Motoren Werke
 Aktiengesellschaft (BMW AG), and LOBSTER is published under the [GNU
 Affero General Public License, Version 3](LICENSE.md).
+
+## Third-Party Licenses
+
+This project uses [Plotly](https://github.com/plotly/plotly.py), which is licensed under the MIT License.
