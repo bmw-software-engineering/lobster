@@ -41,7 +41,7 @@ class ConfigFileData:
 @dataclass
 class CmdArgs:
     out: Optional[str] = None
-    config: Optional[str] = "config.yaml"
+    config: Optional[str] = None
 
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list"""
@@ -56,16 +56,28 @@ class CmdArgs:
         return cmd_args
 
 
-class LobsterJsonTestRunner(TestRunner):
-    """System test runner for lobster-json"""
+class LobsterJsonBaseTestRunner(TestRunner):
+    """Base system test runner for lobster-json"""
     def __init__(self, tool_name: str, working_dir: Path):
         super().__init__(tool_name, working_dir)
-        self._config_file_data = ConfigFileData(single=True)
         self._cmd_args = CmdArgs()
 
     @property
     def cmd_args(self) -> CmdArgs:
         return self._cmd_args
+
+    def get_tool_args(self) -> List[str]:
+        """Returns the command line arguments that shall be used to start 'lobster-json'
+           under test"""
+        return self._cmd_args.as_list()
+
+
+class LobsterJsonTestRunner(LobsterJsonBaseTestRunner):
+    """System test runner for lobster-json"""
+    def __init__(self, tool_name: str, working_dir: Path):
+        super().__init__(tool_name, working_dir)
+        self._cmd_args = CmdArgs(config="config.yaml")
+        self._config_file_data = ConfigFileData(single=True)
 
     @property
     def config_file_data(self) -> ConfigFileData:
@@ -78,11 +90,6 @@ class LobsterJsonTestRunner(TestRunner):
     def declare_inputs_from_file(self, file, data_directory):
         super().declare_inputs_from_file(file, data_directory)
         self.config_file_data.inputs_from_file = file.name
-
-    def get_tool_args(self) -> List[str]:
-        """Returns the command line arguments that shall be used to start 'lobster-json'
-           under test"""
-        return self._cmd_args.as_list()
 
     def run_tool_test(self) -> CompletedProcess:
         if self._cmd_args.config:
