@@ -1,0 +1,238 @@
+package UseCases
+import req
+
+req.PotentialError Requirements_not_listed_correctly{
+    summary = "LOBSTER does not list the requirements correctly"
+    description = '''
+      Some requirements are not listed correctly
+      example, 
+      - Some requirements which are not covered are not listed in the HTML report.
+      - Some requirements which are covered are not listed in the HTML report.
+    '''
+    impacts =[
+      '''If the requirements not covered by tests are not listed in HTML report
+          then user might think that all requirements are covered by the tests but in fact it is not.''',
+
+      '''If the requirements covered by the tests are not listed in HTM report
+          then user might think that all requirements are not covered by the tests but in fact it is not the case.'''
+    ]
+
+    affects = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Software_tests_not_listed_correctly{
+    summary = "LOBSTER does not list the software tests correctly"
+    description = '''
+      Some software tests are not listed correctly.
+      example, 
+      - Some software tests which are not covering any requirement are not listed in the HTML report.
+      - Some software tests which are covering the requirement are not listed in the HTML report.
+    '''
+    impacts = [
+      '''If the software tests not covering any requirement are not listed in HTML report
+      then user might think that all requirements are covered by software tests but in fact it is not.''',
+
+      '''If software tests covered covering requirements are not listed in HTML report
+          then user might think that all requirements are not covered by software tests but in fact that is not the case.'''
+    ]
+
+    affects = [Trace_Codebeamer_to_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Incorrect_mapping_in_HTML_File{
+    summary = "LOBSTER does not show the mapping between requirements software tests correctly"
+    description ='''
+      Mapping between requirements and software tests is not shown correctly HTML report
+      example, while generating html report rows are interchanged or
+      incomplete data is written in html file.
+    '''
+    impacts = [
+      '''If mapping is not shown correctly in HTML file
+          and non covered requirements is shown as covered
+          then user might think that requirement is covered but in fact it is not.'''
+    ]
+
+    affects = [Trace_Codebeamer_to_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError HTML_report_not_Generated{
+    summary = "LOBSTER fails to generate HTML report"
+    description = '''
+      HTML report is not generated.
+    '''
+    impacts = [
+      '''If HTML report is not generated then user will not able to verify the traceability results
+          between requirements and software tests.'''
+    ]
+
+    affects = [HTML_Output]
+    impact_type = req.Impact_Type.Financial
+}
+
+req.PotentialError Input_file_location_missing{
+    summary = "LOBSTER fails to show the location of the input files"
+    description = '''
+      Source location of the input file is missing in HTML report.
+      example, URL for git repo of software test is not shown in HTML report.
+    '''
+    impacts = [
+      '''If URL for Git repo is missing in HTML report
+          then user will not be able to verify the git repo from which software tests are taken.''',
+
+      '''If Hyperaffects to requirement item is missing 
+          and user clicks on requirement item to get more information on requirement item
+          then user will not be able to access the codebeamer item'''
+    ]
+
+    affects = [Item_Source, Show_codebeamer_links]
+    impact_type = req.Impact_Type.Financial
+}
+
+req.PotentialError Incorrect_syntax_in_HTML_report{
+    summary = "LOBSTER generates report syntax incorrectly"
+    description = '''
+      Syntax of the generated HTML report is not correct
+      example, some content of the report is not readable(e.g. Non readable charachters in lines like string of &,*,.. etc.)
+    '''
+    impacts = [
+      '''If HTML report contains unreadbale content
+          then user might not be able to analyze the report correctly.''',
+
+      '''If HTML report contains some unwanted special character in between the lines
+          then user migh not extract correct information from report.'''
+    ]
+
+    affects = [HTML_Output]
+    impact_type = req.Impact_Type.Financial
+}
+
+req.PotentialError Too_few_findings_in_HTML_report{
+    summary = "LOBSTER lists too few findings"
+    description = '''
+      All Tracing policy violations are not listed.
+      example, for software test the requirement reference is missing but tracing policy violation
+      is not detected.
+    '''
+    impacts = [
+      '''If all tracing policy violations are not listed in HTML report
+          then user might think that traceability policy is followed in all test cases but in fact it is not.'''
+    ]
+
+    affects = [HTML_Output, List_Findings]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Wrong_tracing_policy_in_HTML_report{
+    summary = "LOBSTER shows the tracing policy wrongly"
+    description = '''
+      Tracing policy not shown correctly in HTML report.
+    '''
+    impacts = [
+      '''If tracing policy is not shown correctly in HTML report
+          then user might not able understand the traceability data shown in report'''
+      ]
+
+      affects = [Show_Tracing_Policy]
+      impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Wrong_Input_file_location{
+    summary = "LOBSTER shows the wrong location of the input files"
+    description = '''
+      Source location of the input file is incorrect in HTML report.
+    '''
+    impacts = [
+      '''If URL of the git repo is not correct in HTML report
+          and user clicks on the url then user will be redirected to wrong git location.''',
+
+      '''If hyperaffects to requirement item is wrong
+          and user clicks on the hyperaffects to access the requirement item in codebeamer
+          then user will be redirected to wrong requirements item in codebeamer.'''
+    ]
+
+    affects = [Item_Source, Show_codebeamer_links]
+    impact_type = req.Impact_Type.Financial
+}
+
+req.TestSpecification Covered_Requirement_list_in_HTML_file{
+    description = '''
+      The test shall verify that requirements covered by software tests are correctly listed in the HTML file.
+    '''
+    verifies = [Requirements_not_listed_correctly]
+}
+
+req.TestSpecification Not_covered_Requirement_list_in_Output{
+    description = '''
+      The test shall verify that requirements not covered by software tests are correctly listed in the HTML file.
+    '''
+    verifies = [Requirements_not_listed_correctly]
+}
+
+req.TestSpecification List_of_Software_tests_covering_requirements_in_HTML_file{
+    description = '''
+      The test shall verify that software tests covering requirement are correctly listed in the HTML file.
+    '''
+    verifies = [Software_tests_not_listed_correctly]
+}
+
+  req.TestSpecification List_of_Software_tests_Not_covering_requirements_in_HTML_file{
+    description = '''
+      The test shall verify that software tests not covering any requirement are correctly listed in the HTML file.
+    '''
+    verifies = [Software_tests_not_listed_correctly]
+}
+
+req.TestSpecification Mapping_in_HTML_file{
+    description = '''
+      The test shall verify that mapping between requirements and software tests is correct in HTML file.
+    '''
+    verifies = [Incorrect_mapping_in_HTML_File]
+}
+
+req.TestSpecification HTML_file_generation{
+    description = '''
+      The test shall verify that HTML report file is generated.
+    '''
+    verifies = [HTML_report_not_Generated]
+}
+
+req.TestSpecification Source_location_in_output{
+    description = '''
+      The test shall verify that correct source locations of the input files are mentioned in the HTML report.
+      
+      example: Verify HTML file contains correct source location URL from which c++ test file is taken
+    '''
+    verifies = [Input_file_location_missing, Wrong_Input_file_location]
+}
+
+req.TestSpecification readable_data_in_output{
+    description = '''
+      The test shall verify html report contains readable data.
+
+      example : Verify the context is in human readable format.
+    '''
+    verifies = [Incorrect_syntax_in_HTML_report]
+}
+
+req.TestSpecification Missing_tracing_policy_violation_in_output{
+    description = '''
+      The test shall verify items where tracing policy is violated are listed correctly.
+
+      example: Finding shall be listed under violation of tracing policy if requirement reference is
+      missing in software test.
+    '''
+    verifies = [Too_few_findings_in_HTML_report]
+}
+
+req.TestSpecification Tracing_policy_in_output{
+    description = '''
+      The test shall verify correct tracing policy is mentioned in the HTML report.
+
+      example: For requirements in CB and software tests in C++ files,
+      the test shall verify tracing policy between requirements and software tests is correctly shown in the HTML report. 
+    '''
+    verifies = [Wrong_tracing_policy_in_HTML_report]
+}
