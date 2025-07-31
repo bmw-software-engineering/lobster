@@ -20,6 +20,7 @@ import os.path
 import argparse
 import html
 import subprocess
+import sys
 from datetime import datetime, timezone
 
 import markdown
@@ -541,3 +542,4 @@ class HtmlReportTool(MetaDataToolBase):
 
 def main() -> int:
     return HtmlReportTool().run()
+
