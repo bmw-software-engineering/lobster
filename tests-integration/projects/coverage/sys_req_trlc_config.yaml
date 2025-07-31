@@ -3,4 +3,7 @@ inputs :
   - softreq_example.trlc
   - sysreq_example.trlc
 
-trlc_config_file : "trlc-sysreq.conf"
+trlc_config : |
+  coverage_example.System_Requirement {
+    description = text
+  }

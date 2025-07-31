@@ -8,8 +8,9 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
         self._test_runner.declare_input_file(self._data_directory / "default_file.rsl")
         self._test_runner.declare_input_file(self._data_directory / "default_file.trlc")
-        self._test_runner.declare_trlc_config_file(self._data_directory /
-                                                   "lobster-trlc.conf")
+        config_string = self._test_runner.read_config_from_file(self._data_directory /
+                                                                "lobster-trlc.conf")
+        self._test_runner.declare_trlc_config(config_string)
 
     def test_input_files_list(self):
         # lobster-trace: trlc_req.Input_List_Of_Files
@@ -33,12 +34,13 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText('package test_default\n        ^^^^^^^^^^^^ '
-                                  'default_file_copy.rsl:1: error: duplicate '
-                                  'definition, previous definition at '
-                                  'default_file.rsl:1\nnamaste goodname '
-                                  '{\n        ^^^^^^^^ default_file_copy.trlc:3: '
-                                  'error: duplicate definition, previous definition'
-                                  ' at default_file.trlc:3\nlobster-trlc: aborting'
-                                  ' due to earlier error\n')
+        asserter.assertStdOutText('package test_default\n'
+                                  '        ^^^^^^^^^^^^ default_file_copy.rsl:1: '
+                                  'error: duplicate definition, previous definition at'
+                                  ' default_file.rsl:1\n'
+                                  'namaste goodname {\n'
+                                  '        ^^^^^^^^ default_file_copy.trlc:3: '
+                                  'error: duplicate definition, previous definition at'
+                                  ' default_file.trlc:3\n'
+                                  'lobster-trlc: aborting due to earlier error\n')
         asserter.assertExitCode(1)
