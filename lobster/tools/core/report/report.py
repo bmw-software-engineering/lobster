@@ -19,6 +19,7 @@
 
 from argparse import Namespace
 import os
+import sys
 
 from lobster.exceptions import LOBSTER_Exception
 from lobster.errors import LOBSTER_Error
@@ -73,3 +74,7 @@ class ReportTool(MetaDataToolBase):
 
 def main() -> int:
     return ReportTool().run()
+
+
+if __name__ == "__main__":
+    sys.exit(main())

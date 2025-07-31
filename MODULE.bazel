@@ -1,0 +1,44 @@
+module(
+    name = "lobster",
+    compatibility_level = 1,
+    version = "0.0.0",
+)
+
+bazel_dep(
+    name = "rules_python",
+    version = "0.31.0",
+)
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+
+python.toolchain(
+    is_default = True,
+    python_version = "3.11",
+)
+
+use_repo(python, "python_versions")
+
+bazel_dep(name = "googletest", version = "1.13.0")
+bazel_dep(name = "trlc", version = "0.0.0")
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+
+pip.parse(
+    hub_name = "lobster_dependencies",
+    python_version = "3.11",
+    requirements_lock = "//:requirements.txt",
+)
+
+pip.parse(
+    hub_name = "lobster_dev_dependencies",
+    python_version = "3.11",
+    requirements_lock = "//:requirements_dev.txt",
+)
+
+use_repo(pip, "lobster_dependencies")
+
+git_override(
+    commit = "5deb2da28265d7a6a7e6e0a8ca69d3f372530c70",
+    module_name = "trlc",
+    remote = "https://github.com/bmw-software-engineering/trlc.git",
+)

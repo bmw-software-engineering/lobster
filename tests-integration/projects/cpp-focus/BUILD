@@ -6,7 +6,7 @@ cc_library(
 cc_test(
     name = "fruit_test",
     srcs = ["fruit_test.cpp"],
-    deps = ["@com_google_googletest//:gtest_main",
+    deps = ["@googletest//:gtest_main",
             "fruitfunc",
 	    "//support/gtest/include:lobster_gtest"]
 )

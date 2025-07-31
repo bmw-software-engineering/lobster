@@ -492,3 +492,7 @@ class LOBSTER_Trlc(LOBSTER_Tool):
 
 def main():
     return LOBSTER_Trlc().run()
+
+
+if __name__ == "__main__":
+    sys.exit(main())
