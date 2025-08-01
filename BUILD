@@ -39,7 +39,7 @@ alias(
 
 alias(
     name = "lobster-trlc",
-    actual = "//lobster/tools/trlc",
+    actual = "//lobster/tools/trlc_integration",
 )
 
 alias(
