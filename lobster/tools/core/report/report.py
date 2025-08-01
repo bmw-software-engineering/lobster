@@ -23,8 +23,8 @@ import sys
 
 from lobster.exceptions import LOBSTER_Exception
 from lobster.errors import LOBSTER_Error
-from lobster.report import Report
 from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.report import Report
 
 
 class ReportTool(MetaDataToolBase):
@@ -46,30 +46,33 @@ class ReportTool(MetaDataToolBase):
         )
 
     def _run_impl(self, options: Namespace) -> int:
-        if not os.path.isfile(options.lobster_config):
-            print(f"error: cannot read config file '{options.lobster_config}'")
-            return 1
 
         if os.path.exists(options.out) and not os.path.isfile(options.out):
-            print(f"error: cannot write to '{options.out}'")
-            print(f"error: '{options.out}' exists and is not a file")
-            return 1
+            raise LOBSTER_Exception(
+                f"Cannot write to '{options.out}': it exists and is not a file"
+            )
 
         report = Report()
 
         try:
             report.parse_config(options.lobster_config)
-        except LOBSTER_Error:
-            print(f"{self.name}: aborting due to earlier errors.")
-            return 1
+        except LOBSTER_Error as e:
+            raise LOBSTER_Exception(
+                f"{self.name}: aborting due to earlier errors."
+            ) from e
         except LOBSTER_Exception as err:
-            print(f"{self.name}: aborting due to earlier errors.")
-            print(f"{self.name}: Additional data for debugging:")
             err.dump()
-            return 1
+            raise
 
         report.write_report(options.out)
         return 0
+
+
+def generate_report_file(lobster_config_file: str, output_file: str) -> dict:
+    # This is an API function to run the lobster report tool
+    report = Report()
+    report.parse_config(lobster_config_file)
+    report.write_report(output_file)
 
 
 def main() -> int:
