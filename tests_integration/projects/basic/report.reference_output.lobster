@@ -47,7 +47,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/potato.trlc",
+            "file": "tests_integration/projects/basic/potato.trlc",
             "line": 3
           },
           "name": "example.req_implication",
@@ -74,7 +74,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/potato.trlc",
+            "file": "tests_integration/projects/basic/potato.trlc",
             "line": 9
           },
           "name": "example.req_xor",
@@ -104,7 +104,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/potato.trlc",
+            "file": "tests_integration/projects/basic/potato.trlc",
             "line": 15
           },
           "name": "example.req_nand",
@@ -132,7 +132,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/potato.trlc",
+            "file": "tests_integration/projects/basic/potato.trlc",
             "line": 22
           },
           "name": "example.req_nor",
@@ -161,7 +161,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/potato.trlc",
+            "file": "tests_integration/projects/basic/potato.trlc",
             "line": 27
           },
           "name": "example.req_implies",
@@ -185,7 +185,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/potato.trlc",
+            "file": "tests_integration/projects/basic/potato.trlc",
             "line": 39
           },
           "name": "example.req_important",
@@ -220,7 +220,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/foo.cpp",
+            "file": "tests_integration/projects/basic/foo.cpp",
             "line": 3
           },
           "name": "implication",
@@ -242,7 +242,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/foo.cpp",
+            "file": "tests_integration/projects/basic/foo.cpp",
             "line": 9
           },
           "name": "exclusive_or",
@@ -262,7 +262,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/foo.cpp",
+            "file": "tests_integration/projects/basic/foo.cpp",
             "line": 14
           },
           "name": "potato",
@@ -283,7 +283,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/nand.m",
+            "file": "tests_integration/projects/basic/nand.m",
             "line": 1
           },
           "name": "nand",
@@ -305,7 +305,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/exclusive_or.slx",
+            "file": "tests_integration/projects/basic/exclusive_or.slx",
             "line": 1
           },
           "name": "exclusive_or/MATLAB Function",
@@ -325,7 +325,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/exclusive_or.slx",
+            "file": "tests_integration/projects/basic/exclusive_or.slx",
             "line": null
           },
           "name": "exclusive_or",
@@ -345,7 +345,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/exclusive_or.slx",
+            "file": "tests_integration/projects/basic/exclusive_or.slx",
             "line": null
           },
           "name": "exclusive_or/My Exclusive Or",
@@ -367,7 +367,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/nor.py",
+            "file": "tests_integration/projects/basic/nor.py",
             "line": 5
           },
           "name": "nor.trlc_reference",
@@ -387,7 +387,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/nor.py",
+            "file": "tests_integration/projects/basic/nor.py",
             "line": 13
           },
           "name": "nor.Example.helper_function",
@@ -409,7 +409,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/nor.py",
+            "file": "tests_integration/projects/basic/nor.py",
             "line": 17
           },
           "name": "nor.Example.nor",
@@ -438,7 +438,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/test.cpp",
+            "file": "tests_integration/projects/basic/test.cpp",
             "line": 7
           },
           "name": "ImplicationTest:BasicTest",
@@ -461,7 +461,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/nand_test.m",
+            "file": "tests_integration/projects/basic/nand_test.m",
             "line": 3
           },
           "name": "nand_test::test_1",
@@ -484,7 +484,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/example.json",
+            "file": "tests_integration/projects/basic/example.json",
             "line": null
           },
           "name": "example.json:XOR Test 1",
@@ -507,7 +507,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/example.json",
+            "file": "tests_integration/projects/basic/example.json",
             "line": null
           },
           "name": "example.json:XOR Test 2",
@@ -530,7 +530,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/basic/example.json",
+            "file": "tests_integration/projects/basic/example.json",
             "line": null
           },
           "name": "example.json:Potato Test 1",

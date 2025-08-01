@@ -88,13 +88,13 @@ When prompted, you can enter values or simply press Enter to skip. This will cre
 
 Once generated, place these files under:
 
-- tests-system/lobster-codebeamer/data/ssl/
+- tests_system/lobster_codebeamer/data/ssl/
 
 So that the paths are:
 
-tests-system/lobster-codebeamer/data/ssl/cert.pem
+tests_system/lobster_codebeamer/data/ssl/cert.pem
 
-tests-system/lobster-codebeamer/data/ssl/key.pem
+tests_system/lobster_codebeamer/data/ssl/key.pem
 
 These are used by the Flask-based mock server during testing.
 

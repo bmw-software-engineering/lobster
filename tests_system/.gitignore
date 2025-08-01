@@ -1,0 +1,11 @@
+!**/expected_output/*
+!lobster_html_report/**/input/*.lobster
+!lobster_online_report/**/input/*.lobster
+!lobster_online_report/data/*.lobster
+!lobster_online_report_nogit/data/*.lobster
+!lobster_report/data/*.lobster
+!lobster_trlc/data/*.lobster
+!lobster_codebeamer/data/*.lobster
+lobster_codebeamer/data/ssl/
+!lobster_html_report/data/*.lobster
+!lobster_cpptest/data/*.lobster
