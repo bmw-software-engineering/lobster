@@ -17,7 +17,6 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-import os.path
 import json
 from collections import OrderedDict
 from dataclasses import dataclass
@@ -56,10 +55,6 @@ class Report:
         -------
 
         """
-        if not isinstance(filename, str):
-            raise TypeError("filename must be a string")
-        if not os.path.isfile(filename):
-            raise FileNotFoundError(f"Config file '{filename}' does not exist")
 
         # Load config
         self.config = load_config(self.mh, filename)
@@ -149,8 +144,6 @@ class Report:
             fd.write("\n")
 
     def load_report(self, filename):
-        if not isinstance(filename, str):
-            raise TypeError("filename must be a string")
 
         loc = File_Reference(filename)
 
@@ -293,10 +286,3 @@ class Report:
                 self.mh.error(loc, "required top-levelkey %s not present" % rkey)
             if not isinstance(data[rkey], rvalue):
                 self.mh.error(loc, "%s is not %s." % (rkey, type_dict[rvalue]))
-
-
-def generate_report_file(lobster_config, output_file) -> dict:
-    # This is an API function to run the lobster report tool
-    report = Report()
-    report.parse_config(lobster_config)
-    report.write_report(output_file)

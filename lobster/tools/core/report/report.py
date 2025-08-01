@@ -18,13 +18,12 @@
 # <https://www.gnu.org/licenses/>.
 
 from argparse import Namespace
-import os
 import sys
 
 from lobster.exceptions import LOBSTER_Exception
 from lobster.errors import LOBSTER_Error
-from lobster.report import generate_report_file
 from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.report import Report
 
 
 class ReportTool(MetaDataToolBase):
@@ -47,33 +46,31 @@ class ReportTool(MetaDataToolBase):
 
     def _run_impl(self, options: Namespace) -> int:
 
-        if not os.path.isfile(options.lobster_config):
-            raise LOBSTER_Exception(
-                f"Cannot read config file '{options.lobster_config}'"
-            )
-
-        if os.path.exists(options.out) and not os.path.isfile(options.out):
-            raise LOBSTER_Exception(
-                f"Cannot write to '{options.out}': exists and is not a file"
-            )
+        report = Report()
 
         try:
-            generate_report_file(
-                lobster_config=options.lobster_config,
-                output_file=options.out
-            )
-        except LOBSTER_Error as err:
+            report.parse_config(options.lobster_config)
+        except FileNotFoundError as e:
+            print(f"{e}")
+        except TypeError as e:
+            print(f"{e}")
+        except LOBSTER_Error as e:
             raise LOBSTER_Exception(
                 f"{self.name}: aborting due to earlier errors."
-            ) from err
+            ) from e
         except LOBSTER_Exception as err:
             err.dump()
-            raise LOBSTER_Exception(
-                f"{self.name}: aborting due to earlier errors. "
-                "See additional data above."
-            ) from err
+            raise
 
+        report.write_report(options.out)
         return 0
+
+
+def generate_report_file(lobster_config_file: str, output_file: str) -> dict:
+    # This is an API function to run the lobster report tool
+    report = Report()
+    report.parse_config(lobster_config_file)
+    report.write_report(output_file)
 
 
 def main() -> int:
