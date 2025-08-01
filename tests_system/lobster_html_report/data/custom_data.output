@@ -327,22 +327,22 @@ blockquote {
 <div class="subtitle">Lightweight Open BMW Software Traceability Evidence Report</div>
 </div>
 <div id="navbar">
-<a href="#sec-overview">Overview</a>
-<a href="#sec-issues">Issues</a>
+<a href="#sec-overview" id="menu-item-overview">Overview</a>
+<a href="#sec-issues" id="menu-item-issues">Issues</a>
 <div class="dropdown">
 <button class="dropbtn">Detailed report<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
 <div class="dropdown-content">
-<a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</a>
-<a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a>
+<a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2" id="menu-item-requirements">Requirements</a>
+<a href="#sec-ca0dbad92a874b2f69b549293387925e" id="menu-item-code">Code</a>
 </div>
 </div>
 <div class="navbar-right">
 <div class="dropdown">
 <button class="dropbtn">LOBSTER<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
 <div class="dropdown-content">
-<a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md"><svg class="icon"><use href="#svg-external-link"></use></svg> Documentation</a>
-<a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md"><svg class="icon"><use href="#svg-external-link"></use></svg> License</a>
-<a href="https://github.com/bmw-software-engineering/lobster"><svg class="icon"><use href="#svg-external-link"></use></svg> Source</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md" id="menu-item-documentation"><svg class="icon"><use href="#svg-external-link"></use></svg> Documentation</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md" id="menu-item-license"><svg class="icon"><use href="#svg-external-link"></use></svg> License</a>
+<a href="https://github.com/bmw-software-engineering/lobster" id="menu-item-source"><svg class="icon"><use href="#svg-external-link"></use></svg> Source</a>
 </div>
 </div>
 </div>
@@ -379,11 +379,11 @@ blockquote {
 <div class="content">
 <div id="custom-data-banner">component: LSS<br>branch: stable-25<br>ci_run: 2025-05-21 01:00 UTC<br></div>
 </div>
-<h2 id="sec-overview">Overview</h2>
+<h2 id="sec-overview" class="heading-overview">Overview</h2>
 <div class="content">
 <div class="columns">
 <div class="column">
-<h3>Coverage</h3>
+<h3 id="heading-coverage">Coverage</h3>
 <table>
 <thead><tr>
 <td>Category</td>
@@ -394,7 +394,7 @@ blockquote {
 </tr><thead>
 <tbody>
 </tbody>
-<tr>
+<tr class="coverage-table-requirements">
 <td><a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</a></td>
 <td>0.0%</td>
 <td>
@@ -405,7 +405,7 @@ blockquote {
 <td align="right">0</td>
 <td align="right">1</td>
 </tr>
-<tr>
+<tr class="coverage-table-code">
 <td><a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a></td>
 <td>0.0%</td>
 <td>
@@ -420,9 +420,9 @@ blockquote {
 </div>
 </div>
 </div>
-<h2 id="sec-filtering-options">Filtering</h2>
+<h2 id="sec-filtering-options" class="heading-filtering">Filtering</h2>
 <div class="content">
-<h3>Item Filters</h3>
+<h3 id="heading-item-filters">Item Filters</h3>
 <div id = "btnFilterItem">
 <button class="button buttonAll buttonActive" onclick="buttonFilter('all')"> Show All </button>
 <button class ="button buttonOK" onclick="buttonFilter('ok')" > OK </button>
@@ -431,29 +431,30 @@ blockquote {
 <button class ="button buttonJustified" onclick="buttonFilter('justified')" > Justified </button>
 <button class ="button buttonWarning" onclick="buttonFilter('warning')" > Warning </button>
 </div>
-<h3>Show Issues</h3>
+<h3 id="heading-show-issues">Show Issues</h3>
 <div id = "ContainerBtnToggleIssue">
 <button class ="button buttonBlue" id="BtnToggleIssue" onclick="ToggleIssues()"> Show Issues </button>
 </div>
-<h3 id="sec-filter">Filter</h3>
+<h3 id="sec-filter" class="heading-filter">Filter</h3>
 <input type="text" id="search" placeholder="Filter..." onkeyup="searchItem()">
 <div id="search-sec-id"
 </div>
-<h2 id="sec-issues">Issues</h2>
+<h2 id="sec-issues" class="heading-issues">Issues</h2>
 <div class="content">
 <div id="issues-section" style="display:none">
 <ul>
-<li class="issue issue-missing">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: status is status1, expected abc or def</li>
-<li class="issue issue-missing">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: missing reference to Code</li>
-<li class="issue issue-missing">Python Function <a href='#item-b08d67b92006da35eaff57131eb330052bacbfb7'>software.Example</a>: missing up reference</li>
+<li class="issue issue-missing-req">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: status is status1, expected abc or def</li>
+<li class="issue issue-missing-req">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: missing reference to Code</li>
+<li class="issue issue-missing-python">Python Function <a href='#item-b08d67b92006da35eaff57131eb330052bacbfb7'>software.Example</a>: missing up reference</li>
 </ul>
 </div>
 </div>
-<h2 id="sec-detailed-report">Detailed report</h2>
+<h2 id="sec-detailed-report" class="heading-detailed-report">Detailed report</h2>
 <div class="content">
-<h3>Requirements and Specification</h3>
-<h4 id="sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</h4>
-<h5>.\demo.trlc</h5>
+<div class="detailed-report-requirements-and-specification">
+<h3 id="heading-requirements-and-specification">Requirements and Specification</h3>
+<h4 id="sec-5a2ebfb8baa378cfcfcba58bbb1380c2" class="heading-requirements">Requirements</h4>
+<h5 id="heading-.\demo.trlc">.\demo.trlc</h5>
 <!-- begin item req example.adas_100_A -->
 <div class="item-missing" id="item-ae6eef0f9ce6a72c16e8546860450b94d5499085">
 <div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC Requirement example.adas_100_A</div>
@@ -477,9 +478,11 @@ Status: status1
 </div>
 </div>
 <!-- end item -->
-<h3>Implementation</h3>
-<h4 id="sec-ca0dbad92a874b2f69b549293387925e">Code</h4>
-<h5>.\software.py</h5>
+</div>
+<div class="detailed-report-implementation">
+<h3 id="heading-implementation">Implementation</h3>
+<h4 id="sec-ca0dbad92a874b2f69b549293387925e" class="heading-code">Code</h4>
+<h5 id="heading-.\software.py">.\software.py</h5>
 <!-- begin item python software.Example -->
 <div class="item-missing" id="item-b08d67b92006da35eaff57131eb330052bacbfb7">
 <div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Python Function software.Example</div>
@@ -496,7 +499,10 @@ Status: status1
 </div>
 </div>
 <!-- end item -->
-<h3>Verification and Validation</h3>
+</div>
+<div class="detailed-report-verification-and-validation">
+<h3 id="heading-verification-and-validation">Verification and Validation</h3>
+</div>
 </div>
 </div>
 </div>
