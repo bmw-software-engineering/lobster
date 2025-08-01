@@ -1,6 +1,6 @@
 py_binary(
-    name = "trlc",
-    srcs = ["trlc.py"],
+    name = "trlc_integration",
+    srcs = ["trlc_integration.py"],
     visibility = ["//visibility:public"],
     deps = [
         "//:lobster",
