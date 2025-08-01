@@ -145,7 +145,7 @@ def create_item_coverage(doc, report):
     doc.add_line("</tbody>")
     for level in report.config.values():
         data = report.coverage[level["name"]]
-        doc.add_line("<tr>")
+        doc.add_line(f'<tr class="{level["name"].replace(" ", "-").lower()}">')
         doc.add_line('<td><a href="#sec-%s">%s</a></td>' %
                      (name_hash(level["name"]),
                       html.escape(level["name"])))
@@ -466,10 +466,7 @@ def write_html(fd, report, dot, high_contrast, render_md):
                 if not has_issues:
                     has_issues = True
                     doc.add_line("<ul>")
-                doc.add_line("<li class=\"issue issue-%s\">%s: %s</li>" %
-                             (item.tracing_status.name.lower(),
-                              xref_item(item),
-                              message))
+                doc.add_line(f'<li class="issue issue-{item.tracing_status.name.lower()} {item.tag.namespace}">{xref_item(item)}: {message}</li>')
     if has_issues:
         doc.add_line("</ul>")
     else:
@@ -490,13 +487,16 @@ def write_html(fd, report, dot, high_contrast, render_md):
                          "Implementation"),
                         ("activity",
                          "Verification and Validation")]:
-        doc.add_heading(3, title)
+        doc.add_line(f'<div class="{title.lower().replace(" ", "-")}">')
+        doc.add_heading(3, title, html_identifier=True)
         for level in report.config.values():
             if level["kind"] != kind:
                 continue
             doc.add_heading(4,
                             html.escape(level["name"]),
-                            name_hash(level["name"]))
+                            name_hash(level["name"]),
+                            html_identifier=True,
+                            )
             if items_by_level[level["name"]]:
                 for item in sorted(items_by_level[level["name"]],
                                    key = lambda x: x.location.sorting_key()):
@@ -536,6 +536,7 @@ def write_html(fd, report, dot, high_contrast, render_md):
                     write_item_box_end(doc, item)
             else:
                 doc.add_line("No items recorded at this level.")
+        doc.add_line("</div>")  # Closing tag for each level
     # Closing tag for id #search-sec-id
     doc.add_line("</div>")
 

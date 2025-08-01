@@ -56,7 +56,7 @@ class Menu_Link(Menu_Item):
 
     def generate(self, doc):
         assert isinstance(doc, Document)
-        rv = '<a href="%s">' % self.target
+        rv = f'<a href="{self.target}" id="{html.escape(self.name).replace(" ", "-").lower()}">'
         if self.target.startswith("http"):
             rv += '<svg class="icon"><use href="#svg-external-link"></use></svg>' + " "
         rv += html.escape(self.name)
@@ -260,7 +260,7 @@ class Document:
             self.body.append('<div class="content">')
         self.body.append(line)
 
-    def add_heading(self, level, text, anchor=None):
+    def add_heading(self, level, text, anchor=None, html_identifier=False):
         assert isinstance(level, int)
         assert isinstance(text, str)
         assert 2 <= level <= 7
@@ -270,15 +270,15 @@ class Document:
             self.body.append("</div>")
 
         if anchor is None:
-            self.body.append("<h%u>%s</h%u>" % (level,
-                                                text,
-                                                level))
+            if html_identifier:
+                self.body.append(f'<h{level} id="{text.replace(" ", "-").lower()}">{text}</h{level}>')
+            else:
+                self.body.append(f'<h{level}>{text}</h{level}>')
         else:
-            self.body.append('<h%u id="sec-%s">%s</h%u>' %
-                             (level,
-                              anchor,
-                              text,
-                              level))
+            if html_identifier:
+                self.body.append(f'<h{level} id="{anchor}" class="{text.replace(" ", "-").lower()}">{text}</h{level}>')
+            else:
+                self.body.append(f'<h{level} id="sec-{anchor}">{text}</h{level}>')
 
         if level == 2:
             self.body.append('<div class="content">')
