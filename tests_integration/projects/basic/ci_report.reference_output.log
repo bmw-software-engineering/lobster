@@ -1,0 +1,10 @@
+tests_integration/projects/basic/foo.cpp:9: lobster error: missing up reference
+tests_integration/projects/basic/foo.cpp:14: lobster error: unknown tracing target req example.doesnt_exist
+tests_integration/projects/basic/foo.cpp:14: lobster error: missing up reference
+tests_integration/projects/basic/exclusive_or.slx:1: lobster error: missing up reference
+tests_integration/projects/basic/potato.trlc:39: lobster error: missing reference to Code
+tests_integration/projects/basic/potato.trlc:39: lobster error: missing reference to Verification Test
+tests_integration/projects/basic/potato.trlc:22: lobster error: missing up reference
+tests_integration/projects/basic/potato.trlc:22: lobster error: missing reference to Verification Test
+tests_integration/projects/basic/potato.trlc:9: lobster error: tracing destination req 12345 has version 42 (expected 5)
+tests_integration/projects/basic/exclusive_or.slx: lobster error: missing up reference

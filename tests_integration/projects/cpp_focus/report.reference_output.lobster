@@ -13,7 +13,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 3
           },
           "name": "fruits.Buy_Banana1",
@@ -39,7 +39,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 8
           },
           "name": "fruits.Buy_Banana2",
@@ -65,7 +65,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 13
           },
           "name": "fruits.Sell_Banana1",
@@ -91,7 +91,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 18
           },
           "name": "fruits.Sell_Banana2",
@@ -117,7 +117,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 23
           },
           "name": "fruits.Clear_Basket",
@@ -143,7 +143,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 28
           },
           "name": "fruits.Check_Basket",
@@ -169,7 +169,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 33
           },
           "name": "fruits.Throw_Banana",
@@ -195,7 +195,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 38
           },
           "name": "fruits.Sweet_Banana",
@@ -221,7 +221,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 45
           },
           "name": "fruits.Fruit_Less_Than_Operator",
@@ -246,7 +246,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 50
           },
           "name": "fruits.Fruit_Copy_Constructor",
@@ -272,7 +272,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 55
           },
           "name": "fruits.Magic",
@@ -297,7 +297,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 60
           },
           "name": "fruits.SameLine1",
@@ -322,7 +322,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 65
           },
           "name": "fruits.SameLine2",
@@ -348,7 +348,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 70
           },
           "name": "fruits.SameLine3",
@@ -374,7 +374,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.trlc",
+            "file": "tests_integration/projects/cpp_focus/fruit.trlc",
             "line": 75
           },
           "name": "fruits.SameLine4",
@@ -407,7 +407,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 14
           },
           "name": "orchard::Fruit<double>::operator=",
@@ -433,7 +433,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 26
           },
           "name": "orchard::Fruit<double>::operator*",
@@ -458,7 +458,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 33
           },
           "name": "orchard::Fruit<double>::operator<",
@@ -481,7 +481,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 39
           },
           "name": "orchard::Fruit<double>::operator>",
@@ -501,7 +501,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 44
           },
           "name": "orchard::Fruit<double>::operator&",
@@ -521,7 +521,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 49
           },
           "name": "orchard::Fruit<double>::operator|",
@@ -541,7 +541,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 54
           },
           "name": "orchard::Fruit<double>::operator/",
@@ -561,7 +561,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 59
           },
           "name": "orchard::Fruit<double>::operator[]",
@@ -581,7 +581,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 64
           },
           "name": "orchard::Fruit<double>::operator~",
@@ -601,7 +601,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 79
           },
           "name": "orchard::Fruit<double>::complicatedFunc",
@@ -621,7 +621,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 83
           },
           "name": "orchard::Fruit<double>::refAndPtrFunc",
@@ -641,7 +641,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 87
           },
           "name": "orchard::Fruit<double>::crazySignature",
@@ -661,7 +661,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 90
           },
           "name": "buyBanana",
@@ -684,7 +684,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 96
           },
           "name": "sellBanana",
@@ -707,7 +707,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 113
           },
           "name": "clearBasket",
@@ -729,7 +729,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 121
           },
           "name": "checkBasket",
@@ -751,7 +751,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 132
           },
           "name": "throwBanana",
@@ -773,7 +773,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 148
           },
           "name": "main",
@@ -800,7 +800,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit_test.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit_test.cpp",
             "line": 9
           },
           "name": "FruitTest:BasicProperties",
@@ -823,7 +823,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit_test.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit_test.cpp",
             "line": 17
           },
           "name": "CitrusTest:Sweetness",
@@ -847,7 +847,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit_test.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit_test.cpp",
             "line": 29
           },
           "name": "BasketTest:AddAndShowContents",
@@ -870,7 +870,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit_test.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit_test.cpp",
             "line": 47
           },
           "name": "BasketTest:ClearBasket",
@@ -893,7 +893,7 @@
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "this string will be replaced by the current commit during test execution",
-            "file": "tests-integration/projects/cpp-focus/fruit_test.cpp",
+            "file": "tests_integration/projects/cpp_focus/fruit_test.cpp",
             "line": 65
           },
           "name": "BasketTest:FindInBasketTemplate",
