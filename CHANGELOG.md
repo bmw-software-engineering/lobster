@@ -7,7 +7,7 @@
 
 * Introduced API function:
   - `generate_report_file`:
-    This is API function for the tool `lobster-report` which takes lobster config file as input 
+    This is API function for the tool `lobster-report` which takes lobster config file as input
     and generates the lobster report.
     This is similar to running the tool `lobster-report`.
 
