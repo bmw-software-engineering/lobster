@@ -5,7 +5,19 @@
 
 ### 0.13.3-dev
 
+* Support Python 3.13
+  The test matrix has been extended to include Python 3.13.
+  This modification requires at least TRLC v2.0.2, because earlier versions were
+  restricted to Python 3.12 or lower.
 
+* `lobster-trlc`:
+  - Added support for Python 3.13.
+    Then at least least the Python package `trlc` v2.0.2 is required,
+    otherwise at least v2.0.1.
+    The restriction comes from the fact that `trlc` v2.0.1 is restricted to
+    Python < 3.13.
+  - Fix wrong dependency information in packaging instructions for wheel file
+    (`setup.py`), as described above.
 
 ### 0.13.2
 
