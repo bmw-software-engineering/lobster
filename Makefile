@@ -112,7 +112,6 @@ codebeamer-pem:
 system-tests: codebeamer-pem
 	mkdir -p docs
 	python -m unittest discover -s tests_system -v -t .
-	make -B -C tests_system TOOL=lobster-python
 	@echo "🧹 Cleaning up cert.pem and key.pem..."
 	@rm -rf tests_system/lobster_codebeamer/data/ssl
 
@@ -232,12 +231,12 @@ code.lobster-%:
 	lobster-python --out code.lobster lobster/tools/$(TOOL_PATH)
 
 unit-tests.lobster-%:
-	$(eval TOOL_NAME := $(subst _,-,$(notdir $(TOOL_PATH))))
-	lobster-python --activity --out unit-tests.lobster tests_unit/lobster-$(TOOL_NAME)
+	$(eval TOOL_NAME := $(notdir $(TOOL_PATH)))
+	lobster-python --activity --out unit-tests.lobster tests_unit/lobster_$(TOOL_NAME)
 
 system-tests.lobster-%:
-	$(eval TOOL_NAME := $(subst _,-,$(notdir $(TOOL_PATH))))
-	lobster-python --activity --out=system-tests.lobster tests_system/lobster-$(TOOL_NAME)
+	$(eval TOOL_NAME := $(notdir $(TOOL_PATH)))
+	lobster-python --activity --out=system-tests.lobster tests_system/lobster_$(TOOL_NAME)
 
 # STF is short for System Test Framework
 STF_TRLC_FILES := $(wildcard tests_system/*.trlc)
