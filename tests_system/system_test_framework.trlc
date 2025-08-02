@@ -60,8 +60,8 @@ req.Software_Requirement Provide_Virtual_Environment {
 
 req.Software_Requirement Enrich_With_Hash {
     description = '''
-        The test asserter shall provide a function to enrich the LOBSTER file, which
-        represents the expectation value, with the git hash of the current commit hash
+        The function 'update_json' shall enrich a LOBSTER file (which
+        represents the expectation value) with the git hash of the current commit hash
         of the underlying git repository.
     '''
 }
