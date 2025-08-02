@@ -3,7 +3,7 @@ from flask import Response
 from .lobster_codebeamer_system_test_case_base import (
     LobsterCodebeamerSystemTestCaseBase)
 from ..asserter import Asserter
-from .mock_server_setup import start_mock_server, get_mock_app
+from .mock_server_setup import get_mock_app
 
 
 class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
@@ -13,7 +13,6 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
     @classmethod
     def setUpClass(cls):
         """Start the mock server once before any tests run."""
-        start_mock_server()
         cls.codebeamer_flask = get_mock_app()
 
     def setUp(self):

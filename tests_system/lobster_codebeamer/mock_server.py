@@ -1,8 +1,11 @@
 import json
+from time import sleep
 from typing import List
 from flask import Flask, Response, request
 from threading import Lock
 import logging
+
+import requests
 
 # Suppress Flask development server warning
 log = logging.getLogger('werkzeug')
@@ -13,9 +16,15 @@ CERT_PATH = 'tests_system/lobster_codebeamer/data/ssl/cert.pem'
 KEY_PATH = 'tests_system/lobster_codebeamer/data/ssl/key.pem'
 PORT = 8999
 MOCK_ROUTE = '/api/v3/reports/<int:report_id>/items'
+ARE_YOU_RUNNING_ROUTE = '/are-you-running'
 
 
 class CodebeamerFlask(Flask):
+    STARTUP_ANSWER = "Yes, I am running!"
+
+    _HOST = "127.0.0.1"
+    _STARTUP_TEST_URL = f"https://{_HOST}:{PORT}{ARE_YOU_RUNNING_ROUTE}"
+
     def __init__(self):
         super().__init__(__name__)
         self._lock = Lock()
@@ -24,6 +33,7 @@ class CodebeamerFlask(Flask):
 
     def reset(self):
         """Reset the server state."""
+        # lobster-trace: system_test.Codebeamer_Flask_Responses_Reset
         with self._lock:
             self._responses = []
             self._received_requests = []
@@ -45,15 +55,76 @@ class CodebeamerFlask(Flask):
 
     @responses.setter
     def responses(self, value: List):
+        # lobster-trace: system_test.Codebeamer_Flask_Responses_Setter
         with self._lock:
             self._responses = value
 
     def start_server(self):
         self.run(
-            host='0.0.0.0',
+            host=self._HOST,
             port=PORT,
             ssl_context=(CERT_PATH, KEY_PATH),
             use_reloader=False
+        )
+
+    def await_startup_finished(self, logger: logging.Logger):
+        """Wait for the Flask server to start by sending a request."""
+        # lobster-trace: system_test.Codebeamer_Mock_Server_Await_Startup
+        self._await_startup_finished(
+            url=self._STARTUP_TEST_URL,
+            num_attempts=10,
+            retry_sleep=0.5,
+            http_timeout=4.0,
+            expected_response=self.STARTUP_ANSWER,
+            logger=logger,
+        )
+
+    @staticmethod
+    def _await_startup_finished(
+        url: str,
+        num_attempts: int,
+        retry_sleep: float,
+        http_timeout: float,
+        expected_response: str,
+        logger: logging.Logger,
+    ):
+        """Wait for the Flask server to start by retrying requests until success, or
+           until timeout.
+
+           This function is blocking and threadsafe.
+        """
+        attempts = 0
+        while attempts < num_attempts:
+            attempts += 1
+            logger.debug(f"Sending test request {attempts}/{num_attempts} to the mock "
+                         f"server to verify it is running.")
+            try:
+                response = requests.get(
+                    url=url,
+                    timeout=http_timeout,
+                    verify=False,
+                )
+                if (response.status_code == 200) and \
+                        (response.text == expected_response):
+                    logger.debug(f"Mock server is ready. "
+                                 f"Response was '{response.text}'")
+                    return
+                raise NotImplementedError(
+                    f"Unexpected response from mock server: "
+                    f"{response.status_code} - {response.text}"
+                )
+            except requests.exceptions.Timeout as e:
+                raise TimeoutError(
+                    f"Codebeamer mock server did start after {attempts} attempt(s), "
+                    f"but did not respond after {http_timeout} seconds!",
+                ) from e
+            except requests.exceptions.RequestException as e:
+                logger.debug("Mock server not ready yet, retrying...")
+                sleep(retry_sleep)
+
+        raise requests.exceptions.RequestException(
+            f"Codebeamer mock server did not start after {num_attempts} attempts, "
+            f"giving up!"
         )
 
 
@@ -72,6 +143,12 @@ def create_app():
             "json": request.get_json(silent=True),
         })
         return app.responses.pop(0)
+
+    @app.route(ARE_YOU_RUNNING_ROUTE, methods=['GET'])
+    def i_am_running():
+        """Reply that the mock server is running."""
+        return app.STARTUP_ANSWER
+
     return app
 
 

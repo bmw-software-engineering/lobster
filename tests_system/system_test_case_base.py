@@ -1,8 +1,12 @@
 from pathlib import Path
+import logging
 import shutil
 from tempfile import TemporaryDirectory
 from typing import List, Optional, Union
 from unittest import TestCase
+
+
+logging.basicConfig(level=logging.DEBUG, format='%(levelname)s - %(name)s: %(message)s')
 
 
 class SystemTestCaseBase(TestCase):
