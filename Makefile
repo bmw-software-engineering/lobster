@@ -240,7 +240,7 @@ system-tests.lobster-%:
 
 # STF is short for System Test Framework
 STF_TRLC_FILES := $(wildcard tests_system/*.trlc)
-STF_PYTHON_FILES := $(filter-out tests_system/test_%.py tests_system/run_tool_tests.py, $(wildcard tests_system/*.py) tests_system/lobster_codebeamer/mock_server.py tests_system/lobster_codebeamer/mock_server_setup.py)
+STF_PYTHON_FILES := $(filter-out tests_system/test_%.py tests_system/run_tool_tests.py, $(wildcard tests_system/*.py) tests_system/lobster_codebeamer/mock_server.py tests_system/lobster_codebeamer/mock_server_setup.py tests_system/tests_utils/update_online_json_with_hashes.py)
 STF_OUTPUT_FILE := docs/tracing-stf.html
 
 # This target is used to generate the LOBSTER report for the requirements of the system test framework itself.
