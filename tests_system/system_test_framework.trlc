@@ -135,3 +135,52 @@ req.Software_Requirement CWD_Placeholder {
     '''
     derived_from = [Fail_on_Output_File_Mismatch]
 }
+
+section "Codebeamer Mock Server"{
+    req.System_Requirement Codebeamer_Mock_Server_Replies {
+        description = '''
+            The mock server shall be able to respond to requests with predefined responses.
+        '''
+    }
+
+    req.Software_Requirement Codebeamer_Flask_Responses_Setter {
+        description = '''
+            The CodebeamerFlask class shall provide a property
+            which shall allow setting predefined responses for subsequent requests.
+        '''
+        derived_from = [Codebeamer_Mock_Server_Replies]
+    }
+
+    req.Software_Requirement Codebeamer_Flask_Responses_Reset {
+        description = '''
+            The CodebeamerFlask class shall provide a function called 'reset'
+            which resets the predefined responses to an empty list.
+        '''
+        derived_from = [Codebeamer_Mock_Server_Replies]
+    }
+
+    req.System_Requirement Codebeamer_Mock_Server_Startup {
+        description = '''
+            The mock server shall be started before the tests run.
+        '''
+    }
+
+    req.Software_Requirement Codebeamer_Mock_Server_Await_Startup {
+        description = '''
+            The CodebeamerFlask class shall provide a function called 'await_startup_finished'
+            which shall try to connect to the mock server for 10 times until it is ready.
+
+            Note: This way we want to check if the underlying Flask server is ready.
+            The Flask library does not provide a different way to figure it out.
+        '''
+        derived_from = [Codebeamer_Mock_Server_Startup]
+    }
+
+    req.Software_Requirement Use_Await_Startup_Finished {
+        description = '''
+            The function 'get_mock_app' shall return a CodebeamerFlask instance
+            for which 'await_startup_finished' has been called.
+            '''
+        derived_from = [Codebeamer_Mock_Server_Startup]
+    }
+}
