@@ -240,7 +240,8 @@ system-tests.lobster-%:
 
 # STF is short for System Test Framework
 STF_TRLC_FILES := $(wildcard tests_system/*.trlc)
-STF_PYTHON_FILES := $(filter-out tests_system/test_%.py tests_system/run_tool_tests.py, $(wildcard tests_system/*.py))
+STF_PYTHON_FILES := $(filter-out tests_system/test_%.py tests_system/run_tool_tests.py, $(wildcard tests_system/*.py) tests_system/lobster_codebeamer/mock_server.py tests_system/lobster_codebeamer/mock_server_setup.py)
+STF_OUTPUT_FILE := docs/tracing-stf.html
 
 # This target is used to generate the LOBSTER report for the requirements of the system test framework itself.
 tracing-stf: $(STF_TRLC_FILES)
@@ -249,6 +250,7 @@ tracing-stf: $(STF_TRLC_FILES)
 	lobster-python --out=stf_code.lobster --only-tagged-functions $(STF_PYTHON_FILES)
 	lobster-report --lobster-config=tests_system/stf-lobster.conf --out=stf_report.lobster
 	lobster-online-report stf_report.lobster
-	lobster-html-report stf_report.lobster --out=docs/tracing-stf.html
+	lobster-html-report stf_report.lobster --out=$(STF_OUTPUT_FILE)
+	@echo "✅ STF report generated at $(STF_OUTPUT_FILE)"
 	@echo "Deleting STF *.lobster files..."
 	rm -f stf_system_requirements.lobster stf_software_requirements.lobster stf_code.lobster stf_report.lobster
