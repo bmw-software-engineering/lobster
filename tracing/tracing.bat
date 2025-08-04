@@ -1,5 +1,7 @@
 REM Generate Use Cases
-lobster-trlc --config=tracing/use-cases.lobster-trlc.yaml --out=tracing-out/use-cases.lobster
+python usecases.py --config=tracing/use-cases.lobster-codebeamer.yaml --out=tracing-out/use-cases.lobster
+python usecases.py --config=tracing/use-cases.lobster-cpptest.yaml --out=tracing-out/use-cases.lobster
+python usecases.py --config=tracing/use-cases.lobster-trlc.yaml --out=tracing-out/use-cases.lobster
 
 REM Generate artifacts for lobster-codebeamer
 lobster-trlc --config=tracing/codebeamer.potential-errors.lobster-trlc.yaml --out=tracing-out/codebeamer.potential-errors.lobster
