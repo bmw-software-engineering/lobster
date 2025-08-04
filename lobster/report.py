@@ -22,6 +22,7 @@ import json
 from collections import OrderedDict
 from dataclasses import dataclass
 
+from lobster.config.level_definition import LevelDefinition
 from lobster.items import Tracing_Status, Requirement, Implementation, Activity
 from lobster.config.parser import load as load_config
 from lobster.errors import Message_Handler
@@ -64,7 +65,7 @@ class Report:
 
         # Load requested files
         for level in self.config:
-            for source in self.config[level]["source"]:
+            for source in self.config[level].source:
                 lobster_read(self.mh, source["file"], level, self.items,
                              source)
 
@@ -125,12 +126,12 @@ class Report:
         levels = []
         for level_config in self.config.values():
             level = {
-                "name"     : level_config["name"],
-                "kind"     : level_config["kind"],
+                "name"     : level_config.name,
+                "kind"     : level_config.kind,
                 "items"    : [item.to_json()
                               for item in self.items.values()
-                              if item.level == level_config["name"]],
-                "coverage" : self.coverage[level_config["name"]].coverage
+                              if item.level == level_config.name],
+                "coverage" : self.coverage[level_config.name].coverage
             }
             levels.append(level)
 
@@ -139,7 +140,8 @@ class Report:
             "version"   : 2,
             "generator" : "lobster_report",
             "levels"    : levels,
-            "policy"    : self.config,
+            "policy"    : {key: value.to_json()
+                           for key, value in self.config.items()},
             "matrix"    : [],
         }
 
@@ -185,7 +187,8 @@ class Report:
         -------
 
         """
-        self.config = data["policy"]
+        self.config = {key: LevelDefinition.from_json(value)
+                       for key, value in data["policy"].items()}
         for level in data["levels"]:
             assert level["name"] in self.config, (
                 f"level '{level['name']}' not found in config"
