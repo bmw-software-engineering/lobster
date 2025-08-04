@@ -11,6 +11,12 @@
     and generates the lobster report.
     This is similar to running the tool `lobster-report`.
 
+* `lobster-report`
+  - Removed user error messages in case the `custom_data` section contains invalid data.
+    Python will nevertheless exit with return code 1, as previously.
+    The section is not intended to be modified by users.
+    Removing the error messages helps to increase the branch coverage.
+
 ### 0.13.2
 
 * `lobster-html-report`

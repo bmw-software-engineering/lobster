@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2023-2024 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -164,7 +164,7 @@ class Report:
         self.validate_indicated_schema(data, loc)
 
         # Validate and parse custom data
-        self.validate_and_parse_custom_data(data, loc)
+        self.parse_custom_data(data)
 
         # Read in data
         self.compute_items_and_coverage_for_items(data)
@@ -211,33 +211,8 @@ class Report:
                                            Tracing_Status.JUSTIFIED):
                     self.coverage[item.level].ok += 1
 
-    def validate_and_parse_custom_data(self, data, loc):
-        """
-        Function validates the optional 'custom_data' field in the lobster report.
-        Ensures that if present, it is a dictionary with string keys and string values.
-
-        Parameters
-        ----------
-        data - contents of lobster json file.
-        loc  - location from where the error was raised.
-
-        Returns - Nothing
-        -------
-        """
+    def parse_custom_data(self, data):
         self.custom_data = data.get('custom_data', None)
-        if self.custom_data:
-            if not isinstance(self.custom_data, dict):
-                self.mh.error(loc, "'custom_data' must be an object (dictionary).")
-
-            for key, value in self.custom_data.items():
-                if not isinstance(key, str):
-                    self.mh.error(loc,
-                                  f"Key in 'custom_data' must be a "
-                                  f"string, got {type(key).__name__}.")
-                if not isinstance(value, str):
-                    self.mh.error(loc,
-                                  f"Value for key '{key}' in 'custom_data' "
-                                  f"must be a string, got {type(value).__name__}.")
 
     def validate_indicated_schema(self, data, loc):
         """
