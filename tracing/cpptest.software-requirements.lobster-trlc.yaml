@@ -1,4 +1,5 @@
 inputs:
   - "lobster/requirements.rsl"
   - "lobster/tools/cpptest/requirements"
+  - "lobster/use_cases.trlc"
 trlc_config_file: "tracing/software-requirements.lobster-trlc.conf"

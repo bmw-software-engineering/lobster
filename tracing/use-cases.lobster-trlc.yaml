@@ -1,4 +1,5 @@
-inputs:
-  - "lobster/tools/codebeamer/requirements/potential_errors.trlc"
+inputs:  
   - "lobster/requirements.rsl"
+  - "lobster/use_cases.trlc"
+  - "lobster/tools/codebeamer/requirements/potential_errors.trlc"
 trlc_config_file: "tracing/use-cases.lobster-trlc.conf"
