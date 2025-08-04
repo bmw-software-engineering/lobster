@@ -74,7 +74,3 @@ class ReportTool(MetaDataToolBase):
 
 def main() -> int:
     return ReportTool().run()
-
-
-if __name__ == "__main__":
-    sys.exit(main())

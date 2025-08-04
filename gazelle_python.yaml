@@ -1,0 +1,64 @@
+# GENERATED FILE - DO NOT EDIT!
+#
+# To update this file, run:
+#   bazel run //:gazelle_python_manifest.update
+
+---
+manifest:
+  modules_mapping:
+    astroid: astroid
+    attr: attrs
+    attrs: attrs
+    blinker: blinker
+    build: build
+    certifi: certifi
+    charset_normalizer: charset_normalizer
+    click: click
+    coverage: coverage
+    cvc5: cvc5
+    dill: dill
+    dotenv: python_dotenv
+    exceptiongroup: exceptiongroup
+    flask: flask
+    graphviz: graphviz
+    h11: h11
+    idna: idna
+    importlib_metadata: importlib_metadata
+    isort: isort
+    itsdangerous: itsdangerous
+    jinja2: jinja2
+    libcst: libcst
+    markdown: markdown
+    markupsafe: MarkupSafe
+    mccabe: mccabe
+    outcome: outcome
+    packaging: packaging
+    pkg_resources: setuptools
+    platformdirs: platformdirs
+    pycodestyle: pycodestyle
+    pylint: pylint
+    pyproject_hooks: pyproject_hooks
+    pyvcg: PyVCG
+    requests: requests
+    selenium: selenium
+    setuptools: setuptools
+    sniffio: sniffio
+    socks: PySocks
+    sockshandler: PySocks
+    sortedcontainers: sortedcontainers
+    tomli: tomli
+    tomlkit: tomlkit
+    trio: trio
+    trio_websocket: trio_websocket
+    trlc: trlc
+    typing_extensions: typing_extensions
+    urllib3: urllib3
+    webdriver_manager: webdriver_manager
+    websocket: websocket_client
+    werkzeug: werkzeug
+    wsproto: wsproto
+    yaml: PyYAML
+    zipp: zipp
+  pip_repository:
+    name: pip
+integrity: b7ae9bc7b97c56fb675aa2d1c89d85321247857b976724dc58569b938331b3f4
