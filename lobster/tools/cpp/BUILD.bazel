@@ -8,5 +8,8 @@ py_library(
         "implementation_builder.py",
     ],
     visibility = ["//:__subpackages__"],
-    deps = ["//lobster"],
+    deps = [
+        "//lobster",
+        "//lobster/common",
+    ],
 )

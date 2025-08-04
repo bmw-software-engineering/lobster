@@ -15,8 +15,8 @@ from lobster.tools.cpptest.cpptest import (
     lobster_cpptest,
     parse_config_file,
 )
-from lobster.tools.cpptest.parser.constants import Constants
-from lobster.tools.cpptest.parser.requirements_parser import ParserForRequirements
+from lobster.tools.cpptest.constants import Constants
+from lobster.tools.cpptest.requirements_parser import ParserForRequirements
 
 
 class LobsterCpptestTests(unittest.TestCase):

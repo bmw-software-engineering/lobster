@@ -55,7 +55,7 @@ py_binary(
     visibility = ["//:__subpackages__"],
     deps = [
         ":lobster",
-        "//lobster",
+        "//lobster/common",
         "@pip//requests",
     ],
 )
@@ -88,7 +88,7 @@ py_library(
     ],
     visibility = ["//:__subpackages__"],
     deps = [
-        "//lobster",
+        "//lobster/common",
         "@pip//requests",
         "@pip//setuptools",
     ],

@@ -8,8 +8,8 @@ py_library(
     ],
     visibility = ["//:__subpackages__"],
     deps = [
-        "//lobster",
-        "//lobster/html",
+        "//lobster/common",
+        "//lobster/htmldoc",
         "@pip//markdown",
     ],
 )

@@ -24,9 +24,9 @@ import configparser
 import subprocess
 from urllib.parse import quote
 
-from lobster.report import Report
-from lobster.location import File_Reference, Github_Reference
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.report import Report
+from lobster.common.location import File_Reference, Github_Reference
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 
 class Parse_Error(Exception):

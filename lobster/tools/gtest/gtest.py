@@ -22,10 +22,10 @@ import sys
 import os.path
 import xml.etree.ElementTree as ET
 
-from lobster.items import Tracing_Tag, Activity
-from lobster.location import Void_Reference, File_Reference
-from lobster.io import lobster_write
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.items import Tracing_Tag, Activity
+from lobster.common.location import Void_Reference, File_Reference
+from lobster.common.io import lobster_write
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 
 class GtestTool(MetaDataToolBase):

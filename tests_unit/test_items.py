@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import patch, MagicMock,create_autospec
 from hashlib import sha1
-from lobster.items import Tracing_Tag, Tracing_Status, Item, Requirement, Implementation, Activity
-from lobster.location import Location
+from lobster.common.items import Tracing_Tag, Tracing_Status, Item, Requirement, Implementation, Activity
+from lobster.common.location import Location
 
 class ItemsTests(unittest.TestCase):
     def setUp(self):

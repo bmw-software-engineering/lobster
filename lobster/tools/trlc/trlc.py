@@ -31,10 +31,10 @@ from trlc.parser import Parser_Base
 from trlc.errors import Message_Handler, TRLC_Error
 from trlc import ast
 
-from lobster.tool import LOBSTER_Tool
-from lobster.items import Tracing_Tag, Requirement
-from lobster.location import File_Reference
-from lobster.io import lobster_write
+from lobster.common.tool import LOBSTER_Tool
+from lobster.common.items import Tracing_Tag, Requirement
+from lobster.common.location import File_Reference
+from lobster.common.io import lobster_write
 
 
 class Config_Parser(Parser_Base):

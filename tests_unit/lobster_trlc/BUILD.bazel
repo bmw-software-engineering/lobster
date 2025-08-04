@@ -10,7 +10,7 @@ py_test(
     name = "test_trlc",
     srcs = ["test_trlc.py"],
     deps = [
-        "//lobster",
+        "//lobster/common",
         "//lobster/tools/trlc",
         "@pip//trlc",
     ],

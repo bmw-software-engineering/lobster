@@ -2,22 +2,6 @@ load("@rules_python//python:defs.bzl", "py_library")
 
 py_library(
     name = "lobster",
-    srcs = [
-        "__init__.py",
-        "errors.py",
-        "exceptions.py",
-        "file_tag_generator.py",
-        "io.py",
-        "items.py",
-        "location.py",
-        "meta_data_tool_base.py",
-        "report.py",
-        "tool.py",
-        "version.py",
-    ],
+    srcs = ["__init__.py"],
     visibility = ["//:__subpackages__"],
-    deps = [
-        "//lobster/config",
-        "@pip//pyyaml",
-    ],
 )

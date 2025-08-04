@@ -20,8 +20,8 @@
 import sys
 import os.path
 
-from lobster import errors
-from lobster import location
+from lobster.common import errors
+from lobster.common import location
 
 
 class Token:

@@ -26,11 +26,11 @@ from abc import ABCMeta, abstractmethod
 from functools import partial
 from typing import List, Sequence, Union, Tuple, Set, Dict
 import yaml
-from lobster.errors import Message_Handler
-from lobster.location import File_Reference
-from lobster.items import Requirement, Implementation, Activity
-from lobster.io import lobster_write
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.errors import Message_Handler
+from lobster.common.location import File_Reference
+from lobster.common.items import Requirement, Implementation, Activity
+from lobster.common.io import lobster_write
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 
 class SupportedCommonConfigKeys:

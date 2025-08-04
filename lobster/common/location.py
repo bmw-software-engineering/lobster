@@ -20,7 +20,7 @@
 from abc import ABCMeta, abstractmethod
 import html
 from typing import Any, Dict, Optional, Tuple
-from lobster.exceptions import LOBSTER_Exception
+from lobster.common.exceptions import LOBSTER_Exception
 
 
 class Location(metaclass=ABCMeta):

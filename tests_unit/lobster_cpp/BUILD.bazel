@@ -10,7 +10,7 @@ py_test(
     name = "test_implementation_builder",
     srcs = ["test_implementation_builder.py"],
     deps = [
-        "//lobster",
+        "//lobster/common",
         "//lobster/tools/cpp",
     ],
 )

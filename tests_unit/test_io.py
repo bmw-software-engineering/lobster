@@ -2,11 +2,11 @@ import unittest
 import io
 import json
 from unittest.mock import patch, create_autospec, mock_open, ANY
-from lobster.errors import Message_Handler, LOBSTER_Error
-from lobster.location import File_Reference
-from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
-from lobster.io import lobster_write, lobster_read
-from lobster.location import Location
+from lobster.common.errors import Message_Handler, LOBSTER_Error
+from lobster.common.location import File_Reference
+from lobster.common.items import Tracing_Tag, Requirement, Implementation, Activity
+from lobster.common.io import lobster_write, lobster_read
+from lobster.common.location import Location
 
 class LobsterWriteReadTests(unittest.TestCase):
     # unit tests for io.py file

@@ -7,5 +7,5 @@ py_library(
         "ci_report.py",
     ],
     visibility = ["//:__subpackages__"],
-    deps = ["//lobster"],
+    deps = ["//lobster/common"],
 )

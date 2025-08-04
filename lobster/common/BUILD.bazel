@@ -4,26 +4,33 @@ py_binary(
     name = "lexer",
     srcs = ["lexer.py"],
     visibility = ["//:__subpackages__"],
-    deps = ["//lobster"],
+    deps = [":common"],
 )
 
 py_binary(
     name = "parser",
     srcs = ["parser.py"],
     visibility = ["//:__subpackages__"],
-    deps = [
-        ":config",
-        "//lobster",
-    ],
+    deps = [":common"],
 )
 
 py_library(
-    name = "config",
+    name = "common",
     srcs = [
         "__init__.py",
+        "errors.py",
+        "exceptions.py",
+        "file_tag_generator.py",
+        "io.py",
+        "items.py",
         "lexer.py",
+        "location.py",
+        "meta_data_tool_base.py",
         "parser.py",
+        "report.py",
+        "tool.py",
+        "version.py",
     ],
     visibility = ["//:__subpackages__"],
-    deps = ["//lobster"],
+    deps = ["@pip//pyyaml"],
 )

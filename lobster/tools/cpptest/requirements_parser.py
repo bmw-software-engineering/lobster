@@ -6,7 +6,7 @@ import logging
 from pathlib import Path
 from typing import List
 
-from lobster.tools.cpptest.parser.test_case import TestCase
+from lobster.tools.cpptest.test_case import TestCase
 
 
 class ParserForRequirements:

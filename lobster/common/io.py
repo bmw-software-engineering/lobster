@@ -21,9 +21,9 @@ from collections.abc import Iterable
 import json
 from typing import Dict, Optional, Sequence, TextIO, Type, Union
 
-from lobster.errors import Message_Handler
-from lobster.location import File_Reference
-from lobster.items import Requirement, Implementation, Activity
+from lobster.common.errors import Message_Handler
+from lobster.common.location import File_Reference
+from lobster.common.items import Requirement, Implementation, Activity
 
 
 def lobster_write(

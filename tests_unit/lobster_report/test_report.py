@@ -1,5 +1,5 @@
 from unittest import TestCase
-from lobster.report import Coverage, Report
+from lobster.common.report import Coverage, Report
 
 
 class ReportTests(TestCase):

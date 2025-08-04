@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABCMeta
 from argparse import ArgumentParser, Namespace, RawTextHelpFormatter
-from lobster.version import FULL_NAME
+from lobster.common.version import FULL_NAME
 
 
 BUG_URL = "https://github.com/bmw-software-engineering/lobster/issues"

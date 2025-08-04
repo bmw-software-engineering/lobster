@@ -19,7 +19,7 @@
 
 import html
 
-from lobster.html import assets
+from lobster.htmldoc import assets
 
 NAVBAR_STICKY_SCRIPT = """
 window.onscroll = function() {stickyNavbar()};

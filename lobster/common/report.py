@@ -22,11 +22,11 @@ import json
 from collections import OrderedDict
 from dataclasses import dataclass
 
-from lobster.items import Tracing_Status, Requirement, Implementation, Activity
-from lobster.config.parser import load as load_config
-from lobster.errors import Message_Handler
-from lobster.io import lobster_read
-from lobster.location import File_Reference
+from lobster.common.items import Tracing_Status, Requirement, Implementation, Activity
+from lobster.common.parser import load as load_config
+from lobster.common.errors import Message_Handler
+from lobster.common.io import lobster_read
+from lobster.common.location import File_Reference
 
 
 @dataclass

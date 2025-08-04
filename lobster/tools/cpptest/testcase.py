@@ -1,7 +1,7 @@
 import re
 from typing import List
 
-from lobster.tools.cpptest.parser.constants import Constants
+from lobster.tools.cpptest.constants import Constants
 
 
 class TestCase:

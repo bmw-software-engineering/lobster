@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from lobster.version import FULL_NAME
+from lobster.common.version import FULL_NAME
 from ..asserter import Asserter
 
 

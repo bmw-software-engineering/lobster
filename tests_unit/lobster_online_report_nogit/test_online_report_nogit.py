@@ -7,7 +7,7 @@ from lobster.tools.core.online_report_nogit.online_report_nogit import (
     _file_ref_to_github_ref,
     RepoInfo,
 )
-from lobster.location import File_Reference, Github_Reference
+from lobster.common.location import File_Reference, Github_Reference
 
 
 class LobsterOnlineReportNogitTest(TestCase):

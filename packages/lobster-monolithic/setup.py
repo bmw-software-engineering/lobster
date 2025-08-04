@@ -3,7 +3,7 @@
 import re
 import setuptools
 
-from lobster import version
+from lobster.common import version
 
 gh_root = "https://github.com"
 gh_project = "bmw-software-engineering/lobster"

@@ -24,10 +24,10 @@ import subprocess
 import re
 from typing import Optional
 
-from lobster.items import Tracing_Tag, Implementation
-from lobster.io import lobster_write
+from lobster.common.items import Tracing_Tag, Implementation
+from lobster.common.io import lobster_write
 from lobster.tools.cpp.implementation_builder import ImplementationBuilder
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 FILE_LINE_PATTERN = r"(.*):(\d+):\d+:"
 KIND_PATTERN = r"(function|main function|method)"

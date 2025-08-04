@@ -21,9 +21,9 @@ import sys
 import os.path
 import collections
 
-from lobster.config import lexer
-from lobster import errors
-from lobster import location
+from lobster.common import lexer
+from lobster.common import errors
+from lobster.common import location
 
 
 class Parser:

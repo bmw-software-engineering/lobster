@@ -9,8 +9,5 @@ py_library(
 py_test(
     name = "test_cpptest",
     srcs = ["test_cpptest.py"],
-    deps = [
-        "//lobster/tools/cpptest",
-        "//lobster/tools/cpptest/parser",
-    ],
+    deps = ["//lobster/tools/cpptest"],
 )

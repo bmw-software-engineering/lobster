@@ -17,8 +17,8 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-from lobster.exceptions import LOBSTER_Exception
-from lobster.location import Location
+from lobster.common.exceptions import LOBSTER_Exception
+from lobster.common.location import Location
 
 
 class LOBSTER_Error(LOBSTER_Exception):

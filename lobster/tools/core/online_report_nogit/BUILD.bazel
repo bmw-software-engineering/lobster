@@ -7,5 +7,5 @@ py_library(
         "online_report_nogit.py",
     ],
     visibility = ["//:__subpackages__"],
-    deps = ["//lobster"],
+    deps = ["//lobster/common"],
 )

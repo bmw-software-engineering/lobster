@@ -22,7 +22,7 @@ from abc import ABCMeta
 from hashlib import sha1
 from typing import Optional
 
-from lobster.location import Location
+from lobster.common.location import Location
 
 
 class Tracing_Tag:

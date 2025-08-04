@@ -11,7 +11,7 @@ py_library(
     ],
     visibility = ["//:__subpackages__"],
     deps = [
-        "//lobster",
+        "//lobster/common",
         "@pip//pyyaml",
         "@pip//requests",
         "@pip//urllib3",

@@ -4,12 +4,14 @@ py_library(
     name = "cpptest",
     srcs = [
         "__init__.py",
+        "constants.py",
         "cpptest.py",
+        "requirements_parser.py",
+        "testcase.py",
     ],
     visibility = ["//:__subpackages__"],
     deps = [
-        "//lobster",
-        "//lobster/tools/cpptest/parser",
+        "//lobster/common",
         "@pip//pyyaml",
     ],
 )

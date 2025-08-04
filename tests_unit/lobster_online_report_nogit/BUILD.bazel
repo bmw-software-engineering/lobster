@@ -10,7 +10,7 @@ py_test(
     name = "test_online_report_nogit",
     srcs = ["test_online_report_nogit.py"],
     deps = [
-        "//lobster",
+        "//lobster/common",
         "//lobster/tools/core/online_report_nogit",
     ],
 )

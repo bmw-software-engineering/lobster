@@ -9,5 +9,5 @@ py_library(
 py_test(
     name = "test_report",
     srcs = ["test_report.py"],
-    deps = ["//lobster"],
+    deps = ["//lobster/common"],
 )

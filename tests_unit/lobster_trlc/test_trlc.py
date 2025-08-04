@@ -7,7 +7,7 @@ from trlc import ast
 from trlc.ast import Package, Record_Object, Record_Type, Symbol_Table
 from trlc.errors import Location, Message_Handler, TRLC_Error
 from trlc.trlc import Source_Manager
-from lobster.items import Requirement
+from lobster.common.items import Requirement
 from lobster.tools.trlc.trlc import Config_Parser
 
 
