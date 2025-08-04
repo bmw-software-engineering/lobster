@@ -30,7 +30,7 @@ You must provide this file when running the tool to specify parameters to proces
 
 This tool supports C++ code.
 For this your C++ tests must have a documentation with `markers`:
-They can either be `@requirement`, `@requiredby` or `@defect`.
+The tool supports just `@requirement` marker.
 Here is an example:
 ```cpp
 /**
@@ -43,27 +43,13 @@ TEST(RequirementTagTest1, RequirementsAsMultipleComments) {
   // your test implementation here
 }
 ```
-You can also provide parameters to specify which markers should be extracted from which files.
-Additionally, you need to provide the Codebeamer URL.
+You can also provide parameters to specify the configuration of the tool (`output_file`, `codebeamer_url`, `kind`, and `files`).
 
 Examples:
 
 ```yaml
-output:
-    component_tests.lobster:
-        markers:
-        - "@requirement"
-        kind: "req"
-
-    unit_tests.lobster:
-        markers:
-        - "@requiredby"
-        kind: "req"
-
-    other_tests.lobster:
-        markers: []
-        kind: ""
-
+output: 'component_tests.lobster'
+kind: 'req'
 codebeamer_url: "https://codebeamer.com"
  ```
 You can also include CPP files in the YAML configuration file.
@@ -77,7 +63,7 @@ Note: File paths are accepted only in single quotes.
 
 ## Technical Aspects
 
-`lobster-cpptest` now displays a test-name instead of a fixture-name 
+`lobster-cpptest` now displays a test-name instead of a fixture-name
 in the lobster-report and lobster-html-report.
 
 ## Known Issues

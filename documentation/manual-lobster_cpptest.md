@@ -77,25 +77,20 @@ The regex used for each test-tag is as follows:
 
 ## Preparing cpptest YAML config-file
 
-You have to provide a YAML config-file which determines which `markers` should be extracted in which output-files.
-The expected `kind` for each output-file should also be specified.
+You have to provide a YAML configuration file that defines the settings to be applied by the tool.
+The tool supports exactly four configuration attributes:
+`output_file`, `codebeamer_url`, `kind`, and `files`.
 
-In addition, you have to provide the `codebeamer-url`:
+This file must include the `codebeamer_url`. All other attributes are optional.
 
 ```cpptest-config.yaml
-output:
-  unit_tests.lobster:
-    markers: ["@requirement"]
-    kind: req
-
-  components_tests.lobster:
-    markers: ["@requirement"]
-    kind: imp
+output_file: "unit_tests.lobster"
+kind: "req"
 
 codebeamer_url: "https://codebeamer.example.com/cb"
  ```
 
-* Note: Orphan tests, that do not match any configured `markers`, will be written into all defined outputs.
+* Note: Orphan tests, will be always written into the output_file.
  Be aware these tests do not have any references.
 
 
@@ -116,8 +111,10 @@ The LOBSTER unit tests contains a working example:
 * Test [test_case.cpp](../tests_unit/lobster_cpptest/data/test_case.cpp) containing requirement tags
 
 ## Notes & Caveats
-* This tool supports these `markers`: '@requirement'
-* This tool supports these `kind`: 'req', 'imp' and 'act'
+* Only the `@requirement` marker is extracted by this tool.
+* This tool supports these `kind`: 'req', 'imp' and 'act'. When `kind` is not specified, the tool automatically uses 'req' as the default.
+* When `files` is not specified, the tool automatically uses current working directory as the default.
+* When `output_file` is not specified, the tool automatically uses 'report.lobster' as the default.
 * YAML configuration format is now required instead of the previous JSON-like .config format
 
 ## Known Issues
