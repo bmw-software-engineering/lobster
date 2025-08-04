@@ -1,0 +1,53 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_json",
+    srcs = [
+        "__init__.py",
+        "lobsterjsonasserter.py",
+        "lobsterjsonsystemtestcasebase.py",
+        "lobsterjsontestrunner.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = ["@pip//pyyaml"],
+)
+
+py_test(
+    name = "test_directories",
+    srcs = ["test_directories.py"],
+)
+
+py_test(
+    name = "test_input_not_file_not_directory",
+    srcs = ["test_input_not_file_not_directory.py"],
+)
+
+py_test(
+    name = "test_inputs_and_inputs_from_file",
+    srcs = ["test_inputs_and_inputs_from_file.py"],
+)
+
+py_test(
+    name = "test_json_extension",
+    srcs = ["test_json_extension.py"],
+)
+
+py_test(
+    name = "test_justification_attribute",
+    srcs = ["test_justification_attribute.py"],
+)
+
+py_test(
+    name = "test_multiple_files",
+    srcs = ["test_multiple_files.py"],
+)
+
+py_test(
+    name = "test_name_attribute",
+    srcs = ["test_name_attribute.py"],
+)
+
+py_test(
+    name = "test_tag_attribute",
+    srcs = ["test_tag_attribute.py"],
+)

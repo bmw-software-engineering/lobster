@@ -1,0 +1,42 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_cpptest",
+    srcs = [
+        "__init__.py",
+        "lobster_cpptest_asserter.py",
+        "lobster_cpptest_system_test_case_base.py",
+        "lobster_cpptest_test_runner.py",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+py_test(
+    name = "test_config_exceptions",
+    srcs = ["test_config_exceptions.py"],
+)
+
+py_test(
+    name = "test_directories",
+    srcs = ["test_directories.py"],
+)
+
+py_test(
+    name = "test_extension",
+    srcs = ["test_extension.py"],
+)
+
+py_test(
+    name = "test_multiple_files",
+    srcs = ["test_multiple_files.py"],
+)
+
+py_test(
+    name = "test_references",
+    srcs = ["test_references.py"],
+)
+
+py_test(
+    name = "test_valid_scenario",
+    srcs = ["test_valid_scenario.py"],
+)

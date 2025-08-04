@@ -1,0 +1,11 @@
+load("@rules_python//python:defs.bzl", "py_library")
+
+py_library(
+    name = "online_report_nogit",
+    srcs = [
+        "__init__.py",
+        "online_report_nogit.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = ["//lobster"],
+)

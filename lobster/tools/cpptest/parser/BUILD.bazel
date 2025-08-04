@@ -1,0 +1,18 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "parser",
+    srcs = [
+        "__init__.py",
+        "constants.py",
+        "requirements_parser.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = [":test_case"],
+)
+
+py_test(
+    name = "test_case",
+    srcs = ["test_case.py"],
+    deps = [":parser"],
+)

@@ -1,0 +1,29 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+
+py_binary(
+    name = "lexer",
+    srcs = ["lexer.py"],
+    visibility = ["//:__subpackages__"],
+    deps = ["//lobster"],
+)
+
+py_binary(
+    name = "parser",
+    srcs = ["parser.py"],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        ":config",
+        "//lobster",
+    ],
+)
+
+py_library(
+    name = "config",
+    srcs = [
+        "__init__.py",
+        "lexer.py",
+        "parser.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = ["//lobster"],
+)

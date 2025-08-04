@@ -1,0 +1,14 @@
+load("@rules_python//python:defs.bzl", "py_library")
+
+py_library(
+    name = "trlc",
+    srcs = [
+        "__init__.py",
+        "trlc.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//lobster",
+        "@pip//trlc",
+    ],
+)

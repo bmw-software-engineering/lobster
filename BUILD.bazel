@@ -48,3 +48,48 @@ compile_pip_requirements(
     requirements_txt = "requirements_lock_3_9.txt",
     requirements_windows = "requirements_windows_3_9.txt",
 )
+
+py_binary(
+    name = "github_release",
+    srcs = ["util/github_release.py"],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        ":lobster",
+        "//lobster",
+        "@pip//requests",
+    ],
+)
+
+py_binary(
+    name = "mkassets",
+    srcs = ["util/mkassets.py"],
+    visibility = ["//:__subpackages__"],
+)
+
+py_library(
+    name = "lobster",
+    srcs = [
+        "packages/lobster-core/setup.py",
+        "packages/lobster-metapackage/setup.py",
+        "packages/lobster-monolithic/setup.py",
+        "packages/lobster-tool-codebeamer/setup.py",
+        "packages/lobster-tool-cpp/setup.py",
+        "packages/lobster-tool-cpptest/setup.py",
+        "packages/lobster-tool-gtest/setup.py",
+        "packages/lobster-tool-json/setup.py",
+        "packages/lobster-tool-python/setup.py",
+        "packages/lobster-tool-trlc/setup.py",
+        "tests_integration/projects/basic/nor.py",
+        "util/bump_version_post_release.py",
+        "util/changelog.py",
+        "util/github_release.py",
+        "util/mkassets.py",
+        "util/release.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//lobster",
+        "@pip//requests",
+        "@pip//setuptools",
+    ],
+)

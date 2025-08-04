@@ -1,0 +1,30 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_html_report",
+    srcs = [
+        "__init__.py",
+        "lobster_UI_system_test_case_base.py",
+        "lobster_UI_test_runner.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@pip//selenium",
+        "@pip//webdriver_manager",
+    ],
+)
+
+py_test(
+    name = "test_html_report",
+    srcs = ["test_html_report.py"],
+    deps = [
+        "//lobster/tools/core/html_report",
+        "@pip//selenium",
+    ],
+)
+
+py_test(
+    name = "test_input_file",
+    srcs = ["test_input_file.py"],
+    deps = ["//lobster/tools/core/html_report"],
+)

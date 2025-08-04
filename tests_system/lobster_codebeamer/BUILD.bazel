@@ -1,0 +1,44 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library", "py_test")
+
+py_binary(
+    name = "mock_server",
+    srcs = ["mock_server.py"],
+    visibility = ["//:__subpackages__"],
+    deps = ["@pip//flask"],
+)
+
+py_library(
+    name = "lobster_codebeamer",
+    srcs = [
+        "__init__.py",
+        "data/generate_mock_data.py",
+        "lobster_codebeamer_asserter.py",
+        "lobster_codebeamer_system_test_case_base.py",
+        "lobster_codebeamer_test_runner.py",
+        "mock_server.py",
+        "mock_server_setup.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@pip//flask",
+        "@pip//pyyaml",
+    ],
+)
+
+py_test(
+    name = "test_extract_requirements",
+    srcs = ["test_extract_requirements.py"],
+    deps = ["@pip//flask"],
+)
+
+py_test(
+    name = "test_lobster_codebeamer",
+    srcs = ["test_lobster_codebeamer.py"],
+    deps = ["@pip//flask"],
+)
+
+py_test(
+    name = "test_valid_flow",
+    srcs = ["test_valid_flow.py"],
+    deps = ["@pip//flask"],
+)

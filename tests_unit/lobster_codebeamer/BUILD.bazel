@@ -1,0 +1,28 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_codebeamer",
+    srcs = ["__init__.py"],
+    visibility = ["//:__subpackages__"],
+)
+
+py_test(
+    name = "test_authentication",
+    srcs = ["test_authentication.py"],
+    deps = [
+        "//lobster/tools/codebeamer",
+        "@pip//requests",
+    ],
+)
+
+py_test(
+    name = "test_codebeamer",
+    srcs = ["test_codebeamer.py"],
+    deps = ["//lobster/tools/codebeamer"],
+)
+
+py_test(
+    name = "test_codebeamer_schema",
+    srcs = ["test_codebeamer_schema.py"],
+    deps = ["//lobster/tools/codebeamer"],
+)

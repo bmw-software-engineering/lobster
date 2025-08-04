@@ -1,0 +1,13 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_html_report",
+    srcs = ["__init__.py"],
+    visibility = ["//:__subpackages__"],
+)
+
+py_test(
+    name = "test_html_report",
+    srcs = ["test_html_report.py"],
+    deps = ["//lobster/tools/core/html_report"],
+)

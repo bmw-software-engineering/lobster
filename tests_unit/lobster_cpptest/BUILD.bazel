@@ -1,0 +1,16 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_cpptest",
+    srcs = ["__init__.py"],
+    visibility = ["//:__subpackages__"],
+)
+
+py_test(
+    name = "test_cpptest",
+    srcs = ["test_cpptest.py"],
+    deps = [
+        "//lobster/tools/cpptest",
+        "//lobster/tools/cpptest/parser",
+    ],
+)

@@ -1,0 +1,22 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_online_report",
+    srcs = [
+        "__init__.py",
+        "data/basic.py",
+        "lobster_online_report_system_test_case_base.py",
+        "lobster_online_report_test_runner.py",
+    ],
+    visibility = ["//:__subpackages__"],
+)
+
+py_test(
+    name = "test_git_repo_different_location",
+    srcs = ["test_git_repo_different_location.py"],
+)
+
+py_test(
+    name = "test_git_repository",
+    srcs = ["test_git_repository.py"],
+)

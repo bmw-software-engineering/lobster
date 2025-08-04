@@ -1,0 +1,37 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_trlc",
+    srcs = [
+        "__init__.py",
+        "lobster_system_test_case_base.py",
+        "lobster_trlc_test_runner.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = ["@pip//pyyaml"],
+)
+
+py_test(
+    name = "test_input_invalid_extensions",
+    srcs = ["test_input_invalid_extensions.py"],
+)
+
+py_test(
+    name = "test_input_list_of_files",
+    srcs = ["test_input_list_of_files.py"],
+)
+
+py_test(
+    name = "test_inputs_and_inputs_from_file",
+    srcs = ["test_inputs_and_inputs_from_file.py"],
+)
+
+py_test(
+    name = "test_inputs_from_file",
+    srcs = ["test_inputs_from_file.py"],
+)
+
+py_test(
+    name = "test_inputs_from_working_directory",
+    srcs = ["test_inputs_from_working_directory.py"],
+)

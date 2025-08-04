@@ -1,0 +1,17 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_trlc",
+    srcs = ["__init__.py"],
+    visibility = ["//:__subpackages__"],
+)
+
+py_test(
+    name = "test_trlc",
+    srcs = ["test_trlc.py"],
+    deps = [
+        "//lobster",
+        "//lobster/tools/trlc",
+        "@pip//trlc",
+    ],
+)

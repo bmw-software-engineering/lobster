@@ -1,0 +1,16 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_online_report",
+    srcs = ["__init__.py"],
+    visibility = ["//:__subpackages__"],
+)
+
+py_test(
+    name = "test_online_report",
+    srcs = ["test_online_report.py"],
+    deps = [
+        "//lobster",
+        "//lobster/tools/core/online_report",
+    ],
+)

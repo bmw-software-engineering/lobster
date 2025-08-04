@@ -1,0 +1,11 @@
+load("@rules_python//python:defs.bzl", "py_library")
+
+py_library(
+    name = "gtest",
+    srcs = [
+        "__init__.py",
+        "gtest.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = ["//lobster"],
+)

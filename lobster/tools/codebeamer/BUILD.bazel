@@ -1,0 +1,19 @@
+load("@rules_python//python:defs.bzl", "py_library")
+
+py_library(
+    name = "codebeamer",
+    srcs = [
+        "__init__.py",
+        "bearer_auth.py",
+        "codebeamer.py",
+        "config.py",
+        "exceptions.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//lobster",
+        "@pip//pyyaml",
+        "@pip//requests",
+        "@pip//urllib3",
+    ],
+)

@@ -1,0 +1,12 @@
+load("@rules_python//python:defs.bzl", "py_library")
+
+py_library(
+    name = "cpp",
+    srcs = [
+        "__init__.py",
+        "cpp.py",
+        "implementation_builder.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = ["//lobster"],
+)
