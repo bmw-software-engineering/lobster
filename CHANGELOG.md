@@ -36,6 +36,11 @@
     The section is not intended to be modified by users.
     Removing the error messages helps to increase the branch coverage.
 
+* `lobster-cpptest`:
+  - All custom markers have been removed. The tool now supports only the `req` marker. This marker is handled through hard-coded logic.
+  - The tool now accepts exactly four configuration attributes in config file: `output_file`, `codebeamer_url`, `kind` and `files`.
+  - Note: The tool now generates only one output file per execution.
+
 ### 0.13.2
 
 * `lobster-html-report`

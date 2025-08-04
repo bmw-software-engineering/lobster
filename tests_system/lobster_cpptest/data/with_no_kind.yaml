@@ -1,5 +1,0 @@
-output:
-  component_tests.lobster:
-    markers: ["@requirement", "@requiredby"]
-
-codebeamer_url: "https://codebeamer.com"
