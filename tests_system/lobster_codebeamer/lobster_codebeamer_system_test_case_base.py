@@ -1,6 +1,6 @@
 from pathlib import Path
-from .lobster_codebeamer_test_runner import LobsterCodebeamerTestRunner
-from ..system_test_case_base import SystemTestCaseBase
+from tests_system.lobster_codebeamer.lobster_codebeamer_test_runner import LobsterCodebeamerTestRunner
+from tests_system.system_test_case_base import SystemTestCaseBase
 
 
 class LobsterCodebeamerSystemTestCaseBase(SystemTestCaseBase):

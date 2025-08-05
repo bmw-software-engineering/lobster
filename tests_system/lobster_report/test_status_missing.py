@@ -1,5 +1,5 @@
-from .lobster_report_system_test_case_base import LobsterReportSystemTestCaseBase
-from ..asserter import Asserter
+from tests_system.lobster_report.lobster_report_system_test_case_base import LobsterReportSystemTestCaseBase
+from tests_system.asserter import Asserter
 
 
 class ReportJustifiedTest(LobsterReportSystemTestCaseBase):

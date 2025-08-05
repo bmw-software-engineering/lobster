@@ -10,10 +10,17 @@ py_library(
         "lobster_meta_data_tool_base_test_runner.py",
     ],
     visibility = ["//:__subpackages__"],
-    deps = ["//lobster/common"],
+    deps = [
+        "//lobster/common",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_meta_data_tool_base",
     srcs = ["test_meta_data_tool_base.py"],
+    deps = [
+        ":lobster_meta_data_tool_base",
+        "//tests_system",
+    ],
 )

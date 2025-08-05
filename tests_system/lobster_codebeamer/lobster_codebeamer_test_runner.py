@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional, Union
 import yaml
-from .mock_server import PORT
+from tests_system.lobster_codebeamer.mock_server import PORT
 from tests_system.testrunner import TestRunner
 
 

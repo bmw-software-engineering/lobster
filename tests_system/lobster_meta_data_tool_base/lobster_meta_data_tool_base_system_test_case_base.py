@@ -1,6 +1,6 @@
 from pathlib import Path
-from .lobster_meta_data_tool_base_test_runner import LobsterMetaDataToolBaseTestRunner
-from ..system_test_case_base import SystemTestCaseBase
+from tests_system.lobster_meta_data_tool_base.lobster_meta_data_tool_base_test_runner import LobsterMetaDataToolBaseTestRunner
+from tests_system.system_test_case_base import SystemTestCaseBase
 
 
 class LobsterMetaDataToolBaseSystemTestCaseBase(SystemTestCaseBase):

@@ -20,6 +20,7 @@ py_library(
     ],
     visibility = ["//:__subpackages__"],
     deps = [
+        "//tests_system",
         "@pip//flask",
         "@pip//pyyaml",
     ],
@@ -28,17 +29,27 @@ py_library(
 py_test(
     name = "test_extract_requirements",
     srcs = ["test_extract_requirements.py"],
-    deps = ["@pip//flask"],
+    deps = [
+        ":lobster_codebeamer",
+        "@pip//flask",
+    ],
 )
 
 py_test(
     name = "test_lobster_codebeamer",
     srcs = ["test_lobster_codebeamer.py"],
-    deps = ["@pip//flask"],
+    deps = [
+        ":lobster_codebeamer",
+        "//tests_system",
+        "@pip//flask",
+    ],
 )
 
 py_test(
     name = "test_valid_flow",
     srcs = ["test_valid_flow.py"],
-    deps = ["@pip//flask"],
+    deps = [
+        ":lobster_codebeamer",
+        "@pip//flask",
+    ],
 )

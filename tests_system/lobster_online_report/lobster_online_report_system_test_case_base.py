@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional, Union
-from .lobster_online_report_test_runner import LobsterOnlineReportTestRunner
-from ..system_test_case_base import SystemTestCaseBase
+from tests_system.lobster_online_report.lobster_online_report_test_runner import LobsterOnlineReportTestRunner
+from tests_system.system_test_case_base import SystemTestCaseBase
 
 
 class LobsterOnlineReportSystemTestCaseBase(SystemTestCaseBase):

@@ -17,7 +17,7 @@ py_test(
     srcs = ["test_config_exceptions.py"],
     deps = [
         ":lobster_cpptest",
-        "//tests_system/tests_utils",
+        "//tests_system",
     ],
 )
 
@@ -62,6 +62,6 @@ py_test(
     srcs = ["test_valid_scenario.py"],
     deps = [
         ":lobster_cpptest",
-        "//tests_system/tests_utils",
+        "//tests_system",
     ],
 )

@@ -9,14 +9,25 @@ py_library(
         "lobster_online_report_test_runner.py",
     ],
     visibility = ["//:__subpackages__"],
+    deps = ["//tests_system"],
 )
 
 py_test(
     name = "test_git_repo_different_location",
     srcs = ["test_git_repo_different_location.py"],
+    deps = [
+        ":lobster_online_report",
+        "//tests_system",
+        "//tests_system/tests_utils",
+    ],
 )
 
 py_test(
     name = "test_git_repository",
     srcs = ["test_git_repository.py"],
+    deps = [
+        ":lobster_online_report",
+        "//tests_system",
+        "//tests_system/tests_utils",
+    ],
 )

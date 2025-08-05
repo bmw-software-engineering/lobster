@@ -8,30 +8,53 @@ py_library(
         "lobster_trlc_test_runner.py",
     ],
     visibility = ["//:__subpackages__"],
-    deps = ["@pip//pyyaml"],
+    deps = [
+        "//tests_system",
+        "@pip//pyyaml",
+    ],
 )
 
 py_test(
     name = "test_input_invalid_extensions",
     srcs = ["test_input_invalid_extensions.py"],
+    deps = [
+        ":lobster_trlc",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_input_list_of_files",
     srcs = ["test_input_list_of_files.py"],
+    deps = [
+        ":lobster_trlc",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_inputs_and_inputs_from_file",
     srcs = ["test_inputs_and_inputs_from_file.py"],
+    deps = [
+        ":lobster_trlc",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_inputs_from_file",
     srcs = ["test_inputs_from_file.py"],
+    deps = [
+        ":lobster_trlc",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_inputs_from_working_directory",
     srcs = ["test_inputs_from_working_directory.py"],
+    deps = [
+        ":lobster_trlc",
+        "//tests_system",
+    ],
 )

@@ -9,45 +9,68 @@ py_library(
         "lobsterjsontestrunner.py",
     ],
     visibility = ["//:__subpackages__"],
-    deps = ["@pip//pyyaml"],
+    deps = [
+        "//tests_system",
+        "@pip//pyyaml",
+    ],
 )
 
 py_test(
     name = "test_directories",
     srcs = ["test_directories.py"],
+    deps = [":lobster_json"],
 )
 
 py_test(
     name = "test_input_not_file_not_directory",
     srcs = ["test_input_not_file_not_directory.py"],
+    deps = [
+        ":lobster_json",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_inputs_and_inputs_from_file",
     srcs = ["test_inputs_and_inputs_from_file.py"],
+    deps = [":lobster_json"],
 )
 
 py_test(
     name = "test_json_extension",
     srcs = ["test_json_extension.py"],
+    deps = [
+        ":lobster_json",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_justification_attribute",
     srcs = ["test_justification_attribute.py"],
+    deps = [":lobster_json"],
 )
 
 py_test(
     name = "test_multiple_files",
     srcs = ["test_multiple_files.py"],
+    deps = [":lobster_json"],
 )
 
 py_test(
     name = "test_name_attribute",
     srcs = ["test_name_attribute.py"],
+    deps = [
+        ":lobster_json",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_tag_attribute",
     srcs = ["test_tag_attribute.py"],
+    deps = [
+        ":lobster_json",
+        "//tests_system",
+    ],
 )

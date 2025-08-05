@@ -1,5 +1,5 @@
 import threading
-from .mock_server import CodebeamerFlask, create_app
+from tests_system.lobster_codebeamer.mock_server import CodebeamerFlask, create_app
 
 mock_server_thread = None
 codebeamer_flask = None

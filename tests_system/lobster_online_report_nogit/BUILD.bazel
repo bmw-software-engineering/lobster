@@ -8,9 +8,14 @@ py_library(
         "lobster_online_report_nogit_test_runner.py",
     ],
     visibility = ["//:__subpackages__"],
+    deps = ["//tests_system"],
 )
 
 py_test(
     name = "test_nogit",
     srcs = ["test_nogit.py"],
+    deps = [
+        ":lobster_online_report_nogit",
+        "//tests_system",
+    ],
 )

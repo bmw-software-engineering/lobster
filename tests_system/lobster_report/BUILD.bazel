@@ -8,19 +8,32 @@ py_library(
         "lobster_report_test_runner.py",
     ],
     visibility = ["//:__subpackages__"],
+    deps = ["//tests_system"],
 )
 
 py_test(
     name = "test_status_justified",
     srcs = ["test_status_justified.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_status_missing",
     srcs = ["test_status_missing.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_status_ok",
     srcs = ["test_status_ok.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
 )
