@@ -57,10 +57,10 @@ example.Codebeamer_Id {
 ```
 
 These functions are applied in order, and we pick the first one that
-fully manages to apply. When a value is `null`, then and it'd be used
-(like in the first to_string function above) then the expansion does
-not apply and we move to the next, and so on. When none apply an error
-is created.
+fully manages to apply. If a value is `null` and required for the
+the expansion (as in the first `to_string` function above), the current
+function is skipped, and the next one is attempted. If none of the functions
+can be applied, an error is raised.
 
 If you need to justify requirements not being linked or implemented,
 then you can also defined up to three extra fields (using `just_up`,
