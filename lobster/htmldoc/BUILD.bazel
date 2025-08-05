@@ -4,7 +4,8 @@ py_library(
     name = "htmldoc",
     srcs = [
         "__init__.py",
+        "assets.py",
         "htmldoc.py",
     ],
-    visibility = ["//:__subpackages__"],
+    visibility = ["//visibility:public"],
 )

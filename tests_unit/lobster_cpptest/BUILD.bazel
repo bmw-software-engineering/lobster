@@ -3,11 +3,15 @@ load("@rules_python//python:defs.bzl", "py_library", "py_test")
 py_library(
     name = "lobster_cpptest",
     srcs = ["__init__.py"],
-    visibility = ["//:__subpackages__"],
+    visibility = ["//visibility:public"],
 )
 
 py_test(
     name = "test_cpptest",
     srcs = ["test_cpptest.py"],
+    data = [
+        "//tests_unit/lobster_cpptest/data:cpptest_data",
+    ],
     deps = ["//lobster/tools/cpptest"],
+    visibility = ["//visibility:public"],
 )

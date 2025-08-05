@@ -1,6 +1,6 @@
 from os.path import abspath
 from typing import Dict, Match
-from lobster.file_tag_generator import FileTagGenerator
+from lobster.common.file_tag_generator import FileTagGenerator
 from lobster.common.items import Implementation, Tracing_Tag
 from lobster.common.location import File_Reference
 

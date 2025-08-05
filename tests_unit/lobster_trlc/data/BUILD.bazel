@@ -1,0 +1,7 @@
+filegroup(
+    name = "trlc_data",
+    srcs = glob([
+        "*.conf",
+    ]),
+    visibility = ["//visibility:public"],
+)
