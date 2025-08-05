@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
-from ..test_runner import TestRunner
-from ..args_to_list import arguments_to_list
+from tests_system.testrunner import TestRunner
+from tests_system.args_to_list import arguments_to_list
 
 
 @dataclass

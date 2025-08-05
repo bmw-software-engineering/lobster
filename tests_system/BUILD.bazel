@@ -1,21 +1,9 @@
-load("@rules_python//python:defs.bzl", "py_binary", "py_library", "py_test")
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 
 py_binary(
     name = "run_tool_tests",
     srcs = ["run_tool_tests.py"],
-    visibility = ["//:__subpackages__"],
-)
-
-py_binary(
-    name = "update_cpptest_expected_output",
-    srcs = ["tests_utils/update_cpptest_expected_output.py"],
-    visibility = ["//:__subpackages__"],
-)
-
-py_binary(
-    name = "update_online_json_with_hashes",
-    srcs = ["tests_utils/update_online_json_with_hashes.py"],
-    visibility = ["//:__subpackages__"],
+    visibility = ["//visibility:public"],
 )
 
 py_library(
@@ -26,13 +14,7 @@ py_library(
         "asserter.py",
         "run_tool_tests.py",
         "system_test_case_base.py",
-        "tests_utils/update_cpptest_expected_output.py",
-        "tests_utils/update_online_json_with_hashes.py",
+        "testrunner.py",
     ],
-    visibility = ["//:__subpackages__"],
-)
-
-py_test(
-    name = "test_runner",
-    srcs = ["test_runner.py"],
+    visibility = ["//visibility:public"],
 )

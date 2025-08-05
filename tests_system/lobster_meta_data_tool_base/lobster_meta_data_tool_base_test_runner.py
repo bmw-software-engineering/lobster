@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import List
 from .lobster_meta_data_tool_base_cmd_args import CmdArgs
-from ..test_runner import TestRunner
+from tests_system.testrunner import TestRunner
 
 
 class LobsterMetaDataToolBaseTestRunner(TestRunner):

@@ -1,7 +1,7 @@
 import json
 from subprocess import CompletedProcess
 from unittest import TestCase
-from .test_runner import TestRunner
+from tests_system.testrunner import TestRunner
 
 
 # pylint: disable=invalid-name

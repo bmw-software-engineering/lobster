@@ -12,9 +12,10 @@ py_test(
     data = [
         "//tests_unit/lobster_trlc/data:trlc_data",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "//lobster/common",
         "//lobster/tools/trlc",
         "@pip//trlc",
     ],
-    visibility = ["//visibility:public"],)
+)

@@ -12,6 +12,6 @@ py_test(
     data = [
         "//tests_unit/lobster_cpptest/data:cpptest_data",
     ],
-    deps = ["//lobster/tools/cpptest"],
     visibility = ["//visibility:public"],
+    deps = ["//lobster/tools/cpptest"],
 )
