@@ -1,0 +1,9 @@
+package extraction_test
+
+base_type A {
+    description ="AA"
+}
+
+extended_type B {
+    description ="BB"
+}
