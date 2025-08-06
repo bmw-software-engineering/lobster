@@ -1,7 +1,2 @@
-load("@rules_python//python:defs.bzl", "py_library")
-
-py_library(
-    name = "lobster",
-    srcs = ["__init__.py"],
-    visibility = ["//:__subpackages__"],
-)
+# BUILD.bazel
+# gazelle:exclude __init__.py

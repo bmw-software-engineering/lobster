@@ -1,11 +1,13 @@
 load("@rules_python//python:defs.bzl", "py_library")
 
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
 py_library(
     name = "online_report_nogit",
-    srcs = [
-        "__init__.py",
-        "online_report_nogit.py",
+    srcs = ["online_report_nogit.py"],
+    visibility = [
+        "//visibility:public",
     ],
-    visibility = ["//:__subpackages__"],
     deps = ["//lobster/common"],
 )

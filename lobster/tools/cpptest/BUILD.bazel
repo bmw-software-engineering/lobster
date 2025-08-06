@@ -1,15 +1,19 @@
 load("@rules_python//python:defs.bzl", "py_library")
 
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
 py_library(
     name = "cpptest",
     srcs = [
-        "__init__.py",
         "constants.py",
         "cpptest.py",
         "requirements_parser.py",
         "testcase.py",
     ],
-    visibility = ["//:__subpackages__"],
+    visibility = [
+        "//visibility:public",
+    ],
     deps = [
         "//lobster/common",
         "@pip//pyyaml",

@@ -3,14 +3,14 @@ load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 py_binary(
     name = "lexer",
     srcs = ["lexer.py"],
-    visibility = ["//:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [":common"],
 )
 
 py_binary(
     name = "parser",
     srcs = ["parser.py"],
-    visibility = ["//:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [":common"],
 )
 
@@ -31,6 +31,6 @@ py_library(
         "tool.py",
         "version.py",
     ],
-    visibility = ["//:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = ["@pip//pyyaml"],
 )

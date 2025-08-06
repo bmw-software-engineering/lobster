@@ -1,15 +1,17 @@
 load("@rules_python//python:defs.bzl", "py_library", "py_test")
 
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
 py_library(
     name = "lobster_meta_data_tool_base",
     srcs = [
-        "__init__.py",
         "lobster_meta_data_tool_base_asserters.py",
         "lobster_meta_data_tool_base_cmd_args.py",
         "lobster_meta_data_tool_base_system_test_case_base.py",
         "lobster_meta_data_tool_base_test_runner.py",
     ],
-    visibility = ["//:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         "//lobster/common",
         "//tests_system",

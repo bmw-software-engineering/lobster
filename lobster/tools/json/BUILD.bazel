@@ -1,11 +1,13 @@
 load("@rules_python//python:defs.bzl", "py_library")
 
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
 py_library(
     name = "json",
-    srcs = [
-        "__init__.py",
-        "json.py",
+    srcs = ["json.py"],
+    visibility = [
+        "//visibility:public",
     ],
-    visibility = ["//:__subpackages__"],
     deps = ["//lobster/common"],
 )

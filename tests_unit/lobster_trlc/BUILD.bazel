@@ -1,10 +1,7 @@
-load("@rules_python//python:defs.bzl", "py_library", "py_test")
+load("@rules_python//python:defs.bzl", "py_test")
 
-py_library(
-    name = "lobster_trlc",
-    srcs = ["__init__.py"],
-    visibility = ["//visibility:public"],
-)
+# BUILD.bazel
+# gazelle:exclude __init__.py
 
 py_test(
     name = "test_trlc",
@@ -12,7 +9,6 @@ py_test(
     data = [
         "//tests_unit/lobster_trlc/data:trlc_data_unit",
     ],
-    visibility = ["//visibility:public"],
     deps = [
         "//lobster/common",
         "//lobster/tools/trlc",

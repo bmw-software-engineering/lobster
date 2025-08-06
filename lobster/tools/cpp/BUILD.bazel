@@ -1,12 +1,16 @@
 load("@rules_python//python:defs.bzl", "py_library")
 
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
 py_library(
     name = "cpp",
     srcs = [
-        "__init__.py",
         "cpp.py",
         "implementation_builder.py",
     ],
-    visibility = ["//:__subpackages__"],
+    visibility = [
+        "//visibility:public",
+    ],
     deps = ["//lobster/common"],
 )

@@ -1,3 +1,5 @@
+load("@rules_python//python:defs.bzl", "py_library")
+
 filegroup(
     name = "online_report_data_system",
     srcs = glob([
@@ -5,4 +7,10 @@ filegroup(
         "*.lobster",
     ]),
     visibility = ["//visibility:public"],
+)
+
+py_library(
+    name = "data",
+    srcs = ["basic.py"],
+    visibility = ["//:__subpackages__"],
 )

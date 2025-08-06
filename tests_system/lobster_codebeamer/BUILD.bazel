@@ -1,30 +1,36 @@
 load("@rules_python//python:defs.bzl", "py_binary", "py_library", "py_test")
 
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
 py_binary(
     name = "mock_server",
     srcs = ["mock_server.py"],
-    visibility = ["//:__subpackages__"],
+    visibility = [
+        "//visibility:public",
+    ],
     deps = ["@pip//flask"],
 )
 
 py_library(
     name = "lobster_codebeamer",
     srcs = [
-        "__init__.py",
         "lobster_codebeamer_asserter.py",
         "lobster_codebeamer_system_test_case_base.py",
         "lobster_codebeamer_test_runner.py",
         "mock_server.py",
         "mock_server_setup.py",
     ],
-    visibility = ["//:__subpackages__"],
+    data = [
+        "//tests_system/lobster_codebeamer/data:codebeamer_data_system",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
     deps = [
         "//tests_system",
         "@pip//flask",
         "@pip//pyyaml",
-    ],
-    data = [
-        "//tests_system/lobster_codebeamer/data:codebeamer_data_system",
     ],
 )
 

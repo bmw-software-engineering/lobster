@@ -1,11 +1,15 @@
 load("@rules_python//python:defs.bzl", "py_library")
 
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
 py_library(
     name = "htmldoc",
     srcs = [
-        "__init__.py",
         "assets.py",
         "htmldoc.py",
     ],
-    visibility = ["//visibility:public"],
+    visibility = [
+        "//visibility:public",
+    ],
 )

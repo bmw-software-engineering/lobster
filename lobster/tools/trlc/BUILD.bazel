@@ -1,12 +1,14 @@
 load("@rules_python//python:defs.bzl", "py_library")
 
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
 py_library(
     name = "trlc",
-    srcs = [
-        "__init__.py",
-        "trlc.py",
+    srcs = ["trlc.py"],
+    visibility = [
+        "//visibility:public",
     ],
-    visibility = ["//:__subpackages__"],
     deps = [
         "//lobster/common",
         "@pip//trlc",

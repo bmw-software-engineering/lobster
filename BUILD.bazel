@@ -5,6 +5,10 @@ load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
 load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
 
+# BUILD.bazel
+# gazelle:python_visibility //visibility:public
+# gazelle:exclude __init__.py
+
 # Our gazelle target points to the python gazelle binary.
 # This is the simple case where we only need one language supported.
 # If you also had proto, go, or other gazelle-supported languages,
@@ -52,7 +56,9 @@ compile_pip_requirements(
 py_binary(
     name = "github_release",
     srcs = ["util/github_release.py"],
-    visibility = ["//:__subpackages__"],
+    visibility = [
+        "//visibility:public",
+    ],
     deps = [
         ":lobster",
         "//lobster/common",
@@ -63,7 +69,9 @@ py_binary(
 py_binary(
     name = "mkassets",
     srcs = ["util/mkassets.py"],
-    visibility = ["//:__subpackages__"],
+    visibility = [
+        "//visibility:public",
+    ],
 )
 
 py_library(
@@ -86,7 +94,9 @@ py_library(
         "util/mkassets.py",
         "util/release.py",
     ],
-    visibility = ["//:__subpackages__"],
+    visibility = [
+        "//visibility:public",
+    ],
     deps = [
         "//lobster/common",
         "@pip//requests",

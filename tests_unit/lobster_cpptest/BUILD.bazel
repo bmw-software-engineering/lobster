@@ -1,10 +1,7 @@
-load("@rules_python//python:defs.bzl", "py_library", "py_test")
+load("@rules_python//python:defs.bzl", "py_test")
 
-py_library(
-    name = "lobster_cpptest",
-    srcs = ["__init__.py"],
-    visibility = ["//visibility:public"],
-)
+# BUILD.bazel
+# gazelle:exclude __init__.py
 
 py_test(
     name = "test_cpptest",
@@ -12,6 +9,5 @@ py_test(
     data = [
         "//tests_unit/lobster_cpptest/data:cpptest_data_unit",
     ],
-    visibility = ["//visibility:public"],
     deps = ["//lobster/tools/cpptest"],
 )

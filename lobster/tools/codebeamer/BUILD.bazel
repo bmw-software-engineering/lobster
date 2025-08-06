@@ -1,15 +1,19 @@
 load("@rules_python//python:defs.bzl", "py_library")
 
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
 py_library(
     name = "codebeamer",
     srcs = [
-        "__init__.py",
         "bearer_auth.py",
         "codebeamer.py",
         "config.py",
         "exceptions.py",
     ],
-    visibility = ["//:__subpackages__"],
+    visibility = [
+        "//visibility:public",
+    ],
     deps = [
         "//lobster/common",
         "@pip//pyyaml",

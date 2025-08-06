@@ -1,7 +1,15 @@
+load("@rules_python//python:defs.bzl", "py_library")
+
 filegroup(
     name = "codebeamer_data_system",
     srcs = glob([
         "*.lobster",
     ]),
     visibility = ["//visibility:public"],
+)
+
+py_library(
+    name = "data",
+    srcs = ["generate_mock_data.py"],
+    visibility = ["//:__subpackages__"],
 )

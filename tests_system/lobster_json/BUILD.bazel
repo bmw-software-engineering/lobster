@@ -1,20 +1,24 @@
 load("@rules_python//python:defs.bzl", "py_library", "py_test")
 
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
 py_library(
     name = "lobster_json",
     srcs = [
-        "__init__.py",
         "lobsterjsonasserter.py",
         "lobsterjsonsystemtestcasebase.py",
         "lobsterjsontestrunner.py",
     ],
-    visibility = ["//:__subpackages__"],
+    data = [
+        "//tests_system/lobster_json/data:json_data_system",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
     deps = [
         "//tests_system",
         "@pip//pyyaml",
-    ],
-    data = [
-        "//tests_system/lobster_json/data:json_data_system",
     ],
 )
 
