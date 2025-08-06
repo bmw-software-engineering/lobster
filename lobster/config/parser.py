@@ -28,9 +28,8 @@ from lobster import location
 
 class Parser:
     def __init__(self, mh, file_name):
-        assert isinstance(mh, errors.Message_Handler)
-        assert isinstance(file_name, str)
-        assert os.path.isfile(file_name)
+        if not os.path.isfile(file_name):
+            raise FileNotFoundError(f"Config file not found: {file_name}")
 
         self.lexer = lexer.Lexer(mh, file_name)
 
