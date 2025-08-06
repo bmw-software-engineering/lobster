@@ -21,11 +21,10 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter = Asserter(self, completed_process, self._test_runner)
 
         asserter.assertStdErrText(
-            f'usage: lobster-cpptest [-h] [-v] [--config CONFIG]\n'
-            f'lobster-cpptest: error: {self._test_runner.cmd_args.config} '
-            'is not an existing file!\n'
+            f'lobster-cpptest: {self._test_runner.cmd_args.config} '
+            f'is not an existing file!\n'
         )
-        asserter.assertExitCode(2)
+        asserter.assertExitCode(1)
 
     def test_config_file_errors(self):
         test_cases = [
@@ -39,19 +38,19 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
                 "config_file": "with_key_error.yaml",
                 "expected_error": f'Missing attribute {CODEBEAMER_URL}',
                 "case": "key_error",
-                "expected_exit_code": 2
+                "expected_exit_code": 1
             },
             {
                 "config_file": "with_list_of_output.yaml",
                 "expected_error": f' {OUTPUT_FILE} must be a string',
                 "case": "list_of_output",
-                "expected_exit_code": 2
+                "expected_exit_code": 1
             },
             {
                 "config_file": "with_list_of_kind.yaml",
                 "expected_error": f'{KIND} must be a string',
                 "case": "list_of_kind",
-                "expected_exit_code": 2
+                "expected_exit_code": 1
             },
             {
                 "config_file": "with_not_supported_kind.yaml",
@@ -59,7 +58,7 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
                     f'{KIND} must be one of {",".join(SUPPORTED_KINDS)}'
                 ),
                 "case": "not_supported_kind",
-                "expected_exit_code": 2
+                "expected_exit_code": 1
             }
         ]
 

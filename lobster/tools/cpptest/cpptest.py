@@ -17,13 +17,16 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import sys
 from argparse import Namespace
 import os.path
 from copy import copy
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Union
 from enum import Enum
 import yaml
+
+from lobster.errors import LOBSTER_Error
 from lobster.exceptions import LOBSTER_Exception
 from lobster.items import Tracing_Tag, Activity
 from lobster.location import File_Reference
@@ -46,6 +49,8 @@ KIND_FUNCTION = "Function"
 CB_PREFIX = "CB-#"
 MISSING = "Missing"
 ORPHAN_TESTS = "OrphanTests"
+
+TOOL_NAME = "lobster-cpptest"
 
 
 class KindTypes(str, Enum):
@@ -89,7 +94,7 @@ def parse_config_file(file_name: str) -> Config:
         or is improperly formatted.
     """
     if not os.path.isfile(file_name):
-        raise ValueError(f'{file_name} is not an existing file!')
+        raise FileNotFoundError(f'{file_name} is not an existing file!')
 
     with open(file_name, "r", encoding='utf-8') as file:
         try:
@@ -99,7 +104,7 @@ def parse_config_file(file_name: str) -> Config:
 
     if (not config_dict or
             CODEBEAMER_URL not in config_dict):
-        raise ValueError(f'Please follow the right config file structure! '
+        raise KeyError(f'Please follow the right config file structure! '
                          f'Missing attribute {CODEBEAMER_URL}')
 
     codebeamer_url = config_dict.get(CODEBEAMER_URL)
@@ -171,7 +176,7 @@ def get_test_file_list(file_dir_list: list, extension_list: list) -> list:
                     if ext in extension_list:
                         test_file_list.append(os.path.join(path, filename))
         else:
-            raise ValueError(f'"{file_dir_entry}" is not a file or directory.')
+            raise FileNotFoundError(f'"{file_dir_entry}" is not a file or directory.')
 
     if len(test_file_list) == 0:
         raise ValueError(f'"{file_dir_list}" does not contain any test file.')
@@ -360,19 +365,38 @@ class CppTestTool(MetaDataToolBase):
         )
 
     def _run_impl(self, options: Namespace) -> int:
-        options = self._argument_parser.parse_args()
-
         try:
-            config = parse_config_file(options.config)
+            self._execute(options)
+            return 0
+        except FileNotFoundError as file_not_found_error:
+            self._print_error(file_not_found_error)
+        except ValueError as value_error:
+            self._print_error(value_error)
+        except KeyError as key_error:
+            self._print_error(key_error)
+        except LOBSTER_Error as lobster_error:
+            self._print_error(lobster_error)
+        return 1
 
-            lobster_cpptest(
-                config=config
-            )
+    @staticmethod
+    def _print_error(error: Union[Exception, str]):
+        print(f"{TOOL_NAME}: {error}", file=sys.stderr)
 
-        except ValueError as exception:
-            self._argument_parser.error(str(exception))
+    @staticmethod
+    def _execute(options: Namespace) -> None:
+        config = parse_config_file(options.config)
 
-        return 0
+        lobster_cpptest(
+            config=config
+        )
+
+
+def cpptest_items_to_lobster_file(config: Config) -> None:
+    """Loads items from cpptests and serializes them in the LOBSTER interchange
+       format to the given file.
+    """
+    # This is an API function.
+    lobster_cpptest(config=config)
 
 
 def main() -> int:

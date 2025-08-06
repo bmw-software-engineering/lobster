@@ -71,7 +71,6 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertStdErrText(
-            f'usage: lobster-cpptest [-h] [-v] [--config CONFIG]\n'
-            f'lobster-cpptest: error: "no_input_file.cpp" is not a file or directory.\n'
+            'lobster-cpptest: "no_input_file.cpp" is not a file or directory.\n'
         )
-        asserter.assertExitCode(2)
+        asserter.assertExitCode(1)
