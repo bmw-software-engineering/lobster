@@ -1,8 +1,8 @@
 import argparse
 from typing import List
+import sys
 from trlc.errors import Message_Handler
 from trlc.trlc import Source_Manager
-import sys
 from lobster.items import Tracing_Tag, Requirement
 from lobster.location import File_Reference
 from lobster.io import lobster_write
@@ -15,7 +15,7 @@ USECASE_FIELD_DESCRIPTION = "description"
 def parse_args():
     ap = argparse.ArgumentParser(conflict_handler='resolve')
 
-    ap.add_argument("--target", 
+    ap.add_argument("--target",
                     help="Tool name to filter use cases",
                     type=str,
                     required=True)
@@ -48,13 +48,15 @@ def generate_items(symbols, target: str) -> List[Requirement]:
                     item_tag = Tracing_Tag(namespace = "req",
                                 tag       = obj.fully_qualified_name(),
                                 version   = None)
-                    
-                    rv = Requirement(tag       = item_tag,
-                                    location  = item_loc,
-                                    framework = "TRLC",
-                                    kind      = obj.n_typ.name,
-                                    name      = obj.fully_qualified_name(),
-                                    text      = obj.field[USECASE_FIELD_DESCRIPTION].value)
+
+                    rv = Requirement(
+                        tag=item_tag,
+                        location=item_loc,
+                        framework="TRLC",
+                        kind=obj.n_typ.name,
+                        name=obj.fully_qualified_name(),
+                        text=obj.field[USECASE_FIELD_DESCRIPTION].value
+                    )
                     items.append(rv)
     return items
 
@@ -80,4 +82,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
