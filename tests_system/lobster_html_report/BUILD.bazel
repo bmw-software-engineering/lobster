@@ -13,6 +13,9 @@ py_library(
         "@pip//selenium",
         "@pip//webdriver_manager",
     ],
+    data = [
+        "//tests_system/lobster_html_report/data:html_report_data_system",
+    ],
 )
 
 py_test(

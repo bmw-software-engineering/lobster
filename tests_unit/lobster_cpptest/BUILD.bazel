@@ -10,7 +10,7 @@ py_test(
     name = "test_cpptest",
     srcs = ["test_cpptest.py"],
     data = [
-        "//tests_unit/lobster_cpptest/data:cpptest_data",
+        "//tests_unit/lobster_cpptest/data:cpptest_data_unit",
     ],
     visibility = ["//visibility:public"],
     deps = ["//lobster/tools/cpptest"],

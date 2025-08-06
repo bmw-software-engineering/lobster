@@ -1,8 +1,8 @@
 filegroup(
-    name = "cpptest_data_unit",
+    name = "html_report_data_system",
     srcs = glob([
-        "*.cpp",
-        "*.yaml",
+        "*.output",
+        "*.lobster",
     ]),
     visibility = ["//visibility:public"],
 )

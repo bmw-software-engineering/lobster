@@ -9,6 +9,9 @@ py_library(
     ],
     visibility = ["//:__subpackages__"],
     deps = ["//tests_system"],
+    data = [
+        "//tests_system/lobster_online_report_nogit/data:online_report_nogit_data_system",
+    ],
 )
 
 py_test(

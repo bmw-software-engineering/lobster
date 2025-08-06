@@ -25,4 +25,5 @@ py_test(
     name = "test_codebeamer_schema",
     srcs = ["test_codebeamer_schema.py"],
     deps = ["//lobster/tools/codebeamer"],
+    data = ["test.netrc"],
 )

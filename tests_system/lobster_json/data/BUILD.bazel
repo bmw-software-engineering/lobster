@@ -1,0 +1,15 @@
+filegroup(
+    name = "json_data_system",
+    srcs = glob([
+        "empty_directory/*.*",
+        "input_dir/*.json",
+        "nested_directory_data/*.json",
+        "one/*.txt",
+        "valid_directory/*.json",
+        "valid_directory/nested_dir/*.json",
+        "*.json",
+        "*.txt",
+        "*.lobster",
+    ]),
+    visibility = ["//visibility:public"],
+)

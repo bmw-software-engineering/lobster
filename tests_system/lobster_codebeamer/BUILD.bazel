@@ -11,7 +11,6 @@ py_library(
     name = "lobster_codebeamer",
     srcs = [
         "__init__.py",
-        "data/generate_mock_data.py",
         "lobster_codebeamer_asserter.py",
         "lobster_codebeamer_system_test_case_base.py",
         "lobster_codebeamer_test_runner.py",
@@ -23,6 +22,9 @@ py_library(
         "//tests_system",
         "@pip//flask",
         "@pip//pyyaml",
+    ],
+    data = [
+        "//tests_system/lobster_codebeamer/data:codebeamer_data_system",
     ],
 )
 

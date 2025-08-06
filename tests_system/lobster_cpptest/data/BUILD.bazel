@@ -1,8 +1,12 @@
 filegroup(
-    name = "cpptest_data_unit",
+    name = "cpptest_data_system",
     srcs = glob([
+        "*.abc",
         "*.cpp",
+        "*.ppp",
+        "*.xyz",
         "*.yaml",
+        "*.lobster",
     ]),
     visibility = ["//visibility:public"],
 )

@@ -12,6 +12,9 @@ py_library(
         "//tests_system",
         "@pip//pyyaml",
     ],
+    data = [
+        "//tests_system/lobster_trlc/data:trlc_data_system",
+    ],
 )
 
 py_test(

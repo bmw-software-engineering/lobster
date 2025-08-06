@@ -4,12 +4,14 @@ py_library(
     name = "lobster_online_report",
     srcs = [
         "__init__.py",
-        "data/basic.py",
         "lobster_online_report_system_test_case_base.py",
         "lobster_online_report_test_runner.py",
     ],
     visibility = ["//:__subpackages__"],
     deps = ["//tests_system"],
+    data = [
+        "//tests_system/lobster_online_report/data:online_report_data_system",
+    ],
 )
 
 py_test(

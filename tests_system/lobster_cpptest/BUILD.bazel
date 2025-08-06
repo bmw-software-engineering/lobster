@@ -10,6 +10,10 @@ py_library(
     ],
     visibility = ["//visibility:public"],
     deps = ["//tests_system"],
+    data = [
+        "//tests_system/lobster_cpptest/data:cpptest_data_system",
+        "//tests_system/lobster_cpptest/data/cpp_test_files:cpptest_test_files_system",
+    ],
 )
 
 py_test(
