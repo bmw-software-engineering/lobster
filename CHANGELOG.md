@@ -65,23 +65,6 @@
 * Introduce `lobster-pkg` tool:
   Tool to extract lobster traces from `*.pkg` and `*.ta` files.
 
-* `lobster-cpptest`:
-  - All custom markers have been removed. The tool now supports only the `req` marker. This marker is handled through hard-coded logic.
-  - The tool now accepts exactly four configuration attributes in config file: `output_file`, `codebeamer_url`, `kind` and `files`.
-  - Note: The tool now generates only one output file per execution.
-
-* `bmw-lobster-tool-trlc` Python Package:
-  - Fix wrong dependency information in packaging instructions for wheel file (`setup.py`).
-    Only the package [bmw-lobster-tool-trlc](https://pypi.org/project/bmw-lobster-tool-trlc/)
-    was affected, not the package
-    [bmw-lobster-monolithic](https://pypi.org/project/bmw-lobster-monolithic/), which also
-    includes the tool `lobster-trlc`.
-    The minimum required version of [TRLC](https://pypi.org/project/trlc/) is v2.0.1, not v1.2.2.
-    ```
-    > pip install bmw-lobster-tool-trlc
-    ```
-    will now correctly require `trlc>=2.0.1`.  
-
 ### 0.13.2
 
 * `lobster-html-report`
