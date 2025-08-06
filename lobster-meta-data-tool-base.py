@@ -1,6 +1,6 @@
 from argparse import Namespace
 import sys
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 
 # This is a simple script to run the ToolBase class. That class is not a ready-to-use

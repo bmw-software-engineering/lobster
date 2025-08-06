@@ -84,6 +84,7 @@ py_library(
         "lobster-gtest.py",
         "lobster-html-report.py",
         "lobster-json.py",
+        "lobster-meta-data-tool-base.py",
         "lobster-online-report.py",
         "lobster-online-report-nogit.py",
         "lobster-python.py",
@@ -189,6 +190,15 @@ py_binary(
         "//visibility:public",
     ],
     deps = ["//lobster/tools/json"],
+)
+
+py_binary(
+    name = "lobster-meta-data-tool-base",
+    srcs = ["lobster-meta-data-tool-base.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/common"],
 )
 
 py_binary(
