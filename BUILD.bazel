@@ -77,6 +77,18 @@ py_binary(
 py_library(
     name = "lobster",
     srcs = [
+        "lobster-ci-report.py",
+        "lobster-codebeamer.py",
+        "lobster-cpp.py",
+        "lobster-cpptest.py",
+        "lobster-gtest.py",
+        "lobster-html-report.py",
+        "lobster-json.py",
+        "lobster-online-report.py",
+        "lobster-online-report-nogit.py",
+        "lobster-python.py",
+        "lobster-report.py",
+        "lobster-trlc.py",
         "packages/lobster-core/setup.py",
         "packages/lobster-metapackage/setup.py",
         "packages/lobster-monolithic/setup.py",
@@ -99,7 +111,127 @@ py_library(
     ],
     deps = [
         "//lobster/common",
+        "//lobster/tools/codebeamer",
+        "//lobster/tools/core/ci_report",
+        "//lobster/tools/core/html_report",
+        "//lobster/tools/core/online_report",
+        "//lobster/tools/core/online_report_nogit",
+        "//lobster/tools/core/report",
+        "//lobster/tools/cpp",
+        "//lobster/tools/cpptest",
+        "//lobster/tools/gtest",
+        "//lobster/tools/json",
+        "//lobster/tools/python",
+        "//lobster/tools/trlc",
         "@pip//requests",
         "@pip//setuptools",
     ],
+)
+
+py_binary(
+    name = "lobster-ci-report",
+    srcs = ["lobster-ci-report.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/ci_report"],
+)
+
+py_binary(
+    name = "lobster-codebeamer",
+    srcs = ["lobster-codebeamer.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/codebeamer"],
+)
+
+py_binary(
+    name = "lobster-cpp",
+    srcs = ["lobster-cpp.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/cpp"],
+)
+
+py_binary(
+    name = "lobster-cpptest",
+    srcs = ["lobster-cpptest.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/cpptest"],
+)
+
+py_binary(
+    name = "lobster-gtest",
+    srcs = ["lobster-gtest.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/gtest"],
+)
+
+py_binary(
+    name = "lobster-html-report",
+    srcs = ["lobster-html-report.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/html_report"],
+)
+
+py_binary(
+    name = "lobster-json",
+    srcs = ["lobster-json.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/json"],
+)
+
+py_binary(
+    name = "lobster-online-report-nogit",
+    srcs = ["lobster-online-report-nogit.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/online_report_nogit"],
+)
+
+py_binary(
+    name = "lobster-online-report",
+    srcs = ["lobster-online-report.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/online_report"],
+)
+
+py_binary(
+    name = "lobster-python",
+    srcs = ["lobster-python.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/python"],
+)
+
+py_binary(
+    name = "lobster-report",
+    srcs = ["lobster-report.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/report"],
+)
+
+py_binary(
+    name = "lobster-trlc",
+    srcs = ["lobster-trlc.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/trlc"],
 )
