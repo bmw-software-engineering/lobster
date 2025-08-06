@@ -17,7 +17,6 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-import os.path
 import json
 from collections import OrderedDict
 from dataclasses import dataclass
@@ -56,8 +55,6 @@ class Report:
         -------
 
         """
-        assert isinstance(filename, str)
-        assert os.path.isfile(filename)
 
         # Load config
         self.config = load_config(self.mh, filename)
@@ -120,7 +117,6 @@ class Report:
                 self.coverage[item.level].ok += 1
 
     def write_report(self, filename):
-        assert isinstance(filename, str)
 
         levels = []
         for level_config in self.config.values():
@@ -148,7 +144,6 @@ class Report:
             fd.write("\n")
 
     def load_report(self, filename):
-        assert isinstance(filename, str)
 
         loc = File_Reference(filename)
 
@@ -187,9 +182,8 @@ class Report:
         """
         self.config = data["policy"]
         for level in data["levels"]:
-            assert level["name"] in self.config, (
-                f"level '{level['name']}' not found in config"
-            )
+            if level["name"] not in self.config:
+                raise KeyError(f"level '{level['name']}' not found in config")
             coverage = Coverage(
                 level=level["name"], items=0, ok=0, coverage=level["coverage"]
             )
@@ -205,9 +199,8 @@ class Report:
                                                     item_data,
                                                     3)
                 else:
-                    assert level["kind"] == "activity", (
-                        f"unknown level kind '{level['kind']}'"
-                    )
+                    if level["kind"] != "activity":
+                        raise ValueError(f"unknown level kind '{level['kind']}'")
                     item = Activity.from_json(level["name"],
                                               item_data,
                                               3)
