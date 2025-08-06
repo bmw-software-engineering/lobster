@@ -31,9 +31,9 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
         test_cases = [
             {
                 "config_file": "with_syntax_error.yaml",
-                "expected_error": "Invalid config file",
+                "expected_error": "lobster-cpptest: error",
                 "case": "syntax_error",
-                "expected_exit_code": 1
+                "expected_exit_code": 2
             },
             {
                 "config_file": "with_key_error.yaml",
