@@ -17,7 +17,6 @@ manifest:
     coverage: coverage
     cvc5: cvc5
     dill: dill
-    dotenv: python_dotenv
     exceptiongroup: exceptiongroup
     flask: flask
     graphviz: graphviz
@@ -33,7 +32,6 @@ manifest:
     mccabe: mccabe
     outcome: outcome
     packaging: packaging
-    pkg_resources: setuptools
     platformdirs: platformdirs
     pycodestyle: pycodestyle
     pylint: pylint
@@ -41,7 +39,6 @@ manifest:
     pyvcg: PyVCG
     requests: requests
     selenium: selenium
-    setuptools: setuptools
     sniffio: sniffio
     socks: PySocks
     sockshandler: PySocks
@@ -53,7 +50,6 @@ manifest:
     trlc: trlc
     typing_extensions: typing_extensions
     urllib3: urllib3
-    webdriver_manager: webdriver_manager
     websocket: websocket_client
     werkzeug: werkzeug
     wsproto: wsproto
@@ -61,4 +57,4 @@ manifest:
     zipp: zipp
   pip_repository:
     name: pip
-integrity: b7ae9bc7b97c56fb675aa2d1c89d85321247857b976724dc58569b938331b3f4
+integrity: 9f244f6d933a68c3513666eaa1fc179cadd2f71603284d6f94a530368e984640
