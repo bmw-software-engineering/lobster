@@ -1,0 +1,7 @@
+package extraction_test
+
+type base_type {
+    description String
+}
+
+type extended_type extends base_type {}
