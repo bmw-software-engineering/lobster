@@ -1,3 +1,5 @@
+from lobster.tools.cpptest.cpptest import (CODEBEAMER_URL, KIND,
+                                           OUTPUT_FILE, SUPPORTED_KINDS)
 from .lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
 from ..asserter import Asserter
 
@@ -35,45 +37,28 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
             },
             {
                 "config_file": "with_key_error.yaml",
-                "expected_error": (
-                    'usage: lobster-cpptest [-h] [-v] [--config CONFIG]\n'
-                    'lobster-cpptest: error: Please follow the right config '
-                    'file structure! Missing attribute "output" and "codebeamer_url"\n'
-                ),
+                "expected_error": f'Missing attribute {CODEBEAMER_URL}',
                 "case": "key_error",
                 "expected_exit_code": 2
             },
             {
-                "config_file": "with_no_markers.yaml",
-                "expected_error": (
-                    'usage: lobster-cpptest [-h] [-v] [--config CONFIG]\n'
-                    'lobster-cpptest: error: Please follow the right config '
-                    'file structure! Missing attribute "markers" for output file '
-                    '"component_tests.lobster"\n'
-                ),
-                "case": "no_markers",
+                "config_file": "with_list_of_output.yaml",
+                "expected_error": f' {OUTPUT_FILE} must be a string',
+                "case": "list_of_output",
                 "expected_exit_code": 2
             },
             {
-                "config_file": "with_no_kind.yaml",
-                "expected_error": (
-                    'usage: lobster-cpptest [-h] [-v] [--config CONFIG]\n'
-                    'lobster-cpptest: error: Please follow the right config '
-                    'file structure! Missing attribute "kind" for output file '
-                    '"component_tests.lobster"\n'
-                ),
-                "case": "no_kind",
+                "config_file": "with_list_of_kind.yaml",
+                "expected_error": f'{KIND} must be a string',
+                "case": "list_of_kind",
                 "expected_exit_code": 2
             },
             {
-                "config_file": "with_not_supported_markers.yaml",
+                "config_file": "with_not_supported_kind.yaml",
                 "expected_error": (
-                    'usage: lobster-cpptest [-h] [-v] [--config CONFIG]\n'
-                    'lobster-cpptest: error: "@marker1" is not a supported '
-                    '"markers" value for output file "component_tests.lobster". '
-                    'Supported values are: "@requirement, @requiredby, @defect"\n'
+                    f'{KIND} must be one of {",".join(SUPPORTED_KINDS)}'
                 ),
-                "case": "not_supported_markers",
+                "case": "not_supported_kind",
                 "expected_exit_code": 2
             }
         ]

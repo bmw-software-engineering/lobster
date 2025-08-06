@@ -1,6 +1,0 @@
-output:
-  component_tests.lobster:
-    kind: "req"
-
-
-codebeamer_url: "https://codebeamer.com"

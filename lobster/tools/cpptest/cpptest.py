@@ -20,6 +20,8 @@
 from argparse import Namespace
 import os.path
 from copy import copy
+from dataclasses import dataclass, field
+from typing import List
 from enum import Enum
 import yaml
 from lobster.exceptions import LOBSTER_Exception
@@ -32,10 +34,11 @@ from lobster.tools.cpptest.parser.requirements_parser import \
     ParserForRequirements
 from lobster.meta_data_tool_base import MetaDataToolBase
 
-OUTPUT  = "output"
+OUTPUT_FILE = "output_file"
 CODEBEAMER_URL = "codebeamer_url"
-MARKERS = "markers"
-KIND    = "kind"
+KIND = "kind"
+FILES = "files"
+REQUIREMENTS = 'requirements'
 
 NAMESPACE_CPP = "cpp"
 FRAMEWORK_CPP_TEST = "cpptest"
@@ -45,35 +48,29 @@ MISSING = "Missing"
 ORPHAN_TESTS = "OrphanTests"
 
 
-class RequirementTypes(Enum):
-    REQS = '@requirement'
-    REQ_BY = '@requiredby'
-    DEFECT = '@defect'
+class KindTypes(str, Enum):
+    REQ = "req"
+    ACT = "act"
+    IMP = "imp"
 
 
-SUPPORTED_REQUIREMENTS = [
-    RequirementTypes.REQS.value,
-    RequirementTypes.REQ_BY.value,
-    RequirementTypes.DEFECT.value
-]
-
-map_test_type_to_key_name = {
-    RequirementTypes.REQS.value: 'requirements',
-    RequirementTypes.REQ_BY.value: 'required_by',
-    RequirementTypes.DEFECT.value: 'defect_tracking_ids',
-}
+@dataclass
+class Config:
+    codebeamer_url: str
+    kind: KindTypes = KindTypes.REQ
+    files: List[str] = field(default_factory=lambda: ["."])
+    output_file: str = "report.lobster"
 
 
-def parse_config_file(file_name: str) -> dict:
+SUPPORTED_KINDS = [kind_type.value for kind_type in KindTypes]
+
+
+def parse_config_file(file_name: str) -> Config:
     """
     Parse the configuration dictionary from the given YAML config file.
 
-    The configuration dictionary for cpptest must contain the `output` and
-    `codebeamer_url` keys.
-    Each output configuration dictionary contains a file name as a key and
-    a value dictionary containing the keys `markers` and `kind`.
-    The supported values for the `markers` list are specified in
-    SUPPORTED_REQUIREMENTS.
+    The configuration dictionary for cpptest must contain `codebeamer_url`.
+    It may also contain `kind`, `files`, and `output_file` keys.
 
     Parameters
     ----------
@@ -100,34 +97,37 @@ def parse_config_file(file_name: str) -> dict:
         except yaml.scanner.ScannerError as ex:
             raise LOBSTER_Exception(message="Invalid config file") from ex
 
-    if (not config_dict or OUTPUT not in config_dict or
+    if (not config_dict or
             CODEBEAMER_URL not in config_dict):
         raise ValueError(f'Please follow the right config file structure! '
-                         f'Missing attribute "{OUTPUT}" and '
-                         f'"{CODEBEAMER_URL}"')
+                         f'Missing attribute {CODEBEAMER_URL}')
 
-    output_config_dict = config_dict.get(OUTPUT)
+    codebeamer_url = config_dict.get(CODEBEAMER_URL)
+    kind = config_dict.get(KIND, KindTypes.REQ.value)
+    files = config_dict.get(FILES, ["."])
+    output_file = config_dict.get(OUTPUT_FILE, "report.lobster")
 
-    supported_markers = ', '.join(SUPPORTED_REQUIREMENTS)
-    for output_file, output_file_config_dict in output_config_dict.items():
-        if MARKERS not in output_file_config_dict:
-            raise ValueError(f'Please follow the right config file structure! '
-                             f'Missing attribute "{MARKERS}" for output file '
-                             f'"{output_file}"')
-        if KIND not in output_file_config_dict:
-            raise ValueError(f'Please follow the right config file structure! '
-                             f'Missing attribute "{KIND}" for output file '
-                             f'"{output_file}"')
+    if not isinstance(output_file, str):
+        raise ValueError(f'Please follow the right config file structure! '
+                         f'{OUTPUT_FILE} must be a string but got '
+                         f'{type(output_file).__name__}.')
 
-        for output_file_marker in output_file_config_dict.get(MARKERS, []):
-            if output_file_marker not in SUPPORTED_REQUIREMENTS:
-                raise ValueError(f'"{output_file_marker}" is not a supported '
-                                 f'"{MARKERS}" value '
-                                 f'for output file "{output_file}". '
-                                 f'Supported values are: '
-                                 f'"{supported_markers}"')
+    if not isinstance(kind, str):
+        raise ValueError(f'Please follow the right config file structure! '
+                         f'{KIND} must be a string but got '
+                         f'{type(kind).__name__}.')
 
-    return config_dict
+    if kind not in SUPPORTED_KINDS:
+        raise ValueError(f'Please follow the right config file structure! '
+                         f'{KIND} must be one of '
+                         f'{",".join(SUPPORTED_KINDS)} but got {kind}.')
+
+    return Config(
+        codebeamer_url=codebeamer_url,
+        kind=kind,
+        files=files if isinstance(files, list) else [files],
+        output_file=output_file
+    )
 
 
 def get_test_file_list(file_dir_list: list, extension_list: list) -> list:
@@ -198,14 +198,14 @@ def collect_test_cases_from_test_files(test_file_list: list,
     parser = ParserForRequirements()
     test_case_list = parser.collect_test_cases_for_test_files(
         test_files=test_file_list,
-        codebeamer_url = codebeamer_url
+        codebeamer_url=codebeamer_url
     )
     return test_case_list
 
 
 def create_lobster_items_output_dict_from_test_cases(
         test_case_list: list,
-        config_dict: dict) -> dict:
+        config: Config) -> dict:
     """
     Creates the lobster items dictionary for the given test cases grouped by
     configured output.
@@ -214,8 +214,8 @@ def create_lobster_items_output_dict_from_test_cases(
     ----------
     test_case_list : list
         The list of test cases.
-    config_dict : dict
-        The configuration dictionary.
+    config : Config
+        The configuration setting.
 
     Returns
     -------
@@ -223,15 +223,9 @@ def create_lobster_items_output_dict_from_test_cases(
          The lobster items dictionary for the given test cases
          grouped by configured output.
     """
-    lobster_items_output_dict = {ORPHAN_TESTS: {}}
 
-    output_config: dict = config_dict.get(OUTPUT)
-    marker_output_config_dict = {}
-    for output_file_name, output_config_dict in output_config.items():
-        lobster_items_output_dict[output_file_name] = {}
-        marker_list = output_config_dict.get(MARKERS)
-        if isinstance(marker_list, list) and len(marker_list) >= 1:
-            marker_output_config_dict[output_file_name] = output_config_dict
+    output_file = config.output_file
+    lobster_items_output_dict = {ORPHAN_TESTS: {}, output_file: {}}
 
     file_tag_generator = FileTagGenerator()
     for test_case in test_case_list:
@@ -253,32 +247,30 @@ def create_lobster_items_output_dict_from_test_cases(
             )
 
         contains_no_tracing_target = True
-        for output_file_name, output_config_dict in (
-                marker_output_config_dict.items()):
-            tracing_target_list = []
-            tracing_target_kind = output_config_dict.get(KIND)
-            for marker in output_config_dict.get(MARKERS):
-                for test_case_marker_value in getattr(
-                        test_case,
-                        map_test_type_to_key_name.get(marker)
-                ):
-                    if MISSING not in test_case_marker_value:
-                        test_case_marker_value = (
-                            test_case_marker_value.replace(CB_PREFIX, ""))
-                        tracing_target = Tracing_Tag(
-                            tracing_target_kind,
-                            test_case_marker_value
-                        )
-                        tracing_target_list.append(tracing_target)
 
-            if len(tracing_target_list) >= 1:
-                contains_no_tracing_target = False
-                lobster_item = copy(activity)
-                for tracing_target in tracing_target_list:
-                    lobster_item.add_tracing_target(tracing_target)
+        tracing_target_list = []
+        tracing_target_kind = config.kind
+        for test_case_marker_value in getattr(
+                test_case,
+                REQUIREMENTS
+        ):
+            if MISSING not in test_case_marker_value:
+                test_case_marker_value = (
+                    test_case_marker_value.replace(CB_PREFIX, ""))
+                tracing_target = Tracing_Tag(
+                    tracing_target_kind,
+                    test_case_marker_value
+                )
+                tracing_target_list.append(tracing_target)
 
-                lobster_items_output_dict.get(output_file_name)[key] = (
-                    lobster_item)
+        if len(tracing_target_list) >= 1:
+            contains_no_tracing_target = False
+            lobster_item = copy(activity)
+            for tracing_target in tracing_target_list:
+                lobster_item.add_tracing_target(tracing_target)
+
+            lobster_items_output_dict[output_file][key] = (
+                lobster_item)
 
         if contains_no_tracing_target:
             lobster_items_output_dict.get(ORPHAN_TESTS)[key] = (
@@ -319,7 +311,7 @@ def write_lobster_items_output_dict(lobster_items_output_dict: dict):
                   f'"{output_file_name}".')
 
 
-def lobster_cpptest(file_dir_list: list, config_dict: dict):
+def lobster_cpptest(config: Config):
     """
     The main function to parse requirements from comments
     for the given list of files and/or directories and write the
@@ -327,27 +319,25 @@ def lobster_cpptest(file_dir_list: list, config_dict: dict):
 
     Parameters
     ----------
-    file_dir_list : list
-        The list of files and/or directories to be parsed
-    config_dict : dict
-        The configuration dictionary
+    config : Config
+        The configuration setting
     """
     test_file_list = \
         get_test_file_list(
-            file_dir_list=file_dir_list,
+            file_dir_list=config.files,
             extension_list=[".cpp", ".cc", ".c", ".h"]
         )
 
     test_case_list = \
         collect_test_cases_from_test_files(
             test_file_list=test_file_list,
-            codebeamer_url=config_dict.get(CODEBEAMER_URL, '')
+            codebeamer_url=config.codebeamer_url
         )
 
     lobster_items_output_dict: dict = \
         create_lobster_items_output_dict_from_test_cases(
             test_case_list=test_case_list,
-            config_dict=config_dict
+            config=config
         )
 
     write_lobster_items_output_dict(
@@ -373,14 +363,10 @@ class CppTestTool(MetaDataToolBase):
         options = self._argument_parser.parse_args()
 
         try:
-            config_dict = parse_config_file(options.config)
-
-            options.files = config_dict.get("files", ["."])
-            config_dict.pop("files", None)
+            config = parse_config_file(options.config)
 
             lobster_cpptest(
-                file_dir_list=options.files,
-                config_dict=config_dict
+                config=config
             )
 
         except ValueError as exception:
