@@ -58,7 +58,8 @@ class CmdArgs:
 
 class LobsterJsonTestRunner(TestRunner):
     """System test runner for lobster-json"""
-    def __init__(self, tool_name: str, working_dir: Path, use_config_file_data: bool = True):
+    def __init__(self, tool_name: str, working_dir: Path,
+                 use_config_file_data: bool = True):
         super().__init__(tool_name, working_dir)
         self.use_config_file_data = use_config_file_data
         if use_config_file_data:
@@ -66,7 +67,6 @@ class LobsterJsonTestRunner(TestRunner):
             self._config_file_data = ConfigFileData(single=True)
         else:
             self._cmd_args = CmdArgs()
-
 
     @property
     def cmd_args(self) -> CmdArgs:
