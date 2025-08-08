@@ -8,6 +8,15 @@ class LobsterJsonSystemTestCaseBase(SystemTestCaseBase):
         super().__init__(methodName)
         self._data_directory = Path(__file__).parents[0] / "data"
 
+    def create_test_runner_without_config_file_data(self) -> LobsterJsonTestRunner:
+        tool_name = Path(__file__).parents[0].name
+        test_runner = LobsterJsonTestRunner(
+            tool_name,
+            self.create_temp_dir(prefix=f"test-{tool_name}-"),
+            use_config_file_data=False
+        )
+        return test_runner
+
     def create_test_runner(self) -> LobsterJsonTestRunner:
         tool_name = Path(__file__).parents[0].name
         test_runner = LobsterJsonTestRunner(
