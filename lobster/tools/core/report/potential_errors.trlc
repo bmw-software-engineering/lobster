@@ -1,0 +1,81 @@
+package UseCases
+import req
+
+section "Generating LOBSTER report"
+{
+  req.PotentialError Incorrect_Coverage_Calculation{
+      summary = "LOBSTER calculates the coverage number wrongly"
+      description = '''
+        Calculation of total number of requirements and requirements covered is not correct.
+        example, error while converting to percentage value.
+        '''
+      impacts =[
+        '''If there is error in coverage number calculation
+           and the error results in showing 100% coverage
+           then user might think that all requirements are covered but in fact it is not.''',
+
+        '''If there are 1000 requirements and 999 requirements are covered and 1 is not covered
+           and due to coverage calculation error coverage is shown as 100% instead of 99.9%
+           then user might think that all requirements are covered but in fact it is not.'''
+      ]
+
+      affects = [Requirements_to_CPP_Test_Coverage]
+      impact_type = req.Impact_Type.Safety
+  }
+
+  req.PotentialError Wrong_Mapping_of_Requirement_to_Software_Test{
+      summary = "LOBSTER maps the requirement wrongly to software tests"
+      description = '''
+        Some Requirements are not mapped to the tests correctly.
+        example, requirement mapping is missed or requirements are swapped while mapping.
+        '''
+      impacts = [
+        '''If a requirement is wrongly mapped to a test case
+           and that test case does not contains any requirement reference
+           then user might think all requirements are covered by tests but in fact it is not'''
+      ]
+
+      affects = [List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+      impact_type = req.Impact_Type.Safety
+  }
+
+  req.PotentialError Wrong_Mapping_of_Software_Test_to_Requirement{
+      summary = "LOBSTER maps the software tests wrongly to the requirements"
+      description = '''
+        Some software tests are not mapped to the requirements correctly.
+        example, software test mapping is missed or software tests are swapped while mapping.
+        '''
+      impacts = [
+        '''if a software test is wrongly mapped to a requirement
+           and that requirement is not covered by any software test
+           then user moght think test case is written for all requirements but in fact it is not'''
+      ]
+
+      affects = [List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer]
+      impact_type = req.Impact_Type.Safety
+  }
+
+  req.TestSpecification Coverage_calculation_in_Output{
+      description = '''
+        The test shall verify the output file contains correct coverage calculation
+        based on total number of requirements and number of covered requirements.
+      '''
+      verifies = [Incorrect_Coverage_Calculation]
+  }
+
+  req.TestSpecification Requirement_to_software_Test_Mapping_in_Output{
+      description = '''
+        The test shall verify output file contains correct mapping of requirement to software tests
+        based on requirement reference mentioned in software tests.
+      '''
+      verifies = [Wrong_Mapping_of_Requirement_to_Software_Test]
+  }
+
+  req.TestSpecification Software_Test_to_Requirement_Mapping_in_output{
+      description = '''
+        The test shall verify output file contains correct mapping of software tests to requirement
+        based on requirement reference mentioned in software tests.
+      '''
+      verifies = [Wrong_Mapping_of_Software_Test_to_Requirement]
+  }
+}
