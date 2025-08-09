@@ -4,6 +4,21 @@ from ..system_test_case_base import SystemTestCaseBase
 
 
 class LobsterTrlcSystemTestCaseBase(SystemTestCaseBase):
+    # conversion rules for the "namaste" record type
+    NAMASTE_CONVERSION_RULE = {
+        "package": "test_default",
+        "record_type": "namaste",
+        "namespace": "req",
+        "description_fields": ["description"],
+    }
+
+    BERRY_CONVERSION_RULE = {
+        "package": "sweet_fruits",
+        "record_type": "berry",
+        "namespace": "req",
+        "description_fields": ["description"],
+    }
+
     def __init__(self, methodName):
         super().__init__(methodName)
         self._data_directory = Path(__file__).parents[0] / "data"

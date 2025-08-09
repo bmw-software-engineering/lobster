@@ -17,7 +17,7 @@ req.System_Requirement_Aspect Duplicate_Input_List_Of_Files {
 
 req.System_Requirement_Aspect Invalid_Inputs_List_Of_Files_Extensions {
     description = '''
-      IF the [[Input_List_Of_Files]] are with invalid extensions,
+      IF the [[Input_List_Of_Files]] are with invalid extensions OR neither a file nor a directory,
       THEN tool shall raise an error.
     '''
 }
@@ -38,7 +38,7 @@ req.System_Requirement_Aspect Duplicate_Inputs_From_File {
 
 req.System_Requirement_Aspect Invalid_Inputs_From_File_Extensions {
     description = '''
-      IF the [[Inputs_From_File]] has files with invalid extensions,
+      IF the [[Inputs_From_File]] has files with invalid extensions OR neither a file nor a directory,
       THEN tool shall raise an error.
     '''
 }
@@ -58,9 +58,9 @@ req.System_Requirement_Aspect Duplicate_Input_list_Of_File_And_Inputs_From_File
     '''
 }
 
-req.System_Requirement_Aspect No_Inputs_And_No_Inputs_From_File {
+req.System_Requirement_Aspect No_Inputs_At_All {
     description = '''
       OTHERWISE, IF both the config options [[Input_List_Of_Files]] AND [[Inputs_From_File]] are not provided,
-      THEN all .rsl and .trlc files in current directory shall be scanned recursively and consumed.
+      THEN no files shall be scanned and consumed.
     '''
 }

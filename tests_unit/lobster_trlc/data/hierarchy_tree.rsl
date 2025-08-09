@@ -1,0 +1,27 @@
+package hierarchy_tree_test
+
+tuple ThreeValues {
+    tuple_member1 Integer
+    separator @
+    tuple_member2 Integer
+    separator @
+    tuple_member3 Integer
+}
+
+type Level1 {
+    field1 String
+    field2 String
+    reference_field1 "Keep this field empty in all test objects!" optional Level1[0..*]
+    reference_field2 "Always reference Level1_Item in all test objects!" optional Level1[0..*]
+    tuple_field1 optional ThreeValues
+    TUPLE_FIELD2 optional ThreeValues
+}
+
+type Level2A extends Level1 {}
+type Level2B extends Level1 {}
+
+type Level3A extends Level2A {}
+type Level3B extends Level2B {}
+
+type Level4A extends Level3A {}
+type Level4B extends Level3B {}

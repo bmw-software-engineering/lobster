@@ -24,7 +24,7 @@ import multiprocessing
 
 from abc import ABCMeta, abstractmethod
 from functools import partial
-from typing import List, Sequence, Union, Tuple, Set, Dict
+from typing import Iterable, List, Sequence, Union, Tuple, Set, Dict
 import yaml
 from lobster.errors import Message_Handler
 from lobster.location import File_Reference
@@ -71,7 +71,13 @@ class SupportedCommonConfigKeys:
 
 
 class LOBSTER_Tool(MetaDataToolBase, SupportedCommonConfigKeys, metaclass=ABCMeta):
-    def __init__(self, name, description, extensions, official):
+    def __init__(
+            self,
+            name: str,
+            description: str,
+            extensions: Iterable[str],
+            official: bool,
+    ):
         super().__init__(
             name=name,
             description=description,

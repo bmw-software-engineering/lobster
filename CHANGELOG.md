@@ -5,6 +5,22 @@
 
 ### 0.13.3-dev
 
+* `lobster-trlc`:
+  - Introduced YAML schema validator to verify the configuration file format.
+  - The tool now uses a single YAML configuration file.
+    Previously one had to define the rules how to convert a TRLC record object into a
+    LOBSTER item in a separate configuration file, like this:
+
+    ```
+    package.typename {
+      description = field_name
+      tags "test" = field_name
+    }
+    ```
+
+    These conversion rules must now be specified in pure YAML syntax.
+    For more details see [packages/lobster-tool-trlc/README.md](packages/lobster-tool-trlc/README.md).
+
 * Introduced API function:
   - `generate_report_file`:
     This is API function for the tool `lobster-report` which takes lobster config file as input

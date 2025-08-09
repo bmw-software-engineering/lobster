@@ -9,9 +9,9 @@ from ..test_runner import TestRunner
 @dataclass
 class ConfigFileData:
     inputs: List[str] = None
-    trlc_config_file : Optional[str] = None
     inputs_from_file: Optional[str] = None
     traverse_bazel_dirs : Optional[str] = None
+    conversion_rules: Optional[List[dict]] = None
 
     def __post_init__(self):
         self.inputs = []
@@ -24,9 +24,11 @@ class ConfigFileData:
                 data[key] = value
 
         append_if_not_none("inputs", self.inputs)
-        append_if_not_none("inputs_from_file", self.inputs_from_file)
-        append_if_not_none("trlc_config_file", self.trlc_config_file)
-        append_if_not_none("traverse_bazel_dirs", self.traverse_bazel_dirs)
+        append_if_not_none("inputs-from-file", self.inputs_from_file)
+        append_if_not_none("conversion-rules", self.conversion_rules)
+        append_if_not_none("traverse-bazel-dirs", self.traverse_bazel_dirs)
+        if self.traverse_bazel_dirs:
+            raise NotImplementedError("Feature not yet implemented!")
 
         with open(filename, mode='w', encoding="UTF-8") as file:
             yaml.dump(data, file)
@@ -72,10 +74,6 @@ class LobsterTrlcTestRunner(TestRunner):
     def declare_input_file(self, file: Path):
         super().declare_input_file(file)
         self.config_file_data.inputs.append(file.name)
-
-    def declare_trlc_config_file(self, file: Path):
-        super().declare_input_file(file)
-        self.config_file_data.trlc_config_file = file.name
 
     def declare_inputs_from_file(self, file: Path, data_directory: Path):
         super().declare_input_file(file)

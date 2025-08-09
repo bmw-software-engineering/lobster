@@ -1,0 +1,9 @@
+conversion-rules:
+- description_fields:
+  - description
+  namespace: req
+  package: extraction_test
+  record_type: base_type
+inputs:
+- /home/q479115/git/bmw-software-engineering/lobster/tests_system/lobster_trlc/data/extraction_hierarchy.rsl
+- /home/q479115/git/bmw-software-engineering/lobster/tests_system/lobster_trlc/data/extraction_hierarchy.trlc
