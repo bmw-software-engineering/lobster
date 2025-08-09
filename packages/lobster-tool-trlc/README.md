@@ -7,17 +7,18 @@ such as ISO 26262.
 
 ## Configuration
 
-This tool is a bit more complex and you need to supply a config file,
-named (by default) `lobster-trlc.conf`. In it you can declare how
-you'd like tracing tags to be extracted.
+This tool is a bit more complex and you need to supply a 'trlc_config' 
+entry inside the yaml config file. 
+In it you can declare how you would like tracing tags to be extracted.
 
 For record types you can write:
 
-```
-package.typename {
-   description = field_name
-   tags = field_name
-}
+```yaml
+trlc_config: |
+  package.typename {
+    description = field_name
+    tags = field_name
+  }
 ```
 
 By default none of the objects are traced, but adding a declaration
@@ -37,23 +38,25 @@ the namespace like so:
 
 For tuple types like this one:
 
-```
-tuple Codebeamer_Id {
-  item Integer
-  separator @
-  version optional Integer
-}
+```yaml
+trlc_config: |
+  tuple Codebeamer_Id {
+    item Integer
+    separator @
+    version optional Integer
+  }
 ```
 
 You need to provide a series of text expansions so that the
 `lobster-trlc` tool can build lobster tags from it. You can do this
 like so:
 
-```
-example.Codebeamer_Id {
-  to_string = "$(item)@$(version)"
-  to_string = "$(item)"
-}
+```yaml
+trlc_config: |
+  example.Codebeamer_Id {
+    to_string = "$(item)@$(version)"
+    to_string = "$(item)"
+  }
 ```
 
 These functions are applied in order, and we pick the first one that
@@ -67,20 +70,22 @@ then you can also defined up to three extra fields (using `just_up`,
 `just_down`, and `just_global`) that should carry this
 information. For example:
 
-```trlc
-type Requirement {
-   text String
-   unimplemented_justification optional String
-}
+```yaml
+trlc_config: |
+  type Requirement {
+    text String
+    unimplemented_justification optional String
+  }
 ```
 
 With this config file:
 
-```plain
-example.Requirement {
-   description = text
-   just_down   = unimplemented_justification
-}
+```yaml
+trlc_config: |
+  example.Requirement {
+    description = text
+    just_down   = unimplemented_justification
+  }
 ```
 
 The meaning of "up" is along the usual direction of tracing tags. For
@@ -101,8 +106,8 @@ tracing policy will be validated at all when considering this object.
 `lobster-trlc` takes two command line arguments as follows:
 * `--config` - Yaml based config file path in which the following parameters can be 
   mentioned.
-  * `trlc_config_file`: trlc configuration file as mentioned in the configuration 
-    section and also in the example mentioned below see (trlc_config.conf)
+  * `trlc_config`: trlc configuration as mentioned in the configuration section.
+     Using block scalar style (|) for multi line strings.
   * `inputs`: A list of input file paths (can include directories).
   * `inputs_from_file`: A file containing paths to input files or directories.
   * `traverse_bazel_dirs`:  Enter bazel-* directories, which are excluded by default.
@@ -115,17 +120,13 @@ lobster-trlc --config "path to the yaml config file" --out "output file path"
 
 ### Example
 
-#### trlc_config.conf
-```yaml
-req.Requirement {
-  description = description
-}
-```
-
 #### trlc_config_file.yaml
 ```yaml
 inputs: [list of paths to *.trlc and *. rsl files separated by commas]
-trlc_config_file: "path to the above mentioned trlc_config.conf file"
+trlc_config: |
+  req.Requirement {
+    description = description
+  }
 ```
 #### In this case the command will be
 `lobster-trlc --config=trlc_config_file.yaml --out=trlc.lobster`

@@ -6,8 +6,9 @@ class InputFromWorkingDirectory(LobsterTrlcSystemTestCaseBase):
     def setUp(self):
         super().setUp()
         self._test_runner = self.create_test_runner()
-        self._test_runner.declare_trlc_config_file(self._data_directory /
-                                                   "inputs-from-files-and-inputs.conf")
+        config_string = self._test_runner.read_config_from_file(
+            self._data_directory / "inputs-from-files-and-inputs.conf")
+        self._test_runner.declare_trlc_config(config_string)
 
     def test_input_from_working_directory(self):
         # lobster-trace: trlc_req.No_Inputs_And_No_Inputs_From_File

@@ -206,22 +206,22 @@ report.lobster-%: lobster/tools/lobster.conf \
 		--out=report.lobster
 	lobster-online-report report.lobster
 
-system_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-system.conf
+system_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-system.yaml
 
 system_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
 	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
-	@echo "trlc_config_file: $(TRLC_CONFIG)" >> lobster/tools/config.yaml
+	@type $(TRLC_CONFIG) >> lobster/tools/config.yaml
 	lobster-trlc --config=lobster/tools/config.yaml \
 	--out=system_requirements.lobster
 	rm lobster/tools/config.yaml
 
-software_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-software.conf
+software_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-software.yaml
 
 software_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
 	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
-	@echo "trlc_config_file: $(TRLC_CONFIG)" >> lobster/tools/config.yaml
+	@type $(TRLC_CONFIG) >> lobster/tools/config.yaml
 	lobster-trlc --config=lobster/tools/config.yaml \
 	--out=software_requirements.lobster
 	rm lobster/tools/config.yaml
