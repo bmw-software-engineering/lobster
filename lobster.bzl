@@ -109,22 +109,13 @@ def lobster_test(**kwargs):
 def _lobster_trlc_impl(ctx):
     lobster_trlc_trace = ctx.actions.declare_file(ctx.attr.name + ".lobster")
 
-    config = ctx.actions.declare_file("{}_config.yaml".format(ctx.attr.name))
-    ctx.actions.write(
-        output = config,
-        content = """
-trlc_config_file: {}
-        """.format(ctx.file.config.path),
-    )
-
     args = ctx.actions.args()
-    args.add_all(["--config", config.path])
+    args.add_all(["--config", ctx.file.config.path])
     args.add_all(["--out", lobster_trlc_trace.path])
-    #args.add_all(ctx.files.requirements)
 
     ctx.actions.run(
         executable = ctx.executable._lobster_trlc,
-        inputs = ctx.files.requirements + [ctx.file.config, config],
+        inputs = ctx.files.requirements + [ctx.file.config],
         outputs = [lobster_trlc_trace],
         arguments = [args],
         progress_message = "lobster-trlc {}".format(lobster_trlc_trace.path),
