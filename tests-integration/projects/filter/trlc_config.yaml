@@ -1,0 +1,14 @@
+inputs :
+  - example.rsl
+  - softreq_example.trlc
+  - sysreq_example.trlc
+
+trlc_config: |
+  filter_example.System_Requirement {
+    description = text
+  }
+  
+  filter_example.Software_Requirement {
+    description = text
+    tags "req"  = trace_trlc
+  }

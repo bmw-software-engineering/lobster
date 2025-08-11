@@ -24,9 +24,10 @@ class InputFromFilesTest(LobsterTrlcSystemTestCaseBase):
         for setup in test_setups:
             with self.subTest(setup=setup.name):
                 test_runner = self.create_test_runner()
-                test_runner.declare_trlc_config_file(
+                config_string = test_runner.read_config_from_file(
                     self._data_directory / f"extraction_hierarchy_{setup.name}.conf",
                 )
+                test_runner.declare_trlc_config(config_string)
                 out_file = f"extraction_hierarchy_{setup.name}.out.lobster"
                 test_runner.cmd_args.out = out_file
                 test_runner.declare_output_file(self._data_directory / out_file)
