@@ -7,7 +7,7 @@ THIS_TEST:=$(shell realpath --relative-to $(LOBSTER_ROOT) $(PWD))
 THIS_TEST_ESCAPED:=$(subst /,\\/,$(THIS_TEST))
 REFERENCE_OUTPUT:=report.reference_output
 
-html_report.html: req_a.lobster req_b.lobster test_a.lobster lobster.conf trlc_req_a.conf trlc_req_b.conf trlc_test_spec.conf
+html_report.html: req_a.lobster req_b.lobster test_a.lobster lobster.conf
 	@lobster-report
 	@if diff report.lobster $(REFERENCE_OUTPUT); then \
 	    echo "Files are identical"; \
