@@ -1,12 +1,3 @@
-output:
-  component_tests.lobster:
-    markers:
-      - "@requirement"
-    kind: "req"
-
-  unit_tests.lobster:
-    markers:
-      - "@requiredby"
-    kind: "req"
-
+output_file: "unit_tests.lobster"
+kind: "req"
 codebeamer_url: "https://codebeamer.com"
