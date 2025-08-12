@@ -14,7 +14,7 @@ trlc_requirements(
 
 lobster_trlc(
     name = "software-requirements",
-    config = "lobster-trlc.conf",
+    config = "lobster-trlc.yaml",
     requirements = [":req"],
 )
 

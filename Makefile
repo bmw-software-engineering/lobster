@@ -206,22 +206,22 @@ report.lobster-%: lobster/tools/lobster.conf \
 		--out=report.lobster
 	lobster-online-report report.lobster
 
-system_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-system.conf
+system_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-system.yaml
 
 system_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
 	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
-	@echo "trlc_config_file: $(TRLC_CONFIG)" >> lobster/tools/config.yaml
+	@type $(TRLC_CONFIG) >> lobster/tools/config.yaml
 	lobster-trlc --config=lobster/tools/config.yaml \
 	--out=system_requirements.lobster
 	rm lobster/tools/config.yaml
 
-software_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-software.conf
+software_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-software.yaml
 
 software_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
 	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
-	@echo "trlc_config_file: $(TRLC_CONFIG)" >> lobster/tools/config.yaml
+	@type $(TRLC_CONFIG) >> lobster/tools/config.yaml
 	lobster-trlc --config=lobster/tools/config.yaml \
 	--out=software_requirements.lobster
 	rm lobster/tools/config.yaml
@@ -240,7 +240,7 @@ system-tests.lobster-%:
 
 # STF is short for System Test Framework
 STF_TRLC_FILES := $(wildcard tests_system/*.trlc)
-STF_PYTHON_FILES := $(filter-out tests_system/test_%.py tests_system/run_tool_tests.py, $(wildcard tests_system/*.py) tests_system/lobster_codebeamer/mock_server.py tests_system/lobster_codebeamer/mock_server_setup.py)
+STF_PYTHON_FILES := $(filter-out tests_system/test_%.py tests_system/run_tool_tests.py, $(wildcard tests_system/*.py) tests_system/lobster_codebeamer/mock_server.py tests_system/lobster_codebeamer/mock_server_setup.py tests_system/tests_utils/update_online_json_with_hashes.py)
 STF_OUTPUT_FILE := docs/tracing-stf.html
 
 # This target is used to generate the LOBSTER report for the requirements of the system test framework itself.

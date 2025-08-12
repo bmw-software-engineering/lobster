@@ -1,7 +1,4 @@
-output:
-    valid_invalid_files.lobster:
-        markers:
-        - "@requirement"
-        kind: "req"
+output_file: "valid_invalid_files.lobster"
+kind: "req"
 
 codebeamer_url: "https://codebeamer.com"

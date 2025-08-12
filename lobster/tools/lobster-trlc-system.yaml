@@ -1,4 +1,3 @@
-inputs: ['lobster/tools/requirements.rsl', 'tests_system/system_test_framework.trlc']
 trlc_config: |
   req.System_Requirement {
     description = description

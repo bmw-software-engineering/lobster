@@ -1,7 +1,5 @@
-output:
-  specific_directory.lobster:
-    markers: ["@requirement"]
-    kind: "req"
+output_file: "specific_directory.lobster"
+kind: "req"
 files:
   - cpp_test_files
 codebeamer_url: "https://codebeamer.com"

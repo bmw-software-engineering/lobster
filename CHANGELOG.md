@@ -5,6 +5,25 @@
 
 ### 0.13.3-dev
 
+* `lobster-trlc`:
+  - The `lobster-trlc` tool uses now a single yaml config file.
+    The old config parameter `trlc_config_file` holding just the file name 
+    of the `lobster-trlc.conf` config file has been removed.
+    A new config parameter `trlc_config` has been added instead to specify the trlc 
+    configuration directly inside the yaml config file using the block scalar 
+    style (|) for multi line strings. 
+
+    Example entry for the yaml config file:
+    ```yaml
+    trlc_config: |
+      package.typename {
+        description = field_name
+        tags "test" = field_name
+      }
+    ```
+
+    For more details read packages/lobster-tool-trlc/README.md
+
 * Introduced API function:
   - `generate_report_file`:
     This is API function for the tool `lobster-report` which takes lobster config file as input
@@ -16,6 +35,11 @@
     Python will nevertheless exit with return code 1, as previously.
     The section is not intended to be modified by users.
     Removing the error messages helps to increase the branch coverage.
+
+* `lobster-cpptest`:
+  - All custom markers have been removed. The tool now supports only the `req` marker. This marker is handled through hard-coded logic.
+  - The tool now accepts exactly four configuration attributes in config file: `output_file`, `codebeamer_url`, `kind` and `files`.
+  - Note: The tool now generates only one output file per execution.
 
 ### 0.13.2
 

@@ -4,4 +4,10 @@ inputs :
   - req_b.trlc
   - test_spec.trlc
 
-trlc_config_file : "trlc_test_spec.conf"
+trlc_config : |
+  coverage_mix.Test_Specification {
+    description = text
+    tags "req"  = verifies
+    just_up     = just_up
+    just_down   = just_down
+  }

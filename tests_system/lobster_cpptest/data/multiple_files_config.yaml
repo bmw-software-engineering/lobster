@@ -1,9 +1,5 @@
-output:
-    multiple_files.lobster:
-        markers:
-        - "@requirement"
-        kind: "req"
-
+output_file: "multiple_files.lobster"
+kind: "req"
 files:
   - 'multi1.cpp'
   - 'multi2.cpp'

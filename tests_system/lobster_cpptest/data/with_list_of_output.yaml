@@ -1,0 +1,4 @@
+output_file:
+  - "file1.lobster"
+  - "file2.lobster"
+codebeamer_url: "https://codebeamer.com"

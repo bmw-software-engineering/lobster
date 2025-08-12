@@ -1,10 +1,5 @@
-output:
-    invalid_extension.lobster:
-        markers:
-        - "@requirement"
-        kind: "req"
-
+output_file: "invalid_extension.lobster"
+kind: "req"
 files:
   - 'invalid_extension.xyz'
-
 codebeamer_url: "https://codebeamer.com"
