@@ -83,8 +83,9 @@ packages: clean-packages
 		lobster-gtest --version && \
 		lobster-json --version && \
 		lobster-python --version && \
-		lobster-trlc --version
-	
+		lobster-trlc --version && \
+		lobster-pkg --version
+
 clang-tidy:
 	cd .. && \
 	git clone https://github.com/bmw-software-engineering/llvm-project && \
