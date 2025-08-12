@@ -4,6 +4,7 @@ load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
 load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
+load("//:requirements.bzl", "requirement")
 
 # BUILD.bazel
 # gazelle:python_visibility //visibility:public
@@ -62,7 +63,7 @@ py_binary(
     deps = [
         ":lobster",
         "//lobster/common",
-        "@pip//requests",
+        requirement("requests"),
     ],
 )
 
@@ -124,8 +125,8 @@ py_library(
         "//lobster/tools/json",
         "//lobster/tools/python",
         "//lobster/tools/trlc",
-        "@pip//requests",
-        "@pip//setuptools",
+        requirement("requests"),
+        requirement("setuptools"),
     ],
 )
 

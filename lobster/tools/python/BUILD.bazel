@@ -1,4 +1,5 @@
 load("@rules_python//python:defs.bzl", "py_library")
+load("//:requirements.bzl", "requirement")
 
 # BUILD.bazel
 # gazelle:exclude __init__.py
@@ -11,6 +12,6 @@ py_library(
     ],
     deps = [
         "//lobster/common",
-        "@pip//libcst",
+        requirement("libcst"),
     ],
 )
