@@ -99,7 +99,6 @@ integration-tests: packages
 	(cd tests_integration/projects/coverage_mix; make)
 	(cd tests_integration/projects/coverage_zero; make)
 	(cd tests_integration/projects/cpp_focus; make)
-	rm -f MODULE.bazel MODULE.bazel.lock
 
 codebeamer-pem:
 	@echo "🔐 Generating cert.pem and key.pem for codebeamer system tests..."
