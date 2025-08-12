@@ -1,5 +1,9 @@
 inputs:
-  - "lobster/use_cases.trlc"
   - "lobster/requirements.rsl"
-  - "lobster/tools/trlc/requirements/potential_errors.trlc"
-trlc_config_file: "tracing/potential-errors.lobster-trlc.conf"
+  - "lobster/use_cases.trlc"
+  - "lobster/tools/trlc"
+trlc_config: |
+  req.PotentialError {
+    description = description
+    tags = affects
+  }

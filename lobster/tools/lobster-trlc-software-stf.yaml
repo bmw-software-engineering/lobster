@@ -1,2 +1,6 @@
 inputs: ['lobster/requirements.rsl', 'tests_system/system_test_framework.trlc']
-trlc_config_file: 'lobster/tools/lobster-trlc-software.conf'
+trlc_config: |
+  req.Software_Requirement {
+    description = description
+    tags = derived_from
+  }

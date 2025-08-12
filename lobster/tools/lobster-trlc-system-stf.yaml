@@ -1,2 +1,10 @@
 inputs: ['lobster/requirements.rsl', 'tests_system/system_test_framework.trlc']
-trlc_config_file: 'lobster/tools/lobster-trlc-system.conf'
+trlc_config: |
+  req.System_Requirement {
+    description = description
+  }
+
+  req.System_Requirement_Aspect {
+    description = description
+    just_down = not_tested_reason
+  }

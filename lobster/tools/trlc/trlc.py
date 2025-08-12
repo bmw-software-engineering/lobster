@@ -467,7 +467,6 @@ class LOBSTER_Trlc(LOBSTER_Tool):
 
         items = []
         for n_obj in stab.iter_record_objects():
-            # if n_obj is a_use_case_for_the_tool_of_interest_then:
             try:
                 item = config_parser.generate_lobster_object(n_obj)
                 if item:

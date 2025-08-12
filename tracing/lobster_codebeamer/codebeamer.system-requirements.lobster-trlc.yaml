@@ -1,5 +1,13 @@
 inputs:
   - "lobster/requirements.rsl"
-  - "lobster/tools/codebeamer/requirements"
   - "lobster/use_cases.trlc"
-trlc_config_file: "tracing/system-requirements.lobster-trlc.conf"
+  - "lobster/tools/codebeamer"
+trlc_config: |
+  req.System_Requirement {
+    description = description
+  }
+
+  req.System_Requirement_Aspect {
+    description = description
+    just_down = not_tested_reason
+  }

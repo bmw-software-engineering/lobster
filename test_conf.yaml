@@ -1,5 +1,0 @@
-inputs:
-  - "lobster/requirements.rsl"
-  - "lobster/tools/core/html_report/"
-  - "lobster/use_cases.trlc"
-trlc_config_file: "lobster/tools/lobster-trlc-system.conf"

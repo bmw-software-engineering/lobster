@@ -19,29 +19,25 @@ req.TestSpecification Incorrect_number_of_requirement_references_in_Output{
     verifies = [Too_few_requirement_referance_Extraction_from_test,Too_many_requirement_referance_Extraction_from_test]
 }
 
-
-section "Using invalid configuration file"
-{
-  req.TestSpecification Config_File_Missing {
-      description = '''
-        The test shall verify that the lobster-cpptest exits with a non-zero return code when the config file does not exist.
-        Example: Verify that the lobster-cpptest throws an error when a non-existent config file is provided.
-      '''
-      verifies = [Output_Despite_Missing_Config_File]
-  }
-
-  req.TestSpecification Config_File_Syntax_Error {
-      description = '''
-          The test shall verify that lobster-cpptest tool exits with a non-zero return code when the config file contains a syntax error.
-          Example: Verify that lobster-cpptest throws an error when a config file with invalid YAML is provided.
-      '''
-      verifies = [Output_Despite_Config_File_Error]
-  }
-
-  req.TestSpecification Config_File_Key_Error {
+req.TestSpecification Config_File_Missing {
     description = '''
-        The test shall verify that lobster-cpptest tool exits with a non-zero return code when the config file is missing required keys.
+      The test shall verify that the lobster-cpptest exits with a non-zero return code when the config file does not exist.
+      Example: Verify that the lobster-cpptest throws an error when a non-existent config file is provided.
+    '''
+    verifies = [Output_Despite_Missing_Config_File]
+}
+
+req.TestSpecification Config_File_Syntax_Error {
+    description = '''
+      The test shall verify that lobster-cpptest tool exits with a non-zero return code when the config file contains a syntax error.
+      Example: Verify that lobster-cpptest throws an error when a config file with invalid YAML is provided.
     '''
     verifies = [Output_Despite_Config_File_Error]
-  }
+}
+
+req.TestSpecification Config_File_Key_Error {
+    description = '''
+      The test shall verify that lobster-cpptest tool exits with a non-zero return code when the config file is missing required keys.
+    '''
+    verifies = [Output_Despite_Config_File_Error]
 }

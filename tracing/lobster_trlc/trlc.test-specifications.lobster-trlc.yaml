@@ -1,6 +1,9 @@
 inputs:
-  - "lobster/use_cases.trlc"
   - "lobster/requirements.rsl"
-  - "lobster/tools/trlc/requirements/potential_errors.trlc"
-  - "lobster/tools/trlc/requirements/test_specifications.trlc"
-trlc_config_file: "tracing/test-specifications.lobster-trlc.conf"
+  - "lobster/use_cases.trlc"
+  - "lobster/tools/trlc"
+trlc_config: |
+  req.TestSpecification {
+    description = description
+    tags = verifies
+  }

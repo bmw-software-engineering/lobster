@@ -1,5 +1,9 @@
 inputs:
   - "lobster/requirements.rsl"
   - "lobster/use_cases.trlc"
-  - "lobster/tools/codebeamer/requirements/potential_errors.trlc"
-trlc_config_file: "tracing/potential-errors.lobster-trlc.conf"
+  - "lobster/tools/codebeamer"
+trlc_config: |
+  req.PotentialError {
+    description = description
+    tags = affects
+  }
