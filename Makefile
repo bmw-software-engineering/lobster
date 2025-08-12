@@ -210,7 +210,7 @@ system_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-system.y
 system_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
 	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
-	@type $(TRLC_CONFIG) >> lobster/tools/config.yaml
+	@cat $(TRLC_CONFIG) >> lobster/tools/config.yaml
 	lobster-trlc --config=lobster/tools/config.yaml \
 	--out=system_requirements.lobster
 	rm lobster/tools/config.yaml
@@ -220,7 +220,7 @@ software_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-softwa
 software_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
 	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
-	@type $(TRLC_CONFIG) >> lobster/tools/config.yaml
+	@cat $(TRLC_CONFIG) >> lobster/tools/config.yaml
 	lobster-trlc --config=lobster/tools/config.yaml \
 	--out=software_requirements.lobster
 	rm lobster/tools/config.yaml
