@@ -1,6 +1,3 @@
-output:
-  nested_directories.lobster:
-    markers: ["@requirement"]
-    kind: "req"
-
+output_file: "nested_directories.lobster"
+kind: "req"
 codebeamer_url: "https://codebeamer.com"
