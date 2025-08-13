@@ -1,88 +1,94 @@
 package UseCases
 import req
 
-req.UseCase Trace_Codebeamer_to_CPP_Tests {
+req.UseCase Trace_Requirements_to_Tests {
     description = '''
         As a requirements manager I want to have a report of traceability between
-        requirements in codebeamer and tests in C++.
+        requirements (in codebeamer or TRLC) and tests (in C++ or JSON).
     '''
     affected_tools = [
         req.Tools.lobster_codebeamer,
         req.Tools.lobster_cpptest,
         req.Tools.lobster_report,
+        req.Tools.lobster_trlc,
         req.Tools.lobster_html_report
     ]
 }
 
-req.UseCase List_Codebeamer_to_CPP_Tests {
+req.UseCase List_Requirements_to_Tests {
     description = '''
         As a requirements manager I want the traceability report to show the list of
-        requirements from codebeamer which are covered by C++ software tests.
+        requirements (from codebeamer or TRLC) which are covered by tests (in C++ or JSON).
     '''
     affected_tools = [
         req.Tools.lobster_codebeamer,
         req.Tools.lobster_cpptest,
         req.Tools.lobster_report,
+        req.Tools.lobster_trlc,
         req.Tools.lobster_html_report
     ]
 }
 
-req.UseCase List_Codebeamer_without_CPP_Tests {
+req.UseCase List_Requirements_without_Tests {
     description = '''
         As a requirements manager I want the traceability report to show the list of
-        requirements from codebeamer which are not covered by C++ software test.
+        requirements (from codebeamer or TRLC) which are not covered by tests (in C++ or JSON).
     '''
     affected_tools = [
         req.Tools.lobster_codebeamer,
         req.Tools.lobster_cpptest,
         req.Tools.lobster_report,
+        req.Tools.lobster_trlc,
         req.Tools.lobster_html_report
     ]
 }
 
-req.UseCase List_CPP_Tests_to_Codebeamer {
+req.UseCase List_Tests_to_Requirements {
     description = '''
         As a requirements manager I want the traceability report to show the list of
-        C++ software tests covering requirements in codebeamer.
+        tests (in C++ or JSON) covering requirements in (in codebeamer or TRLC).
     '''
     affected_tools = [
         req.Tools.lobster_codebeamer,
         req.Tools.lobster_cpptest,
         req.Tools.lobster_report,
+        req.Tools.lobster_trlc,
         req.Tools.lobster_html_report
     ]
 }
 
-req.UseCase List_CPP_Tests_without_Codebeamer {
+req.UseCase List_Tests_without_Requirements {
     description = '''
         As a requirements manager I want the traceability report to show the list of
-        C++ software test which are not covering any requirement in codebeamer.
+        tests (in C++ or JSON) which are not covering any requirement in (in codebeamer or TRLC).
     '''
     affected_tools = [
         req.Tools.lobster_codebeamer,
         req.Tools.lobster_cpptest,
         req.Tools.lobster_report,
+        req.Tools.lobster_trlc,
         req.Tools.lobster_html_report
     ]
 }
 
-req.UseCase Requirements_to_CPP_Test_Coverage {
+req.UseCase Requirements_to_Test_Coverage {
     description = '''
         As a requirements manager I want the traceability report to show the fraction of
-        the number of requirements in codebeamer which are covered by C++ software test
-        divided by the total number of requirements in codebeamer.
+        the number of requirements (in codebeamer or TRLC) which are covered by tests (in C++ or JSON)
+        divided by the total number of requirements.
         The fraction shall be shown as percentage.
     '''
     /* Note:
        The current implementation computes the fraction of "OK" items vs. total items.
        If the user defines a tracing policy where the requirements have a single downstream
-       to C++ tests only (and no upstreams), then that fraction is equal to the fraction
+       to tests only (and no upstreams), then that fraction is equal to the fraction
        of the above use case.
      */
     affected_tools = [
         req.Tools.lobster_codebeamer,
         req.Tools.lobster_cpptest,
         req.Tools.lobster_report,
+        req.Tools.lobster_trlc,
         req.Tools.lobster_html_report
     ]
 }
@@ -135,12 +141,10 @@ req.UseCase HTML_Output {
 req.UseCase git_hash {
     description = '''
         As a requirements manager I want the traceability report
-        between requirements in codebeamer and C++ tests
-        to show the git hashes of the
-        git commit from which C++ tests were taken.
+        which includes sources from a local git clone
+        to show the git hashes of the git commit from which files were taken.
     '''
     affected_tools = [
-        req.Tools.lobster_cpptest,
         req.Tools.lobster_report,
         req.Tools.lobster_online_report,
         req.Tools.lobster_html_report
@@ -150,7 +154,7 @@ req.UseCase git_hash {
 req.UseCase List_Findings {
     description = '''
         As a requirements manager I want the traceability report
-        between requirements in codebeamer and C++ tests
+        between requirements (in codebeamer or TRLC) and tests (in C++ or JSON)
         to show a list with all findings
         where the tracing policy is violated.
     '''
