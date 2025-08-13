@@ -4,9 +4,16 @@ export PYTHONPATH=$(LOBSTER_ROOT)
 export PATH:=$(LOBSTER_ROOT):$(PATH)
 
 ASSETS=$(wildcard assets/*.svg)
-TOOL_FOLDERS := $(shell find ./lobster/tools -mindepth 1 -maxdepth 2 -type d | grep -v -E '^./lobster/tools/core$$|__pycache__|parser' | sed 's|^./lobster/tools/||; s|/|-|g')
+TOOL_FOLDERS := $(shell \
+	(find ./lobster/tools -mindepth 1 -maxdepth 1 -type d \
+		| grep -v -E '__pycache__|parser|core$$' \
+		| sed 's|^./lobster/tools/||'; \
+	 find ./lobster/tools/core -mindepth 1 -maxdepth 1 -type d 2>/dev/null \
+		| grep -v -E '__pycache__' \
+		| sed 's|^./lobster/tools/core/|core-|') \
+	| sort)
 
-.PHONY: packages docs
+.PHONY: packages docs tracing
 
 lobster/html/assets.py: $(ASSETS) util/mkassets.py
 	util/mkassets.py lobster/html/assets.py $(ASSETS)
@@ -175,6 +182,7 @@ docs:
 	mkdir -p docs
 	@-make tracing
 	@-make tracing-stf
+	@-./tracing/tracing.sh
 
 clean-docs:
 	rm -rf docs
@@ -183,11 +191,27 @@ tracing:
 	@mkdir -p docs
 	@make lobster/html/assets.py
 	@for tool in $(TOOL_FOLDERS); do \
-		make tracing-tools-$$tool; \
+		case $$tool in \
+			codebeamer|cpptest|trlc) \
+				echo "Skipping tool: $$tool (handled by tracing.sh script)"; \
+				;; \
+			*) \
+				echo "> Processing tool: $$tool"; \
+				make tracing-tools-$$tool; \
+				;; \
+		esac; \
 	done
 
 tracing-tools-%: tracing-%
+	rm -f usecases.lobster
 	@echo "Finished processing tool: $*"
+
+usecases.lobster-%:
+	python3 util/tracing/usecases.py \
+		--target=lobster_$(subst -,_,$*) \
+		--out=usecases.lobster \
+		lobster/requirements.rsl \
+		lobster/use_cases.trlc \
 
 tracing-%: report.lobster-%
 	$(eval TOOL_PATH := $(subst -,_,$*))
@@ -199,7 +223,8 @@ report.lobster-%: lobster/tools/lobster.conf \
 				  unit-tests.lobster-% \
 				  system_requirements.lobster-% \
 				  software_requirements.lobster-% \
-				  system-tests.lobster-%
+				  system-tests.lobster-% \
+				  usecases.lobster-%
 	lobster-report \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
@@ -209,7 +234,7 @@ system_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-system.y
 
 system_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
-	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
+	@echo "inputs: ['lobster/requirements.rsl', 'lobster/use_cases.trlc', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
 	@cat $(TRLC_CONFIG) >> lobster/tools/config.yaml
 	lobster-trlc --config=lobster/tools/config.yaml \
 	--out=system_requirements.lobster
@@ -219,7 +244,7 @@ software_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-softwa
 
 software_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
-	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
+	@echo "inputs: ['lobster/requirements.rsl', 'lobster/use_cases.trlc', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
 	@cat $(TRLC_CONFIG) >> lobster/tools/config.yaml
 	lobster-trlc --config=lobster/tools/config.yaml \
 	--out=software_requirements.lobster

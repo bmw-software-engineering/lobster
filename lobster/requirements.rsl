@@ -58,6 +58,14 @@ type Definition {
   ''' String
 }
 
+enum Tools {
+  lobster_codebeamer
+  lobster_cpptest
+  lobster_report
+  lobster_online_report
+  lobster_html_report
+}
+
 type UseCase {
   description ''' 
     The text of the use case.
@@ -65,6 +73,9 @@ type UseCase {
     A use case shall describe the goal that the user wants to achieve by using LOBSTER.
     The use case shall not describe the implementation of the tools.
   ''' String
+  affected_tools
+    '''List of tools that are affected by the use case'''
+      Tools[1..*]
 }
 
 enum Impact_Type {
