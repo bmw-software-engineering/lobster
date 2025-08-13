@@ -1,7 +1,2 @@
-something:
-  component_tests.lobster:
-    markers: ["@requirement", "@requiredby"]
-    kind: "req"
-
-
+something: "else"
 some_url: "https://codebeamer.com"

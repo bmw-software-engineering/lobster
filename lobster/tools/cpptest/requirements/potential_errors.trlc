@@ -1,0 +1,141 @@
+package UseCases
+import req
+
+req.PotentialError Too_few_Extraction_from_CPP_Test_Files{
+    summary = "LOBSTER extracts too few tests"
+    description = '''
+      Some c++ test file are ignored
+      example, some c++ test file are ignored while extracting referance data.
+      '''
+    impacts =[
+      '''If c++ test files are ignored in the extraction
+          and report is generated with missing file data
+          then user might think that some requirements are not covered in test case but in fact they are covered''',
+
+      '''If c++ test files are ignored in the extraction
+          and report is generated with missing file data with some of the test cases have missing referance to requirements
+          then user might think that all test cases are covering the requirements but in fact it is not.'''
+    ]
+
+    affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Too_few_tests_Extraction_from_test_file{
+    summary = "LOBSTER extracts too few tests"
+    description = '''
+      Some tests from c++ test file are ignored
+      '''
+    impacts =[
+      '''If some test cases are not extracted from c++ test file
+          and report is generated with missing data
+          then user might think that all requirements are covered by test case but in fact it is not.'''
+    ]
+
+    affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Too_few_requirement_referance_Extraction_from_test{
+    summary = "LOBSTER extracts too few tests"
+    description = '''
+      Some requirement referances from test in c++ file are ignored
+      '''
+    impacts =[
+      '''If some requirement references are missed while extracting referances from c++ test
+          and report is generated with not extracted requirement marked as missing test case reference
+          then user might think that test case implementation is missing for the requirement but in fact it is not.''',
+
+      '''If requirement references are not extracted from c++ test
+          and report is generated with those test cases marked as missing requirement reference
+          then user might think that test cases are missing reference but in fact it is not.'''   
+    ]
+
+    affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Too_many_Extraction_from_CPP_Test_Files{
+    summary = "LOBSTER extracts too many tests"
+    description = ''' 
+      Some non relevant test file are extracted.
+      example, Some test file are extracted from file which is not relevant.
+      '''
+    impacts =[
+      '''If the unwanted test file contains relevant requirement references
+          and report is generated with those requirement references
+          then user might think that all requirements are covered by c++ tests but in fact it is not.''',
+
+      '''If unwanted test file contains non relevant requirement references
+          and report is generated with those requirement references
+          then user might think that all requirements are not covered by c++ tests but in fact they are covered.'''
+    ]
+
+    affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Too_many_requirement_referance_Extraction_from_test{
+    summary = "LOBSTER extracts too many tests"
+    description = '''
+      Some non referanced requirement referances from test in c++ file are extracted
+      example: While extracting requirement referances from a test case, an additional referance considered
+      with partial data from previous requirement referance.
+      '''
+    impacts = [
+      '''If the additional requirement in referance is valid requirement id and not covered in any test case
+          and report is generated with this wrong data
+          then user might think that all requirements are covered by the software tests but in fact it is not the case.'''
+    ]
+
+    affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Output_Despite_Missing_Config_File {
+    summary = "Output generated without configuration file"
+    description = '''
+      The user does not provide a valid path to a configuration file,
+      but the lobster-cpptest generates valid output nevertheless, potentially based on
+      irrelevant C++ files.
+      For example, the lobster-cpptest might consider the current working directory
+      as source of C++ files, and these do in fact contain links to real requirements,
+      such that lobster-report would compute a non-zero coverage value.
+    '''
+    impacts = [
+      '''If the lobster-cpptest generates a valid output file, then the invalid input path could
+        remain undetected, and subsequent tools of the LOBSTER tool chain
+        could consume unqualified input data.''',
+    ]
+
+    affects = [
+      Trace_Codebeamer_to_CPP_Tests,
+      List_Codebeamer_to_CPP_Tests,
+      List_Codebeamer_without_CPP_Tests,
+      List_CPP_Tests_to_Codebeamer,
+      List_CPP_Tests_without_Codebeamer,
+      Requirements_to_CPP_Test_Coverage,
+      List_Findings
+    ]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError  Output_Despite_Config_File_Error {
+    summary = "Output generated with an invalid configuration file"
+    description = '''
+      The user provides an invalid configuration file, but the lobster-cpptest
+      generates valid output nevertheless, potentially based on
+      irrelevant C++ files.
+      This includes cases where the config file:
+      - contains invalid YAML syntax (e.g., incorrect indentation, missing colons, or other formatting errors),
+      - is missing required keys or attributes,
+    '''
+    impacts = [
+      '''If the lobster-cpptest generates a valid output file, then the invalid configuration file could
+        remain undetected, and subsequent tools of the LOBSTER tool chain
+        could consume unqualified input data.''',
+    ]
+
+    affects = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer, Requirements_to_CPP_Test_Coverage, List_Findings]
+    impact_type = req.Impact_Type.Safety
+}

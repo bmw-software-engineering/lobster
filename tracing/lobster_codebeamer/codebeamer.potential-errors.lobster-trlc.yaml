@@ -1,0 +1,9 @@
+inputs:
+  - "lobster/requirements.rsl"
+  - "lobster/use_cases.trlc"
+  - "lobster/tools/codebeamer"
+trlc_config: |
+  req.PotentialError {
+    description = description
+    tags = affects
+  }

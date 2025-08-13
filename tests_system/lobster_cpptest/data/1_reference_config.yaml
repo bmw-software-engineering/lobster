@@ -1,8 +1,5 @@
-output:
-  1_reference.lobster:
-    markers: ["@requirement"]
-    kind: "req"
-
+output_file: "1_reference.lobster"
+kind: "req"
 files:
   - '1_reference.cpp'
 codebeamer_url: "https://codebeamer.com"
