@@ -4,8 +4,8 @@
   "generator": "lobster_report",
   "levels": [
     {
-      "name": "Requirements",
-      "kind": "requirements",
+      "name": "Code",
+      "kind": "implementation",
       "items": [
         {
           "tag": "python software.Example",
@@ -37,9 +37,9 @@
     }
   ],
   "policy": {
-    "Requirements": {
-      "name": "Requirements",
-      "kind": "requirements",
+    "Code": {
+      "name": "Code",
+      "kind": "implementation",
       "traces": [],
       "source": [
         {
