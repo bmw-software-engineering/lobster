@@ -19,7 +19,7 @@ section "Generating LOBSTER report"
            then user might think that all requirements are covered but in fact it is not.'''
       ]
 
-      affects = [Requirements_to_CPP_Test_Coverage]
+      affects = [Requirements_to_Test_Coverage]
       impact_type = req.Impact_Type.Safety
   }
 
@@ -35,7 +35,7 @@ section "Generating LOBSTER report"
            then user might think all requirements are covered by tests but in fact it is not'''
       ]
 
-      affects = [List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+      affects = [List_Requirements_to_Tests, List_Requirements_without_Tests]
       impact_type = req.Impact_Type.Safety
   }
 
@@ -51,7 +51,7 @@ section "Generating LOBSTER report"
            then user moght think test case is written for all requirements but in fact it is not'''
       ]
 
-      affects = [List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer]
+      affects = [List_Tests_to_Requirements, List_Tests_without_Requirements]
       impact_type = req.Impact_Type.Safety
   }
 
