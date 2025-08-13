@@ -1,0 +1,81 @@
+package UseCases
+import req
+
+  req.PotentialError Incomplete_Extraction_from_Codebeamer {
+    summary = "LOBSTER extracts a requirement incompletely."
+    description = '''
+      Some requirements are not extracted completely.
+      For example, some information of a requirement is missing.
+      '''
+    impacts = [
+      '''If the ID of a codebeamer requirement is not written to the output correctly (e.g. truncated),
+         and if that wrong ID is also a real requirement in codebeamer,
+         then the user might think that a requirement is tested where in fact it is not.''',
+
+      '''If the hyperaffects in the HTML output is not correct (e.g. pointing to a different requirement),
+         and a user clicks on it and does not realize that the affects is wrong,
+         then the user might think that a requirement is tested where in fact it is not.''',
+
+      '''If the summary of a codebeamer requirement is not correct
+         (e.g. truncated),',
+         then the user might think that all aspects of a requirement are covered by a test,
+         where in fact they are not.''',
+    ]
+
+    affects = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+    impact_type = req.Impact_Type.Safety
+  }
+
+   req.PotentialError Wrong_Extraction_from_Codebeamer{
+      summary = "LOBSTER extracts requirement wrongly"
+      description = '''
+       Some requirements are extracted with wrong data.
+       For example, some information of the requirement is incorrect.
+      '''
+      impacts =[
+        '''If the ID of the codebeamer requirement is not written in correct order(e.g. overwrite with combination of previous ID, partial write)
+           and if that wrong ID is also a real requirement in codebeamer
+           then user might think that a requirement is tested where in reality it is not.''',
+        
+        '''If the hyperaffects in the HTML output is not correct (e.g. pointing to a different requirement),
+         and a user clicks on it and does not realize that the affects is wrong,
+         then the user might think that a requirement is tested where in fact it is not.''',
+
+         '''If the summary of the requirement is not correct (e.g. ID of one requirement and summary of another.)
+         then the user might think that all aspects of a requirement are covered by a test,
+         where in fact they are not.'''
+      ]
+
+      affects = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+      impact_type = req.Impact_Type.Safety
+  }
+
+  req.PotentialError Too_few_Extraction_from_Codebeamer{
+      summary = "LOBSTER extracts too few requirements"
+      description = '''
+       Some requirements are not extracted from codebeamer.
+       For example, there are 100 applicable requirements in codebeamer tracker but LOBSTER extracts 75 requirements.
+      '''
+      impacts =[
+        '''If the codebeamer requirement is missing
+           then user might think that all requirements are tested where in reality it is not the case.'''
+      ]
+
+      affects = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+      impact_type = req.Impact_Type.Safety
+  }
+
+  req.PotentialError Too_many_Extraction_from_Codebeamer{
+      summary = "LOBSTER extracts too many requirements"
+      description = '''
+       Extra requirements are extracted from codebeamer.
+       For example, there are 100 applicable requirements in codebeamer tracker but LOBSTER extracts 125 requirements with 25 requirements from not applicable section of tracker.
+      '''
+      impacts =[
+        '''If the codebeamer requirement is from not applicable section
+           then user might think that all requirements are not tested where in reality it is not the case.'''
+      ]
+
+      affects = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+      impact_type = req.Impact_Type.Safety
+  }

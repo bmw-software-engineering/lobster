@@ -1,0 +1,8 @@
+inputs:  
+  - "lobster/requirements.rsl"
+  - "lobster/use_cases.trlc"
+  - "lobster/tools/codebeamer/requirements/potential_errors.trlc"
+trlc_config: |
+  req.UseCase {
+    description = description
+  }

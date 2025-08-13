@@ -1,0 +1,35 @@
+package UseCases
+import req
+
+req.TestSpecification Wrong_Codebeamer_IDs_in_Output {
+    description = '''
+      The test shall check that the IDs (including their version) downloaded from
+      codebeamer are exactly the same as written in the output.
+      
+      Example 1: verify that the tool does NOT truncate IDs. For example,
+      it could download 10 IDs as expected, but those ID strings could be truncated by one digit each.
+      
+      Example 2: Verify that the tool does NOT duplicate IDs.
+
+      Test steps:
+      - download a set of items from a mock server
+      - verify that the obtained IDs are the same as provided by the mock server 
+      '''
+    verifies = [Incomplete_Extraction_from_Codebeamer]
+}
+
+req.TestSpecification Codebeamer_Summary_in_Output {
+    description = '''
+      The test shall check that the LOBSTER items in the output file use the summary
+      as downloaded from codebeamer as name for the LOBSTER item.
+      '''
+    verifies = [Incomplete_Extraction_from_Codebeamer, Wrong_Extraction_from_Codebeamer]
+}
+
+req.TestSpecification Incorrect_Number_of_Codebeamer_Items_in_Output{
+    description ='''
+      The test shall verify that the number of items downloaded from codebeamer are same as written in the output.
+      
+      Example: Verify that tool does NOT duplicate items.'''
+    verifies = [Too_few_Extraction_from_Codebeamer, Too_many_Extraction_from_Codebeamer]
+}
