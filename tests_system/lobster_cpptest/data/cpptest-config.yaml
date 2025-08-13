@@ -1,10 +1,11 @@
 output:
-  valid_component_tests.lobster:
+  component_tests.lobster:
     markers: ["@requirement", "@requiredby"]
     kind: "req"
 
-  valid_other_tests.lobster:
+  other_tests.lobster:
     markers: []
+
     kind: ""
 
 codebeamer_url: "https://codebeamer.com"
