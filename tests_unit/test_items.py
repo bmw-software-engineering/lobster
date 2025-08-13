@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock,create_autospec
 from hashlib import sha1
+from lobster.config.level_definition import LevelDefinition
 from lobster.items import Tracing_Tag, Tracing_Status, Item, Requirement, Implementation, Activity
 from lobster.location import Location
 
@@ -185,12 +186,14 @@ class TestItem(ItemsTests):
         expected_result = "mock_namespace mock_tag"
         mock_key.return_value = expected_result
         config = {
-            "level1": {
-                "needs_tracing_up": True,
-                "needs_tracing_down": True,
-                "traces": ["level1"],
-                "breakdown_requirements": [["level1"]]
-            }
+            "level1": LevelDefinition(
+                name="level1",
+                kind="activity",
+                needs_tracing_up=True,
+                needs_tracing_down=True,
+                traces=["level1"],
+                breakdown_requirements=[["level1"]],
+            )
         }
         stab = {
             mock_key() : self.item
@@ -207,12 +210,14 @@ class TestItem(ItemsTests):
         self.item.just_global = []
         self.item.ref_up = []
         config = {
-            "level1": {
-                "needs_tracing_up": True,
-                "needs_tracing_down": False,
-                "traces": ["level1"],
-                "breakdown_requirements": [["level1"]]
-            }
+            "level1": LevelDefinition(
+                name="level1",
+                kind="requirement",
+                needs_tracing_up=True,
+                needs_tracing_down=False,
+                traces=["level1"],
+                breakdown_requirements=[["level1"]],
+            )
         }
         stab = {
             Tracing_Tag(mock_namespace, mock_tag).key() : self.item
@@ -230,12 +235,14 @@ class TestItem(ItemsTests):
         self.item.just_global = []
         self.item.ref_down = []
         config = {
-            "level1": {
-                "needs_tracing_up": False,
-                "needs_tracing_down": True,
-                "traces": ["level1"],
-                "breakdown_requirements": [["level1"]]
-            }
+            "level1": LevelDefinition(
+                name="level1",
+                kind="implementation",
+                needs_tracing_up=False,
+                needs_tracing_down=True,
+                traces=["level1"],
+                breakdown_requirements=[["level1"]]
+            )
         }
         stab = {
             Tracing_Tag(mock_namespace, mock_tag).key() : self.item

@@ -83,13 +83,13 @@ def create_item_coverage(doc, report):
     doc.add_line("<tbody>")
     doc.add_line("</tbody>")
     for level in report.config.values():
-        data = report.coverage[level["name"]]
+        data = report.coverage[level.name]
         doc.add_line(
-            f'<tr class="coverage-table-{level["name"].replace(" ", "-").lower()}">'
+            f'<tr class="coverage-table-{level.name.replace(" ", "-").lower()}">'
         )
         doc.add_line('<td><a href="#sec-%s">%s</a></td>' %
-                     (name_hash(level["name"]),
-                      html.escape(level["name"])))
+                     (name_hash(level.name),
+                      html.escape(level.name)))
         doc.add_line("<td>%.1f%%</td>" % data.coverage)
         doc.add_line("<td>")
         doc.add_line('<progress value="%u" max="%u">' %
@@ -337,7 +337,7 @@ def write_html(fd, report, high_contrast, render_md):
     doc.navbar.add_link("Issues", "#sec-issues")
     menu = doc.navbar.add_dropdown("Detailed report")
     for level in report.config.values():
-        menu.add_link(level["name"], "#sec-" + name_hash(level["name"]))
+        menu.add_link(level.name, "#sec-" + name_hash(level.name))
     # doc.navbar.add_link("Software Traceability Matrix", "#matrix")
     if report.custom_data:
         content = generate_custom_data(report)
@@ -435,15 +435,15 @@ def write_html(fd, report, high_contrast, render_md):
         doc.add_line(f'<div class="detailed-report-{title.lower().replace(" ", "-")}">')
         doc.add_heading(3, title, html_identifier=True)
         for level in report.config.values():
-            if level["kind"] != kind:
+            if level.kind != kind:
                 continue
             doc.add_heading(4,
-                            html.escape(level["name"]),
-                            name_hash(level["name"]),
+                            html.escape(level.name),
+                            name_hash(level.name),
                             html_identifier=True,
                             )
-            if items_by_level[level["name"]]:
-                for item in sorted(items_by_level[level["name"]],
+            if items_by_level[level.name]:
+                for item in sorted(items_by_level[level.name],
                                    key = lambda x: x.location.sorting_key()):
                     if isinstance(item.location, Void_Reference):
                         new_file_heading = "Unknown"

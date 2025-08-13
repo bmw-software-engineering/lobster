@@ -22,6 +22,7 @@ import os.path
 import collections
 
 from lobster.config import lexer
+from lobster.config.level_definition import LevelDefinition
 from lobster import errors
 from lobster import location
 
@@ -100,15 +101,10 @@ class Parser:
             self.error(self.ct.loc,
                        "duplicate declaration")
 
-        item = {
-            "name"                   : level_name,
-            "kind"                   : level_kind,
-            "traces"                 : [],
-            "source"                 : [],
-            "needs_tracing_up"       : False,
-            "needs_tracing_down"     : False,
-            "raw_trace_requirements" : []
-        }
+        item = LevelDefinition(
+            name=level_name,
+            kind=level_kind,
+        )
         self.levels[level_name] = item
 
         self.match("C_BRA")
@@ -124,7 +120,7 @@ class Parser:
                 if not os.path.isfile(source_info["file"]):
                     self.error(self.ct.loc,
                                "cannot find file %s" % source_info["file"])
-                item["source"].append(source_info)
+                item.source.append(source_info)
 
                 if self.peek("KEYWORD", "with"):
                     self.match("KEYWORD", "with")
@@ -143,9 +139,9 @@ class Parser:
                     self.error(self.ct.loc,
                                "unknown item %s" % self.ct.value())
                 else:
-                    self.levels[self.ct.value()]["needs_tracing_down"] = True
-                item["traces"].append(self.ct.value())
-                item["needs_tracing_up"] = True
+                    self.levels[self.ct.value()].needs_tracing_down = True
+                item.traces.append(self.ct.value())
+                item.needs_tracing_up = True
 
                 self.match("SEMI")
 
@@ -165,7 +161,7 @@ class Parser:
 
                 self.match("SEMI")
 
-                item["raw_trace_requirements"].append(req_list)
+                item.raw_trace_requirements.append(req_list)
 
             else:
                 self.error(self.nt.loc,
@@ -180,25 +176,25 @@ def load(mh, file_name):
 
     # Resolve requires links now
     for item in ast.values():
-        item["breakdown_requirements"] = []
-        if len(item["raw_trace_requirements"]) > 0:
-            for chain in item["raw_trace_requirements"]:
+        item.breakdown_requirements = []
+        if item.raw_trace_requirements:
+            for chain in item.raw_trace_requirements:
                 new_chain = []
                 for tok in chain:
                     if tok.value() not in ast:
                         mh.error(tok.loc, "unknown level %s" % tok.value())
-                    if item["name"] not in ast[tok.value()]["traces"]:
+                    if item.name not in ast[tok.value()].traces:
                         mh.error(tok.loc,
                                  "%s cannot trace to %s items" %
                                  (tok.value(),
-                                  item["name"]))
+                                  item.name))
                     new_chain.append(tok.value())
-                item["breakdown_requirements"].append(new_chain)
+                item.breakdown_requirements.append(new_chain)
         else:
             for src in ast.values():
-                if item["name"] in src["traces"]:
-                    item["breakdown_requirements"].append([src["name"]])
-        del item["raw_trace_requirements"]
+                if item.name in src.traces:
+                    item.breakdown_requirements.append([src.name])
+        item.raw_trace_requirements.clear()
 
     return ast
 
