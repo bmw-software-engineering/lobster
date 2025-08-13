@@ -15,7 +15,7 @@ _mapping = {
     "selenium": "@selenium//:lib",
     "setuptools": "@setuptools//:lib",
     "urllib3": "@urllib3//:lib",
-    "webdriver_manager": "@webdriver_manager//:lib",
+    "webdriver-manager": "@webdriver_manager//:lib",
 }
 
 def requirement(requested):

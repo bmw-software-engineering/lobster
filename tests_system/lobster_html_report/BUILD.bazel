@@ -23,7 +23,7 @@ py_library(
         requirement("requests"),
         requirement("selenium"),
         requirement("urllib3"),
-        requirement("webdriver_manager"),
+        requirement("webdriver-manager"),
     ],
 )
 
