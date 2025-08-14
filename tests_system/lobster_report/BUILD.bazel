@@ -22,26 +22,8 @@ py_library(
 )
 
 py_test(
-    name = "test_status_justified",
-    srcs = ["test_status_justified.py"],
-    deps = [
-        ":lobster_report",
-        "//tests_system",
-    ],
-)
-
-py_test(
-    name = "test_status_missing",
-    srcs = ["test_status_missing.py"],
-    deps = [
-        ":lobster_report",
-        "//tests_system",
-    ],
-)
-
-py_test(
-    name = "test_status_ok",
-    srcs = ["test_status_ok.py"],
+    name = "test_tracing_status",
+    srcs = ["test_tracing_status.py"],
     deps = [
         ":lobster_report",
         "//tests_system",
@@ -78,6 +60,33 @@ py_test(
 py_test(
     name = "test_items_coverage",
     srcs = ["test_items_coverage.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_multiple_inputs",
+    srcs = ["test_multiple_inputs.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_multiple_traces",
+    srcs = ["test_multiple_traces.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_tracing_policies",
+    srcs = ["test_tracing_policies.py"],
     deps = [
         ":lobster_report",
         "//tests_system",
