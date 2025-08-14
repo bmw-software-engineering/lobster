@@ -8,13 +8,6 @@ req.System_Requirement Report_Input_Duplicate_Definition {
   '''
 }
 
-req.Software_Requirement Dummy_Requirement_Unit_Test {
-  description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
-  '''
-}
-
 req.Definition Item {
   description = '''
     An item is an entry in the data section according to the schema.

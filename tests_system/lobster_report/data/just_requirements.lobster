@@ -28,7 +28,9 @@
       },
       "name": "example.engine",
       "messages": [],
-      "just_up": [],
+      "just_up": [
+        "Not applicable everywhere"
+      ],
       "just_down": [],
       "just_global": [],
       "framework": "TRLC",
@@ -41,7 +43,7 @@
       "location": {
         "kind": "file",
         "file": "demo.trlc",
-        "line": 11,
+        "line": 12,
         "column": 13
       },
       "name": "example.safety_system",
@@ -59,7 +61,7 @@
       "location": {
         "kind": "file",
         "file": "demo.trlc",
-        "line": 15,
+        "line": 16,
         "column": 13
       },
       "name": "example.braking_system",
@@ -77,7 +79,7 @@
       "location": {
         "kind": "file",
         "file": "demo.trlc",
-        "line": 19,
+        "line": 20,
         "column": 13
       },
       "name": "example.electrical_system",
@@ -95,7 +97,7 @@
       "location": {
         "kind": "file",
         "file": "demo.trlc",
-        "line": 23,
+        "line": 24,
         "column": 13
       },
       "name": "example.fuel_system",
@@ -113,7 +115,7 @@
       "location": {
         "kind": "file",
         "file": "demo.trlc",
-        "line": 27,
+        "line": 28,
         "column": 13
       },
       "name": "example.transmission_system",
@@ -131,7 +133,7 @@
       "location": {
         "kind": "file",
         "file": "demo.trlc",
-        "line": 31,
+        "line": 32,
         "column": 13
       },
       "name": "example.steering_system",
@@ -149,7 +151,7 @@
       "location": {
         "kind": "file",
         "file": "demo.trlc",
-        "line": 35,
+        "line": 36,
         "column": 13
       },
       "name": "example.lighting_system",
@@ -167,7 +169,7 @@
       "location": {
         "kind": "file",
         "file": "demo.trlc",
-        "line": 39,
+        "line": 40,
         "column": 13
       },
       "name": "example.climate_control",
