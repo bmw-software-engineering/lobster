@@ -50,20 +50,17 @@ class ReportTool(MetaDataToolBase):
 
         try:
             report.parse_config(options.lobster_config)
+            report.write_report(options.out)
+            return 0
         except FileNotFoundError as e:
-            print(f"{e}")
-        except TypeError as e:
-            print(f"{e}")
+            print(e)
         except LOBSTER_Error as e:
-            raise LOBSTER_Exception(
-                f"{self.name}: aborting due to earlier errors."
-            ) from e
+            print(e)
+            print(f"{self.name}: aborting due to earlier errors.")
         except LOBSTER_Exception as err:
             err.dump()
-            raise
 
-        report.write_report(options.out)
-        return 0
+        return 1
 
 
 def generate_report_file(lobster_config_file: str, output_file: str) -> dict:
