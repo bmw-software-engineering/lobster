@@ -66,3 +66,99 @@ req.System_Requirement_Aspect Status_Ok {
     THEN the tool shall set the tracing status to "OK" of that [[Item]]
   '''
 }
+
+req.System_Requirement_Aspect Zero_Items_Coverage {
+  description = '''
+    IF a level defined in the tracing policy has zero items in the corresponding input file,
+    THEN the tool shall set the coverage for that level to 0.0 in the generated report file.
+  '''
+}
+
+req.System_Requirement_Aspect Invalid_JSON_File {
+  description = '''
+    IF an input file given in the configuration is not valid JSON,
+    THEN the tool shall raise an error of type LOBSTER_Error
+    AND shall exit with a non-zero return code
+    AND shall report the error location and message.
+  '''
+}
+
+req.System_Requirement_Aspect Invalid_JSON_Not_Dict {
+  description = '''
+    IF a JSON input file does not contain a dictionary at the top level,
+    THEN the tool shall raise a Exception,
+    AND the tool shall exit with a non-zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect Invalid_Schema {
+  description = '''
+    IF a lobster input file contains a schema that is not in the list of supported schemas,
+    THEN the tool shall:
+    - Report "unknown schema kind <schema>"
+    - Exit with a non-zero return code
+  '''
+}
+
+req.System_Requirement_Aspect Invalid_Version {
+  description = '''
+    IF a lobster input file contains a schema with an unsupported version number,
+    THEN the tool shall:
+    - Report "version <X> for schema <Y> is not supported"
+    - Exit with a non-zero return code
+  '''
+}
+
+req.System_Requirement_Aspect Missing_Schema_Key {
+  description = '''
+    IF the input .lobster file is missing a schema key,
+    THEN the tool shall raise a LOBSTER_Exception,
+    AND the tool shall exit with a non-zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect Missing_Version_Key {
+  description = '''
+    IF the input .lobster file is missing a version key,
+    THEN the tool shall raise a LOBSTER_Exception,
+    AND the tool shall exit with a non-zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect Lobster_Exception_Dump_Invalid_Input {
+  description = '''
+    IF the tool detects an invalid input file
+    AND raises a LOBSTER_Exception,
+    THEN the tool shall invoke the exception's dump() method
+    to display the error details in the standard output
+    AND exit with a non-zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect Unknown_Tracing_Target {
+  description = '''
+    IF a reference in a lobster file points to a tag that does not exist in the set of loaded items,
+    THEN the tool shall report "unknown tracing target <tag>" and exit with non-zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect Tracing_Destination_Unversioned {
+  description = '''
+    IF a reference specifies a version but the destination tag is unversioned,
+    THEN the tool shall report "tracing destination <tag> is unversioned" and exit with non-zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect Tracing_Destination_Version_Mismatch {
+  description = '''
+    IF a reference specifies a version and the destination tag has a different version,
+    THEN the tool shall report "tracing destination <tag> has version <x> (expected <y>)" and exit with non-zero return code.
+  '''
+}
+
+req.System_Requirement_Aspect File_Not_Found {
+  description = '''
+    IF a required input file for the tool does not exist or cannot be accessed,
+    THEN the tool shall report "file not found <file_path>" and exit with a non-zero return code.
+  '''
+}
