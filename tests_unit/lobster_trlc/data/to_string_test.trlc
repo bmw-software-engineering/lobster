@@ -1,0 +1,24 @@
+package to_string_test
+
+shipyard TONY {
+    fast_boat = ("Flying Cloud", 30, 8.5)
+    large_boat = ("Sea Explorer", 50, 12.0)
+}
+
+shipyard BOBBY {
+    fast_boat = ("Speedster", 25, 7.0)
+    large_boat = ("Ocean Voyager", 60, 15.0)
+    berthed_ships = [
+        ("Harbor Master", 20, 5.1),
+        ("Wave Rider", 22, 6.2)
+    ]
+}
+
+shipyard ELLEN {
+    fast_boat = ("", -25, 1.0001)
+    large_boat = ("Sneaky Submarine", 99, 999.9999)
+    berthed_ships = [
+        ("Wind Sailor", 999999, -5.01),
+        ("Paradise", -1234, 12.34)
+    ]
+}

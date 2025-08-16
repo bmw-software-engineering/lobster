@@ -1,0 +1,13 @@
+package to_string_test
+
+tuple ship {
+    name String
+    length Integer
+    WIDTH Decimal
+}
+
+type shipyard {
+    fast_boat ship
+    large_boat ship
+    berthed_ships optional ship[0..*]
+}

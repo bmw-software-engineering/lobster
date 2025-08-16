@@ -6,16 +6,13 @@ import yaml
 from ..test_runner import TestRunner
 
 
-class LiteralString(str):
-    pass
-
-
 @dataclass
 class ConfigFileData:
-    inputs: List[str] = None
-    trlc_config : Optional[LiteralString] = None
+    inputs: Optional[List[str]] = None
     inputs_from_file: Optional[str] = None
     traverse_bazel_dirs : Optional[str] = None
+    conversion_rules: Optional[List[dict]] = None
+    to_string_rules: Optional[List[dict]] = None
 
     def __post_init__(self):
         self.inputs = []
@@ -27,15 +24,13 @@ class ConfigFileData:
             if value is not None:
                 data[key] = value
 
-        def literal_representer(dumper, data):
-            return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
-
-        yaml.add_representer(LiteralString, literal_representer)
-
         append_if_not_none("inputs", self.inputs)
-        append_if_not_none("inputs_from_file", self.inputs_from_file)
-        append_if_not_none("trlc_config", self.trlc_config)
-        append_if_not_none("traverse_bazel_dirs", self.traverse_bazel_dirs)
+        append_if_not_none("inputs-from-file", self.inputs_from_file)
+        append_if_not_none("conversion-rules", self.conversion_rules)
+        append_if_not_none("to-string-rules", self.to_string_rules)
+        append_if_not_none("traverse-bazel-dirs", self.traverse_bazel_dirs)
+        if self.traverse_bazel_dirs:
+            raise NotImplementedError("Feature not yet implemented!")
 
         with open(filename, mode='w', encoding="UTF-8") as file:
             yaml.dump(data, file)
@@ -81,16 +76,6 @@ class LobsterTrlcTestRunner(TestRunner):
     def declare_input_file(self, file: Path):
         super().declare_input_file(file)
         self.config_file_data.inputs.append(file.name)
-
-    def read_config_from_file(self, file: Path) -> str:
-        config_string = ""
-        with open(file, "r", encoding="UTF-8") as fd:
-            config_string = fd.read()
-
-        return config_string
-
-    def declare_trlc_config(self, trlc_config: str):
-        self.config_file_data.trlc_config = LiteralString(trlc_config)
 
     def declare_inputs_from_file(self, file: Path, data_directory: Path):
         super().declare_input_file(file)

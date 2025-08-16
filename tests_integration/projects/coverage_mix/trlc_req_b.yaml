@@ -4,7 +4,8 @@ inputs :
   - req_b.trlc
   - test_spec.trlc
 
-trlc_config : |
-  coverage_mix.Requirement_B {
-    description = text
-  }
+conversion-rules:
+  - package: coverage_mix
+    record-type: Requirement_B
+    namespace: req
+    description-fields: text

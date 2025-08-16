@@ -6,9 +6,9 @@ class InputFromFilesTest(LobsterTrlcSystemTestCaseBase):
     def setUp(self):
         super().setUp()
         self._test_runner = self.create_test_runner()
-        config_string = self._test_runner.read_config_from_file(
-            self._data_directory / "lobster-trlc.conf")
-        self._test_runner.declare_trlc_config(config_string)
+        self._test_runner.config_file_data.conversion_rules = [
+            self.NAMASTE_CONVERSION_RULE,
+        ]
 
     def test_input_from_files(self):
         # lobster-trace: trlc_req.Inputs_From_File
@@ -27,13 +27,16 @@ class InputFromFilesTest(LobsterTrlcSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_input_from_files_duplicate_contents(self):
+        """Test that duplicated TRLC record types/objects cause an error"""
         # lobster-trace: trlc_req.Duplicate_Inputs_From_File
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "input_from_file_duplicate_data.txt",
             self._data_directory)
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
-        asserter.assertNoStdErrText()
+        asserter.assertStdErrText(
+            "lobster-trlc: TRLC processing failed: aborting due to TRLC error\n"
+        )
         asserter.assertStdOutText('package test_default\n'
                                   '        ^^^^^^^^^^^^ default_file_copy.rsl:1: '
                                   'error: duplicate definition, previous definition at'
@@ -42,5 +45,5 @@ class InputFromFilesTest(LobsterTrlcSystemTestCaseBase):
                                   '        ^^^^^^^^ default_file_copy.trlc:3: '
                                   'error: duplicate definition, previous definition at'
                                   ' default_file.trlc:3\n'
-                                  'lobster-trlc: aborting due to earlier error\n')
+                                  )
         asserter.assertExitCode(1)
