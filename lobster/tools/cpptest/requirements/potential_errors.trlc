@@ -17,7 +17,7 @@ req.PotentialError Too_few_Extraction_from_CPP_Test_Files{
           then user might think that all test cases are covering the requirements but in fact it is not.'''
     ]
 
-    affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+    affects = [List_Tests_without_Requirements, List_Tests_without_Requirements, Trace_Requirements_to_Tests]
     impact_type = req.Impact_Type.Safety
 }
 
@@ -32,7 +32,7 @@ req.PotentialError Too_few_tests_Extraction_from_test_file{
           then user might think that all requirements are covered by test case but in fact it is not.'''
     ]
 
-    affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+    affects = [List_Tests_without_Requirements, List_Tests_without_Requirements, Trace_Requirements_to_Tests]
     impact_type = req.Impact_Type.Safety
 }
 
@@ -51,7 +51,7 @@ req.PotentialError Too_few_requirement_referance_Extraction_from_test{
           then user might think that test cases are missing reference but in fact it is not.'''   
     ]
 
-    affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+    affects = [List_Tests_without_Requirements, List_Tests_without_Requirements, Trace_Requirements_to_Tests]
     impact_type = req.Impact_Type.Safety
 }
 
@@ -71,7 +71,7 @@ req.PotentialError Too_many_Extraction_from_CPP_Test_Files{
           then user might think that all requirements are not covered by c++ tests but in fact they are covered.'''
     ]
 
-    affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+    affects = [List_Tests_without_Requirements, List_Tests_without_Requirements, Trace_Requirements_to_Tests]
     impact_type = req.Impact_Type.Safety
 }
 
@@ -88,7 +88,7 @@ req.PotentialError Too_many_requirement_referance_Extraction_from_test{
           then user might think that all requirements are covered by the software tests but in fact it is not the case.'''
     ]
 
-    affects = [List_CPP_Tests_without_Codebeamer, List_CPP_Tests_without_Codebeamer, Trace_Codebeamer_to_CPP_Tests]
+    affects = [List_Tests_without_Requirements, List_Tests_without_Requirements, Trace_Requirements_to_Tests]
     impact_type = req.Impact_Type.Safety
 }
 
@@ -109,18 +109,18 @@ req.PotentialError Output_Despite_Missing_Config_File {
     ]
 
     affects = [
-      Trace_Codebeamer_to_CPP_Tests,
-      List_Codebeamer_to_CPP_Tests,
-      List_Codebeamer_without_CPP_Tests,
-      List_CPP_Tests_to_Codebeamer,
-      List_CPP_Tests_without_Codebeamer,
-      Requirements_to_CPP_Test_Coverage,
+      Trace_Requirements_to_Tests,
+      List_Requirements_to_Tests,
+      List_Requirements_without_Tests,
+      List_Tests_to_Requirements,
+      List_Tests_without_Requirements,
+      Requirements_to_Test_Coverage,
       List_Findings
     ]
     impact_type = req.Impact_Type.Safety
 }
 
-req.PotentialError  Output_Despite_Config_File_Error {
+req.PotentialError Output_Despite_Config_File_Error {
     summary = "Output generated with an invalid configuration file"
     description = '''
       The user provides an invalid configuration file, but the lobster-cpptest
@@ -136,6 +136,14 @@ req.PotentialError  Output_Despite_Config_File_Error {
         could consume unqualified input data.''',
     ]
 
-    affects = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer, Requirements_to_CPP_Test_Coverage, List_Findings]
+    affects = [
+      Trace_Requirements_to_Tests,
+      List_Requirements_to_Tests,
+      List_Requirements_without_Tests,
+      List_Tests_to_Requirements,
+      List_Tests_without_Requirements,
+      Requirements_to_Test_Coverage,
+      List_Findings
+    ]
     impact_type = req.Impact_Type.Safety
 }

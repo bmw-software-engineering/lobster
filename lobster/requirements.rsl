@@ -59,9 +59,13 @@ type Definition {
 }
 
 enum Tools {
+  // tools that consume source files provided by the user
   lobster_codebeamer
   lobster_cpptest
   lobster_report
+  lobster_trlc
+
+  // tools that consume the output of other LOBSTER tools
   lobster_online_report
   lobster_html_report
 }
