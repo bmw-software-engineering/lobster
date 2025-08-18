@@ -56,7 +56,10 @@
     ```
     > pip install bmw-lobster-tool-trlc
     ```
-    will now correctly require `trlc>=2.0.1`.  
+    will now correctly require `trlc>=2.0.1`.
+
+* Introduce `lobster-pkg` tool:
+  -Tool to extract lobster traces from 'pkg' files.
 
 ### 0.13.2
 
