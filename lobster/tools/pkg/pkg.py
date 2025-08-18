@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_pkg - Extract tracing values from xml file for LOBSTER
-# Copyright (C) 2023-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2024-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -18,7 +18,6 @@
 # <https://www.gnu.org/licenses/>.
 import os.path
 from pathlib import Path
-import sys
 import xml.etree.ElementTree as ET
 import json
 import re
@@ -307,19 +306,19 @@ def lobster_pkg(options):
             try:
                 file_content = file.read()
 
-                # After reading file_content:
                 tree = ET.fromstring(file_content)
 
                 getvalues = xml_parser(file_content, filename)
 
-                # NEW: Also extract from TRACE-ANALYSIS blocks
-                valid_traces, misplaced_traces = extract_lobster_traces_from_trace_analysis(
-                    tree, filename
+                # Also extract from TRACE-ANALYSIS blocks
+                valid_traces, misplaced_traces = (
+                    extract_lobster_traces_from_trace_analysis(
+                        tree, filename
+                    )
                 )
                 getvalues.extend(valid_traces)
                 for msg in misplaced_traces:
                     print(msg)
-
 
                 if getvalues:
                     create_raw_entry(data, file.name, json.dumps(getvalues))
