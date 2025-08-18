@@ -17,7 +17,7 @@ req.PotentialError Requirements_not_listed_correctly{
           then user might think that all requirements are not covered by the tests but in fact it is not the case.'''
     ]
 
-    affects = [Trace_Codebeamer_to_CPP_Tests, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+    affects = [Trace_Requirements_to_Tests, List_Requirements_to_Tests, List_Requirements_without_Tests]
     impact_type = req.Impact_Type.Safety
 }
 
@@ -37,7 +37,7 @@ req.PotentialError Software_tests_not_listed_correctly{
           then user might think that all requirements are not covered by software tests but in fact that is not the case.'''
     ]
 
-    affects = [Trace_Codebeamer_to_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer]
+    affects = [Trace_Requirements_to_Tests, List_Tests_to_Requirements, List_Tests_without_Requirements]
     impact_type = req.Impact_Type.Safety
 }
 
@@ -54,7 +54,7 @@ req.PotentialError Incorrect_mapping_in_HTML_File{
           then user might think that requirement is covered but in fact it is not.'''
     ]
 
-    affects = [Trace_Codebeamer_to_CPP_Tests, List_CPP_Tests_to_Codebeamer, List_CPP_Tests_without_Codebeamer, List_Codebeamer_to_CPP_Tests, List_Codebeamer_without_CPP_Tests]
+    affects = [Trace_Requirements_to_Tests, List_Tests_to_Requirements, List_Tests_without_Requirements, List_Requirements_to_Tests, List_Requirements_without_Tests]
     impact_type = req.Impact_Type.Safety
 }
 
