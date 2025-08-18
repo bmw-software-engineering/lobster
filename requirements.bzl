@@ -14,6 +14,7 @@ _mapping = {
     "requests": "@requests//:lib",
     "selenium": "@selenium//:lib",
     "setuptools": "@setuptools//:lib",
+    "trlc": "@trlc//:lib",
     "urllib3": "@urllib3//:lib",
     "webdriver-manager": "@webdriver_manager//:lib",
 }
