@@ -27,7 +27,7 @@ class LobsterPkgTests(unittest.TestCase):
         self.test_pkg_file_2 = str(Path(dirname(__file__), "data", "sample2.pkg"))
         self.test_fake_file = str(Path(dirname(__file__), "data", "not_existing.pkg"))
 
-        self.temp_dir = TemporaryDirectory()
+        self.temp_dir = TemporaryDirectory() # pylint: disable=R1732
 
         self.output_pkg_file_1 = os.path.join(self.temp_dir.name, "sample1.lobster")
         self.output_pkg_file_2 = os.path.join(self.temp_dir.name, "sample2.lobster")
