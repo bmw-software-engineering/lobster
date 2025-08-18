@@ -117,12 +117,12 @@ class Item(metaclass=ABCMeta):
         assert isinstance(level, str)
         self.level = level
 
-    def error(self, message):
+    def error(self, message: str):
         assert isinstance(message, str)
         self.messages.append(message)
         self.has_error = True
 
-    def add_tracing_target(self, target):
+    def add_tracing_target(self, target: Tracing_Tag):
         assert isinstance(target, Tracing_Tag)
         if target.key() in self.unresolved_references_cache:
             return

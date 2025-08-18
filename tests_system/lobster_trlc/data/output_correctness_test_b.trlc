@@ -1,0 +1,37 @@
+package output_correctness_test
+
+/* Note:
+   This file provides a set of unique test items.
+   Each value of each item is unique and not used by other items.
+ */
+
+TheReference Target4a {}
+TheReference Target4b {}
+TheReference Target4c {}
+
+TheType Instance4 {
+    string = "string-value-4"
+    decimal = 4.1
+    boolean = false
+    integer = -4
+    strings = [
+        "string-value-4a",
+        "string-value-4b",
+        "string-value-4c",
+        "string-value-4d",
+    ]
+    decimals = [
+        4.1,
+        4.2,
+        4.3,
+        4.4
+    ]
+    booleans = [
+        true,
+        false,
+        true,
+        false,
+    ]
+    integers = [4, 40, 400, 4000]
+    references = [Target4a, Target4b, Target4c]
+}

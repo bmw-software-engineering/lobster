@@ -1,0 +1,19 @@
+package optional_field_test
+
+EverythingOptional A {
+    // nothing in here!
+}
+
+EverythingOptional B {
+    // all fields set!
+    field1 = "value of field 1 of B"
+    field2 = 42
+    field3 = true
+    field4 = 1.380649
+}
+
+EverythingOptional C {
+    // only some fields set!
+    field1 = "value of field 1 of C"
+    field3 = false
+}

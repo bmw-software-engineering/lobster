@@ -6,23 +6,28 @@
 ### 0.13.3-dev
 
 * `lobster-trlc`:
-  - The `lobster-trlc` tool uses now a single yaml config file.
-    The old config parameter `trlc_config_file` holding just the file name 
-    of the `lobster-trlc.conf` config file has been removed.
-    A new config parameter `trlc_config` has been added instead to specify the trlc 
-    configuration directly inside the yaml config file using the block scalar 
-    style (|) for multi line strings. 
+  - The tool no longer searches for `*.rsl` and `*.trlc` files in  the current working
+    directory if `inputs` and `inputs-from-file` are both empty.
+    This change has been introduced as a safeguard to increase the probability that
+    users will detect errors in their configurations.
+  - Introduced YAML schema validator to verify the configuration file format.
+    This implies a stricter validation of the configuration YAML file than previously.
+  - Removed the necessity for a separate configuration file where the user had to define
+    the rules how to convert a TRLC record object into a LOBSTER item, like this:
 
-    Example entry for the yaml config file:
-    ```yaml
-    trlc_config: |
-      package.typename {
-        description = field_name
-        tags "test" = field_name
-      }
+    ```
+    package.typename {
+      description = field_name
+      tags "test" = field_name
+    }
     ```
 
-    For more details read packages/lobster-tool-trlc/README.md
+    The tool now uses a single YAML configuration file instead.
+
+    These conversion rules must now be specified in pure YAML syntax.
+    The configuration parameter is called `conversion-rules`
+    For more details please see
+    [packages/lobster-tool-trlc/README.md](packages/lobster-tool-trlc/README.md).
 
 * Introduced API function:
   - `generate_report_file`:

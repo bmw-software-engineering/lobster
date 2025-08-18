@@ -1,9 +1,10 @@
-inputs :
+inputs:
   - example.rsl
   - softreq_example.trlc
   - sysreq_example.trlc
 
-trlc_config : |
-  coverage_example.System_Requirement {
-    description = text
-  }
+conversion-rules:
+  - package: coverage_example
+    record-type: System_Requirement
+    namespace: req
+    description-fields: text

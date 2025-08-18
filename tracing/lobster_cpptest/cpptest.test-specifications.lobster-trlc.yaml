@@ -2,8 +2,11 @@ inputs:
   - "lobster/requirements.rsl"
   - "lobster/use_cases.trlc"
   - "lobster/tools/cpptest"
-trlc_config: |
-  req.TestSpecification {
-    description = description
-    tags = verifies
-  }
+conversion-rules:
+  - package: req
+    record-type: TestSpecification
+    namespace: req
+    description-fields:
+      - description
+    tags:
+      - verifies

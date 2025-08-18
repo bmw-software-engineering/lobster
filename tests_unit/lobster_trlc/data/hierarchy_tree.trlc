@@ -1,0 +1,49 @@
+package hierarchy_tree_test
+
+Level1 Level1_Item {
+    field1 = "text of Level1_Item in field1"
+    field2 = "text of Level1_Item in field2"
+    reference_field2 = [Level1_Item]
+    string_array_field1 = ["Level1_Item+string_1", "Level1_Item+string_2", "Level1_Item+string_3"]
+    integer_array_field1 = [1, 2, 3]
+    decimal_array_field1 = [1.1, 2.2, 3.3]
+    boolean_array_field1 = [true, false, true, true]
+}
+
+Level2A Level2A_Item {
+    field1 = "text of Level2A_Item in field1"
+    field2 = "text of Level2A_Item in field2"
+    reference_field2 = [Level1_Item]
+}
+
+Level2B Level2B_Item {
+    field1 = "text of Level2B_Item in field1"
+    field2 = "text of Level2B_Item in field2"
+    reference_field2 = [Level1_Item]
+}
+
+Level3A Level3A_Item {
+    field1 = "text of Level3A_Item in field1"
+    field2 = "text of Level3A_Item in field2"
+    reference_field2 = [Level1_Item]
+}
+
+Level3B Level3B_Item {
+    field1 = "text of Level3B_Item in field1"
+    field2 = "text of Level3B_Item in field2"
+    reference_field2 = [Level1_Item]
+}
+
+Level4A Level4A_Item {
+    field1 = "text of Level4A_Item in field1"
+    field2 = "text of Level4A_Item in field2"
+    reference_field2 = [Level1_Item]
+}
+
+Level4B Level4B_Item {
+    field1 = "text of Level4B_Item in field1"
+    field2 = "text of Level4B_Item in field2"
+    reference_field2 = [Level1_Item]
+    tuple_field1 = 1 @ 2 @ 3
+    TUPLE_FIELD2 = 4@            5@6
+}
