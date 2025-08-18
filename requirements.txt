@@ -4,3 +4,4 @@ libcst>=1.1.0
 PyYAML>=6.0
 Markdown~=3.7
 plotly>=6.2.0
+yamale>=6.0.0

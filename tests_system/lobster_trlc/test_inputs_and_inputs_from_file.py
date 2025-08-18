@@ -8,11 +8,13 @@ class InputFromFilesAndInputsTest(LobsterTrlcSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
         self._test_runner.declare_input_file(self._data_directory / "default_file.rsl")
         self._test_runner.declare_input_file(self._data_directory / "default_file.trlc")
-        config_string = self._test_runner.read_config_from_file(
-            self._data_directory / "inputs-from-files-and-inputs.conf")
-        self._test_runner.declare_trlc_config(config_string)
+        self._test_runner.config_file_data.conversion_rules = [
+            self.BERRY_CONVERSION_RULE,
+            self.NAMASTE_CONVERSION_RULE,
+        ]
 
     def test_input_from_files_and_inputs_list(self):
+        """Test that inputs from files and inputs list can be processed together."""
         # lobster-trace: trlc_req.Input_list_Of_File_And_Inputs_From_File
         OUT_FILE = "input_from_files_and_inputs.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
@@ -29,13 +31,16 @@ class InputFromFilesAndInputsTest(LobsterTrlcSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_duplicate_contents_input_from_files_and_inputs_list(self):
+        """Test that duplicates in inputs from files and inputs list cause an error"""
         # lobster-trace: trlc_req.Duplicate_Input_list_Of_File_And_Inputs_From_File
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "input_from_files_and_inputs_duplicate_contents.txt",
             self._data_directory)
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
-        asserter.assertNoStdErrText()
+        asserter.assertStdErrText(
+            "lobster-trlc: TRLC processing failed: aborting due to TRLC error\n"
+        )
         asserter.assertStdOutText('package test_default\n'
                                   '        ^^^^^^^^^^^^ default_file_copy.rsl:1: '
                                   'error: duplicate definition, previous definition at'
@@ -44,5 +49,5 @@ class InputFromFilesAndInputsTest(LobsterTrlcSystemTestCaseBase):
                                   '        ^^^^^^^^ default_file_copy.trlc:3: '
                                   'error: duplicate definition, previous definition at'
                                   ' default_file.trlc:3\n'
-                                  'lobster-trlc: aborting due to earlier error\n')
+                                  )
         asserter.assertExitCode(1)

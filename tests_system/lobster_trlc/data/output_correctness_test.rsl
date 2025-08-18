@@ -1,0 +1,15 @@
+package output_correctness_test
+
+type TheReference {}
+
+type TheType {
+    string optional String
+    decimal optional Decimal
+    boolean optional Boolean
+    integer optional Integer
+    strings optional String[0..*]
+    decimals optional Decimal[0..*]
+    booleans optional Boolean[0..*]
+    integers optional Integer[0..*]
+    references optional TheReference[0..*]
+}

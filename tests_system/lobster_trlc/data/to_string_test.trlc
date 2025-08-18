@@ -1,0 +1,24 @@
+package buildings
+
+Building Greenwood_Ranch {
+    summary = "A beautiful ranch in the countryside, nowadays a school"
+    category = "school"@3
+    thermal_insulation = (5, 3.1415)
+}
+
+Building Coconut_Palace {
+    summary = "A tropical palace with a unique design"
+    category = "palace"@5
+    thermal_insulation = (42, 8.2830)
+}
+
+Building Space_Tower {
+    summary = "wow!"
+    category = "hiiiiiigh"@999999999
+}
+
+Building Dyson_Sphere {
+    summary = "construction around a star to harvest energy"
+    category = "solar power plant"
+    thermal_insulation = (-1, 0.0)
+}

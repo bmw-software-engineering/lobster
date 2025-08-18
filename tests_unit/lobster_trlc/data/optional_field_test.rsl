@@ -1,0 +1,8 @@
+package optional_field_test
+
+type EverythingOptional {
+    field1 optional String
+    field2 optional Integer
+    field3 optional Boolean
+    field4 optional Decimal
+}

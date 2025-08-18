@@ -2,7 +2,9 @@ inputs :
   - fruit.rsl
   - fruit.trlc
 
-trlc_config : |
-  fruits.FruityRequirement {
-    description = description
-  }
+conversion-rules:
+  - package: fruits
+    record-type: FruityRequirement
+    namespace: req
+    description-fields:
+      - description

@@ -1,10 +1,13 @@
-inputs :
+inputs:
   - example.rsl
   - softreq_example.trlc
   - sysreq_example.trlc
 
-trlc_config : |
-  coverage_half.Software_Requirement {
-    description = text
-    tags "req"  = derived_from
-  }
+conversion-rules:
+  - package: coverage_half
+    record-type: Software_Requirement
+    namespace: req
+    description-fields: text
+    tags:
+      - field: derived_from
+        namespace: req

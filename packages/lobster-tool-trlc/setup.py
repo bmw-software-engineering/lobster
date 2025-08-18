@@ -46,6 +46,7 @@ setuptools.setup(
     project_urls=project_urls,
     license="GNU Affero General Public License v3",
     packages=["lobster.tools.trlc"],
+    package_data={"lobster.tools.trlc": ["*.yamale"]},
     install_requires=[
         "trlc>=2.0.1",
         f"bmw-lobster-core>={version.LOBSTER_VERSION}",
