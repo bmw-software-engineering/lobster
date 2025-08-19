@@ -1,0 +1,6 @@
+output:
+  report.lobster:
+    markers: ["@requirement", "@requiredby"]
+    kind: "req"
+
+codebeamer_url: "https://codebeamer.com"

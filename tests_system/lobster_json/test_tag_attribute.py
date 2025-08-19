@@ -29,6 +29,7 @@ class JsonTagAttributeTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.config_file_data.tag_attribute = "missingkey"
         out_file = "tag_attribute_irrelavent.lobster"
         self._test_runner.cmd_args.out = out_file
+        self._test_runner.declare_output_file(self._data_directory / out_file)
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)

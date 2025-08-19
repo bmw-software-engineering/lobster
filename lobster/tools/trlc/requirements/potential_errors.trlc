@@ -1,0 +1,33 @@
+package UseCases
+import req
+
+req.PotentialError Default_Path_Choice {
+    summary = '''A default directory is used as source of input files without notifying
+                 the user'''
+    description = '''
+        If no input files are specified, the tool might inadvertently use the current
+        working directory (or any other default value for these configuration parameters)
+        as the location to search for input files.
+        '''
+    impacts = [
+        '''
+        The assumption here is that the user wanted to specify input paths, but forgot
+        to do so, or that the user did not realize that the tool would use the current
+        working directory.
+        This can lead to unintended consequences, because it is hard for the user to
+        detect their mistake, since a report will be generated if the wrong folder
+        contains valid TRLC files.
+        This is especially problematic if the tool is executed in an automated
+        environment, like a CI/CD pipeline.
+        '''
+    ]
+    affects = [
+        Trace_Requirements_to_Tests,
+        List_Requirements_to_Tests,
+        List_Requirements_without_Tests,
+        List_Tests_to_Requirements,
+        List_Tests_without_Requirements,
+        Requirements_to_Test_Coverage,
+    ]
+    impact_type = req.Impact_Type.Safety
+}

@@ -3,4 +3,11 @@ inputs :
   - softreq_example.trlc
   - sysreq_example.trlc
 
-trlc_config_file : "trlc-softreq.conf"
+conversion-rules:
+  - package: coverage_zero
+    record-type: Software_Requirement
+    namespace: req
+    description-fields:
+      - text
+    tags:
+      - derived_from

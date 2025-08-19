@@ -1,0 +1,114 @@
+package req
+
+enum Reason {
+  Initial_Condition
+   '''
+   The requirement aspect does not need to be tested, because it is an initial condition
+   that specifies the test setup, but not the test result. The aspect will automatically
+   be taken into account by the test linked to the "THEN" aspect of the requirement.
+   '''
+}
+
+type System_Requirement {
+  description
+    '''
+    The content of the requirement.
+    A tool requirement describes the behavior of a lobster tool from the point of view of the user.
+    It does not describe implementation details.
+    '''
+      String
+}
+
+type System_Requirement_Aspect extends System_Requirement {
+  /* This type describes an aspect of a system requirement.
+     The aspect itself is not testable. It is only testable in the context of a requirement.
+     For example, an aspect may give details about a certain input, but it does not describe
+     the related output.
+     Nevertheless, system tests shall be linked to aspects, and each aspect shall be covered
+     by system tests. These tests must always take the requirement into account, which uses
+     the aspect.
+     Using this type helps to make long requirements easier to read, and it is easier to
+     develop tests for them.
+   */
+
+  not_tested_reason
+    ''' Justification why the requirement aspect does not need to be tested.'''
+      optional Reason
+
+}
+
+type Software_Requirement {
+  description
+    '''
+    The content of the requirement.
+    A software requirement describes the behavior of a class method or module function.
+    '''
+      String
+
+  derived_from
+    '''List of system requirements that resulted into this software requirement'''
+      optional System_Requirement[1..*]
+}
+
+type Definition {
+  description '''
+    The text of the definition.
+    A definition shall be formulated such that it is reusable in multiple requirements,
+    to prevent the need of duplicating text.
+  ''' String
+}
+
+enum Tools {
+  // tools that consume source files provided by the user
+  lobster_codebeamer
+  lobster_cpptest
+  lobster_report
+  lobster_trlc
+
+  // tools that consume the output of other LOBSTER tools
+  lobster_online_report
+  lobster_html_report
+}
+
+type UseCase {
+  description ''' 
+    The text of the use case.
+    The format shall be : As a < role > I want < description of the UseCase >
+    A use case shall describe the goal that the user wants to achieve by using LOBSTER.
+    The use case shall not describe the implementation of the tools.
+  ''' String
+  affected_tools
+    '''List of tools that are affected by the use case'''
+      Tools[1..*]
+}
+
+enum Impact_Type {
+  Safety
+    ''' 
+    The potential error has a safety impact.
+    '''
+  Financial
+    '''
+    The potential error has a security impact.
+    '''
+}
+
+type PotentialError {
+  summary String
+  description '''
+    The text of the potential error.
+    This shall be a description of a potential error that may occur in a tool.
+  ''' String
+  impacts String [1..*]
+  affects 
+    '''List of use cases which the potential error could affect'''
+      UseCase[1..*]
+  impact_type Impact_Type
+}
+
+type TestSpecification {
+  description String
+  verifies
+    '''List of potential errors that resulted into this test'''
+      PotentialError[1..*]
+}

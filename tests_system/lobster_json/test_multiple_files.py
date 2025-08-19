@@ -47,6 +47,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         out_file = "empty.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.config_file_data.inputs.append("one")
+        self._test_runner.declare_output_file(self._data_directory / out_file)
 
         source_dir = self._data_directory / "one"
         dest_dir = self._test_runner.working_dir / "one"

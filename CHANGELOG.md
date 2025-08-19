@@ -5,7 +5,61 @@
 
 ### 0.13.3-dev
 
+* `lobster-trlc`:
+  - The tool no longer searches for `*.rsl` and `*.trlc` files in  the current working
+    directory if `inputs` and `inputs-from-file` are both empty.
+    This change has been introduced as a safeguard to increase the probability that
+    users will detect errors in their configurations.
+  - Introduced YAML schema validator to verify the configuration file format.
+    This implies a stricter validation of the configuration YAML file than previously.
+  - Removed the necessity for a separate configuration file where the user had to define
+    the rules how to convert a TRLC record object into a LOBSTER item, like this:
 
+    ```
+    package.typename {
+      description = field_name
+      tags "test" = field_name
+    }
+    ```
+
+    The tool now uses a single YAML configuration file instead.
+
+    These conversion rules must now be specified in pure YAML syntax.
+    The configuration parameter is called `conversion-rules`
+    For more details please see
+    [packages/lobster-tool-trlc/README.md](packages/lobster-tool-trlc/README.md).
+
+* Introduced API function:
+  - `generate_report_file`:
+    This is API function for the tool `lobster-report` which takes lobster config file as input
+    and generates the lobster report.
+    This is similar to running the tool `lobster-report`.
+
+* `lobster-report`
+  - Removed user error messages in case the `custom_data` section contains invalid data.
+    Python will nevertheless exit with return code 1, as previously.
+    The section is not intended to be modified by users.
+    Removing the error messages helps to increase the branch coverage.
+
+* `lobster-cpptest`:
+  - All custom markers have been removed. The tool now supports only the `req` marker. This marker is handled through hard-coded logic.
+  - The tool now accepts exactly four configuration attributes in config file: `output_file`, `codebeamer_url`, `kind` and `files`.
+  - Note: The tool now generates only one output file per execution.
+
+* `bmw-lobster-tool-trlc` Python Package:
+  - Fix wrong dependency information in packaging instructions for wheel file (`setup.py`).
+    Only the package [bmw-lobster-tool-trlc](https://pypi.org/project/bmw-lobster-tool-trlc/)
+    was affected, not the package
+    [bmw-lobster-monolithic](https://pypi.org/project/bmw-lobster-monolithic/), which also
+    includes the tool `lobster-trlc`.
+    The minimum required version of [TRLC](https://pypi.org/project/trlc/) is v2.0.1, not v1.2.2.
+    ```
+    > pip install bmw-lobster-tool-trlc
+    ```
+    will now correctly require `trlc>=2.0.1`.
+
+* Introduce `lobster-pkg` tool:
+  -Tool to extract lobster traces from 'pkg' files.
 
 ### 0.13.2
 

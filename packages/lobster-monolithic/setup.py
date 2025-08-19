@@ -46,7 +46,8 @@ setuptools.setup(
     license="GNU Affero General Public License v3",
     packages=setuptools.find_packages(),
     package_data={
-        "lobster.tools.core.html_report":["assets/*"]
+        "lobster.tools.core.html_report":["assets/*"],
+        "lobster.tools.trlc": ["*.yamale"],
     },
     install_requires=[
         "miss-hit>=0.9.42",
@@ -55,6 +56,7 @@ setuptools.setup(
         "trlc>=2.0.1",
         "Markdown~=3.7",
         "PyYAML>=6.0",
+        "yamale>=6.0.0",
     ],
     python_requires=">=3.7, <4",
     classifiers=[
@@ -78,7 +80,8 @@ setuptools.setup(
             "lobster-cpptest = lobster.tools.cpptest.cpptest:main",
             "lobster-gtest = lobster.tools.gtest.gtest:main",
             "lobster-json = lobster.tools.json.json:main",
-            "lobster-trlc = lobster.tools.trlc.trlc:main"
+            "lobster-trlc = lobster.tools.trlc.trlc:main",
+            "lobster-pkg = lobster.tools.pkg.pkg:main"
         ]
     },
 )

@@ -1,0 +1,18 @@
+package buildings
+
+tuple Building_Category {
+    name String
+    separator @
+    floors optional Integer
+}
+
+tuple Thermal_Insolation {
+    thermal_factor Integer
+    thickness Decimal
+}
+
+type Building {
+    category Building_Category
+    thermal_insulation optional Thermal_Insolation
+    summary "short title!" String
+}

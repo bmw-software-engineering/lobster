@@ -92,23 +92,23 @@ def create_policy_diagram(doc, report, dot):
 
     graph = 'digraph "LOBSTER Tracing Policy" {\n'
     for level in report.config.values():
-        if level["kind"] == "requirements":
+        if level.kind == "requirements":
             style = 'shape=box, style=rounded'
-        elif level["kind"] == "implementation":
+        elif level.kind == "implementation":
             style = 'shape=box'
         else:
-            assert level["kind"] == "activity"
+            assert level.kind == "activity"
             style = 'shape=hexagon'
-        style += f', href="#sec-{name_hash(level["name"])}"'
+        style += f', href="#sec-{name_hash(level.name)}"'
 
         graph += '  n_%s [label="%s", %s];\n' % \
-            (name_hash(level["name"]),
-             level["name"],
+            (name_hash(level.name),
+             level.name,
              style)
 
     for level in report.config.values():
-        source = name_hash(level["name"])
-        for target in map(name_hash, level["traces"]):
+        source = name_hash(level.name)
+        for target in map(name_hash, level.traces):
             # Not a mistake; we want to show the tracing down, whereas
             # in the config file we indicate how we trace up.
             graph += '  n_%s -> n_%s;\n' % (target, source)
@@ -144,11 +144,13 @@ def create_item_coverage(doc, report):
     doc.add_line("<tbody>")
     doc.add_line("</tbody>")
     for level in report.config.values():
-        data = report.coverage[level["name"]]
-        doc.add_line("<tr>")
+        data = report.coverage[level.name]
+        doc.add_line(
+            f'<tr class="coverage-table-{level.name.replace(" ", "-").lower()}">'
+        )
         doc.add_line('<td><a href="#sec-%s">%s</a></td>' %
-                     (name_hash(level["name"]),
-                      html.escape(level["name"])))
+                     (name_hash(level.name),
+                      html.escape(level.name)))
         doc.add_line("<td>%.1f%%</td>" % data.coverage)
         doc.add_line("<td>")
         doc.add_line('<progress value="%u" max="%u">' %
@@ -390,7 +392,7 @@ def write_html(fd, report, dot, high_contrast, render_md):
     doc.navbar.add_link("Issues", "#sec-issues")
     menu = doc.navbar.add_dropdown("Detailed report")
     for level in report.config.values():
-        menu.add_link(level["name"], "#sec-" + name_hash(level["name"]))
+        menu.add_link(level.name, "#sec-" + name_hash(level.name))
     # doc.navbar.add_link("Software Traceability Matrix", "#matrix")
     if report.custom_data:
         content = generate_custom_data(report)
@@ -403,10 +405,10 @@ def write_html(fd, report, dot, high_contrast, render_md):
     menu.add_link("Source", LOBSTER_GH)
 
     ### Summary (Coverage & Policy)
-    doc.add_heading(2, "Overview", "overview")
+    doc.add_heading(2, "Overview", "overview", html_identifier=True)
     doc.add_line('<div class="columns">')
     doc.add_line('<div class="column">')
-    doc.add_heading(3, "Coverage")
+    doc.add_heading(3, "Coverage", html_identifier=True)
     create_item_coverage(doc, report)
     doc.add_line('</div>')
     if is_dot_available(dot):
@@ -421,8 +423,8 @@ def write_html(fd, report, dot, high_contrast, render_md):
     doc.add_line('</div>')
 
     ### Filtering
-    doc.add_heading(2, "Filtering", "filtering-options")
-    doc.add_heading(3, "Item Filters")
+    doc.add_heading(2, "Filtering", "filtering-options", html_identifier=True)
+    doc.add_heading(3, "Item Filters", html_identifier=True)
     doc.add_line('<div id = "btnFilterItem">')
     doc.add_line('<button class="button buttonAll buttonActive" '
                  'onclick="buttonFilter(\'all\')"> Show All </button>')
@@ -443,19 +445,19 @@ def write_html(fd, report, dot, high_contrast, render_md):
                  'onclick="buttonFilter(\'warning\')" > Warning </button>')
     doc.add_line("</div>")
 
-    doc.add_heading(3, "Show Issues")
+    doc.add_heading(3, "Show Issues", html_identifier=True)
     doc.add_line('<div id = "ContainerBtnToggleIssue">')
     doc.add_line('<button class ="button buttonBlue" id="BtnToggleIssue" '
                  'onclick="ToggleIssues()"> Show Issues </button>')
     doc.add_line('</div>')
 
-    doc.add_heading(3, "Filter", "filter")
+    doc.add_heading(3, "Filter", "filter", html_identifier=True)
     doc.add_line('<input type="text" id="search" placeholder="Filter..." '
                  'onkeyup="searchItem()">')
     doc.add_line('<div id="search-sec-id"')
 
     ### Issues
-    doc.add_heading(2, "Issues", "issues")
+    doc.add_heading(2, "Issues", "issues", html_identifier=True)
     doc.add_line('<div id="issues-section" style="display:none">')
     has_issues = False
     for item in sorted(report.items.values(),
@@ -466,10 +468,10 @@ def write_html(fd, report, dot, high_contrast, render_md):
                 if not has_issues:
                     has_issues = True
                     doc.add_line("<ul>")
-                doc.add_line("<li class=\"issue issue-%s\">%s: %s</li>" %
-                             (item.tracing_status.name.lower(),
-                              xref_item(item),
-                              message))
+                doc.add_line(
+                    f'<li class="issue issue-{item.tracing_status.name.lower()}-'
+                    f'{item.tag.namespace}">{xref_item(item)}: {message}</li>'
+                )
     if has_issues:
         doc.add_line("</ul>")
     else:
@@ -478,7 +480,7 @@ def write_html(fd, report, dot, high_contrast, render_md):
 
     ### Report
     file_heading = None
-    doc.add_heading(2, "Detailed report", "detailed-report")
+    doc.add_heading(2, "Detailed report", "detailed-report", html_identifier=True)
     items_by_level = {}
     for level in report.config:
         items_by_level[level] = [item
@@ -490,15 +492,18 @@ def write_html(fd, report, dot, high_contrast, render_md):
                          "Implementation"),
                         ("activity",
                          "Verification and Validation")]:
-        doc.add_heading(3, title)
+        doc.add_line(f'<div class="detailed-report-{title.lower().replace(" ", "-")}">')
+        doc.add_heading(3, title, html_identifier=True)
         for level in report.config.values():
-            if level["kind"] != kind:
+            if level.kind != kind:
                 continue
             doc.add_heading(4,
-                            html.escape(level["name"]),
-                            name_hash(level["name"]))
-            if items_by_level[level["name"]]:
-                for item in sorted(items_by_level[level["name"]],
+                            html.escape(level.name),
+                            name_hash(level.name),
+                            html_identifier=True,
+                            )
+            if items_by_level[level.name]:
+                for item in sorted(items_by_level[level.name],
                                    key = lambda x: x.location.sorting_key()):
                     if isinstance(item.location, Void_Reference):
                         new_file_heading = "Unknown"
@@ -513,7 +518,8 @@ def write_html(fd, report, dot, high_contrast, render_md):
                         assert False
                     if new_file_heading != file_heading:
                         file_heading = new_file_heading
-                        doc.add_heading(5, html.escape(file_heading))
+                        doc.add_heading(5, html.escape(file_heading),
+                                        html_identifier=True)
 
                     write_item_box_begin(doc, item)
                     if isinstance(item, Requirement) and item.status:
@@ -536,6 +542,7 @@ def write_html(fd, report, dot, high_contrast, render_md):
                     write_item_box_end(doc, item)
             else:
                 doc.add_line("No items recorded at this level.")
+        doc.add_line("</div>")  # Closing tag for detailed-report-<title>
     # Closing tag for id #search-sec-id
     doc.add_line("</div>")
 

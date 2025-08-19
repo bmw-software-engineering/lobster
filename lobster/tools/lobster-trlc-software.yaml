@@ -1,0 +1,8 @@
+conversion-rules:
+  - package: req
+    record-type: Software_Requirement
+    namespace: req
+    description-fields:
+      - description
+    tags:
+      - derived_from

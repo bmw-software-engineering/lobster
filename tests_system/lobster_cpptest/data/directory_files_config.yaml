@@ -1,7 +1,5 @@
-output:
-  directory_files.lobster:
-    markers: ["@requirement"]
-    kind: "req"
+output_file: "directory_files.lobster"
+kind: "req"
 files:
   - cpp_test_files
   - 1_reference.cpp

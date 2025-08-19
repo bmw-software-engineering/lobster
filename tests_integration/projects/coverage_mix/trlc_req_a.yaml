@@ -4,4 +4,8 @@ inputs :
   - req_b.trlc
   - test_spec.trlc
 
-trlc_config_file : "trlc_req_a.conf"
+conversion-rules:
+  - package: coverage_mix
+    record-type: Requirement_A
+    namespace: req
+    description-fields: text

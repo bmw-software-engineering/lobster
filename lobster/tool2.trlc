@@ -1,0 +1,14 @@
+package req
+
+req.Software_Requirement Lines_In_Inputs_File {
+    description = """
+        Each line in the specified file shall be interpreted as a path,
+        with the following restrictions:
+        - trailing whitespace is ignored
+        - empty lines are ignored
+        - characters after a '#' are ignored (they are meant to be comments)
+
+        The function read_commented_file shall process the specified file and return a list
+        of lines.
+    """
+}

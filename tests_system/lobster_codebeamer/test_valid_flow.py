@@ -3,7 +3,7 @@ from flask import Response
 from tests_system.lobster_codebeamer.lobster_codebeamer_system_test_case_base import (
     LobsterCodebeamerSystemTestCaseBase)
 from tests_system.lobster_codebeamer.lobster_codebeamer_asserter import LobsterCodebeamerAsserter
-from tests_system.lobster_codebeamer.mock_server_setup import start_mock_server, get_mock_app
+from tests_system.lobster_codebeamer.mock_server_setup import get_mock_app
 
 
 class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
@@ -12,7 +12,6 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
 
     @classmethod
     def setUpClass(cls):
-        start_mock_server()
         cls.codebeamer_flask = get_mock_app()
 
     def setUp(self):
@@ -72,6 +71,9 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out()
         cfg.import_query = 424242
+        cfg.out = "refs_tracing_tag.lobster"
+        self._test_runner.declare_output_file(
+            self._data_directory / self._test_runner.config_file_data.out)
         self._test_runner.config_file_data.refs = ["Wife", "Husband"]
 
         response_data = {
@@ -114,6 +116,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         asserter.assertStdOutNumAndFile(
             num_items=len(response_data['items']),
             page_size=1,
+            out_file=cfg.out,
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()

@@ -1,0 +1,68 @@
+package output_correctness_test
+
+/* Note:
+   This file provides a set of unique test items.
+   Each value of each item is unique and not used by other items.
+   Boolean values are exceptions, as they can only be true or false, or missing.
+ */
+
+TheReference Target2 {}
+TheReference Target3a {}
+TheReference Target3b {}
+
+TheType Instance0 {
+    /* This is an empty TRLC item.
+       The test shall show that the corresponding LOBSTER item will not be 
+       polluted with wrong data (e.g. from other items)
+    */
+}
+
+TheType Instance1 {
+    string = "string-value-1"
+    decimal = 1.1
+    boolean = true
+    integer = -1
+    strings = ["string-value-1a", "string-value-1b"]
+    decimals = [1.1, 1.2]
+    booleans = [true]
+    integers = [1, 10]
+    references = []
+}
+
+TheType Instance2 {
+    string = "string-value-2"
+    decimal = 2.1
+    boolean = false
+    integer = -2
+    strings = ["string-value-2a", "string-value-2b", "string-value-2c"]
+    decimals = [2.1, 2.2, 2.3]
+    booleans = [false, true]
+    integers = [2, 20, 200]
+    references = [Target2]
+}
+
+TheType Instance3 {
+    string = "string-value-3"
+    decimal = 3.1
+    boolean = true
+    integer = -3
+    strings = [
+        "string-value-3a",
+        "string-value-3b",
+        "string-value-3c",
+        "string-value-3d",
+    ]
+    decimals = [
+        3.1,
+        3.2,
+        3.3,
+        3.4
+    ]
+    booleans = [
+        true,
+        false,
+        true,
+    ]
+    integers = [3, 30, 300, 3000]
+    references = [Target3a, Target3b]
+}

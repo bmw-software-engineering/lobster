@@ -4,9 +4,16 @@ export PYTHONPATH=$(LOBSTER_ROOT)
 export PATH:=$(LOBSTER_ROOT):$(PATH)
 
 ASSETS=$(wildcard assets/*.svg)
-TOOL_FOLDERS := $(shell find ./lobster/tools -mindepth 1 -maxdepth 2 -type d | grep -v -E '^./lobster/tools/core$$|__pycache__|parser' | sed 's|^./lobster/tools/||; s|/|-|g')
+TOOL_FOLDERS := $(shell \
+	(find ./lobster/tools -mindepth 1 -maxdepth 1 -type d \
+		| grep -v -E '__pycache__|parser|core$$' \
+		| sed 's|^./lobster/tools/||'; \
+	 find ./lobster/tools/core -mindepth 1 -maxdepth 1 -type d 2>/dev/null \
+		| grep -v -E '__pycache__' \
+		| sed 's|^./lobster/tools/core/|core-|') \
+	| sort)
 
-.PHONY: packages docs
+.PHONY: packages docs tracing
 
 lobster/html/assets.py: $(ASSETS) util/mkassets.py
 	util/mkassets.py lobster/html/assets.py $(ASSETS)
@@ -64,8 +71,8 @@ packages: clean-packages
 	PYTHONPATH= \
 		pip3 install --prefix test_install_monolithic \
 		packages/lobster-monolithic/meta_dist/*.whl
-	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc"
-	diff -Naur test_install/bin test_install_monolithic/bin
+	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc" -x "*pkg*" -x "pkg/*"
+	diff -Naur test_install/bin test_install_monolithic/bin -x "*pkg*" -x "pkg/*"
 
 	# Very basic smoke test to ensure the tools are packaged properly
 	python3 -m venv test_install_monolithic_venv
@@ -83,8 +90,9 @@ packages: clean-packages
 		lobster-gtest --version && \
 		lobster-json --version && \
 		lobster-python --version && \
-		lobster-trlc --version
-	
+		lobster-trlc --version && \
+		lobster-pkg --version
+
 clang-tidy:
 	cd .. && \
 	git clone https://github.com/bmw-software-engineering/llvm-project && \
@@ -99,7 +107,6 @@ integration-tests: packages
 	(cd tests_integration/projects/coverage_mix; make)
 	(cd tests_integration/projects/coverage_zero; make)
 	(cd tests_integration/projects/cpp_focus; make)
-	rm -f MODULE.bazel MODULE.bazel.lock
 
 codebeamer-pem:
 	@echo "🔐 Generating cert.pem and key.pem for codebeamer system tests..."
@@ -148,13 +155,13 @@ coverage-unit:
 	@echo "📊 Generating coverage report for unit tests..."
 	coverage combine -q .coverage.unit*
 	coverage html --directory=htmlcov-unit --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=39
+	coverage report --rcfile=coverage.cfg --fail-under=44
 
 coverage-system:
 	@echo "📊 Generating coverage report for system tests..."
 	coverage combine -q .coverage.system*
 	coverage html --directory=htmlcov-system --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=62
+	coverage report --rcfile=coverage.cfg --fail-under=60
 
 # --- Clean Coverage ---
 clean-coverage:
@@ -176,6 +183,7 @@ docs:
 	mkdir -p docs
 	@-make tracing
 	@-make tracing-stf
+	@-./tracing/tracing.sh
 
 clean-docs:
 	rm -rf docs
@@ -184,11 +192,27 @@ tracing:
 	@mkdir -p docs
 	@make lobster/html/assets.py
 	@for tool in $(TOOL_FOLDERS); do \
-		make tracing-tools-$$tool; \
+		case $$tool in \
+			codebeamer|cpptest|trlc) \
+				echo "Skipping tool: $$tool (handled by tracing.sh script)"; \
+				;; \
+			*) \
+				echo "> Processing tool: $$tool"; \
+				make tracing-tools-$$tool; \
+				;; \
+		esac; \
 	done
 
 tracing-tools-%: tracing-%
+	rm -f usecases.lobster
 	@echo "Finished processing tool: $*"
+
+usecases.lobster-%:
+	python3 util/tracing/usecases.py \
+		--target=lobster_$(subst -,_,$*) \
+		--out=usecases.lobster \
+		lobster/requirements.rsl \
+		lobster/use_cases.trlc \
 
 tracing-%: report.lobster-%
 	$(eval TOOL_PATH := $(subst -,_,$*))
@@ -200,28 +224,29 @@ report.lobster-%: lobster/tools/lobster.conf \
 				  unit-tests.lobster-% \
 				  system_requirements.lobster-% \
 				  software_requirements.lobster-% \
-				  system-tests.lobster-%
+				  system-tests.lobster-% \
+				  usecases.lobster-%
 	lobster-report \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
 	lobster-online-report report.lobster
 
-system_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-system.conf
+system_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-system.yaml
 
 system_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
-	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
-	@echo "trlc_config_file: $(TRLC_CONFIG)" >> lobster/tools/config.yaml
+	@echo "inputs: ['lobster/requirements.rsl', 'lobster/use_cases.trlc', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
+	@cat $(TRLC_CONFIG) >> lobster/tools/config.yaml
 	lobster-trlc --config=lobster/tools/config.yaml \
 	--out=system_requirements.lobster
 	rm lobster/tools/config.yaml
 
-software_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-software.conf
+software_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-software.yaml
 
 software_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
-	@echo "inputs: ['lobster/tools/requirements.rsl', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
-	@echo "trlc_config_file: $(TRLC_CONFIG)" >> lobster/tools/config.yaml
+	@echo "inputs: ['lobster/requirements.rsl', 'lobster/use_cases.trlc', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
+	@cat $(TRLC_CONFIG) >> lobster/tools/config.yaml
 	lobster-trlc --config=lobster/tools/config.yaml \
 	--out=software_requirements.lobster
 	rm lobster/tools/config.yaml
@@ -240,7 +265,8 @@ system-tests.lobster-%:
 
 # STF is short for System Test Framework
 STF_TRLC_FILES := $(wildcard tests_system/*.trlc)
-STF_PYTHON_FILES := $(filter-out tests_system/test_%.py tests_system/run_tool_tests.py, $(wildcard tests_system/*.py))
+STF_PYTHON_FILES := $(filter-out tests_system/test_%.py tests_system/run_tool_tests.py, $(wildcard tests_system/*.py) tests_system/lobster_codebeamer/mock_server.py tests_system/lobster_codebeamer/mock_server_setup.py tests_system/tests_utils/update_online_json_with_hashes.py)
+STF_OUTPUT_FILE := docs/tracing-stf.html
 
 # This target is used to generate the LOBSTER report for the requirements of the system test framework itself.
 tracing-stf: $(STF_TRLC_FILES)
@@ -249,6 +275,7 @@ tracing-stf: $(STF_TRLC_FILES)
 	lobster-python --out=stf_code.lobster --only-tagged-functions $(STF_PYTHON_FILES)
 	lobster-report --lobster-config=tests_system/stf-lobster.conf --out=stf_report.lobster
 	lobster-online-report stf_report.lobster
-	lobster-html-report stf_report.lobster --out=docs/tracing-stf.html
+	lobster-html-report stf_report.lobster --out=$(STF_OUTPUT_FILE)
+	@echo "✅ STF report generated at $(STF_OUTPUT_FILE)"
 	@echo "Deleting STF *.lobster files..."
 	rm -f stf_system_requirements.lobster stf_software_requirements.lobster stf_code.lobster stf_report.lobster

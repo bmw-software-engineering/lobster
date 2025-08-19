@@ -1,2 +1,9 @@
-inputs: ['lobster/tools/requirements.rsl', 'tests_system/system_test_framework.trlc']
-trlc_config_file: 'lobster\tools\lobster-trlc-software.conf'
+inputs: ['lobster/requirements.rsl', 'tests_system/system_test_framework.trlc']
+conversion-rules:
+  - package: req
+    record-type: Software_Requirement
+    namespace: req
+    description-fields:
+      - description
+    tags:
+      - derived_from

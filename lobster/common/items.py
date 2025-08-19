@@ -117,12 +117,12 @@ class Item(metaclass=ABCMeta):
         assert isinstance(level, str)
         self.level = level
 
-    def error(self, message):
+    def error(self, message: str):
         assert isinstance(message, str)
         self.messages.append(message)
         self.has_error = True
 
-    def add_tracing_target(self, target):
+    def add_tracing_target(self, target: Tracing_Tag):
         assert isinstance(target, Tracing_Tag)
         if target.key() in self.unresolved_references_cache:
             return
@@ -146,20 +146,20 @@ class Item(metaclass=ABCMeta):
 
         # Check up references
         ok_up = True
-        if level["needs_tracing_up"]:
+        if level.needs_tracing_up:
             if not has_up_ref and not has_just_up:
                 ok_up = False
                 self.messages.append("missing up reference")
 
         # Check set of down references
         ok_down = True
-        if level["needs_tracing_down"]:
+        if level.needs_tracing_down:
             has_trace = {name : False
                          for name in config
-                         if self.level in config[name]["traces"]}
+                         if self.level in config[name].traces}
             for ref in self.ref_down:
                 has_trace[stab[ref.key()].level] = True
-            for chain in level["breakdown_requirements"]:
+            for chain in level.breakdown_requirements:
                 if not any(has_trace[src] for src in chain) and \
                    not has_just_down:
                     ok_down = False
@@ -175,8 +175,8 @@ class Item(metaclass=ABCMeta):
             else:
                 self.tracing_status = Tracing_Status.OK
         elif (ok_up or ok_down) and \
-             level["needs_tracing_up"] and \
-             level["needs_tracing_down"]:
+             level.needs_tracing_up and \
+             level.needs_tracing_down:
             self.tracing_status = Tracing_Status.PARTIAL
         else:
             self.tracing_status = Tracing_Status.MISSING

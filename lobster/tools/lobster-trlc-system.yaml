@@ -1,0 +1,13 @@
+conversion-rules:
+  - package: req
+    record-type: System_Requirement
+    namespace: req
+    description-fields:
+      - description
+  - package: req
+    record-type: System_Requirement_Aspect
+    namespace: req
+    description-fields:
+      - description
+    justification-down-fields:
+      - not_tested_reason

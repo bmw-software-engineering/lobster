@@ -1,3 +1,10 @@
 inputs :
   - fruit.rsl
   - fruit.trlc
+
+conversion-rules:
+  - package: fruits
+    record-type: FruityRequirement
+    namespace: req
+    description-fields:
+      - description

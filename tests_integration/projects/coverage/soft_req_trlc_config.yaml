@@ -1,6 +1,12 @@
-inputs :
+inputs:
   - example.rsl
   - softreq_example.trlc
   - sysreq_example.trlc
 
-trlc_config_file : "trlc-softreq.conf"
+conversion-rules:
+  - package: coverage_example
+    record-type: Software_Requirement
+    namespace: req
+    description-fields: text
+    tags:
+    - derived_from

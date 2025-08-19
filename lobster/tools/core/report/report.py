@@ -18,7 +18,6 @@
 # <https://www.gnu.org/licenses/>.
 
 from argparse import Namespace
-import os
 import sys
 
 from lobster.common.exceptions import LOBSTER_Exception
@@ -46,30 +45,29 @@ class ReportTool(MetaDataToolBase):
         )
 
     def _run_impl(self, options: Namespace) -> int:
-        if not os.path.isfile(options.lobster_config):
-            print(f"error: cannot read config file '{options.lobster_config}'")
-            return 1
-
-        if os.path.exists(options.out) and not os.path.isfile(options.out):
-            print(f"error: cannot write to '{options.out}'")
-            print(f"error: '{options.out}' exists and is not a file")
-            return 1
 
         report = Report()
 
         try:
             report.parse_config(options.lobster_config)
-        except LOBSTER_Error:
+            report.write_report(options.out)
+            return 0
+        except FileNotFoundError as e:
+            print(e)
+        except LOBSTER_Error as e:
+            print(e)
             print(f"{self.name}: aborting due to earlier errors.")
-            return 1
         except LOBSTER_Exception as err:
-            print(f"{self.name}: aborting due to earlier errors.")
-            print(f"{self.name}: Additional data for debugging:")
             err.dump()
-            return 1
 
-        report.write_report(options.out)
-        return 0
+        return 1
+
+
+def generate_report_file(lobster_config_file: str, output_file: str) -> dict:
+    # This is an API function to run the lobster report tool
+    report = Report()
+    report.parse_config(lobster_config_file)
+    report.write_report(output_file)
 
 
 def main() -> int:

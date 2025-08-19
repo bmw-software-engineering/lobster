@@ -1,7 +1,14 @@
-inputs :
+inputs:
   - example.rsl
   - req_a.trlc
   - req_b.trlc
   - test_spec.trlc
 
-trlc_config_file : "trlc_test_spec.conf"
+conversion-rules:
+  - package: coverage_mix
+    record-type: Test_Specification
+    namespace: req
+    description-fields: text
+    justification-up-fields: just_up
+    justification-down-fields: just_down
+    tags: [verifies]

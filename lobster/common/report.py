@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2023-2024 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -17,11 +17,11 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-import os.path
 import json
 from collections import OrderedDict
 from dataclasses import dataclass
 
+from lobster.common.level_definition import LevelDefinition
 from lobster.common.items import Tracing_Status, Requirement, Implementation, Activity
 from lobster.common.parser import load as load_config
 from lobster.common.errors import Message_Handler
@@ -56,15 +56,13 @@ class Report:
         -------
 
         """
-        assert isinstance(filename, str)
-        assert os.path.isfile(filename)
 
         # Load config
         self.config = load_config(self.mh, filename)
 
         # Load requested files
         for level in self.config:
-            for source in self.config[level]["source"]:
+            for source in self.config[level].source:
                 lobster_read(self.mh, source["file"], level, self.items,
                              source)
 
@@ -120,17 +118,16 @@ class Report:
                 self.coverage[item.level].ok += 1
 
     def write_report(self, filename):
-        assert isinstance(filename, str)
 
         levels = []
         for level_config in self.config.values():
             level = {
-                "name"     : level_config["name"],
-                "kind"     : level_config["kind"],
+                "name"     : level_config.name,
+                "kind"     : level_config.kind,
                 "items"    : [item.to_json()
                               for item in self.items.values()
-                              if item.level == level_config["name"]],
-                "coverage" : self.coverage[level_config["name"]].coverage
+                              if item.level == level_config.name],
+                "coverage" : self.coverage[level_config.name].coverage
             }
             levels.append(level)
 
@@ -139,7 +136,8 @@ class Report:
             "version"   : 2,
             "generator" : "lobster_report",
             "levels"    : levels,
-            "policy"    : self.config,
+            "policy"    : {key: value.to_json()
+                           for key, value in self.config.items()},
             "matrix"    : [],
         }
 
@@ -148,7 +146,6 @@ class Report:
             fd.write("\n")
 
     def load_report(self, filename):
-        assert isinstance(filename, str)
 
         loc = File_Reference(filename)
 
@@ -169,7 +166,7 @@ class Report:
         self.validate_indicated_schema(data, loc)
 
         # Validate and parse custom data
-        self.validate_and_parse_custom_data(data, loc)
+        self.parse_custom_data(data)
 
         # Read in data
         self.compute_items_and_coverage_for_items(data)
@@ -185,11 +182,11 @@ class Report:
         -------
 
         """
-        self.config = data["policy"]
+        self.config = {key: LevelDefinition.from_json(value)
+                       for key, value in data["policy"].items()}
         for level in data["levels"]:
-            assert level["name"] in self.config, (
-                f"level '{level['name']}' not found in config"
-            )
+            if level["name"] not in self.config:
+                raise KeyError(f"level '{level['name']}' not found in config")
             coverage = Coverage(
                 level=level["name"], items=0, ok=0, coverage=level["coverage"]
             )
@@ -205,9 +202,8 @@ class Report:
                                                     item_data,
                                                     3)
                 else:
-                    assert level["kind"] == "activity", (
-                        f"unknown level kind '{level['kind']}'"
-                    )
+                    if level["kind"] != "activity":
+                        raise ValueError(f"unknown level kind '{level['kind']}'")
                     item = Activity.from_json(level["name"],
                                               item_data,
                                               3)
@@ -218,33 +214,8 @@ class Report:
                                            Tracing_Status.JUSTIFIED):
                     self.coverage[item.level].ok += 1
 
-    def validate_and_parse_custom_data(self, data, loc):
-        """
-        Function validates the optional 'custom_data' field in the lobster report.
-        Ensures that if present, it is a dictionary with string keys and string values.
-
-        Parameters
-        ----------
-        data - contents of lobster json file.
-        loc  - location from where the error was raised.
-
-        Returns - Nothing
-        -------
-        """
+    def parse_custom_data(self, data):
         self.custom_data = data.get('custom_data', None)
-        if self.custom_data:
-            if not isinstance(self.custom_data, dict):
-                self.mh.error(loc, "'custom_data' must be an object (dictionary).")
-
-            for key, value in self.custom_data.items():
-                if not isinstance(key, str):
-                    self.mh.error(loc,
-                                  f"Key in 'custom_data' must be a "
-                                  f"string, got {type(key).__name__}.")
-                if not isinstance(value, str):
-                    self.mh.error(loc,
-                                  f"Value for key '{key}' in 'custom_data' "
-                                  f"must be a string, got {type(value).__name__}.")
 
     def validate_indicated_schema(self, data, loc):
         """

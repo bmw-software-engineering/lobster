@@ -72,6 +72,11 @@ class Asserter:
            output files.
         """
         # lobster-trace: system_test.Compare_Output_Files
+        if not self._test_runner.tool_output_files:
+            self._test_case.fail(
+                "Invalid test setup: No expected output files have been registered."
+            )
+
         for expected_file_ref in self._test_runner.tool_output_files:
             expected_location = self._test_runner.working_dir / expected_file_ref.name
             try:
