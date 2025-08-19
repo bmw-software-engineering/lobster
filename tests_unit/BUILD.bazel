@@ -59,3 +59,9 @@ py_test(
         requirement("pyyaml"),
     ],
 )
+
+py_test(
+    name = "test_tool2",
+    srcs = ["test_tool2.py"],
+    deps = ["//lobster/common"],
+)

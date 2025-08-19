@@ -17,6 +17,7 @@ _mapping = {
     "trlc": "@trlc//:lib",
     "urllib3": "@urllib3//:lib",
     "webdriver-manager": "@webdriver_manager//:lib",
+    "yamale": "@yamale//:lib",
 }
 
 def requirement(requested):

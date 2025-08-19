@@ -6,12 +6,27 @@ load("//:requirements.bzl", "requirement")
 
 py_library(
     name = "trlc",
-    srcs = ["trlc.py"],
+    srcs = [
+        "conversion_rule.py",
+        "conversion_rule_lookup.py",
+        "converter.py",
+        "errors.py",
+        "hierarchy_tree.py",
+        "instruction.py",
+        "item_wrapper.py",
+        "lobster_trlc_config.py",
+        "tag_entry.py",
+        "text_generation.py",
+        "to_string_rules.py",
+        "trlc.py",
+    ],
     visibility = [
         "//visibility:public",
     ],
     deps = [
         "//lobster/common",
+        requirement("pyyaml"),
         requirement("trlc"),
+        requirement("yamale"),
     ],
 )

@@ -66,3 +66,37 @@ py_test(
         "//tests_system",
     ],
 )
+
+py_test(
+    name = "test_conversion",
+    srcs = ["test_conversion.py"],
+)
+
+py_test(
+    name = "test_conversion_errors",
+    srcs = ["test_conversion_errors.py"],
+)
+
+py_test(
+    name = "test_inputs_from_directory",
+    srcs = ["test_inputs_from_directory.py"],
+    deps = [
+        ":lobster_trlc",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_inputs_zero",
+    srcs = ["test_inputs_zero.py"],
+)
+
+py_test(
+    name = "test_invalid_config",
+    srcs = ["test_invalid_config.py"],
+)
+
+py_test(
+    name = "test_output_correctness",
+    srcs = ["test_output_correctness.py"],
+)

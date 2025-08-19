@@ -12,6 +12,7 @@ py_binary(
     ],
     deps = [
         requirement("flask"),
+        requirement("requests"),
     ],
 )
 
@@ -34,6 +35,7 @@ py_library(
         "//tests_system",
         requirement("flask"),
         requirement("pyyaml"),
+        requirement("requests"),
     ],
 )
 
