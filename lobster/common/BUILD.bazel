@@ -38,7 +38,6 @@ py_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//lobster/tools/trlc",
         requirement("pyyaml")
     ],
 )
