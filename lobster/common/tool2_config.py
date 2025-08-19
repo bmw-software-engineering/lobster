@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Iterable, List, Type, Union
 from re import Pattern
 
-from lobster.items import Activity, Implementation, Requirement
+from lobster.common.items import Activity, Implementation, Requirement
 
 
 @dataclass

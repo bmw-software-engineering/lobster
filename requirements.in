@@ -12,3 +12,4 @@ selenium
 setuptools
 trlc>=2.0.1
 webdriver-manager
+yamale>=6.0.0

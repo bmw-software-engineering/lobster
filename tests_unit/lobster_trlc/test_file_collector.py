@@ -1,6 +1,6 @@
 from os import path
 from unittest import TestCase
-from lobster.file_collector import FileCollector
+from lobster.common.file_collector import FileCollector
 from lobster.tools.trlc.errors import PathError
 
 

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from lobster.tool2 import select_non_comment_parts
+from lobster.common.tool2 import select_non_comment_parts
 
 
 class LobsterToolTest(TestCase):

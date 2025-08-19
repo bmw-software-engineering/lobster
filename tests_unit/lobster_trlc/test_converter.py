@@ -1,8 +1,8 @@
 import operator
 from typing import List, Optional
 
-from lobster.items import Requirement, Tracing_Tag
-from lobster.location import Location
+from lobster.common.items import Requirement, Tracing_Tag
+from lobster.common.location import Location
 from lobster.tools.trlc.conversion_rule import ConversionRule
 from lobster.tools.trlc.converter import Converter
 from lobster.tools.trlc.errors import (

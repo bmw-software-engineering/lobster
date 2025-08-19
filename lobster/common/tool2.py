@@ -19,12 +19,12 @@ import os
 
 from abc import ABCMeta
 from typing import Iterable, List, Type, Union
-from lobster.errors import Message_Handler
-from lobster.items import Requirement, Implementation, Activity
-from lobster.io import lobster_write
-from lobster.meta_data_tool_base import MetaDataToolBase
-from lobster.tool2_config import Config
-from lobster.file_collector import FileCollector
+from lobster.common.errors import Message_Handler
+from lobster.common.items import Requirement, Implementation, Activity
+from lobster.common.io import lobster_write
+from lobster.common.meta_data_tool_base import MetaDataToolBase
+from lobster.common.tool2_config import Config
+from lobster.common.file_collector import FileCollector
 
 
 def read_commented_file(file: str) -> List[str]:

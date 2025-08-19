@@ -25,4 +25,4 @@ def requirement(requested):
         return mapping
     if requested in _mapping:
         return _mapping[requested]
-    return "<UNHANDLED MAPPING for '" + requested + "' in third_party/requirements.bzl>"
+    return "<UNHANDLED MAPPING for '" + requested + "' in requirements.bzl>"

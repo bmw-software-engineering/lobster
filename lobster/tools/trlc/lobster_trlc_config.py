@@ -5,10 +5,10 @@ from typing import List
 import yamale
 import yaml
 
-from lobster.items import Requirement
+from lobster.common.items import Requirement
 from lobster.tools.trlc.conversion_rule import ConversionRule
 from lobster.tools.trlc.to_string_rules import ToStringRules
-from lobster.tool2_config import Config
+from lobster.common.tool2_config import Config
 
 
 @dataclass

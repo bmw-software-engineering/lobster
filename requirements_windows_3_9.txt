@@ -11,3 +11,4 @@ build>=1.2.0
 selenium
 webdriver-manager
 flask
+yamale>=6.0.0

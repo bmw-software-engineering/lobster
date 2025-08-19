@@ -152,7 +152,3 @@ class GtestTool(MetaDataToolBase):
 
 def main() -> int:
     return GtestTool().run()
-
-
-if __name__ == "__main__":
-    sys.exit(main())
