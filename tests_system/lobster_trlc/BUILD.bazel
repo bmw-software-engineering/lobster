@@ -59,8 +59,8 @@ py_test(
 )
 
 py_test(
-    name = "test_inputs_from_working_directory",
-    srcs = ["test_inputs_from_working_directory.py"],
+    name = "test_conversion",
+    srcs = ["test_conversion.py"],
     deps = [
         ":lobster_trlc",
         "//tests_system",
@@ -68,13 +68,12 @@ py_test(
 )
 
 py_test(
-    name = "test_conversion",
-    srcs = ["test_conversion.py"],
-)
-
-py_test(
     name = "test_conversion_errors",
     srcs = ["test_conversion_errors.py"],
+    deps = [
+        ":lobster_trlc",
+        "//tests_system",
+    ],
 )
 
 py_test(
@@ -89,14 +88,26 @@ py_test(
 py_test(
     name = "test_inputs_zero",
     srcs = ["test_inputs_zero.py"],
+    deps = [
+        ":lobster_trlc",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_invalid_config",
     srcs = ["test_invalid_config.py"],
+    deps = [
+        ":lobster_trlc",
+        "//tests_system",
+    ],
 )
 
 py_test(
     name = "test_output_correctness",
     srcs = ["test_output_correctness.py"],
+    deps = [
+        ":lobster_trlc",
+        "//tests_system",
+    ],
 )
