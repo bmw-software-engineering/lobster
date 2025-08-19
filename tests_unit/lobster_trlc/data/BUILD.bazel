@@ -1,7 +1,8 @@
 filegroup(
     name = "trlc_data_unit",
     srcs = glob([
-        "*.conf",
+        "*.rsl",
+        "*.trlc",
     ]),
     visibility = ["//visibility:public"],
 )

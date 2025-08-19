@@ -120,7 +120,6 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
-        asserter.assertStdErrText('usage: lobster-cpptest [-h] [-v]'
-                                  ' [--config CONFIG]\nlobster-cpptest: error:'
-                                  ' "[\'.\']" does not contain any test file.\n')
-        asserter.assertExitCode(2)
+        asserter.assertStdErrText(
+            'lobster-cpptest: "[\'.\']" does not contain any test file.\n')
+        asserter.assertExitCode(1)
