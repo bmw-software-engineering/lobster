@@ -1,6 +1,7 @@
 import os
 import json
 import unittest
+from tempfile import TemporaryDirectory
 from os.path import dirname
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -26,10 +27,10 @@ class LobsterPkgTests(unittest.TestCase):
         self.test_pkg_file_2 = str(Path(dirname(__file__), "data", "sample2.pkg"))
         self.test_fake_file = str(Path(dirname(__file__), "data", "not_existing.pkg"))
 
-        self.output_pkg_file_1 = "sample1.lobster"
-        self.output_pkg_file_2 = "sample2.lobster"
+        self.temp_dir = TemporaryDirectory() # pylint: disable=R1732
 
-        self.output_file_names = [self.output_pkg_file_1, self.output_pkg_file_2]
+        self.output_pkg_file_1 = os.path.join(self.temp_dir.name, "sample1.lobster")
+        self.output_pkg_file_2 = os.path.join(self.temp_dir.name, "sample2.lobster")
 
     def test_get_valid_files(self):
         test_cases = [
@@ -148,9 +149,7 @@ class LobsterPkgTests(unittest.TestCase):
 
 
     def tearDown(self):
-        for output_file in self.output_file_names:
-            if os.path.exists(output_file):
-                os.remove(output_file)
+        self.temp_dir.cleanup()
 
 
 if __name__ == '__main__':
