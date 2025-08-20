@@ -1,0 +1,82 @@
+package UseCases
+import req
+
+req.TestSpecification Covered_Requirement_list_in_HTML_file{
+    description = '''
+      The test shall verify that requirements covered by software tests are correctly listed in the HTML file.
+    '''
+    verifies = [Requirements_not_listed_correctly]
+}
+
+req.TestSpecification Not_covered_Requirement_list_in_Output{
+    description = '''
+      The test shall verify that requirements not covered by software tests are correctly listed in the HTML file.
+    '''
+    verifies = [Requirements_not_listed_correctly]
+}
+
+req.TestSpecification List_of_Software_tests_covering_requirements_in_HTML_file{
+    description = '''
+      The test shall verify that software tests covering requirement are correctly listed in the HTML file.
+    '''
+    verifies = [Software_tests_not_listed_correctly]
+}
+
+  req.TestSpecification List_of_Software_tests_Not_covering_requirements_in_HTML_file{
+    description = '''
+      The test shall verify that software tests not covering any requirement are correctly listed in the HTML file.
+    '''
+    verifies = [Software_tests_not_listed_correctly]
+}
+
+req.TestSpecification Mapping_in_HTML_file{
+    description = '''
+      The test shall verify that mapping between requirements and software tests is correct in HTML file.
+    '''
+    verifies = [Incorrect_mapping_in_HTML_File]
+}
+
+req.TestSpecification HTML_file_generation{
+    description = '''
+      The test shall verify that HTML report file is generated.
+    '''
+    verifies = [HTML_report_not_Generated]
+}
+
+req.TestSpecification Source_location_in_output{
+    description = '''
+      The test shall verify that correct source locations of the input files are mentioned in the HTML report.
+      
+      example: Verify HTML file contains correct source location URL from which c++ test file is taken
+    '''
+    verifies = [Input_file_location_missing, Wrong_Input_file_location]
+}
+
+req.TestSpecification readable_data_in_output{
+    description = '''
+      The test shall verify html report contains readable data.
+
+      example : Verify the context is in human readable format.
+    '''
+    verifies = [Incorrect_syntax_in_HTML_report]
+}
+
+req.TestSpecification Missing_tracing_policy_violation_in_output{
+    description = '''
+      The test shall verify items where tracing policy is violated are listed correctly.
+
+      example: Finding shall be listed under violation of tracing policy if requirement reference is
+      missing in software test.
+    '''
+    verifies = [Too_few_findings_in_HTML_report]
+}
+
+req.TestSpecification Tracing_policy_in_output{
+    description = '''
+      The test shall verify correct tracing policy is mentioned in the HTML report.
+
+      example: For requirements in CB and software tests in C++ files,
+      the test shall verify tracing policy between requirements and software tests is correctly shown in the HTML report. 
+    '''
+    verifies = [Wrong_tracing_policy_in_HTML_report]
+}

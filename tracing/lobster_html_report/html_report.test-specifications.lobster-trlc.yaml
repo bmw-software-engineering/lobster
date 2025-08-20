@@ -1,0 +1,12 @@
+inputs:
+  - "lobster/requirements.rsl"
+  - "lobster/use_cases.trlc"  
+  - "lobster/tools/core/html_report"
+conversion-rules:
+  - package: req
+    record-type: TestSpecification
+    namespace: req
+    description-fields:
+      - description
+    tags:
+      - verifies
