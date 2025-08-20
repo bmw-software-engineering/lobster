@@ -1,11 +1,16 @@
 from dataclasses import dataclass
 from typing import Tuple, Type
-from tests_system.lobster_meta_data_tool_base.lobster_meta_data_tool_base_system_test_case_base import (
-    LobsterMetaDataToolBaseSystemTestCaseBase,
-)
-from tests_system.lobster_meta_data_tool_base.lobster_meta_data_tool_base_asserters import (
-    SpecialAsserter, HelpAsserter, VersionAsserter, IMPLEMENTATION_MESSAGE
-)
+from tests_system.lobster_meta_data_tool_base.\
+    lobster_meta_data_tool_base_system_test_case_base import (
+        LobsterMetaDataToolBaseSystemTestCaseBase
+    )
+from tests_system.lobster_meta_data_tool_base.\
+    lobster_meta_data_tool_base_asserters import (
+        SpecialAsserter,
+        HelpAsserter,
+        VersionAsserter,
+        IMPLEMENTATION_MESSAGE
+    )
 from tests_system.asserter import Asserter
 
 

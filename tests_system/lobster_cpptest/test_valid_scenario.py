@@ -1,7 +1,9 @@
 from pathlib import Path
-from tests_system.lobster_cpptest.lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
+from tests_system.lobster_cpptest.\
+    lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
 from tests_system.asserter import Asserter
-from tests_system.tests_utils.update_cpptest_expected_output import update_cpptest_output_file
+from tests_system.tests_utils.\
+    update_cpptest_expected_output import update_cpptest_output_file
 
 
 class InputFileCpptestTest(LobsterCpptestSystemTestCaseBase):

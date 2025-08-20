@@ -1,4 +1,5 @@
-from tests_system.lobster_trlc.lobster_system_test_case_base import LobsterTrlcSystemTestCaseBase
+from tests_system.lobster_trlc.lobster_system_test_case_base import (
+    LobsterTrlcSystemTestCaseBase)
 from tests_system.asserter import Asserter
 
 

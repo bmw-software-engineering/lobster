@@ -2,7 +2,8 @@ import json
 from flask import Response
 from tests_system.lobster_codebeamer.lobster_codebeamer_system_test_case_base import (
     LobsterCodebeamerSystemTestCaseBase)
-from tests_system.lobster_codebeamer.lobster_codebeamer_asserter import LobsterCodebeamerAsserter
+from tests_system.lobster_codebeamer.lobster_codebeamer_asserter import (
+    LobsterCodebeamerAsserter)
 from tests_system.lobster_codebeamer.mock_server_setup import get_mock_app
 
 

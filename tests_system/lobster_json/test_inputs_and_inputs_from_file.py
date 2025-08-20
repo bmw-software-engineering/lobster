@@ -1,7 +1,8 @@
 from pathlib import Path
 import shutil
 from tests_system.lobster_json.lobsterjsonasserter import LobsterJsonAsserter
-from tests_system.lobster_json.lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
+from tests_system.lobster_json.\
+    lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
 
 
 class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):

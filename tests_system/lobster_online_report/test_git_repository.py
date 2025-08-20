@@ -1,6 +1,8 @@
 from pathlib import Path
-from tests_system.lobster_online_report.lobster_online_report_system_test_case_base import (
-    LobsterOnlineReportSystemTestCaseBase)
+from tests_system.lobster_online_report.\
+    lobster_online_report_system_test_case_base import (
+        LobsterOnlineReportSystemTestCaseBase
+    )
 from tests_system.asserter import Asserter
 from tests_system.tests_utils.update_online_json_with_hashes import update_json
 

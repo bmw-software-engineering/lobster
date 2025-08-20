@@ -30,11 +30,12 @@ import markdown
 from lobster.htmldoc import htmldoc
 from lobster.common.report import Report
 from lobster.common.location import (Void_Reference,
-                              File_Reference,
-                              Github_Reference,
-                              Codebeamer_Reference)
+                                     File_Reference,
+                                     Github_Reference,
+                                     Codebeamer_Reference)
 from lobster.common.items import (Tracing_Status, Item,
-                           Requirement, Implementation, Activity)
+                                  Requirement, Implementation,
+                                  Activity)
 from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
@@ -614,4 +615,3 @@ class HtmlReportTool(MetaDataToolBase):
 
 def main() -> int:
     return HtmlReportTool().run()
-

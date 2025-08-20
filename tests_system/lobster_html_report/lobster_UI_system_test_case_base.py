@@ -1,5 +1,6 @@
 from pathlib import Path
-from tests_system.lobster_html_report.lobster_UI_test_runner import LobsterUITestRunner
+from tests_system.lobster_html_report.\
+    lobster_UI_test_runner import LobsterUITestRunner
 from tests_system.system_test_case_base import SystemTestCaseBase
 
 

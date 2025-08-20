@@ -1,5 +1,6 @@
 from pathlib import Path
-from tests_system.lobster_cpptest.lobster_cpptest_test_runner import LobsterCpptestTestRunner
+from tests_system.lobster_cpptest.\
+    lobster_cpptest_test_runner import LobsterCpptestTestRunner
 from tests_system.system_test_case_base import SystemTestCaseBase
 
 

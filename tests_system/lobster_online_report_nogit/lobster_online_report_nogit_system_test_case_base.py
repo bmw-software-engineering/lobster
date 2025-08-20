@@ -1,5 +1,6 @@
 from pathlib import Path
-from tests_system.lobster_online_report_nogit.lobster_online_report_nogit_test_runner import LobsterOnlineReportNogitTestRunner
+from tests_system.lobster_online_report_nogit.\
+    lobster_online_report_nogit_test_runner import LobsterOnlineReportNogitTestRunner
 from tests_system.system_test_case_base import SystemTestCaseBase
 
 
