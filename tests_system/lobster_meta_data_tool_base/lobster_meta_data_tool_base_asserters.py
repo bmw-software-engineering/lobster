@@ -6,13 +6,21 @@ from tests_system.asserter import Asserter
 IMPLEMENTATION_MESSAGE = "This is the AppleBanana tool."
 
 
-class SpecialAsserter(Asserter, metaclass=ABCMeta):
+class SpecificAsserter(Asserter, metaclass=ABCMeta):
+    """This class is an abstract base class. Implementors shall provide an
+       implementation for the `assert_result` method.
+    """
+
     @abstractmethod
     def assert_result(self):
-        pass
+        """Asserts the result of the tool execution.
+
+           This function shall assert all relevant aspects of the tool's output,
+           including stdout, stderr, and the exit code.
+        """
 
 
-class HelpAsserter(SpecialAsserter):
+class HelpAsserter(SpecificAsserter):
     def assert_result(self):
         """Assert that
           - the help message is printed correctly
@@ -43,7 +51,7 @@ class HelpAsserter(SpecialAsserter):
         self.assertExitCode(0)
 
 
-class VersionAsserter(SpecialAsserter):
+class VersionAsserter(SpecificAsserter):
     def assert_result(self):
         """Assert that
           - the version message is printed correctly

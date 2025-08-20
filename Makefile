@@ -31,7 +31,10 @@ lint-system-tests: style
 		tests_system/lobster_meta_data_tool_base \
 		tests_system/lobster_online_report \
 		tests_system/lobster_online_report_nogit \
-		tests_system/lobster_report
+		tests_system/lobster_report \
+		tests_system/lobster_trlc \
+		tests_system/lobster_cpp \
+		tests_system/lobster_gtest
 
 lint-unit-tests: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
