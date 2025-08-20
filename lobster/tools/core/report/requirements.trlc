@@ -162,3 +162,11 @@ req.System_Requirement_Aspect File_Not_Found {
     THEN the tool shall report "file not found <file_path>" and exit with a non-zero return code.
   '''
 }
+
+req.System_Requirement_Aspect Message_Trace_Coverage {
+  description = '''
+    IF an item contains a "message" and traces to another item,
+    THEN the traced item shall have 100% coverage,
+    AND the item with the message shall have 0% coverage.
+  '''
+}

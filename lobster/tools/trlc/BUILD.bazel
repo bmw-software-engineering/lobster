@@ -5,7 +5,7 @@ load("//:requirements.bzl", "requirement")
 # gazelle:exclude __init__.py
 
 py_library(
-    name = "trlc",
+    name = "trlc_tool",
     srcs = [
         "conversion_rule.py",
         "conversion_rule_lookup.py",
@@ -18,10 +18,12 @@ py_library(
         "tag_entry.py",
         "text_generation.py",
         "to_string_rules.py",
-        "trlc.py",
+        "trlc_tool.py",
     ],
-    visibility = [
-        "//visibility:public",
+    main = "trlc_tool.py",
+    visibility = ["//visibility:public"],
+    data = [
+        "schema.yamale",
     ],
     deps = [
         "//lobster/common",
