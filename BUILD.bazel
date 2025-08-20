@@ -93,7 +93,6 @@ py_library(
         "packages/lobster-tool-json/setup.py",
         "packages/lobster-tool-python/setup.py",
         "packages/lobster-tool-trlc/setup.py",
-        "tests_integration/projects/basic/nor.py",
         "util/bump_version_post_release.py",
         "util/changelog.py",
         "util/github_release.py",

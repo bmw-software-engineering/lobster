@@ -46,7 +46,6 @@ setuptools.setup(
     license="GNU Affero General Public License v3",
     packages=setuptools.find_packages(),
     package_data={
-        "lobster.tools.core.html_report":["assets/*"],
         "lobster.tools.trlc": ["*.yamale"],
     },
     install_requires=[
