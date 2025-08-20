@@ -190,7 +190,7 @@ tracing:
 	@mkdir -p docs
 	@for tool in $(TOOL_FOLDERS); do \
 		case $$tool in \
-			codebeamer|cpptest|trlc|core-report) \
+			codebeamer|cpptest|trlc|core-report|json) \
 				echo "Skipping tool: $$tool (handled by tracing.sh script)"; \
 				;; \
 			*) \
