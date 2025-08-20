@@ -1,1 +1,2 @@
 common --experimental_enable_bzlmod
+build --incompatible_default_to_explicit_init_py=true
