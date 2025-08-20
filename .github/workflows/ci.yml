@@ -191,9 +191,9 @@ jobs:
     steps:
       - uses: bazel-contrib/setup-bazel@0.15.0
         with:
-          bazelisk-cache: true
+          bazelisk-cache: false
           disk-cache: ${{ github.workflow }}
-          repository-cache: true
+          repository-cache: false
       - uses: actions/checkout@v4
       - run: bazel test //... --deleted_packages=//tests_integration/projects/cpp_focus
   failure:
