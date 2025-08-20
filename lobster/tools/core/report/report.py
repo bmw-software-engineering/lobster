@@ -18,7 +18,6 @@
 # <https://www.gnu.org/licenses/>.
 
 from argparse import Namespace
-import sys
 
 from lobster.common.exceptions import LOBSTER_Exception
 from lobster.common.errors import LOBSTER_Error
