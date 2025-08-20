@@ -4,7 +4,7 @@ from .lobster_meta_data_tool_base_system_test_case_base import (
     LobsterMetaDataToolBaseSystemTestCaseBase,
 )
 from .lobster_meta_data_tool_base_asserters import (
-    SpecialAsserter, HelpAsserter, VersionAsserter, IMPLEMENTATION_MESSAGE
+    SpecificAsserter, HelpAsserter, VersionAsserter, IMPLEMENTATION_MESSAGE
 )
 from ..asserter import Asserter
 
@@ -17,7 +17,7 @@ class ToolBaseTest(LobsterMetaDataToolBaseSystemTestCaseBase):
     @dataclass
     class ArgumentSetup:
         argument_variants: Tuple[str, str]
-        asserter_cls: Type[SpecialAsserter]
+        asserter_cls: Type[SpecificAsserter]
 
     def test_early_exit_arguments(self):
         """Test that 'help' and 'version' cmd arguments trigger early exit
