@@ -5,7 +5,7 @@ load("//:requirements.bzl", "requirement")
 # gazelle:exclude __init__.py
 
 py_library(
-    name = "trlc_tool",
+    name = "trlc",
     srcs = [
         "conversion_rule.py",
         "conversion_rule_lookup.py",
