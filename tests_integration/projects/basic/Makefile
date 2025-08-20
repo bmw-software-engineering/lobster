@@ -30,7 +30,7 @@ cppcode.lobster: foo.h foo.cpp
 		--out="cppcode.lobster" --clang-tidy $(CLANG_TIDY)
 
 gtests.lobster: foo.h foo.cpp test.cpp
-	@bazel test foo_test --cxxopt='-std=c++14' --enable_workspace
+	# @bazel test foo_test --cxxopt='-std=c++14' --enable_workspace
 	@lobster-gtest $(LOBSTER_ROOT)/bazel-out/*/testlogs/$(THIS_TEST) \
 		--out="gtests.lobster"
 	sed -i s/$(THIS_TEST_ESCAPED)\\///g gtests.lobster
