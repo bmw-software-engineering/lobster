@@ -14,8 +14,9 @@ py_binary(
         "tag_entry.py",
         "text_generation.py",
         "to_string_rules.py",
-        "trlc.py",
+        "trlc_tool.py",
     ],
+    main = "trlc_tool.py",
     visibility = ["//visibility:public"],
     data = [
         "schema.yamale",

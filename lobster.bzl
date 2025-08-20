@@ -177,8 +177,6 @@ def _lobster_gtest(ctx):
     args.add_all(["--out", lobster_gtest_trace.path])
     args.add(".")
 
-    print(ctx.attr.tests[0][OutputGroupInfo])
-
     ctx.actions.run(
         executable = ctx.executable._lobster_gtest,
         inputs = ctx.files.tests,
