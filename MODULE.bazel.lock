@@ -1938,7 +1938,7 @@
         "recordedFileInputs": {
           "@@//requirements_dev.txt": "e334b7dcc42e151776e78441d8a21ca6b2cf78644e3441832b0f1134a6b5aeef",
           "@@trlc~//requirements.txt": "b9318249d997255dc8b9f944f861ed8bf5ade7000888bc898efa8c3af978c29b",
-          "@@//requirements.txt": "0446ff5d71d47a121bd24f0cf0f0215af8d9a336492416c77c8612423052196f"
+          "@@//requirements.txt": "0a6607a4f1ff835158750ed1b5865d747af1f237e3fe99ad8f32d6d18c285c5a"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -2009,6 +2009,30 @@
                 "-r",
                 "requirements.txt"
               ],
+              "download_only": false,
+              "pip_data_exclude": [],
+              "enable_implicit_namespace_pkgs": false,
+              "environment": {},
+              "envsubst": [],
+              "group_name": "",
+              "group_deps": []
+            }
+          },
+          "lobster_dependencies_311_yamale": {
+            "bzlFile": "@@rules_python~//python/pip_install:pip_repository.bzl",
+            "ruleClassName": "whl_library",
+            "attributes": {
+              "requirement": "yamale>=6.0.0",
+              "repo": "lobster_dependencies_311",
+              "repo_prefix": "lobster_dependencies_311_",
+              "whl_patches": {},
+              "experimental_target_platforms": [],
+              "python_interpreter": "",
+              "python_interpreter_target": "@@rules_python~~python~python_3_11_host//:python",
+              "quiet": true,
+              "timeout": 600,
+              "isolated": true,
+              "extra_pip_args": [],
               "download_only": false,
               "pip_data_exclude": [],
               "enable_implicit_namespace_pkgs": false,
@@ -2310,6 +2334,9 @@
                   "3.11"
                 ],
                 "trlc": [
+                  "3.11"
+                ],
+                "yamale": [
                   "3.11"
                 ]
               },
