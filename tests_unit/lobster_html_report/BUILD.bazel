@@ -3,8 +3,11 @@ load("@rules_python//python:defs.bzl", "py_test")
 # BUILD.bazel
 # gazelle:exclude __init__.py
 
-py_test(
-    name = "test_html_report",
-    srcs = ["test_html_report.py"],
-    deps = ["//lobster/tools/core/html_report"],
-)
+# do not add "test_html_report.py" tests as long subprocess.run(git)
+# can't be called within bazel test.
+#
+# py_test(
+#     name = "test_html_report",
+#     srcs = ["test_html_report.py"],
+#     deps = ["//lobster/tools/core/html_report"],
+# )
