@@ -29,7 +29,6 @@ from trlc.trlc import Source_Manager
 
 from lobster.common.io import lobster_write
 from lobster.common.items import Requirement
-from lobster.common.location import File_Reference
 from lobster.common.tool2 import LOBSTER_Tool2
 
 from lobster.tools.trlc.converter import Converter
