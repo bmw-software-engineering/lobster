@@ -20,7 +20,6 @@ py_library(
         "to_string_rules.py",
         "trlc_tool.py",
     ],
-    main = "trlc_tool.py",
     visibility = ["//visibility:public"],
     data = [
         "schema.yamale",
