@@ -1,6 +1,7 @@
 import shutil
 
-from tests_system.lobster_json.lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
+from tests_system.lobster_json.\
+    lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
 from tests_system.lobster_json.lobsterjsonasserter import LobsterJsonAsserter
 
 
