@@ -1,8 +1,7 @@
 from os import path
 from unittest import TestCase
 from lobster.common.file_collector import FileCollector
-from lobster.tools.trlc.errors import PathError
-
+from lobster.common.exceptions import LOBSTER_Exception
 
 class FileCollectorTest(TestCase):
     def test_extension_validation(self):
@@ -26,7 +25,7 @@ class FileCollectorTest(TestCase):
         self.assertNotIn("test.chisel", collector.files)
 
         # Test adding files with invalid extensions and throwing an error
-        with self.assertRaises(PathError) as context:
+        with self.assertRaises(LOBSTER_Exception) as context:
             collector.add_file("test.grinder", throw_on_mismatch=True)
         self.assertEqual(
             str(context.exception),
