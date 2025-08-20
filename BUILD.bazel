@@ -67,14 +67,6 @@ py_binary(
     ],
 )
 
-py_binary(
-    name = "mkassets",
-    srcs = ["util/mkassets.py"],
-    visibility = [
-        "//visibility:public",
-    ],
-)
-
 py_library(
     name = "lobster",
     srcs = [
@@ -105,7 +97,6 @@ py_library(
         "util/bump_version_post_release.py",
         "util/changelog.py",
         "util/github_release.py",
-        "util/mkassets.py",
         "util/release.py",
         "util/tracing/usecases.py",
     ],

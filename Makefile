@@ -15,9 +15,6 @@ TOOL_FOLDERS := $(shell \
 
 .PHONY: packages docs tracing
 
-lobster/html/assets.py: $(ASSETS) util/mkassets.py
-	util/mkassets.py lobster/html/assets.py $(ASSETS)
-
 lint: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
 	python3 -m pylint --rcfile=pylint3.cfg \
