@@ -2,10 +2,6 @@ from typing import Iterable
 from trlc import ast
 
 
-class PathError(Exception):
-    pass
-
-
 class TrlcFailure(Exception):
     """Exception if a TRLC API function indicated an error through its return value.
        In that case the TRLC message handler should have printed details to stdout, but

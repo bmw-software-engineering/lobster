@@ -27,6 +27,7 @@ from yamale import YamaleError
 from trlc.errors import Message_Handler, TRLC_Error
 from trlc.trlc import Source_Manager
 
+from lobster.common.errors import PathError
 from lobster.common.io import lobster_write
 from lobster.common.items import Requirement
 from lobster.common.tool2 import LOBSTER_Tool2
@@ -34,7 +35,6 @@ from lobster.common.tool2 import LOBSTER_Tool2
 from lobster.tools.trlc.converter import Converter
 from lobster.tools.trlc.errors import (
     InvalidConversionRuleError,
-    PathError,
     RecordObjectComponentError,
     TrlcFailure,
     TupleToStringFailedError,

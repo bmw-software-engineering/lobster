@@ -3,7 +3,7 @@ from pathlib import Path
 from re import Pattern
 from typing import Iterable, List
 
-from lobster.common.exceptions import LOBSTER_Exception
+from lobster.common.errors import PathError
 
 
 class FileCollector:
@@ -27,7 +27,7 @@ class FileCollector:
         if self._is_file_of_interest(file):
             self._files.append(file)
         elif throw_on_mismatch:
-            raise LOBSTER_Exception(
+            raise PathError(
                 f"File {file} does not have a valid extension. "
                 f"Expected one of {', '.join(self._extensions)}."
             )

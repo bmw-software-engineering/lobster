@@ -21,6 +21,10 @@ from lobster.common.exceptions import LOBSTER_Exception
 from lobster.common.location import Location
 
 
+class PathError(Exception):
+    pass
+
+
 class LOBSTER_Error(LOBSTER_Exception):
     def __init__(self, location, message):
         super().__init__(message)
