@@ -7,3 +7,10 @@ req.System_Requirement Output_File {
       Otherwise, the output shall be written to 'trlc.lobster'.
     '''
 }
+
+req.Software_Requirement Args_From_File {
+    description = '''
+      If a command line argument is prefixed with '@', then the contents of that file
+      shall be included as arguments to the argument parser.
+    '''
+}

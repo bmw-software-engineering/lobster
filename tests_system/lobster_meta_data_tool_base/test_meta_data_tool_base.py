@@ -1,3 +1,5 @@
+import os
+from tempfile import NamedTemporaryFile
 from dataclasses import dataclass
 from typing import Tuple, Type
 from .lobster_meta_data_tool_base_system_test_case_base import (
@@ -73,3 +75,31 @@ class ToolBaseTest(LobsterMetaDataToolBaseSystemTestCaseBase):
         )
         asserter.assertNoStdOutText()
         asserter.assertExitCode(2)
+
+    def test_args_from_file(self):
+        """Test that the version argument can be loaded from a file
+
+           If loading the version argument from a file works, then we assume it works
+           for all other arguments, too.
+        """
+        # lobster-trace: req.Args_From_File
+
+        # with NamedTemporaryFile and Python 3.12+ we could simply use
+        # delete_on_close=False and delete=True, but we want to support Python 3.8+
+
+        with NamedTemporaryFile(
+            mode="w",
+            encoding="UTF-8",
+            delete=False,  # Use delete=False for compatibility with Python 3.8+
+        ) as tmp_file:
+            tmp_file.write("--version\n")
+            tmp_file.flush()
+            tmp_file_path = tmp_file.name
+
+        try:
+            self._test_runner.cmd_args.append_arg(f"@{tmp_file_path}")
+            completed_process = self._test_runner.run_tool_test()
+            asserter = VersionAsserter(self, completed_process, self._test_runner)
+            asserter.assert_result()
+        finally:
+            os.remove(tmp_file_path)
