@@ -19,7 +19,7 @@
 
 import sys
 
-from lobster.tools.trlc.trlc import main
+from lobster.tools.trlc.trlc_tool import main
 
 if __name__ == "__main__":
     sys.exit(main())

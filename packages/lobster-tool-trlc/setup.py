@@ -61,6 +61,6 @@ setuptools.setup(
         "Topic :: Software Development",
     ],
     entry_points={
-        "console_scripts": ["lobster-trlc = lobster.tools.trlc.trlc:main"],
+        "console_scripts": ["lobster-trlc = lobster.tools.trlc.trlc_tool:main"],
     },
 )
