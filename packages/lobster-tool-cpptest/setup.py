@@ -45,7 +45,7 @@ setuptools.setup(
     url=project_urls["Source Code"],
     project_urls=project_urls,
     license="GNU Affero General Public License v3",
-    packages=["lobster.tools.cpptest", "lobster.tools.cpptest.parser"],
+    packages=["lobster.tools.cpptest"],
     install_requires=["bmw-lobster-core>=%s" % version.LOBSTER_VERSION],
     python_requires=">=3.7, <4",
     classifiers=[
