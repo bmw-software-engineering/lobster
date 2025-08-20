@@ -17,26 +17,27 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import argparse
 import os
 import sys
-import argparse
 from typing import Iterable
 
-from trlc.trlc import Source_Manager
-from trlc.errors import Message_Handler, TRLC_Error
+from yamale import YamaleError
 
-from lobster.common.tool2 import LOBSTER_Tool2
+from trlc.errors import Message_Handler, TRLC_Error
+from trlc.trlc import Source_Manager
+
+from lobster.common.io import lobster_write
 from lobster.common.items import Requirement
 from lobster.common.location import File_Reference
-from lobster.common.io import lobster_write
-from yamale import YamaleError
+from lobster.common.tool2 import LOBSTER_Tool2
 
 from lobster.tools.trlc.converter import Converter
 from lobster.tools.trlc.errors import (
     InvalidConversionRuleError,
     PathError,
-    TrlcFailure,
     RecordObjectComponentError,
+    TrlcFailure,
     TupleToStringFailedError,
     TupleToStringMissingError,
 )
