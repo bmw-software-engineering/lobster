@@ -14,41 +14,41 @@ test_suite(
 py_test(
     name = "test_file_tag_generator",
     srcs = ["test_file_tag_generator.py"],
-    deps = ["//:lobster"],
+    deps = ["//:lobster-core"],
 )
 
 py_test(
     name = "test_io",
     srcs = ["test_io.py"],
-    deps = ["//:lobster"],
+    deps = ["//:lobster-core"],
 )
 
 py_test(
     name = "test_io_signal_duplicate_items",
     srcs = ["test_io_signal_duplicate_items.py"],
-    deps = ["//:lobster"],
+    deps = ["//:lobster-core"],
 )
 
 py_test(
     name = "test_items",
     srcs = ["test_items.py"],
-    deps = ["//:lobster"],
+    deps = ["//:lobster-core"],
 )
 
 py_test(
     name = "test_location",
     srcs = ["test_location.py"],
-    deps = ["//:lobster"],
+    deps = ["//:lobster-core"],
 )
 
 py_test(
     name = "test_meta_data_tool_base",
     srcs = ["test_meta_data_tool_base.py"],
-    deps = ["//:lobster"],
+    deps = ["//:lobster-core"],
 )
 
 py_test(
     name = "test_tool",
     srcs = ["test_tool.py"],
-    deps = ["//:lobster"],
+    deps = ["//:lobster-core"],
 )

@@ -1,12 +1,17 @@
 load("@lobster_dependencies//:requirements.bzl", "requirement")
 
 py_library(
-    name = "lobster",
+    name = "lobster-core",
     srcs = glob([
         "lobster/config/*.py",
         "lobster/html/*.py",
+        "lobster/tools/core/**/*.py",
         "lobster/*.py",
     ]) + ["//:gen_assets"],
+    data = [
+        "lobster/tools/core/html_report/assets/html_report.css",
+        "lobster/tools/core/html_report/assets/html_report.js",
+    ],
     imports = [
         ".",
     ],
@@ -59,20 +64,63 @@ alias(
 
 alias(
     name = "lobster-ci-report",
-    actual = "//lobster/tools/core:ci_report-tool",
+    actual = ":ci_report-tool",
 )
 
 alias(
     name = "lobster-html-report",
-    actual = "//lobster/tools/core:html_report-tool",
+    actual = ":html_report-tool",
 )
 
 alias(
     name = "lobster-online-report",
-    actual = "//lobster/tools/core:online_report-tool",
+    actual = ":online_report-tool",
 )
 
 alias(
     name = "lobster-report",
-    actual = "//lobster/tools/core:report-tool",
+    actual = ":report-tool",
+)
+
+load("@lobster_dependencies//:requirements.bzl", "requirement")
+
+py_binary(
+    name = "ci_report-tool",
+    srcs = ["lobster/tools/core/ci_report/ci_report.py"],
+    main = "lobster/tools/core/ci_report/ci_report.py",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:lobster-core",
+    ],
+)
+
+py_binary(
+    name = "html_report-tool",
+    srcs = ["lobster/tools/core/html_report/html_report.py"],
+    main = "lobster/tools/core/html_report/html_report.py",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:lobster-core",
+        requirement("markdown"),
+    ],
+)
+
+py_binary(
+    name = "online_report-tool",
+    srcs = ["lobster/tools/core/online_report/online_report.py"],
+    main = "lobster/tools/core/online_report/online_report.py",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:lobster-core",
+    ],
+)
+
+py_binary(
+    name = "report-tool",
+    srcs = ["lobster/tools/core/report/report.py"],
+    main = "lobster/tools/core/report/report.py",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:lobster-core",
+    ],
 )

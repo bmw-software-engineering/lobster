@@ -132,6 +132,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
       - name: Install python version
         uses: actions/setup-python@v5
         with:
@@ -171,6 +176,11 @@ jobs:
           key: cache-clang-tidy
           fail-on-cache-miss: true
 
+      - uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
       - name: Install python version
         uses: actions/setup-python@v5
         with:
@@ -180,10 +190,6 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
           sudo apt install cmake ninja-build graphviz
-      - name: Setup bazel (for lobster-gtest)
-        uses: jwlawson/actions-setup-bazel@v2
-        with:
-          bazel-version: '8.0.0'
       - name: Run integration tests
         run: |
           make integration-tests
@@ -197,6 +203,7 @@ jobs:
           disk-cache: ${{ github.workflow }}
           repository-cache: true
       - uses: actions/checkout@v4
+      - run: bazel build //...
       - run: bazel test //... --deleted_packages=//tests_integration/projects/cpp_focus
   failure:
     name: Check all jobs

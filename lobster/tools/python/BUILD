@@ -3,6 +3,6 @@ py_binary(
     srcs = ["python.py"],
     visibility = ["//visibility:public"],
     deps = [
-        "//:lobster",
+        "//:lobster-core",
     ],
 )
