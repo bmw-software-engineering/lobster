@@ -1,7 +1,7 @@
 from os import path
 from unittest import TestCase
-from lobster.common.file_collector import FileCollector
 from lobster.common.errors import PathError
+from lobster.common.file_collector import FileCollector
 
 
 class FileCollectorTest(TestCase):
