@@ -47,3 +47,31 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
                                   ' default_file.trlc:3\n'
                                   )
         asserter.assertExitCode(1)
+
+
+class CmdArgsInputTest(LobsterTrlcSystemTestCaseBase):
+    def test_input_files_list(self):
+        """Test that input files can be specified as command line arguments"""
+        test_runner = self.create_test_runner()
+
+        test_runner.cmd_args.dir_or_files = [
+            "default_file.rsl",
+            "default_file.trlc",
+        ]
+
+        for file in test_runner.cmd_args.dir_or_files:
+            test_runner.copy_file_to_working_directory(self._data_directory / file)
+
+        test_runner.config_file_data.conversion_rules = [
+            self.NAMASTE_CONVERSION_RULE,
+        ]
+        OUT_FILE = "input_files_list.lobster"
+        test_runner.cmd_args.out = OUT_FILE
+        test_runner.declare_output_file(self._data_directory / OUT_FILE)
+        completed_process = test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutText(f"lobster-trlc: successfully wrote 1 items to "
+                                  f"{OUT_FILE}\n")
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
