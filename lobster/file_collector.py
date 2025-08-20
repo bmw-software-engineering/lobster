@@ -12,6 +12,10 @@ class FileCollector:
             extensions: Iterable[str],
             directory_exclude_patterns: Iterable[Pattern],
     ) -> None:
+        if extensions is None:
+            raise ValueError("'extensions' must not be None")
+        if directory_exclude_patterns is None:
+            directory_exclude_patterns = []
         self._extensions = extensions
         self._files = []
         self._directory_exclude_patterns = directory_exclude_patterns

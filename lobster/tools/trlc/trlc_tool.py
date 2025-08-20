@@ -27,7 +27,7 @@ from trlc.errors import Message_Handler, TRLC_Error
 
 from yamale import YamaleError
 
-from lobster.multi_file_input_tool import MultiFileInputTool
+from lobster.multi_file_input_tool import create_worklist, MultiFileInputTool
 from lobster.items import Requirement
 from lobster.io import lobster_write
 from lobster.tools.trlc.converter import Converter
@@ -111,7 +111,7 @@ class LOBSTER_Trlc(MultiFileInputTool):
 
     def _execute(self, options: argparse.Namespace) -> None:
         config = LobsterTrlcConfig.from_file(options.config)
-        work_list = self._create_worklist(config)
+        work_list = create_worklist(config, options.dir_or_files)
         trlc_mh = Message_Handler()
         sm = Source_Manager(trlc_mh)
         self._register_trlc_files(sm, work_list)
