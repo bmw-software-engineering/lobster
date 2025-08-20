@@ -3,7 +3,6 @@ export LOBSTER_ROOT=$(PWD)
 export PYTHONPATH=$(LOBSTER_ROOT)
 export PATH:=$(LOBSTER_ROOT):$(PATH)
 
-ASSETS=$(wildcard assets/*.svg)
 TOOL_FOLDERS := $(shell \
 	(find ./lobster/tools -mindepth 1 -maxdepth 1 -type d \
 		| grep -v -E '__pycache__|parser|core$$' \
@@ -186,7 +185,6 @@ clean-docs:
 
 tracing:
 	@mkdir -p docs
-	@make lobster/html/assets.py
 	@for tool in $(TOOL_FOLDERS); do \
 		case $$tool in \
 			codebeamer|cpptest|trlc) \
