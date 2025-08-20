@@ -195,7 +195,7 @@ jobs:
           disk-cache: ${{ github.workflow }}
           repository-cache: false
       - uses: actions/checkout@v4
-      - run: bazel test //... --deleted_packages=//tests_integration/projects/cpp_focus
+      - run: bazel test //... --deleted_packages=//tests_integration/...
   failure:
     name: Check all jobs
     needs:
