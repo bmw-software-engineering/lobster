@@ -27,7 +27,7 @@ from trlc.errors import Message_Handler, TRLC_Error
 
 from yamale import YamaleError
 
-from lobster.tool2 import LOBSTER_Tool2
+from lobster.multi_file_input_tool import MultiFileInputTool
 from lobster.items import Requirement
 from lobster.io import lobster_write
 from lobster.tools.trlc.converter import Converter
@@ -42,7 +42,7 @@ from lobster.tools.trlc.errors import (
 from lobster.tools.trlc.lobster_trlc_config import LobsterTrlcConfig
 
 
-class LOBSTER_Trlc(LOBSTER_Tool2):
+class LOBSTER_Trlc(MultiFileInputTool):
     def __init__(self):
         super().__init__(
             name        = "trlc",

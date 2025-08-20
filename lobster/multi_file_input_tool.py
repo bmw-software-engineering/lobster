@@ -39,8 +39,8 @@ def read_commented_file(file: str) -> List[str]:
 def select_non_comment_parts(text_list: Iterable[str]) -> List[str]:
     """Selects non-comment parts from a list of strings.
 
-       Returns the input list where each entry is stripped of comments and
-       trailing and leading whitespace, and empty lines are removed.
+       Returns the input list where each entry is stripped of comments, as well as
+       leading and trailing whitespace, and empty lines are removed.
     """
     return list(
         filter(
@@ -50,7 +50,9 @@ def select_non_comment_parts(text_list: Iterable[str]) -> List[str]:
     )
 
 
-class LOBSTER_Tool2(MetaDataToolBase, metaclass=ABCMeta):
+class MultiFileInputTool(MetaDataToolBase, metaclass=ABCMeta):
+    """This class serves as base class for tools that process multiple input files."""
+
     def __init__(
             self,
             name: str,
@@ -81,12 +83,12 @@ class LOBSTER_Tool2(MetaDataToolBase, metaclass=ABCMeta):
         )
 
     @classmethod
-    def _get_all_inputs(cls, options: Config) -> List[str]:
+    def _get_all_inputs(cls, config: Config) -> List[str]:
         inputs = []
-        if options.inputs:
-            inputs.extend(options.inputs)
-        if options.inputs_from_file:
-            inputs.extend(read_commented_file(options.inputs_from_file))
+        if config.inputs:
+            inputs.extend(config.inputs)
+        if config.inputs_from_file:
+            inputs.extend(read_commented_file(config.inputs_from_file))
         return inputs
 
     def _create_worklist(
