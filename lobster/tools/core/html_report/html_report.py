@@ -22,7 +22,6 @@ import html
 import subprocess
 import hashlib
 import tempfile
-import sys
 from datetime import datetime, timezone
 
 import markdown
