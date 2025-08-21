@@ -5,7 +5,43 @@
 
 ### 0.14.1-dev
 
+* Add feature to read command line arguments from a file for the following tools:
 
+  - `lobster-trlc`
+  - `lobster-codebeamer`
+  - `lobster-cpp`
+  - `lobster-gtest`
+  - `lobster-pkg`
+  - `lobster-python`
+  - `lobster-ci-report`
+  - `lobster-online-report`
+  - `lobster-online-report-nogit`
+  - `lobster-html-report`
+  - `lobster-report`
+
+  This feature allows to specify a path to a file which contains command line arguments.
+  The path must be prefixed with the `@` character so that the above mentioned tools
+  understand that the argument is a path to an argument file (and not an argument on its
+  own).
+
+  Example:
+
+
+  ```sh
+  > lobster-report --version
+  ```
+
+  could be replaced by
+
+  ```sh
+  > lobster-cpptest @arguments.txt
+  ```
+
+  where the content of `arguments.txt` is as follows:
+
+  ```txt
+  --version
+  ```
 
 ### 0.14.0
 

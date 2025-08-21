@@ -34,6 +34,7 @@ class MetaDataToolBase(metaclass=ABCMeta):
                       if official else None),
             allow_abbrev = False,
             formatter_class=RawTextHelpFormatter,
+            fromfile_prefix_chars="@",  # lobster-trace: req.Args_From_File
         )
         self._argument_parser.add_argument(
             "-v",
