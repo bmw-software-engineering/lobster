@@ -28,7 +28,7 @@ release += 1
 
 # Bump version and update version.py
 
-VERSION_FILE = os.path.join("lobster", "version.py")
+VERSION_FILE = os.path.join("lobster", "common", "version.py")
 
 # pylint: disable=invalid-name
 tmp = ""
