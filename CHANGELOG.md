@@ -43,6 +43,11 @@
   --version
   ```
 
+* `lobster-trlc`:
+  - Add command line argument `DIR|FILE` which allows to specify input files.
+    This argument works in combination with the configuration file parameters `inputs`
+    and `inputs-from-file`.
+
 ### 0.14.0
 
 * Introduced API function:

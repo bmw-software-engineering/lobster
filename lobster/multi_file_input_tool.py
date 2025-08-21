@@ -18,12 +18,12 @@
 import os
 
 from abc import ABCMeta
-from typing import Iterable, List, Type, Union
+from typing import Iterable, List, Optional, Type, Union
 from lobster.errors import Message_Handler
 from lobster.items import Requirement, Implementation, Activity
 from lobster.io import lobster_write
 from lobster.meta_data_tool_base import MetaDataToolBase
-from lobster.tool2_config import Config
+from lobster.multi_file_input_config import Config
 from lobster.file_collector import FileCollector
 
 
@@ -39,8 +39,8 @@ def read_commented_file(file: str) -> List[str]:
 def select_non_comment_parts(text_list: Iterable[str]) -> List[str]:
     """Selects non-comment parts from a list of strings.
 
-       Returns the input list where each entry is stripped of comments and
-       trailing and leading whitespace, and empty lines are removed.
+       Returns the input list where each entry is stripped of comments, as well as
+       leading and trailing whitespace, and empty lines are removed.
     """
     return list(
         filter(
@@ -50,7 +50,44 @@ def select_non_comment_parts(text_list: Iterable[str]) -> List[str]:
     )
 
 
-class LOBSTER_Tool2(MetaDataToolBase, metaclass=ABCMeta):
+def combine_all_inputs(
+    config: Config,
+    dir_or_files: Optional[List[str]],
+) -> List[str]:
+    """Combines all input sources into a single list."""
+    inputs = []
+    if config.inputs:
+        inputs.extend(config.inputs)
+    if config.inputs_from_file:
+        inputs.extend(read_commented_file(config.inputs_from_file))
+    if dir_or_files:
+        inputs.extend(dir_or_files)
+    return inputs
+
+
+def create_worklist(
+        config: Config,
+        dir_or_files: Optional[List[str]],
+) -> List[str]:
+    """Generates the exact list of files to work on. Directories are iterated
+       recursively and their files are collected, if they match the extensions.
+       Subdirectories are iterated if they do not match the exclude patterns.
+    """
+    inputs = combine_all_inputs(config, dir_or_files)
+    file_collector = FileCollector(config.extensions, config.exclude_patterns)
+    for item in inputs:
+        if os.path.isfile(item):
+            file_collector.add_file(item, throw_on_mismatch=True)
+        elif os.path.isdir(item):
+            file_collector.add_dir_recursively(item)
+        else:
+            raise ValueError(f"{item} is not a file or directory")
+    return file_collector.files
+
+
+class MultiFileInputTool(MetaDataToolBase, metaclass=ABCMeta):
+    """This class serves as base class for tools that process multiple input files."""
+
     def __init__(
             self,
             name: str,
@@ -79,31 +116,12 @@ class LOBSTER_Tool2(MetaDataToolBase, metaclass=ABCMeta):
             help="Path to configuration file",
             required=True
         )
-
-    @classmethod
-    def _get_all_inputs(cls, options: Config) -> List[str]:
-        inputs = []
-        if options.inputs:
-            inputs.extend(options.inputs)
-        if options.inputs_from_file:
-            inputs.extend(read_commented_file(options.inputs_from_file))
-        return inputs
-
-    def _create_worklist(
-            self,
-            config: Config,
-    ) -> List[str]:
-        """Generates the exact list of files to work on later."""
-        inputs = self._get_all_inputs(config)
-        file_collector = FileCollector(config.extensions, config.exclude_patterns)
-        for item in inputs:
-            if os.path.isfile(item):
-                file_collector.add_file(item, throw_on_mismatch=True)
-            elif os.path.isdir(item):
-                file_collector.add_dir_recursively(item)
-            else:
-                raise ValueError(f"{item} is not a file or directory")
-        return file_collector.files
+        self._argument_parser.add_argument(
+            "dir_or_files",
+            nargs="*",
+            metavar="DIR|FILE",
+            help="Input directories or files"
+        )
 
     def _write_output(
             self,
