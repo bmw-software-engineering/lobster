@@ -1,10 +1,10 @@
 from typing import List
 from unittest import TestCase
 from unittest.mock import Mock
-from lobster.errors import Message_Handler
-from lobster.items import Tracing_Tag, Requirement
-from lobster.io import signal_duplicate_items
-from lobster.location import File_Reference
+from lobster.common.errors import Message_Handler
+from lobster.common.items import Tracing_Tag, Requirement
+from lobster.common.io import signal_duplicate_items
+from lobster.common.location import File_Reference
 
 class SignalDuplicateItemsTest(TestCase):
     def setUp(self) -> None:

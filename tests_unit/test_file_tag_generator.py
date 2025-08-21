@@ -1,5 +1,5 @@
 from unittest import TestCase
-from lobster.file_tag_generator import FileTagGenerator
+from lobster.common.file_tag_generator import FileTagGenerator
 
 
 class FileTagGeneratorTest(TestCase):

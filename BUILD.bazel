@@ -1,0 +1,240 @@
+# load("@bazel_gazelle//:def.bzl", "gazelle")
+# load("@pip//:requirements.bzl", "all_whl_requirements")
+# load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+# load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
+# load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+load("//:requirements.bzl", "requirement")
+
+# # BUILD.bazel
+# # gazelle:python_visibility //visibility:public
+# # gazelle:exclude __init__.py
+# 
+# # Our gazelle target points to the python gazelle binary.
+# # This is the simple case where we only need one language supported.
+# # If you also had proto, go, or other gazelle-supported languages,
+# # you would also need a gazelle_binary rule.
+# # See https://github.com/bazelbuild/bazel-gazelle/blob/master/extend.rst#example
+# gazelle(
+#     name = "gazelle",
+#     gazelle = "@rules_python_gazelle_plugin//python:gazelle_binary",
+# )
+# 
+# # This rule fetches the metadata for python packages we depend on. That data is
+# # required for the gazelle_python_manifest rule to update our manifest file.
+# modules_mapping(
+#     name = "modules_map",
+#     wheels = all_whl_requirements,
+# )
+# 
+# # Gazelle python extension needs a manifest file mapping from
+# # an import to the installed package that provides it.
+# # This macro produces two targets:
+# # - //:gazelle_python_manifest.update can be used with `bazel run`
+# #   to recalculate the manifest
+# # - //:gazelle_python_manifest.test is a test target ensuring that
+# #   the manifest doesn't need to be updated
+# gazelle_python_manifest(
+#     name = "gazelle_python_manifest",
+#     # include_stub_packages = True,
+#     modules_mapping = ":modules_map",
+#     # This is what we called our `pip_parse` rule, where third-party
+#     # python libraries are loaded in BUILD files.
+#     pip_repository_name = "pip",
+#     requirements = "requirements_lock_3_9.txt",
+# )
+# 
+# # This stanza calls a rule that generates targets for managing pip dependencies
+# # with pip-compile for a particular python version.
+# compile_pip_requirements(
+#     name = "requirements_3_9",
+#     timeout = "moderate",
+#     src = "requirements.in",
+#     requirements_txt = "requirements_lock_3_9.txt",
+#     requirements_windows = "requirements_windows_3_9.txt",
+# )
+
+py_binary(
+    name = "github_release",
+    srcs = ["util/github_release.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        ":lobster",
+        "//lobster/common",
+        requirement("requests"),
+    ],
+)
+
+py_library(
+    name = "lobster",
+    srcs = [
+        "lobster-ci-report.py",
+        "lobster-codebeamer.py",
+        "lobster-cpp.py",
+        "lobster-cpptest.py",
+        "lobster-gtest.py",
+        "lobster-html-report.py",
+        "lobster-json.py",
+        "lobster-meta-data-tool-base.py",
+        "lobster-online-report.py",
+        "lobster-online-report-nogit.py",
+        "lobster-python.py",
+        "lobster-report.py",
+        "lobster-trlc.py",
+        "packages/lobster-core/setup.py",
+        "packages/lobster-metapackage/setup.py",
+        "packages/lobster-monolithic/setup.py",
+        "packages/lobster-tool-codebeamer/setup.py",
+        "packages/lobster-tool-cpp/setup.py",
+        "packages/lobster-tool-cpptest/setup.py",
+        "packages/lobster-tool-gtest/setup.py",
+        "packages/lobster-tool-json/setup.py",
+        "packages/lobster-tool-python/setup.py",
+        "packages/lobster-tool-trlc/setup.py",
+        "util/bump_version_post_release.py",
+        "util/changelog.py",
+        "util/github_release.py",
+        "util/release.py",
+        "util/tracing/usecases.py",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//lobster/common",
+        "//lobster/tools/codebeamer",
+        "//lobster/tools/core/ci_report",
+        "//lobster/tools/core/html_report",
+        "//lobster/tools/core/online_report",
+        "//lobster/tools/core/online_report_nogit",
+        "//lobster/tools/core/report",
+        "//lobster/tools/cpp",
+        "//lobster/tools/cpptest",
+        "//lobster/tools/gtest",
+        "//lobster/tools/json",
+        "//lobster/tools/python",
+        "//lobster/tools/trlc",
+        requirement("requests"),
+        requirement("setuptools"),
+        requirement("trlc"),
+    ],
+)
+
+py_binary(
+    name = "lobster-ci-report",
+    srcs = ["lobster-ci-report.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/ci_report"],
+)
+
+py_binary(
+    name = "lobster-codebeamer",
+    srcs = ["lobster-codebeamer.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/codebeamer"],
+)
+
+py_binary(
+    name = "lobster-cpp",
+    srcs = ["lobster-cpp.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/cpp"],
+)
+
+py_binary(
+    name = "lobster-cpptest",
+    srcs = ["lobster-cpptest.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/cpptest"],
+)
+
+py_binary(
+    name = "lobster-gtest",
+    srcs = ["lobster-gtest.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/gtest"],
+)
+
+py_binary(
+    name = "lobster-html-report",
+    srcs = ["lobster-html-report.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/html_report"],
+)
+
+py_binary(
+    name = "lobster-json",
+    srcs = ["lobster-json.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/json"],
+)
+
+py_binary(
+    name = "lobster-meta-data-tool-base",
+    srcs = ["lobster-meta-data-tool-base.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/common"],
+)
+
+py_binary(
+    name = "lobster-online-report-nogit",
+    srcs = ["lobster-online-report-nogit.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/online_report_nogit"],
+)
+
+py_binary(
+    name = "lobster-online-report",
+    srcs = ["lobster-online-report.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/online_report"],
+)
+
+py_binary(
+    name = "lobster-python",
+    srcs = ["lobster-python.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/python"],
+)
+
+py_binary(
+    name = "lobster-report",
+    srcs = ["lobster-report.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/report"],
+)
+
+py_binary(
+    name = "lobster-trlc",
+    srcs = ["lobster-trlc.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/trlc"],
+)

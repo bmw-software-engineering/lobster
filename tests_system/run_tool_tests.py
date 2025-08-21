@@ -6,6 +6,7 @@ from pathlib import Path
 from subprocess import CompletedProcess, PIPE, run
 from typing import Iterator, Optional, List
 
+# gazelle:ignore tests_utils.update_online_json_with_hashes.update_json
 from tests_utils.update_online_json_with_hashes import update_json
 
 # This is the folder containing the folders starting with "rbt-"

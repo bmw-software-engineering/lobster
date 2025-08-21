@@ -27,7 +27,7 @@ import json
 
 import requests
 
-from lobster.version import LOBSTER_VERSION
+from lobster.common.version import LOBSTER_VERSION
 import util.changelog
 
 

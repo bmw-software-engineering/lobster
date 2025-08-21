@@ -3,7 +3,7 @@
 import re
 import setuptools
 
-from lobster import version
+from lobster.common import version
 
 gh_root = "https://github.com"
 gh_project = "bmw-software-engineering/lobster"
@@ -45,8 +45,8 @@ setuptools.setup(
     project_urls=project_urls,
     license="GNU Affero General Public License v3",
     packages=["lobster",
-              "lobster.config",
-              "lobster.html",
+              "lobster.common",
+              "lobster.htmldoc",
               "lobster.tools.core.ci_report",
               "lobster.tools.core.html_report",
               "lobster.tools.core.online_report",

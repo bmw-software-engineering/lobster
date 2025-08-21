@@ -17,25 +17,26 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import argparse
 import os
 import sys
-import argparse
 from typing import Iterable
-
-from trlc.trlc import Source_Manager
-from trlc.errors import Message_Handler, TRLC_Error
 
 from yamale import YamaleError
 
-from lobster.multi_file_input_tool import create_worklist, MultiFileInputTool
-from lobster.items import Requirement
-from lobster.io import lobster_write
+from trlc.errors import Message_Handler, TRLC_Error
+from trlc.trlc import Source_Manager
+
+from lobster.common.errors import PathError
+from lobster.common.io import lobster_write
+from lobster.common.items import Requirement
+from lobster.common.multi_file_input_tool import create_worklist, MultiFileInputTool
+
 from lobster.tools.trlc.converter import Converter
 from lobster.tools.trlc.errors import (
     InvalidConversionRuleError,
-    PathError,
-    TrlcFailure,
     RecordObjectComponentError,
+    TrlcFailure,
     TupleToStringFailedError,
     TupleToStringMissingError,
 )
@@ -143,7 +144,3 @@ class LOBSTER_Trlc(MultiFileInputTool):
 
 def main():
     return LOBSTER_Trlc().run()
-
-
-if __name__ == "__main__":
-    sys.exit(main())

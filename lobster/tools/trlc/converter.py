@@ -1,8 +1,8 @@
 from typing import Iterable, List, Optional
 from trlc import ast
 
-from lobster.items import Item, Requirement, Tracing_Tag
-from lobster.location import File_Reference
+from lobster.common.items import Item, Requirement, Tracing_Tag
+from lobster.common.location import File_Reference
 from lobster.tools.trlc.conversion_rule import ConversionRule
 from lobster.tools.trlc.conversion_rule_lookup import (
     build_record_type_to_conversion_rule_lookup,

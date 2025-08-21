@@ -6,9 +6,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from .lobster_UI_system_test_case_base import LobsterUISystemTestCaseBase
-from .obster_UI_system_asserter import LobsterUIAsserter as Asserter
-
+from tests_system.lobster_html_report.\
+    lobster_UI_system_test_case_base import LobsterUISystemTestCaseBase
+from tests_system.lobster_html_report.obster_UI_system_asserter import LobsterUIAsserter as Asserter
 
 class LobsterUIReportTests(LobsterUISystemTestCaseBase):
     """UI Automation Tests for Lobster Report."""

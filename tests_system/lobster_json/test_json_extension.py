@@ -1,5 +1,6 @@
-from .lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
-from ..asserter import Asserter
+from tests_system.lobster_json.\
+    lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
+from tests_system.asserter import Asserter
 
 
 class JsonExtensionTest(LobsterJsonSystemTestCaseBase):

@@ -1,0 +1,27 @@
+load("@rules_python//python:defs.bzl", "py_test")
+load("//:requirements.bzl", "requirement")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_test(
+    name = "test_authentication",
+    srcs = ["test_authentication.py"],
+    deps = [
+        "//lobster/tools/codebeamer",
+        requirement("requests"),
+    ],
+)
+
+py_test(
+    name = "test_codebeamer",
+    srcs = ["test_codebeamer.py"],
+    deps = ["//lobster/tools/codebeamer"],
+)
+
+py_test(
+    name = "test_codebeamer_schema",
+    srcs = ["test_codebeamer_schema.py"],
+    data = ["test.netrc"],
+    deps = ["//lobster/tools/codebeamer"],
+)

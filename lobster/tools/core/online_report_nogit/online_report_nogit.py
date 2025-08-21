@@ -6,10 +6,10 @@ from dataclasses import dataclass
 from typing import Iterable
 from urllib.parse import quote
 
-from lobster.items import Item
-from lobster.location import File_Reference, Github_Reference
-from lobster.report import Report
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.items import Item
+from lobster.common.location import File_Reference, Github_Reference
+from lobster.common.report import Report
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 
 @dataclass

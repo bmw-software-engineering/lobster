@@ -1,0 +1,28 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_library(
+    name = "lobster_online_report_nogit",
+    srcs = [
+        "lobster_online_report_nogit_system_test_case_base.py",
+        "lobster_online_report_nogit_test_runner.py",
+    ],
+    data = [
+        "//tests_system/lobster_online_report_nogit/data:online_report_nogit_data_system",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//tests_system"],
+)
+
+py_test(
+    name = "test_nogit",
+    srcs = ["test_nogit.py"],
+    deps = [
+        ":lobster_online_report_nogit",
+        "//tests_system",
+    ],
+)

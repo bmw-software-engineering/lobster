@@ -1,6 +1,6 @@
 import sys
 from unittest import TestCase
-from lobster.location import Codebeamer_Reference
+from lobster.common.location import Codebeamer_Reference
 
 class CodebeamerReferenceTests(TestCase):
     _CB_ROOT = "http://turtle:123456789"

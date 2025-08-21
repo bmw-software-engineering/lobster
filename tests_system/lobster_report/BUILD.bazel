@@ -1,0 +1,82 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_library(
+    name = "lobster_report",
+    srcs = [
+        "lobster_report_system_test_case_base.py",
+        "lobster_report_test_runner.py",
+    ],
+    data = [
+        "//tests_system/lobster_report/data:report_data_system",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//tests_system"],
+)
+
+py_test(
+    name = "test_status_justified",
+    srcs = ["test_status_justified.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_status_missing",
+    srcs = ["test_status_missing.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_status_ok",
+    srcs = ["test_status_ok.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_json_scanario",
+    srcs = ["test_json_scanario.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_resolve_references_errors",
+    srcs = ["test_resolve_references_errors.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_schema_and_version",
+    srcs = ["test_schema_and_version.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_items_coverage",
+    srcs = ["test_items_coverage.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)

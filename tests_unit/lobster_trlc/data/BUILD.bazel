@@ -1,0 +1,8 @@
+filegroup(
+    name = "trlc_data_unit",
+    srcs = glob([
+        "*.rsl",
+        "*.trlc",
+    ]),
+    visibility = ["//visibility:public"],
+)

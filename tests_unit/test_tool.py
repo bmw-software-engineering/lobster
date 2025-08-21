@@ -4,8 +4,8 @@ import argparse
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 import yaml
 
-from lobster.errors import Message_Handler
-from lobster.tool import LOBSTER_Tool
+from lobster.common.errors import Message_Handler
+from lobster.common.tool import LOBSTER_Tool
 
 class ConcreteLOBSTER_Tool(LOBSTER_Tool):
     def __init__(self, name, description, extensions, official=False):

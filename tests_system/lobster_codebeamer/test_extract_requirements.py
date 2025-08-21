@@ -1,9 +1,10 @@
 import json
 from flask import Response
-from .lobster_codebeamer_system_test_case_base import (
+from tests_system.lobster_codebeamer.lobster_codebeamer_system_test_case_base import (
     LobsterCodebeamerSystemTestCaseBase)
-from .lobster_codebeamer_asserter import LobsterCodebeamerAsserter
-from .mock_server_setup import get_mock_app
+from tests_system.lobster_codebeamer.lobster_codebeamer_asserter import (
+    LobsterCodebeamerAsserter)
+from tests_system.lobster_codebeamer.mock_server_setup import get_mock_app
 
 
 class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBase):

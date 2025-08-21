@@ -1,9 +1,9 @@
 import unittest
 from unittest.mock import patch, MagicMock,create_autospec
 from hashlib import sha1
-from lobster.config.level_definition import LevelDefinition
-from lobster.items import Tracing_Tag, Tracing_Status, Item, Requirement, Implementation, Activity
-from lobster.location import Location
+from lobster.common.level_definition import LevelDefinition
+from lobster.common.items import Tracing_Tag, Tracing_Status, Item, Requirement, Implementation, Activity
+from lobster.common.location import Location
 
 class ItemsTests(unittest.TestCase):
     def setUp(self):
@@ -80,7 +80,7 @@ class TestTracingTag(ItemsTests):
 
         self.assertEqual(expected_json, actual_json)
 
-    @patch('lobster.items.Tracing_Tag.from_text')
+    @patch('lobster.common.items.Tracing_Tag.from_text')
     def test_from_json(self, mock_from_text):
         json_input = "namespace string"
         expected_namespace = "namespace"
@@ -150,7 +150,7 @@ class TestItem(ItemsTests):
         self.assertIn(mock_message, self.item.messages)
         self.assertTrue(self.item.messages)
 
-    @patch("lobster.items.Tracing_Tag.key")
+    @patch("lobster.common.items.Tracing_Tag.key")
     def test_add_tracing_target(self, mock_key):
         mock_target = self.tracing_tag
         expected_result = "mock_namespace mock_tag"
@@ -173,7 +173,7 @@ class TestItem(ItemsTests):
         with self.assertRaises(AssertionError):
             self.item.perform_source_checks(mock_invalid_source_info)
 
-    @patch("lobster.items.Tracing_Tag.key")
+    @patch("lobster.common.items.Tracing_Tag.key")
     def test_determine_status_ok(self, mock_key):
         self.item.ref_up = []
         self.item.ref_down = [self.tracing_tag]
@@ -252,7 +252,7 @@ class TestItem(ItemsTests):
         self.assertEqual(self.item.tracing_status, Tracing_Status.MISSING)
         self.assertIn("missing reference to level1", self.item.messages)
 
-    @patch("lobster.items.Item.set_level")
+    @patch("lobster.common.items.Item.set_level")
     def test_additional_data_from_json_valid_data(self, mock_set_level):
         mock_level = "mock_level"
         mock_set_level.return_value = "mock_level"
@@ -302,7 +302,7 @@ class TestItem(ItemsTests):
         with self.assertRaises(AssertionError):
             self.item.additional_data_from_json(level, data, schema_version)
 
-    @patch("lobster.items.Tracing_Tag.to_json")
+    @patch("lobster.common.items.Tracing_Tag.to_json")
     def test_to_json(self, mock_to_json):
         mock_to_json.return_value = "mock_value"
         self.item.name = "mock_name"
@@ -333,7 +333,7 @@ class TestItem(ItemsTests):
         self.assertEqual(result, expected_json)
 
 class TestRequirement(ItemsTests):
-    @patch("lobster.items.Item.to_json")
+    @patch("lobster.common.items.Item.to_json")
     def test_to_json(self, mock_super_to_json):
         mock_super_to_json.return_value = {
             "item_property": "item_value"
@@ -356,7 +356,7 @@ class TestRequirement(ItemsTests):
         with self.assertRaises(AssertionError):
             self.requirement.perform_source_checks(invalid_source_info)
 
-    @patch("lobster.items.Tracing_Tag.from_json")
+    @patch("lobster.common.items.Tracing_Tag.from_json")
     def test_from_json(self, mock_from_json):
         mock_level = "mock_level"
         mock_schema_version = 3
@@ -396,7 +396,7 @@ class TestRequirement(ItemsTests):
                     self.assertEqual(result.location.name, location_data["name"])
 
 class TestImplementation(ItemsTests):
-    @patch("lobster.items.Item.to_json")
+    @patch("lobster.common.items.Item.to_json")
     def test_to_json(self, mock_super_to_json):
         mock_super_to_json.return_value = {
             "item_property": "item_value"
@@ -411,7 +411,7 @@ class TestImplementation(ItemsTests):
         mock_super_to_json.assert_called_once_with()
         self.assertEqual(result, expected_result)
 
-    @patch("lobster.items.Tracing_Tag.from_json")
+    @patch("lobster.common.items.Tracing_Tag.from_json")
     def test_from_json(self, mock_from_json):
         mock_level = "mock_level"
         mock_schema_version = 3
@@ -447,7 +447,7 @@ class TestImplementation(ItemsTests):
                     self.assertEqual(result.location.name, location_data["name"])
 
 class TestActivity(ItemsTests):
-    @patch("lobster.items.Item.to_json")
+    @patch("lobster.common.items.Item.to_json")
     def test_to_json(self, mock_super_to_json):
         mock_super_to_json.return_value = {
             "item_property": "item_value"
@@ -463,7 +463,7 @@ class TestActivity(ItemsTests):
         mock_super_to_json.assert_called_once_with()
         self.assertEqual(result, expected_result)
 
-    @patch("lobster.items.Tracing_Tag.from_json")
+    @patch("lobster.common.items.Tracing_Tag.from_json")
     def test_from_json(self, mock_from_json):
         mock_level = "mock_level"
         mock_schema_version = 3

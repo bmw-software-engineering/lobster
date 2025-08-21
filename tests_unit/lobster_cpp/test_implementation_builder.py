@@ -2,7 +2,7 @@ from os import getcwd
 from os.path import abspath, join
 import re
 from unittest import TestCase
-from lobster.location import File_Reference
+from lobster.common.location import File_Reference
 from lobster.tools.cpp.implementation_builder import ImplementationBuilder
 
 

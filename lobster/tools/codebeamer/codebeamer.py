@@ -44,11 +44,11 @@ from requests.adapters import HTTPAdapter
 import yaml
 from urllib3.util.retry import Retry
 
-from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
-from lobster.location import Codebeamer_Reference
-from lobster.errors import Message_Handler, LOBSTER_Error
-from lobster.io import lobster_read, lobster_write
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.items import Tracing_Tag, Requirement, Implementation, Activity
+from lobster.common.location import Codebeamer_Reference
+from lobster.common.errors import Message_Handler, LOBSTER_Error
+from lobster.common.io import lobster_read, lobster_write
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 from lobster.tools.codebeamer.bearer_auth import BearerAuth
 from lobster.tools.codebeamer.config import AuthenticationConfig, Config
 from lobster.tools.codebeamer.exceptions import (
