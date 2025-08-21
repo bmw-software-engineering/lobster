@@ -6,9 +6,9 @@ import yamale
 import yaml
 
 from lobster.common.items import Requirement
+from lobster.common.multi_file_input_config import Config
 from lobster.tools.trlc.conversion_rule import ConversionRule
 from lobster.tools.trlc.to_string_rules import ToStringRules
-from lobster.common.tool2_config import Config
 
 
 @dataclass

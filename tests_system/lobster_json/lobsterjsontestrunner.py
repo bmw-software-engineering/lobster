@@ -41,7 +41,7 @@ class ConfigFileData:
 @dataclass
 class CmdArgs:
     out: Optional[str] = None
-    config: Optional[str] = "config.yaml"
+    config: Optional[str] = None
 
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list"""
@@ -58,10 +58,15 @@ class CmdArgs:
 
 class LobsterJsonTestRunner(TestRunner):
     """System test runner for lobster-json"""
-    def __init__(self, tool_name: str, working_dir: Path):
+    def __init__(self, tool_name: str, working_dir: Path,
+                 use_config_file_data: bool = True):
         super().__init__(tool_name, working_dir)
-        self._config_file_data = ConfigFileData(single=True)
-        self._cmd_args = CmdArgs()
+        self.use_config_file_data = use_config_file_data
+        if use_config_file_data:
+            self._cmd_args = CmdArgs(config="config.yaml")
+            self._config_file_data = ConfigFileData(single=True)
+        else:
+            self._cmd_args = CmdArgs()
 
     @property
     def cmd_args(self) -> CmdArgs:
@@ -85,6 +90,6 @@ class LobsterJsonTestRunner(TestRunner):
         return self._cmd_args.as_list()
 
     def run_tool_test(self) -> CompletedProcess:
-        if self._cmd_args.config:
+        if self.use_config_file_data and self._cmd_args.config:
             self._config_file_data.dump(str(self._working_dir / self._cmd_args.config))
         return super().run_tool_test()

@@ -61,3 +61,23 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         asserter.assertStdOutNumAndFile(6, OUT_FILE)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+    def test_mix_inputs_from_directory(self):
+        OUT_FILE = "mix_inputs.lobster"
+        self._test_runner.cmd_args.out = OUT_FILE
+        self._test_runner.config_file_data.tag_attribute = "tags"
+        self._test_runner.config_file_data.name_attribute = "name"
+        self._test_runner.config_file_data.inputs.append("input_dir_mix")
+
+        source_dir = self._data_directory / "input_dir_mix"
+        dest_dir = self._test_runner.working_dir / "input_dir_mix"
+        shutil.copytree(source_dir, dest_dir)
+
+        self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(3, OUT_FILE)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()

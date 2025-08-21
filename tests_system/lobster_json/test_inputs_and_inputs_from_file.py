@@ -87,3 +87,19 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         asserter.assertStdOutNumAndFile(15, out_file)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+    def test_inputs_from_file_and_input(self):
+        self._test_runner.declare_inputs_from_file(
+            self._data_directory / "inputs_from_file.txt", self._data_directory)
+        self._test_runner.declare_input_file(
+            self._data_directory / "inputs_cosmetic_duplicate.json")
+
+        out_file = "inputs_from_file_and_input.lobster"
+        self._test_runner.cmd_args.out = out_file
+        self._test_runner.declare_output_file(self._data_directory / out_file)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(18, out_file)
+        asserter.assertExitCode(0)

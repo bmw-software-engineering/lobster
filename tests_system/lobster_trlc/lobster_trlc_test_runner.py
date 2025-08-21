@@ -40,6 +40,7 @@ class ConfigFileData:
 class CmdArgs:
     config: Optional[str] = "config.yaml"
     out: Optional[str] = None
+    dir_or_files: Optional[List[str]] = None
 
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list"""
@@ -51,6 +52,8 @@ class CmdArgs:
 
         append_if_string("--out", self.out)
         append_if_string("--config", self.config)
+        if self.dir_or_files:
+            cmd_args.extend(self.dir_or_files)
         return cmd_args
 
 
