@@ -1,0 +1,8 @@
+filegroup(
+    name = "online_report_data_unit",
+    srcs = glob([
+        "*.lobster",
+        "*.yaml",
+    ]),
+    visibility = ["//visibility:public"],
+)

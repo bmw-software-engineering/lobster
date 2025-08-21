@@ -6,6 +6,9 @@ load("@rules_python//python:defs.bzl", "py_test")
 py_test(
     name = "test_online_report",
     srcs = ["test_online_report.py"],
+    data = [
+        "//tests_unit/lobster_online_report/data:online_report_data_unit",
+    ],
     deps = [
         "//lobster/common",
         "//lobster/tools/core/online_report",

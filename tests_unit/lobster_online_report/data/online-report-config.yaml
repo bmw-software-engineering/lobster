@@ -1,0 +1,3 @@
+base_url: "/something"
+repo_root: "https://github.com/test-repo"
+commit_id: "abc123def456"
