@@ -25,17 +25,16 @@ from dataclasses import dataclass, field
 from typing import List, Union
 from enum import Enum
 import yaml
-
-from lobster.errors import LOBSTER_Error
-from lobster.exceptions import LOBSTER_Exception
-from lobster.items import Tracing_Tag, Activity
-from lobster.location import File_Reference
-from lobster.io import lobster_write
-from lobster.file_tag_generator import FileTagGenerator
-from lobster.tools.cpptest.parser.constants import Constants
-from lobster.tools.cpptest.parser.requirements_parser import \
+from lobster.common.errors import LOBSTER_Error
+from lobster.common.exceptions import LOBSTER_Exception
+from lobster.common.items import Tracing_Tag, Activity
+from lobster.common.location import File_Reference
+from lobster.common.io import lobster_write
+from lobster.common.file_tag_generator import FileTagGenerator
+from lobster.tools.cpptest.constants import Constants
+from lobster.tools.cpptest.requirements_parser import \
     ParserForRequirements
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 OUTPUT_FILE = "output_file"
 CODEBEAMER_URL = "codebeamer_url"

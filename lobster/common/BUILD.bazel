@@ -1,0 +1,43 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+load("//:requirements.bzl", "requirement")
+
+py_binary(
+    name = "lexer",
+    srcs = ["lexer.py"],
+    visibility = ["//visibility:public"],
+    deps = [":common"],
+)
+
+py_binary(
+    name = "parser",
+    srcs = ["parser.py"],
+    visibility = ["//visibility:public"],
+    deps = [":common"],
+)
+
+py_library(
+    name = "common",
+    srcs = [
+        "__init__.py",
+        "errors.py",
+        "exceptions.py",
+        "file_collector.py",
+        "file_tag_generator.py",
+        "io.py",
+        "items.py",
+        "level_definition.py",
+        "lexer.py",
+        "location.py",
+        "meta_data_tool_base.py",
+        "parser.py",
+        "report.py",
+        "tool.py",
+        "tool2.py",
+        "tool2_config.py",
+        "version.py",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("pyyaml")
+    ],
+)

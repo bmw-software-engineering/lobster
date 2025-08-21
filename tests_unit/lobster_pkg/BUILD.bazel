@@ -1,0 +1,13 @@
+load("@rules_python//python:defs.bzl", "py_test")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_test(
+    name = "test_pkg",
+    srcs = ["test_pkg.py"],
+    data = [
+        "//tests_unit/lobster_pkg/data:pkg_data_unit",
+    ],
+    deps = ["//lobster/tools/pkg"],
+)

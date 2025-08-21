@@ -1,0 +1,7 @@
+filegroup(
+    name = "online_report_nogit_data_system",
+    srcs = glob([
+        "*.lobster",
+    ]),
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,12 @@
+filegroup(
+    name = "trlc_data_system",
+    srcs = glob([
+        "*.rsl",
+        "*.slr",
+        "*.clrt",
+        "*.trlc",
+        "*.txt",
+        "*.lobster",
+    ]),
+    visibility = ["//visibility:public"],
+)

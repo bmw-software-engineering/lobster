@@ -1,7 +1,8 @@
 from lobster.tools.cpptest.cpptest import (CODEBEAMER_URL, KIND,
                                            OUTPUT_FILE, SUPPORTED_KINDS)
-from .lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
-from ..asserter import Asserter
+from tests_system.lobster_cpptest.\
+    lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
+from tests_system.asserter import Asserter
 
 
 class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):

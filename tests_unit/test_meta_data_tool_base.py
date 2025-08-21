@@ -1,6 +1,6 @@
 from argparse import Namespace
 from unittest import TestCase
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 
 class CherryPineappleTool(MetaDataToolBase):

@@ -1,0 +1,13 @@
+load("@rules_python//python:defs.bzl", "py_test")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_test(
+    name = "test_implementation_builder",
+    srcs = ["test_implementation_builder.py"],
+    deps = [
+        "//lobster/common",
+        "//lobster/tools/cpp",
+    ],
+)

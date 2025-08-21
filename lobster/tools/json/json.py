@@ -22,9 +22,9 @@ from pathlib import PurePath
 from pprint import pprint
 from typing import Tuple, List, Set
 
-from lobster.tool import LOBSTER_Per_File_Tool
-from lobster.items import Tracing_Tag, Activity
-from lobster.location import File_Reference
+from lobster.common.tool import LOBSTER_Per_File_Tool
+from lobster.common.items import Tracing_Tag, Activity
+from lobster.common.location import File_Reference
 
 
 class Malformed_Input(Exception):

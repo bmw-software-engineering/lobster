@@ -20,9 +20,9 @@
 from argparse import Namespace
 import os.path
 
-from lobster.report import Report
-from lobster.items import Tracing_Status
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.report import Report
+from lobster.common.items import Tracing_Status
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 
 class CiReportTool(MetaDataToolBase):

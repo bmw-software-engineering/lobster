@@ -1,12 +1,12 @@
 import os
 from tempfile import TemporaryDirectory
 from unittest import TestCase
-from lobster.multi_file_input_tool import (
+from lobster.common.multi_file_input_tool import (
     create_worklist,
     combine_all_inputs,
     select_non_comment_parts,
 )
-from lobster.multi_file_input_config import Config
+from lobster.common.multi_file_input_config import Config
 from tests_unit.temp_content_file import TempContentFile
 
 

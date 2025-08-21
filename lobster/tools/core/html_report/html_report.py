@@ -22,20 +22,20 @@ import html
 import subprocess
 import hashlib
 import tempfile
-import sys
 from datetime import datetime, timezone
 
 import markdown
 
-from lobster.html import htmldoc
-from lobster.report import Report
-from lobster.location import (Void_Reference,
-                              File_Reference,
-                              Github_Reference,
-                              Codebeamer_Reference)
-from lobster.items import (Tracing_Status, Item,
-                           Requirement, Implementation, Activity)
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.htmldoc import htmldoc
+from lobster.common.report import Report
+from lobster.common.location import (Void_Reference,
+                                     File_Reference,
+                                     Github_Reference,
+                                     Codebeamer_Reference)
+from lobster.common.items import (Tracing_Status, Item,
+                                  Requirement, Implementation,
+                                  Activity)
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
 
@@ -614,7 +614,3 @@ class HtmlReportTool(MetaDataToolBase):
 
 def main() -> int:
     return HtmlReportTool().run()
-
-
-if __name__ == "__main__":
-    sys.exit(main())

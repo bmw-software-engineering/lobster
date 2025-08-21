@@ -1,0 +1,7 @@
+filegroup(
+    name = "cpptest_test_files_system",
+    srcs = glob([
+        "*.cpp",
+    ]),
+    visibility = ["//visibility:public"],
+)

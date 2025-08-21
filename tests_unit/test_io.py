@@ -2,11 +2,11 @@ import unittest
 import io
 import json
 from unittest.mock import patch, create_autospec, mock_open, ANY
-from lobster.errors import Message_Handler, LOBSTER_Error
-from lobster.location import File_Reference
-from lobster.items import Tracing_Tag, Requirement, Implementation, Activity
-from lobster.io import lobster_write, lobster_read
-from lobster.location import Location
+from lobster.common.errors import Message_Handler, LOBSTER_Error
+from lobster.common.location import File_Reference
+from lobster.common.items import Tracing_Tag, Requirement, Implementation, Activity
+from lobster.common.io import lobster_write, lobster_read
+from lobster.common.location import Location
 
 class LobsterWriteReadTests(unittest.TestCase):
     # unit tests for io.py file
@@ -58,9 +58,9 @@ class LobsterWriteReadTests(unittest.TestCase):
             "ref_down": ["mock_value"],
         }
 
-    @patch("lobster.io.json")
-    @patch("lobster.items.Tracing_Tag.to_json")
-    @patch("lobster.items.Item.to_json")
+    @patch("lobster.common.io.json")
+    @patch("lobster.common.items.Tracing_Tag.to_json")
+    @patch("lobster.common.items.Item.to_json")
     def test_lobster_write_requirement(self, mock_item_to_json, mock_tracing_tag_to_json, mock_json):
         generator = "mock_generator"
         mock_tracing_tag_to_json.return_value = "mock_value"
@@ -83,9 +83,9 @@ class LobsterWriteReadTests(unittest.TestCase):
         fd_req.seek(0)
         mock_json.dump.assert_called_once_with(mock_data, fd_req, indent=2)
 
-    @patch("lobster.io.json")
-    @patch("lobster.items.Tracing_Tag.to_json")
-    @patch("lobster.items.Item.to_json")
+    @patch("lobster.common.io.json")
+    @patch("lobster.common.items.Tracing_Tag.to_json")
+    @patch("lobster.common.items.Item.to_json")
     def test_lobster_write_implementation(self, mock_item_to_json, mock_tracing_tag_to_json, mock_json):
         generator = "mock_generator"
         mock_tracing_tag_to_json.return_value = "mock_value"
@@ -106,9 +106,9 @@ class LobsterWriteReadTests(unittest.TestCase):
         }
         mock_json.dump.assert_called_once_with(mock_data, fd_imp, indent=2)
 
-    @patch("lobster.io.json")
-    @patch("lobster.items.Tracing_Tag.to_json")
-    @patch("lobster.items.Item.to_json")
+    @patch("lobster.common.io.json")
+    @patch("lobster.common.items.Tracing_Tag.to_json")
+    @patch("lobster.common.items.Item.to_json")
     def test_lobster_write_activity(self, mock_item_to_json, mock_tracing_tag_to_json, mock_json):
         generator = "mock_generator"
         mock_tracing_tag_to_json.return_value = "mock_value"
@@ -130,9 +130,9 @@ class LobsterWriteReadTests(unittest.TestCase):
         }
         mock_json.dump.assert_called_once_with(mock_data, fd_act, indent=2)
 
-    @patch("lobster.items.Item.additional_data_from_json")
-    @patch("lobster.items.Tracing_Tag.key")
-    @patch("lobster.items.Tracing_Tag.from_json")
+    @patch("lobster.common.items.Item.additional_data_from_json")
+    @patch("lobster.common.items.Tracing_Tag.key")
+    @patch("lobster.common.items.Tracing_Tag.from_json")
     def test_lobster_read_valid_requirement(self, mock_from_json, mock_key, mock_additional_data_from_json):
         mock_key.return_value = "mock_namespace mock_tag"
         mock_from_json.return_value = self.tracing_tag
@@ -161,9 +161,9 @@ class LobsterWriteReadTests(unittest.TestCase):
                     self.source_data, mock_data_req["version"],
                 )
 
-    @patch("lobster.items.Item.additional_data_from_json")
-    @patch("lobster.items.Tracing_Tag.key")
-    @patch("lobster.items.Tracing_Tag.from_json")
+    @patch("lobster.common.items.Item.additional_data_from_json")
+    @patch("lobster.common.items.Tracing_Tag.key")
+    @patch("lobster.common.items.Tracing_Tag.from_json")
     def test_lobster_read_valid_implementation(
         self,
         mock_from_json, mock_key,
@@ -194,9 +194,9 @@ class LobsterWriteReadTests(unittest.TestCase):
                     self.source_data, mock_data_imp["version"],
                 )
 
-    @patch("lobster.items.Item.additional_data_from_json")
-    @patch("lobster.items.Tracing_Tag.key")
-    @patch("lobster.items.Tracing_Tag.from_json")
+    @patch("lobster.common.items.Item.additional_data_from_json")
+    @patch("lobster.common.items.Tracing_Tag.key")
+    @patch("lobster.common.items.Tracing_Tag.from_json")
     def test_lobster_read_valid_activity(self, mock_from_json, mock_key, mock_additional_data_from_json):
         mock_key.return_value = "mock_namespace mock_tag"
         mock_from_json.return_value = self.tracing_tag

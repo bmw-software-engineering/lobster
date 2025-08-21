@@ -2,8 +2,8 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from lobster.items import Item, Tracing_Tag
-from lobster.location import File_Reference
+from lobster.common.items import Item, Tracing_Tag
+from lobster.common.location import File_Reference
 from lobster.tools.core.online_report.online_report import (
     get_summary, get_git_commit_hash_repo_and_path
 )

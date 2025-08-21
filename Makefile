@@ -3,7 +3,6 @@ export LOBSTER_ROOT=$(PWD)
 export PYTHONPATH=$(LOBSTER_ROOT)
 export PATH:=$(LOBSTER_ROOT):$(PATH)
 
-ASSETS=$(wildcard assets/*.svg)
 TOOL_FOLDERS := $(shell \
 	(find ./lobster/tools -mindepth 1 -maxdepth 1 -type d \
 		| grep -v -E '__pycache__|parser|core$$' \
@@ -14,9 +13,6 @@ TOOL_FOLDERS := $(shell \
 	| sort)
 
 .PHONY: packages docs tracing
-
-lobster/html/assets.py: $(ASSETS) util/mkassets.py
-	util/mkassets.py lobster/html/assets.py $(ASSETS)
 
 lint: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
@@ -57,7 +53,6 @@ clean-packages:
 	git clean -xdf packages test_install test_install_monolithic test_install_monolithic_venv
 
 packages: clean-packages
-	make lobster/html/assets.py
 	make -C packages/lobster-core
 	make -C packages/lobster-tool-trlc
 	make -C packages/lobster-tool-codebeamer
@@ -193,7 +188,6 @@ clean-docs:
 
 tracing:
 	@mkdir -p docs
-	@make lobster/html/assets.py
 	@for tool in $(TOOL_FOLDERS); do \
 		case $$tool in \
 			codebeamer|cpptest|trlc) \

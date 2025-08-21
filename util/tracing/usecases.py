@@ -3,9 +3,9 @@ from typing import List
 import sys
 from trlc.errors import Message_Handler
 from trlc.trlc import Source_Manager
-from lobster.items import Tracing_Tag, Requirement
-from lobster.location import File_Reference
-from lobster.io import lobster_write
+from lobster.common.items import Tracing_Tag, Requirement
+from lobster.common.location import File_Reference
+from lobster.common.io import lobster_write
 
 TRLC_TYPE = "UseCase"
 USECASE_FIELD_AFFECTED_TOOLS = "affected_tools"

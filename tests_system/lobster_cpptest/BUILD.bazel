@@ -1,0 +1,75 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_library(
+    name = "lobster_cpptest",
+    srcs = [
+        "lobster_cpptest_asserter.py",
+        "lobster_cpptest_system_test_case_base.py",
+        "lobster_cpptest_test_runner.py",
+    ],
+    data = [
+        "//tests_system/lobster_cpptest/data:cpptest_data_system",
+        "//tests_system/lobster_cpptest/data/cpp_test_files:cpptest_test_files_system",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["//tests_system"],
+)
+
+py_test(
+    name = "test_config_exceptions",
+    srcs = ["test_config_exceptions.py"],
+    deps = [
+        ":lobster_cpptest",
+        "//lobster/tools/cpptest",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_directories",
+    srcs = ["test_directories.py"],
+    deps = [
+        ":lobster_cpptest",
+        "//tests_system/tests_utils",
+    ],
+)
+
+py_test(
+    name = "test_extension",
+    srcs = ["test_extension.py"],
+    deps = [
+        ":lobster_cpptest",
+        "//tests_system/tests_utils",
+    ],
+)
+
+py_test(
+    name = "test_multiple_files",
+    srcs = ["test_multiple_files.py"],
+    deps = [
+        ":lobster_cpptest",
+        "//tests_system/tests_utils",
+    ],
+)
+
+py_test(
+    name = "test_references",
+    srcs = ["test_references.py"],
+    deps = [
+        ":lobster_cpptest",
+        "//tests_system/tests_utils",
+    ],
+)
+
+py_test(
+    name = "test_valid_scenario",
+    srcs = ["test_valid_scenario.py"],
+    deps = [
+        ":lobster_cpptest",
+        "//tests_system",
+        "//tests_system/tests_utils",
+    ],
+)

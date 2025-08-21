@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from lobster.report import Coverage, Report
+from lobster.common.report import Coverage, Report
 from lobster.tools.core.report.report import generate_report_file
 
 

@@ -1,0 +1,7 @@
+filegroup(
+    name = "pkg_data_unit",
+    srcs = glob([
+        "*.pkg",
+    ]),
+    visibility = ["//visibility:public"],
+)
