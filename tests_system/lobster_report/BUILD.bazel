@@ -72,11 +72,11 @@ py_test(
     ],
 )
 
-# py_test(
-#     name = "test_zero_items_coverage",
-#     srcs = ["test_zero_items_coverage.py"],
-#     deps = [
-#         ":lobster_report",
-#         "//tests_system",
-#     ],
-# )
+py_test(
+    name = "test_items_coverage",
+    srcs = ["test_items_coverage.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)
