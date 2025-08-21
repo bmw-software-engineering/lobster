@@ -27,7 +27,7 @@ import util.changelog
 # Update version.py to remove the -dev (or if given) use a different
 # version number.
 
-VERSION_FILE = os.path.join("lobster", "version.py")
+VERSION_FILE = os.path.join("lobster", "common", "version.py")
 
 # pylint: disable=invalid-name
 tmp = ""
