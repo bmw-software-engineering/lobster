@@ -3,6 +3,6 @@ py_binary(
     srcs = ["gtest.py"],
     visibility = ["//visibility:public"],
     deps = [
-        "//:lobster",
+        "//:lobster-core",
     ],
 )

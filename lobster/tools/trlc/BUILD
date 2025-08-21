@@ -3,8 +3,8 @@ load("@lobster_dependencies//:requirements.bzl", "requirement")
 py_binary(
     name = "trlc",
     srcs = [
-        "conversion_rule_lookup.py",
         "conversion_rule.py",
+        "conversion_rule_lookup.py",
         "converter.py",
         "errors.py",
         "hierarchy_tree.py",
@@ -17,12 +17,12 @@ py_binary(
         "trlc_tool.py",
     ],
     main = "trlc_tool.py",
-    visibility = ["//visibility:public"],
     data = [
         "schema.yamale",
     ],
+    visibility = ["//visibility:public"],
     deps = [
-        "//:lobster",
+        "//:lobster-core",
         "@trlc//trlc",
         requirement("yamale"),
     ],

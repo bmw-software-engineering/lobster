@@ -3,7 +3,7 @@ export LOBSTER_ROOT=$(PWD)
 export PYTHONPATH=$(LOBSTER_ROOT)
 export PATH:=$(LOBSTER_ROOT):$(PATH)
 
-ASSETS=$(wildcard assets/*.svg)
+ASSETS=$(sort $(wildcard assets/*.svg))
 TOOL_FOLDERS := $(shell \
 	(find ./lobster/tools -mindepth 1 -maxdepth 1 -type d \
 		| grep -v -E '__pycache__|parser|core$$' \
@@ -58,7 +58,7 @@ clean-packages:
 
 packages: clean-packages
 	make lobster/html/assets.py
-	make -C packages/lobster-core
+	bazel build //packages/lobster-core:wheel
 	make -C packages/lobster-tool-trlc
 	make -C packages/lobster-tool-codebeamer
 	make -C packages/lobster-tool-cpp
@@ -70,6 +70,7 @@ packages: clean-packages
 	make -C packages/lobster-monolithic
 	PYTHONPATH= \
 		pip3 install --prefix test_install \
+		bazel-bin/packages/lobster-core/*.whl \
 		packages/*/dist/*.whl
 	PYTHONPATH= \
 		pip3 install --prefix test_install_monolithic \
