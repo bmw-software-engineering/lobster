@@ -29,6 +29,8 @@ py_library(
         "lexer.py",
         "location.py",
         "meta_data_tool_base.py",
+        "multi_file_input_config.py",
+        "multi_file_input_tool.py",
         "parser.py",
         "report.py",
         "tool.py",
