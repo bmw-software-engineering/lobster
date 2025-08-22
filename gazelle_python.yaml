@@ -33,7 +33,6 @@ manifest:
     mccabe: mccabe
     outcome: outcome
     packaging: packaging
-    pkg_resources: setuptools
     platformdirs: platformdirs
     pycodestyle: pycodestyle
     pylint: pylint
@@ -41,7 +40,6 @@ manifest:
     pyvcg: PyVCG
     requests: requests
     selenium: selenium
-    setuptools: setuptools
     sniffio: sniffio
     socks: PySocks
     sockshandler: PySocks
