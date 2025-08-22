@@ -142,5 +142,5 @@ class LOBSTER_Trlc(MultiFileInputTool):
         print(f"lobster-trlc: successfully wrote {len(items)} items to {options.out}")
 
 
-def main():
-    return LOBSTER_Trlc().run()
+def main(*args):
+    return LOBSTER_Trlc().run(*args)

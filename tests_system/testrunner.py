@@ -1,8 +1,12 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
 import shutil
+import os
+import io
+import contextlib
 from subprocess import PIPE, CompletedProcess, run
 from typing import List
+from lobster.tools.trlc.trlc_tool import main as main_lobster_trlc
 
 
 class TestRunner(ABC):
@@ -118,6 +122,36 @@ class TestRunner(ABC):
     def run_tool_test(self) -> CompletedProcess:
         """Runs the tool under test and measures the branch coverage."""
         tool_args = self.get_tool_args()
+
+        class FakeCompletedProcess:
+            def __init__(self, returncode, stdout, stderr):
+                self.returncode = returncode
+                self.stdout = stdout
+                self.stderr = stderr
+
+        tool_name = self._tool_main_path.stem
+        if tool_name == "lobster-trlc":
+            func = main_lobster_trlc
+        else:
+            raise NotImplementedError(f"Unknown tool: {tool_name}")
+
+        stdout_buffer = io.StringIO()
+        stderr_buffer = io.StringIO()
+
+        old_cwd = Path.cwd()
+        try:
+            # Change to working directory
+            os.chdir(self._working_dir)
+            with contextlib.redirect_stdout(stdout_buffer), contextlib.redirect_stderr(stderr_buffer):
+                rv = func(*tool_args)
+        finally:
+            # Restore original working directory
+            os.chdir(old_cwd)
+        return FakeCompletedProcess(
+            returncode=rv,
+            stdout=stdout_buffer.getvalue(),
+            stderr=stderr_buffer.getvalue(),
+        )
 
         root_directory = self.get_repo_root()
         coverage_command = [

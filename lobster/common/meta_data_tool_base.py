@@ -50,15 +50,15 @@ class MetaDataToolBase(metaclass=ABCMeta):
         """The name of the tool, prefixed with 'lobster-'."""
         return self._name
 
-    def run(self) -> int:
+    def run(self, *args) -> int:
         """
         Parse the command line arguments and return the parsed namespace.
 
         If the --version or --help flag is set, it prints those messages.
         Otherwise it calls the _run_impl method with the parsed arguments.
         """
-        args = self._argument_parser.parse_args()
-        return self._run_impl(args)
+        parsed_arguments = self._argument_parser.parse_args(args)
+        return self._run_impl(parsed_arguments)
 
     @abstractmethod
     def _run_impl(self, options: Namespace) -> int:
