@@ -627,5 +627,5 @@ class HtmlReportTool(MetaDataToolBase):
         return 0
 
 
-def main(args: Optional[Sequence[str]]) -> int:
+def main(args: Optional[Sequence[str]] = None) -> int:
     return HtmlReportTool().run(args)

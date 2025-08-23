@@ -32,6 +32,7 @@ py_library(
         "//visibility:public",
     ],
     deps = [
+        "//:lobster",
         "//tests_system",
         requirement("flask"),
         requirement("pyyaml"),
