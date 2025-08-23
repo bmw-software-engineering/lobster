@@ -1,5 +1,6 @@
 from abc import abstractmethod, ABCMeta
 from argparse import ArgumentParser, Namespace, RawTextHelpFormatter
+from typing import Optional, Sequence
 from lobster.common.version import FULL_NAME
 
 
@@ -50,7 +51,7 @@ class MetaDataToolBase(metaclass=ABCMeta):
         """The name of the tool, prefixed with 'lobster-'."""
         return self._name
 
-    def run(self, *args) -> int:
+    def run(self, args: Optional[Sequence[str]] = None) -> int:
         """
         Parse the command line arguments and run the tool implementation.
 

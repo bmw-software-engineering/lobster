@@ -20,7 +20,7 @@ import argparse
 import json
 from pathlib import PurePath
 from pprint import pprint
-from typing import Tuple, List, Set
+from typing import Optional, Sequence, Tuple, List, Set
 
 from lobster.common.tool import LOBSTER_Per_File_Tool
 from lobster.common.items import Tracing_Tag, Activity
@@ -228,5 +228,5 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
         return ok, items
 
 
-def main(*args):
-    return LOBSTER_Json().run(*args)
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return LOBSTER_Json().run(args)

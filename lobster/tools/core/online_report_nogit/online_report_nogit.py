@@ -3,7 +3,7 @@ import os
 import sys
 
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Iterable, Optional, Sequence
 from urllib.parse import quote
 
 from lobster.common.items import Item
@@ -137,5 +137,5 @@ class OnlineReportNogitTool(MetaDataToolBase):
         return 0
 
 
-def main(*args) -> int:
-    return OnlineReportNogitTool().run(*args)
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return OnlineReportNogitTool().run(args)

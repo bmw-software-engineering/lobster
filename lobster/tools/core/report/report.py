@@ -18,6 +18,7 @@
 # <https://www.gnu.org/licenses/>.
 
 from argparse import Namespace
+from typing import Optional, Sequence
 
 from lobster.common.exceptions import LOBSTER_Exception
 from lobster.common.errors import LOBSTER_Error
@@ -69,5 +70,5 @@ def generate_report_file(lobster_config_file: str, output_file: str) -> dict:
     report.write_report(output_file)
 
 
-def main(*args) -> int:
-    return ReportTool().run(*args)
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return ReportTool().run(args)

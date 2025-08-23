@@ -22,7 +22,7 @@ import sys
 import os.path
 import subprocess
 import re
-from typing import Optional
+from typing import Optional, Sequence
 
 from lobster.common.items import Tracing_Tag, Implementation
 from lobster.common.io import lobster_write
@@ -222,5 +222,5 @@ class CppTool(MetaDataToolBase):
         return 0
 
 
-def main() -> int:
-    return CppTool().run()
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return CppTool().run(args)

@@ -22,6 +22,7 @@ import os
 import argparse
 import configparser
 import subprocess
+from typing import Optional, Sequence
 from urllib.parse import quote
 
 from lobster.common.report import Report
@@ -280,5 +281,5 @@ class OnlineReportTool(MetaDataToolBase):
         return 0
 
 
-def main(*args) -> int:
-    return OnlineReportTool().run(*args)
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return OnlineReportTool().run(args)

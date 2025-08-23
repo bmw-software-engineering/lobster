@@ -20,7 +20,7 @@
 import argparse
 import os
 import sys
-from typing import Iterable
+from typing import Iterable, Optional, Sequence
 
 from yamale import YamaleError
 
@@ -142,5 +142,5 @@ class LOBSTER_Trlc(MultiFileInputTool):
         print(f"lobster-trlc: successfully wrote {len(items)} items to {options.out}")
 
 
-def main(*args):
-    return LOBSTER_Trlc().run(*args)
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return LOBSTER_Trlc().run(args)

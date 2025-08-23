@@ -22,7 +22,7 @@ from argparse import Namespace
 import os.path
 from copy import copy
 from dataclasses import dataclass, field
-from typing import List, Union
+from typing import List, Optional, Sequence, Union
 from enum import Enum
 import yaml
 from lobster.common.errors import LOBSTER_Error
@@ -398,5 +398,5 @@ def cpptest_items_to_lobster_file(config: Config) -> None:
     lobster_cpptest(config=config)
 
 
-def main(*args) -> int:
-    return CppTestTool().run(*args)
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return CppTestTool().run(args)
