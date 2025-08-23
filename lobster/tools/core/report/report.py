@@ -69,5 +69,5 @@ def generate_report_file(lobster_config_file: str, output_file: str) -> dict:
     report.write_report(output_file)
 
 
-def main() -> int:
-    return ReportTool().run()
+def main(*args) -> int:
+    return ReportTool().run(*args)

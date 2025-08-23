@@ -1,12 +1,18 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from pathlib import Path
 import shutil
 import os
 import io
 import contextlib
-from subprocess import PIPE, CompletedProcess, run
-from typing import List
-from lobster.tools.trlc.trlc_tool import main as main_lobster_trlc
+from typing import Callable, List
+
+
+@dataclass
+class TestRunResult:
+    returncode: int
+    stdout: str
+    stderr: str
 
 
 class TestRunner(ABC):
@@ -26,17 +32,18 @@ class TestRunner(ABC):
       subprocess.CompletedProcess object.
     """
 
-    def __init__(self, tool_name: str, working_dir: Path):
+    def __init__(self, tool_main_fnc: Callable, working_dir: Path):
         """Constructor
 
-        :param tool_name: Name of the LOBSTER tool. This must be equal to the name of
-        the Python file that contains the "__main__" entry point.
+        :param tool_main_fnc: main function that is also specified in setup.py as the
+            tool's entry point (see variable 'console_scripts' there)
         :param working_dir: path to a directory which to use as current working
         directory for the tool under test. Input files will be copied into this
         directory before running the tool.
         """
-        self._tool_main_path = (Path(__file__).resolve().parents[1] /
-                                f"{tool_name.replace('_', '-')}.py")
+        if not isinstance(tool_main_fnc, Callable):
+            raise TypeError("Invalid Test Setup: tool_main_fnc must be callable")
+        self._tool_main_fnc = tool_main_fnc
         self._tool_output_files: List[Path] = []
         self._working_dir = working_dir
 
@@ -119,58 +126,23 @@ class TestRunner(ABC):
         """Returns the root directory of the LOBSTER repository."""
         return Path(__file__).resolve().parents[1]
 
-    def run_tool_test(self) -> CompletedProcess:
-        """Runs the tool under test and measures the branch coverage."""
-        tool_args = self.get_tool_args()
-
-        class FakeCompletedProcess:
-            def __init__(self, returncode, stdout, stderr):
-                self.returncode = returncode
-                self.stdout = stdout
-                self.stderr = stderr
-
-        tool_name = self._tool_main_path.stem
-        if tool_name == "lobster-trlc":
-            func = main_lobster_trlc
-        else:
-            raise NotImplementedError(f"Unknown tool: {tool_name}")
-
+    def run_tool_test(self) -> TestRunResult:
+        """Runs the tool under test"""
         stdout_buffer = io.StringIO()
         stderr_buffer = io.StringIO()
-
         old_cwd = Path.cwd()
+        rv = None
         try:
-            # Change to working directory
+            # Change to designated working directory
             os.chdir(self._working_dir)
-            with contextlib.redirect_stdout(stdout_buffer), contextlib.redirect_stderr(stderr_buffer):
-                rv = func(*tool_args)
+            with contextlib.redirect_stdout(stdout_buffer), \
+                    contextlib.redirect_stderr(stderr_buffer):
+                rv = self._tool_main_fnc(*self.get_tool_args())
         finally:
             # Restore original working directory
             os.chdir(old_cwd)
-        return FakeCompletedProcess(
+        return TestRunResult(
             returncode=rv,
             stdout=stdout_buffer.getvalue(),
             stderr=stderr_buffer.getvalue(),
         )
-
-        root_directory = self.get_repo_root()
-        coverage_command = [
-            "coverage",
-            "run",
-            "-p",
-            f"--rcfile={root_directory / 'coverage.cfg'}",
-            f"--data-file={root_directory / '.coverage.system'}",
-            f"--source={root_directory / 'lobster'}",
-            "--branch",
-            str(self._tool_main_path),
-            *tool_args,
-        ]
-        completed_process = run(
-            coverage_command,
-            stdout=PIPE,
-            stderr=PIPE,
-            encoding="UTF-8",
-            cwd=str(self._working_dir),
-            check=False,
-        )
-        return completed_process

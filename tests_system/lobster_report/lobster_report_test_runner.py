@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
 from tests_system.testrunner import TestRunner
+from lobster.tools.core.report.report import main
 
 
 @dataclass
@@ -25,8 +26,8 @@ class CmdArgs:
 class LobsterReportTestRunner(TestRunner):
     """System test runner for lobster-report"""
 
-    def __init__(self, tool_name: str, working_dir: Path):
-        super().__init__(tool_name, working_dir)
+    def __init__(self, working_dir: Path):
+        super().__init__(main, working_dir)
         self._cmd_args = CmdArgs()
 
     @property

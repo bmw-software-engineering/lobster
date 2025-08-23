@@ -3,6 +3,7 @@ from pathlib import Path
 import shutil
 from typing import List, Optional
 from tests_system.testrunner import TestRunner
+from lobster.tools.cpptest.cpptest import main
 
 
 @dataclass
@@ -24,8 +25,8 @@ class CmdArgs:
 class LobsterCpptestTestRunner(TestRunner):
     """System test runner for lobster-cpptest"""
 
-    def __init__(self, tool_name: str, working_dir: Path):
-        super().__init__(tool_name, working_dir)
+    def __init__(self, working_dir: Path):
+        super().__init__(main, working_dir)
         self._cmd_args = CmdArgs()
 
     @property

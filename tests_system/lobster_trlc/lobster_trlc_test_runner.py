@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import List, Optional
 import yaml
 from tests_system.testrunner import TestRunner
+from lobster.tools.trlc.trlc_tool import main
 
 
 @dataclass
@@ -59,8 +60,8 @@ class CmdArgs:
 
 class LobsterTrlcTestRunner(TestRunner):
     """System test runner for lobster-TRLC"""
-    def __init__(self, tool_name: str, working_dir: Path):
-        super().__init__(tool_name, working_dir)
+    def __init__(self, working_dir: Path):
+        super().__init__(main, working_dir)
         self._config_file_data = ConfigFileData()
         self._cmd_args = CmdArgs()
 

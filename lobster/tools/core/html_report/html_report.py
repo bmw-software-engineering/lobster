@@ -626,5 +626,5 @@ class HtmlReportTool(MetaDataToolBase):
         return 0
 
 
-def main() -> int:
-    return HtmlReportTool().run()
+def main(*args) -> int:
+    return HtmlReportTool().run(*args)

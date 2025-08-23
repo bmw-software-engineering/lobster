@@ -137,5 +137,5 @@ class OnlineReportNogitTool(MetaDataToolBase):
         return 0
 
 
-def main() -> int:
-    return OnlineReportNogitTool().run()
+def main(*args) -> int:
+    return OnlineReportNogitTool().run(*args)

@@ -619,5 +619,5 @@ def cb_query_to_lobster_file(config: Config, out_file: str) -> None:
         _cb_items_to_lobster(items, config, fd)
 
 
-def main() -> int:
-    return CodebeamerTool().run()
+def main(*args) -> int:
+    return CodebeamerTool().run(*args)

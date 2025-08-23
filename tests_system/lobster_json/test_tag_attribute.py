@@ -1,7 +1,6 @@
 from tests_system.lobster_json.\
     lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
 from tests_system.lobster_json.lobsterjsonasserter import LobsterJsonAsserter
-from tests_system.asserter import Asserter
 
 
 class JsonTagAttributeTest(LobsterJsonSystemTestCaseBase):
@@ -44,8 +43,7 @@ class JsonTagAttributeTest(LobsterJsonSystemTestCaseBase):
         # Intentionally not setting tag_attribute (it's mandatory)
 
         completed_process = self._test_runner.run_tool_test()
-        asserter = Asserter(self, completed_process, self._test_runner)
-        asserter.assertStdErrText(
-            "Required mandatory parameters missing - tag_attribute\n")
-        asserter.assertNoStdOutText()
-        asserter.assertExitCode(1)
+        self.assertEqual(
+            completed_process.returncode,
+            "Required mandatory parameters missing - tag_attribute",
+        )

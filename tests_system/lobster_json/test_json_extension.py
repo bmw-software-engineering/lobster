@@ -1,3 +1,5 @@
+from json.decoder import JSONDecodeError
+
 from tests_system.lobster_json.\
     lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
 from tests_system.asserter import Asserter
@@ -50,10 +52,8 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
             self._data_directory / "valid_extension_invalid_json.json"
         )
 
-        completed_process = self._test_runner.run_tool_test()
-        asserter = Asserter(self, completed_process, self._test_runner)
-        self.assertIn("json.decoder.JSONDecodeError:", completed_process.stderr)
-        asserter.assertExitCode(1)
+        with self.assertRaises(JSONDecodeError):
+            self._test_runner.run_tool_test()
 
     def test_inputs_and_inputs_from_files_with_mixed_extension(self):
         """

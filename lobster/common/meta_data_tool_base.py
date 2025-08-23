@@ -52,13 +52,19 @@ class MetaDataToolBase(metaclass=ABCMeta):
 
     def run(self, *args) -> int:
         """
-        Parse the command line arguments and return the parsed namespace.
+        Parse the command line arguments and run the tool implementation.
 
         If the --version or --help flag is set, it prints those messages.
         Otherwise it calls the _run_impl method with the parsed arguments.
         """
-        parsed_arguments = self._argument_parser.parse_args(args)
-        return self._run_impl(parsed_arguments)
+
+        # parse_args calls sys.exit if 'args' contains --help or --version
+        # so we wrap the call in a try-catch block
+        try:
+            parsed_arguments = self._argument_parser.parse_args(args)
+            return self._run_impl(parsed_arguments)
+        except SystemExit as e:
+            return e.code
 
     @abstractmethod
     def _run_impl(self, options: Namespace) -> int:

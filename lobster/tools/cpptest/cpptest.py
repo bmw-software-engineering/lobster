@@ -398,5 +398,5 @@ def cpptest_items_to_lobster_file(config: Config) -> None:
     lobster_cpptest(config=config)
 
 
-def main() -> int:
-    return CppTestTool().run()
+def main(*args) -> int:
+    return CppTestTool().run(*args)

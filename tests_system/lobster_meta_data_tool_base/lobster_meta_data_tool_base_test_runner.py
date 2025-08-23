@@ -1,15 +1,34 @@
+from argparse import Namespace
+
 from pathlib import Path
 from typing import List
 from tests_system.lobster_meta_data_tool_base.\
     lobster_meta_data_tool_base_cmd_args import CmdArgs
 from tests_system.testrunner import TestRunner
 
+from lobster.common.meta_data_tool_base import MetaDataToolBase
+
+
+IMPLEMENTATION_MESSAGE = "This is the AppleBanana tool."
+
 
 class LobsterMetaDataToolBaseTestRunner(TestRunner):
     """System test runner for abstract lobster base tool"""
 
-    def __init__(self, tool_name: str, working_dir: Path):
-        super().__init__(tool_name, working_dir)
+    def __init__(self, working_dir: Path):
+        def main(*args):
+            class AppleBananaTool(MetaDataToolBase):
+                def _run_impl(self, options: Namespace) -> int:
+                    print(IMPLEMENTATION_MESSAGE)
+                    return 0
+
+            return AppleBananaTool(
+                name="apple",
+                description="banana",
+                official=True,
+            ).run(*args)
+
+        super().__init__(main, working_dir)
         self._cmd_args = CmdArgs()
 
     @staticmethod

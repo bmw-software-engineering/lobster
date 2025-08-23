@@ -228,5 +228,5 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
         return ok, items
 
 
-def main():
-    return LOBSTER_Json().run()
+def main(*args):
+    return LOBSTER_Json().run(*args)

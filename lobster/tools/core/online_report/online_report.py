@@ -280,5 +280,5 @@ class OnlineReportTool(MetaDataToolBase):
         return 0
 
 
-def main() -> int:
-    return OnlineReportTool().run()
+def main(*args) -> int:
+    return OnlineReportTool().run(*args)
