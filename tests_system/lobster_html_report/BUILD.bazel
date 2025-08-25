@@ -45,5 +45,6 @@ py_test(
         ":lobster_html_report",
         "//lobster/tools/core/html_report",
         "//tests_system",
+        "//tests_system/tests_utils",
     ],
 )

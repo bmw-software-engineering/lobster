@@ -26,6 +26,7 @@ from datetime import datetime, timezone
 
 import markdown
 
+from lobster.common.version import LOBSTER_VERSION
 from lobster.htmldoc import htmldoc
 from lobster.common.report import Report
 from lobster.common.location import (Void_Reference,
@@ -387,6 +388,15 @@ def write_html(fd, report, dot, high_contrast, render_md):
         "margin-left"  : "0.5em",
     }
 
+    # Footer
+    doc.style["footer"] = {
+        "margin-top"    : "1rem",
+        "padding"       : ".2rem",
+        "text-align"    : "right",
+        "color"         : "#666",
+        "font-size"     : ".7rem",
+    }
+
     ### Menu & Navigation
     doc.navbar.add_link("Overview", "#sec-overview")
     doc.navbar.add_link("Issues", "#sec-issues")
@@ -545,6 +555,10 @@ def write_html(fd, report, dot, high_contrast, render_md):
         doc.add_line("</div>")  # Closing tag for detailed-report-<title>
     # Closing tag for id #search-sec-id
     doc.add_line("</div>")
+    # Add LOBSTER version in the footer.
+    doc.add_line("<footer>")
+    doc.add_line(f"<p>LOBSTER Version: {LOBSTER_VERSION}</p>")
+    doc.add_line("</footer>")
 
     # Add the css from assets
     dir_path = os.path.dirname(os.path.abspath(__file__))
