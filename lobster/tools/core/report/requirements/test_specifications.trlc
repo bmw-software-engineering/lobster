@@ -1,0 +1,26 @@
+package UseCases
+import req
+
+req.TestSpecification Coverage_calculation_in_Output{
+    description = '''
+    The test shall verify the output file contains correct coverage calculation
+    based on total number of requirements and number of covered requirements.
+    '''
+    verifies = [Incorrect_Coverage_Calculation]
+}
+
+req.TestSpecification Requirement_to_software_Test_Mapping_in_Output{
+    description = '''
+    The test shall verify output file contains correct mapping of requirement to software tests
+    based on requirement reference mentioned in software tests.
+    '''
+    verifies = [Wrong_Mapping_of_Requirement_to_Software_Test]
+}
+
+req.TestSpecification Software_Test_to_Requirement_Mapping_in_output{
+    description = '''
+    The test shall verify output file contains correct mapping of software tests to requirement
+    based on requirement reference mentioned in software tests.
+    '''
+    verifies = [Wrong_Mapping_of_Software_Test_to_Requirement]
+}

@@ -1,68 +1,74 @@
 #!/bin/bash
 
-# Cleanup function that runs on exit
-cleanup() {
-    echo "Cleaning up intermediate files..."
-    rm -rf tracing-out
-}
-
-# Set trap to run cleanup on exit (normal or error)
-trap cleanup EXIT
-
 # Create output directories if they don't exist
-mkdir -p tracing-out
+mkdir -p tracing_out
 mkdir -p docs
 
-TOOLS=("codebeamer" "cpptest" "trlc")
+TOOLS=("codebeamer" "cpptest" "trlc" "report")
 
 # Process each tool
 for tool in "${TOOLS[@]}"; do
-    echo "Processing lobster-$tool..."
-    
+    echo "Processing tool: lobster-$tool"
+    TARGET_NAME="lobster_$tool"
+
+    # Determine the correct path for the tool by checking where it exists
+    if [ -d "lobster/tools/$tool" ]; then
+        TOOL_PATH="$tool"
+        OUTPUT_NAME="tracing-$tool.html"
+    elif [ -d "lobster/tools/core/$tool" ]; then
+        TOOL_PATH="core/$tool"
+        OUTPUT_NAME="tracing-core_$tool.html"
+    else
+        echo "❌ ERROR: Tool '$tool' not found in lobster/tools/ or lobster/tools/core/"
+        continue
+    fi
+
     # Process tool in a subshell to contain errors
     if (
         set -e  # Exit subshell on error, but don't exit main script
-        
+
         # Generate use cases
         python util/tracing/usecases.py \
-            --target=lobster_$tool \
+            --target="$TARGET_NAME" \
             lobster/requirements.rsl \
             lobster/use_cases.trlc \
-            lobster/tools/$tool/requirements/potential_errors.trlc \
-            lobster/tools/$tool/requirements/test_specifications.trlc \
-            --out=tracing-out/use-cases.lobster
-        
+            "lobster/tools/$TOOL_PATH/requirements/potential_errors.trlc" \
+            "lobster/tools/$TOOL_PATH/requirements/test_specifications.trlc" \
+            --out=tracing_out/use-cases.lobster
+
         # Generate artifacts
-        python lobster-trlc.py \
-            --config=tracing/lobster_$tool/$tool.potential-errors.lobster-trlc.yaml \
-            --out=tracing-out/potential-errors.lobster
-        python lobster-trlc.py \
-            --config=tracing/lobster_$tool/$tool.test-specifications.lobster-trlc.yaml \
-            --out=tracing-out/test-specifications.lobster
-        python lobster-trlc.py \
-            --config=tracing/lobster_$tool/$tool.system-requirements.lobster-trlc.yaml \
-            --out=tracing-out/system-requirements.lobster
-        python lobster-trlc.py \
-            --config=tracing/lobster_$tool/$tool.software-requirements.lobster-trlc.yaml \
-            --out=tracing-out/software-requirements.lobster
-        python lobster-python.py lobster/tools/$tool --out=tracing-out/code.lobster
+        for artifact in potential-errors test-specifications system-requirements software-requirements; do
+            python lobster-trlc.py \
+                --config="tracing/lobster_$tool/$tool.$artifact.lobster-trlc.yaml" \
+                --out="tracing_out/$artifact.lobster"
+        done
+
+        python lobster-python.py "lobster/tools/$TOOL_PATH" --out=tracing_out/code.lobster
         python lobster-python.py tests_system/lobster_$tool --activity \
-            --out=tracing-out/system-tests.lobster
+            --out=tracing_out/system-tests.lobster
         python lobster-python.py tests_unit/lobster_$tool --activity \
-            --out=tracing-out/unit-tests.lobster
-        
+            --out=tracing_out/unit-tests.lobster
+
         # Generate report
         python lobster-report.py --lobster-config=tracing/tracing_policy.conf \
-            --out=tracing-out/tracing.lobster
-        
+            --out=tracing_out/tracing.lobster
+
         # Generate HTML report
-        python lobster-html-report.py tracing-out/tracing.lobster \
+        python lobster-html-report.py tracing_out/tracing.lobster \
             --out=docs/tracing-$tool.html
     ); then
-        echo -e "✅ SUCCESS: Generated HTML report for $tool in docs/tracing-$tool.html"
+        echo -e "✅ SUCCESS: Generated HTML report for $tool in docs/$OUTPUT_NAME"
+        rm -f tracing_out/*.lobster
     else
-        echo -e "❌ ERROR: Failed to process $tool. Continuing with next tool..."
+        echo -e "❌ ERROR: Failed to process $tool."
+        rm -f tracing_out/*.lobster
     fi
-    
+
     echo "----------------------------------------"
 done
+
+echo "Tracing script completed"
+
+# Final cleanup - remove the entire tracing_out directory
+echo "Cleaning up intermediate files..."
+rm -rf tracing_out
