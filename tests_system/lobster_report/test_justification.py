@@ -1,0 +1,40 @@
+from tests_system.asserter import Asserter
+from tests_system.lobster_report.lobster_report_system_test_case_base import (
+    LobsterReportSystemTestCaseBase
+)
+
+
+class ReportJustificationTest(LobsterReportSystemTestCaseBase):
+    def setUp(self):
+        super().setUp()
+        self._test_runner = self.create_test_runner()
+
+    def test_justification_and_coverage(self):
+        # lobster-trace: core_report_req.Status_Justified_Global
+        # lobster-trace: core_report_req.Status_Justified_Up
+        # lobster-trace: core_report_req.Status_Justified_Down
+        """
+        This test checks that the lobster report tool can handle justifications
+        and coverage changes according to justifications and generate lobster report.
+        """
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "just_policy.conf")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "just_usecases.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "just_system_requirements.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "just_software_requirements.lobster")
+
+        conf_file = "just_policy.conf"
+        out_file = "just_report.lobster"
+        self._test_runner.cmd_args.lobster_config = conf_file
+        self._test_runner.cmd_args.out = out_file
+        self._test_runner.declare_output_file(self._data_directory / out_file)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertNoStdOutText()
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
