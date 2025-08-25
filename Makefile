@@ -213,8 +213,8 @@ usecases.lobster-%:
 
 tracing-%: report.lobster-%
 	$(eval TOOL_PATH := $(subst -,_,$*))
-	lobster-html-report report.lobster --out=docs/tracing-$(TOOL_PATH).html
-	lobster-ci-report report.lobster
+	python lobster-html-report.py report.lobster --out=docs/tracing-$(TOOL_PATH).html
+	python lobster-ci-report.py report.lobster
 
 report.lobster-%: lobster/tools/lobster.conf \
 				  code.lobster-% \
@@ -223,10 +223,10 @@ report.lobster-%: lobster/tools/lobster.conf \
 				  software_requirements.lobster-% \
 				  system-tests.lobster-% \
 				  usecases.lobster-%
-	lobster-report \
+	python lobster-report.py \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
-	lobster-online-report report.lobster
+	python lobster-online-report.py report.lobster
 
 system_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-system.yaml
 
@@ -234,7 +234,7 @@ system_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
 	@echo "inputs: ['lobster/requirements.rsl', 'lobster/use_cases.trlc', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
 	@cat $(TRLC_CONFIG) >> lobster/tools/config.yaml
-	lobster-trlc --config=lobster/tools/config.yaml \
+	python lobster-trlc.py --config=lobster/tools/config.yaml \
 	--out=system_requirements.lobster
 	rm lobster/tools/config.yaml
 
@@ -244,21 +244,21 @@ software_requirements.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
 	@echo "inputs: ['lobster/requirements.rsl', 'lobster/use_cases.trlc', 'lobster/tools/$(TOOL_PATH)']" > lobster/tools/config.yaml
 	@cat $(TRLC_CONFIG) >> lobster/tools/config.yaml
-	lobster-trlc --config=lobster/tools/config.yaml \
+	python lobster-trlc.py --config=lobster/tools/config.yaml \
 	--out=software_requirements.lobster
 	rm lobster/tools/config.yaml
 
 code.lobster-%:
 	$(eval TOOL_PATH := $(subst -,/,$*))
-	lobster-python --out code.lobster lobster/tools/$(TOOL_PATH)
+	python lobster-python.py --out code.lobster lobster/tools/$(TOOL_PATH)
 
 unit-tests.lobster-%:
 	$(eval TOOL_NAME := $(notdir $(TOOL_PATH)))
-	lobster-python --activity --out unit-tests.lobster tests_unit/lobster_$(TOOL_NAME)
+	python lobster-python.py --activity --out unit-tests.lobster tests_unit/lobster_$(TOOL_NAME)
 
 system-tests.lobster-%:
 	$(eval TOOL_NAME := $(notdir $(TOOL_PATH)))
-	lobster-python --activity --out=system-tests.lobster tests_system/lobster_$(TOOL_NAME)
+	python lobster-python.py --activity --out=system-tests.lobster tests_system/lobster_$(TOOL_NAME)
 
 # STF is short for System Test Framework
 STF_TRLC_FILES := $(wildcard tests_system/*.trlc)
@@ -267,12 +267,12 @@ STF_OUTPUT_FILE := docs/tracing-stf.html
 
 # This target is used to generate the LOBSTER report for the requirements of the system test framework itself.
 tracing-stf: $(STF_TRLC_FILES)
-	lobster-trlc --config=lobster/tools/lobster-trlc-system-stf.yaml --out=stf_system_requirements.lobster
-	lobster-trlc --config=lobster/tools/lobster-trlc-software-stf.yaml --out=stf_software_requirements.lobster
-	lobster-python --out=stf_code.lobster --only-tagged-functions $(STF_PYTHON_FILES)
-	lobster-report --lobster-config=tests_system/stf-lobster.conf --out=stf_report.lobster
-	lobster-online-report stf_report.lobster
-	lobster-html-report stf_report.lobster --out=$(STF_OUTPUT_FILE)
+	python lobster-trlc.py --config=lobster/tools/lobster-trlc-system-stf.yaml --out=stf_system_requirements.lobster
+	python lobster-trlc.py --config=lobster/tools/lobster-trlc-software-stf.yaml --out=stf_software_requirements.lobster
+	python lobster-python.py --out=stf_code.lobster --only-tagged-functions $(STF_PYTHON_FILES)
+	python lobster-report.py --lobster-config=tests_system/stf-lobster.conf --out=stf_report.lobster
+	python lobster-online-report.py stf_report.lobster
+	python lobster-html-report.py stf_report.lobster --out=$(STF_OUTPUT_FILE)
 	@echo "✅ STF report generated at $(STF_OUTPUT_FILE)"
 	@echo "Deleting STF *.lobster files..."
 	rm -f stf_system_requirements.lobster stf_software_requirements.lobster stf_code.lobster stf_report.lobster
