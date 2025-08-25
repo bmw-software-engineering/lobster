@@ -27,6 +27,7 @@ import markdown
 
 from lobster.tools.core.html_report.diagram_generator import (
     create_policy_diagram_plotly, name_hash)
+from lobster.common.version import LOBSTER_VERSION
 from lobster.htmldoc import htmldoc
 from lobster.common.report import Report
 from lobster.common.location import (Void_Reference,
@@ -486,6 +487,10 @@ def write_html(fd, report, high_contrast, render_md):
         doc.add_line("</div>")  # Closing tag for detailed-report-<title>
     # Closing tag for id #search-sec-id
     doc.add_line("</div>")
+    # Add LOBSTER version in the footer.
+    doc.add_line("<footer>")
+    doc.add_line(f"<p>LOBSTER Version: {LOBSTER_VERSION}</p>")
+    doc.add_line("</footer>")
 
     # Add the css from assets
     dir_path = os.path.dirname(os.path.abspath(__file__))

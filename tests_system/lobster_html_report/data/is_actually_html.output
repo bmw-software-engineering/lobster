@@ -516,6 +516,9 @@ Status: status1
 <h3 id="heading-verification-and-validation">Verification and Validation</h3>
 </div>
 </div>
+<footer>
+<p>LOBSTER Version: 0.14.3-dev</p>
+</footer>
 </div>
 </div>
 <script>
