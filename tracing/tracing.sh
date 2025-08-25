@@ -33,30 +33,30 @@ for tool in "${TOOLS[@]}"; do
             --out=tracing-out/use-cases.lobster
         
         # Generate artifacts
-        lobster-trlc \
+        python lobster-trlc.py \
             --config=tracing/lobster_$tool/$tool.potential-errors.lobster-trlc.yaml \
             --out=tracing-out/potential-errors.lobster
-        lobster-trlc \
+        python lobster-trlc.py \
             --config=tracing/lobster_$tool/$tool.test-specifications.lobster-trlc.yaml \
             --out=tracing-out/test-specifications.lobster
-        lobster-trlc \
+        python lobster-trlc.py \
             --config=tracing/lobster_$tool/$tool.system-requirements.lobster-trlc.yaml \
             --out=tracing-out/system-requirements.lobster
-        lobster-trlc \
+        python lobster-trlc.py \
             --config=tracing/lobster_$tool/$tool.software-requirements.lobster-trlc.yaml \
             --out=tracing-out/software-requirements.lobster
-        lobster-python lobster/tools/$tool --out=tracing-out/code.lobster
-        lobster-python tests_system/lobster_$tool --activity \
+        python lobster-python.py lobster/tools/$tool --out=tracing-out/code.lobster
+        python lobster-python.py tests_system/lobster_$tool --activity \
             --out=tracing-out/system-tests.lobster
-        lobster-python tests_unit/lobster_$tool --activity \
+        python lobster-python.py tests_unit/lobster_$tool --activity \
             --out=tracing-out/unit-tests.lobster
         
         # Generate report
-        lobster-report --lobster-config=tracing/tracing_policy.conf \
+        python lobster-report.py --lobster-config=tracing/tracing_policy.conf \
             --out=tracing-out/tracing.lobster
         
         # Generate HTML report
-        lobster-html-report tracing-out/tracing.lobster \
+        python lobster-html-report.py tracing-out/tracing.lobster \
             --out=docs/tracing-$tool.html
     ); then
         echo -e "✅ SUCCESS: Generated HTML report for $tool in docs/tracing-$tool.html"
