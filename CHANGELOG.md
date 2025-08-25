@@ -3,9 +3,17 @@
 ## Changelog
 
 
-### 0.14.2-dev
+### 0.14.3-dev
 
+* `lobster-html-report`
+  - Add LOBSTER version to the HTML output file of `lobster-html-report`.
 
+### 0.14.2
+
+Add Bazel targets
+
+* to run system tests and most of the unit tests using `bazel test //...`
+* to run the LOBSTER tools, e.g. `bazel run //:lobster-codebeamer -- --version`
 
 ### 0.14.1
 

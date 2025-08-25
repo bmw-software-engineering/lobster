@@ -21,14 +21,14 @@ import os
 
 import util.changelog
 
-from lobster.version import VERSION_TUPLE
+from lobster.common.version import VERSION_TUPLE
 
 major, minor, release = VERSION_TUPLE
 release += 1
 
 # Bump version and update version.py
 
-VERSION_FILE = os.path.join("lobster", "version.py")
+VERSION_FILE = os.path.join("lobster", "common", "version.py")
 
 # pylint: disable=invalid-name
 tmp = ""

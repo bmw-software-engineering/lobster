@@ -1,9 +1,10 @@
 import json
 import re
-from .lobster_online_report_nogit_system_test_case_base import (
-    LobsterOnlineReportNogitSystemTestCaseBase
-)
-from ..asserter import Asserter
+from tests_system.lobster_online_report_nogit.\
+    lobster_online_report_nogit_system_test_case_base import (
+        LobsterOnlineReportNogitSystemTestCaseBase
+    )
+from tests_system.asserter import Asserter
 
 
 class OnlineReportNogitTest(LobsterOnlineReportNogitSystemTestCaseBase):

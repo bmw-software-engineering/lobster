@@ -27,7 +27,7 @@ import util.changelog
 # Update version.py to remove the -dev (or if given) use a different
 # version number.
 
-VERSION_FILE = os.path.join("lobster", "version.py")
+VERSION_FILE = os.path.join("lobster", "common", "version.py")
 
 # pylint: disable=invalid-name
 tmp = ""
@@ -40,7 +40,7 @@ with open(VERSION_FILE, "r", encoding="UTF-8") as fd:
 with open(VERSION_FILE, "w", encoding="UTF-8") as fd:
     fd.write(tmp)
 
-from lobster.version import LOBSTER_VERSION  # pylint: disable=wrong-import-position
+from lobster.common.version import LOBSTER_VERSION  # pylint: disable=wrong-import-position
 print(LOBSTER_VERSION)
 
 # Update last CHANGELOG entry and documentation to use the new

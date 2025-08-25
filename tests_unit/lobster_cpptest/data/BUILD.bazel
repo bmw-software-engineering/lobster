@@ -1,0 +1,8 @@
+filegroup(
+    name = "cpptest_data_unit",
+    srcs = glob([
+        "*.cpp",
+        "*.yaml",
+    ]),
+    visibility = ["//visibility:public"],
+)

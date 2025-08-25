@@ -1,6 +1,6 @@
 import math
 from typing import Optional
-from ..asserter import Asserter
+from tests_system.asserter import Asserter
 
 
 class LobsterCodebeamerAsserter(Asserter):

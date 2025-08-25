@@ -1,8 +1,11 @@
 from pathlib import Path
 import shutil
-from .lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
-from .lobster_cpptest_asserter import LobsterCppTestAsserter as Asserter
-from ..tests_utils.update_cpptest_expected_output import update_cpptest_output_file
+from tests_system.lobster_cpptest.\
+    lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
+from tests_system.lobster_cpptest.\
+    lobster_cpptest_asserter import LobsterCppTestAsserter as Asserter
+from tests_system.tests_utils.\
+    update_cpptest_expected_output import update_cpptest_output_file
 
 
 class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):

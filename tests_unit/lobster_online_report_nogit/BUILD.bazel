@@ -1,0 +1,13 @@
+load("@rules_python//python:defs.bzl", "py_test")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_test(
+    name = "test_online_report_nogit",
+    srcs = ["test_online_report_nogit.py"],
+    deps = [
+        "//lobster/common",
+        "//lobster/tools/core/online_report_nogit",
+    ],
+)

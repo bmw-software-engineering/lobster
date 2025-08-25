@@ -1,0 +1,8 @@
+filegroup(
+    name = "report_data_system",
+    srcs = glob([
+        "*.conf",
+        "*.lobster",
+    ]),
+    visibility = ["//visibility:public"],
+)

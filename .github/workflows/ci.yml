@@ -70,7 +70,6 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
-          make lobster/html/assets.py
       - name: Executing linter
         run: |
           make lint
@@ -140,7 +139,6 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
-          make lobster/html/assets.py
       - name: Install gnu make on macos
         if: startsWith(matrix.os, 'macos')
         run: |
@@ -183,7 +181,7 @@ jobs:
       - name: Setup bazel (for lobster-gtest)
         uses: jwlawson/actions-setup-bazel@v2
         with:
-          bazel-version: '8.0.0'
+          bazel-version: '7.1.0'
       - name: Run integration tests
         run: |
           make integration-tests
@@ -197,7 +195,7 @@ jobs:
           disk-cache: ${{ github.workflow }}
           repository-cache: true
       - uses: actions/checkout@v4
-      - run: bazel test //... --deleted_packages=//tests_integration/projects/cpp_focus
+      - run: bazel test //tests_system/... //tests_unit/...
   failure:
     name: Check all jobs
     needs:

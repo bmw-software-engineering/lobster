@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+# gazelle:ignore potatolib
 import potatolib
 
 def trlc_reference(requirement):

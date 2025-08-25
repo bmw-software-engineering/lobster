@@ -22,20 +22,21 @@ import html
 import subprocess
 import hashlib
 import tempfile
-import sys
 from datetime import datetime, timezone
 
 import markdown
 
-from lobster.html import htmldoc
-from lobster.report import Report
-from lobster.location import (Void_Reference,
-                              File_Reference,
-                              Github_Reference,
-                              Codebeamer_Reference)
-from lobster.items import (Tracing_Status, Item,
-                           Requirement, Implementation, Activity)
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.version import LOBSTER_VERSION
+from lobster.htmldoc import htmldoc
+from lobster.common.report import Report
+from lobster.common.location import (Void_Reference,
+                                     File_Reference,
+                                     Github_Reference,
+                                     Codebeamer_Reference)
+from lobster.common.items import (Tracing_Status, Item,
+                                  Requirement, Implementation,
+                                  Activity)
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
 
@@ -387,6 +388,15 @@ def write_html(fd, report, dot, high_contrast, render_md):
         "margin-left"  : "0.5em",
     }
 
+    # Footer
+    doc.style["footer"] = {
+        "margin-top"    : "1rem",
+        "padding"       : ".2rem",
+        "text-align"    : "right",
+        "color"         : "#666",
+        "font-size"     : ".7rem",
+    }
+
     ### Menu & Navigation
     doc.navbar.add_link("Overview", "#sec-overview")
     doc.navbar.add_link("Issues", "#sec-issues")
@@ -545,6 +555,10 @@ def write_html(fd, report, dot, high_contrast, render_md):
         doc.add_line("</div>")  # Closing tag for detailed-report-<title>
     # Closing tag for id #search-sec-id
     doc.add_line("</div>")
+    # Add LOBSTER version in the footer.
+    doc.add_line("<footer>")
+    doc.add_line(f"<p>LOBSTER Version: {LOBSTER_VERSION}</p>")
+    doc.add_line("</footer>")
 
     # Add the css from assets
     dir_path = os.path.dirname(os.path.abspath(__file__))
@@ -614,7 +628,3 @@ class HtmlReportTool(MetaDataToolBase):
 
 def main() -> int:
     return HtmlReportTool().run()
-
-
-if __name__ == "__main__":
-    sys.exit(main())

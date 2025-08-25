@@ -1,4 +1,4 @@
-from ..asserter import Asserter
+from tests_system.asserter import Asserter
 
 
 # Setting this flag will tell unittest not to print tracebacks from this frame.

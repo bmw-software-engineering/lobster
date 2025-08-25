@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
-from lobster.version import FULL_NAME
-from ..asserter import Asserter
+from lobster.common.version import FULL_NAME
+from tests_system.asserter import Asserter
 
 
 IMPLEMENTATION_MESSAGE = "This is the AppleBanana tool."

@@ -12,8 +12,8 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "24f75b0c9ebf1bed10d1396a441c20ce3ce15437",
-            "file": "test-lobster-online-report-idwycg78/basic.py",
+            "commit": "117791d3a624b3c37bdbbd4bc428f1efa8a1ff87",
+            "file": "test-lobster_online_report-m5zbvipm/basic.py",
             "line": 5
           },
           "name": "basic.trlc_reference",
@@ -32,8 +32,8 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "24f75b0c9ebf1bed10d1396a441c20ce3ce15437",
-            "file": "test-lobster-online-report-idwycg78/basic.py",
+            "commit": "117791d3a624b3c37bdbbd4bc428f1efa8a1ff87",
+            "file": "test-lobster_online_report-m5zbvipm/basic.py",
             "line": 13
           },
           "name": "basic.Example.helper_function",
@@ -50,8 +50,8 @@
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
-            "commit": "24f75b0c9ebf1bed10d1396a441c20ce3ce15437",
-            "file": "test-lobster-online-report-idwycg78/basic.py",
+            "commit": "117791d3a624b3c37bdbbd4bc428f1efa8a1ff87",
+            "file": "test-lobster_online_report-m5zbvipm/basic.py",
             "line": 17
           },
           "name": "basic.Example.nor",

@@ -27,10 +27,10 @@ import re
 from libcst.metadata import PositionProvider
 import libcst as cst
 
-from lobster.items import Tracing_Tag, Implementation, Activity
-from lobster.location import File_Reference
-from lobster.io import lobster_write
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.items import Tracing_Tag, Implementation, Activity
+from lobster.common.location import File_Reference
+from lobster.common.io import lobster_write
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 LOBSTER_TRACE_PREFIX = "# lobster-trace: "
 LOBSTER_JUST_PREFIX = "# lobster-exclude: "

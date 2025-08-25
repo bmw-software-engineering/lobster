@@ -1,6 +1,9 @@
-from .lobster_UI_system_test_case_base import LobsterUISystemTestCaseBase
-from ..asserter import Asserter
+from pathlib import Path
+from tests_system.lobster_html_report.lobster_UI_system_test_case_base import (
+    LobsterUISystemTestCaseBase)
+from tests_system.asserter import Asserter
 from lobster.tools.core.html_report.html_report import is_dot_available
+from tests_system.tests_utils.update_version_in_html import update_version_in_html_file
 
 
 class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
@@ -10,6 +13,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
     def setUp(self):
         super().setUp()
         self.test_runner = self.create_test_runner()
+        self.output_dir = Path(Path(__file__).parents[0])
 
     def test_lobster_file_is_missing(self):
         # lobster-trace: html_req.Missing_Lobster_File
@@ -35,9 +39,16 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         # lobster-trace: html_req.Valid_Lobster_File
         """Verify the tool runs successfully with a valid .lobster file."""
         output_filename = "is_actually_html.output"
-        valid_inputfile = self._data_directory / "awesome.output"
+        valid_inputfile = self._data_directory / "awesome.lobster"
 
-        self.test_runner.declare_output_file(self._data_directory / output_filename)
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / output_filename))
+        self.test_runner.declare_output_file(self.output_dir / output_filename)
+
+        update_version_in_html_file(
+            self.output_dir / output_filename,
+        )
+
         self.test_runner.cmd_args.out = output_filename
         self.test_runner.cmd_args.lobster_report = str(valid_inputfile)
 
@@ -65,25 +76,32 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         displayed in the HTML report header."""
         dot_present = is_dot_available(dot=None)
         if dot_present:
-            output = "custom_data_tracing_policy.output"
+            output_filename = "custom_data_tracing_policy.output"
         else:
-            output = "custom_data.output"
+            output_filename = "custom_data.output"
         input = self._data_directory / "custom_data_report.lobster"
 
-        self.test_runner.declare_output_file(self._data_directory / output)
-        self.test_runner.cmd_args.out = output
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / output_filename))
+        self.test_runner.declare_output_file(self.output_dir / output_filename)
+
+        update_version_in_html_file(
+            self.output_dir / output_filename,
+        )
+
+        self.test_runner.cmd_args.out = output_filename
         self.test_runner.cmd_args.lobster_report = str(input)
 
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
         if dot_present:
-            expected_stdout = f"LOBSTER HTML report written to {output}\n"
+            expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
         else:
             expected_stdout = (
                 "warning: dot utility not found, report will not include "
                 "the tracing policy visualisation\n"
                 "> please install Graphviz (https://graphviz.org)\n"
-                f"LOBSTER HTML report written to {output}\n"
+                f"LOBSTER HTML report written to {output_filename}\n"
             )
 
         asserter.assertStdOutText(expected_stdout)
@@ -96,7 +114,13 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         output_filename = "to_render_md_content.output"
         valid_inputfile = self._data_directory / "to_render_md_content.lobster"
 
-        self.test_runner.declare_output_file(self._data_directory / output_filename)
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / output_filename))
+        self.test_runner.declare_output_file(self.output_dir / output_filename)
+
+        update_version_in_html_file(
+            self.output_dir / output_filename,
+        )
         self.test_runner.cmd_args.out = output_filename
         self.test_runner.cmd_args.render_md = True
         self.test_runner.cmd_args.lobster_report = str(valid_inputfile)

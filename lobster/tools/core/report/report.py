@@ -18,12 +18,11 @@
 # <https://www.gnu.org/licenses/>.
 
 from argparse import Namespace
-import sys
 
-from lobster.exceptions import LOBSTER_Exception
-from lobster.errors import LOBSTER_Error
-from lobster.meta_data_tool_base import MetaDataToolBase
-from lobster.report import Report
+from lobster.common.exceptions import LOBSTER_Exception
+from lobster.common.errors import LOBSTER_Error
+from lobster.common.report import Report
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 
 class ReportTool(MetaDataToolBase):
@@ -72,7 +71,3 @@ def generate_report_file(lobster_config_file: str, output_file: str) -> dict:
 
 def main() -> int:
     return ReportTool().run()
-
-
-if __name__ == "__main__":
-    sys.exit(main())

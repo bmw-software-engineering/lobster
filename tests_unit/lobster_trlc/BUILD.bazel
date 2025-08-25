@@ -1,0 +1,135 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+load("//:requirements.bzl", "requirement")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_library(
+    name = "lobster_trlc",
+    srcs = [
+        "trlc_data_provider.py",
+        "trlc_hierarchy_data_test_case.py",
+        "trlc_optional_field_test_case.py",
+        "trlc_to_string_data_test_case.py",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    data = [
+
+        "//tests_unit/lobster_trlc/data:trlc_data_unit",
+    ],
+    deps = [requirement("trlc")],
+)
+
+py_test(
+    name = "test_build_text_from_instructions",
+    srcs = ["test_build_text_from_instructions.py"],
+    deps = [
+        "//lobster/tools/trlc",
+        requirement("trlc"),
+    ],
+)
+
+py_test(
+    name = "test_conversion_rules",
+    srcs = ["test_conversion_rules.py"],
+    deps = [
+        ":lobster_trlc",
+        "//lobster/tools/trlc",
+    ],
+)
+
+py_test(
+    name = "test_conversion_rules_order",
+    srcs = ["test_conversion_rules_order.py"],
+    deps = [
+        ":lobster_trlc",
+        "//lobster/tools/trlc",
+    ],
+)
+
+py_test(
+    name = "test_converter",
+    srcs = ["test_converter.py"],
+    deps = [
+        ":lobster_trlc",
+        "//lobster/common",
+        "//lobster/tools/trlc",
+    ],
+)
+
+py_test(
+    name = "test_converter_generate_text",
+    srcs = ["test_converter_generate_text.py"],
+    deps = [
+        ":lobster_trlc",
+        "//lobster/tools/trlc",
+    ],
+)
+
+py_test(
+    name = "test_converter_optional_field",
+    srcs = ["test_converter_optional_field.py"],
+    deps = [
+        ":lobster_trlc",
+        "//lobster/tools/trlc",
+    ],
+)
+
+py_test(
+    name = "test_errors",
+    srcs = ["test_errors.py"],
+    deps = [
+        ":lobster_trlc",
+        "//lobster/tools/trlc",
+    ],
+)
+
+py_test(
+    name = "test_file_collector",
+    srcs = ["test_file_collector.py"],
+    deps = [
+        "//lobster/common",
+        "//lobster/tools/trlc",
+    ],
+)
+
+py_test(
+    name = "test_item_wrapper",
+    srcs = ["test_item_wrapper.py"],
+    deps = [
+        ":test_to_string_rules",
+        "//lobster/tools/trlc",
+    ],
+)
+
+py_test(
+    name = "test_parse_instructions",
+    srcs = ["test_parse_instructions.py"],
+    deps = ["//lobster/tools/trlc"],
+)
+
+py_test(
+    name = "test_parse_string_instructions",
+    srcs = ["test_parse_string_instructions.py"],
+    deps = ["//lobster/tools/trlc"],
+)
+
+py_test(
+    name = "test_to_string_rules",
+    srcs = ["test_to_string_rules.py"],
+    deps = [
+        ":lobster_trlc",
+        "//lobster/tools/trlc",
+    ],
+)
+
+py_test(
+    name = "test_to_string_rules_mapping",
+    srcs = ["test_to_string_rules_mapping.py"],
+    deps = [
+        ":lobster_trlc",
+        "//lobster/tools/trlc",
+    ],
+)

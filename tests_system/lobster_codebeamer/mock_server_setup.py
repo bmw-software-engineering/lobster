@@ -1,7 +1,7 @@
 import threading
 import logging
 from typing import Optional
-from .mock_server import CodebeamerFlask, create_app
+from tests_system.lobster_codebeamer.mock_server import CodebeamerFlask, create_app
 
 mock_server_thread: Optional[threading.Thread] = None
 codebeamer_flask: Optional[CodebeamerFlask] = None

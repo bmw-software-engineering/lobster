@@ -1,0 +1,17 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_library(
+    name = "tests_system",
+    srcs = [
+        "args_to_list.py",
+        "asserter.py",
+        "system_test_case_base.py",
+        "testrunner.py",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+)

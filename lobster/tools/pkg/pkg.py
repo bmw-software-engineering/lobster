@@ -25,11 +25,11 @@ from typing import Dict, List
 from xml.dom import minidom
 from argparse import Namespace
 
-from lobster.exceptions import LOBSTER_Exception
-from lobster.io import lobster_write
-from lobster.items import Activity, Tracing_Tag
-from lobster.location import File_Reference
-from lobster.meta_data_tool_base import MetaDataToolBase
+from lobster.common.exceptions import LOBSTER_Exception
+from lobster.common.io import lobster_write
+from lobster.common.items import Activity, Tracing_Tag
+from lobster.common.location import File_Reference
+from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 NS = {
     "ecu": "http://www.tracetronic.de/xml/ecu-test",
