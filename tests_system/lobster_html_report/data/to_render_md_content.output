@@ -115,6 +115,13 @@ blockquote {
   padding-left: 0.4em;
   margin-left: 0.5em;
 }
+footer {
+  margin-top: 1rem;
+  padding: .2rem;
+  text-align: right;
+  color: #666;
+  font-size: .7rem;
+}
 #navbar {
   overflow: hidden;
   background-color: #009ada;
@@ -537,6 +544,9 @@ Status: status1
 <h3 id="heading-verification-and-validation">Verification and Validation</h3>
 </div>
 </div>
+<footer>
+<p>LOBSTER Version: 0.14.3-dev</p>
+</footer>
 </div>
 </div>
 <script>

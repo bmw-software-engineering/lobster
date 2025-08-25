@@ -12,12 +12,19 @@ py_binary(
     visibility = ["//visibility:public"],
 )
 
+py_binary(
+    name = "update_version_in_html",
+    srcs = ["update_version_in_html.py"],
+    visibility = ["//visibility:public"],
+)
+
 py_library(
     name = "tests_utils",
     srcs = [
         "__init__.py",
         "update_cpptest_expected_output.py",
         "update_online_json_with_hashes.py",
+        "update_version_in_html.py",
     ],
     visibility = ["//visibility:public"],
 )
