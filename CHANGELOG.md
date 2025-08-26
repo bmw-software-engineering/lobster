@@ -3,10 +3,14 @@
 ## Changelog
 
 
-### 0.14.3-dev
+### 0.14.4-dev
 
-* `lobster-html-report`
-  - Add LOBSTER version to the HTML output file of `lobster-html-report`.
+
+
+### 0.14.3
+
+* Fixed Bazel configuration.
+* Add LOBSTER version to the HTML output file of `lobster-html-report`.
 
 ### 0.14.2
 
