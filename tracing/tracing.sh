@@ -55,7 +55,7 @@ for tool in "${TOOLS[@]}"; do
 
         # Generate HTML report
         python lobster-html-report.py tracing_out/tracing.lobster \
-            --out=docs/tracing-$tool.html
+            --out=docs/$OUTPUT_NAME
     ); then
         echo -e "✅ SUCCESS: Generated HTML report for $tool in docs/$OUTPUT_NAME"
         rm -f tracing_out/*.lobster
