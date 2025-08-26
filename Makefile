@@ -189,8 +189,9 @@ clean-docs:
 tracing:
 	@mkdir -p docs
 	@for tool in $(TOOL_FOLDERS); do \
+	echo "Processing tool: $$tool"; \
 		case $$tool in \
-			codebeamer|cpptest|trlc|core-report|json) \
+			codebeamer|cpptest|trlc|json|core-report|core-html_report) \
 				echo "Skipping tool: $$tool (handled by tracing.sh script)"; \
 				;; \
 			*) \
