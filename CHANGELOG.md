@@ -5,7 +5,7 @@
 
 ### 0.14.4-dev
 
-
+* Increased the TRLC version to 2.0.2 when running `lobster-trlc` with Bazel.
 
 ### 0.14.3
 

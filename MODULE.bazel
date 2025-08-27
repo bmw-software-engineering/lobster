@@ -50,7 +50,7 @@ bazel_dep(name = "gazelle", version = "0.44.0", repo_name = "bazel_gazelle")
 use_repo(python, "python_3_9")
 
 git_override(
-    commit = "5deb2da28265d7a6a7e6e0a8ca69d3f372530c70",
+    commit = "650b51a47264a4f232b3341f473527710fc32669",
     module_name = "trlc",
     remote = "https://github.com/bmw-software-engineering/trlc.git",
 )
