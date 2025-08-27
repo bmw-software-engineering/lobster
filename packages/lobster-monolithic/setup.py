@@ -57,6 +57,7 @@ setuptools.setup(
         "Markdown~=3.7",
         "PyYAML>=6.0",
         "yamale>=6.0.0",
+        "GitPython>=3.1.30",
     ],
     python_requires=">=3.7, <4",
     classifiers=[

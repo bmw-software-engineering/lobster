@@ -17,190 +17,146 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-import re
 import os
-import argparse
-import configparser
-import subprocess
-from typing import Optional, Sequence
-from urllib.parse import quote
-
+import sys
+from typing import Optional, Sequence, Union
+from argparse import Namespace
+from pathlib import Path
+from dataclasses import dataclass
+import yaml
+from lobster.common.exceptions import LOBSTER_Exception
+from lobster.common.errors import LOBSTER_Error
 from lobster.common.report import Report
 from lobster.common.location import File_Reference, Github_Reference
 from lobster.common.meta_data_tool_base import MetaDataToolBase
+from lobster.tools.core.online_report.path_to_url_converter import (
+    PathToUrlConverter,
+    NotInsideRepositoryException
+)
+
+LOBSTER_REPORT = "report"
+COMMIT_ID = "commit_id"
+BASE_URL = "base_url"
+REPO_ROOT = "repo_root"
 
 
-class Parse_Error(Exception):
-    pass
+@dataclass
+class Config:
+    repo_root: str
+    base_url: str
+    commit_id: str
+    report: str = "report.lobster"
 
 
-def is_git_main_module(path):
-    return os.path.isdir(os.path.join(path, ".git"))
+TOOL_NAME = "lobster-online-report"
 
 
-def is_dir_in_git_submodule(directory):
-    """
-    Checks if a given directory is nested inside a Git submodule.
+def load_config(file_name: str) -> Config:
+    if not os.path.isfile(file_name):
+        raise FileNotFoundError(f'{file_name} is not an existing file!')
 
-    Args:
-        directory (str): The path to the directory to check.
-
-    Returns:
-        bool: True if the directory is inside a Git submodule,
-        False otherwise.
-        str: The path to the superproject of submodule.
-    """
-    try:
-        # Check if the directory is part of a Git submodule
-        result = subprocess.run(['git',
-                                 'rev-parse',
-                                 '--show-superproject-working-tree'],
-                                cwd=directory,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                universal_newlines=True,
-                                check=True)
-        if result.returncode == 0 and result.stdout.strip():
-            return True, result.stdout.strip()
-        else:
-            return False, ''
-    except (subprocess.CalledProcessError, OSError):
-        return False, ''
+    with open(file_name, "r", encoding='utf-8') as file:
+        try:
+            config_dict = yaml.safe_load(file)
+        except yaml.scanner.ScannerError as ex:
+            raise LOBSTER_Exception(message="Invalid config file") from ex
+    return parse_config_data(config_dict)
 
 
-def is_dir_in_git_main_module(directory):
-    """
-    Checks if a given directory is nested inside a Git main module.
+def parse_config_data(config_dict: dict) -> Config:
+    """Parse a YAML configuration file for the online report tool.
+
+    This function reads a YAML configuration file and extracts the necessary
+    configuration parameters for transforming file references to GitHub references
+    in a LOBSTER report.
 
     Args:
-        directory (str): The path to the directory to check.
+        config_dict (dict): YAML configuration file converted to dict.
 
     Returns:
-        bool: True if the directory is inside a Git mainmodule,
-        False otherwise.
-        str: The path to the mainmodule.
+        Config: A configuration object containing the following attributes:
+            - report (str): Path to the input LOBSTER report file
+            (defaults to "report.lobster").
+            - base_url (str): Base URL for GitHub references.
+            - commit_id (str): Git commit ID to use for references.
+            - repo_root (str): Path to the root of the Git repository.
+
+    Raises:
+        FileNotFoundError: If the specified configuration file doesn't exist.
+        LOBSTER_Exception: If the YAML file has syntax errors.
+        ValueError: If required attributes are missing or have incorrect types.
+
     """
-    try:
-        # Check if the directory is part of a Git main module
-        result = subprocess.run(['git', 'rev-parse', '--show-toplevel'],
-                                cwd=directory,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                universal_newlines=True,
-                                check=True)
-        if result.returncode == 0 and result.stdout.strip():
-            return True, result.stdout.strip()
-        else:
-            return False, ''
-    except (subprocess.CalledProcessError, OSError):
-        return False, ''
+    if (not config_dict or
+            COMMIT_ID not in config_dict):
+        raise KeyError(f'Please follow the right config file structure! '
+                         f'Missing attribute {COMMIT_ID}')
+
+    if BASE_URL not in config_dict:
+        raise KeyError(f'Please follow the right config file structure! '
+                         f'Missing attribute {BASE_URL}')
+
+    if REPO_ROOT not in config_dict:
+        raise KeyError(f'Please follow the right config file structure! '
+                         f'Missing attribute {REPO_ROOT}')
+
+    base_url = config_dict.get(BASE_URL)
+    repo_root = config_dict.get(REPO_ROOT)
+    commit_id = config_dict.get(COMMIT_ID)
+    report = config_dict.get(LOBSTER_REPORT, "report.lobster")
+
+    if not isinstance(base_url, str):
+        raise ValueError(f'Please follow the right config file structure! '
+                         f'{BASE_URL} must be a string but got '
+                         f'{type(base_url).__name__}.')
+
+    if not isinstance(repo_root, str):
+        raise ValueError(f'Please follow the right config file structure! '
+                         f'{REPO_ROOT} must be a string but got '
+                         f'{type(repo_root).__name__}.')
+
+    if not isinstance(commit_id, str):
+        raise ValueError(f'Please follow the right config file structure! '
+                         f'{COMMIT_ID} must be a string but got '
+                         f'{type(commit_id).__name__}.')
+
+    if not isinstance(report, str):
+        raise ValueError(f'Please follow the right config file structure! '
+                         f'{LOBSTER_REPORT} must be a string but got '
+                         f'{type(report).__name__}.')
+
+    return Config(
+        report=report,
+        repo_root=repo_root,
+        base_url=base_url,
+        commit_id=commit_id
+    )
 
 
-def find_repo_main_root(file_path):
-    """
-    Find the main root repository.
+def add_github_reference_to_items(
+        repo_root: str,
+        base_url: str,
+        report: Report,
+        commit_id: str
+):
 
-    Args:
-        file_path (str): The path to the file to check.
+    repo_root = os.path.abspath(os.path.expanduser(repo_root))
+    path_to_url_converter = PathToUrlConverter(repo_root, base_url)
 
-    Returns:
-        str: The path to the main root repository.
-    """
-    file_path = os.path.abspath(file_path)
-
-    is_submodule, submodule_superproject_path = \
-        is_dir_in_git_submodule(os.path.dirname(file_path))
-
-    if is_submodule:
-        return submodule_superproject_path
-
-    is_mainmodule, mainmodule_path = \
-        is_dir_in_git_main_module(os.path.dirname(file_path))
-
-    return mainmodule_path if is_mainmodule else os.getcwd()
-
-
-def path_starts_with_subpath(path, subpath):
-    path = os.path.normcase(path)
-    subpath = os.path.normcase(subpath)
-    return path.startswith(subpath)
-
-
-def parse_git_root(cfg):
-    gh_root = cfg["url"]
-    if not gh_root.endswith(".git"):
-        gh_root += ".git"
-
-    if gh_root.startswith("http"):
-        gh_root = gh_root[:-4]
-    else:
-        match = re.match(r"^(.*)@(.*):(.*)\.git$", gh_root)
-        if match is None:
-            raise Parse_Error("could not understand git origin %s" % gh_root)
-        gh_root = "https://%s/%s" % (match.group(2),
-                                     match.group(3))
-
-    return gh_root
-
-
-def add_github_reference_to_items(gh_root, gh_submodule_roots, repo_root, report):
-    """Function to add GitHub reference to items of the report"""
-    git_hash_cache = {}
     for item in report.items.values():
         if isinstance(item.location, File_Reference):
-            assert (os.path.isdir(item.location.filename) or
-                    os.path.isfile(item.location.filename))
-
-            actual_path, actual_repo, commit = get_git_commit_hash_repo_and_path(
-                gh_root, gh_submodule_roots, item, repo_root, git_hash_cache)
-            loc = Github_Reference(
-                gh_root=actual_repo,
-                filename=quote(actual_path.replace(os.sep, "/")),
-                line=item.location.line,
-                commit=commit)
-            item.location = loc
-
-
-def get_git_commit_hash_repo_and_path(gh_root, gh_submodule_roots,
-                                      item, repo_root, git_hash_cache):
-    """Function to get git commit hash for the item file which is part of either the
-    root repo or the submodules."""
-    rel_path_from_root = os.path.relpath(
-        os.path.realpath(item.location.filename),
-        os.path.realpath(repo_root),
-    )
-    # pylint: disable=possibly-used-before-assignment
-    actual_repo = gh_root
-    actual_path = rel_path_from_root
-    git_repo = repo_root
-    # pylint: disable=consider-using-dict-items
-    for prefix in gh_submodule_roots:
-        if path_starts_with_subpath(rel_path_from_root, prefix):
-            actual_repo = gh_submodule_roots[prefix]
-            actual_path = rel_path_from_root[len(prefix) + 1:]
-            git_repo = prefix
-            break
-    commit = git_hash_cache.get(git_repo, None)
-    if not commit:
-        git_repo_path = repo_root
-        if git_repo and git_repo != repo_root:
-            git_repo_path = os.path.normpath(os.path.join(repo_root, git_repo))
-        commit = get_hash_for_git_commit(git_repo_path)
-        git_hash_cache[git_repo] = commit.strip()
-
-    return actual_path, actual_repo, commit
-
-
-def get_hash_for_git_commit(repo_root):
-    return subprocess.check_output(
-        ["git", "rev-parse", "HEAD"], cwd=repo_root
-    ).decode().strip()
-
-
-def get_summary(in_file: str, out_file: str):
-    if in_file == out_file:
-        return f"LOBSTER report {in_file} modified to use online references."
-    return f"LOBSTER report {out_file} created, using online references."
+            file_path = Path(item.location.filename).resolve()
+            try:
+                url_parts = path_to_url_converter.path_to_url(file_path, commit_id)
+                item.location = Github_Reference(
+                    gh_root=url_parts.url_start,
+                    filename=url_parts.path_html,
+                    line=item.location.line,
+                    commit=url_parts.commit_hash,
+                )
+            except NotInsideRepositoryException as e:
+                print(f"Error converting path to URL for {file_path}: {e}")
+                continue
 
 
 class OnlineReportTool(MetaDataToolBase):
@@ -211,74 +167,53 @@ class OnlineReportTool(MetaDataToolBase):
             official=True,
         )
         self._argument_parser.add_argument(
-            "lobster_report",
-            nargs="?",
-            default="report.lobster",
-        )
-        self._argument_parser.add_argument(
-            "--repo-root",
-            help="override git repository root",
-            default=None,
+            "--config",
+            help=("Path to YAML file with arguments, "
+                  "by default (online-report-config.yaml)"),
+            default="online-report-config.yaml",
         )
         self._argument_parser.add_argument(
             "--out",
             help="output file, by default overwrite input",
-            default=None,
+            default="online_report.lobster",
         )
 
-    def _run_impl(self, options: argparse.Namespace) -> int:
-        if not os.path.isfile(options.lobster_report):
-            if options.lobster_report == "report.lobster":
-                self._argument_parser.error("specify report file")
-            else:
-                self._argument_parser.error(f"{options.lobster_report} is not a file")
+    def _run_impl(self, options: Namespace) -> int:
+        try:
+            self._execute(options)
+            return 0
+        except FileNotFoundError as file_not_found_error:
+            self._print_error(file_not_found_error)
+        except FileExistsError as file_exists_error:
+            self._print_error(file_exists_error)
+        except ValueError as value_error:
+            self._print_error(value_error)
+        except KeyError as key_error:
+            self._print_error(key_error)
+        except LOBSTER_Error as lobster_error:
+            self._print_error(lobster_error)
+        return 1
 
-        if options.repo_root:
-            repo_root = os.path.abspath(os.path.expanduser(options.repo_root))
-            if not is_git_main_module(repo_root):
-                self._argument_parser.error(
-                    f"cannot find .git directory in {options.repo_root}")
-        else:
-            repo_root = find_repo_main_root(options.lobster_report)
-            while True:
-                if is_git_main_module(repo_root):
-                    break
-                new_root = os.path.dirname(repo_root)
-                if new_root == repo_root:
-                    print("error: could not find .git directory")
-                    return 1
-                repo_root = new_root
+    @staticmethod
+    def _print_error(error: Union[Exception, str]):
+        print(f"{TOOL_NAME}: {error}", file=sys.stderr)
 
-        git_config = configparser.ConfigParser()
-        git_config.read(os.path.join(repo_root, ".git", "config"))
-        if 'remote "origin"' not in git_config.sections():
-            print("error: could not find remote \"origin\" in git config")
-            return 1
+    @staticmethod
+    def _execute(options: Namespace) -> None:
+        config = load_config(options.config)
+        lobster_online_report(
+            config, options.out
+        )
 
-        git_m_config = configparser.ConfigParser()
-        if os.path.isfile(os.path.join(repo_root, ".gitmodules")):
-            git_m_config.read(os.path.join(repo_root, ".gitmodules"))
 
-        gh_root = None
-        gh_submodule_roots = {}
-        for item in git_config:
-            if item == 'remote "origin"':
-                gh_root = parse_git_root(git_config[item])
-            elif item.startswith('submodule "'):
-                assert re.match('submodule "(.*?)"', item)
-                sm_dir = git_m_config[item]["path"]
-                gh_submodule_roots[sm_dir] = parse_git_root(git_config[item])
-
-        report = Report()
-        report.load_report(options.lobster_report)
-        if gh_root:
-            add_github_reference_to_items(gh_root, gh_submodule_roots,
-                                          repo_root, report)
-
-        out_file = options.out if options.out else options.lobster_report
-        report.write_report(out_file)
-        print(get_summary(options.lobster_report, out_file))
-        return 0
+def lobster_online_report(config: Config, out_file: str) -> None:
+    # This is an API function for Lobster online report tool.
+    report = Report()
+    report.load_report(config.report)
+    add_github_reference_to_items(
+        config.repo_root, config.base_url, report, config.commit_id
+    )
+    report.write_report(out_file)
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

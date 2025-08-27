@@ -22,21 +22,10 @@ py_library(
 )
 
 py_test(
-    name = "test_git_repo_different_location",
-    srcs = ["test_git_repo_different_location.py"],
+    name = "test_config_exceptions",
+    srcs = ["test_config_exceptions.py"],
     deps = [
         ":lobster_online_report",
         "//tests_system",
-        "//tests_system/tests_utils",
-    ],
-)
-
-py_test(
-    name = "test_git_repository",
-    srcs = ["test_git_repository.py"],
-    deps = [
-        ":lobster_online_report",
-        "//tests_system",
-        "//tests_system/tests_utils",
     ],
 )
