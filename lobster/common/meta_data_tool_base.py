@@ -1,5 +1,6 @@
 from abc import abstractmethod, ABCMeta
 from argparse import ArgumentParser, Namespace, RawTextHelpFormatter
+from typing import Optional, Sequence
 from lobster.common.version import FULL_NAME
 
 
@@ -50,15 +51,21 @@ class MetaDataToolBase(metaclass=ABCMeta):
         """The name of the tool, prefixed with 'lobster-'."""
         return self._name
 
-    def run(self) -> int:
+    def run(self, args: Optional[Sequence[str]] = None) -> int:
         """
-        Parse the command line arguments and return the parsed namespace.
+        Parse the command line arguments and run the tool implementation.
 
         If the --version or --help flag is set, it prints those messages.
         Otherwise it calls the _run_impl method with the parsed arguments.
         """
-        args = self._argument_parser.parse_args()
-        return self._run_impl(args)
+
+        # parse_args calls sys.exit if 'args' contains --help or --version
+        # so we wrap the call in a try-catch block
+        try:
+            parsed_arguments = self._argument_parser.parse_args(args)
+            return self._run_impl(parsed_arguments)
+        except SystemExit as e:
+            return e.code
 
     @abstractmethod
     def _run_impl(self, options: Namespace) -> int:

@@ -1,9 +1,8 @@
 from abc import ABCMeta, abstractmethod
 from lobster.common.version import FULL_NAME
 from tests_system.asserter import Asserter
-
-
-IMPLEMENTATION_MESSAGE = "This is the AppleBanana tool."
+from tests_system.lobster_meta_data_tool_base.\
+    lobster_meta_data_tool_base_test_runner import IMPLEMENTATION_MESSAGE
 
 
 class SpecificAsserter(Asserter, metaclass=ABCMeta):

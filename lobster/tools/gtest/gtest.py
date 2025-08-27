@@ -20,6 +20,7 @@
 from argparse import Namespace
 import sys
 import os.path
+from typing import Optional, Sequence
 import xml.etree.ElementTree as ET
 
 from lobster.common.items import Tracing_Tag, Activity
@@ -150,5 +151,5 @@ class GtestTool(MetaDataToolBase):
         return 0
 
 
-def main() -> int:
-    return GtestTool().run()
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return GtestTool().run(args)

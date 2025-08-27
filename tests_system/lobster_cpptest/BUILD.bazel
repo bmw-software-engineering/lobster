@@ -15,7 +15,10 @@ py_library(
         "//tests_system/lobster_cpptest/data/cpp_test_files:cpptest_test_files_system",
     ],
     visibility = ["//visibility:public"],
-    deps = ["//tests_system"],
+    deps = [
+        "//:lobster",
+        "//tests_system",
+    ],
 )
 
 py_test(

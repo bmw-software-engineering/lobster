@@ -1,7 +1,6 @@
 import json
-from subprocess import CompletedProcess
 from unittest import TestCase
-from tests_system.testrunner import TestRunner
+from tests_system.testrunner import TestRunner, TestRunResult
 
 
 # pylint: disable=invalid-name
@@ -14,7 +13,7 @@ __unittest = True
 
 
 class Asserter:
-    def __init__(self, system_test_case: TestCase, completed_process: CompletedProcess,
+    def __init__(self, system_test_case: TestCase, completed_process: TestRunResult,
                  test_runner: TestRunner):
         self._test_case = system_test_case
         self._completed_process = completed_process

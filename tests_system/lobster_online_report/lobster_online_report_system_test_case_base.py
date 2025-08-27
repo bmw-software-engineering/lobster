@@ -16,7 +16,6 @@ class LobsterOnlineReportSystemTestCaseBase(SystemTestCaseBase):
         if not working_dir:
             working_dir = Path(__file__).parents[2]
         test_runner = LobsterOnlineReportTestRunner(
-            tool_name,
             self.create_temp_dir(prefix=f"test-{tool_name}-",
                                  dir_path=working_dir),
         )

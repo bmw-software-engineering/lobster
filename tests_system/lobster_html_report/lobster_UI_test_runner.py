@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from lobster.tools.core.html_report.html_report import main
 
 
 @dataclass
@@ -37,8 +38,8 @@ class CmdArgs:
 class LobsterUITestRunner(TestRunner):
     """System test runner for lobster-report"""
 
-    def __init__(self, tool_name: str, working_dir: Path):
-        super().__init__(tool_name, working_dir)
+    def __init__(self, working_dir: Path):
+        super().__init__(main, working_dir)
         self._cmd_args = CmdArgs()
 
     @property

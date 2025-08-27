@@ -36,7 +36,7 @@ import os
 import sys
 import argparse
 import netrc
-from typing import Dict, Iterable, List, Optional, TextIO, Union
+from typing import Dict, Iterable, List, Optional, Sequence, TextIO, Union
 from urllib.parse import quote, urlparse
 from enum import Enum
 import requests
@@ -619,5 +619,5 @@ def cb_query_to_lobster_file(config: Config, out_file: str) -> None:
         _cb_items_to_lobster(items, config, fd)
 
 
-def main() -> int:
-    return CodebeamerTool().run()
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return CodebeamerTool().run(args)

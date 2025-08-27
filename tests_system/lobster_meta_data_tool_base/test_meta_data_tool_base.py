@@ -11,9 +11,10 @@ from tests_system.lobster_meta_data_tool_base.\
         SpecificAsserter,
         HelpAsserter,
         VersionAsserter,
-        IMPLEMENTATION_MESSAGE
     )
 from tests_system.asserter import Asserter
+from tests_system.lobster_meta_data_tool_base.\
+    lobster_meta_data_tool_base_test_runner import IMPLEMENTATION_MESSAGE
 
 
 class ToolBaseTest(LobsterMetaDataToolBaseSystemTestCaseBase):

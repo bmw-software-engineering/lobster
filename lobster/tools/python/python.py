@@ -23,6 +23,7 @@ import os.path
 import multiprocessing
 import functools
 import re
+from typing import Optional, Sequence
 
 from libcst.metadata import PositionProvider
 import libcst as cst
@@ -547,5 +548,5 @@ class PythonTool(MetaDataToolBase):
             return 1
 
 
-def main() -> int:
-    return PythonTool().run()
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return PythonTool().run(args)

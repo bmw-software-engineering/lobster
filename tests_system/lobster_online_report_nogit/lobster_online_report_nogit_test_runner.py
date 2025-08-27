@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import List, Optional
 from tests_system.testrunner import TestRunner
 from tests_system.args_to_list import arguments_to_list
+from lobster.tools.core.online_report_nogit.online_report_nogit import main
 
 
 @dataclass
@@ -31,8 +32,8 @@ class CmdArgs:
 class LobsterOnlineReportNogitTestRunner(TestRunner):
     """System test runner for lobster-online-report-nogit"""
 
-    def __init__(self, tool_name: str, working_dir: Path):
-        super().__init__(tool_name, working_dir)
+    def __init__(self, working_dir: Path):
+        super().__init__(main, working_dir)
         self._cmd_args = CmdArgs()
 
     @property
