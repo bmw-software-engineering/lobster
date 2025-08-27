@@ -7,6 +7,7 @@ load("@pip//:requirements.bzl", pip_requirement = "requirement")
 _mapping = {
     "certifi": "@certifi//:lib",
     "flask": "@flask//:lib",
+    "GitPython": "@gitpython//:lib",
     "libcst": "@libcst//:lib",
     "markdown": "@markdown//:lib",
     "packaging": "@packaging//:lib",
