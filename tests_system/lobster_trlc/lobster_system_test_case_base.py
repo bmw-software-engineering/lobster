@@ -25,7 +25,6 @@ class LobsterTrlcSystemTestCaseBase(SystemTestCaseBase):
     def create_test_runner(self) -> LobsterTrlcTestRunner:
         tool_name = Path(__file__).parents[0].name
         test_runner = LobsterTrlcTestRunner(
-            tool_name,
             self.create_temp_dir(prefix=f"test-{tool_name}-"),
         )
         return test_runner

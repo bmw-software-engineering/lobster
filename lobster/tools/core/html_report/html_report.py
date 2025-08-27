@@ -23,6 +23,7 @@ import subprocess
 import hashlib
 import tempfile
 from datetime import datetime, timezone
+from typing import Optional, Sequence
 
 import markdown
 
@@ -626,5 +627,5 @@ class HtmlReportTool(MetaDataToolBase):
         return 0
 
 
-def main() -> int:
-    return HtmlReportTool().run()
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return HtmlReportTool().run(args)

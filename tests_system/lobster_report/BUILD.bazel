@@ -15,7 +15,10 @@ py_library(
     visibility = [
         "//visibility:public",
     ],
-    deps = ["//tests_system"],
+    deps = [
+        "//:lobster",
+        "//tests_system",
+    ],
 )
 
 py_test(

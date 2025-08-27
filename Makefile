@@ -116,7 +116,11 @@ codebeamer-pem:
 
 system-tests: codebeamer-pem
 	mkdir -p docs
-	python -m unittest discover -s tests_system -v -t .
+	coverage run -p \
+		--branch --rcfile=coverage.cfg \
+		--data-file .coverage.system \
+		--source=lobster \
+		-m unittest discover -s tests_system -v -t .
 	@echo "🧹 Cleaning up cert.pem and key.pem..."
 	@rm -rf tests_system/lobster_codebeamer/data/ssl
 

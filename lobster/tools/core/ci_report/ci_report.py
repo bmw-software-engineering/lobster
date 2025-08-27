@@ -19,6 +19,7 @@
 
 from argparse import Namespace
 import os.path
+from typing import Optional, Sequence
 
 from lobster.common.report import Report
 from lobster.common.items import Tracing_Status
@@ -64,5 +65,5 @@ class CiReportTool(MetaDataToolBase):
             return 0
 
 
-def main() -> int:
-    return CiReportTool().run()
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return CiReportTool().run(args)

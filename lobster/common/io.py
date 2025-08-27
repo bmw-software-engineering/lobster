@@ -17,9 +17,8 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-from collections.abc import Iterable
 import json
-from typing import Dict, Optional, Sequence, TextIO, Type, Union
+from typing import Dict, Optional, Sequence, TextIO, Type, Union, Iterable
 
 from lobster.common.errors import Message_Handler
 from lobster.common.location import File_Reference

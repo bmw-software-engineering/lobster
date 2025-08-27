@@ -3,6 +3,7 @@ from lobster.tools.cpptest.cpptest import (CODEBEAMER_URL, KIND,
 from tests_system.lobster_cpptest.\
     lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
 from tests_system.asserter import Asserter
+from lobster.common.exceptions import LOBSTER_Exception
 
 
 class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
@@ -29,12 +30,6 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
 
     def test_config_file_errors(self):
         test_cases = [
-            {
-                "config_file": "with_syntax_error.yaml",
-                "expected_error": "Invalid config file",
-                "case": "syntax_error",
-                "expected_exit_code": 1
-            },
             {
                 "config_file": "with_key_error.yaml",
                 "expected_error": f'Missing attribute {CODEBEAMER_URL}',
@@ -64,7 +59,6 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
         ]
 
         # lobster-trace: cpptest_req.Input_File_Invalid_Cpp_Test_File
-        # lobster-trace: UseCases.Config_File_Syntax_Error
         # lobster-trace: UseCases.Config_File_Key_Error
         for test_case in test_cases:
             with self.subTest(i=test_case["case"]):
@@ -77,3 +71,14 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
 
                 asserter.assertInStdErr(test_case["expected_error"])
                 asserter.assertExitCode(test_case["expected_exit_code"])
+
+    def test_config_file_syntax_error(self):
+        # lobster-trace: cpptest_req.Input_File_Invalid_Cpp_Test_File
+        # lobster-trace: UseCases.Config_File_Syntax_Error
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "with_syntax_error.yaml"
+        )
+
+        with self.assertRaises(LOBSTER_Exception) as ctx:
+            self._test_runner.run_tool_test()
+        self.assertIn("Invalid config file", ctx.exception.message)

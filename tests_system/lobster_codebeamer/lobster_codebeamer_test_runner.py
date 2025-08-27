@@ -1,10 +1,10 @@
-from subprocess import CompletedProcess
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional, Union
 import yaml
 from tests_system.lobster_codebeamer.mock_server import PORT
-from tests_system.testrunner import TestRunner
+from tests_system.testrunner import TestRunResult, TestRunner
+from lobster.tools.codebeamer.codebeamer import main
 
 
 @dataclass
@@ -65,8 +65,8 @@ class CmdArgs:
 class LobsterCodebeamerTestRunner(TestRunner):
     """System test runner for lobster-codebeamer"""
 
-    def __init__(self, tool_name: str, working_dir: Path):
-        super().__init__(tool_name, working_dir)
+    def __init__(self, working_dir: Path):
+        super().__init__(main, working_dir)
         self._config_file_data = ConfigFileData()
         self._cmd_args = CmdArgs()
 
@@ -83,7 +83,7 @@ class LobsterCodebeamerTestRunner(TestRunner):
         start 'lobster-codebeamer' under test"""
         return self._cmd_args.as_list()
 
-    def run_tool_test(self) -> CompletedProcess:
+    def run_tool_test(self) -> TestRunResult:
         if self._cmd_args.config:
             self._config_file_data.dump(str(self._working_dir / self._cmd_args.config))
         return super().run_tool_test()

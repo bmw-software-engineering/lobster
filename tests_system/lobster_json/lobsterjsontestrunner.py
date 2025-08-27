@@ -1,9 +1,9 @@
-from subprocess import CompletedProcess
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
 import yaml
-from tests_system.testrunner import TestRunner
+from tests_system.testrunner import TestRunResult, TestRunner
+from lobster.tools.json.json import main
 
 
 @dataclass
@@ -58,9 +58,9 @@ class CmdArgs:
 
 class LobsterJsonTestRunner(TestRunner):
     """System test runner for lobster-json"""
-    def __init__(self, tool_name: str, working_dir: Path,
+    def __init__(self, working_dir: Path,
                  use_config_file_data: bool = True):
-        super().__init__(tool_name, working_dir)
+        super().__init__(main, working_dir)
         self.use_config_file_data = use_config_file_data
         if use_config_file_data:
             self._cmd_args = CmdArgs(config="config.yaml")
@@ -89,7 +89,7 @@ class LobsterJsonTestRunner(TestRunner):
            under test"""
         return self._cmd_args.as_list()
 
-    def run_tool_test(self) -> CompletedProcess:
+    def run_tool_test(self) -> TestRunResult:
         if self.use_config_file_data and self._cmd_args.config:
             self._config_file_data.dump(str(self._working_dir / self._cmd_args.config))
         return super().run_tool_test()

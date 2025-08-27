@@ -21,7 +21,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 import json
 import re
-from typing import Dict, List
+from typing import Dict, List, Optional, Sequence
 from xml.dom import minidom
 from argparse import Namespace
 
@@ -373,5 +373,5 @@ class PkgTool(MetaDataToolBase):
         return 0
 
 
-def main() -> int:
-    return PkgTool().run()
+def main(args: Optional[Sequence[str]] = None) -> int:
+    return PkgTool().run(args)
