@@ -366,7 +366,8 @@ class PkgTool(MetaDataToolBase):
         try:
             lobster_pkg(options)
             return 0
-        except (ValueError, FileNotFoundError, LOBSTER_Exception, ET.ParseError) as exception:
+        except (ValueError, FileNotFoundError,
+                LOBSTER_Exception, ET.ParseError) as exception:
             print(
                 f"{self.name}: {exception}",
                 file=sys.stderr,

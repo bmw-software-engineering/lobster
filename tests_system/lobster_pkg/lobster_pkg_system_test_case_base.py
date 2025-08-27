@@ -3,7 +3,6 @@ from .lobster_pkg_test_runner import LobsterPKGTestRunner
 from ..system_test_case_base import SystemTestCaseBase
 
 
-
 class LobsterPKGSystemTestCaseBase(SystemTestCaseBase):
     def __init__(self, methodName):
         super().__init__(methodName)
