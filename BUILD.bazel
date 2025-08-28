@@ -103,7 +103,6 @@ py_library(
         "//lobster/tools/python",
         "//lobster/tools/trlc",
         requirement("requests"),
-        requirement("setuptools"),
         requirement("trlc"),
     ],
 )
