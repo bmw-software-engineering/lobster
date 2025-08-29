@@ -8,13 +8,6 @@ req.System_Requirement Report_Input_Duplicate_Definition {
   '''
 }
 
-req.Software_Requirement Dummy_Requirement_Unit_Test {
-  description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
-  '''
-}
-
 req.Definition Item {
   description = '''
     An item is an entry in the data section according to the schema.
@@ -163,10 +156,64 @@ req.System_Requirement_Aspect File_Not_Found {
   '''
 }
 
+req.System_Requirement_Aspect Multiple_Traces_Support {
+  description = '''
+    IF the [[Item]] has multiple references across file,
+    THEN the tool shall correctly consolidate the traces and report the tracing relationships.
+  '''
+}
+
+req.System_Requirement_Aspect Linear_Policy_Support {
+  description = '''
+    IF the tracing policy is a linear tracibility where each level traces to exactly one other level,
+    forming a linear chain of traceability,
+    THEN the tool support linear tracing policies.
+  '''
+}
+
+req.System_Requirement_Aspect Complex_Multi_Level_Policy_Support {
+  description = '''
+    IF the tracing policy is complex with multiple interconnected levels,
+    where traceability can exist between multiple levels,
+    THEN tool shall support complex tracing policies.
+  '''
+}
+
+req.System_Requirement_Aspect Input_Files_Policy_Based_Processing {
+  description = '''
+    IF multiple input files are available in the workspace,
+    THEN the tool shall only process the input files specified in the tracing policy configuration
+    AND shall ignore any additional lobster files not referenced in the policy.
+  '''
+}
+
+req.System_Requirement_Aspect Multi_Level_Source_Files {
+  description = '''
+    IF the tracing policy defines multiple levels with multiple source files for each level,
+    THEN the tool shall correctly process and consolidate all source files and generate lobster report.
+  '''
+}
+
 req.System_Requirement_Aspect Message_Trace_Coverage {
   description = '''
     IF an item contains a "message" and traces to another item,
     THEN the traced item shall have 100% coverage,
     AND the item with the message shall have 0% coverage.
+  '''
+}
+
+req.System_Requirement_Aspect Item_Data_Isolation {
+  description = '''
+    IF the tool processes multiple items with their respective data and information,
+    THEN the tool shall ensure that data do not get mixed between different items,
+    AND each [[item]] shall maintain its own distinct data,
+  '''
+}
+
+req.System_Requirement_Aspect Missing_Required_Files_Error {
+  description = '''
+    IF the tracing policy configuration references input files that cannot be found in the workspace,
+    THEN the tool shall report error
+    AND shall exit with a non-zero return code.
   '''
 }
