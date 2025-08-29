@@ -3,13 +3,20 @@
 ## Changelog
 
 
-### 0.14.4-dev
+### 0.14.4
+
+* Bazel fixes:
+  - removed unnecessary dependency to `setuptools`
+  - added test targets for all system tests
 
 * `lobster-html-report`:
   - Improved error handling: if the tool has an internal error it no longer creates an
     empty output file (except in very rare scenarios where the OS succeeds to open the
     file but fails to write content to it, e.g. if disk space is exhausted).
+  - Added API function `lobster_html_report` which is similar to calling the tool.
+
 * Increased the TRLC version to 2.0.2 when running `lobster-trlc` with Bazel.
+
 * `lobster-online-report`:
   - Improved support for git submodules.
   - Now requires a config file as a command line argument.
