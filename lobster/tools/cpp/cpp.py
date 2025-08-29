@@ -18,16 +18,16 @@
 # <https://www.gnu.org/licenses/>.
 
 from argparse import Namespace
-import sys
 import os.path
 import subprocess
 import re
 from typing import Optional, Sequence
 
 from lobster.common.items import Tracing_Tag, Implementation
-from lobster.common.io import lobster_write
+from lobster.common.multi_file_input_config import Config
 from lobster.tools.cpp.implementation_builder import ImplementationBuilder
-from lobster.common.meta_data_tool_base import MetaDataToolBase
+from lobster.common.multi_file_input_tool import create_worklist, MultiFileInputTool
+
 
 FILE_LINE_PATTERN = r"(.*):(\d+):\d+:"
 KIND_PATTERN = r"(function|main function|method)"
@@ -56,18 +56,13 @@ def extract_clang_finding_name(line: str) -> Optional[str]:
     return None
 
 
-class CppTool(MetaDataToolBase):
+class CppTool(MultiFileInputTool):
     def __init__(self):
         super().__init__(
             name = "cpp",
             description = "Extract tracing tags from C++ using clang-tidy",
+            extensions=("cpp", "cc", "c", "h"),
             official = True,
-        )
-
-        self._argument_parser.add_argument(
-            "files",
-            nargs="+",
-            metavar="FILE|DIR",
         )
         self._argument_parser.add_argument(
             "--clang-tidy",
@@ -93,26 +88,20 @@ class CppTool(MetaDataToolBase):
             metavar="FINDINGS",
             help="List of all clang-tidy errors to ignore.",
         )
-        self._argument_parser.add_argument(
-            "--out",
-            default=None,
-            help="write output to this file; otherwise output to to stdout",
-        )
+
+    def _add_config_argument(self):
+        # This tool does not use a config file
+        pass
 
     def _run_impl(self, options: Namespace) -> int:
-        file_list = []
-        for item in options.files:
-            if os.path.isfile(item):
-                file_list.append(item)
-            elif os.path.isdir(item):
-                for path, _, files in os.walk(item):
-                    for filename in files:
-                        _, ext = os.path.splitext(filename)
-                        if ext in (".cpp", ".cc", ".c", ".h"):
-                            file_list.append(os.path.join(path, filename))
-            else:
-                self._argument_parser.error(f"{item} is not a file or directory")
-
+        config = Config(
+            inputs=None,
+            inputs_from_file=None,
+            extensions=self._extensions,
+            exclude_patterns=None,
+            schema=Implementation,
+        )
+        file_list = create_worklist(config, options.dir_or_files)
         clang_tidy_path = os.path.expanduser(options.clang_tidy)
 
         # Test if the clang-tidy can be used
@@ -208,14 +197,11 @@ class CppTool(MetaDataToolBase):
             print(">", line)
             return 1
 
-        if options.out:
-            with open(options.out, "w", encoding="UTF-8") as fd:
-                lobster_write(fd, Implementation, "lobster_cpp", db.values())
-            print(f"Written output for {len(db)} items to {options.out}")
-
-        else:
-            lobster_write(sys.stdout, Implementation, "lobster_cpp", db.values())
-            print()
+        self._write_output(
+            schema=config.schema,
+            out_file=options.out,
+            items=db.values(),
+        )
 
         return 0
 
