@@ -1,8 +1,8 @@
 from unittest import TestCase
-from lobster.common.tool2 import select_non_comment_parts
+from lobster.common.multi_file_input_tool import select_non_comment_parts
 
 
-class LobsterToolTest(TestCase):
+class LobsterToolUtilTest(TestCase):
     def test_select_non_comment_parts(self):
         input_text = [
             "This is a line.           ",

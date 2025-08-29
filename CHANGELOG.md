@@ -9,6 +9,15 @@
   Fixed error message of missing folder `assets` when running `lobster-html-report`
   as a Bazel target.
 
+* `lobster-cpp`:
+  - Removed feature to write output to `stdout`.
+    This decision has been made to align the behavior of `lobster-cpp` with all other
+    LOBSTER tools, and to reduce the complexity of the tool.
+    This simplifies testing and tool qualification in the future.
+
+    The output file must be specified through the `--out` command line argument.
+    Its default value is `cpp.lobster`.
+
 ### 0.14.4
 
 * Bazel fixes:
