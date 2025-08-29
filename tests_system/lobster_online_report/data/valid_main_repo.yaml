@@ -1,0 +1,4 @@
+base_url: "https://github.com/bmw-software-engineering/lobster"
+commit_id: "abcdef1234567890abcdef1234567890abcdef12"
+repo_root: "system-test-repo"
+report: "main_repo_report.lobster"

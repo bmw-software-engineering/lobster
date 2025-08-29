@@ -11,7 +11,7 @@
           "tag": "python basic.trlc_reference",
           "location": {
             "kind": "file",
-            "file": "basic.py",
+            "file": "main_repo_file1.py",
             "line": 5,
             "column": null
           },
@@ -30,7 +30,7 @@
           "tag": "python basic.Example.helper_function",
           "location": {
             "kind": "file",
-            "file": "basic.py",
+            "file": "system-test-repo/main_repo_folder/main_repo_file2.py",
             "line": 13,
             "column": null
           },
@@ -40,25 +40,6 @@
           "just_down": [],
           "just_global": [],
           "tracing_status": "OK",
-          "language": "Python",
-          "kind": "Method"
-        },
-        {
-          "tag": "python basic.Example.nor",
-          "location": {
-            "kind": "file",
-            "file": "basic.py",
-            "line": 17,
-            "column": null
-          },
-          "name": "basic.Example.nor",
-          "messages": [
-            "unknown tracing target req example.req_nor"
-          ],
-          "just_up": [],
-          "just_down": [],
-          "just_global": [],
-          "tracing_status": "MISSING",
           "language": "Python",
           "kind": "Method"
         }

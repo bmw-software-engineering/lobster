@@ -29,3 +29,13 @@ py_test(
         "//tests_system",
     ],
 )
+
+py_test(
+    name = "test_valid_cases",
+    srcs = ["test_valid_cases.py"],
+    deps = [
+        ":lobster_online_report",
+        "//tests_system",
+        "//lobster/common:common"
+    ],
+)

@@ -5,6 +5,7 @@ filegroup(
     srcs = glob([
         "*.py",
         "*.lobster",
+        "*.yaml",
     ]),
     visibility = ["//visibility:public"],
 )
