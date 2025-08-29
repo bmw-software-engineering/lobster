@@ -628,5 +628,35 @@ class HtmlReportTool(MetaDataToolBase):
         return 0
 
 
+def lobster_html_report(
+    lobster_report_path: str,
+    output_html_path: str,
+    dot_path: str = None,
+    high_contrast: bool = False,
+    render_md: bool = False
+) -> None:
+    """
+    API function to generate an HTML report from a LOBSTER report file.
+
+    Args:
+        lobster_report_path (str): Path to the input LOBSTER report file.
+        output_html_path (str): Path to the output HTML file.
+        dot_path (str, optional): Path to the Graphviz 'dot' utility.
+        high_contrast (bool, optional): Use high contrast colors.
+        render_md (bool, optional): Render Markdown in descriptions.
+    """
+    report = Report()
+    report.load_report(lobster_report_path)
+    html_content = write_html(
+        report=report,
+        dot=dot_path,
+        high_contrast=high_contrast,
+        render_md=render_md,
+    )
+    with open(output_html_path, "w", encoding="UTF-8") as fd:
+        fd.write(html_content)
+        fd.write("\n")
+
+
 def main(args: Optional[Sequence[str]] = None) -> int:
     return HtmlReportTool().run(args)
