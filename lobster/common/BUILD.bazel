@@ -34,8 +34,6 @@ py_library(
         "parser.py",
         "report.py",
         "tool.py",
-        "tool2.py",
-        "tool2_config.py",
         "version.py",
     ],
     visibility = ["//visibility:public"],
