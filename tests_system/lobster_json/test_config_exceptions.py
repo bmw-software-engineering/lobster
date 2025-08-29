@@ -1,6 +1,8 @@
 from yaml.scanner import ScannerError
-from .lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
-from .lobsterjsonasserter import LobsterJsonAsserter
+from tests_system.lobster_json.lobsterjsonasserter import LobsterJsonAsserter
+from tests_system.lobster_json.lobsterjsonsystemtestcasebase import (
+    LobsterJsonSystemTestCaseBase
+)
 
 
 class ConfigParserExceptionsLobsterJsonTest(LobsterJsonSystemTestCaseBase):

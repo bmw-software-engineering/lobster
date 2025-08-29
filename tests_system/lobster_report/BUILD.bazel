@@ -83,3 +83,12 @@ py_test(
         "//tests_system",
     ],
 )
+
+py_test(
+    name = "test_justification",
+    srcs = ["test_justification.py"],
+    deps = [
+        ":lobster_report",
+        "//tests_system",
+    ],
+)
