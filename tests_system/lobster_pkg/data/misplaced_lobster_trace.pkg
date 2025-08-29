@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PACKAGE format-rev="7" xmlns="http://www.tracetronic.de/xml/ecu-test" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <INFORMATION format-rev="2" xsi:type="packageInfo">
+        <TAGS>
+            <TAG xsi:type="string">TESTCASE</TAG>
+        </TAGS>
+    </INFORMATION>
+    <TRACE-ANALYSIS>
+        <ANALYSISITEM xsi:type="episode">
+            <NAME>Episode1</NAME>
+            <ANALYSISITEM xsi:type="other">
+                <DESCRIPTION>lobster-trace: misplaced.req1,misplaced.req2</DESCRIPTION>
+            </ANALYSISITEM>
+        </ANALYSISITEM>
+    </TRACE-ANALYSIS>
+</PACKAGE>
