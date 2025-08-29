@@ -18,6 +18,7 @@
 # <https://www.gnu.org/licenses/>.
 import os.path
 from pathlib import Path
+import sys
 import xml.etree.ElementTree as ET
 import json
 import re
@@ -357,20 +358,21 @@ class PkgTool(MetaDataToolBase):
         )
         self._argument_parser.add_argument(
             "--out",
-            default="report.lobster",
+            required=True,
             help="write output to this file; otherwise output is report.lobster",
         )
 
     def _run_impl(self, options: Namespace) -> int:
-        options = self._argument_parser.parse_args()
-
         try:
             lobster_pkg(options)
-
-        except ValueError as exception:
-            self._argument_parser.error(str(exception))
-
-        return 0
+            return 0
+        except (ValueError, FileNotFoundError,
+                LOBSTER_Exception, ET.ParseError) as exception:
+            print(
+                f"{self.name}: {exception}",
+                file=sys.stderr,
+            )
+        return 1
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

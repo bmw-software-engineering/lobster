@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PACKAGE format-rev="7" xmlns="http://www.tracetronic.de/xml/ecu-test" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <INFORMATION format-rev="2" xsi:type="packageInfo">
+        <TAGS>
+            <TAG xsi:type="string">TESTCASE</TAG>
+        </TAGS>
+        <DESCRIPTION xsi:type="string">Description</DESCRIPTION>
+    <TESTSTEPS xsi:type="testCase">
+        <TESTSTEP format-rev="3" id="1" name="TsBlock" xsi:type="utility-11111111111">
+            <VALUE xsi:type="string">lobster-trace: test.req1,test.req2</VALUE>
+        </TESTSTEP>
+    </TESTSTEPS>
+</PACKAGE>
