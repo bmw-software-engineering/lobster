@@ -511,7 +511,7 @@ def write_html(fd, report, high_contrast, render_md):
             with open(filename, "r", encoding="UTF-8") as scripts:
                 doc.scripts.append("".join(scripts.readlines()))
 
-    fd.write(doc.render() + "\n")
+    return doc.render()
 
 
 class HtmlReportTool(MetaDataToolBase):
@@ -542,6 +542,12 @@ class HtmlReportTool(MetaDataToolBase):
         report = Report()
         report.load_report(options.lobster_report)
 
+        html_content = write_html(
+            report = report,
+            dot = options.dot,
+            high_contrast = options.high_contrast,
+            render_md = options.render_md,
+        )
         with open(options.out, "w", encoding="UTF-8") as fd:
             write_html(
                 fd = fd,

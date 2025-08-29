@@ -5,6 +5,10 @@
 
 ### 0.14.4-dev
 
+* `lobster-html-report`:
+  - Improved error handling: if the tool has an internal error it no longer creates an
+    empty output file (except in very rare scenarios where the OS succeeds to open the
+    file but fails to write content to it, e.g. if disk space is exhausted).
 * Increased the TRLC version to 2.0.2 when running `lobster-trlc` with Bazel.
 * `lobster-online-report`:
   - Improved support for git submodules.
