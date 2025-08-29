@@ -283,7 +283,7 @@ def generate_custom_data(report) -> str:
     return "".join(content)
 
 
-def write_html(fd, report, dot, high_contrast, render_md):
+def write_html(report, dot, high_contrast, render_md) -> str:
     assert isinstance(report, Report)
 
     doc = htmldoc.Document(
@@ -579,7 +579,7 @@ def write_html(fd, report, dot, high_contrast, render_md):
             with open(filename, "r", encoding="UTF-8") as scripts:
                 doc.scripts.append("".join(scripts.readlines()))
 
-    fd.write(doc.render() + "\n")
+    return doc.render()
 
 
 class HtmlReportTool(MetaDataToolBase):
@@ -614,15 +614,16 @@ class HtmlReportTool(MetaDataToolBase):
         report = Report()
         report.load_report(options.lobster_report)
 
+        html_content = write_html(
+            report = report,
+            dot = options.dot,
+            high_contrast = options.high_contrast,
+            render_md = options.render_md,
+        )
         with open(options.out, "w", encoding="UTF-8") as fd:
-            write_html(
-                fd = fd,
-                report = report,
-                dot = options.dot,
-                high_contrast = options.high_contrast,
-                render_md = options.render_md,
-            )
-            print("LOBSTER HTML report written to %s" % options.out)
+            fd.write(html_content)
+            fd.write("\n")
+        print(f"LOBSTER HTML report written to {options.out}")
 
         return 0
 
