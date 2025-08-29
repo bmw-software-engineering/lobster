@@ -50,5 +50,5 @@ util.changelog.set_current_title(LOBSTER_VERSION)
 
 # Commit & tag
 
-os.system("git add CHANGELOG.md lobster/version.py")
+os.system("git add CHANGELOG.md lobster/common/version.py")
 os.system('git commit -m "LOBSTER Release %s"' % LOBSTER_VERSION)
