@@ -8,6 +8,7 @@ from lobster.tools.core.online_report.online_report import main
 @dataclass
 class CmdArgs:
     config: Optional[str] = None
+    out: Optional[str] = None
 
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list"""
@@ -18,6 +19,7 @@ class CmdArgs:
                 cmd_args.append(f"{parameter}={value}")
 
         append_if_string("--config", self.config)
+        append_if_string("--out", self.out)
         return cmd_args
 
 
