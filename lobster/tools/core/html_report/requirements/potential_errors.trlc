@@ -87,7 +87,7 @@ req.PotentialError Input_file_location_missing{
           then user will not be able to access the codebeamer item'''
     ]
 
-    affects = [Item_Source, Show_codebeamer_links]
+    affects = [Item_GitHub_Source, Show_codebeamer_links]
     impact_type = req.Impact_Type.Financial
 }
 
@@ -153,6 +153,6 @@ req.PotentialError Wrong_Input_file_location{
           then user will be redirected to wrong requirements item in codebeamer.'''
     ]
 
-    affects = [Item_Source, Show_codebeamer_links]
+    affects = [Item_GitHub_Source, Show_codebeamer_links]
     impact_type = req.Impact_Type.Financial
 }
