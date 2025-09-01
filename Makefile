@@ -18,7 +18,7 @@ lint: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
 	python3 -m pylint --rcfile=pylint3.cfg \
 		--reports=no \
-		--ignore=assets.py \
+		--ignore=assets.py,html_report_js.py \
 		lobster util
 
 lint-system-tests: style
@@ -47,7 +47,7 @@ trlc:
 
 style:
 	@python3 -m pycodestyle lobster tests_system \
-		--exclude=assets.py
+		--exclude=assets.py,html_report_js.py
 
 clean-packages:
 	git clean -xdf packages test_install test_install_monolithic test_install_monolithic_venv
