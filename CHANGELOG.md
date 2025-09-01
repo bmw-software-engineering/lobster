@@ -5,7 +5,9 @@
 
 ### 0.14.5-dev
 
-
+* Bazel fixes:
+  Fixed error message of missing folder `assets` when running `lobster-html-report`
+  as a Bazel target.
 
 ### 0.14.4
 

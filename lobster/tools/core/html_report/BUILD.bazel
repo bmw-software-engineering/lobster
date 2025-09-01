@@ -6,7 +6,11 @@ load("//:requirements.bzl", "requirement")
 
 py_library(
     name = "html_report",
-    srcs = ["html_report.py"],
+    srcs = [
+        "html_report.py",
+        "html_report_css.py",
+        "html_report_js.py",
+    ],
     visibility = [
         "//visibility:public",
     ],

@@ -1,3 +1,4 @@
+CSS = """
 .button {
     background-color: #818589;
     border: none;
@@ -137,3 +138,4 @@
     text-decoration: none;
     border: 5px solid #000099
 }
+"""
