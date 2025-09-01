@@ -53,15 +53,19 @@ for tool in "${TOOLS[@]}"; do
         python lobster-report.py --lobster-config=tracing/tracing_policy.conf \
             --out=tracing_out/tracing.lobster
 
-        # Generate HTML report
-        python lobster-html-report.py tracing_out/tracing.lobster \
+        # Generate online report
+        printf "report: report.lobster\ncommit_id: ''\nrepo_root: ''\nbase_url: 'https://github.com/bmw-software-engineering/lobster'" > tracing_out/online_report_config.yaml
+        python lobster-online-report.py --config=tracing_out/online_report_config.yaml --out=tracing_out/online-report.lobster
+
+        # Generate HTML reports
+        python lobster-html-report.py tracing_out/online-report.lobster \
             --out=docs/$OUTPUT_NAME
     ); then
         echo -e "✅ SUCCESS: Generated HTML report for $tool in docs/$OUTPUT_NAME"
-        rm -f tracing_out/*.lobster
+        rm -f tracing_out/*.lobster tracing_out/*.yaml
     else
         echo -e "❌ ERROR: Failed to process $tool."
-        rm -f tracing_out/*.lobster
+        rm -f tracing_out/*.lobster tracing_out/*.yaml
     fi
 
     echo "----------------------------------------"
