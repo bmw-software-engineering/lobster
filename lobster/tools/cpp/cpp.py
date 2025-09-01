@@ -100,8 +100,6 @@ class CppTool(MetaDataToolBase):
         )
 
     def _run_impl(self, options: Namespace) -> int:
-        options = self._argument_parser.parse_args()
-
         file_list = []
         for item in options.files:
             if os.path.isfile(item):
