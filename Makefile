@@ -231,7 +231,9 @@ report.lobster-%: lobster/tools/lobster.conf \
 	python lobster-report.py \
 		--lobster-config=lobster/tools/lobster.conf \
 		--out=report.lobster
-	python lobster-online-report.py report.lobster
+	@printf "report: report.lobster\ncommit_id: 'main'\nrepo_root: ''\nbase_url: 'https://github.com/bmw-software-engineering/lobster'" > online_report_config.yaml
+	python lobster-online-report.py --config=online_report_config.yaml --out=report.lobster
+	@rm online_report_config.yaml
 
 system_requirements.lobster-%: TRLC_CONFIG = lobster/tools/lobster-trlc-system.yaml
 
