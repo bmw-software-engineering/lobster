@@ -54,7 +54,7 @@ for tool in "${TOOLS[@]}"; do
             --out=tracing_out/tracing.lobster
 
         # Generate online report
-        printf "report: report.lobster\ncommit_id: ''\nrepo_root: ''\nbase_url: 'https://github.com/bmw-software-engineering/lobster'" > tracing_out/online_report_config.yaml
+        printf "report: tracing_out/tracing.lobster\ncommit_id: ''\nrepo_root: ''\nbase_url: 'https://github.com/bmw-software-engineering/lobster'" > tracing_out/online_report_config.yaml
         python lobster-online-report.py --config=tracing_out/online_report_config.yaml --out=tracing_out/online-report.lobster
 
         # Generate HTML reports
