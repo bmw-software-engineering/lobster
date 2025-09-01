@@ -457,6 +457,7 @@ footer {
 <div class="content">
 <div class="detailed-report-requirements-and-specification">
 <h3 id="heading-requirements-and-specification">Requirements and Specification</h3>
+<div id="section-requirements">
 <h4 id="sec-5a2ebfb8baa378cfcfcba58bbb1380c2" class="heading-requirements">Requirements</h4>
 <h5 id="heading-.\demo.trlc">.\demo.trlc</h5>
 <!-- begin item req example.adas_100_A -->
@@ -483,8 +484,10 @@ Status: status1
 </div>
 <!-- end item -->
 </div>
+</div>
 <div class="detailed-report-implementation">
 <h3 id="heading-implementation">Implementation</h3>
+<div id="section-code">
 <h4 id="sec-ca0dbad92a874b2f69b549293387925e" class="heading-code">Code</h4>
 <h5 id="heading-.\software.py">.\software.py</h5>
 <!-- begin item python software.Example -->
@@ -504,12 +507,13 @@ Status: status1
 </div>
 <!-- end item -->
 </div>
+</div>
 <div class="detailed-report-verification-and-validation">
 <h3 id="heading-verification-and-validation">Verification and Validation</h3>
 </div>
 </div>
 <footer>
-<p>LOBSTER Version: 0.14.3-dev</p>
+<p>LOBSTER Version: 0.14.5-dev</p>
 </footer>
 </div>
 </div>
