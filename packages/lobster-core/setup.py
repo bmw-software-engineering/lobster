@@ -52,9 +52,6 @@ setuptools.setup(
               "lobster.tools.core.online_report",
               "lobster.tools.core.online_report_nogit",
               "lobster.tools.core.report"],
-    package_data={
-        "lobster.tools.core.html_report":["assets/*"]
-    },
     install_requires=[
         "Markdown~=3.7",
         "PyYAML>=6.0",

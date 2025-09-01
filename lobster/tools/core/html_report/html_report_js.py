@@ -1,3 +1,4 @@
+JAVA_SCRIPT = """
 function buttonFilter(filter) {
     var elms = document.getElementsByTagName("div");
     var issue_elms = document.getElementsByClassName("issue");
@@ -85,3 +86,4 @@ function searchItem() {
         }
     }
 }
+"""

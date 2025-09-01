@@ -38,6 +38,9 @@ from lobster.common.items import (Tracing_Status, Item,
                                   Requirement, Implementation,
                                   Activity)
 from lobster.common.meta_data_tool_base import MetaDataToolBase
+from lobster.tools.core.html_report.html_report_css import CSS
+from lobster.tools.core.html_report.html_report_js import JAVA_SCRIPT
+
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
 
@@ -562,22 +565,10 @@ def write_html(report, dot, high_contrast, render_md) -> str:
     doc.add_line("</footer>")
 
     # Add the css from assets
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-    file_path = dir_path + "/assets"
-    for filename in os.listdir(file_path):
-        if filename.endswith(".css"):
-            filename = os.path.join(file_path, filename)
-            with open(filename, "r", encoding="UTF-8") as styles:
-                doc.css.append("".join(styles.readlines()))
+    doc.css.append(CSS.lstrip())
 
     # Add javascript from assets/html_report.js file
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-    file_path = dir_path + "/assets"
-    for filename in os.listdir(file_path):
-        if filename.endswith(".js"):
-            filename = os.path.join(file_path, filename)
-            with open(filename, "r", encoding="UTF-8") as scripts:
-                doc.scripts.append("".join(scripts.readlines()))
+    doc.scripts.append(JAVA_SCRIPT.lstrip())
 
     return doc.render()
 
