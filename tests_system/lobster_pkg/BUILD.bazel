@@ -28,7 +28,6 @@ py_test(
     deps = [
         ":lobster_pkg",
         "//lobster/tools/pkg",
-        "//tests_system",
     ],
 )
 
@@ -38,6 +37,5 @@ py_test(
     deps = [
         ":lobster_pkg",
         "//lobster/tools/pkg",
-        "//tests_system",
     ],
 )
