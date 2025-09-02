@@ -4,7 +4,7 @@ import req
 req.PotentialError Too_few_Extraction_from_CPP_Test_Files{
     summary = "LOBSTER extracts too few tests"
     description = '''
-      Some c++ test file are ignored
+      Some c++ test file are ignored or some tests from c++ test file are ignored
       example, some c++ test file are ignored while extracting referance data.
       '''
     impacts =[
@@ -14,27 +14,13 @@ req.PotentialError Too_few_Extraction_from_CPP_Test_Files{
 
       '''If c++ test files are ignored in the extraction
           and report is generated with missing file data with some of the test cases have missing referance to requirements
-          then user might think that all test cases are covering the requirements but in fact it is not.'''
+          then there might be tests which are not based on requirements, which could mean the product contains hidden features.'''
     ]
 
     affects = [List_Tests_without_Requirements, List_Tests_without_Requirements, Trace_Requirements_to_Tests]
     impact_type = req.Impact_Type.Safety
 }
 
-req.PotentialError Too_few_tests_Extraction_from_test_file{
-    summary = "LOBSTER extracts too few tests"
-    description = '''
-      Some tests from c++ test file are ignored
-      '''
-    impacts =[
-      '''If some test cases are not extracted from c++ test file
-          and report is generated with missing data
-          then user might think that all requirements are covered by test case but in fact it is not.'''
-    ]
-
-    affects = [List_Tests_without_Requirements, List_Tests_without_Requirements, Trace_Requirements_to_Tests]
-    impact_type = req.Impact_Type.Safety
-}
 
 req.PotentialError Too_few_requirement_referance_Extraction_from_test{
     summary = "LOBSTER extracts too few tests"
