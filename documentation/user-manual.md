@@ -167,6 +167,13 @@ If you prefer to do it manually or are Windows user, install Ninja and cmake and
   [mh_trace](https://florianschanda.github.io/miss_hit/trace.html) for
   more information.
 
-## Extending LOBSTER
+### Tracetronic's ecu.test
 
-DOCUMENTATION TODO
+[www.tracetronic.de](https://www.tracetronic.de) offers the tool `ecu.test`, which can be used to create test cases
+specialized for the automotive industry.
+It stores data in an XML format in `.pkg` and `.ta` files.
+The user can use the graphical interface of `ecu.test` add lobster traces in
+the desription nodes of the XML tree.
+`lobster-pkg` can extract these traces and generate `.lobster` files.
+
+For more information on `ecu.test` see [here](https://www.tracetronic.com/products/ecu-test/).
