@@ -1,5 +1,6 @@
-from .lobster_pkg_asserter import LobsterPkgAsserter
-from .lobster_pkg_system_test_case_base import LobsterPKGSystemTestCaseBase
+from tests_system.lobster_pkg.lobster_pkg_asserter import LobsterPkgAsserter
+from tests_system.lobster_pkg.lobster_pkg_system_test_case_base import (
+    LobsterPKGSystemTestCaseBase)
 from pathlib import Path
 import shutil
 
