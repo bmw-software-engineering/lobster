@@ -1,5 +1,4 @@
 from pathlib import Path
-import shutil
 from tests_system.lobster_cpptest.\
     lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
 from tests_system.lobster_cpptest.\
@@ -16,6 +15,9 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         self.output_dir = Path(Path(__file__).parents[0])
 
     def test_valid_extension_file(self):
+        """
+        Test checks that the C++ files with valid extensions are processed correctly.
+        """
         # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
         # lobster-trace: Usecases.Incorrect_number_of_requirement_references_in_Output
         self._test_runner.cmd_args.config = str(
@@ -43,6 +45,11 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_invalid_extension_file(self):
+        """
+        Test processing of C++ files with invalid extensions but valid data.
+        Hence, the tool should still be able to process the files correctly.
+        """
+        # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
         self._test_runner.cmd_args.config = str(
             self._data_directory / "invalid_extension_config.yaml")
         self._test_runner.declare_input_file(
@@ -68,6 +75,10 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_no_input_file(self):
+        """
+        Test processing of C++ files with no input files.
+        Input file provided in YAML config file does not exist.
+        """
         self._test_runner.cmd_args.config = str(
             self._data_directory / "no_input_file_config.yaml")
 
