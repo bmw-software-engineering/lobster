@@ -443,6 +443,7 @@ def write_html(fd, report, high_contrast, render_md):
         for level in report.config.values():
             if level.kind != kind:
                 continue
+            doc.add_line(f'<div id="section-{level.name.lower().replace(" ", "-")}">')
             doc.add_heading(4,
                             html.escape(level.name),
                             name_hash(level.name),
@@ -488,6 +489,7 @@ def write_html(fd, report, high_contrast, render_md):
                     write_item_box_end(doc, item)
             else:
                 doc.add_line("No items recorded at this level.")
+            doc.add_line("</div>")  # Closing tag for id #level.name
         doc.add_line("</div>")  # Closing tag for detailed-report-<title>
     # Closing tag for id #search-sec-id
     doc.add_line("</div>")
