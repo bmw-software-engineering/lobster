@@ -24,7 +24,7 @@
           "ref_down": [
             "req octopus_example.tentacle_motor_control",
             "python tentacle_commander.TentacleCoordinator",
-            "python test_tentacle_commander.TestTentacleCoordinator"
+            "pyunit test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18"
           ],
           "tracing_status": "OK",
           "framework": "TRLC1",
@@ -49,7 +49,8 @@
           "ref_down": [
             "req octopus_example.chromatophore_processor",
             "python tentacle_commander.ColorCamouflage",
-            "python test_tentacle_commander.TestColorCamouflage"
+            "pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28",
+            "pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33"
           ],
           "tracing_status": "OK",
           "framework": "TRLC2",
@@ -74,7 +75,7 @@
           "ref_down": [
             "req octopus_example.ink_sac_trigger",
             "python tentacle_commander.InkDefense",
-            "python test_tentacle_commander.TestInkDefense"
+            "pyunit test_tentacle_commander.TestInkDefense.test_deploy_ink:42"
           ],
           "tracing_status": "OK",
           "framework": "TRLC3",
@@ -99,7 +100,7 @@
           "ref_down": [
             "req octopus_example.vision_processing_unit",
             "python tentacle_commander.PreyDetection",
-            "python test_tentacle_commander.TestPreyDetection"
+            "pyunit test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52"
           ],
           "tracing_status": "OK",
           "framework": "TRLC4",
@@ -125,7 +126,7 @@
           ],
           "ref_down": [
             "python tentacle_toolkit.MotorController",
-            "python test_tentacle_toolkit.TestMotorController"
+            "pyunit test_tentacle_toolkit.TestMotorController.test_control_motors:18"
           ],
           "tracing_status": "OK",
           "framework": "TRLC",
@@ -151,7 +152,7 @@
           ],
           "ref_down": [
             "python tentacle_toolkit.ColorProcessor",
-            "python test_tentacle_toolkit.TestColorProcessor"
+            "pyunit test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28"
           ],
           "tracing_status": "OK",
           "framework": "TRLC",
@@ -177,7 +178,7 @@
           ],
           "ref_down": [
             "python tentacle_toolkit.InkTrigger",
-            "python test_tentacle_toolkit.TestInkTrigger"
+            "pyunit test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38"
           ],
           "tracing_status": "OK",
           "framework": "TRLC",
@@ -203,7 +204,7 @@
           ],
           "ref_down": [
             "python tentacle_toolkit.VisionProcessor",
-            "python test_tentacle_toolkit.TestVisionProcessor"
+            "pyunit test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48"
           ],
           "tracing_status": "OK",
           "framework": "TRLC",
@@ -434,14 +435,14 @@
       "kind": "activity",
       "items": [
         {
-          "tag": "python test_tentacle_commander.TestTentacleCoordinator",
+          "tag": "pyunit test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18",
           "location": {
             "kind": "file",
             "file": "test_tentacle_commander.py",
-            "line": 14,
+            "line": 18,
             "column": null
           },
-          "name": "test_tentacle_commander.TestTentacleCoordinator",
+          "name": "test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -451,18 +452,19 @@
           ],
           "ref_down": [],
           "tracing_status": "OK",
-          "language": "Python",
-          "kind": "Class"
+          "framework": "PyUnit",
+          "kind": "Test",
+          "status": null
         },
         {
-          "tag": "python test_tentacle_commander.TestColorCamouflage",
+          "tag": "pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28",
           "location": {
             "kind": "file",
             "file": "test_tentacle_commander.py",
-            "line": 24,
+            "line": 28,
             "column": null
           },
-          "name": "test_tentacle_commander.TestColorCamouflage",
+          "name": "test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -472,18 +474,41 @@
           ],
           "ref_down": [],
           "tracing_status": "OK",
-          "language": "Python",
-          "kind": "Class"
+          "framework": "PyUnit",
+          "kind": "Test",
+          "status": null
         },
         {
-          "tag": "python test_tentacle_commander.TestInkDefense",
+          "tag": "pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33",
           "location": {
             "kind": "file",
             "file": "test_tentacle_commander.py",
-            "line": 38,
+            "line": 33,
             "column": null
           },
-          "name": "test_tentacle_commander.TestInkDefense",
+          "name": "test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33",
+          "messages": [],
+          "just_up": [],
+          "just_down": [],
+          "just_global": [],
+          "ref_up": [
+            "req octopus_example.color_camouflage"
+          ],
+          "ref_down": [],
+          "tracing_status": "OK",
+          "framework": "PyUnit",
+          "kind": "Test",
+          "status": null
+        },
+        {
+          "tag": "pyunit test_tentacle_commander.TestInkDefense.test_deploy_ink:42",
+          "location": {
+            "kind": "file",
+            "file": "test_tentacle_commander.py",
+            "line": 42,
+            "column": null
+          },
+          "name": "test_tentacle_commander.TestInkDefense.test_deploy_ink:42",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -493,18 +518,19 @@
           ],
           "ref_down": [],
           "tracing_status": "OK",
-          "language": "Python",
-          "kind": "Class"
+          "framework": "PyUnit",
+          "kind": "Test",
+          "status": null
         },
         {
-          "tag": "python test_tentacle_commander.TestPreyDetection",
+          "tag": "pyunit test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52",
           "location": {
             "kind": "file",
             "file": "test_tentacle_commander.py",
-            "line": 48,
+            "line": 52,
             "column": null
           },
-          "name": "test_tentacle_commander.TestPreyDetection",
+          "name": "test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -514,18 +540,19 @@
           ],
           "ref_down": [],
           "tracing_status": "OK",
-          "language": "Python",
-          "kind": "Class"
+          "framework": "PyUnit",
+          "kind": "Test",
+          "status": null
         },
         {
-          "tag": "python test_tentacle_commander.TestDenSecurity",
+          "tag": "pyunit test_tentacle_commander.TestDenSecurity.test_secure_den:62",
           "location": {
             "kind": "file",
             "file": "test_tentacle_commander.py",
-            "line": 58,
+            "line": 62,
             "column": null
           },
-          "name": "test_tentacle_commander.TestDenSecurity",
+          "name": "test_tentacle_commander.TestDenSecurity.test_secure_den:62",
           "messages": [
             "unknown tracing target req octopus_example.den_security",
             "missing up reference"
@@ -534,18 +561,19 @@
           "just_down": [],
           "just_global": [],
           "tracing_status": "MISSING",
-          "language": "Python",
-          "kind": "Class"
+          "framework": "PyUnit",
+          "kind": "Test",
+          "status": null
         },
         {
-          "tag": "python test_tentacle_toolkit.TestMotorController",
+          "tag": "pyunit test_tentacle_toolkit.TestMotorController.test_control_motors:18",
           "location": {
             "kind": "file",
             "file": "test_tentacle_toolkit.py",
-            "line": 14,
+            "line": 18,
             "column": null
           },
-          "name": "test_tentacle_toolkit.TestMotorController",
+          "name": "test_tentacle_toolkit.TestMotorController.test_control_motors:18",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -555,18 +583,19 @@
           ],
           "ref_down": [],
           "tracing_status": "OK",
-          "language": "Python",
-          "kind": "Class"
+          "framework": "PyUnit",
+          "kind": "Test",
+          "status": null
         },
         {
-          "tag": "python test_tentacle_toolkit.TestColorProcessor",
+          "tag": "pyunit test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28",
           "location": {
             "kind": "file",
             "file": "test_tentacle_toolkit.py",
-            "line": 24,
+            "line": 28,
             "column": null
           },
-          "name": "test_tentacle_toolkit.TestColorProcessor",
+          "name": "test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -576,18 +605,19 @@
           ],
           "ref_down": [],
           "tracing_status": "OK",
-          "language": "Python",
-          "kind": "Class"
+          "framework": "PyUnit",
+          "kind": "Test",
+          "status": null
         },
         {
-          "tag": "python test_tentacle_toolkit.TestInkTrigger",
+          "tag": "pyunit test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38",
           "location": {
             "kind": "file",
             "file": "test_tentacle_toolkit.py",
-            "line": 34,
+            "line": 38,
             "column": null
           },
-          "name": "test_tentacle_toolkit.TestInkTrigger",
+          "name": "test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -597,18 +627,19 @@
           ],
           "ref_down": [],
           "tracing_status": "OK",
-          "language": "Python",
-          "kind": "Class"
+          "framework": "PyUnit",
+          "kind": "Test",
+          "status": null
         },
         {
-          "tag": "python test_tentacle_toolkit.TestVisionProcessor",
+          "tag": "pyunit test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48",
           "location": {
             "kind": "file",
             "file": "test_tentacle_toolkit.py",
-            "line": 44,
+            "line": 48,
             "column": null
           },
-          "name": "test_tentacle_toolkit.TestVisionProcessor",
+          "name": "test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -618,18 +649,19 @@
           ],
           "ref_down": [],
           "tracing_status": "OK",
-          "language": "Python",
-          "kind": "Class"
+          "framework": "PyUnit",
+          "kind": "Test",
+          "status": null
         },
         {
-          "tag": "python test_tentacle_toolkit.TestConstructionPlanner",
+          "tag": "pyunit test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58",
           "location": {
             "kind": "file",
             "file": "test_tentacle_toolkit.py",
-            "line": 54,
+            "line": 58,
             "column": null
           },
-          "name": "test_tentacle_toolkit.TestConstructionPlanner",
+          "name": "test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58",
           "messages": [
             "unknown tracing target req octopus_example.rock_arrangement_planner",
             "missing up reference"
@@ -638,11 +670,12 @@
           "just_down": [],
           "just_global": [],
           "tracing_status": "MISSING",
-          "language": "Python",
-          "kind": "Class"
+          "framework": "PyUnit",
+          "kind": "Test",
+          "status": null
         }
       ],
-      "coverage": 80.0
+      "coverage": 81.81818181818181
     }
   ],
   "policy": {
