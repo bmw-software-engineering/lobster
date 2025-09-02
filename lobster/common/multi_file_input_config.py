@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Iterable, List, Type, Union
+from typing import Iterable, Optional, Type, Union
 from re import Pattern
 
 from lobster.common.items import Activity, Implementation, Requirement
@@ -7,8 +7,8 @@ from lobster.common.items import Activity, Implementation, Requirement
 
 @dataclass
 class Config:
-    inputs: str
-    inputs_from_file: str
+    inputs: Optional[Iterable[str]]
+    inputs_from_file: Optional[str]
     extensions: Iterable[str]
-    exclude_patterns: List[Pattern]
+    exclude_patterns: Optional[Iterable[Pattern]]
     schema: Union[Type[Requirement], Type[Implementation], Type[Activity]]

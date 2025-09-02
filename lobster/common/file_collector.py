@@ -1,7 +1,7 @@
 import os.path
 from pathlib import Path
 from re import Pattern
-from typing import Iterable, List
+from typing import Iterable, List, Optional
 
 from lobster.common.errors import PathError
 
@@ -10,7 +10,7 @@ class FileCollector:
     def __init__(
             self,
             extensions: Iterable[str],
-            directory_exclude_patterns: Iterable[Pattern],
+            directory_exclude_patterns: Optional[Iterable[Pattern]],
     ) -> None:
         if extensions is None:
             raise ValueError("'extensions' must not be None")

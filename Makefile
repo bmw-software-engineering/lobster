@@ -157,13 +157,13 @@ coverage-unit:
 	@echo "📊 Generating coverage report for unit tests..."
 	coverage combine -q .coverage.unit*
 	coverage html --directory=htmlcov-unit --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=44
+	coverage report --rcfile=coverage.cfg --fail-under=45
 
 coverage-system:
 	@echo "📊 Generating coverage report for system tests..."
 	coverage combine -q .coverage.system*
 	coverage html --directory=htmlcov-system --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=60
+	coverage report --rcfile=coverage.cfg --fail-under=66
 
 # --- Clean Coverage ---
 clean-coverage:
