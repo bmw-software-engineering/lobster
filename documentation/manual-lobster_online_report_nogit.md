@@ -8,7 +8,7 @@ There are two tools, `lobster-online-report` and `lobster-online-report-nogit`.
 Both tools replace file references in a `*.lobster` file with GitHub references,
 with the following difference:
 - `lobster-online-report` calls `git` and extracts the necessary information like
-  remote URL by itself,
+  submodule URL by itself,
 - `lobster-online-report-nogit` does not call `git`, but the user provides the
   necessary information through command line arguments.
 
