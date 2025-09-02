@@ -53,6 +53,7 @@ The following requirements frameworks are supported:
 
 * [TRLC](https://github.com/bmw-software-engineering/trlc/)
 * [Codebeamer](packages/lobster-tool-codebeamer/README.md)
+* [PKG](packages/lobster-monolithic/README.md)
 
 The following programming languages are supported:
 
@@ -116,6 +117,7 @@ Here are the links to the individual requirement coverage reports:
 
 * [Requirement Coverage Report TRLC](https://bmw-software-engineering.github.io/lobster/tracing-trlc.html)
 * [Requirement Coverage Report Python](https://bmw-software-engineering.github.io/lobster/tracing-python.html)
+* Requirement Coverage Report PKG: not yet available
 * [Requirement Coverage Report Json](https://bmw-software-engineering.github.io/lobster/tracing-json.html)
 * [Requirement Coverage Report Gtest](https://bmw-software-engineering.github.io/lobster/tracing-gtest.html)
 * [Requirement Coverage Report Cpptest](https://bmw-software-engineering.github.io/lobster/tracing-cpptest.html)
