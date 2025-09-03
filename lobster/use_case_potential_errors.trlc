@@ -23,7 +23,7 @@ section "GIT"
            then user might give a release clearence for wrong hash.'''
       ]
 
-      affects = [git_hash]
+      affects = [Item_GitHub_Source]
       impact_type = req.Impact_Type.Safety
   }
 
@@ -37,7 +37,7 @@ section "GIT"
             then user might not able to verify if the c++ test belongs to correct commit'''
         ]
 
-        affects = [git_hash]
+        affects = [Item_GitHub_Source]
         impact_type = req.Impact_Type.Financial
   }
 
@@ -47,14 +47,14 @@ section "GIT"
         URL for the c++ test case location is not available.
         '''
       impacts =[
-        '''If the hyperaffects is not available in the HTML report
-           then user will not able to navigate to source location of the c++ test.''',
+        '''If the hyperlink is not available in the HTML report
+           then the user will not able to navigate to the source location of the C++ test.''',
 
         '''If source location is not available in the report
-           then user will not able to verify if c++ test file are taken from correct path.'''
+           then the user will not able to verify if C++ test file are taken from correct path.'''
       ]
 
-      affects = [Item_Source]
+      affects = [Item_GitHub_Source]
       impact_type = req.Impact_Type.Financial
   }
 

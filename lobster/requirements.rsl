@@ -64,6 +64,7 @@ enum Tools {
   lobster_cpptest
   lobster_report
   lobster_trlc
+  lobster_json
 
   // tools that consume the output of other LOBSTER tools
   lobster_online_report

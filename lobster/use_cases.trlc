@@ -4,13 +4,19 @@ import req
 req.UseCase Trace_Requirements_to_Tests {
     description = '''
         As a requirements manager I want to have a report of traceability between
-        requirements (in codebeamer or TRLC) and tests (in C++ or JSON).
+        requirements and tests.
     '''
     affected_tools = [
+        // shall extract requirements:
         req.Tools.lobster_codebeamer,
-        req.Tools.lobster_cpptest,
-        req.Tools.lobster_report,
         req.Tools.lobster_trlc,
+
+        // shall extract test cases:
+        req.Tools.lobster_json,
+        req.Tools.lobster_cpptest,
+
+        // shall generate reports:
+        req.Tools.lobster_report,
         req.Tools.lobster_html_report
     ]
 }
@@ -18,13 +24,19 @@ req.UseCase Trace_Requirements_to_Tests {
 req.UseCase List_Requirements_to_Tests {
     description = '''
         As a requirements manager I want the traceability report to show the list of
-        requirements (from codebeamer or TRLC) which are covered by tests (in C++ or JSON).
+        requirements which are covered by tests.
     '''
     affected_tools = [
+        // shall extract requirements:
         req.Tools.lobster_codebeamer,
-        req.Tools.lobster_cpptest,
-        req.Tools.lobster_report,
         req.Tools.lobster_trlc,
+
+        // shall extract test cases:
+        req.Tools.lobster_json,
+        req.Tools.lobster_cpptest,
+
+        // shall generate reports:
+        req.Tools.lobster_report,
         req.Tools.lobster_html_report
     ]
 }
@@ -32,13 +44,19 @@ req.UseCase List_Requirements_to_Tests {
 req.UseCase List_Requirements_without_Tests {
     description = '''
         As a requirements manager I want the traceability report to show the list of
-        requirements (from codebeamer or TRLC) which are not covered by tests (in C++ or JSON).
+        requirements which are not covered by tests.
     '''
     affected_tools = [
+        // shall extract requirements:
         req.Tools.lobster_codebeamer,
-        req.Tools.lobster_cpptest,
-        req.Tools.lobster_report,
         req.Tools.lobster_trlc,
+
+        // shall extract test cases:
+        req.Tools.lobster_json,
+        req.Tools.lobster_cpptest,
+
+        // shall generate reports:
+        req.Tools.lobster_report,
         req.Tools.lobster_html_report
     ]
 }
@@ -46,7 +64,7 @@ req.UseCase List_Requirements_without_Tests {
 req.UseCase List_Tests_to_Requirements {
     description = '''
         As a requirements manager I want the traceability report to show the list of
-        tests (in C++ or JSON) covering requirements in (in codebeamer or TRLC).
+        tests covering requirements.
     '''
     affected_tools = [
         req.Tools.lobster_codebeamer,
@@ -60,7 +78,7 @@ req.UseCase List_Tests_to_Requirements {
 req.UseCase List_Tests_without_Requirements {
     description = '''
         As a requirements manager I want the traceability report to show the list of
-        tests (in C++ or JSON) which are not covering any requirement in (in codebeamer or TRLC).
+        tests which are not covering any requirement.
     '''
     affected_tools = [
         req.Tools.lobster_codebeamer,
@@ -74,7 +92,8 @@ req.UseCase List_Tests_without_Requirements {
 req.UseCase Requirements_to_Test_Coverage {
     description = '''
         As a requirements manager I want the traceability report to show the fraction of
-        the number of requirements (in codebeamer or TRLC) which are covered by tests (in C++ or JSON)
+        the number of requirements
+        which are each covered by at least one test respectively
         divided by the total number of requirements.
         The fraction shall be shown as percentage.
     '''
@@ -95,7 +114,8 @@ req.UseCase Requirements_to_Test_Coverage {
 
 req.UseCase Show_Tracing_Policy {
     description = '''
-        As a requirements manager I want the traceability report to show the tracing policy used to generate the report.
+        As a requirements manager I want the traceability report to show the tracing
+        policy used to generate the report.
     '''
     affected_tools = [
         req.Tools.lobster_report,
@@ -105,48 +125,66 @@ req.UseCase Show_Tracing_Policy {
 
 req.UseCase Show_codebeamer_links {
     description = '''
-        As a requirements manager I want the traceability report to mention the codebeamer link to requirements in codebeamer.
+        As a requirements manager I want the traceability report to mention the
+        codebeamer link to each requirement in codebeamer.
     '''
     affected_tools = [
+        // shall extract the source URL
         req.Tools.lobster_codebeamer,
+
+        // shall propagate the source URL to the output
         req.Tools.lobster_report,
+
+        // shall render the source URL
         req.Tools.lobster_html_report
     ]
 }
 
-req.UseCase Item_Source {
+req.UseCase Item_GitHub_Source {
     description = '''
         As a requirements manager
         I want the traceability report
-        between requirements in codebeamer and C++ tests
-        to mention the source location of each item.
+        to mention the GitHub location of each item which comes from a file inside a git
+        repository (hosted on my company's GitHub Enterprise server),
+        so that I can
+        - map the traceability report to a commit SHA, and
+        - easily navigate to the corresponding location.
+
+        The location shall include:
+        - the full URL including the git commit SHA,
+        - and the line number (if applicable).
+
+        Note:
+        - The assumption is that, the repository will be checked out locally by the user
+          or CI system, and the URL to the remote repository will be given as input to
+          the LOBSTER tool suite. That is, the tool suite does not have to detect the
+          commit SHA on its own.
+        - The line number is optional, because otherwise it is impossible to represent
+          files as a whole by a LOBSTER item.
     '''
     affected_tools = [
-        req.Tools.lobster_codebeamer,
+        // shall extract the local file reference:
         req.Tools.lobster_cpptest,
+        req.Tools.lobster_trlc,
+        req.Tools.lobster_json,
+
+        // shall preserve the local file references:
         req.Tools.lobster_report,
+
+        // shall convert file references to GitHub references
+        req.Tools.lobster_online_report,
+
+        // shall render the references
         req.Tools.lobster_html_report
     ]
 }
 
 req.UseCase HTML_Output {
     description = '''
-        As a requirements manager I want the traceability report to be generated as html file.
+        As a requirements manager I want the traceability report to be generated as html
+        file.
     '''
     affected_tools = [
-        req.Tools.lobster_html_report
-    ]
-}
-
-req.UseCase git_hash {
-    description = '''
-        As a requirements manager I want the traceability report
-        which includes sources from a local git clone
-        to show the git hashes of the git commit from which files were taken.
-    '''
-    affected_tools = [
-        req.Tools.lobster_report,
-        req.Tools.lobster_online_report,
         req.Tools.lobster_html_report
     ]
 }
@@ -154,7 +192,6 @@ req.UseCase git_hash {
 req.UseCase List_Findings {
     description = '''
         As a requirements manager I want the traceability report
-        between requirements (in codebeamer or TRLC) and tests (in C++ or JSON)
         to show a list with all findings
         where the tracing policy is violated.
     '''
