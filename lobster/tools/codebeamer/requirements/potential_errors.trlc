@@ -1,31 +1,6 @@
 package UseCases
 import req
 
-  req.PotentialError Incomplete_Extraction_from_Codebeamer {
-    summary = "LOBSTER extracts a requirement incompletely."
-    description = '''
-      Some requirements are not extracted completely.
-      For example, some information of a requirement is missing.
-      '''
-    impacts = [
-      '''If the ID of a codebeamer requirement is not written to the output correctly (e.g. truncated),
-         and if that wrong ID is also a real requirement in codebeamer,
-         then the user might think that a requirement is tested where in fact it is not.''',
-
-      '''If the hyperaffects in the HTML output is not correct (e.g. pointing to a different requirement),
-         and a user clicks on it and does not realize that the affects is wrong,
-         then the user might think that a requirement is tested where in fact it is not.''',
-
-      '''If the summary of a codebeamer requirement is not correct
-         (e.g. truncated),',
-         then the user might think that all aspects of a requirement are covered by a test,
-         where in fact they are not.''',
-    ]
-
-    affects = [Trace_Requirements_to_Tests, List_Requirements_to_Tests, List_Requirements_without_Tests]
-    impact_type = req.Impact_Type.Safety
-  }
-
    req.PotentialError Wrong_Extraction_from_Codebeamer{
       summary = "LOBSTER extracts requirement wrongly"
       description = '''
@@ -41,12 +16,20 @@ import req
          and a user clicks on it and does not realize that the affects is wrong,
          then the user might think that a requirement is tested where in fact it is not.''',
 
-         '''If the summary of the requirement is not correct (e.g. ID of one requirement and summary of another.)
+         '''If the summary field of the requirement is not correct (e.g. ID of one requirement and summary of another.)
          then the user might think that all aspects of a requirement are covered by a test,
          where in fact they are not.'''
       ]
 
-      affects = [Trace_Requirements_to_Tests, List_Requirements_to_Tests, List_Requirements_without_Tests]
+      affects = [
+         Trace_Requirements_to_Tests,
+         List_Requirements_to_Tests,
+         List_Requirements_without_Tests,
+         List_Tests_to_Requirements,
+         List_Tests_without_Requirements,
+         Requirements_to_Test_Coverage,
+         Show_codebeamer_links
+      ]
       impact_type = req.Impact_Type.Safety
   }
 
@@ -61,7 +44,15 @@ import req
            then user might think that all requirements are tested where in reality it is not the case.'''
       ]
 
-      affects = [Trace_Requirements_to_Tests, List_Requirements_to_Tests, List_Requirements_without_Tests]
+      affects = [
+         Trace_Requirements_to_Tests,
+         List_Requirements_to_Tests,
+         List_Requirements_without_Tests,
+         List_Tests_to_Requirements,
+         List_Tests_without_Requirements,
+         Requirements_to_Test_Coverage,
+         Show_codebeamer_links
+      ]
       impact_type = req.Impact_Type.Safety
   }
 
@@ -76,6 +67,14 @@ import req
            then user might think that all requirements are not tested where in reality it is not the case.'''
       ]
 
-      affects = [Trace_Requirements_to_Tests, List_Requirements_to_Tests, List_Requirements_without_Tests]
+      affects = [
+         Trace_Requirements_to_Tests,
+         List_Requirements_to_Tests,
+         List_Requirements_without_Tests,
+         List_Tests_to_Requirements,
+         List_Tests_without_Requirements,
+         Requirements_to_Test_Coverage,
+         Show_codebeamer_links
+      ]
       impact_type = req.Impact_Type.Safety
   }
