@@ -32,7 +32,6 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
             self.output_dir / output_filename,
         )
         self.test_runner.cmd_args.out = output_filename
-        self.test_runner.cmd_args.render_md = True
         self.test_runner.cmd_args.lobster_report = str(inputfile2)
 
         completed_process = self.test_runner.run_tool_test()
@@ -70,7 +69,6 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
             self.output_dir / output_filename,
         )
         self.test_runner.cmd_args.out = output_filename
-        self.test_runner.cmd_args.render_md = True
         self.test_runner.cmd_args.lobster_report = str(inputfile)
 
         completed_process = self.test_runner.run_tool_test()
@@ -92,7 +90,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_multiple_input_files_in_working_directory(self):
-        # lobster-trace: html_req.Selective_Input_File_Processing
+        # lobster-trace: html_req.Only_Given_Input_File_Consumed
         """
         This test checks that the tool shall process only the provided input file
         and ignore all other files in the working directory.
@@ -101,6 +99,8 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         inputfile1 = self._data_directory / "report_pizza.lobster"
         inputfile2 = self._data_directory / "report_octopus.lobster"
 
+        self.test_runner.declare_input_file(inputfile1)
+        self.test_runner.declare_input_file(inputfile2)
         self.output_dir = self.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / output_filename))
         self.test_runner.declare_output_file(self.output_dir / output_filename)
@@ -109,7 +109,6 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
             self.output_dir / output_filename,
         )
         self.test_runner.cmd_args.out = output_filename
-        self.test_runner.cmd_args.render_md = True
         self.test_runner.cmd_args.lobster_report = str(inputfile1)
 
         completed_process = self.test_runner.run_tool_test()
@@ -130,14 +129,15 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_html_content_with_justifications(self):
+    def test_html_content_with_multiple_status(self):
         # lobster-trace: html_req.Processing_Data_With_Justifications
         """
-        This test checks that the data containing the justifications
-        is processed and displays content correctly according to the justifications.
+        This test checks that the tool processes data containing the items
+        with multiple status like ok, missing, partial, justified
+        and displays content correctly according to its status.
         """
-        output_filename = "just.output"
-        inputfile = self._data_directory / "report_just.lobster"
+        output_filename = "all_status.output"
+        inputfile = self._data_directory / "report_all_status.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / output_filename))
@@ -147,7 +147,6 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
             self.output_dir / output_filename,
         )
         self.test_runner.cmd_args.out = output_filename
-        self.test_runner.cmd_args.render_md = True
         self.test_runner.cmd_args.lobster_report = str(inputfile)
 
         completed_process = self.test_runner.run_tool_test()

@@ -84,19 +84,6 @@ h2 {
 .attribute {
   margin-top: 0.5em;
 }
-.md_description {
-  font-style: unset;
-}
-.md_description h1 {
-  padding: unset;
-  margin: unset;
-}
-.md_description h2 {
-  padding: unset;
-  margin: unset;
-  border-bottom: unset;
-  text-align: unset;
-}
 .columns {
   display: flex;
 }
@@ -498,7 +485,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>User loses a sock during laundry and needs to find it quickly</p></blockquote>
+<blockquote>User loses a sock during laundry and needs to find it quickly</blockquote>
 </div>
 <div class="attribute">
 <div>Issues:
@@ -517,7 +504,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>User wakes up feeling unmotivated on Monday morning</p></blockquote>
+<blockquote>User wakes up feeling unmotivated on Monday morning</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -541,7 +528,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>User orders pizza and anxiously waits for delivery</p></blockquote>
+<blockquote>User orders pizza and anxiously waits for delivery</blockquote>
 </div>
 <div class="attribute">
 <div>Justifications:
@@ -560,7 +547,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>User tries to understand what their cat wants</p></blockquote>
+<blockquote>User tries to understand what their cat wants</blockquote>
 </div>
 <div class="attribute">
 <div>Justifications:
@@ -579,7 +566,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>User wants to watch TV but cannot find the remote control</p></blockquote>
+<blockquote>User wants to watch TV but cannot find the remote control</blockquote>
 </div>
 <div class="attribute">
 <div>Justifications:
@@ -599,7 +586,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>User feels sad and needs cheering up</p></blockquote>
+<blockquote>User feels sad and needs cheering up</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -618,7 +605,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>User is tempted to eat unhealthy snacks late at night</p></blockquote>
+<blockquote>User is tempted to eat unhealthy snacks late at night</blockquote>
 </div>
 <div class="attribute">
 <div>Issues:
@@ -640,7 +627,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall locate missing socks from the laundry dimension</p></blockquote>
+<blockquote>The system shall locate missing socks from the laundry dimension</blockquote>
 </div>
 <div class="attribute">
 <div>Issues:
@@ -659,7 +646,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall automatically improve user mood on Monday mornings</p></blockquote>
+<blockquote>The system shall automatically improve user mood on Monday mornings</blockquote>
 </div>
 <div class="attribute">
 <div>Derived from:
@@ -683,7 +670,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall detect when pizza delivery arrives within 5 miles</p></blockquote>
+<blockquote>The system shall detect when pizza delivery arrives within 5 miles</blockquote>
 </div>
 <div class="attribute">
 <div>Issues:
@@ -702,7 +689,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall translate cat meows into human language</p></blockquote>
+<blockquote>The system shall translate cat meows into human language</blockquote>
 </div>
 <div class="attribute">
 <div>Justifications:
@@ -721,7 +708,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall find TV remotes hiding in couch cushions</p></blockquote>
+<blockquote>The system shall find TV remotes hiding in couch cushions</blockquote>
 </div>
 <div class="attribute">
 <div>Justifications:
@@ -741,7 +728,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall tell dad jokes when users are feeling sad</p></blockquote>
+<blockquote>The system shall tell dad jokes when users are feeling sad</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -765,7 +752,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall protect cookies from midnight snack attacks</p></blockquote>
+<blockquote>The system shall protect cookies from midnight snack attacks</blockquote>
 </div>
 <div class="attribute">
 <div>Issues:
@@ -788,7 +775,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall scan washing machines and dryers for sock presence</p></blockquote>
+<blockquote>The software shall scan washing machines and dryers for sock presence</blockquote>
 </div>
 <div class="attribute">
 <div>Justifications:
@@ -807,7 +794,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall analyze user facial expressions and deploy happiness algorithms</p></blockquote>
+<blockquote>The software shall analyze user facial expressions and deploy happiness algorithms</blockquote>
 </div>
 <div class="attribute">
 <div>Issues:
@@ -826,7 +813,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall monitor GPS coordinates of pizza delivery vehicles</p></blockquote>
+<blockquote>The software shall monitor GPS coordinates of pizza delivery vehicles</blockquote>
 </div>
 <div class="attribute">
 <div>Justifications:
@@ -845,7 +832,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall process cat vocalizations using advanced feline linguistics</p></blockquote>
+<blockquote>The software shall process cat vocalizations using advanced feline linguistics</blockquote>
 </div>
 <div class="attribute">
 <div>Justifications:
@@ -865,7 +852,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall maintain a database of dad jokes sorted by cringe level</p></blockquote>
+<blockquote>The software shall maintain a database of dad jokes sorted by cringe level</blockquote>
 </div>
 <div class="attribute">
 <div>Derived from:
@@ -884,7 +871,7 @@ footer {
 <a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall map couch cushion topography for remote detection</p></blockquote>
+<blockquote>The software shall map couch cushion topography for remote detection</blockquote>
 </div>
 <div class="attribute">
 <div>Issues:

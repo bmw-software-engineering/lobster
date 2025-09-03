@@ -84,19 +84,6 @@ h2 {
 .attribute {
   margin-top: 0.5em;
 }
-.md_description {
-  font-style: unset;
-}
-.md_description h1 {
-  padding: unset;
-  margin: unset;
-}
-.md_description h2 {
-  padding: unset;
-  margin: unset;
-  border-bottom: unset;
-  text-align: unset;
-}
 .columns {
   display: flex;
 }
@@ -498,7 +485,7 @@ footer {
 <a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall implement motor control algorithms for independent tentacle movement</p></blockquote>
+<blockquote>The software shall implement motor control algorithms for independent tentacle movement</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -523,7 +510,7 @@ footer {
 <a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall process color-changing commands to chromatophore cells in real-time</p></blockquote>
+<blockquote>The software shall process color-changing commands to chromatophore cells in real-time</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -548,7 +535,7 @@ footer {
 <a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall trigger ink sac release with precise timing and volume control</p></blockquote>
+<blockquote>The software shall trigger ink sac release with precise timing and volume control</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -573,7 +560,7 @@ footer {
 <a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall process multiple camera feeds for 360-degree underwater vision</p></blockquote>
+<blockquote>The software shall process multiple camera feeds for 360-degree underwater vision</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -599,7 +586,7 @@ footer {
 <a href="octopus_requirements1.trlc" target="_blank">octopus_requirements1.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall coordinate all eight tentacles simultaneously without getting tangled</p></blockquote>
+<blockquote>The system shall coordinate all eight tentacles simultaneously without getting tangled</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -621,7 +608,7 @@ footer {
 <a href="octopus_requirements2.trlc" target="_blank">octopus_requirements2.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall change colors instantly to blend with coral reefs and escape predators</p></blockquote>
+<blockquote>The system shall change colors instantly to blend with coral reefs and escape predators</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -644,7 +631,7 @@ footer {
 <a href="octopus_requirements3.trlc" target="_blank">octopus_requirements3.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall deploy ink clouds as defensive countermeasure when threatened</p></blockquote>
+<blockquote>The system shall deploy ink clouds as defensive countermeasure when threatened</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -666,7 +653,7 @@ footer {
 <a href="octopus_requirements4.trlc" target="_blank">octopus_requirements4.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall detect and track multiple prey items using advanced underwater vision</p></blockquote>
+<blockquote>The system shall detect and track multiple prey items using advanced underwater vision</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:

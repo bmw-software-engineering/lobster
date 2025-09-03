@@ -84,19 +84,6 @@ h2 {
 .attribute {
   margin-top: 0.5em;
 }
-.md_description {
-  font-style: unset;
-}
-.md_description h1 {
-  padding: unset;
-  margin: unset;
-}
-.md_description h2 {
-  padding: unset;
-  margin: unset;
-  border-bottom: unset;
-  text-align: unset;
-}
 .columns {
   display: flex;
 }
@@ -513,7 +500,7 @@ footer {
 <a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall heat pizzas to perfect crispy goodness</p></blockquote>
+<blockquote>The system shall heat pizzas to perfect crispy goodness</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -536,7 +523,7 @@ footer {
 <a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall transport pizzas while they are still hot</p></blockquote>
+<blockquote>The system shall transport pizzas while they are still hot</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -557,7 +544,7 @@ footer {
 <a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall accept pizza orders from hungry customers</p></blockquote>
+<blockquote>The system shall accept pizza orders from hungry customers</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -580,7 +567,7 @@ footer {
 <a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall process money without stealing tips</p></blockquote>
+<blockquote>The system shall process money without stealing tips</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -602,7 +589,7 @@ footer {
 <a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall show where the pizza is on its journey</p></blockquote>
+<blockquote>The system shall show where the pizza is on its journey</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -623,7 +610,7 @@ footer {
 <a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall keep track of cheese and pepperoni supplies</p></blockquote>
+<blockquote>The system shall keep track of cheese and pepperoni supplies</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -646,7 +633,7 @@ footer {
 <a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall notify customers when pizza arrives</p></blockquote>
+<blockquote>The system shall notify customers when pizza arrives</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -669,7 +656,7 @@ footer {
 <a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The system shall ensure pizzas taste better than cardboard</p></blockquote>
+<blockquote>The system shall ensure pizzas taste better than cardboard</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -696,7 +683,7 @@ footer {
 <a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall control oven temperature and cooking timer</p></blockquote>
+<blockquote>The software shall control oven temperature and cooking timer</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -720,7 +707,7 @@ footer {
 <a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall calculate fastest delivery routes</p></blockquote>
+<blockquote>The software shall calculate fastest delivery routes</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -742,7 +729,7 @@ footer {
 <a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall manage pizza orders and customer details</p></blockquote>
+<blockquote>The software shall manage pizza orders and customer details</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -767,7 +754,7 @@ footer {
 <a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall handle credit card transactions securely</p></blockquote>
+<blockquote>The software shall handle credit card transactions securely</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -790,7 +777,7 @@ footer {
 <a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall provide real-time delivery location updates</p></blockquote>
+<blockquote>The software shall provide real-time delivery location updates</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -811,7 +798,7 @@ footer {
 <a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall monitor ingredient levels and send alerts</p></blockquote>
+<blockquote>The software shall monitor ingredient levels and send alerts</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -835,7 +822,7 @@ footer {
 <a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall send SMS and email updates to customers</p></blockquote>
+<blockquote>The software shall send SMS and email updates to customers</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
@@ -859,7 +846,7 @@ footer {
 <a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
 </div>
 <div class="attribute">
-<blockquote class="md_description"><p>The software shall store pizza recipes and quality standards</p></blockquote>
+<blockquote>The software shall store pizza recipes and quality standards</blockquote>
 </div>
 <div class="attribute">
 <div>Traces to:
