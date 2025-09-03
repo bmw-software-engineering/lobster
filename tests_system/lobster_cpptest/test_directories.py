@@ -16,6 +16,10 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_all_files_from_current_directory_consumed(self):
+        """
+        Tests that all C++ files in the current directory are consumed.
+        It also picks files from nested directories.
+        """
         # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
         OUT_FILE = "nested_directories.lobster"
 
@@ -52,6 +56,9 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_files_from_specified_directory_consumed(self):
+        """
+        Test for processing files from a specific directory.
+        """
         # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
         OUT_FILE = "specific_directory.lobster"
 
@@ -82,6 +89,10 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_specified_directory_and_files_consumed(self):
+        """
+        Test for processing files from a specific directory
+        as well as files provided as input.
+        """
         # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
         OUT_FILE = "directory_files.lobster"
 
@@ -115,6 +126,10 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_no_cpptest_file(self):
+        """
+        Test case for handling the scenario where no .cpp test files are found.
+        No input file provided in YAML config file or in working directory.
+        """
         OUT_FILE = "no_cpptest_file.lobster"
 
         self._test_runner.declare_output_file(self._data_directory / OUT_FILE)

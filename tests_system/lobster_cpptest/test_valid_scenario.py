@@ -14,6 +14,10 @@ class InputFileCpptestTest(LobsterCpptestSystemTestCaseBase):
         self.output_dir = Path(Path(__file__).parents[0])
 
     def test_valid_input_cpptest_file(self):
+        """
+        This test checks that the valid C++ test file is processed correctly
+        by the lobster-cpptest tool.
+        """
         # lobster-trace: cpptest_req.Input_File_Valid_Cpp_Test_File
         OUT_FILE = "report.lobster"
         self._test_runner.declare_input_file(self._data_directory / "1_reference.cpp")

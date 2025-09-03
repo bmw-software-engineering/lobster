@@ -1,5 +1,4 @@
 from pathlib import Path
-import shutil
 from tests_system.lobster_cpptest.\
     lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
 from tests_system.lobster_cpptest.\
@@ -16,6 +15,10 @@ class ReferencesCpptestTest(LobsterCpptestSystemTestCaseBase):
         self.output_dir = Path(Path(__file__).parents[0])
 
     def test_no_references_cpptest_file(self):
+        """
+        This test checks that the file with no requirement references
+        is handled correctly by the lobster-cpptest tool.
+        """
         # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
         OUT_FILE = "no_references.lobster"
         self._test_runner.declare_input_file(self._data_directory / "no_references.cpp")
@@ -40,6 +43,10 @@ class ReferencesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_one_reference_in_cpptest_file(self):
+        """
+        This test checks that the file with a single requirement reference
+        is handled correctly by the lobster-cpptest tool.
+        """
         # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
         OUT_FILE = "1_reference.lobster"
         self._test_runner.declare_input_file(self._data_directory / "1_reference.cpp")
@@ -64,6 +71,10 @@ class ReferencesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_many_references_in_cpptest_file(self):
+        """
+        This test checks that the file with multiple requirement references
+        is handled correctly by the lobster-cpptest tool.
+        """
         # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
         OUT_FILE = "many_references.lobster"
         self._test_runner.declare_input_file(
