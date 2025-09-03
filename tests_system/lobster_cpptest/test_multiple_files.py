@@ -1,4 +1,3 @@
-import shutil
 from pathlib import Path
 from tests_system.lobster_cpptest.\
     lobster_cpptest_asserter import LobsterCppTestAsserter as Asserter
@@ -18,9 +17,8 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
     def test_multiple_files(self):
         """
         Test case for processing multiple input files.
-        Test to ensure that the tool runs on the files
-        specified in the configuration file
-        and generates the expected output file.
+        Ensures the tool runs on files specified in the yaml config file and
+        generates expected output.
         """
         # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
         # lobster-trace: Usecases.Incorrect_number_of_requirement_references_in_Output
@@ -52,10 +50,9 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
 
     def test_multiple_valid_invalid_files(self):
         """
-        Test case for processing multiple input files in a directory
-        that contain valid and invalid extensions.
-        Test to ensure that the tool runs on all files in the specified directory
-        and generates the expected output file.
+        Test for processing multiple input files in a directory with valid and invalid
+        extensions. Ensures the tool runs on all files in the directory and generates
+        output for all valid files in the directory.
         """
         # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
         # lobster-trace: Usecases.Incorrect_number_of_requirement_references_in_Output
@@ -87,11 +84,9 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
 
     def test_no_input_file(self):
         """
-        Test case for handling the scenario where
-        the input file does not exist.
-        This test ensures that the tool correctly identifies
-        the absence of the input file
-        and returns an appropriate error message.
+        Test case for handling the scenario where the input file does not exist.
+        An input file provided in YAML config file which does not exist in working
+        directory.
         """
         # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
         self._test_runner.cmd_args.config = str(
