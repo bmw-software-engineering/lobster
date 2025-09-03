@@ -15,9 +15,23 @@ The report is in JSON, but you can generate more readable versions of it
 with additional tools:
 
 * `lobster-online-report`:
-  Preprocess a JSON report to contain github references instead of local file
+  Postprocess a `*.lobster` report to contain GitHub references instead of local file
   references.
-  Repository information is retrieved by calling the `git` tool.
+  Repository information must partly be provided as configuration parameters, and is partly retrieved by calling the `git` tool.
+  Note that the tool only works in combination with submodules if the `.gitmodules` file of the repository uses HTTPS urls instead of SSH.
+
+  If your `.gitmodules` looks like this, you can use this tool:
+
+  ```ini
+  [submodule "farm-with-palms"]
+    path = coconut/farm
+    url = ../farm-with-palms
+    branch = .
+  ```
+
+  But if your file contains URLs ending on `.git`, you cannot use this tool.
+  It will build invalid URLs.
+
 * `lobster-online-report-nogit`:
   This tool is similar to `lobster-online-report`, but it does not
   call the `git` tool to obtain information about the repository.
