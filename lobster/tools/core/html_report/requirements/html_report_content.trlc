@@ -8,3 +8,37 @@ req.System_Requirement Meta_Tag_In_Html_Report {
       HAVING attributes "http-equiv" and "content".
     '''
 }
+
+req.System_Requirement Item_Data_Unique {
+    description = '''
+      IF the HTML report tool processes multiple items with their respective data,
+      THEN the tool shall ensure that data is not mixed between items,
+      AND each item shall be processed correctly with its unique data.
+    '''
+}
+
+req.System_Requirement Complex_Tracing_Policy_Data {
+    description = '''
+      IF the input report file contains data created using a complex tracing policy,
+      THEN the tool shall process the data correctly into an HTML report.
+
+      example: refer the policy 'tests_system/lobster_report/data/pizza_policy.conf'
+
+    '''
+}
+
+req.System_Requirement Only_Given_Input_File_Consumed {
+    description = '''
+      IF multiple files are present in the working directory and a specific input file is provided,
+      THEN the tool shall process only the provided input file,
+      AND shall ignore all other files in the working directory.
+    '''
+}
+
+req.System_Requirement Processing_Data_With_Justifications {
+    description = '''
+      IF the input data contains items with justifications,
+      THEN the tool shall process the justifications correctly,
+      AND shall display the content according to the justifications in the HTML report.
+    '''
+}

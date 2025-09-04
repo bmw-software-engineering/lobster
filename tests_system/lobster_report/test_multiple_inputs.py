@@ -99,7 +99,7 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
                                              "tentacle_toolkit_test.lobster")
 
         conf_file = "octopus_policy.conf"
-        out_file = "octopus_report.lobster"
+        out_file = "report_octopus.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
