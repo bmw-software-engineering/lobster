@@ -29,13 +29,6 @@ req.TestSpecification List_of_Software_tests_covering_requirements_in_HTML_file{
     verifies = [Software_tests_not_listed_correctly]
 }
 
-req.TestSpecification Mapping_in_HTML_file{
-    description = '''
-      The test shall verify that mapping between requirements and software tests is correct in HTML file.
-    '''
-    verifies = [Incorrect_mapping_in_HTML_File]
-}
-
 req.TestSpecification HTML_file_generation{
     description = '''
       The test shall verify that HTML report file is generated.
@@ -52,15 +45,6 @@ req.TestSpecification Source_location_in_output{
     verifies = [Input_file_location_missing, Wrong_Input_file_location]
 }
 
-req.TestSpecification readable_data_in_output{
-    description = '''
-      The test shall verify html report contains readable data.
-
-      example : Verify the context is in human readable format.
-    '''
-    verifies = [Incorrect_syntax_in_HTML_report]
-}
-
 req.TestSpecification Missing_tracing_policy_violation_in_output{
     description = '''
       The test shall verify items where tracing policy is violated are listed correctly.
@@ -71,12 +55,16 @@ req.TestSpecification Missing_tracing_policy_violation_in_output{
     verifies = [Too_few_findings_in_HTML_report]
 }
 
-req.TestSpecification Tracing_policy_in_output{
+req.TestSpecification Coverage_in_output{
     description = '''
-      The test shall verify correct tracing policy is mentioned in the HTML report.
-
-      example: For requirements in CB and software tests in C++ files,
-      the test shall verify tracing policy between requirements and software tests is correctly shown in the HTML report. 
+      The test shall verify correct coverage value in the HTML report. 
     '''
-    verifies = [Wrong_tracing_policy_in_HTML_report]
+    verifies = [Incorrect_Coverage]
+}
+
+req.TestSpecification Correct_Item_Data{
+    description = '''
+      The test shall verify correct item data is displayed in the HTML report.
+    '''
+    verifies = [Incorrect_Item_Data]
 }
