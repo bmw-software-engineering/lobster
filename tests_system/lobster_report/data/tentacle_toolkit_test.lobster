@@ -1,14 +1,14 @@
 {
   "data": [
     {
-      "tag": "python test_tentacle_toolkit.TestMotorController",
+      "tag": "pyunit test_tentacle_toolkit.TestMotorController.test_control_motors:18",
       "location": {
         "kind": "file",
         "file": "test_tentacle_toolkit.py",
-        "line": 14,
+        "line": 18,
         "column": null
       },
-      "name": "test_tentacle_toolkit.TestMotorController",
+      "name": "test_tentacle_toolkit.TestMotorController.test_control_motors:18",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -16,18 +16,19 @@
       "refs": [
         "req octopus_example.tentacle_motor_control"
       ],
-      "language": "Python",
-      "kind": "Class"
+      "framework": "PyUnit",
+      "kind": "Test",
+      "status": null
     },
     {
-      "tag": "python test_tentacle_toolkit.TestColorProcessor",
+      "tag": "pyunit test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28",
       "location": {
         "kind": "file",
         "file": "test_tentacle_toolkit.py",
-        "line": 24,
+        "line": 28,
         "column": null
       },
-      "name": "test_tentacle_toolkit.TestColorProcessor",
+      "name": "test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -35,18 +36,19 @@
       "refs": [
         "req octopus_example.chromatophore_processor"
       ],
-      "language": "Python",
-      "kind": "Class"
+      "framework": "PyUnit",
+      "kind": "Test",
+      "status": null
     },
     {
-      "tag": "python test_tentacle_toolkit.TestInkTrigger",
+      "tag": "pyunit test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38",
       "location": {
         "kind": "file",
         "file": "test_tentacle_toolkit.py",
-        "line": 34,
+        "line": 38,
         "column": null
       },
-      "name": "test_tentacle_toolkit.TestInkTrigger",
+      "name": "test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -54,18 +56,19 @@
       "refs": [
         "req octopus_example.ink_sac_trigger"
       ],
-      "language": "Python",
-      "kind": "Class"
+      "framework": "PyUnit",
+      "kind": "Test",
+      "status": null
     },
     {
-      "tag": "python test_tentacle_toolkit.TestVisionProcessor",
+      "tag": "pyunit test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48",
       "location": {
         "kind": "file",
         "file": "test_tentacle_toolkit.py",
-        "line": 44,
+        "line": 48,
         "column": null
       },
-      "name": "test_tentacle_toolkit.TestVisionProcessor",
+      "name": "test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -73,18 +76,19 @@
       "refs": [
         "req octopus_example.vision_processing_unit"
       ],
-      "language": "Python",
-      "kind": "Class"
+      "framework": "PyUnit",
+      "kind": "Test",
+      "status": null
     },
     {
-      "tag": "python test_tentacle_toolkit.TestConstructionPlanner",
+      "tag": "pyunit test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58",
       "location": {
         "kind": "file",
         "file": "test_tentacle_toolkit.py",
-        "line": 54,
+        "line": 58,
         "column": null
       },
-      "name": "test_tentacle_toolkit.TestConstructionPlanner",
+      "name": "test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58",
       "messages": [],
       "just_up": [],
       "just_down": [],
@@ -92,11 +96,12 @@
       "refs": [
         "req octopus_example.rock_arrangement_planner"
       ],
-      "language": "Python",
-      "kind": "Class"
+      "framework": "PyUnit",
+      "kind": "Test",
+      "status": null
     }
   ],
   "generator": "lobster_python",
-  "schema": "lobster-imp-trace",
+  "schema": "lobster-act-trace",
   "version": 3
 }

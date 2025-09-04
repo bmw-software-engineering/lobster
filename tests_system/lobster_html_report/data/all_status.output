@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<title>L.O.B.S.T.E.R.</title>
+<style>
+html {
+  scroll-padding-top: 5em;
+}
+body {
+  margin: 0;
+}
+.title {
+  background-color: #009ada;
+  color: white;
+  padding: 0.5em;
+  margin: 0;
+}
+h1 {
+  padding: 0;
+  margin: 0;
+}
+h2 {
+  padding: 0.5em;
+  margin: 0;
+  border-bottom: 0.25em solid #009ada;
+  text-align: right;
+}
+.content {
+  padding: 0.5em;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+#custom-data-banner {
+  position: absolute;
+  top: 1em;
+  right: 2em;
+  font-size: 0.9em;
+  color: white;
+}
+.item-ok, .item-partial, .item-missing, .item-justified {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  margin-top: 0.4em;
+  padding: 0.25em;
+}
+.item-ok:target, .item-partial:target, .item-missing:target, .item-justified:target {
+  border: 3px solid black;
+}
+.subtle-ok, .subtle-partial, .subtle-missing, .subtle-justified {
+  padding-left: 0.2em;
+}
+.item-ok {
+  background-color: #efe;
+}
+.item-partial {
+  background-color: #ffe;
+}
+.item-missing {
+  background-color: #fee;
+}
+.item-justified {
+  background-color: #eee;
+}
+.subtle-ok {
+  border-left: 0.2em solid #8f8;
+}
+.subtle-partial {
+  border-left: 0.2em solid #ff8;
+}
+.subtle-missing {
+  border-left: 0.2em solid #f88;
+}
+.subtle-justified {
+  border-left: 0.2em solid #888;
+}
+.item-name {
+  font-size: 125%;
+  font-weight: bold;
+}
+.attribute {
+  margin-top: 0.5em;
+}
+.columns {
+  display: flex;
+}
+.columns .column {
+  flex: 45%;
+}
+thead tr {
+  font-weight: bold;
+}
+tbody tr.alt {
+  background-color: #eee;
+}
+blockquote {
+  font-style: italic;
+  border-left: 0.2em solid gray;
+  padding-left: 0.4em;
+  margin-left: 0.5em;
+}
+footer {
+  margin-top: 1rem;
+  padding: .2rem;
+  text-align: right;
+  color: #666;
+  font-size: .7rem;
+}
+#navbar {
+  overflow: hidden;
+  background-color: #009ada;
+}
+.navbar-right {
+  float: right;
+}
+#navbar a {
+  float: left;
+  display: block;
+  color: white;
+  padding: 14px;
+  text-decoration: none;
+}
+#navbar a:hover {
+  background-color: white;
+  color: #009ada;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.sticky + .htmlbody {
+  padding-top: 60px;
+}
+#navbar .dropdown {
+  float: left;
+  overflow: hidden;
+}
+.navbar-right .dropdown {
+  float: right;
+  overflow: hidden;
+}
+.dropdown .dropbtn {
+  font-size: inherit;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  background-color: inherit;
+  color: white;
+  font-family: inherit;
+  margin: 0;
+}
+.dropdown:hover .dropbtn {
+  background-color: white;
+  color: #009ada;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #009ada;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.navbar-right .dropdown-content {
+  right: 0;
+}
+.dropdown-content a {
+  float: none;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+.dropdown-content a:hover {
+  color: #009ada;
+  background-color: white;
+}
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+.sticky .dropdown-content {
+  position: fixed;
+}
+.button {
+    background-color: #818589;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 12px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer
+}
+
+.button active:before {
+    content: ;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 15px 0 0;
+    border-color: #333 transparent transparent transparent
+}
+
+.buttonActive.button {
+    text-decoration: none;
+    border: 5px solid #000000
+}
+
+.buttonOK {
+    background-color: #04AA6D;
+    color: white;
+    border: 2px solid #04AA6D;
+    border-radius: 5px
+}
+
+.buttonOK:hover {
+    background-color: #026641;
+    color: white;
+    border: 2px solid #026641
+}
+
+.buttonActive.buttonOK {
+    text-decoration: none;
+    border: 5px solid #026641
+}
+
+.buttonPartial {
+    background-color: #17a2b8;
+    color: white;
+    border: 2px solid #17a2b8;
+    border-radius: 5px
+}
+
+.buttonPartial:hover {
+    background-color: #0e616e;
+    color: white;
+    border: 2px solid #0e616e
+}
+
+.buttonActive.buttonPartial {
+    text-decoration: none;
+    border: 5px solid #0e616e
+}
+
+.buttonMissing {
+    background-color: #f44336;
+    color: white;
+    border: 2px solid #f44336;
+    border-radius: 5px
+}
+
+.buttonMissing:hover {
+    background-color: #a91409;
+    color: white;
+    border: 2px solid #a91409
+}
+
+.buttonActive.buttonMissing {
+    text-decoration: none;
+    border: 5px solid #a91409
+}
+
+.buttonJustified {
+    background-color: #6c757d;
+    color: white;
+    border: 2px solid #6c757d;
+    border-radius: 5px
+}
+
+.buttonJustified:hover {
+    background-color: #41464b;
+    color: white;
+    border: 2px solid #41464b
+}
+
+.buttonActive.buttonJustified {
+    text-decoration: none;
+    border: 5px solid #41464b
+}
+
+.buttonWarning {
+    background-color: #ffbf00;
+    color: white;
+    border: 2px solid #ffbf00;
+    border-radius: 5px
+}
+
+.buttonWarning:hover {
+    background-color: #997300;
+    color: white;
+    border: 2px solid #997300
+}
+
+.buttonActive.buttonWarning {
+    text-decoration: none;
+    border: 5px solid #997300
+}
+
+.buttonBlue {
+    background-color: #0000ff;
+    color: white;
+    border: 2px solid #0000ff;
+    border-radius: 5px
+}
+
+.buttonBlue:hover {
+    background-color: #000099;
+    color: white;
+    border: 2px solid #000099
+}
+
+.buttonActive.buttonBlue {
+    text-decoration: none;
+    border: 5px solid #000099
+}
+
+</style>
+</head>
+<body>
+<div class="title">
+<h1>L.O.B.S.T.E.R.</h1>
+<div class="subtitle">Lightweight Open BMW Software Traceability Evidence Report</div>
+</div>
+<div id="navbar">
+<a href="#sec-overview" id="menu-item-overview">Overview</a>
+<a href="#sec-issues" id="menu-item-issues">Issues</a>
+<div class="dropdown">
+<button class="dropbtn">Detailed report<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
+<div class="dropdown-content">
+<a href="#sec-69946e94f6df7a936df43371c18df3ba" id="menu-item-usecases">usecases</a>
+<a href="#sec-419cfc02b324dc7d8faefa90ed608fb0" id="menu-item-system-requirements">System Requirements</a>
+<a href="#sec-9d273bd32c1fceb91b7d6a4d40e98bdd" id="menu-item-software-requirements">Software Requirements</a>
+</div>
+</div>
+<div class="navbar-right">
+<div class="dropdown">
+<button class="dropbtn">LOBSTER<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
+<div class="dropdown-content">
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md" id="menu-item-documentation"><svg class="icon"><use href="#svg-external-link"></use></svg> Documentation</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md" id="menu-item-license"><svg class="icon"><use href="#svg-external-link"></use></svg> License</a>
+<a href="https://github.com/bmw-software-engineering/lobster" id="menu-item-source"><svg class="icon"><use href="#svg-external-link"></use></svg> Source</a>
+</div>
+</div>
+</div>
+</div>
+<div class="htmlbody">
+<svg style="display: none;">
+<defs>
+<symbol id="svg-check-square" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-alert-triangle" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-external-link" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-chevron-down" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</symbol>
+</defs>
+</svg>
+<h2 id="sec-overview" class="heading-overview">Overview</h2>
+<div class="content">
+<div class="columns">
+<div class="column">
+<h3 id="heading-coverage">Coverage</h3>
+<table>
+<thead><tr>
+<td>Category</td>
+<td>Ratio</td>
+<td>Coverage</td>
+<td>OK Items</td>
+<td>Total Items</td>
+</tr><thead>
+<tbody>
+</tbody>
+<tr class="coverage-table-usecases">
+<td><a href="#sec-69946e94f6df7a936df43371c18df3ba">usecases</a></td>
+<td>71.4%</td>
+<td>
+<progress value="5" max="7">
+71.43%
+</progress>
+</td>
+<td align="right">5</td>
+<td align="right">7</td>
+</tr>
+<tr class="coverage-table-system-requirements">
+<td><a href="#sec-419cfc02b324dc7d8faefa90ed608fb0">System Requirements</a></td>
+<td>57.1%</td>
+<td>
+<progress value="4" max="7">
+57.14%
+</progress>
+</td>
+<td align="right">4</td>
+<td align="right">7</td>
+</tr>
+<tr class="coverage-table-software-requirements">
+<td><a href="#sec-9d273bd32c1fceb91b7d6a4d40e98bdd">Software Requirements</a></td>
+<td>66.7%</td>
+<td>
+<progress value="4" max="6">
+66.67%
+</progress>
+</td>
+<td align="right">4</td>
+<td align="right">6</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<h2 id="sec-filtering-options" class="heading-filtering">Filtering</h2>
+<div class="content">
+<h3 id="heading-item-filters">Item Filters</h3>
+<div id = "btnFilterItem">
+<button class="button buttonAll buttonActive" onclick="buttonFilter('all')"> Show All </button>
+<button class ="button buttonOK" onclick="buttonFilter('ok')" > OK </button>
+<button class ="button buttonMissing" onclick="buttonFilter('missing')" > Missing </button>
+<button class ="button buttonPartial" onclick="buttonFilter('partial')" > Partial </button>
+<button class ="button buttonJustified" onclick="buttonFilter('justified')" > Justified </button>
+<button class ="button buttonWarning" onclick="buttonFilter('warning')" > Warning </button>
+</div>
+<h3 id="heading-show-issues">Show Issues</h3>
+<div id = "ContainerBtnToggleIssue">
+<button class ="button buttonBlue" id="BtnToggleIssue" onclick="ToggleIssues()"> Show Issues </button>
+</div>
+<h3 id="sec-filter" class="heading-filter">Filter</h3>
+<input type="text" id="search" placeholder="Filter..." onkeyup="searchItem()">
+<div id="search-sec-id"
+</div>
+<h2 id="sec-issues" class="heading-issues">Issues</h2>
+<div class="content">
+<div id="issues-section" style="display:none">
+<ul>
+<li class="issue issue-missing-req">TRLC Usecase <a href='#item-a78f259e8462886192ecac5101450bc65217f6f2'>complex_just_example.lost_sock_scenario</a>: missing reference to System Requirements</li>
+<li class="issue issue-missing-req">TRLC Usecase <a href='#item-2c74cb805d52d95048005446cecffdb49edc7f92'>complex_just_example.midnight_snack_temptation_scenario</a>: missing reference to System Requirements</li>
+<li class="issue issue-partial-req">TRLC System_requirement <a href='#item-3e305d42ba7a90ab7b066392b4876421f8b90f91'>complex_just_example.sock_finder</a>: missing reference to Software Requirements</li>
+<li class="issue issue-partial-req">TRLC System_requirement <a href='#item-e98d43674284bfd1ed2810293750e6bc61cc541c'>complex_just_example.pizza_detector</a>: missing up reference</li>
+<li class="issue issue-missing-req">TRLC System_requirement <a href='#item-936ae76ade9e901cff60a63589a8cffd07939e52'>complex_just_example.cookie_guard</a>: missing up reference</li>
+<li class="issue issue-missing-req">TRLC System_requirement <a href='#item-936ae76ade9e901cff60a63589a8cffd07939e52'>complex_just_example.cookie_guard</a>: missing reference to Software Requirements</li>
+<li class="issue issue-missing-req">TRLC Software_requirement <a href='#item-3fbb378209e0d13a84c2b37495d3955d8fe55edc'>complex_just_example.mood_analyzer</a>: missing up reference</li>
+<li class="issue issue-missing-req">TRLC Software_requirement <a href='#item-f3639b8fff1954f343c6432542b61afff40cbb07'>complex_just_example.cushion_explorer</a>: missing up reference</li>
+</ul>
+</div>
+</div>
+<h2 id="sec-detailed-report" class="heading-detailed-report">Detailed report</h2>
+<div class="content">
+<div class="detailed-report-requirements-and-specification">
+<h3 id="heading-requirements-and-specification">Requirements and Specification</h3>
+<div id="section-usecases">
+<h4 id="sec-69946e94f6df7a936df43371c18df3ba" class="heading-usecases">usecases</h4>
+<h5 id="heading-just_requirements.trlc">just_requirements.trlc</h5>
+<!-- begin item req complex_just_example.lost_sock_scenario -->
+<div class="item-missing" id="item-a78f259e8462886192ecac5101450bc65217f6f2">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC Usecase complex_just_example.lost_sock_scenario</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>User loses a sock during laundry and needs to find it quickly</blockquote>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing reference to System Requirements</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.monday_motivation_scenario -->
+<div class="item-justified" id="item-b693e3b0d95031398b17d4c045f05a2056b3f318">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Usecase complex_just_example.monday_motivation_scenario</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>User wakes up feeling unmotivated on Monday morning</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>TRLC System_requirement <a href='#item-38e8e72be1d7e8cfdbcc2d4731fd3d20482fe886'>complex_just_example.monday_mood</a></li>
+</ul>
+</div>
+<div>Justifications:
+<ul>
+<li>Not applicable down reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.pizza_waiting_scenario -->
+<div class="item-justified" id="item-547d1ad9324898edbf48be39bee4a9e79e04749b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Usecase complex_just_example.pizza_waiting_scenario</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>User orders pizza and anxiously waits for delivery</blockquote>
+</div>
+<div class="attribute">
+<div>Justifications:
+<ul>
+<li>Not applicable down reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.cat_communication_scenario -->
+<div class="item-justified" id="item-ca6f8854d8d69fbe95f60d4262f4e1dcac337574">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Usecase complex_just_example.cat_communication_scenario</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>User tries to understand what their cat wants</blockquote>
+</div>
+<div class="attribute">
+<div>Justifications:
+<ul>
+<li>Not applicable up and down reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.remote_hunting_scenario -->
+<div class="item-justified" id="item-7e872ebcf227d9a5e711f083d4410f196947a102">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Usecase complex_just_example.remote_hunting_scenario</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>User wants to watch TV but cannot find the remote control</blockquote>
+</div>
+<div class="attribute">
+<div>Justifications:
+<ul>
+<li>Not applicable up reference</li>
+<li>Not applicable down reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.sadness_relief_scenario -->
+<div class="item-ok" id="item-bf0407f768ec58e4de55cb990eca41d22d7b478f">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Usecase complex_just_example.sadness_relief_scenario</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>User feels sad and needs cheering up</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>TRLC System_requirement <a href='#item-82be9b3a6b1220f15e6f14a1110b66225c657c4a'>complex_just_example.joke_generator</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.midnight_snack_temptation_scenario -->
+<div class="item-missing" id="item-2c74cb805d52d95048005446cecffdb49edc7f92">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC Usecase complex_just_example.midnight_snack_temptation_scenario</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>User is tempted to eat unhealthy snacks late at night</blockquote>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing reference to System Requirements</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-system-requirements">
+<h4 id="sec-419cfc02b324dc7d8faefa90ed608fb0" class="heading-system-requirements">System Requirements</h4>
+<!-- begin item req complex_just_example.sock_finder -->
+<div class="item-partial" id="item-3e305d42ba7a90ab7b066392b4876421f8b90f91">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC System_requirement complex_just_example.sock_finder</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall locate missing socks from the laundry dimension</blockquote>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing reference to Software Requirements</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.monday_mood -->
+<div class="item-justified" id="item-38e8e72be1d7e8cfdbcc2d4731fd3d20482fe886">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement complex_just_example.monday_mood</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall automatically improve user mood on Monday mornings</blockquote>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Usecase <a href='#item-b693e3b0d95031398b17d4c045f05a2056b3f318'>complex_just_example.monday_motivation_scenario</a></li>
+</ul>
+</div>
+<div>Justifications:
+<ul>
+<li>Not applicable down reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.pizza_detector -->
+<div class="item-partial" id="item-e98d43674284bfd1ed2810293750e6bc61cc541c">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC System_requirement complex_just_example.pizza_detector</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall detect when pizza delivery arrives within 5 miles</blockquote>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.cat_translator -->
+<div class="item-justified" id="item-7bd42a1dc31e79ded108a01b46218550b76eea24">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement complex_just_example.cat_translator</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall translate cat meows into human language</blockquote>
+</div>
+<div class="attribute">
+<div>Justifications:
+<ul>
+<li>Not applicable up and down reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.remote_locator -->
+<div class="item-justified" id="item-f86a1b106c0a18950d190823e79302485f1ac69b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement complex_just_example.remote_locator</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall find TV remotes hiding in couch cushions</blockquote>
+</div>
+<div class="attribute">
+<div>Justifications:
+<ul>
+<li>Not applicable up reference</li>
+<li>Not applicable down reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.joke_generator -->
+<div class="item-ok" id="item-82be9b3a6b1220f15e6f14a1110b66225c657c4a">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement complex_just_example.joke_generator</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall tell dad jokes when users are feeling sad</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>TRLC Software_requirement <a href='#item-ed74ac34234b6421252879b70827725602df886a'>complex_just_example.pun_database</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>TRLC Usecase <a href='#item-bf0407f768ec58e4de55cb990eca41d22d7b478f'>complex_just_example.sadness_relief_scenario</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.cookie_guard -->
+<div class="item-missing" id="item-936ae76ade9e901cff60a63589a8cffd07939e52">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC System_requirement complex_just_example.cookie_guard</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall protect cookies from midnight snack attacks</blockquote>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing up reference</li>
+<li>missing reference to Software Requirements</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-software-requirements">
+<h4 id="sec-9d273bd32c1fceb91b7d6a4d40e98bdd" class="heading-software-requirements">Software Requirements</h4>
+<!-- begin item req complex_just_example.sock_scanner -->
+<div class="item-justified" id="item-03434810870717aea9d6e1a51fa2db807f987099">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement complex_just_example.sock_scanner</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall scan washing machines and dryers for sock presence</blockquote>
+</div>
+<div class="attribute">
+<div>Justifications:
+<ul>
+<li>Not applicable up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.mood_analyzer -->
+<div class="item-missing" id="item-3fbb378209e0d13a84c2b37495d3955d8fe55edc">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC Software_requirement complex_just_example.mood_analyzer</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall analyze user facial expressions and deploy happiness algorithms</blockquote>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.pizza_radar -->
+<div class="item-justified" id="item-099efd7322c896c93b89f25bc9ba62de16aa8011">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement complex_just_example.pizza_radar</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall monitor GPS coordinates of pizza delivery vehicles</blockquote>
+</div>
+<div class="attribute">
+<div>Justifications:
+<ul>
+<li>Not applicable up and down reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.meow_processor -->
+<div class="item-justified" id="item-b7ce111072c64131ebd9ce3a779a79d3947863ac">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement complex_just_example.meow_processor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall process cat vocalizations using advanced feline linguistics</blockquote>
+</div>
+<div class="attribute">
+<div>Justifications:
+<ul>
+<li>Not applicable up reference</li>
+<li>Not applicable down reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.pun_database -->
+<div class="item-ok" id="item-ed74ac34234b6421252879b70827725602df886a">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement complex_just_example.pun_database</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall maintain a database of dad jokes sorted by cringe level</blockquote>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-82be9b3a6b1220f15e6f14a1110b66225c657c4a'>complex_just_example.joke_generator</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req complex_just_example.cushion_explorer -->
+<div class="item-missing" id="item-f3639b8fff1954f343c6432542b61afff40cbb07">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC Software_requirement complex_just_example.cushion_explorer</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="just_requirements.trlc" target="_blank">just_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall map couch cushion topography for remote detection</blockquote>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+</div>
+<div class="detailed-report-implementation">
+<h3 id="heading-implementation">Implementation</h3>
+</div>
+<div class="detailed-report-verification-and-validation">
+<h3 id="heading-verification-and-validation">Verification and Validation</h3>
+</div>
+</div>
+<footer>
+<p>LOBSTER Version: 0.14.5-dev</p>
+</footer>
+</div>
+</div>
+<script>
+function buttonFilter(filter) {
+    var elms = document.getElementsByTagName("div");
+    var issue_elms = document.getElementsByClassName("issue");
+    for (i = 0; i < elms.length; i++) {
+        if (elms[i].id.startsWith("item-")) {
+            console.log("elms[i].className ", elms[i].className)
+            if (filter == "all") {
+                elms[i].style.display = "block";
+            } else if (elms[i].className == "item-" + filter) {
+                elms[i].style.display = "block";
+            } else {
+                elms[i].style.display = "none";
+            }
+        }
+    }
+    // filter the issues list based on the issue filter button clicked
+    for (i = 0; i < issue_elms.length; i++) {
+        console.log("log ", issue_elms[i].className)
+        if (filter == "all") {
+            issue_elms[i].style.display = "list-item";
+        } else if (issue_elms[i].className == "issue issue-" + filter) {
+            issue_elms[i].style.display = "list-item";
+        } else {
+            issue_elms[i].style.display = "none";
+        }
+    }
+    activeButton(filter);
+    //call the search filering which could have been overwritten by the current filtering
+    searchItem();
+}
+
+
+function activeButton(filter) {
+    var elms = document.getElementsByTagName("button");
+    console.log("the click buitton is " + filter);
+    for (i = 0; i < elms.length; i++) {
+        if (elms[i].className.includes("buttonActive")) {
+            console.log("elem active found : " + elms[i].className);
+            elms[i].className = elms[i].className.replace("buttonActive", "");
+        } else if (elms[i].className.toLowerCase().includes("button" + filter.toLowerCase())) {
+            console.log("elem to be activated found : " + elms[i].className);
+            elms[i].className = elms[i].className + " buttonActive";
+        }
+    }
+}
+
+
+function ToggleIssues() {
+    var div_issue = document.getElementById("issues-section");
+    if (div_issue.style.display == "block" || div_issue.style.display == "") {
+        div_issue.style.display = "none";
+        document.getElementById("BtnToggleIssue").innerHTML = "Show Issues";
+        document.getElementById("BtnToggleIssue").className = document.getElementById("BtnToggleIssue").className + " buttonActive";
+    } else {
+        div_issue.style = 'display: block; flex-direction: column; height: 200px;' +
+            'overflow:auto;';
+        document.getElementById("BtnToggleIssue").innerHTML = "Hide Issues";
+        document.getElementById("BtnToggleIssue").className = document.getElementById("BtnToggleIssue").className.replace("buttonActive", "");
+    }
+}
+
+
+function searchItem() {
+    var input = document.getElementById('search').value
+    input = input.toLowerCase();
+
+    var divs = document.getElementsByClassName('item-name');
+    for (i = 0; i < divs.length; i++) {
+        var title = divs[i].parentNode.getAttribute("title");
+        // get requirement name: 2nd part when we cut the long string with /svg
+        var reqname = divs[i].innerHTML.toLowerCase().split("</svg>").pop();
+        reqname = reqname.split(" ").pop();
+        if (reqname.includes(input)) {
+            // the search pattern has been found, if this elem has the title "hidden-not-matching", put it back to diplayed
+            if (title) {
+                if (title.startsWith("hidden-not-matching")) {
+                    divs[i].parentNode.style.display = "block";
+                }
+            }
+            divs[i].parentNode.setAttribute("title", "matching-" + input)
+        } else {
+            // not maching, we hide
+            divs[i].parentNode.setAttribute("title", "hidden-not-matching")
+            divs[i].parentNode.style.display = "none";
+        }
+    }
+}
+</script>
+<script>
+
+window.onscroll = function() {stickyNavbar()};
+
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+function stickyNavbar() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+</body>
+</html>
