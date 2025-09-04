@@ -1,26 +1,6 @@
 package UseCases
 import req
 
-req.UseCase Trace_Requirements_to_Tests {
-    description = '''
-        As a requirements manager I want to have a report of traceability between
-        requirements and tests.
-    '''
-    affected_tools = [
-        // shall extract requirements:
-        req.Tools.lobster_codebeamer,
-        req.Tools.lobster_trlc,
-
-        // shall extract test cases:
-        req.Tools.lobster_json,
-        req.Tools.lobster_cpptest,
-
-        // shall generate reports:
-        req.Tools.lobster_report,
-        req.Tools.lobster_html_report
-    ]
-}
-
 req.UseCase List_Requirements_to_Tests {
     description = '''
         As a requirements manager I want the traceability report to show the list of
