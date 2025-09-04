@@ -15,7 +15,7 @@ req.TestSpecification Wrong_Codebeamer_IDs_in_Output {
       - download a set of items from a mock server
       - verify that the obtained IDs are the same as provided by the mock server 
       '''
-    verifies = [Incomplete_Extraction_from_Codebeamer]
+    verifies = [Wrong_Extraction_from_Codebeamer]
 }
 
 req.TestSpecification Codebeamer_Summary_in_Output {
@@ -23,7 +23,7 @@ req.TestSpecification Codebeamer_Summary_in_Output {
       The test shall check that the LOBSTER items in the output file use the summary
       as downloaded from codebeamer as name for the LOBSTER item.
       '''
-    verifies = [Incomplete_Extraction_from_Codebeamer, Wrong_Extraction_from_Codebeamer]
+    verifies = [Wrong_Extraction_from_Codebeamer]
 }
 
 req.TestSpecification Incorrect_Number_of_Codebeamer_Items_in_Output{

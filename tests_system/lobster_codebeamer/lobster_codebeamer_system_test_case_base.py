@@ -28,7 +28,6 @@ class LobsterCodebeamerSystemTestCaseBase(SystemTestCaseBase):
                 "item": {
                     "id": i,
                     "name": f"Requirement {i}: Dynamic name",
-                    "description": f"Dynamic description for requirement {i}.",
                     "status": {
                         "id": i,
                         "name": f"Status {i}",
