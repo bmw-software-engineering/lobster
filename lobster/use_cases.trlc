@@ -67,10 +67,16 @@ req.UseCase List_Tests_to_Requirements {
         tests covering requirements.
     '''
     affected_tools = [
+        // shall extract requirements:
         req.Tools.lobster_codebeamer,
-        req.Tools.lobster_cpptest,
-        req.Tools.lobster_report,
         req.Tools.lobster_trlc,
+
+        // shall extract test cases:
+        req.Tools.lobster_json,
+        req.Tools.lobster_cpptest,
+
+        // shall generate reports:
+        req.Tools.lobster_report,
         req.Tools.lobster_html_report
     ]
 }
@@ -81,10 +87,16 @@ req.UseCase List_Tests_without_Requirements {
         tests which are not covering any requirement.
     '''
     affected_tools = [
+        // shall extract requirements:
         req.Tools.lobster_codebeamer,
-        req.Tools.lobster_cpptest,
-        req.Tools.lobster_report,
         req.Tools.lobster_trlc,
+
+        // shall extract test cases:
+        req.Tools.lobster_json,
+        req.Tools.lobster_cpptest,
+
+        // shall generate reports:
+        req.Tools.lobster_report,
         req.Tools.lobster_html_report
     ]
 }
@@ -104,10 +116,16 @@ req.UseCase Requirements_to_Test_Coverage {
        of the above use case.
      */
     affected_tools = [
+        // shall extract requirements:
         req.Tools.lobster_codebeamer,
-        req.Tools.lobster_cpptest,
-        req.Tools.lobster_report,
         req.Tools.lobster_trlc,
+
+        // shall extract test cases:
+        req.Tools.lobster_json,
+        req.Tools.lobster_cpptest,
+
+        // shall generate reports:
+        req.Tools.lobster_report,
         req.Tools.lobster_html_report
     ]
 }
