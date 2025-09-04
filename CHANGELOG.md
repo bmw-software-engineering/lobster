@@ -3,11 +3,14 @@
 ## Changelog
 
 
-### 0.14.5-dev
+### 0.14.5
 
 * Bazel fixes:
   Fixed error message of missing folder `assets` when running `lobster-html-report`
   as a Bazel target.
+
+* `lobster-html-report`:
+  New divs are introduced for the sub-sections inside of detailed report section.
 
 ### 0.14.4
 
