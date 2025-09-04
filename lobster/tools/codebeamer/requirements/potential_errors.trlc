@@ -22,7 +22,6 @@ import req
       ]
 
       affects = [
-         Trace_Requirements_to_Tests,
          List_Requirements_to_Tests,
          List_Requirements_without_Tests,
          List_Tests_to_Requirements,
@@ -45,7 +44,6 @@ import req
       ]
 
       affects = [
-         Trace_Requirements_to_Tests,
          List_Requirements_to_Tests,
          List_Requirements_without_Tests,
          List_Tests_to_Requirements,
@@ -68,7 +66,6 @@ import req
       ]
 
       affects = [
-         Trace_Requirements_to_Tests,
          List_Requirements_to_Tests,
          List_Requirements_without_Tests,
          List_Tests_to_Requirements,
