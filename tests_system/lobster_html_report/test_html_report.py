@@ -27,7 +27,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         self.input_file = f'file://{self._test_runner.working_dir}/{self.OUT_FILE}'
         self._test_runner.cmd_args.out = self.OUT_FILE
         self._test_runner.cmd_args.lobster_report = str(
-            self._data_directory / "report.output")
+            self._data_directory / "report.html")
 
     def test_show_issue_button(self):
         """Test the toggle functionality of the Show Issue button."""
@@ -115,7 +115,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         self._test_runner.run_tool_test()
         self.driver.get(self.input_file)
 
-        report_path = (self._data_directory / "report.output")
+        report_path = (self._data_directory / "report.html")
 
         with open(report_path) as file:
             data = json.load(file)
