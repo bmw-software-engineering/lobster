@@ -1,1 +1,153 @@
 package UseCases
+import req
+
+req.PotentialError Too_few_Extraction_from_JSON_Test_Files{
+		summary = "LOBSTER extracts too few tests from JSON files"
+		description = '''
+			Some JSON test files or test cases within JSON files are ignored during extraction.
+			For example, some JSON test files are ignored while extracting reference data.
+			'''
+		impacts =[
+			'''If JSON test files are ignored in the extraction
+					and report is generated with missing file data
+					then user might think that some requirements are not covered in test case but in fact they are covered''',
+
+			'''If JSON test files are ignored in the extraction
+					and report is generated with missing file data with some of the test cases having missing reference to requirements
+					then there might be tests which are not based on requirements, which could mean the product contains hidden features.'''
+		]
+
+		affects = [
+			List_Tests_without_Requirements,
+			List_Requirements_to_Tests,
+			List_Requirements_without_Tests,
+			List_Tests_to_Requirements
+		]
+		impact_type = req.Impact_Type.Safety
+}
+
+
+req.PotentialError Too_few_requirement_reference_Extraction_from_JSON_test{
+		summary = "LOBSTER extracts too few requirement references from JSON tests"
+		description = '''
+			Some requirement references from tests in JSON files are ignored.
+			'''
+		impacts =[
+			'''If some requirement references are missed while extracting references from JSON test
+					and report is generated with not extracted requirement marked as missing test case reference
+					then user might think that test case implementation is missing for the requirement but in fact it is not.''',
+
+			'''If requirement references are not extracted from JSON test
+					and report is generated with those test cases marked as missing requirement reference
+					then user might think that test cases are missing reference but in fact it is not.'''
+		]
+
+		affects = [
+			List_Tests_without_Requirements,
+			List_Requirements_to_Tests,
+			List_Requirements_without_Tests,
+			List_Tests_to_Requirements
+		]
+		impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Too_many_Extraction_from_JSON_Test_Files{
+		summary = "LOBSTER extracts too many tests from JSON files"
+		description = ''' 
+			Some non-relevant JSON test files are consumed.
+			For example, some test are extracted from files which are not relevant.
+			'''
+		impacts =[
+			'''If the unwanted test file contains relevant requirement references
+					and report is generated with those requirement references
+					then user might think that all requirements are covered by JSON tests but in fact they are not.''',
+
+			'''If unwanted test file contains non-relevant requirement references
+					and report is generated with those requirement references
+					then user might think that all requirements are not covered by JSON tests but in fact they are covered.'''
+		]
+
+		affects = [
+			List_Tests_without_Requirements,
+			List_Requirements_to_Tests,
+			List_Requirements_without_Tests,
+			List_Tests_to_Requirements
+		]
+		impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Too_many_requirement_reference_Extraction_from_JSON_test{
+		summary = "LOBSTER extracts too many requirement references from JSON tests"
+		description = '''
+			Some fake requirement references from tests in JSON files are extracted.
+			For example: While extracting requirement references from a test case, an additional reference is considered
+			with partial data from previous requirement reference.
+			'''
+		impacts = [
+			'''If the additional requirement in reference is a valid requirement id and not covered in any test case
+					and report is generated with this wrong data
+					then user might think that all requirements are covered by the software tests but in fact it is not the case.'''
+		]
+
+		affects = [
+			List_Tests_without_Requirements, 
+			List_Requirements_to_Tests,
+			List_Requirements_without_Tests,
+			List_Tests_to_Requirements
+		]
+		impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Output_Despite_Missing_Config_File_json {
+		summary = "Output generated without configuration file"
+		description = '''
+			The user does not provide a valid path to a configuration file,
+			but the lobster-json tool generates valid output nevertheless, potentially based on
+			irrelevant JSON files.
+			For example, the lobster-json tool might consider the current working directory
+			as source of JSON files, and these do in fact contain links to real requirements,
+			such that lobster-report would compute a non-zero coverage value.
+		'''
+		impacts = [
+			'''If the lobster-json tool generates a valid output file, then the invalid input path could
+				remain undetected, and subsequent tools of the LOBSTER tool chain
+				could consume unqualified input data.''',
+		]
+
+		affects = [
+			List_Requirements_to_Tests,
+			List_Requirements_without_Tests,
+			List_Tests_to_Requirements,
+			List_Tests_without_Requirements,
+			Requirements_to_Test_Coverage,
+			List_Findings
+		]
+		impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Output_Despite_Config_File_Error_json {
+		summary = "Output generated with an invalid configuration file"
+		description = '''
+			The user provides an invalid configuration file, but the lobster-json tool
+			generates valid output nevertheless, potentially based on
+			irrelevant JSON files.
+			This includes cases where the config file:
+			- contains invalid YAML syntax (e.g., incorrect indentation, missing colons, or other formatting errors),
+			- is missing required keys or attributes,
+		'''
+		impacts = [
+			'''If the lobster-json tool generates a valid output file, then the invalid configuration file could
+				remain undetected, and subsequent tools of the LOBSTER tool chain
+				could consume unqualified input data.''',
+		]
+
+		affects = [
+			List_Requirements_to_Tests,
+			List_Requirements_without_Tests,
+			List_Tests_to_Requirements,
+			List_Tests_without_Requirements,
+			Requirements_to_Test_Coverage,
+			List_Findings
+		]
+		impact_type = req.Impact_Type.Safety
+}
