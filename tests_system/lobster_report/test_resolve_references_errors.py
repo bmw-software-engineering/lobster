@@ -9,6 +9,7 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_unknown_tracing_target(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Unknown_Tracing_Target
         self._test_runner.declare_input_file(self._data_directory /
                                              "unknown_tracing_target.conf")
@@ -28,6 +29,7 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_tracing_destination_unversioned(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Tracing_Destination_Unversioned
         self._test_runner.declare_input_file(self._data_directory /
                                              "unversioned_trace.conf")
@@ -47,6 +49,7 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_tracing_destination_version_mismatch(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Tracing_Destination_Version_Mismatch
         self._test_runner.declare_input_file(self._data_directory /
                                              "version_mismatch_trace.conf")
