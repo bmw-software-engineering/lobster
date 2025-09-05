@@ -10,6 +10,8 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_extra_input_files_are_ignored_by_policy(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
+        # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
         # lobster-trace: core_report_req.Input_Files_Policy_Based_Processing
         """
         This test checks that the lobster report tool can handle multiple input files.
@@ -76,6 +78,8 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(1)
 
     def test_multiple_source_files(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
+        # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
         # lobster-trace: core_report_req.Multi_Level_Source_Files
         # lobster-trace: core_report_req.Item_Data_Isolation
         """

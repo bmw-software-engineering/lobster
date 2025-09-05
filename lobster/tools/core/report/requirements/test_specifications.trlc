@@ -24,3 +24,17 @@ req.TestSpecification Software_Test_to_Requirement_Mapping_in_output{
     '''
     verifies = [Wrong_Mapping_of_Software_Test_to_Requirement]
 }
+
+req.TestSpecification Tracing_Policy_Output_File{
+    description = '''
+    The test shall verify that the ouput file contains the tracing policy.
+    '''
+    verifies = [Wrong_Policy_in_Output_File]
+}
+
+req.TestSpecification Correct_Item_Data_in_Output_File{
+        description = '''
+            The test shall verify that the item data in the output file matches the item data in the input file.
+        '''
+        verifies = [Wrong_Item_Data_in_Output]
+}

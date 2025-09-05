@@ -10,6 +10,8 @@ class ReportJustificationTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_justification_and_coverage(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
+        # lobster-trace: UseCases.Coverage_calculation_in_Output
         # lobster-trace: core_report_req.Status_Justified_Global
         # lobster-trace: core_report_req.Status_Justified_Up
         # lobster-trace: core_report_req.Status_Justified_Down

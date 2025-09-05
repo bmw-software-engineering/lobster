@@ -12,6 +12,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
     # Tests for the report generation with different statuses
     # Status Ok
     def test_status_ok(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Ok
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_ok.conf")
@@ -35,6 +36,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
 
     # Status Missing
     def test_status_missing(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Missing
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_missing.conf")
@@ -57,6 +59,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_status_missing_mixed(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Missing
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_mixed.conf")
@@ -80,6 +83,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
 
     # Status Justified
     def test_status_justified(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Justified_Global
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_justified.conf")
