@@ -161,14 +161,6 @@ req.UseCase Item_GitHub_Source {
           files as a whole by a LOBSTER item.
     '''
     affected_tools = [
-        // shall extract the local file reference:
-        req.Tools.lobster_cpptest,
-        req.Tools.lobster_trlc,
-        req.Tools.lobster_json,
-
-        // shall preserve the local file references:
-        req.Tools.lobster_report,
-
         // shall convert file references to GitHub references
         req.Tools.lobster_online_report,
 
@@ -193,10 +185,7 @@ req.UseCase List_Findings {
         to show a list with all findings
         where the tracing policy is violated.
     '''
-    affected_tools = [
-        req.Tools.lobster_report,
-        req.Tools.lobster_html_report
-    ]
+    affected_tools = [req.Tools.lobster_html_report]
 }
 
 section "Nice to have" {

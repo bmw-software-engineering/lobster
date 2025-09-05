@@ -52,3 +52,32 @@ req.PotentialError Wrong_Mapping_of_Software_Test_to_Requirement{
     affects = [List_Tests_to_Requirements, List_Tests_without_Requirements]
     impact_type = req.Impact_Type.Safety
 }
+
+req.PotentialError Wrong_Policy_in_Output_File{
+    summary = "LOBSTER report writes wrong data of the tracing policy into the output file"
+    description = '''
+      LOBSTER report writes a tracing policy into the output file which is not equal to the tracing policy from the input configuration file.
+      '''
+    impacts = [
+      '''A quality manager might review a tracing policy which has actually not been used by the tool, and the manager
+          might misinterpret the coverage values in the report, because she/he assumes a wrong context.'''
+    ]
+
+    affects = [Show_Tracing_Policy]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Wrong_Item_Data_in_Output{
+    summary = "LOBSTER report writes wrong item data into the output file"
+    description = '''
+      The data of the items in the output file is not equal to the data of the items in the input file.
+      '''
+    impacts = [
+      '''If item identifiers are wrong, the quality manager could justify that a certain item
+         does not need a trace to another item, but in reality a different item violates the tracing policy.
+         The quality manager might release a software product which should not be released. If other item data is wrong, the same can happen.'''
+    ]
+
+    affects = [Show_codebeamer_links]
+    impact_type = req.Impact_Type.Safety
+}
