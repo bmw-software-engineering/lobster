@@ -41,23 +41,6 @@ req.PotentialError Software_tests_not_listed_correctly{
     impact_type = req.Impact_Type.Safety
 }
 
-req.PotentialError Incorrect_mapping_in_HTML_File{
-    summary = "LOBSTER does not show the mapping between requirements software tests correctly"
-    description ='''
-      Mapping between requirements and software tests is not shown correctly HTML report
-      example, while generating html report rows are interchanged or
-      incomplete data is written in html file.
-    '''
-    impacts = [
-      '''If mapping is not shown correctly in HTML file
-          and non covered requirements is shown as covered
-          then user might think that requirement is covered but in fact it is not.'''
-    ]
-
-    affects = [List_Tests_to_Requirements, List_Tests_without_Requirements, List_Requirements_to_Tests, List_Requirements_without_Tests]
-    impact_type = req.Impact_Type.Safety
-}
-
 req.PotentialError HTML_report_not_Generated{
     summary = "LOBSTER fails to generate HTML report"
     description = '''
@@ -125,20 +108,6 @@ req.PotentialError Too_few_findings_in_HTML_report{
     impact_type = req.Impact_Type.Safety
 }
 
-req.PotentialError Wrong_tracing_policy_in_HTML_report{
-    summary = "LOBSTER shows the tracing policy wrongly"
-    description = '''
-      Tracing policy not shown correctly in HTML report.
-    '''
-    impacts = [
-      '''If tracing policy is not shown correctly in HTML report
-          then user might not able understand the traceability data shown in report'''
-      ]
-
-      affects = [Show_Tracing_Policy]
-      impact_type = req.Impact_Type.Safety
-}
-
 req.PotentialError Wrong_Input_file_location{
     summary = "LOBSTER shows the wrong location of the input files"
     description = '''
@@ -154,5 +123,35 @@ req.PotentialError Wrong_Input_file_location{
     ]
 
     affects = [Item_GitHub_Source, Show_codebeamer_links]
-    impact_type = req.Impact_Type.Financial
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Incorrect_Coverage{
+    summary = "LOBSTER HTML report shows a wrong coverage value."
+    description = '''
+      The tool writes a coverage value into the output file
+      that is not equal to the coverage value from the input file.
+    '''
+    impacts = [
+      '''If the displayed coverage value is higher than the actual value, 
+          the quality manager may release a software, which should not be released'''
+    ]
+
+    affects = [Requirements_to_Test_Coverage]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Incorrect_Item_Data{
+    summary = "LOBSTER HTML report shows wrong data for an item."
+    description = '''
+      The tool writes wrong information of an item into the output file
+      that is not equal to the data from the input file.
+    '''
+    impacts = [
+      '''If the rendered item data shows a higher quality than the actual item data, 
+          then the quality manager may decide to release a software that should not be released.'''
+    ]
+
+    affects = [Requirements_to_Test_Coverage]
+    impact_type = req.Impact_Type.Safety
 }
