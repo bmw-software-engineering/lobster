@@ -1,0 +1,201 @@
+package UseCases
+import req
+
+req.PotentialError Invalid_XML_Ignored {
+    summary = "lobster-pkg ignores invalid XML files"
+    description = '''
+        If at least one input file is invalid XML, the tool might ignore this fact
+        and continue processing the other files.
+        '''
+    impacts = [
+        '''If the tool ignores invalid XML files, then the quality manager might think
+           that all specified input files were valid and processed correctly.
+           This can lead the quality manager to a false conclusion, because she/he might
+           believe that all tests in the specified files were considered,
+           while in reality some files were ignored.
+        ''',
+    ]
+    affects = [
+        List_Requirements_to_Tests,
+        List_Requirements_without_Tests,
+        List_Tests_to_Requirements,
+        Item_Coverage,
+    ]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Default_Path_Choice_pkg {
+    summary = '''A default directory is used as source of input files without notifying
+                 the user'''
+    description = '''
+        If no input files are specified, the tool might inadvertently use the current
+        working directory (or any other default value for these configuration parameters)
+        as the location to search for input files.
+        '''
+    impacts = [
+        '''
+        The assumption here is that the user wanted to specify input paths, but forgot
+        to do so, or that the user did not realize that the tool would use the current
+        working directory.
+        This can lead to unintended consequences, because it is hard for the user to
+        detect their mistake, since a report will be generated if the wrong folder
+        contains valid input files.
+        This is especially problematic if the tool is executed in an automated
+        environment, like a CI/CD pipeline.
+        '''
+    ]
+    affects = [
+        List_Requirements_to_Tests,
+        List_Requirements_without_Tests,
+        List_Tests_to_Requirements,
+        Item_Coverage,
+    ]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Wrong_Extraction_from_PKG {
+    summary = "lobster-pkg extracts data wrongly"
+    description = '''
+        The data of the items in the output file is not consistent with the data in the input files.
+        '''
+    impacts = [
+        '''If the data of the XML node is parsed incorrectly 
+           (e.g. items wrongly mapped - data of items A and B interchanged)
+           then the quality manager might think that 
+           an item is linked to another item
+           (e.g. test from PKG file is linked against a requirement)
+           where in reality it is not.
+        ''',
+    ]
+    affects = [
+        List_Requirements_to_Tests,
+        List_Requirements_without_Tests,
+        List_Tests_to_Requirements,
+        Item_Coverage,
+    ]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Too_many_PKG_files {
+    summary = "lobster-pkg extracts too many items"
+    description = '''
+        Some non-relevant *.pkg files or *.ta files are consumed.
+        For example, some items are extracted from files which are not specified as input
+        by the user (but which could be found in the same folder as the specified input
+        files).
+        '''
+    impacts = [
+        '''If the tool creates fake items whose IDs are actually referenced by other
+           items, then the final report may incorrectly show a higher coverage value than
+           the true value.
+           The quality manager expects the report to highlight that items point to
+           non-existent items, but instead the error leads to an incorrect coverage
+           result.
+        ''',
+    ]
+    affects = [
+        List_Requirements_to_Tests,
+        List_Requirements_without_Tests,
+        List_Tests_to_Requirements,
+        Item_Coverage,
+    ]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Too_many_Output_Items {
+    summary = "lobster-pkg creates fake output items"
+    description = '''
+        The tool creates fake output items, which do not correspond to any real input
+        items.
+        '''
+    impacts = [
+        '''If the tool creates fake items which are referenced by other items,
+           or which reference real other items on their own,
+           then the final report may incorrectly show a higher coverage value than the
+           true value.
+           The quality manager expects the report to highlight that items point to
+           non-existent items, but instead the error leads to an incorrect coverage
+           result.
+        ''',
+    ]
+    affects = [
+        List_Requirements_to_Tests,
+        List_Requirements_without_Tests,
+        List_Tests_to_Requirements,
+        Item_Coverage,
+    ]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Too_few_Extraction_from_PKG {
+    summary = "lobster-pkg extracts too few items"
+    description = '''
+        Some items are not extracted from input files.
+        For example, there are 100 applicable items in the input files but
+        the tool extracts only 42 items.
+        '''
+    impacts = [
+        '''The tool generally extracts only tests where a lobster-trace is found.
+           It does not extract orphan tests.
+
+           This is different to tools like lobster-cpptest, which extracts all tests,
+           including orphan tests that do not have a trace (usually pointing to a
+           requirement).
+
+           The quality manager can use the generated output of lobster-pkg only to
+           determine the items which are covered by tests in PKG/TA files, but not vice
+           versa.
+           The quality manager cannot use the output to determine if all tests fulfill
+           the tracing policy.
+
+           If lobster-pkg does not issue a warning for misplaced traces,
+           then the situation is the same as if the test in the input file had no trace
+           at all.
+
+           Hence the impact type is "Financial", not "Safety".
+           There is only the risk that the test engineer needs to spend more time to
+           manually check if all tests in the input files are covered by requirements.
+        ''',
+    ]
+    affects = [
+        List_Requirements_to_Tests,
+        List_Tests_to_Requirements,
+        Item_Coverage,
+    ]
+    impact_type = req.Impact_Type.Financial
+}
+
+req.PotentialError No_Warning_for_Misplaced_Trace {
+    summary = "lobster-pkg does not warn about misplaced trace elements"
+    description = '''
+        No warning is issued for lobster-traces which do not fulfill the conditions
+        of the requirements [[Trace_in_Test_Step_Node]] and [[Trace_in_Analysis_Node]].
+        '''
+    impacts = [
+        '''The tool generally extracts only tests where a lobster-trace is found.
+           It does not extract orphan tests.
+
+           This is different to tools like lobster-cpptest, which extracts all tests,
+           including orphan tests that do not have a trace (usually pointing to a
+           requirement).
+
+           The quality manager can use the generated output of lobster-pkg only to
+           determine the items which are covered by tests in PKG/TA files, but not vice
+           versa.
+           The quality manager cannot use the output to determine if all tests fulfill
+           the tracing policy.
+
+           If lobster-pkg does not issue a warning for misplaced traces,
+           then the situation is the same as if the test in the input file had no trace
+           at all.
+
+           Hence the impact type is "Financial", not "Safety".
+           There is only the risk that the test engineer needs to spend more time to
+           manually check if all tests in the input files are covered by requirements.
+        ''',
+    ]
+    affects = [
+        PKG_Misplaced_Trace_Warning,
+    ]
+    impact_type = req.Impact_Type.Financial
+}

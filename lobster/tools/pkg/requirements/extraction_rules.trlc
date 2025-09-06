@@ -1,0 +1,67 @@
+package req
+
+
+System_Requirement Pkg_Invalid_Xml {
+    description = 
+    '''
+        IF at least one input file is invalid XML,
+        THEN the tool shall exit with non-zero return code.
+    '''
+}
+
+System_Requirement Pkg_File_Item {
+    description =
+    '''
+        The tool SHALL create a LOBSTER output item of type "Activity" for each input file
+        IF the file represents a test case, identified by having an <INFORMATION> node
+        with a <TITLE> child node containing the string "TESTCASE"
+        OR IF a lobster-trace is given in an ANALYSIS block
+        (details see [[Trace_in_Analysis_Node]]).
+
+        The following requirements describe how to fill the "refs" attribute of these
+        items.
+
+        Note: If no requirements is fulfilled, which describes how to fill the "refs" attribute,
+        then the item SHALL be created with an empty "refs" attribute.
+    '''
+}
+
+System_Requirement Trace_in_Test_Step_Node {
+    description = '''
+        Note: Pay attention to the difference between TESTSTEP and TESTSTEPS!
+
+        The tool SHALL extract all tags (marked by "lobster-trace") from <VALUE> nodes
+        from the specified input files
+        WHERE all of the following conditions apply:
+        - The file SHALL be a test case, identified by having an <INFORMATION> node
+        with a <TITLE> child node containing the string "TESTCASE".
+        - The <TESTSTEPS> node is of type "testCase".
+        - The <TESTSTEP> node is the first child node of a <TESTSTEPS> node.
+        - The <TESTSTEP> node is named "TsBlock".
+        - The <VALUE> node is nested inside a <TESTSTEP> node.
+        - The <VALUE> node contains one or more substrings in the format
+        "lobster-trace:<REQUIREMENT_ID>"
+    '''
+}
+
+System_Requirement Trace_in_Analysis_Node {
+    description = '''
+        The tool SHALL extract all tags (marked by "lobster-trace") from <DESCRIPTION> nodes
+        from the specified input files
+        WHERE all of the following conditions apply:
+        - The <ANALYSISITEM> node is a **direct** child node of a <TRACE-ANALYSIS> node.
+        - The <ANALYSISITEM> node is of type "episode".
+        - The <DESCRIPTION> node is a **direct** child node of an <ANALYSISITEM> node.
+        - The <DESCRIPTION> node contains the substring in the format
+        "lobster-trace:<REQUIREMENT_ID>"
+    '''
+}
+
+System_Requirement Misplaced_Traces {
+    description =
+    '''
+        The tool SHALL print a warning for tags in <DESCRIPTION> and <VALUE> nodes
+        which do not match the conditions of the requirements
+        [[Trace_in_Test_Step_Node]] and [[Trace_in_Analysis_Node]].
+    '''
+}

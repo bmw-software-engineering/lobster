@@ -93,11 +93,14 @@ req.PotentialError Too_many_Extraction_from_TRLC {
            requirements are not tested where in reality those extracted items are
            not into considerations or irrelavent requirements.''',
 
-        '''If lobster-trlc creates fake requirements and another tool like lobster-cpptest
-           extracts tests from C++ that reference these fake requirement IDs,
-           the HTML report may incorrectly show 100% coverage.
-           The user expects the report to highlight that C++ tests point to non-existent
-           requirements, but instead, the error leads to a misleading coverage result.'''
+        '''If the tool creates fake items which are referenced by other items,
+           or which reference real other items on their own,
+           then the final report may incorrectly show a higher coverage value than the
+           true value.
+           The quality manager expects the report to highlight that items point to
+           non-existent items, but instead the error leads to an incorrect coverage
+           result.
+        ''',
     ]
     affects = [
         List_Requirements_to_Tests,
@@ -113,15 +116,15 @@ req.PotentialError Output_Despite_Missing_Config_File_TRLC {
     summary = "Output generated without configuration file"
     description = '''
       The user does not provide a valid path to a configuration file,
-      but the lobster-trlc generates valid output nevertheless, potentially based on
-      irrelevant rsl and trlc files.
-      For example, the lobster-trlc might consider the current working directory
-      as source of rsl and trlc files, and these do in fact contain links to real requirements,
+      but the tool generates valid output nevertheless, potentially based on
+      irrelevant input files.
+      For example, the tool might consider the current working directory
+      as source of input files, and these do in fact contain links to real other items,
       such that lobster-report would compute a non-zero coverage value.
     '''
     impacts = [
-      '''If the lobster-trlc generates a valid output file, then the invalid input path could
-        remain undetected, and subsequent tools of the LOBSTER tool chain
+      '''If the tool generates a valid output file, then the invalid input path could
+        remain undetected, and subsequent tools of the LOBSTER tool suite
         could consume unqualified input data.''',
     ]
 
@@ -138,17 +141,18 @@ req.PotentialError Output_Despite_Missing_Config_File_TRLC {
 req.PotentialError Output_Despite_Config_File_Error_TRLC {
     summary = "Output generated with an invalid configuration file"
     description = '''
-      The user provides an invalid configuration file, but the lobster-trlc
+      The user provides an invalid configuration file, but the tool
       generates valid output nevertheless, potentially based on
-      irrelevant rsl and trlc files.
+      irrelevant input files.
       This includes cases where the config file:
       - contains invalid YAML syntax (e.g., incorrect indentation, missing colons, or other formatting errors),
       - is missing required keys or attributes,
     '''
     impacts = [
-      '''If the lobster-trlc generates a valid output file, then the invalid configuration file could
-        remain undetected, and subsequent tools of the LOBSTER tool chain
-        could consume unqualified input data.''',
+      '''If the tool generates a valid output file, then the invalid configuration file could
+         remain undetected, and subsequent tools of the LOBSTER tool suite
+         could consume unqualified input data.
+      ''',
     ]
 
     affects = [
