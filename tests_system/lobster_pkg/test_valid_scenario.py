@@ -12,6 +12,9 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_valid_input_pkg_file(self):
+        # lobster-trace: UseCases.Wrong_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_few_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_many_Output_Items
         OUT_FILE = "valid_file1.lobster"
         self._test_runner.declare_input_file(self._data_directory / "valid_file1.pkg")
         self._test_runner.cmd_args.files = ["valid_file1.pkg"]
@@ -29,6 +32,9 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_valid_input_ta_file(self):
+        # lobster-trace: UseCases.Wrong_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_few_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_many_Output_Items
         OUT_FILE = "valid_ta_file.lobster"
         self._test_runner.declare_input_file(self._data_directory / "valid_file.ta")
         self._test_runner.cmd_args.files = ["valid_file.ta"]
@@ -46,6 +52,10 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_valid_ta_file_with_misplaced_traces(self):
+        # lobster-trace: UseCases.Wrong_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_few_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_many_Output_Items
+        # lobster-trace: UseCases.No_Warning_for_Misplaced_Trace
         OUT_FILE = "with_misplaced_traces.lobster"
         self._test_runner.cmd_args.files = [
             str(self._data_directory / "with_misplaced_traces.ta")
@@ -69,6 +79,10 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertExitCode(0)
 
     def test_valid_pkg_file_with_misplaced_traces(self):
+        # lobster-trace: UseCases.Wrong_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_few_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_many_Output_Items
+        # lobster-trace: UseCases.No_Warning_for_Misplaced_Trace
         OUT_FILE = "valid_file1.lobster"
         self._test_runner.cmd_args.files = [
             str(self._data_directory / "with_misplaced_traces.pkg")
@@ -92,6 +106,9 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertExitCode(0)
 
     def test_valid_input_pkg_files(self):
+        # lobster-trace: UseCases.Wrong_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_few_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_many_Output_Items
         OUT_FILE = "valid_file1_and_valid_file2.lobster"
         for file in ("valid_file1.pkg", "valid_file2.pkg"):
             self._test_runner.declare_input_file(self._data_directory / file)
@@ -110,7 +127,34 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
+    def test_valid_input_file_and_extra_file(self):
+        """Test that an extra file in the working directory is ignored."""
+        # lobster-trace: UseCases.Wrong_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_few_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_many_Output_Items
+        # lobster-trace: UseCases.Too_many_PKG_files
+        OUT_FILE = "valid_file1.lobster"
+        IN_FILES = ("valid_file1.pkg", "valid_file2.pkg")
+        for f in IN_FILES:
+            self._test_runner.copy_file_to_working_directory(self._data_directory / f)
+        self._test_runner.cmd_args.files.append(IN_FILES[0])
+
+        out_file = self._data_directory / OUT_FILE
+        self._test_runner.declare_output_file(out_file)
+
+        self._test_runner.cmd_args.out = OUT_FILE
+        completed_process = self._test_runner.run_tool_test()
+
+        asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
     def test_valid_input_pkg_folder(self):
+        # lobster-trace: UseCases.Wrong_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_few_Extraction_from_PKG
+        # lobster-trace: UseCases.Too_many_Output_Items
         OUT_FILE = "valid_file1_folder.lobster"
 
         pkg_files_dir = Path(self._test_runner.working_dir) / "pkg_files"

@@ -1,0 +1,37 @@
+package req
+
+System_Requirement Trace_in_Test_Step_Node {
+    description = '''
+        Note: Pay attention to the difference between TESTSTEP and TESTSTEPS!
+
+        The tool SHALL extract all tags (marked by "lobster-trace") from <VALUE> nodes
+        from the specified input files
+        WHERE all of the following conditions apply:
+        - The <VALUE> node is nested inside a <TESTSTEP> node.
+        - The <TESTSTEP> node is the first child node of a <TESTSTEPS> node.
+        - The <TESTSTEP> node is named "TsBlock".
+        - The <TESTSTEPS> node is of type "testCase".
+        - The <VALUE> node contains the string "lobster-trace:" in its value.
+    '''
+}
+
+System_Requirement Trace_in_Analysis_Node {
+    description = '''
+        The tool SHALL extract all tags (marked by "lobster-trace") from <DESCRIPTION> nodes
+        from the specified input files
+        WHERE all of the following conditions apply:
+        - The <DESCRIPTION> node is a direct child node of an <ANALYSISITEM> node.
+        - The <ANALYSISITEM> node is of type "episode".
+        - The <ANALYSISITEM> node is a child node of a <TRACE-ANALYSIS> node.
+        - The <DESCRIPTION> node contains the string "lobster-trace:" in its value.
+    '''
+}
+
+System_Requirement Misplaced_Traces {
+    description =
+    '''
+        The tool SHALL print a warning for tags in <DESCRIPTION> and <VALUE> nodes
+        which do not match the conditions of the requirements
+        [[Trace_in_Test_Step_Node]] and [[Trace_in_Analysis_Node]].
+    '''
+}

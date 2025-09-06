@@ -10,6 +10,8 @@ class InvalidInputFilePkgTest(LobsterPKGSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_not_existing_pkg_file(self):
+        """Test that a missing input file causes non-zero exit code"""
+        # lobster-trace: UseCases.Default_Path_Choice_pkg
         OUT_FILE = "not_existing.lobster"
         non_existing_file = str(
             self._data_directory / "not_existing.pkg")
@@ -22,7 +24,19 @@ class InvalidInputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertInStdErr(f'{non_existing_file} is not a file or directory')
         asserter.assertExitCode(1)
 
+    def test_missing_input_parameter(self):
+        """Test that not specifying an input file causes non-zero exit code"""
+        # lobster-trace: UseCases.Default_Path_Choice_pkg
+        self._test_runner.cmd_args.files = []
+        self._test_runner.cmd_args.out = "will-not-be-generated.lobster"
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
+        asserter.assertInStdErr('the following arguments are required: FILE|DIR')
+        asserter.assertExitCode(2)
+
     def test_not_existing_output_path(self):
+        """Test that a missing output path causes non-zero exit code"""
         OUT_FILE = "not_existing/not_existing.lobster"
         self._test_runner.cmd_args.files = [
             str(self._data_directory / "valid_file1.pkg")
@@ -36,6 +50,9 @@ class InvalidInputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertExitCode(1)
 
     def test_misplaced_lobster_trace_file(self):
+        """Test that a misplaced lobster-trace in ANALYSISITEM causes a warning
+           but exit code 0"""
+        # lobster-trace: UseCases.No_Warning_for_Misplaced_Trace
         OUT_FILE = "report.lobster"
         misplaced_lobster_trace_file = str(
             self._data_directory / "misplaced_lobster_trace.pkg")
@@ -53,6 +70,8 @@ class InvalidInputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertExitCode(0)
 
     def test_misplaced_tags_file(self):
+        """Test that a misplaced lobster-trace in TESTSTEPS causes non-zero exit code"""
+        # lobster-trace: UseCases.No_Warning_for_Misplaced_Trace
         OUT_FILE = "report.lobster"
         misplaced_tags_file_name = "misplaced_tags.pkg"
         misplaced_tags_file_path = str(
