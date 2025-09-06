@@ -30,3 +30,133 @@ req.PotentialError Default_Path_Choice {
     ]
     impact_type = req.Impact_Type.Safety
 }
+
+req.PotentialError Wrong_Extraction_from_TRLC {
+    summary = "LOBSTER extracts TRLC requirement wrongly"
+    description = '''
+        Some TRLC requirements are extracted with incorrect data.
+        '''
+    impacts = [
+        '''If the data of the TRLC requirement is parsed incorrectly 
+        (e.g. items wrongly mapped - data of items A,B interchanged) then user might think that 
+           a requirement is tested where in reality it is not.''',
+        
+        '''If the requirement is extracted 
+           incorrectly (e.g. mixing content from different requirements due to 
+           parsing issues), then the user might think that all aspects of a 
+           requirement are covered by a test, where in fact they are not.'''
+    ]
+    affects = [
+        List_Requirements_to_Tests,
+        List_Requirements_without_Tests,
+        List_Tests_to_Requirements,
+        List_Tests_without_Requirements,
+        Requirements_to_Test_Coverage,
+    ]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Too_few_Extraction_from_TRLC {
+    summary = "LOBSTER extracts too few TRLC requirements"
+    description = '''
+        Some TRLC requirements are not extracted from TRLC files.
+        For example, there are 100 applicable requirements in TRLC files but 
+        LOBSTER extracts only 75 requirements.
+        '''
+    impacts = [
+        '''If TRLC requirements are missing from extraction, then user 
+           might think that all requirements are tested where in reality some 
+           requirements are not even considered.''',
+           
+        '''If some TRLC files are not found or accessible during extraction, the user
+           might get an incomplete view of requirement coverage without being 
+           aware that some requirement files were not processed.'''
+    ]
+    affects = [
+        List_Requirements_to_Tests,
+        List_Requirements_without_Tests,
+        List_Tests_to_Requirements,
+        List_Tests_without_Requirements,
+        Requirements_to_Test_Coverage,
+    ]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Too_many_Extraction_from_TRLC {
+    summary = "LOBSTER extracts too many TRLC requirements"
+    description = '''
+        Some non-relevant TRLC test files are consumed.
+        For example, some requirements are extracted from TRLC files which are not relevant.
+        '''
+    impacts = [
+        '''If TRLC requirements are extracted other than the specified, then user might think that some
+           requirements are not tested where in reality those extracted items are
+           not into considerations or irrelavent requirements.''',
+
+        '''If lobster-trlc creates fake requirements and another tool like lobster-cpptest
+           extracts tests from C++ that reference these fake requirement IDs,
+           the HTML report may incorrectly show 100% coverage.
+           The user expects the report to highlight that C++ tests point to non-existent
+           requirements, but instead, the error leads to a misleading coverage result.'''
+    ]
+    affects = [
+        List_Requirements_to_Tests,
+        List_Requirements_without_Tests,
+        List_Tests_to_Requirements,
+        List_Tests_without_Requirements,
+        Requirements_to_Test_Coverage,
+    ]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Output_Despite_Missing_Config_File_TRLC {
+    summary = "Output generated without configuration file"
+    description = '''
+      The user does not provide a valid path to a configuration file,
+      but the lobster-trlc generates valid output nevertheless, potentially based on
+      irrelevant rsl and trlc files.
+      For example, the lobster-trlc might consider the current working directory
+      as source of rsl and trlc files, and these do in fact contain links to real requirements,
+      such that lobster-report would compute a non-zero coverage value.
+    '''
+    impacts = [
+      '''If the lobster-trlc generates a valid output file, then the invalid input path could
+        remain undetected, and subsequent tools of the LOBSTER tool chain
+        could consume unqualified input data.''',
+    ]
+
+    affects = [
+      List_Requirements_to_Tests,
+      List_Requirements_without_Tests,
+      List_Tests_to_Requirements,
+      List_Tests_without_Requirements,
+      Requirements_to_Test_Coverage
+    ]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError Output_Despite_Config_File_Error_TRLC {
+    summary = "Output generated with an invalid configuration file"
+    description = '''
+      The user provides an invalid configuration file, but the lobster-trlc
+      generates valid output nevertheless, potentially based on
+      irrelevant rsl and trlc files.
+      This includes cases where the config file:
+      - contains invalid YAML syntax (e.g., incorrect indentation, missing colons, or other formatting errors),
+      - is missing required keys or attributes,
+    '''
+    impacts = [
+      '''If the lobster-trlc generates a valid output file, then the invalid configuration file could
+        remain undetected, and subsequent tools of the LOBSTER tool chain
+        could consume unqualified input data.''',
+    ]
+
+    affects = [
+      List_Requirements_to_Tests,
+      List_Requirements_without_Tests,
+      List_Tests_to_Requirements,
+      List_Tests_without_Requirements,
+      Requirements_to_Test_Coverage
+    ]
+    impact_type = req.Impact_Type.Safety
+}
