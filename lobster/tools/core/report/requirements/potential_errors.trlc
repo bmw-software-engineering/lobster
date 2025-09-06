@@ -17,7 +17,7 @@ req.PotentialError Incorrect_Coverage_Calculation{
           then user might think that all requirements are covered but in fact it is not.'''
     ]
 
-    affects = [Requirements_to_Test_Coverage]
+    affects = [Item_Coverage]
     impact_type = req.Impact_Type.Safety
 }
 

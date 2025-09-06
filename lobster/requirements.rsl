@@ -65,6 +65,7 @@ enum Tools {
   lobster_report
   lobster_trlc
   lobster_json
+  lobster_pkg
 
   // tools that consume the output of other LOBSTER tools
   lobster_online_report
@@ -79,7 +80,7 @@ type UseCase {
     The use case shall not describe the implementation of the tools.
   ''' String
   affected_tools
-    '''List of tools that are affected by the use case'''
+    '''List of tools that contribute features to fulfill the use case'''
       Tools[1..*]
 }
 

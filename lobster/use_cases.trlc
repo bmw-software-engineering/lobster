@@ -14,6 +14,7 @@ req.UseCase List_Requirements_to_Tests {
         // shall extract test cases:
         req.Tools.lobster_json,
         req.Tools.lobster_cpptest,
+        req.Tools.lobster_pkg,
 
         // shall generate reports:
         req.Tools.lobster_report,
@@ -34,6 +35,7 @@ req.UseCase List_Requirements_without_Tests {
         // shall extract test cases:
         req.Tools.lobster_json,
         req.Tools.lobster_cpptest,
+        req.Tools.lobster_pkg,
 
         // shall generate reports:
         req.Tools.lobster_report,
@@ -54,6 +56,7 @@ req.UseCase List_Tests_to_Requirements {
         // shall extract test cases:
         req.Tools.lobster_json,
         req.Tools.lobster_cpptest,
+        req.Tools.lobster_pkg,
 
         // shall generate reports:
         req.Tools.lobster_report,
@@ -74,6 +77,7 @@ req.UseCase List_Tests_without_Requirements {
         // shall extract test cases:
         req.Tools.lobster_json,
         req.Tools.lobster_cpptest,
+        req.Tools.lobster_pkg,
 
         // shall generate reports:
         req.Tools.lobster_report,
@@ -81,20 +85,19 @@ req.UseCase List_Tests_without_Requirements {
     ]
 }
 
-req.UseCase Requirements_to_Test_Coverage {
+req.UseCase Item_Coverage {
     description = '''
         As a requirements manager I want the traceability report to show the fraction of
-        the number of requirements
-        which are each covered by at least one test respectively
-        divided by the total number of requirements.
+        the number of items in one level (of the tracing policy)
+        which fulfill the tracing policy,
+        divided by the total number of items in that level (of the tracing policy).
         The fraction shall be shown as percentage.
+
+        Example:
+        If the tracing policy is: Tests --(trace to)--> Requirements,
+        then the report shall show the fraction of requirements which are covered by at
+        least one test, divided by the total number of requirements.
     '''
-    /* Note:
-       The current implementation computes the fraction of "OK" items vs. total items.
-       If the user defines a tracing policy where the requirements have a single downstream
-       to tests only (and no upstreams), then that fraction is equal to the fraction
-       of the above use case.
-     */
     affected_tools = [
         // shall extract requirements:
         req.Tools.lobster_codebeamer,
@@ -103,6 +106,7 @@ req.UseCase Requirements_to_Test_Coverage {
         // shall extract test cases:
         req.Tools.lobster_json,
         req.Tools.lobster_cpptest,
+        req.Tools.lobster_pkg,
 
         // shall generate reports:
         req.Tools.lobster_report,
@@ -191,7 +195,7 @@ req.UseCase List_Findings {
 section "Nice to have" {
     /* Use cases in this section are nice to have, but are probably not relevant for a tool qualification in the sense of ISO 26262.
        As always, it is important to qualify a tool in the context of the project and company which uses the tool.
-       LOBSTER is an open source project and the above mentioned context is not known.
+       LOBSTER is an open source project and the context is not known.
        There may be circumstances where the below use cases are essential for a project.
      */
     req.UseCase Colored_Findings {

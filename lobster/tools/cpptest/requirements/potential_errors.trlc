@@ -119,7 +119,7 @@ req.PotentialError Output_Despite_Missing_Config_File {
       List_Requirements_without_Tests,
       List_Tests_to_Requirements,
       List_Tests_without_Requirements,
-      Requirements_to_Test_Coverage,
+      Item_Coverage,
     ]
     impact_type = req.Impact_Type.Safety
 }
@@ -145,7 +145,7 @@ req.PotentialError Output_Despite_Config_File_Error {
       List_Requirements_without_Tests,
       List_Tests_to_Requirements,
       List_Tests_without_Requirements,
-      Requirements_to_Test_Coverage,
+      Item_Coverage,
     ]
     impact_type = req.Impact_Type.Safety
 }
