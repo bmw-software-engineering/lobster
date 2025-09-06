@@ -1,20 +1,6 @@
 package core_online_report_req
 import req
 
-req.Software_Requirement Dummy_Requirement {
-  description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
-  '''
-}
-
-req.Software_Requirement Dummy_Requirement_Unit_Test {
-  description = '''
-    This is not really a requirement. It will be used only to generate a minimal tracing report for each tool.
-    It can be deleted as soon as all the tools get their real requirements.
-  '''
-}
-
 req.System_Requirement Valid_Git_Repository {
   description = '''
     IF the provided repository root directory contains a ".git" directory,

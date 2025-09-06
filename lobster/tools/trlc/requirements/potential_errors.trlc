@@ -26,7 +26,7 @@ req.PotentialError Default_Path_Choice {
         List_Requirements_without_Tests,
         List_Tests_to_Requirements,
         List_Tests_without_Requirements,
-        Requirements_to_Test_Coverage,
+        Item_Coverage,
     ]
     impact_type = req.Impact_Type.Safety
 }
@@ -51,7 +51,7 @@ req.PotentialError Wrong_Extraction_from_TRLC {
         List_Requirements_without_Tests,
         List_Tests_to_Requirements,
         List_Tests_without_Requirements,
-        Requirements_to_Test_Coverage,
+        Item_Coverage,
     ]
     impact_type = req.Impact_Type.Safety
 }
@@ -77,7 +77,7 @@ req.PotentialError Too_few_Extraction_from_TRLC {
         List_Requirements_without_Tests,
         List_Tests_to_Requirements,
         List_Tests_without_Requirements,
-        Requirements_to_Test_Coverage,
+        Item_Coverage,
     ]
     impact_type = req.Impact_Type.Safety
 }
@@ -104,7 +104,7 @@ req.PotentialError Too_many_Extraction_from_TRLC {
         List_Requirements_without_Tests,
         List_Tests_to_Requirements,
         List_Tests_without_Requirements,
-        Requirements_to_Test_Coverage,
+        Item_Coverage,
     ]
     impact_type = req.Impact_Type.Safety
 }
@@ -130,7 +130,7 @@ req.PotentialError Output_Despite_Missing_Config_File_TRLC {
       List_Requirements_without_Tests,
       List_Tests_to_Requirements,
       List_Tests_without_Requirements,
-      Requirements_to_Test_Coverage
+      Item_Coverage
     ]
     impact_type = req.Impact_Type.Safety
 }
@@ -156,7 +156,7 @@ req.PotentialError Output_Despite_Config_File_Error_TRLC {
       List_Requirements_without_Tests,
       List_Tests_to_Requirements,
       List_Tests_without_Requirements,
-      Requirements_to_Test_Coverage
+      Item_Coverage
     ]
     impact_type = req.Impact_Type.Safety
 }
