@@ -15,7 +15,8 @@ log.setLevel(logging.ERROR)
 CERT_PATH = 'tests_system/lobster_codebeamer/data/ssl/cert.pem'
 KEY_PATH = 'tests_system/lobster_codebeamer/data/ssl/key.pem'
 PORT = 8999
-MOCK_ROUTE = '/api/v3/reports/<int:report_id>/items'
+MOCK_ROUTE_QUERY_ID = '/api/v3/reports/<int:report_id>/items'
+MOCK_ROUTE_QUERY_STRING = '/api/v3/items/query'
 ARE_YOU_RUNNING_ROUTE = '/are-you-running'
 
 
@@ -128,20 +129,31 @@ class CodebeamerFlask(Flask):
         )
 
 
+def store_received_request(app: CodebeamerFlask):
+    """Store the received request in the app's received_requests list."""
+    app.received_requests.append({
+        "url": request.url,
+        "method": request.method,
+        "args": request.args.to_dict(flat=False),
+        "headers": dict(request.headers),
+        "data": request.get_data(as_text=True),
+        "json": request.get_json(silent=True),
+    })
+
+
 def create_app():
     app = CodebeamerFlask()
 
-    @app.route(MOCK_ROUTE, methods=['GET'])
-    def mock_response(report_id):
+    @app.route(MOCK_ROUTE_QUERY_ID, methods=['GET'])
+    def mock_query_id_response(report_id):
         """Return mocked item response or error."""
-        app.received_requests.append({
-            "url": request.url,
-            "method": request.method,
-            "args": request.args.to_dict(flat=False),
-            "headers": dict(request.headers),
-            "data": request.get_data(as_text=True),
-            "json": request.get_json(silent=True),
-        })
+        store_received_request(app)
+        return app.responses.pop(0)
+
+    @app.route(MOCK_ROUTE_QUERY_STRING, methods=['GET'])
+    def mock_query_string_response():
+        """Return mocked item response or error."""
+        store_received_request(app)
         return app.responses.pop(0)
 
     @app.route(ARE_YOU_RUNNING_ROUTE, methods=['GET'])
