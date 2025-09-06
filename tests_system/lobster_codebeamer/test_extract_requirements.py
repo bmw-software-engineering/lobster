@@ -5,6 +5,8 @@ from tests_system.lobster_codebeamer.lobster_codebeamer_system_test_case_base im
 from tests_system.lobster_codebeamer.lobster_codebeamer_asserter import (
     LobsterCodebeamerAsserter)
 from tests_system.lobster_codebeamer.mock_server_setup import get_mock_app
+from tests_system.lobster_codebeamer.lobster_codebeamer_test_runner import (
+    ConfigFileData)
 
 
 class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBase):
@@ -18,17 +20,10 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
         super().setUp()
         self._test_runner = self.create_test_runner()
 
-    def test_extract_requirements_scenarios(self):
-        """Validate Codebeamer report generation with mock data using subtests."""
-        # lobster-trace: UseCases.Codebeamer_Summary_in_Output
-        # lobster-trace: UseCases.Wrong_Codebeamer_IDs_in_Output
-        # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_Items_in_Output
-
-        cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
-        cfg.import_query = 54321
-        cfg.page_size = 5
-
+    def extract_requirements(self,
+                             cfg: ConfigFileData,
+                             expected_url: str,
+                             is_query_id: bool):
         for total_items in [0, 1, 4, 5, 6, 9, 10, 11, 74, 75, 76]:
             with self.subTest(total_items=total_items):
                 self.codebeamer_flask.reset()
@@ -44,14 +39,14 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
                 # and total_items to simulate the pagination
                 if total_items == 0:
                     responses = [self.create_mock_response_items(
-                        1, cfg.page_size, total_items)]
+                        1, cfg.page_size, total_items, is_query_id)]
                 else:
                     for i in range(
                         1, (total_items // cfg.page_size) +
                         (2 if total_items % cfg.page_size > 0 else 1)
                     ):
                         responses.append(self.create_mock_response_items(
-                            i, cfg.page_size, total_items))
+                            i, cfg.page_size, total_items, is_query_id))
 
                 self.codebeamer_flask.responses = [
                     Response(json.dumps(response), status=200) for response in responses
@@ -66,11 +61,8 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
                 for i, request in enumerate(self.codebeamer_flask.received_requests,
                                             start=1):
                     actual_url = request['url']
-                    expected_url = (
-                        f"{cfg.root}/api/v3/reports/"
-                        f"{cfg.import_query}/items?page={i}&pageSize={cfg.page_size}"
-                    )
-                    self.assertEqual(actual_url, expected_url)
+                    self.assertEqual(actual_url, f"{expected_url}".format(cfg=cfg, i=i))
+                    self.assertEqual(request['method'], 'GET')
 
                 asserter = LobsterCodebeamerAsserter(self,
                                                      completed_process,
@@ -84,3 +76,39 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
                 )
                 asserter.assertExitCode(0)
                 asserter.assertOutputFiles()
+
+    def test_extract_requirements_query_id_scenarios(self):
+        """Validate Codebeamer report generation with mock data using subtests."""
+        # lobster-trace: UseCases.Codebeamer_Summary_in_Output
+        # lobster-trace: UseCases.Wrong_Codebeamer_IDs_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_Items_in_Output
+
+        cfg = self._test_runner.config_file_data
+        cfg.set_default_root_token_out()
+        cfg.import_query = 54321
+        cfg.page_size = 5
+
+        self.extract_requirements(
+            cfg,
+            expected_url=("{cfg.root}/api/v3/reports/"
+                          "{cfg.import_query}/items?page={i}&pageSize={cfg.page_size}"),
+            is_query_id=True
+        )
+
+    def test_extract_requirements_query_string_scenarios(self):
+        """Validate Codebeamer report generation with mock data using subtests."""
+        # lobster-trace: UseCases.Codebeamer_Summary_in_Output
+        # lobster-trace: UseCases.Wrong_Codebeamer_IDs_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_Items_in_Output
+
+        cfg = self._test_runner.config_file_data
+        cfg.set_default_root_token_out()
+        cfg.import_query = "projectId%3D10"
+        cfg.page_size = 5
+
+        self.extract_requirements(
+            cfg,
+            expected_url=("{cfg.root}/api/v3/items/query?page={i}"
+                          "&pageSize={cfg.page_size}&queryString={cfg.import_query}"),
+            is_query_id=False
+        )
