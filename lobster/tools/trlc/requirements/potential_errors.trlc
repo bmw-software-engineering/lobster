@@ -91,7 +91,13 @@ req.PotentialError Too_many_Extraction_from_TRLC {
     impacts = [
         '''If TRLC requirements are extracted other than the specified, then user might think that some
            requirements are not tested where in reality those extracted items are
-           not into considerations or irrelavent requirements.'''
+           not into considerations or irrelavent requirements.''',
+
+        '''If lobster-trlc creates fake requirements and another tool like lobster-cpptest
+           extracts tests from C++ that reference these fake requirement IDs,
+           the HTML report may incorrectly show 100% coverage.
+           The user expects the report to highlight that C++ tests point to non-existent
+           requirements, but instead, the error leads to a misleading coverage result.'''
     ]
     affects = [
         List_Requirements_to_Tests,
@@ -103,7 +109,7 @@ req.PotentialError Too_many_Extraction_from_TRLC {
     impact_type = req.Impact_Type.Safety
 }
 
-req.PotentialError Output_Despite_Missing_Config_File {
+req.PotentialError Output_Despite_Missing_Config_File_TRLC {
     summary = "Output generated without configuration file"
     description = '''
       The user does not provide a valid path to a configuration file,
@@ -129,7 +135,7 @@ req.PotentialError Output_Despite_Missing_Config_File {
     impact_type = req.Impact_Type.Safety
 }
 
-req.PotentialError Output_Despite_Config_File_Error {
+req.PotentialError Output_Despite_Config_File_Error_TRLC {
     summary = "Output generated with an invalid configuration file"
     description = '''
       The user provides an invalid configuration file, but the lobster-trlc

@@ -3,34 +3,27 @@ import req
 
 req.TestSpecification Default_Path_Warning_Test {
     description = '''
-      The test shall verify that when no input files are specified, the tool
-      either warns the user about using the default directory or fails with
-      a clear error message.
-      
-      Test steps:
-      - Run the TRLC tool without specifying any input files
-      - Verify that the tool displays a clear warning message about using the current working directory
-      - Ensure the tool does not silently use default paths without notification
+        The test shall verify that when no input files are specified, the tool
+        shall generate an output file with zero LOBSTER items.
+        
+        Test steps:
+        - Run the TRLC tool without specifying any input files
+        - Verify that the tool generates an output file with zero items.
     '''
     verifies = [Default_Path_Choice]
 }
 
 
-req.TestSpecification Wrong_Extraction_from_TRLC {
+req.TestSpecification Incorrect_data_Extraction_from_TRLC {
     description = '''
-        The test shall verify that the extracted data is consistent and
-        no data is interchanged between the items.
+        The test shall verify that the extracted data is consistent with
+        the input data according to the configuration.
+        
+        For example, the input may contain 5 items of type "Information" and 6 items of type "Requirement".
+        The configuration specifies to extract only "Requirement" items.
+        The test needs to verify that these 6 requirement items are consistent with the LOBSTER output.
     '''
     verifies = [Wrong_Extraction_from_TRLC]
-}
-
-req.TestSpecification Incorrect_Number_of_TRLC_Items_in_Output {
-    description = '''
-        The test shall verify that the number of requirements extracted from TRLC files
-        matches the expected number of valid requirements in the source files.
-    '''
-
-    verifies = [Too_few_Extraction_from_TRLC, Too_many_Extraction_from_TRLC]
 }
 
 req.TestSpecification TRLC_Config_File_Missing {
@@ -38,7 +31,7 @@ req.TestSpecification TRLC_Config_File_Missing {
         The test shall verify that the lobster-trlc tool exits with a non-zero return code when the config file does not exist.
         Example: Verify that the lobster-trlc tool throws an error when a non-existent config file is provided.
     '''
-    verifies = [Output_Despite_Missing_Config_File]
+    verifies = [Output_Despite_Missing_Config_File_TRLC]
 }
 
 req.TestSpecification TRLC_Config_File_Syntax_Error {
@@ -46,7 +39,7 @@ req.TestSpecification TRLC_Config_File_Syntax_Error {
         The test shall verify that lobster-trlc tool exits with a non-zero return code when the config file contains a syntax error.
         Example: Verify that lobster-trlc throws an error when a config file with invalid TRLC is provided.
     '''
-    verifies = [Output_Despite_Config_File_Error]
+    verifies = [Output_Despite_Config_File_Error_TRLC]
 }
 
 
@@ -54,5 +47,5 @@ req.TestSpecification TRLC_Config_File_Key_Error {
     description = '''
         The test shall verify that lobster-trlc tool exits with a non-zero return code when the config file is missing required keys.
     '''
-    verifies = [Output_Despite_Config_File_Error]
+    verifies = [Output_Despite_Config_File_Error_TRLC]
 }
