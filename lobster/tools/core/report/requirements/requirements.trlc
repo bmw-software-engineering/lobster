@@ -196,9 +196,10 @@ req.System_Requirement_Aspect Multi_Level_Source_Files {
 
 req.System_Requirement_Aspect Message_Trace_Coverage {
   description = '''
-    IF an item contains a "message" and traces to another item,
-    THEN the traced item shall have 100% coverage,
-    AND the item with the message shall have 0% coverage.
+    IF an item contains a "message",
+    THEN the item shall be counted as "not okay",
+    regardless of whether it traces to another item or not.
+    ELSE the item shall be evaluated according to the general tracing policy.
   '''
 }
 
