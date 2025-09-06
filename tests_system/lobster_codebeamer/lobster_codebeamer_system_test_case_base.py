@@ -5,6 +5,7 @@ from tests_system.system_test_case_base import SystemTestCaseBase
 
 
 class LobsterCodebeamerSystemTestCaseBase(SystemTestCaseBase):
+    MULTIPLICATOR = 100
 
     def __init__(self, methodName):
         super().__init__(methodName)
@@ -17,33 +18,46 @@ class LobsterCodebeamerSystemTestCaseBase(SystemTestCaseBase):
         )
         return test_runner
 
-    def create_mock_response_items(self, page: int, page_size: int, total: int):
+    def create_item(self, item_id: int):
+        return {
+            "id": item_id,
+            "name": f"Requirement {item_id}: Dynamic name",
+            "status": {
+                "id": item_id,
+                "name": f"Status {item_id}",
+                "type": "ChoiceOptionReference",
+            },
+            'tracker': {
+                'id': item_id * self.MULTIPLICATOR * self.MULTIPLICATOR,
+                'name': f'Tracker_{item_id}',
+                'type': 'TrackerReference',
+            },
+            'version': item_id * self.MULTIPLICATOR
+        }
+
+    def create_mock_response_items(self,
+                                   page: int,
+                                   page_size: int,
+                                   total: int,
+                                   is_query_id: bool):
         """Create a mock response like codebeamer API paginated items."""
-        MULTIPLICATOR = 100
-        if (total > MULTIPLICATOR):
+        if (total > self.MULTIPLICATOR):
             self.fail(
-                f"Total items {total} exceeds multiplicator {MULTIPLICATOR}.")
-        items = [
-            {
-                "item": {
-                    "id": i,
-                    "name": f"Requirement {i}: Dynamic name",
-                    "status": {
-                        "id": i,
-                        "name": f"Status {i}",
-                        "type": "ChoiceOptionReference",
-                    },
-                    'tracker': {
-                        'id': i * MULTIPLICATOR * MULTIPLICATOR,
-                        'name': f'Tracker_{i}',
-                        'type': 'TrackerReference',
-                    },
-                    'version': i * MULTIPLICATOR
+                f"Total items {total} exceeds multiplicator {self.MULTIPLICATOR}.")
+        if is_query_id:
+            items = [
+                {
+                    "item": self.create_item(i)
                 }
-            }
-            for i in range(
-                (page - 1) * page_size + 1, min(page * page_size, total) + 1)
-        ]
+                for i in range(
+                    (page - 1) * page_size + 1, min(page * page_size, total) + 1)
+            ]
+        else:
+            items = [
+                self.create_item(i)
+                for i in range(
+                    (page - 1) * page_size + 1, min(page * page_size, total) + 1)
+            ]
         return {
             "page": page,
             "pageSize": page_size,
