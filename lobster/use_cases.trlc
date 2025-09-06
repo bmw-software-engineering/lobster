@@ -68,6 +68,8 @@ req.UseCase List_Tests_without_Requirements {
     description = '''
         As a requirements manager I want the traceability report to show the list of
         tests which are not covering any requirement.
+
+        This use case does not apply to tests in PKG/TA files (from ecu.test).
     '''
     affected_tools = [
         // shall extract requirements:
@@ -77,7 +79,10 @@ req.UseCase List_Tests_without_Requirements {
         // shall extract test cases:
         req.Tools.lobster_json,
         req.Tools.lobster_cpptest,
-        req.Tools.lobster_pkg,
+        /* Note: lobster-pkg cannot contribute to this use case, because it only extracts
+         * tests which have a trace to another item.
+         * It does not extract orphan tests without a trace by design.
+         */
 
         // shall generate reports:
         req.Tools.lobster_report,
@@ -215,6 +220,17 @@ section "Nice to have" {
         '''
         affected_tools = [
             req.Tools.lobster_html_report
+        ]
+    }
+
+    req.UseCase PKG_Misplaced_Trace_Warning {
+        description = '''
+            As a requirements manager I want lobster-pkg to print a warning
+            for lobster-traces in <DESCRIPTION> and <VALUE> nodes
+            which are not extracted (due to wrong XML node or path properties).
+        '''
+        affected_tools = [
+            req.Tools.lobster_pkg,
         ]
     }
 }
