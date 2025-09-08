@@ -54,6 +54,22 @@ but not with input directories.
 In this example the output of the tool is not qualified in the sense of ISO 26262
 when providing a list of directories, even if the tool supports it.
 
+## Use Case
+
+Once a use case is described it must be broken down into features.
+Since the LOBSTER tool suite consists of several tools, one has to decide which tool
+is goint to provide the necessary feature.
+This task is an architectural design task.
+It defines the overarching architecture of the LOBSTER tool suite.
+Each use case has got a property `affected_tools`, where a list of tools can be
+specified.
+Each listed tool contributes to the use case differently.
+
+Once this step is done, one must think about potential errors of the tool features
+in the context of the use case.
+What could possibly go wrong such that there is a safety risk or financial risk for the
+use case?
+
 ## Definition of "Potential Error"
 
 Potential errors shall describe potential bugs of the tool.
