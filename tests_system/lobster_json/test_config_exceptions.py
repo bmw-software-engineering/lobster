@@ -11,12 +11,8 @@ class ConfigParserExceptionsLobsterJsonTest(LobsterJsonSystemTestCaseBase):
         super().setUp()
         self._test_runner = self.create_test_runner_without_config_file_data()
 
-    def test_missing_config_file(self):
+    def test_missing_config_file_parameter(self):
         # lobster-trace: Usecases.JSON_Config_File_Missing
-        out_file = "missing_config_file.lobster"
-        self._test_runner.cmd_args.out = out_file
-        self._test_runner.declare_output_file(self._data_directory / out_file)
-
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertStdErrText(
@@ -24,6 +20,19 @@ class ConfigParserExceptionsLobsterJsonTest(LobsterJsonSystemTestCaseBase):
             'lobster-json: error: the following arguments are required: --config\n'
         )
         asserter.assertExitCode(2)
+
+    def test_missing_config_file(self):
+        # lobster-trace: Usecases.JSON_Config_File_Missing
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "missing_config_file.yaml")
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
+        asserter.assertExitCode(
+            f'Error: Config file '
+            f"'{self._data_directory / 'missing_config_file.yaml'}'"
+            f' not found.'
+        )
 
     def test_config_file_errors(self):
         # lobster-trace: Usecases.JSON_Config_File_Syntax_Error
