@@ -12,7 +12,7 @@ class ConfigParserExceptionsLobsterJsonTest(LobsterJsonSystemTestCaseBase):
         self._test_runner = self.create_test_runner_without_config_file_data()
 
     def test_missing_config_file(self):
-
+        # lobster-trace: Usecases.JSON_Config_File_Missing
         out_file = "missing_config_file.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -26,6 +26,7 @@ class ConfigParserExceptionsLobsterJsonTest(LobsterJsonSystemTestCaseBase):
         asserter.assertExitCode(2)
 
     def test_config_file_errors(self):
+        # lobster-trace: Usecases.JSON_Config_File_Syntax_Error
         out_file = "syntax_error.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -36,6 +37,7 @@ class ConfigParserExceptionsLobsterJsonTest(LobsterJsonSystemTestCaseBase):
         self.assertIn("mapping values are not allowed here", str(ctx.exception))
 
     def test_config_file_empty(self):
+        # lobster-trace: Usecases.JSON_Config_File_Key_Error
         out_file = "no_tag_error.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)

@@ -11,7 +11,7 @@ class ValidInputTest(LobsterJsonSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_input_with_specific_schema(self):
-
+        # lobster-trace: Usecases.Incorrect_number_of_requirement_refs_in_JSON_Output
         out_file = "specific_schema.lobster"
         self._test_runner.cmd_args.out = out_file
 
