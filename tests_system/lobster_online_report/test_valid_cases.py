@@ -35,6 +35,8 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
 
     @patch('lobster.tools.core.online_report.path_to_url_converter.Repo')
     def test_main_repo(self, mock_repo_class):
+        # lobster-trace: Usecases.Incorrect_GitHub_Reference_in_Output_file
+        # lobster-trace: Usecases.Correct_Item_Data_in_Online_Report_Output_File
         OUT_FILE = "main_repo_online_report.lobster"
 
         mock_main_repo = Mock()
@@ -58,6 +60,8 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
 
     @patch('lobster.tools.core.online_report.path_to_url_converter.Repo')
     def test_submodules(self, mock_repo_class):
+        # lobster-trace: Usecases.Incorrect_GitHub_Reference_in_Output_file
+        # lobster-trace: Usecases.Correct_Item_Data_in_Online_Report_Output_File
         OUT_FILE = "submodule_online_report.lobster"
 
         mock_repo = Mock()
