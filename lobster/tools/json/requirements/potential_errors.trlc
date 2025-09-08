@@ -1,7 +1,7 @@
 package UseCases
 import req
 
-req.PotentialError Too_few_Extraction_from_JSON_Test_Files{
+req.PotentialError Too_few_Extraction_from_JSON_Test_Files {
 		summary = "LOBSTER extracts too few tests from JSON files"
 		description = '''
 			Some JSON test files or test cases within JSON files are ignored during extraction.
@@ -21,13 +21,14 @@ req.PotentialError Too_few_Extraction_from_JSON_Test_Files{
 			List_Tests_without_Requirements,
 			List_Requirements_to_Tests,
 			List_Requirements_without_Tests,
-			List_Tests_to_Requirements
+			List_Tests_to_Requirements,
+			Item_Coverage,
 		]
 		impact_type = req.Impact_Type.Safety
 }
 
 
-req.PotentialError Too_few_requirement_reference_Extraction_from_JSON_test{
+req.PotentialError Too_few_requirement_reference_Extraction_from_JSON_test {
 		summary = "LOBSTER extracts too few requirement references from JSON tests"
 		description = '''
 			Some requirement references from tests in JSON files are ignored.
@@ -46,12 +47,13 @@ req.PotentialError Too_few_requirement_reference_Extraction_from_JSON_test{
 			List_Tests_without_Requirements,
 			List_Requirements_to_Tests,
 			List_Requirements_without_Tests,
-			List_Tests_to_Requirements
+			List_Tests_to_Requirements,
+			Item_Coverage
 		]
 		impact_type = req.Impact_Type.Safety
 }
 
-req.PotentialError Too_many_Extraction_from_JSON_Test_Files{
+req.PotentialError Too_many_Extraction_from_JSON_Test_Files {
 		summary = "LOBSTER extracts too many tests from JSON files"
 		description = ''' 
 			Some non-relevant JSON test files are consumed.
@@ -71,12 +73,13 @@ req.PotentialError Too_many_Extraction_from_JSON_Test_Files{
 			List_Tests_without_Requirements,
 			List_Requirements_to_Tests,
 			List_Requirements_without_Tests,
-			List_Tests_to_Requirements
+			List_Tests_to_Requirements,
+			Item_Coverage,
 		]
 		impact_type = req.Impact_Type.Safety
 }
 
-req.PotentialError Too_many_requirement_reference_Extraction_from_JSON_test{
+req.PotentialError Too_many_requirement_reference_Extraction_from_JSON_test {
 		summary = "LOBSTER extracts too many requirement references from JSON tests"
 		description = '''
 			Some fake requirement references from tests in JSON files are extracted.
@@ -93,7 +96,8 @@ req.PotentialError Too_many_requirement_reference_Extraction_from_JSON_test{
 			List_Tests_without_Requirements, 
 			List_Requirements_to_Tests,
 			List_Requirements_without_Tests,
-			List_Tests_to_Requirements
+			List_Tests_to_Requirements,
+			Item_Coverage
 		]
 		impact_type = req.Impact_Type.Safety
 }
