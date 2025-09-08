@@ -13,6 +13,7 @@ class TrlcInvalidExtensionsTest(LobsterTrlcSystemTestCaseBase):
 
     def test_invalid_extensions_inputs_files_list(self):
         # lobster-trace: trlc_req.Invalid_Inputs_List_Of_Files_Extensions
+        # lobster-trace: UseCases.TRLC_Config_File_Syntax_Error
         self._test_runner.declare_input_file(self._data_directory /
                                              "rsl_invalid_extension.slr")
         self._test_runner.declare_input_file(self._data_directory /
@@ -27,6 +28,7 @@ class TrlcInvalidExtensionsTest(LobsterTrlcSystemTestCaseBase):
 
     def test_invalid_extensions_input_from_file(self):
         # lobster-trace: trlc_req.Invalid_Inputs_From_File_Extensions
+        # lobster-trace: UseCases.TRLC_Config_File_Syntax_Error
         self._test_runner.declare_inputs_from_file(self._data_directory /
                                                    "invalid_ext_inputs_from_file.txt",
                                                    self._data_directory)

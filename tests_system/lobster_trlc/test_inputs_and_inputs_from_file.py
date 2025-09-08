@@ -17,6 +17,7 @@ class InputFromFilesAndInputsTest(LobsterTrlcSystemTestCaseBase):
     def test_input_from_files_and_inputs_list(self):
         """Test that inputs from files and inputs list can be processed together."""
         # lobster-trace: trlc_req.Input_list_Of_File_And_Inputs_From_File
+        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
         OUT_FILE = "input_from_files_and_inputs.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.declare_output_file(self._data_directory / OUT_FILE)

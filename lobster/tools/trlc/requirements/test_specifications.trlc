@@ -49,3 +49,11 @@ req.TestSpecification TRLC_Config_File_Key_Error {
     '''
     verifies = [Output_Despite_Config_File_Error_TRLC]
 }
+
+req.TestSpecification TRLC_Config_File_non_existent_conversion_rules {
+    description = '''
+        The test shall verify that lobster-trlc tool exits with a non-zero return code when the config file contains
+        conversion rules for TRLC record types which do not exist in the RSL file.
+    '''
+    verifies = [Output_Despite_Config_File_Error_TRLC]
+}
