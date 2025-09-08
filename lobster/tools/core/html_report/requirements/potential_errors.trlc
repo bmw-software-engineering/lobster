@@ -108,10 +108,10 @@ req.PotentialError Too_few_findings_in_HTML_report{
     impact_type = req.Impact_Type.Safety
 }
 
-req.PotentialError Wrong_Input_file_location{
-    summary = "LOBSTER shows the wrong location of the input files"
+req.PotentialError Wrong_Input_location{
+    summary = "LOBSTER shows the wrong location of the input source"
     description = '''
-      Source location of the input file is incorrect in HTML report.
+      Source location of the input source is incorrect in HTML report.
     '''
     impacts = [
       '''If URL of the git repo is not correct in HTML report
