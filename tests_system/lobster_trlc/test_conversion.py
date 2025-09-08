@@ -50,6 +50,7 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
 
         for setup in test_setups:
             with self.subTest(setup=setup.name):
+                # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
                 out_file = f"extraction_hierarchy_{setup.name}.out.lobster"
                 test_runner = self.create_test_runner()
                 test_runner.cmd_args.out = out_file
@@ -80,6 +81,7 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
 
     def test_to_string_rules(self):
         """Test that to_string rules are applied correctly."""
+        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
         test_runner = self.create_test_runner()
         out_file = "to_string_rules.out.lobster"
         test_runner.cmd_args.out = out_file

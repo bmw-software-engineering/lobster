@@ -12,6 +12,7 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
 
     def test_input_files_list(self):
         # lobster-trace: trlc_req.Input_List_Of_Files
+        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
         self._test_runner.config_file_data.conversion_rules = [
             self.NAMASTE_CONVERSION_RULE,
         ]
@@ -52,6 +53,7 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
 
 class CmdArgsInputTest(LobsterTrlcSystemTestCaseBase):
     def test_input_files_list(self):
+        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
         """Test that input files can be specified as command line arguments"""
         test_runner = self.create_test_runner()
 

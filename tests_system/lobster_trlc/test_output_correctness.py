@@ -17,6 +17,7 @@ class OutputCorrectnessTest(LobsterTrlcSystemTestCaseBase):
            set, so we can verify that each output item is populated with data only
            based on one single input item.
         """
+        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
         self._test_runner.cmd_args.out = "output_correctness_test.out.lobster"
         self._test_runner.declare_output_file(
             self._data_directory / self._test_runner.cmd_args.out)
