@@ -373,62 +373,61 @@ class LobsterCpptestTests(unittest.TestCase):
                 self.assertEqual(
                     test_cases[i].docu_start_line,
                     expectation["docu_start"],
-                    "docu_start does not match for test_name " + test_cases[i].test_name,
+                    f"docu_start does not match for test_name {test_cases[i].test_name}",
                 )
                 self.assertEqual(
                     test_cases[i].docu_end_line,
                     expectation["docu_end"],
-                    "docu_end does not match for test_name " + test_cases[i].test_name,
+                    f"docu_end does not match for test_name {test_cases[i].test_name}",
                 )
                 self.assertEqual(
                     test_cases[i].definition_start_line,
                     expectation["def_start"],
-                    "def_start does not match for test_name " + test_cases[i].test_name,
+                    f"def_start does not match for test_name {test_cases[i].test_name}",
                 )
                 self.assertEqual(
                     test_cases[i].definition_end_line,
                     expectation["def_end"],
-                    "def_end does not match for test_name " + test_cases[i].test_name,
+                    f"def_end does not match for test_name {test_cases[i].test_name}",
                 )
             if "req" in expectation:
                 self.assertEqual(
                     test_cases[i].requirements,
                     expectation["req"],
-                    "req does not match for test_name " + test_cases[i].test_name,
+                    f"req does not match for test_name {test_cases[i].test_name}",
                 )
             if "req_by" in expectation:
                 self.assertEqual(
                     test_cases[i].required_by,
                     expectation["req_by"],
-                    "req_by does not match for test_name " + test_cases[i].test_name,
+                    f"req_by does not match for test_name {test_cases[i].test_name}",
                 )
             if "version" in expectation:
                 self.assertEqual(
                     test_cases[i].version_id,
                     expectation["version"],
-                    "version does not match for test_name " + test_cases[i].test_name,
+                    f"version does not match for test_name {test_cases[i].test_name}",
                 )
             if "test" in expectation:
                 self.assertEqual(
                     test_cases[i].test,
                     expectation["test"],
-                    "test does not match for test_name " + test_cases[i].test_name,
+                    f"test does not match for test_name {test_cases[i].test_name}",
                 )
             if "testmethods" in expectation:
                 self.assertEqual(
                     test_cases[i].testmethods,
                     expectation["testmethods"],
-                    "testmethods does not match for test_name " + test_cases[i].test_name,
+                    f"testmethods does not match for test_name {test_cases[i].test_name}",
                 )
             if "brief" in expectation:
                 self.assertEqual(
                     test_cases[i].brief,
                     expectation["brief"],
-                    "brief does not match for test_name " + test_cases[i].test_name,
+                    f"brief does not match for test_name {test_cases[i].test_name}",
                 )
 
     def tearDown(self):
-        # lobster-trace: cpptest_req.Dummy_Requirement_Unit_Test
         for output_file in self.output_file_names:
             if os.path.exists(output_file):
                 os.remove(output_file)

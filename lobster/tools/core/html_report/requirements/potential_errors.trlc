@@ -137,7 +137,7 @@ req.PotentialError Incorrect_Coverage{
           the quality manager may release a software, which should not be released'''
     ]
 
-    affects = [Requirements_to_Test_Coverage]
+    affects = [Item_Coverage]
     impact_type = req.Impact_Type.Safety
 }
 
@@ -152,6 +152,6 @@ req.PotentialError Incorrect_Item_Data{
           then the quality manager may decide to release a software that should not be released.'''
     ]
 
-    affects = [Requirements_to_Test_Coverage]
+    affects = [Item_Coverage]
     impact_type = req.Impact_Type.Safety
 }
