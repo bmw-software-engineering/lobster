@@ -201,7 +201,6 @@ footer {
 }
 
 .button active:before {
-    content: ;
     position: absolute;
     left: 0;
     top: 0;
@@ -462,7 +461,7 @@ footer {
 <h3 id="heading-requirements-and-specification">Requirements and Specification</h3>
 <div id="section-requirements">
 <h4 id="sec-5a2ebfb8baa378cfcfcba58bbb1380c2" class="heading-requirements">Requirements</h4>
-<h5 id="heading-.\demo.trlc">.\demo.trlc</h5>
+<h5>.\demo.trlc</h5>
 <!-- begin item req example.adas_100_A -->
 <div class="item-missing" id="item-ae6eef0f9ce6a72c16e8546860450b94d5499085">
 <div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC Requirement example.adas_100_A</div>
@@ -492,7 +491,7 @@ Status: status1
 <h3 id="heading-implementation">Implementation</h3>
 <div id="section-code">
 <h4 id="sec-ca0dbad92a874b2f69b549293387925e" class="heading-code">Code</h4>
-<h5 id="heading-.\software.py">.\software.py</h5>
+<h5>.\software.py</h5>
 <!-- begin item python software.Example -->
 <div class="item-missing" id="item-b08d67b92006da35eaff57131eb330052bacbfb7">
 <div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Python Function software.Example</div>
