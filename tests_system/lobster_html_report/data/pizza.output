@@ -201,7 +201,6 @@ footer {
 }
 
 .button active:before {
-    content: ;
     position: absolute;
     left: 0;
     top: 0;
@@ -491,7 +490,7 @@ footer {
 <h3 id="heading-requirements-and-specification">Requirements and Specification</h3>
 <div id="section-system-requirements">
 <h4 id="sec-419cfc02b324dc7d8faefa90ed608fb0" class="heading-system-requirements">System Requirements</h4>
-<h5 id="heading-pizza_system_requirements.trlc">pizza_system_requirements.trlc</h5>
+<h5>pizza_system_requirements.trlc</h5>
 <!-- begin item req pizza_example.oven -->
 <div class="item-ok" id="item-34ce8207e099c745b54dfdded903a0eaba3d2c04">
 <div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement pizza_example.oven</div>
@@ -674,7 +673,7 @@ footer {
 </div>
 <div id="section-software-requirements">
 <h4 id="sec-9d273bd32c1fceb91b7d6a4d40e98bdd" class="heading-software-requirements">Software Requirements</h4>
-<h5 id="heading-pizza_software_requirements.trlc">pizza_software_requirements.trlc</h5>
+<h5>pizza_software_requirements.trlc</h5>
 <!-- begin item req pizza_example.oven_controller -->
 <div class="item-ok" id="item-8252c7d6cf693ad663582a4ad00cff4a5ae06c35">
 <div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement pizza_example.oven_controller</div>
@@ -868,7 +867,7 @@ footer {
 <h3 id="heading-implementation">Implementation</h3>
 <div id="section-code">
 <h4 id="sec-ca0dbad92a874b2f69b549293387925e" class="heading-code">Code</h4>
-<h5 id="heading-pizza_implementation.py">pizza_implementation.py</h5>
+<h5>pizza_implementation.py</h5>
 <!-- begin item python pizza_implementation.OvenController.start_cooking -->
 <div class="item-ok" id="item-a4fdc956823486ee87c209137515151833bc050a">
 <div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.OvenController.start_cooking</div>
@@ -1096,7 +1095,7 @@ footer {
 <h3 id="heading-verification-and-validation">Verification and Validation</h3>
 <div id="section-component-tests">
 <h4 id="sec-89ee055e759171b6b87a317d46004553" class="heading-component-tests">Component Tests</h4>
-<h5 id="heading-test_pizza_components.py">test_pizza_components.py</h5>
+<h5>test_pizza_components.py</h5>
 <!-- begin item pyunit test_pizza_components.TestOrderProcessingComponent.test_complete_order_creation_workflow:26 -->
 <div class="item-ok" id="item-f3fdeaa418db9883767e5e50759eca924f90689d">
 <div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_components.TestOrderProcessingComponent.test_complete_order_creation_workflow:26</div>
@@ -1249,7 +1248,7 @@ footer {
 </div>
 <div id="section-unit-tests">
 <h4 id="sec-d6a712b8912b88fc5654b52032b40f5b" class="heading-unit-tests">Unit Tests</h4>
-<h5 id="heading-test_pizza_implementation.py">test_pizza_implementation.py</h5>
+<h5>test_pizza_implementation.py</h5>
 <!-- begin item pyunit test_pizza_implementation.TestOvenController.test_start_cooking:18 -->
 <div class="item-ok" id="item-04bc5b71b0cd65e226440f83048c2a10e1eb02d5">
 <div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_implementation.TestOvenController.test_start_cooking:18</div>

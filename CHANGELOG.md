@@ -5,7 +5,8 @@
 
 ### 0.14.6-dev
 
-
+* `lobster-html-report`:
+  Unused `id` attribute from `h5` tag in the HTML report was removed.
 
 ### 0.14.5
 

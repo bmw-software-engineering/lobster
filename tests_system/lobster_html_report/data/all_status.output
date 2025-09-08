@@ -201,7 +201,6 @@ footer {
 }
 
 .button active:before {
-    content: ;
     position: absolute;
     left: 0;
     top: 0;
@@ -476,7 +475,7 @@ footer {
 <h3 id="heading-requirements-and-specification">Requirements and Specification</h3>
 <div id="section-usecases">
 <h4 id="sec-69946e94f6df7a936df43371c18df3ba" class="heading-usecases">usecases</h4>
-<h5 id="heading-just_requirements.trlc">just_requirements.trlc</h5>
+<h5>just_requirements.trlc</h5>
 <!-- begin item req complex_just_example.lost_sock_scenario -->
 <div class="item-missing" id="item-a78f259e8462886192ecac5101450bc65217f6f2">
 <div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC Usecase complex_just_example.lost_sock_scenario</div>
