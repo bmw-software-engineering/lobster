@@ -38,11 +38,11 @@ req.TestSpecification HTML_file_generation{
 
 req.TestSpecification Source_location_in_output{
     description = '''
-      The test shall verify that correct source locations of the input files are mentioned in the HTML report.
+      The test shall verify that correct source locations of the inputs (url) are mentioned in the HTML report.
       
       example: Verify HTML file contains correct source location URL from which c++ test file is taken
     '''
-    verifies = [Input_file_location_missing, Wrong_Input_file_location]
+    verifies = [Input_file_location_missing, Wrong_Input_location]
 }
 
 req.TestSpecification Missing_tracing_policy_violation_in_output{
