@@ -22,6 +22,14 @@ class LobsterTrlcSystemTestCaseBase(SystemTestCaseBase):
         super().__init__(methodName)
         self._data_directory = Path(__file__).parents[0] / "data"
 
+    def create_test_runner_without_config_file_data(self) -> LobsterTrlcTestRunner:
+        tool_name = Path(__file__).parents[0].name
+        test_runner = LobsterTrlcTestRunner(
+            self.create_temp_dir(prefix=f"test-{tool_name}-"),
+            use_config_file_data=False
+        )
+        return test_runner
+
     def create_test_runner(self) -> LobsterTrlcTestRunner:
         tool_name = Path(__file__).parents[0].name
         test_runner = LobsterTrlcTestRunner(

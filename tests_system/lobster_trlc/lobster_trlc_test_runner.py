@@ -38,7 +38,7 @@ class ConfigFileData:
 
 @dataclass
 class CmdArgs:
-    config: Optional[str] = "config.yaml"
+    config: Optional[str] = None
     out: Optional[str] = None
     dir_or_files: Optional[List[str]] = None
 
@@ -59,10 +59,14 @@ class CmdArgs:
 
 class LobsterTrlcTestRunner(TestRunner):
     """System test runner for lobster-TRLC"""
-    def __init__(self, working_dir: Path):
+    def __init__(self, working_dir: Path, use_config_file_data: bool = True):
         super().__init__(main, working_dir)
-        self._config_file_data = ConfigFileData()
-        self._cmd_args = CmdArgs()
+        self.use_config_file_data = use_config_file_data
+        if use_config_file_data:
+            self._cmd_args = CmdArgs(config="config.yaml")
+            self._config_file_data = ConfigFileData()
+        else:
+            self._cmd_args = CmdArgs()
 
     @property
     def cmd_args(self) -> CmdArgs:
@@ -96,6 +100,6 @@ class LobsterTrlcTestRunner(TestRunner):
         return self._cmd_args.as_list()
 
     def run_tool_test(self) -> TestRunResult:
-        if self._cmd_args.config:
+        if self._cmd_args.config and self.use_config_file_data:
             self._config_file_data.dump(str(self._working_dir / self._cmd_args.config))
         return super().run_tool_test()
