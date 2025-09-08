@@ -14,7 +14,6 @@ CSS = """
 }
 
 .button active:before {
-    content: ;
     position: absolute;
     left: 0;
     top: 0;

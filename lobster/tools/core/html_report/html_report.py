@@ -533,8 +533,7 @@ def write_html(report, dot, high_contrast, render_md) -> str:
                         assert False
                     if new_file_heading != file_heading:
                         file_heading = new_file_heading
-                        doc.add_heading(5, html.escape(file_heading),
-                                        html_identifier=True)
+                        doc.add_heading(5, html.escape(file_heading))
 
                     write_item_box_begin(doc, item)
                     if isinstance(item, Requirement) and item.status:
