@@ -637,7 +637,7 @@ function buttonFilter(filter) {
         console.log("log ", issue_elms[i].className)
         if (filter == "all") {
             issue_elms[i].style.display = "list-item";
-        } else if (issue_elms[i].className == "issue issue-" + filter) {
+        } else if (issue_elms[i].className.includes("issue issue-" + filter)) {
             issue_elms[i].style.display = "list-item";
         } else {
             issue_elms[i].style.display = "none";
