@@ -1,0 +1,32 @@
+package UseCases
+import req
+
+req.TestSpecification Incorrect_GitHub_Reference_in_Output_file {
+    description = '''
+      The test shall verify that the GitHub reference (URL, commit SHA, and line number if applicable) for each item in the output matches the expected values from the input and repository configuration.
+      Example: If an item is from a file tracked in git, the output must contain the correct GitHub URL, commit SHA, and line number.
+    '''
+    verifies = [Incorrect_GitHub_Reference_in_Output]
+}
+
+req.TestSpecification Correct_Item_Data_in_Online_Report_Output_File {
+        description = '''
+            The test shall verify that the item data in the output file matches the item data in the input file.
+        '''
+        verifies = [Online_Report_Extract_Wrong_Item_Data_in_Output]
+}
+
+req.TestSpecification Online_Report_Config_File_Missing {
+		description = '''
+			The test shall verify that the lobster-online_report tool exits with a non-zero return code when the config file does not exist.
+			Example: Verify that the lobster-online_report tool throws an error when a non-existent config file is provided.
+		'''
+		verifies = [Output_Despite_Missing_Config_File_Online_Report]
+}
+
+req.TestSpecification Online_Report_Config_File_Key_Error {
+		description = '''
+			The test shall verify that lobster-online_report tool exits with a non-zero return code when the config file is missing required keys.
+		'''
+		verifies = [Output_Despite_Config_File_Error_Online_Report]
+}

@@ -12,6 +12,7 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_missing_config_file(self):
+        # lobster-trace: Usecases.Online_Report_Config_File_Missing
         not_existing_file = str(
             self._data_directory / "non-existing.yaml")
 
@@ -27,35 +28,30 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
         asserter.assertExitCode(1)
 
     def test_config_file_errors(self):
+        # lobster-trace: Usecases.Online_Report_Config_File_Key_Error
         test_cases = [
-            {
-                "config_file": "with_no_repo_root.yaml",
-                "expected_error": f'Missing attribute {REPO_ROOT}',
-                "case": "repo_root_key_error",
-                "expected_exit_code": 1
-            },
-            {
-                "config_file": "with_no_base_url.yaml",
-                "expected_error": f'Missing attribute {BASE_URL}',
-                "case": "base_url_key_error",
-                "expected_exit_code": 1
-            },
-            {
-                "config_file": "with_no_commit_id.yaml",
-                "expected_error": f'Missing attribute {COMMIT_ID}',
-                "case": "commit_id_key_error",
-                "expected_exit_code": 1
-            }
+            (
+                "with_no_repo_root.yaml",
+                f"Missing attribute {REPO_ROOT}",
+                "repo_root_key_error"
+            ),
+            (
+                "with_no_base_url.yaml",
+                f"Missing attribute {BASE_URL}",
+                "base_url_key_error"
+            ),
+            (
+                "with_no_commit_id.yaml",
+                f"Missing attribute {COMMIT_ID}",
+                "commit_id_key_error"
+            ),
         ]
 
-        for test_case in test_cases:
-            with self.subTest(i=test_case["case"]):
+        for config_file, expected_error, case in test_cases:
+            with self.subTest(i=case):
                 self._test_runner.cmd_args.config = str(
-                    self._data_directory / test_case["config_file"]
-                )
-
+                    self._data_directory / config_file)
                 completed_process = self._test_runner.run_tool_test()
                 asserter = Asserter(self, completed_process, self._test_runner)
-
-                asserter.assertInStdErr(test_case["expected_error"])
-                asserter.assertExitCode(test_case["expected_exit_code"])
+                asserter.assertInStdErr(expected_error)
+                asserter.assertExitCode(1)
