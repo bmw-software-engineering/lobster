@@ -29,7 +29,7 @@ from lobster.common.meta_data_tool_base import MetaDataToolBase
 class CiReportTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
-            name="lobster-ci-report",
+            name="ci-report",
             description="Command line tool to check a LOBSTER report",
             official=True,
         )

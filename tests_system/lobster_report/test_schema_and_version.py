@@ -25,7 +25,7 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         asserter.assertStdOutText("python_invalid_schema.lobster: "
                                   "lobster error: unknown schema kind "
                                   "invalid-schema-name\n\n"
-                                  "lobster-lobster-report: aborting due "
+                                  "lobster-report: aborting due "
                                   "to earlier errors.\n")
         asserter.assertExitCode(1)
 
@@ -43,7 +43,7 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         asserter.assertStdOutText("trlc_missing_schema.lobster: "
                                   "lobster error: required top-levelkey "
                                   "schema not present\n\n"
-                                  "lobster-lobster-report: aborting due "
+                                  "lobster-report: aborting due "
                                   "to earlier errors.\n")
         asserter.assertExitCode(1)
 
@@ -64,7 +64,7 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         asserter.assertStdOutText("python_invalid_version.lobster: "
                                   "lobster error: version 99 for schema "
                                   "lobster-req-trace is not supported\n\n"
-                                  "lobster-lobster-report: aborting due "
+                                  "lobster-report: aborting due "
                                   "to earlier errors.\n")
         asserter.assertExitCode(1)
 
@@ -82,6 +82,6 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         asserter.assertStdOutText("trlc_missing_version.lobster: "
                                   "lobster error: required top-levelkey "
                                   "version not present\n\n"
-                                  "lobster-lobster-report: aborting due "
+                                  "lobster-report: aborting due "
                                   "to earlier errors.\n")
         asserter.assertExitCode(1)

@@ -48,9 +48,6 @@ class Config:
     report: str = "report.lobster"
 
 
-TOOL_NAME = "lobster-online-report"
-
-
 def load_config(file_name: str) -> Config:
     if not os.path.isfile(file_name):
         raise FileNotFoundError(f'{file_name} is not an existing file!')
@@ -162,7 +159,7 @@ def add_github_reference_to_items(
 class OnlineReportTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
-            name="lobster-online-report",
+            name="online-report",
             description="Update file locations in LOBSTER report to GitHub references.",
             official=True,
         )
@@ -194,9 +191,8 @@ class OnlineReportTool(MetaDataToolBase):
             self._print_error(lobster_error)
         return 1
 
-    @staticmethod
-    def _print_error(error: Union[Exception, str]):
-        print(f"{TOOL_NAME}: {error}", file=sys.stderr)
+    def _print_error(self, error: Union[Exception, str]):
+        print(f"{self.name}: {error}", file=sys.stderr)
 
     @staticmethod
     def _execute(options: Namespace) -> None:
