@@ -38,7 +38,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
     def test_valid_lobster_file_succeeds(self):
         # lobster-trace: html_req.Valid_Lobster_File
         """Verify the tool runs successfully with a valid .lobster file."""
-        output_filename = "is_actually_html.output"
+        output_filename = "is_actually_html.html"
         valid_inputfile = self._data_directory / "awesome.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
@@ -76,9 +76,9 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         displayed in the HTML report header."""
         dot_present = is_dot_available(dot=None)
         if dot_present:
-            output_filename = "custom_data_tracing_policy.output"
+            output_filename = "custom_data_tracing_policy.html"
         else:
-            output_filename = "custom_data.output"
+            output_filename = "custom_data.html"
         input = self._data_directory / "custom_data_report.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
@@ -111,7 +111,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
     def test_valid_md_lobster_file_succeeds(self):
         # lobster-trace: html_req.Valid_Lobster_File_With_Md_Content
         """Verify tool runs successfully with a valid .lobster file with md content."""
-        output_filename = "to_render_md_content.output"
+        output_filename = "to_render_md_content.html"
         valid_inputfile = self._data_directory / "to_render_md_content.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
