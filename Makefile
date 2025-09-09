@@ -278,8 +278,9 @@ tracing-stf: $(STF_TRLC_FILES)
 	python lobster-trlc.py --config=lobster/tools/lobster-trlc-software-stf.yaml --out=stf_software_requirements.lobster
 	python lobster-python.py --out=stf_code.lobster --only-tagged-functions $(STF_PYTHON_FILES)
 	python lobster-report.py --lobster-config=tests_system/stf-lobster.conf --out=stf_report.lobster
-	python lobster-online-report.py stf_report.lobster
-	python lobster-html-report.py stf_report.lobster --out=$(STF_OUTPUT_FILE)
+	@printf "report: stf_report.lobster\ncommit_id: 'main'\nrepo_root: ''\nbase_url: 'https://github.com/bmw-software-engineering/lobster'" > online_report_config.yaml
+	python lobster-online-report.py --config=online_report_config.yaml --out=stf-online-report.lobster
+	python lobster-html-report.py stf-online-report.lobster --out=$(STF_OUTPUT_FILE)
 	@echo "✅ STF report generated at $(STF_OUTPUT_FILE)"
 	@echo "Deleting STF *.lobster files..."
-	rm -f stf_system_requirements.lobster stf_software_requirements.lobster stf_code.lobster stf_report.lobster
+	rm -f stf_system_requirements.lobster stf_software_requirements.lobster stf_code.lobster stf_report.lobster online_report_config.yaml
