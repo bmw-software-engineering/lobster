@@ -17,13 +17,10 @@ req.System_Requirement Item_Data_Unique {
     '''
 }
 
-req.System_Requirement Tracing_Policy_Data {
+req.System_Requirement Tracing_Policy_Image {
     description = '''
-      IF the input report file contains data created using a tracing policy,
-      THEN the tool shall process the data correctly into an HTML report and 
-      generate correct visual representation of tracing policy.
-
-      example: refer the policy 'tests_system/lobster_report/data/pizza_policy.conf'
+      IF the tool "dot" is available, 
+      THEN the tool shall include a visualization of the tracing policy.
     '''
 }
 

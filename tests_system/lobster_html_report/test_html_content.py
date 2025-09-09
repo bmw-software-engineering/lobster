@@ -60,7 +60,6 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_complex_tracing_policy_data(self):
-        # lobster-trace: html_req.Complex_Tracing_Policy_Data
         # lobster-trace: UseCases.Correct_Item_Data
         # lobster-trace: UseCases.Coverage_in_output
         # lobster-trace: UseCases.HTML_file_generation
