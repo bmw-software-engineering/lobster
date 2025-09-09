@@ -28,7 +28,7 @@ req.PotentialError Online_Report_Extract_Wrong_Item_Data_in_Output{
     impact_type = req.Impact_Type.Safety
 }
 
-req.PotentialError Output_Despite_Missing_Config_File_Online {
+req.PotentialError Output_Despite_Missing_Config_File_Online_Report {
 		summary = "Output generated without configuration file"
 		description = '''
 			The user does not provide a valid path to a configuration file,
@@ -48,7 +48,7 @@ req.PotentialError Output_Despite_Missing_Config_File_Online {
 		impact_type = req.Impact_Type.Safety
 }
 
-req.PotentialError Output_Despite_Config_File_Error_Online {
+req.PotentialError Output_Despite_Config_File_Error_Online_Report {
 		summary = "Output generated with an invalid configuration file"
 		description = '''
 			The user provides an invalid configuration file, but the lobster-online_report tool

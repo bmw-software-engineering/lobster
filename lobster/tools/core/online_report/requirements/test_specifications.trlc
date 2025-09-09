@@ -16,17 +16,17 @@ req.TestSpecification Correct_Item_Data_in_Online_Report_Output_File {
         verifies = [Online_Report_Extract_Wrong_Item_Data_in_Output]
 }
 
-req.TestSpecification Online_Config_File_Missing {
+req.TestSpecification Online_Report_Config_File_Missing {
 		description = '''
 			The test shall verify that the lobster-online_report tool exits with a non-zero return code when the config file does not exist.
 			Example: Verify that the lobster-online_report tool throws an error when a non-existent config file is provided.
 		'''
-		verifies = [Output_Despite_Missing_Config_File_Online]
+		verifies = [Output_Despite_Missing_Config_File_Online_Report]
 }
 
-req.TestSpecification Online_Config_File_Key_Error {
+req.TestSpecification Online_Report_Config_File_Key_Error {
 		description = '''
 			The test shall verify that lobster-online_report tool exits with a non-zero return code when the config file is missing required keys.
 		'''
-		verifies = [Output_Despite_Config_File_Error_Online]
+		verifies = [Output_Despite_Config_File_Error_Online_Report]
 }

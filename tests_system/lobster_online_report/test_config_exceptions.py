@@ -12,7 +12,7 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_missing_config_file(self):
-        # lobster-trace: Usecases.Online_Config_File_Missing
+        # lobster-trace: Usecases.Online_Report_Config_File_Missing
         not_existing_file = str(
             self._data_directory / "non-existing.yaml")
 
@@ -28,7 +28,7 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
         asserter.assertExitCode(1)
 
     def test_config_file_errors(self):
-        # lobster-trace: Usecases.Online_Config_File_Key_Error
+        # lobster-trace: Usecases.Online_Report_Config_File_Key_Error
         test_cases = [
             (
                 "with_no_repo_root.yaml",
