@@ -5,6 +5,11 @@
 
 ### 0.14.6-dev
 
+* Standardized tool API naming convention:
+  - `cb_query_to_lobster_file` → `lobster_codebeamer`
+  - `generate_report_file` → `lobster_report`
+  - `cpptest_items_to_lobster_file` → `lobster_cpptest`
+
 * `lobster-html-report`:
   Unused `id` attribute from `h5` tag in the HTML report was removed.
 

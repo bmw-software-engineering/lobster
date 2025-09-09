@@ -609,7 +609,7 @@ def _cb_items_to_lobster(items: List[Dict], config: Config, out_file: TextIO) ->
     lobster_write(out_file, schema_config["class"], TOOL_NAME.replace("-", "_"), items)
 
 
-def cb_query_to_lobster_file(config: Config, out_file: str) -> None:
+def lobster_codebeamer(config: Config, out_file: str) -> None:
     """Loads items from codebeamer and serializes them in the LOBSTER interchange
        format to the given file.
     """

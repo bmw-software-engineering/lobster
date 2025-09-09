@@ -315,7 +315,7 @@ def write_lobster_items_output_dict(lobster_items_output_dict: dict):
                   f'"{output_file_name}".')
 
 
-def lobster_cpptest(config: Config):
+def run_lobster_cpptest(config: Config):
     """
     The main function to parse requirements from comments
     for the given list of files and/or directories and write the
@@ -385,17 +385,17 @@ class CppTestTool(MetaDataToolBase):
     def _execute(options: Namespace) -> None:
         config = parse_config_file(options.config)
 
-        lobster_cpptest(
+        run_lobster_cpptest(
             config=config
         )
 
 
-def cpptest_items_to_lobster_file(config: Config) -> None:
+def lobster_cpptest(config: Config) -> None:
     """Loads items from cpptests and serializes them in the LOBSTER interchange
-       format to the given file.
+        format to the given file.
     """
     # This is an API function.
-    lobster_cpptest(config=config)
+    run_lobster_cpptest(config=config)
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:
