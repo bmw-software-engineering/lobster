@@ -74,7 +74,7 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_codebeamer_links(self):
-        # lobster-trace: UseCases.Correct_Item_Data
+        # lobster-trace: UseCases.Correct_Item_Data_in_Output_File
         """
         This test checks that the report contains
         the Codebeamer items present in the input file.

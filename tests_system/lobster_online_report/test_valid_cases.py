@@ -35,6 +35,8 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
 
     @patch('lobster.tools.core.online_report.path_to_url_converter.Repo')
     def test_main_repo(self, mock_repo_class):
+        # lobster-trace: Usecases.Incorrect_GitHub_Reference_in_Output_file
+        # lobster-trace: Usecases.Correct_Item_Data_in_Online_Report_Output_File
         OUT_FILE = "main_repo_online_report.lobster"
 
         mock_main_repo = Mock()
@@ -58,6 +60,8 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
 
     @patch('lobster.tools.core.online_report.path_to_url_converter.Repo')
     def test_submodules(self, mock_repo_class):
+        # lobster-trace: Usecases.Incorrect_GitHub_Reference_in_Output_file
+        # lobster-trace: Usecases.Correct_Item_Data_in_Online_Report_Output_File
         OUT_FILE = "submodule_online_report.lobster"
 
         mock_repo = Mock()
@@ -104,5 +108,34 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
         self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    @patch('lobster.tools.core.online_report.path_to_url_converter.Repo')
+    def test_codebeamer_links(self, mock_repo_class):
+        # lobster-trace: UseCases.Correct_Item_Data_in_Online_Report_Output_File
+        """
+        This test checks that the online report contains
+        the Codebeamer items present in the input file.
+        """
+        mock_main_repo = Mock()
+        mock_main_repo.working_tree_dir = str(self._test_runner.working_dir)
+        mock_repo_class.return_value = mock_main_repo
+        mock_main_repo.submodules = []
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "codebeamer_links.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "codebeamer_funny_impl.py")
+
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "codebeamer_links_config.yaml")
+        out_file = "codebeamer_online_report.lobster"
+        self._test_runner.cmd_args.out = out_file
+        self._test_runner.declare_output_file(self._data_directory / out_file)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertNoStdOutText()
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
