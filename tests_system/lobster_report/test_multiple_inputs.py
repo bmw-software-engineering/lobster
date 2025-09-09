@@ -73,7 +73,7 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
             "multiple_traces_just.conf:11: lobster error: cannot find file "
             "multiple_traces_test.lobster\n"
             "\n"
-            "lobster-lobster-report: aborting due to earlier errors.\n"
+            "lobster-report: aborting due to earlier errors.\n"
         )
         asserter.assertExitCode(1)
 

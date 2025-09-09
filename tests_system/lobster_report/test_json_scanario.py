@@ -22,7 +22,7 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         asserter.assertNoStdErrText()
         asserter.assertStdOutText("trlc_invalid_json.lobster:6:2: "
                                   "lobster error: Extra data\n\n"
-                                  "lobster-lobster-report: aborting due "
+                                  "lobster-report: aborting due "
                                   "to earlier errors.\n")
         asserter.assertExitCode(1)
 
@@ -73,6 +73,6 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         asserter.assertNoStdErrText()
         asserter.assertStdOutText("trlc_json_not_dict.lobster: "
                                   "lobster error: parsed json is not an object\n\n"
-                                  "lobster-lobster-report: aborting due "
+                                  "lobster-report: aborting due "
                                   "to earlier errors.\n")
         asserter.assertExitCode(1)

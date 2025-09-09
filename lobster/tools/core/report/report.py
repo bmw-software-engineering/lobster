@@ -29,7 +29,7 @@ from lobster.common.meta_data_tool_base import MetaDataToolBase
 class ReportTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
-            name="lobster-report",
+            name="report",
             description="Generate a LOBSTER report from a lobster.conf file",
             official=True,
         )

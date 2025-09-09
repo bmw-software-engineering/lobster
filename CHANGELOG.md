@@ -12,6 +12,12 @@
 
 * `lobster-html-report`:
   Unused `id` attribute from `h5` tag in the HTML report was removed.
+* `lobster-online-report`:
+  Fixed tool name in help message.
+* `lobster-report`:
+  Fixed tool name in help message.
+* `lobster-ci-report`:
+  Fixed tool name in help message.
 
 ### 0.14.5
 
