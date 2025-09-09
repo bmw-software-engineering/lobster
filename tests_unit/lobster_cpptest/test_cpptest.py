@@ -12,7 +12,7 @@ from lobster.tools.cpptest.cpptest import (
     Config,
     collect_test_cases_from_test_files,
     get_test_file_list,
-    lobster_cpptest,
+    run_lobster_cpptest,
     parse_config_file,
 )
 from lobster.tools.cpptest.constants import Constants
@@ -134,7 +134,7 @@ class LobsterCpptestTests(unittest.TestCase):
             output_file=self.output_file_name
         )
 
-        lobster_cpptest(
+        run_lobster_cpptest(
             config=config
         )
 
@@ -165,7 +165,7 @@ class LobsterCpptestTests(unittest.TestCase):
             output_file=self.output_data_file_name
         )
 
-        lobster_cpptest(
+        run_lobster_cpptest(
             config=config
         )
 
@@ -188,7 +188,7 @@ class LobsterCpptestTests(unittest.TestCase):
         )
 
         with self.assertRaises(Exception) as wrapper:
-            lobster_cpptest(
+            run_lobster_cpptest(
                 config=config
             )
 
@@ -202,7 +202,7 @@ class LobsterCpptestTests(unittest.TestCase):
         config: Config = parse_config_file(self.test_config_2)
         config.files = [self.test_case_file]
 
-        lobster_cpptest(
+        run_lobster_cpptest(
             config=config
         )
 
