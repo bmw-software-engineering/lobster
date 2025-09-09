@@ -17,19 +17,19 @@ class LobsterOnlineReportInputTest(LobsterUISystemTestCaseBase):
         self.output_dir = Path(Path(__file__).parents[0])
 
     def test_online_report_input(self):
-        # lobster-trace: html_req.Source_location_in_output
-        # lobster-trace: html_req.HTML_file_generation
-        # lobster-trace: html_req.Mapping_in_HTML_file
-        # lobster-trace: html_req.Tracing_policy_in_output
-        # lobster-trace: html_req.Correct_Item_Data
-        # lobster-trace: html_req.HTML_file_generation
+        # lobster-trace: UseCases.Source_location_in_output
+        # lobster-trace: UseCases.HTML_file_generation
+        # lobster-trace: UseCases.Correct_Item_Data
+        # lobster-trace: UseCases.Coverage_in_output
+        # lobster-trace: UseCases.List_of_tests_covering_requirements_in_HTML_file
+        # lobster-trace: UseCases.Covered_Requirement_list_in_HTML_file
         """
         Tests the input file 'online report' is processed
         and links are generated correctly in the HTML report.
         the online report file is created using complex tracing policy
         which contains requirements, code and tests.
         """
-        output_filename = "online_pizza.html"
+        output_filename = "pizza_online.html"
         valid_inputfile = self._data_directory / "pizza_online_report.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
@@ -65,5 +65,6 @@ class LobsterOnlineReportInputTest(LobsterUISystemTestCaseBase):
             f"LOBSTER HTML report written to {output_filename}\n",
             completed_process.stdout,
         )
+        asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
