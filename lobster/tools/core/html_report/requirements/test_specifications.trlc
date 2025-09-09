@@ -17,14 +17,14 @@ req.TestSpecification Not_covered_Requirement_list_in_Output{
 
 req.TestSpecification List_of_tests_covering_requirements_in_HTML_file{
     description = '''
-      The test shall verify that software tests covering requirement are correctly listed in the HTML file.
+      The test shall verify that software tests covering requirements are correctly listed in the HTML file.
     '''
     verifies = [Software_tests_not_listed_correctly]
 }
 
   req.TestSpecification List_of_tests_Not_covering_requirements_in_HTML_file{
     description = '''
-      The test shall verify that software tests not covering any requirement are correctly listed in the HTML file.
+      The test shall verify that software tests not covering requirements are correctly listed in the HTML file.
     '''
     verifies = [Software_tests_not_listed_correctly]
 }
