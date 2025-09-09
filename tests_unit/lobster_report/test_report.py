@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch
 from lobster.common.report import Coverage, Report
-from lobster.tools.core.report.report import generate_report_file
+from lobster.tools.core.report.report import lobster_report
 
 
 class ReportTests(TestCase):
@@ -56,7 +56,7 @@ class ReportTests(TestCase):
         with patch.object(Report, 'parse_config') as mock_parse_config, \
              patch.object(Report, 'write_report') as mock_write_report:
 
-            generate_report_file(
+            lobster_report(
                 lobster_config_file=apple_config,
                 output_file=banana_output
             )

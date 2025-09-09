@@ -63,7 +63,7 @@ class ReportTool(MetaDataToolBase):
         return 1
 
 
-def generate_report_file(lobster_config_file: str, output_file: str) -> dict:
+def lobster_report(lobster_config_file: str, output_file: str) -> dict:
     # This is an API function to run the lobster report tool
     report = Report()
     report.parse_config(lobster_config_file)
