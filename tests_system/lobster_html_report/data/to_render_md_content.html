@@ -467,9 +467,9 @@ blockquote {
 <div class="content">
 <div id="issues-section" style="display:none">
 <ul>
-<li class="issue issue-missing-req">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: status is status1, expected abc or def</li>
-<li class="issue issue-missing-req">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: missing reference to Code</li>
-<li class="issue issue-missing-python">Python Function <a href='#item-b08d67b92006da35eaff57131eb330052bacbfb7'>software.Example</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-req">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: status is status1, expected abc or def</li>
+<li class="issue issue-missing issue-missing-req">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: missing reference to Code</li>
+<li class="issue issue-missing issue-missing-python">Python Function <a href='#item-b08d67b92006da35eaff57131eb330052bacbfb7'>software.Example</a>: missing up reference</li>
 </ul>
 </div>
 </div>
@@ -556,7 +556,7 @@ Status: status1
 </div>
 </div>
 <footer>
-<p>LOBSTER Version: 0.14.5-dev</p>
+<p>LOBSTER Version: 0.14.6-dev</p>
 </footer>
 </div>
 </div>
@@ -581,7 +581,7 @@ function buttonFilter(filter) {
         console.log("log ", issue_elms[i].className)
         if (filter == "all") {
             issue_elms[i].style.display = "list-item";
-        } else if (issue_elms[i].className == "issue issue-" + filter) {
+        } else if (issue_elms[i].className.includes("issue issue-" + filter)) {
             issue_elms[i].style.display = "list-item";
         } else {
             issue_elms[i].style.display = "none";

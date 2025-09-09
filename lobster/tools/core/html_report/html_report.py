@@ -415,7 +415,8 @@ def write_html(fd, report, high_contrast, render_md):
                     has_issues = True
                     doc.add_line("<ul>")
                 doc.add_line(
-                    f'<li class="issue issue-{item.tracing_status.name.lower()}-'
+                    f'<li class="issue issue-{item.tracing_status.name.lower()}'
+                    f' issue-{item.tracing_status.name.lower()}-'
                     f'{item.tag.namespace}">{xref_item(item)}: {message}</li>'
                 )
     if has_issues:
