@@ -1,0 +1,42 @@
+package UseCases
+import req
+
+
+req.TestSpecification PKG_Files_Missing {
+    description = '''
+        The test shall verify that the lobster-pkg tool exits with a non-zero return code when the pkg files do not exist.
+        Example: Verify that the lobster-pkg tool throws an error when a non-existent pkg file is provided.
+    '''
+    verifies = [Default_Path_Choice_pkg]
+}
+
+req.TestSpecification PKG_Files_Invalid {
+    description = '''
+        The test shall verify that the lobster-pkg tool exits with a non-zero return code when the pkg/ta files are invalid XML.
+        Example: Verify that the lobster-pkg tool throws an error when an invalid pkg/ta file is provided.
+    '''
+    verifies = [Invalid_XML_Ignored]
+}
+
+req.TestSpecification PKG_Items_Extraction {
+    description = '''
+        The test shall verify that the lobster-pkg tool extracts the correct items from the pkg/ta files.
+        Example: Verify that the lobster-pkg tool extracts all relevant items from the provided pkg/ta files.
+    '''
+    verifies = [Wrong_Extraction_from_PKG, Too_few_Extraction_from_PKG, Too_many_Output_Items, Too_many_PKG_files]
+}
+
+req.TestSpecification Warning_for_Misplaced_Trace {
+    description = '''
+        The test shall verify that the lobster-pkg tool does warn user about misplaced traces in pkg/ta files.
+        Example: Verify that the lobster-pkg tool processes pkg/ta files with misplaced traces and
+        that a warning is issued in the console output.
+
+        Test steps:
+        - Provide a PKG or TA XML file with <VALUE> or <DESCRIPTION> nodes containing "lobster-trace:REQUIREMENT_ID"
+          but placed outside the valid locations described in [[Trace_in_Test_Step_Node]] and [[Trace_in_Analysis_Node]].
+        - Run the tool and verify that a warning is printed for each misplaced tag, including location information.
+    '''
+    verifies = [No_Warning_for_Misplaced_Trace]
+}
+
