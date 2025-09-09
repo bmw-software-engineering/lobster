@@ -458,14 +458,14 @@ footer {
 <div class="content">
 <div id="issues-section" style="display:none">
 <ul>
-<li class="issue issue-missing-python">Python Class <a href='#item-65c9f37adf97674454a4b4463c94621ca97a397c'>tentacle_commander.DenSecurity</a>: unknown tracing target req octopus_example.den_security</li>
-<li class="issue issue-missing-python">Python Class <a href='#item-65c9f37adf97674454a4b4463c94621ca97a397c'>tentacle_commander.DenSecurity</a>: missing up reference</li>
-<li class="issue issue-missing-python">Python Class <a href='#item-e70dc1c3f97b6472665a02063bb47b5c55c1fe18'>tentacle_toolkit.ConstructionPlanner</a>: unknown tracing target req octopus_example.rock_arrangement_planner</li>
-<li class="issue issue-missing-python">Python Class <a href='#item-e70dc1c3f97b6472665a02063bb47b5c55c1fe18'>tentacle_toolkit.ConstructionPlanner</a>: missing up reference</li>
-<li class="issue issue-missing-pyunit">PyUnit Test <a href='#item-96586fd418c143ab49cdb8c2b80dbfb41aefc7e4'>test_tentacle_commander.TestDenSecurity.test_secure_den:62</a>: unknown tracing target req octopus_example.den_security</li>
-<li class="issue issue-missing-pyunit">PyUnit Test <a href='#item-96586fd418c143ab49cdb8c2b80dbfb41aefc7e4'>test_tentacle_commander.TestDenSecurity.test_secure_den:62</a>: missing up reference</li>
-<li class="issue issue-missing-pyunit">PyUnit Test <a href='#item-c3d63908be382cd7ea18ee1a68080efdadfdb134'>test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</a>: unknown tracing target req octopus_example.rock_arrangement_planner</li>
-<li class="issue issue-missing-pyunit">PyUnit Test <a href='#item-c3d63908be382cd7ea18ee1a68080efdadfdb134'>test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-python">Python Class <a href='#item-65c9f37adf97674454a4b4463c94621ca97a397c'>tentacle_commander.DenSecurity</a>: unknown tracing target req octopus_example.den_security</li>
+<li class="issue issue-missing issue-missing-python">Python Class <a href='#item-65c9f37adf97674454a4b4463c94621ca97a397c'>tentacle_commander.DenSecurity</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-python">Python Class <a href='#item-e70dc1c3f97b6472665a02063bb47b5c55c1fe18'>tentacle_toolkit.ConstructionPlanner</a>: unknown tracing target req octopus_example.rock_arrangement_planner</li>
+<li class="issue issue-missing issue-missing-python">Python Class <a href='#item-e70dc1c3f97b6472665a02063bb47b5c55c1fe18'>tentacle_toolkit.ConstructionPlanner</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-pyunit">PyUnit Test <a href='#item-96586fd418c143ab49cdb8c2b80dbfb41aefc7e4'>test_tentacle_commander.TestDenSecurity.test_secure_den:62</a>: unknown tracing target req octopus_example.den_security</li>
+<li class="issue issue-missing issue-missing-pyunit">PyUnit Test <a href='#item-96586fd418c143ab49cdb8c2b80dbfb41aefc7e4'>test_tentacle_commander.TestDenSecurity.test_secure_den:62</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-pyunit">PyUnit Test <a href='#item-c3d63908be382cd7ea18ee1a68080efdadfdb134'>test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</a>: unknown tracing target req octopus_example.rock_arrangement_planner</li>
+<li class="issue issue-missing issue-missing-pyunit">PyUnit Test <a href='#item-c3d63908be382cd7ea18ee1a68080efdadfdb134'>test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</a>: missing up reference</li>
 </ul>
 </div>
 </div>
@@ -1025,7 +1025,7 @@ footer {
 </div>
 </div>
 <footer>
-<p>LOBSTER Version: 0.14.5-dev</p>
+<p>LOBSTER Version: 0.14.6-dev</p>
 </footer>
 </div>
 </div>
@@ -1050,7 +1050,7 @@ function buttonFilter(filter) {
         console.log("log ", issue_elms[i].className)
         if (filter == "all") {
             issue_elms[i].style.display = "list-item";
-        } else if (issue_elms[i].className == "issue issue-" + filter) {
+        } else if (issue_elms[i].className.includes("issue issue-" + filter)) {
             issue_elms[i].style.display = "list-item";
         } else {
             issue_elms[i].style.display = "none";

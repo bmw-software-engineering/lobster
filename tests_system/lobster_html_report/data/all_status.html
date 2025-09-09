@@ -458,14 +458,14 @@ footer {
 <div class="content">
 <div id="issues-section" style="display:none">
 <ul>
-<li class="issue issue-missing-req">TRLC Usecase <a href='#item-a78f259e8462886192ecac5101450bc65217f6f2'>complex_just_example.lost_sock_scenario</a>: missing reference to System Requirements</li>
-<li class="issue issue-missing-req">TRLC Usecase <a href='#item-2c74cb805d52d95048005446cecffdb49edc7f92'>complex_just_example.midnight_snack_temptation_scenario</a>: missing reference to System Requirements</li>
-<li class="issue issue-partial-req">TRLC System_requirement <a href='#item-3e305d42ba7a90ab7b066392b4876421f8b90f91'>complex_just_example.sock_finder</a>: missing reference to Software Requirements</li>
-<li class="issue issue-partial-req">TRLC System_requirement <a href='#item-e98d43674284bfd1ed2810293750e6bc61cc541c'>complex_just_example.pizza_detector</a>: missing up reference</li>
-<li class="issue issue-missing-req">TRLC System_requirement <a href='#item-936ae76ade9e901cff60a63589a8cffd07939e52'>complex_just_example.cookie_guard</a>: missing up reference</li>
-<li class="issue issue-missing-req">TRLC System_requirement <a href='#item-936ae76ade9e901cff60a63589a8cffd07939e52'>complex_just_example.cookie_guard</a>: missing reference to Software Requirements</li>
-<li class="issue issue-missing-req">TRLC Software_requirement <a href='#item-3fbb378209e0d13a84c2b37495d3955d8fe55edc'>complex_just_example.mood_analyzer</a>: missing up reference</li>
-<li class="issue issue-missing-req">TRLC Software_requirement <a href='#item-f3639b8fff1954f343c6432542b61afff40cbb07'>complex_just_example.cushion_explorer</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-req">TRLC Usecase <a href='#item-a78f259e8462886192ecac5101450bc65217f6f2'>complex_just_example.lost_sock_scenario</a>: missing reference to System Requirements</li>
+<li class="issue issue-missing issue-missing-req">TRLC Usecase <a href='#item-2c74cb805d52d95048005446cecffdb49edc7f92'>complex_just_example.midnight_snack_temptation_scenario</a>: missing reference to System Requirements</li>
+<li class="issue issue-partial issue-partial-req">TRLC System_requirement <a href='#item-3e305d42ba7a90ab7b066392b4876421f8b90f91'>complex_just_example.sock_finder</a>: missing reference to Software Requirements</li>
+<li class="issue issue-partial issue-partial-req">TRLC System_requirement <a href='#item-e98d43674284bfd1ed2810293750e6bc61cc541c'>complex_just_example.pizza_detector</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-req">TRLC System_requirement <a href='#item-936ae76ade9e901cff60a63589a8cffd07939e52'>complex_just_example.cookie_guard</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-req">TRLC System_requirement <a href='#item-936ae76ade9e901cff60a63589a8cffd07939e52'>complex_just_example.cookie_guard</a>: missing reference to Software Requirements</li>
+<li class="issue issue-missing issue-missing-req">TRLC Software_requirement <a href='#item-3fbb378209e0d13a84c2b37495d3955d8fe55edc'>complex_just_example.mood_analyzer</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-req">TRLC Software_requirement <a href='#item-f3639b8fff1954f343c6432542b61afff40cbb07'>complex_just_example.cushion_explorer</a>: missing up reference</li>
 </ul>
 </div>
 </div>
@@ -891,7 +891,7 @@ footer {
 </div>
 </div>
 <footer>
-<p>LOBSTER Version: 0.14.5-dev</p>
+<p>LOBSTER Version: 0.14.6-dev</p>
 </footer>
 </div>
 </div>
@@ -916,7 +916,7 @@ function buttonFilter(filter) {
         console.log("log ", issue_elms[i].className)
         if (filter == "all") {
             issue_elms[i].style.display = "list-item";
-        } else if (issue_elms[i].className == "issue issue-" + filter) {
+        } else if (issue_elms[i].className.includes("issue issue-" + filter)) {
             issue_elms[i].style.display = "list-item";
         } else {
             issue_elms[i].style.display = "none";
