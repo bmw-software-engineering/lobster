@@ -7,6 +7,12 @@ py_binary(
 )
 
 py_binary(
+    name = "update_html_expected_output",
+    srcs = ["update_html_expected_output.py"],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
     name = "update_online_json_with_hashes",
     srcs = ["update_online_json_with_hashes.py"],
     visibility = ["//visibility:public"],
@@ -23,6 +29,7 @@ py_library(
     srcs = [
         "__init__.py",
         "update_cpptest_expected_output.py",
+        "update_html_expected_output.py",
         "update_online_json_with_hashes.py",
         "update_version_in_html.py",
     ],
