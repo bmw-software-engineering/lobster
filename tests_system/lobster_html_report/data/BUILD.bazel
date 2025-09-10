@@ -1,7 +1,7 @@
 filegroup(
     name = "html_report_data_system",
     srcs = glob([
-        "*.output",
+        "*.html",
         "*.lobster",
     ]),
     visibility = ["//visibility:public"],

@@ -59,3 +59,14 @@ py_test(
         "//tests_system/tests_utils",
     ],
 )
+
+py_test(
+    name = "test_online_report_input",
+    srcs = ["test_online_report_input.py"],
+    deps = [
+        ":lobster_html_report",
+        "//lobster/tools/core/html_report",
+        "//tests_system",
+        "//tests_system/tests_utils",
+    ],
+)
