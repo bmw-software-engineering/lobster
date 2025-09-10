@@ -131,26 +131,23 @@ unit-tests:
 			--source=lobster \
 			-m unittest discover -s tests_unit -v
 
-upload-main: packages
-	python3 -m twine upload --repository pypi packages/*/dist/*
-	python3 -m twine upload --repository pypi packages/*/meta_dist/*
-
 remove-dev:
 	python3 -m util.release
-
-github-release:
-	git push
-	python3 -m util.github_release
 
 bump:
 	python3 -m util.bump_version_post_release
 
-full-release:
-	make remove-dev
-	git push
-	make github-release
-	make bump
-	git push
+
+# steps for a release:
+# - create new branch
+# - make remove-dev
+# - review CHANGELOG.md (is it complete, or is something missing?)
+# - git push + create pull request
+#
+# - create new branch
+# - make bump
+# - git push + create pull request
+
 
 # --- Coverage Execution Targets ---
 coverage-unit:
@@ -175,11 +172,9 @@ clean-coverage:
 # --- Convenience Test Targets ---
 test-system: clean-coverage system-tests
 	make coverage-system
-	util/check_local_modifications.sh
 
 test-unit: clean-coverage unit-tests
 	make coverage-unit
-	util/check_local_modifications.sh
 
 docs:
 	mkdir -p docs
