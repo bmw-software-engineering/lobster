@@ -5,7 +5,7 @@ The **L**ightweight **O**pen **B**MW **S**oftware **T**raceability
 and requirements coverage, which is essential for meeting standards
 such as ISO 26262.
 
-This repository contains the prototype for LOBSTER, which is a key
+This repository contains LOBSTER, which is a key
 ingredient to make [TRLC](https://github.com/bmw-software-engineering/trlc/)
 and other supported tools more useful.
 
