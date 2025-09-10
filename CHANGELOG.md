@@ -5,6 +5,15 @@
 
 ### 0.14.6-dev
 
+* `lobster-cpp`:
+  - Removed feature to write output to `stdout`.
+    This decision has been made to align the behavior of `lobster-cpp` with all other
+    LOBSTER tools, and to reduce the complexity of the tool.
+    This simplifies testing and tool qualification in the future.
+
+    The output file must be specified through the `--out` command line argument.
+    Its default value is `cpp.lobster`.
+
 * Standardized tool API naming convention:
   - `cb_query_to_lobster_file` → `lobster_codebeamer`
   - `generate_report_file` → `lobster_report`
@@ -26,7 +35,7 @@
   as a Bazel target.
 
 * `lobster-html-report`:
-  New divs are introduced for the sub-sections inside of detailed report section.
+  New `<div>` elements are introduced for the sub-sections inside of detailed report section.
 
 ### 0.14.4
 
