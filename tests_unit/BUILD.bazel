@@ -61,7 +61,7 @@ py_test(
 )
 
 py_test(
-    name = "test_tool2",
-    srcs = ["test_tool2.py"],
+    name = "test_tool_util",
+    srcs = ["test_tool_util.py"],
     deps = ["//lobster/common"],
 )

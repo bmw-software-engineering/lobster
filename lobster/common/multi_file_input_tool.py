@@ -23,7 +23,7 @@ from lobster.common.errors import Message_Handler
 from lobster.common.items import Requirement, Implementation, Activity
 from lobster.common.io import lobster_write
 from lobster.common.meta_data_tool_base import MetaDataToolBase
-from lobster.common.tool2_config import Config
+from lobster.common.multi_file_input_config import Config
 from lobster.common.file_collector import FileCollector
 
 
@@ -111,16 +111,19 @@ class MultiFileInputTool(MetaDataToolBase, metaclass=ABCMeta):
             help=f"Write output to the given file (default: {self.name}.lobster)",
         )
         self._argument_parser.add_argument(
-            "--config",
-            default=None,
-            help="Path to configuration file",
-            required=True
-        )
-        self._argument_parser.add_argument(
             "dir_or_files",
             nargs="*",
             metavar="DIR|FILE",
             help="Input directories or files"
+        )
+        self._add_config_argument()
+
+    def _add_config_argument(self):
+        self._argument_parser.add_argument(
+            "--config",
+            default=None,
+            help="Path to configuration file",
+            required=True
         )
 
     def _write_output(
