@@ -3,7 +3,14 @@
 ## Changelog
 
 
-### 0.14.6-dev
+### 1.0.0
+
+This release has got many system tests, which may help to 
+qualify tools according to use cases in the context of
+ISO 26262.
+Please refer to [QUALIFICATION.md](QUALIFICATION.md) for more details.
+
+Changes:
 
 * `lobster-cpp`:
   - Removed feature to write output to `stdout`.
