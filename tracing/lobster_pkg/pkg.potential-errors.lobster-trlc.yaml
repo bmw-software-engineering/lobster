@@ -9,4 +9,4 @@ conversion-rules:
     description-fields:
       - description
     tags:
-    - affects
+      - affects

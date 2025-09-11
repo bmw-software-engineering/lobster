@@ -117,7 +117,7 @@ Here are the links to the individual requirement coverage reports:
 
 * [Requirement Coverage Report TRLC](https://bmw-software-engineering.github.io/lobster/tracing-trlc.html)
 * [Requirement Coverage Report Python](https://bmw-software-engineering.github.io/lobster/tracing-python.html)
-* Requirement Coverage Report PKG: not yet available
+* [Requirement Coverage Report PKG](https://bmw-software-engineering.github.io/lobster/tracing-pkg.html)
 * [Requirement Coverage Report Json](https://bmw-software-engineering.github.io/lobster/tracing-json.html)
 * [Requirement Coverage Report Gtest](https://bmw-software-engineering.github.io/lobster/tracing-gtest.html)
 * [Requirement Coverage Report Cpptest](https://bmw-software-engineering.github.io/lobster/tracing-cpptest.html)
