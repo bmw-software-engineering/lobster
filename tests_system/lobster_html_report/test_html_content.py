@@ -24,6 +24,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         # lobster-trace: UseCases.List_of_tests_Not_covering_requirements_in_HTML_file
         # lobster-trace: UseCases.List_of_tests_covering_requirements_in_HTML_file
         # lobster-trace: UseCases.Source_location_in_output
+        # lobster-trace: UseCases.Missing_tracing_policy_violation_in_output
         """
         This test checks that the data is not mixed
         and unique data in each item processed correctly
@@ -154,6 +155,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         # lobster-trace: UseCases.Source_location_in_output
         # lobster-trace: UseCases.HTML_file_generation
         # lobster-trace: UseCases.Not_covered_Requirement_list_in_Output
+        # lobster-trace: UseCases.Missing_tracing_policy_violation_in_output
         """
         This test checks that the tool processes data containing the items
         with multiple status like ok, missing, partial, justified
@@ -240,6 +242,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         # lobster-trace: UseCases.List_of_tests_Not_covering_requirements_in_HTML_file
         # lobster-trace: UseCases.List_of_tests_covering_requirements_in_HTML_file
         # lobster-trace: UseCases.Source_location_in_output
+        # lobster-trace: UseCases.Missing_tracing_policy_violation_in_output
         """
         This test checks the input .lobster file has a content in message attributes
         and HTML tool correctly processes it and write correct output file.
