@@ -190,7 +190,7 @@ tracing:
 	@for tool in $(TOOL_FOLDERS); do \
 	echo "Processing tool: $$tool"; \
 		case $$tool in \
-			codebeamer|cpptest|trlc|json|pkg|core-report|core-html_report) \
+			codebeamer|cpptest|trlc|json|pkg|core-report|core-html_report|core-online-report) \
 				echo "Skipping tool: $$tool (handled by tracing.sh script)"; \
 				;; \
 			*) \

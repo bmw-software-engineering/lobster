@@ -4,7 +4,7 @@
 mkdir -p tracing_out
 mkdir -p docs
 
-TOOLS=("codebeamer" "cpptest" "trlc" "json" "pkg" "report" "html_report")
+TOOLS=("codebeamer" "cpptest" "trlc" "json" "pkg" "report" "html_report" "online_report")
 
 # Process each tool
 for tool in "${TOOLS[@]}"; do
