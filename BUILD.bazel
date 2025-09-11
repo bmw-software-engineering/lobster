@@ -56,19 +56,6 @@ load("//:requirements.bzl", "requirement")
 #     requirements_windows = "requirements_windows_3_9.txt",
 # )
 
-py_binary(
-    name = "github_release",
-    srcs = ["util/github_release.py"],
-    visibility = [
-        "//visibility:public",
-    ],
-    deps = [
-        ":lobster",
-        "//lobster/common",
-        requirement("requests"),
-    ],
-)
-
 py_library(
     name = "lobster",
     srcs = [
