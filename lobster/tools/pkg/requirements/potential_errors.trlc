@@ -19,6 +19,7 @@ req.PotentialError Invalid_XML_Ignored {
         List_Requirements_to_Tests,
         List_Requirements_without_Tests,
         List_Tests_to_Requirements,
+        List_Tests_without_Requirements,
         Item_Coverage,
     ]
     impact_type = req.Impact_Type.Safety
@@ -48,6 +49,7 @@ req.PotentialError Default_Path_Choice_pkg {
         List_Requirements_to_Tests,
         List_Requirements_without_Tests,
         List_Tests_to_Requirements,
+        List_Tests_without_Requirements,
         Item_Coverage,
     ]
     impact_type = req.Impact_Type.Safety
@@ -71,6 +73,7 @@ req.PotentialError Wrong_Extraction_from_PKG {
         List_Requirements_to_Tests,
         List_Requirements_without_Tests,
         List_Tests_to_Requirements,
+        List_Tests_without_Requirements,
         Item_Coverage,
     ]
     impact_type = req.Impact_Type.Safety
@@ -97,6 +100,7 @@ req.PotentialError Too_many_PKG_files {
         List_Requirements_to_Tests,
         List_Requirements_without_Tests,
         List_Tests_to_Requirements,
+        List_Tests_without_Requirements,
         Item_Coverage,
     ]
     impact_type = req.Impact_Type.Safety
@@ -122,6 +126,7 @@ req.PotentialError Too_many_Output_Items {
         List_Requirements_to_Tests,
         List_Requirements_without_Tests,
         List_Tests_to_Requirements,
+        List_Tests_without_Requirements,
         Item_Coverage,
     ]
     impact_type = req.Impact_Type.Safety
@@ -159,7 +164,9 @@ req.PotentialError Too_few_Extraction_from_PKG {
     ]
     affects = [
         List_Requirements_to_Tests,
+        List_Requirements_without_Tests,
         List_Tests_to_Requirements,
+        List_Tests_without_Requirements,
         Item_Coverage,
     ]
     impact_type = req.Impact_Type.Financial
