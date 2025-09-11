@@ -37,6 +37,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
 
     def test_valid_lobster_file_succeeds(self):
         # lobster-trace: html_req.Valid_Lobster_File
+        # lobster-trace: UseCases.Missing_tracing_policy_violation_in_output
         """Verify the tool runs successfully with a valid .lobster file."""
         output_filename = "is_actually_html.html"
         valid_inputfile = self._data_directory / "awesome.lobster"
@@ -72,6 +73,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
 
     def test_custom_data_displayed_in_report(self):
         # lobster-trace: html_req.HTML_Report_Displays_Custom_data
+        # lobster-trace: UseCases.Missing_tracing_policy_violation_in_output
         """Verify that 'custom_data' values are correctly
         displayed in the HTML report header."""
         dot_present = is_dot_available(dot=None)
@@ -110,6 +112,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
 
     def test_valid_md_lobster_file_succeeds(self):
         # lobster-trace: html_req.Valid_Lobster_File_With_Md_Content
+        # lobster-trace: UseCases.Missing_tracing_policy_violation_in_output
         """Verify tool runs successfully with a valid .lobster file with md content."""
         output_filename = "to_render_md_content.html"
         valid_inputfile = self._data_directory / "to_render_md_content.lobster"
