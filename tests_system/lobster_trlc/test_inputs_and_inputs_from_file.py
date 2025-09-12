@@ -53,3 +53,27 @@ class InputFromFilesAndInputsTest(LobsterTrlcSystemTestCaseBase):
                                   ' default_file.trlc:3\n'
                                   )
         asserter.assertExitCode(1)
+
+    def test_input_from_files_and_inputs_list_extra_files(self):
+        """
+        Test that inputs from files and inputs list can be processed together
+        and ignores the extra files in the working directory.
+        """
+        # lobster-trace: trlc_req.Input_list_Of_File_And_Inputs_From_File
+        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
+        OUT_FILE = "input_from_files_and_inputs.lobster"
+        self._test_runner.cmd_args.out = OUT_FILE
+        self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
+        self._test_runner.declare_inputs_from_file(self._data_directory /
+                                                   "input_from_files_and_inputs.txt",
+                                                   self._data_directory)
+        self._test_runner.copy_files_in_working_directory(
+            [self._data_directory / "to_string_test.trlc"]
+        )
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutText(f"lobster-trlc: successfully wrote 2 items to "
+                                  f"{OUT_FILE}\n")
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()

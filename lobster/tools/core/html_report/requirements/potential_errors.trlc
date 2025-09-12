@@ -51,7 +51,11 @@ req.PotentialError HTML_report_not_Generated{
           between requirements and software tests.'''
     ]
 
-    affects = [HTML_Output]
+    affects = [
+      HTML_Output,
+      Colored_Findings,
+      English_Language,
+    ]
     impact_type = req.Impact_Type.Financial
 }
 

@@ -121,7 +121,6 @@ req.UseCase Show_Tracing_Policy {
     '''
     affected_tools = [
         req.Tools.lobster_report,
-        req.Tools.lobster_html_report
     ]
 }
 
