@@ -43,7 +43,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_consumes_files_in_specified_directory(self):
-        # lobster-trace: Usecases.Incorrect_Number_of_JSON_Tests_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
         OUT_FILE = "valid_directory.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.config_file_data.tag_attribute = "tags"
@@ -64,7 +64,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_mix_inputs_from_directory(self):
-        # lobster-trace: Usecases.Incorrect_Number_of_JSON_Tests_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
         OUT_FILE = "mix_inputs.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.config_file_data.tag_attribute = "tags"

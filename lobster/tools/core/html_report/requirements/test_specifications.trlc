@@ -33,7 +33,10 @@ req.TestSpecification HTML_file_generation{
     description = '''
       The test shall verify that HTML report file is generated.
     '''
-    verifies = [HTML_report_not_Generated]
+    verifies = [
+      HTML_report_not_Generated,
+      Incorrect_syntax_in_HTML_report,
+    ]
 }
 
 req.TestSpecification Source_location_in_output{
