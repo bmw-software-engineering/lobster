@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
-from tests_system.testrunner import TestRunner
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from lobster.tools.core.html_report.html_report import main
+from tests_system.testrunner import TestRunner
 
 
 @dataclass
