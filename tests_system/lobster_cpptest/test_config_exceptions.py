@@ -1,3 +1,4 @@
+import unittest
 from lobster.tools.cpptest.cpptest import (CODEBEAMER_URL, KIND,
                                            OUTPUT_FILE, SUPPORTED_KINDS)
 from tests_system.lobster_cpptest.\
@@ -90,3 +91,7 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
         with self.assertRaises(LOBSTER_Exception) as ctx:
             self._test_runner.run_tool_test()
         self.assertIn("Invalid config file", ctx.exception.message)
+
+
+if __name__ == "__main__":
+    unittest.main()
