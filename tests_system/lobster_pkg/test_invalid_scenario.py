@@ -1,3 +1,4 @@
+import unittest
 from tests_system.lobster_pkg.lobster_pkg_asserter import LobsterPkgAsserter
 from tests_system.lobster_pkg.lobster_pkg_system_test_case_base import (
     LobsterPKGSystemTestCaseBase)
@@ -118,3 +119,7 @@ class InvalidInputFilePkgTest(LobsterPKGSystemTestCaseBase):
 
         asserter.assertExitCode(2)
         asserter.assertInStdErr("the following arguments are required: --out")
+
+
+if __name__ == "__main__":
+    unittest.main()
