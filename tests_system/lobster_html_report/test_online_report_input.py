@@ -2,9 +2,9 @@ from pathlib import Path
 from tests_system.lobster_html_report.lobster_UI_system_test_case_base import (
     LobsterUISystemTestCaseBase)
 from tests_system.asserter import Asserter
-from lobster.tools.core.html_report.html_report import is_dot_available
 from tests_system.tests_utils.update_version_in_html import update_version_in_html_file
 from tests_system.tests_utils.update_html_expected_output import update_html_output_file
+from lobster.tools.core.html_report.html_report import is_dot_available
 
 
 class LobsterOnlineReportInputTest(LobsterUISystemTestCaseBase):
