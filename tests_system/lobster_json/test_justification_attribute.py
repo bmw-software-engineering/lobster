@@ -1,3 +1,4 @@
+import unittest
 from tests_system.lobster_json.\
     lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
 from tests_system.lobster_json.lobsterjsonasserter import LobsterJsonAsserter
@@ -57,3 +58,7 @@ class JsonJustificationAttributeTest(LobsterJsonSystemTestCaseBase):
         asserter.assertStdOutNumAndFile(7, out_file)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+
+if __name__ == "__main__":
+    unittest.main()
