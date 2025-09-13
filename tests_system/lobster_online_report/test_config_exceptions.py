@@ -1,3 +1,4 @@
+import unittest
 from lobster.tools.core.online_report.online_report import (
     REPO_ROOT, BASE_URL, COMMIT_ID)
 from tests_system.lobster_online_report.lobster_online_report_system_test_case_base \
@@ -55,3 +56,7 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
                 asserter = Asserter(self, completed_process, self._test_runner)
                 asserter.assertInStdErr(expected_error)
                 asserter.assertExitCode(1)
+
+
+if __name__ == "__main__":
+    unittest.main()

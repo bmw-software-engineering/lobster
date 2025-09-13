@@ -1,5 +1,6 @@
 import json
 import re
+import unittest
 from tests_system.lobster_online_report_nogit.\
     lobster_online_report_nogit_system_test_case_base import (
         LobsterOnlineReportNogitSystemTestCaseBase
@@ -155,3 +156,7 @@ class OnlineReportNogitTest(LobsterOnlineReportNogitSystemTestCaseBase):
         )
         asserter.assertNoStdOutText()
         asserter.assertExitCode(1)
+
+
+if __name__ == "__main__":
+    unittest.main()
