@@ -1,3 +1,4 @@
+import unittest
 from tests_system.asserter import Asserter
 from tests_system.lobster_report.lobster_report_system_test_case_base import (
     LobsterReportSystemTestCaseBase,
@@ -104,3 +105,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         asserter.assertNoStdOutText()
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -2,6 +2,7 @@ import os
 from tempfile import NamedTemporaryFile
 from dataclasses import dataclass
 from typing import Tuple, Type
+import unittest
 from tests_system.lobster_meta_data_tool_base.\
     lobster_meta_data_tool_base_system_test_case_base import (
         LobsterMetaDataToolBaseSystemTestCaseBase
@@ -109,3 +110,7 @@ class ToolBaseTest(LobsterMetaDataToolBaseSystemTestCaseBase):
             asserter.assert_result()
         finally:
             os.remove(tmp_file_path)
+
+
+if __name__ == "__main__":
+    unittest.main()

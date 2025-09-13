@@ -1,3 +1,4 @@
+import unittest
 from tests_system.lobster_trlc.lobster_system_test_case_base import (
     LobsterTrlcSystemTestCaseBase)
 from tests_system.asserter import Asserter
@@ -78,3 +79,7 @@ class CmdArgsInputTest(LobsterTrlcSystemTestCaseBase):
                                   f"{OUT_FILE}\n")
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+
+if __name__ == "__main__":
+    unittest.main()
