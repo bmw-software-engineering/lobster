@@ -1,5 +1,5 @@
 from json.decoder import JSONDecodeError
-
+import unittest
 from tests_system.lobster_json.\
     lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
 from tests_system.asserter import Asserter
@@ -90,3 +90,7 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+
+if __name__ == "__main__":
+    unittest.main()
