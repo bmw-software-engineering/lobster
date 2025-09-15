@@ -39,7 +39,8 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
             expected_display = "block" if toggle == 0 else "none"
             self.assertEqual(element.value_of_css_property("display"), expected_display)
 
-    def click_and_verify(self, button_xpath, item_class, status, item_count, asserter):
+    def click_and_verify(self, button_xpath, item_class, status, item_count):
+        # pylint: disable=too-many-arguments
         """Click a button and verify the visibility of elements."""
 
         WebDriverWait(self.driver, self.TIMEOUT).until(
@@ -55,7 +56,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         self.assertEqual(len(elements), item_count.get(status))
         return True
 
-    def check_hidden_elements(self, item_classes, current_status, asserter):
+    def check_hidden_elements(self, item_classes, current_status):
         """Ensure that elements for other statuses are hidden."""
         for status, class_name in item_classes.items():
             if status != current_status:
@@ -71,6 +72,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         """Test the status buttons in the HTML report."""
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertExitCode(0)
         self.driver.get(self.input_file)
 
         ok = "ok"
@@ -78,14 +80,14 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         partial = "partial"
         justified = "justified"
         warning = "warning"
-        all = "Show All"
+        show_all = "Show All"
         button_xpath = {
             ok: '//*[@id="btnFilterItem"]/button[2]',
             missing: '//*[@id="btnFilterItem"]/button[3]',
             partial: '//*[@id="btnFilterItem"]/button[4]',
             justified: '//*[@id="btnFilterItem"]/button[5]',
             warning: '//*[@id="btnFilterItem"]/button[6]',
-            all: '//*[@id="btnFilterItem"]/button[1]',
+            show_all: '//*[@id="btnFilterItem"]/button[1]',
         }
         item_classes = {
             ok: "item-ok",
@@ -93,7 +95,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
             partial: "item-partial",
             justified: "item-justified",
             warning: "item-warning",
-            all: "item-",
+            show_all: "item-",
         }
         item_count = {
             ok: 2,
@@ -101,21 +103,20 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
             partial: 0,
             justified: 0,
             warning: 0,
-            all: 3
+            show_all: 3
         }
         for status, xpath in button_xpath.items():
-            if self.click_and_verify(xpath, item_classes[status], status, item_count,
-                                     asserter):
-                self.check_hidden_elements(item_classes, status, asserter)
+            if self.click_and_verify(xpath, item_classes[status], status, item_count):
+                self.check_hidden_elements(item_classes, status)
 
     def test_git_hash_timestamp(self):
         """Verify git commit timestamps in the report output."""
         self._test_runner.run_tool_test()
         self.driver.get(self.input_file)
 
-        report_path = (self._data_directory / "report.html")
+        report_path = self._data_directory / "report.html"
 
-        with open(report_path) as file:
+        with open(report_path, encoding="UTF-8") as file:
             data = json.load(file)
 
         for level in data.get("levels", []):
