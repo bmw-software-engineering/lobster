@@ -1,4 +1,5 @@
 from pathlib import Path
+import unittest
 from lobster.tools.core.html_report.html_report import is_dot_available
 from tests_system.lobster_html_report.lobster_UI_system_test_case_base import (
     LobsterUISystemTestCaseBase)
@@ -145,3 +146,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -30,6 +30,10 @@ py_library(
 py_test(
     name = "test_html_report",
     srcs = ["test_html_report.py"],
+    # TODO: This test is manual because Selenium tests require a Googlechrome driver
+    # from googlechromelabs.github.io, which needs to be provided first.
+    # We need to update Bazel to download it first.
+    tags = ["manual"],
     deps = [
         ":lobster_html_report",
         "//lobster/tools/core/html_report",
