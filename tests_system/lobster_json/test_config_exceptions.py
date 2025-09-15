@@ -1,3 +1,4 @@
+import unittest
 from yaml.scanner import ScannerError
 from tests_system.lobster_json.lobsterjsonasserter import LobsterJsonAsserter
 from tests_system.lobster_json.lobsterjsonsystemtestcasebase import (
@@ -55,3 +56,7 @@ class ConfigParserExceptionsLobsterJsonTest(LobsterJsonSystemTestCaseBase):
         test_run_result = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, test_run_result, self._test_runner)
         asserter.assertExitCode("Required mandatory parameters missing - tag_attribute")
+
+
+if __name__ == "__main__":
+    unittest.main()
