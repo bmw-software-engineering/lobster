@@ -25,17 +25,18 @@ lint-system-tests: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
 	python3 -m pylint --rcfile=tests_system/pylint3.cfg \
 		--reports=no \
-		tests_system/system_test_case_base.py \
 		tests_system/asserter.py \
+		tests_system/lobster_cpp \
+		tests_system/lobster_gtest \
+		tests_system/lobster_html_report \
 		tests_system/lobster_json \
 		tests_system/lobster_meta_data_tool_base \
 		tests_system/lobster_online_report \
 		tests_system/lobster_online_report_nogit \
+		tests_system/lobster_pkg \
 		tests_system/lobster_report \
 		tests_system/lobster_trlc \
-		tests_system/lobster_cpp \
-		tests_system/lobster_gtest \
-		tests_system/lobster_pkg
+		tests_system/system_test_case_base.py
 
 lint-unit-tests: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \

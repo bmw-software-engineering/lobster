@@ -1,8 +1,8 @@
 from pathlib import Path
+from lobster.tools.core.html_report.html_report import is_dot_available
 from tests_system.lobster_html_report.lobster_UI_system_test_case_base import (
     LobsterUISystemTestCaseBase)
 from tests_system.asserter import Asserter
-from lobster.tools.core.html_report.html_report import is_dot_available
 from tests_system.tests_utils.update_version_in_html import update_version_in_html_file
 
 
@@ -81,7 +81,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
             output_filename = "custom_data_tracing_policy.html"
         else:
             output_filename = "custom_data.html"
-        input = self._data_directory / "custom_data_report.lobster"
+        input_file = self._data_directory / "custom_data_report.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / output_filename))
@@ -92,7 +92,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         )
 
         self.test_runner.cmd_args.out = output_filename
-        self.test_runner.cmd_args.lobster_report = str(input)
+        self.test_runner.cmd_args.lobster_report = str(input_file)
 
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
