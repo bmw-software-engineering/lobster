@@ -2,6 +2,7 @@ import sys
 import subprocess
 from datetime import datetime, timezone
 import json
+import unittest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -148,3 +149,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         self.assertEqual(meta_element.get_attribute('http-equiv'), "Content-Type")
         self.assertEqual(
             meta_element.get_attribute('content'), "text/html; charset=utf-8")
+
+
+if __name__ == "__main__":
+    unittest.main()
