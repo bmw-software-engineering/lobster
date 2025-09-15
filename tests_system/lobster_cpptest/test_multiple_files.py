@@ -1,4 +1,5 @@
 from pathlib import Path
+import unittest
 from tests_system.lobster_cpptest.\
     lobster_cpptest_asserter import LobsterCppTestAsserter as Asserter
 from tests_system.lobster_cpptest.\
@@ -98,3 +99,7 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
             'lobster-cpptest: "no_input_file.cpp" is not a file or directory.\n'
         )
         asserter.assertExitCode(1)
+
+
+if __name__ == "__main__":
+    unittest.main()

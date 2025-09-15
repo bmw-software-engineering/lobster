@@ -1,3 +1,4 @@
+import unittest
 from tests_system.lobster_json.\
     lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
 from tests_system.asserter import Asserter
@@ -47,3 +48,7 @@ class InputNotFileNotDirectoryTest(LobsterJsonSystemTestCaseBase):
             f"directory\n"
         )
         asserter.assertExitCode(1)
+
+
+if __name__ == "__main__":
+    unittest.main()

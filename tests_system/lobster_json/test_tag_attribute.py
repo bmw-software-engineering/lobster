@@ -1,3 +1,4 @@
+import unittest
 from tests_system.lobster_json.\
     lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
 from tests_system.lobster_json.lobsterjsonasserter import LobsterJsonAsserter
@@ -47,3 +48,7 @@ class JsonTagAttributeTest(LobsterJsonSystemTestCaseBase):
             completed_process.returncode,
             "Required mandatory parameters missing - tag_attribute",
         )
+
+
+if __name__ == "__main__":
+    unittest.main()

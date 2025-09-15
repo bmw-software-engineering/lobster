@@ -1,5 +1,6 @@
 from pathlib import Path
 import shutil
+import unittest
 
 from tests_system.lobster_cpptest.\
     lobster_cpptest_system_test_case_base import LobsterCpptestSystemTestCaseBase
@@ -141,3 +142,7 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertStdErrText(
             'lobster-cpptest: "[\'.\']" does not contain any test file.\n')
         asserter.assertExitCode(1)
+
+
+if __name__ == "__main__":
+    unittest.main()

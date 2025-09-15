@@ -1,3 +1,4 @@
+import unittest
 from tests_system.asserter import Asserter
 from tests_system.lobster_trlc.lobster_system_test_case_base import \
     LobsterTrlcSystemTestCaseBase
@@ -137,3 +138,7 @@ class ConversionRuleErrorTest(LobsterTrlcSystemTestCaseBase):
             "symbol table: buildings.Does_Not_Exist.",
         )
         asserter.assertExitCode(1)
+
+
+if __name__ == "__main__":
+    unittest.main()
