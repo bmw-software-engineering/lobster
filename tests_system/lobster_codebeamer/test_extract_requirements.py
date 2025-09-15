@@ -1,4 +1,5 @@
 import json
+import unittest
 from flask import Response
 from tests_system.lobster_codebeamer.lobster_codebeamer_system_test_case_base import (
     LobsterCodebeamerSystemTestCaseBase)
@@ -112,3 +113,7 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
                           "&pageSize={cfg.page_size}&queryString={cfg.import_query}"),
             is_query_id=False
         )
+
+
+if __name__ == '__main__':
+    unittest.main()
