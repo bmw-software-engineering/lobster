@@ -121,5 +121,5 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         asserter.assertExitCode(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
