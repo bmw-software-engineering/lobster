@@ -1,4 +1,5 @@
 from pathlib import Path
+import unittest
 from unittest.mock import patch, Mock
 
 from lobster.common.report import Report
@@ -139,3 +140,7 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
         asserter.assertNoStdOutText()
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+
+if __name__ == "__main__":
+    unittest.main()

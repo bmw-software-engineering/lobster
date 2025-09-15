@@ -1,3 +1,4 @@
+import unittest
 from tests_system.lobster_trlc.lobster_system_test_case_base import (
     LobsterTrlcSystemTestCaseBase)
 from tests_system.asserter import Asserter
@@ -75,3 +76,7 @@ class MissingConfigTest(LobsterTrlcSystemTestCaseBase):
                                 "[Errno 2] No such file or directory:",
                                 completed_process.stderr)
         asserter.assertExitCode(1)
+
+
+if __name__ == "__main__":
+    unittest.main()

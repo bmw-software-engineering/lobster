@@ -1,4 +1,5 @@
 import shutil
+import unittest
 from tests_system.lobster_json.\
     lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
 from tests_system.lobster_json.lobsterjsonasserter import LobsterJsonAsserter
@@ -121,3 +122,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         asserter.assertStdOutNumAndFile(13, out_file)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+
+if __name__ == "__main__":
+    unittest.main()

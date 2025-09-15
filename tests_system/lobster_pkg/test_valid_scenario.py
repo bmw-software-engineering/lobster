@@ -1,8 +1,9 @@
+from pathlib import Path
+import shutil
+import unittest
 from tests_system.lobster_pkg.lobster_pkg_asserter import LobsterPkgAsserter
 from tests_system.lobster_pkg.lobster_pkg_system_test_case_base import (
     LobsterPKGSystemTestCaseBase)
-from pathlib import Path
-import shutil
 
 
 class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
@@ -220,3 +221,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertStdOutNumAndFile(1, OUT_FILE)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+
+if __name__ == "__main__":
+    unittest.main()

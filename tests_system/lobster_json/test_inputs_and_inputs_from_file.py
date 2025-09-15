@@ -1,5 +1,6 @@
 from pathlib import Path
 import shutil
+import unittest
 from tests_system.lobster_json.lobsterjsonasserter import LobsterJsonAsserter
 from tests_system.lobster_json.\
     lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
@@ -108,3 +109,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFile(18, out_file)
         asserter.assertExitCode(0)
+
+
+if __name__ == "__main__":
+    unittest.main()
