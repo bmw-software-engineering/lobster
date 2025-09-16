@@ -2,9 +2,10 @@ import json
 from time import sleep
 from typing import List
 from flask import Flask, Response, request
+from pathlib import Path
 from threading import Lock
 import logging
-
+import os
 import requests
 
 # Suppress Flask development server warning
@@ -60,11 +61,22 @@ class CodebeamerFlask(Flask):
         with self._lock:
             self._responses = value
 
+    def find_first_file(self, path: Path, pattern: str):
+        return next(Path(path).rglob(pattern), None)
+
     def start_server(self):
+        cwd = os.getcwd()
+        parent_dir = os.path.dirname(cwd)
+        cert_file = self.find_first_file(cwd, CERT_PATH)
+        if cert_file is None:
+            cert_file = self.find_first_file(parent_dir, CERT_PATH)
+        key_file = self.find_first_file(cwd, KEY_PATH)
+        if key_file is None:
+            key_file = self.find_first_file(parent_dir, KEY_PATH)
         self.run(
             host=self._HOST,
             port=PORT,
-            ssl_context=(CERT_PATH, KEY_PATH),
+            ssl_context=(cert_file, key_file),
             use_reloader=False
         )
 
