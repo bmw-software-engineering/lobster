@@ -86,16 +86,16 @@ class ConversionRulesTest(TestCase):
             namespace="req",
         )
         rule_level2a = ConversionRule(
-                record_type="Level2A",
-                package="hierarchy_tree_test",
-                applies_to_derived_types=True,
-                namespace="req",
+            record_type="Level2A",
+            package="hierarchy_tree_test",
+            applies_to_derived_types=True,
+            namespace="req",
         )
         rule_level3b = ConversionRule(
-                record_type="Level3B",
-                package="hierarchy_tree_test",
-                applies_to_derived_types=True,
-                namespace="req",
+            record_type="Level3B",
+            package="hierarchy_tree_test",
+            applies_to_derived_types=True,
+            namespace="req",
         )
         expected_rule_lookup = {
             "Level1": top_rule,

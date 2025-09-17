@@ -85,10 +85,19 @@ class Converter:
         if not rule:
             return None
 
+        if rule.lobster_namespace != "req":
+            raise NotImplementedError(
+                f"Conversion for namespace '{rule.lobster_namespace}' not implemented."
+            )
+
+        item_wrapper = ItemWrapper(n_obj)
         item_tag = Tracing_Tag(
             namespace=rule.lobster_namespace,
             tag=n_obj.fully_qualified_name(),
-            version=None,
+            version=(
+                item_wrapper.get_field_value_or_none(rule.version)
+                if rule.version
+                else None),
         )
 
         item_loc = File_Reference(
@@ -97,13 +106,7 @@ class Converter:
             column=n_obj.location.col_no
         )
 
-        item_wrapper = ItemWrapper(n_obj)
         item_text = self._get_description(item_wrapper, rule.description_fields)
-
-        if rule.lobster_namespace != "req":
-            raise NotImplementedError(
-                f"Conversion for namespace '{rule.lobster_namespace}' not implemented."
-            )
         rv = Requirement(
             tag=item_tag,
             location=item_loc,

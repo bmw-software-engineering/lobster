@@ -14,6 +14,7 @@ class ConversionRule:
             package: str,
             record_type: str,
             namespace: str,
+            version_field: Optional[str] = None,
             description_fields: Optional[Union[str, Iterable[str]]] = None,
             justification_up_fields: Optional[Union[str, Iterable[str]]] = None,
             justification_down_fields: Optional[Union[str, Iterable[str]]] = None,
@@ -24,6 +25,7 @@ class ConversionRule:
         self._record_type_name = record_type
         self._package_name = package
         self._lobster_namespace = namespace
+        self._version = version_field
         self._description_fields = self._as_string_list(description_fields)
         self._justification_up_fields = self._as_string_list(justification_up_fields)
         self._justification_down_fields = self._as_string_list(
@@ -51,6 +53,10 @@ class ConversionRule:
     @property
     def lobster_namespace(self) -> str:
         return self._lobster_namespace
+
+    @property
+    def version(self) -> str:
+        return self._version
 
     @staticmethod
     def _as_string_list(value: Optional[Union[str, Iterable[str]]]) -> List[str]:

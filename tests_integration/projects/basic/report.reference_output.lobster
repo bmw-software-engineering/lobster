@@ -24,9 +24,9 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req example.req_implication",
+            "req example.req_implication@10",
             "req example.req_xor",
-            "req example.req_nand"
+            "req example.req_nand@30"
           ],
           "tracing_status": "OK",
           "framework": "codebeamer",
@@ -42,7 +42,7 @@
       "kind": "requirements",
       "items": [
         {
-          "tag": "req example.req_implication",
+          "tag": "req example.req_implication@10",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -59,6 +59,7 @@
             "req 12345"
           ],
           "ref_down": [
+            "req example.req_important",
             "cpp foo.cpp:1:implication:3",
             "gtest ImplicationTest:BasicTest"
           ],
@@ -75,7 +76,7 @@
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "c550086fafeab2b3b490a57286f2a1cb219a74a1",
             "file": "tests_integration/projects/basic/potato.trlc",
-            "line": 9
+            "line": 10
           },
           "name": "example.req_xor",
           "messages": [
@@ -99,13 +100,13 @@
           "status": null
         },
         {
-          "tag": "req example.req_nand",
+          "tag": "req example.req_nand@30",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "c550086fafeab2b3b490a57286f2a1cb219a74a1",
             "file": "tests_integration/projects/basic/potato.trlc",
-            "line": 15
+            "line": 16
           },
           "name": "example.req_nand",
           "messages": [],
@@ -127,13 +128,13 @@
           "status": null
         },
         {
-          "tag": "req example.req_nor",
+          "tag": "req example.req_nor@40",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "c550086fafeab2b3b490a57286f2a1cb219a74a1",
             "file": "tests_integration/projects/basic/potato.trlc",
-            "line": 22
+            "line": 24
           },
           "name": "example.req_nor",
           "messages": [
@@ -162,7 +163,7 @@
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "c550086fafeab2b3b490a57286f2a1cb219a74a1",
             "file": "tests_integration/projects/basic/potato.trlc",
-            "line": 27
+            "line": 30
           },
           "name": "example.req_implies",
           "messages": [],
@@ -186,10 +187,11 @@
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "c550086fafeab2b3b490a57286f2a1cb219a74a1",
             "file": "tests_integration/projects/basic/potato.trlc",
-            "line": 39
+            "line": 42
           },
           "name": "example.req_important",
           "messages": [
+            "tracing destination req example.req_nand has version 30 (expected 31)",
             "missing reference to Code",
             "missing reference to Verification Test"
           ],
@@ -197,11 +199,12 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nand",
-            "req example.req_nor"
+            "req example.req_nand@31",
+            "req example.req_nor@40",
+            "req example.req_implication"
           ],
           "ref_down": [],
-          "tracing_status": "PARTIAL",
+          "tracing_status": "MISSING",
           "framework": "TRLC",
           "kind": "Linked_Requirement",
           "text": "this is important",
