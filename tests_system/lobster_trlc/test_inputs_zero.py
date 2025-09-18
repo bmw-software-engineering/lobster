@@ -41,6 +41,7 @@ class ZeroInputTest(LobsterTrlcSystemTestCaseBase):
         """
         # lobster-trace: trlc_req.No_Inputs_At_All
         # lobster-trace: UseCases.Default_Path_Warning_Test
+        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
         self._test_runner.config_file_data.conversion_rules = []
         OUT_FILE = "zero_items.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
