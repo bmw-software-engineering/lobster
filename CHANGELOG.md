@@ -3,6 +3,11 @@
 ## Changelog
 
 
+### 1.0.2
+ 
+* `lobster-trlc`:
+  - Added system tests for `lobster-trlc` tool qualification.
+
 ### 1.0.1
 
 Fixed Bazel execution of system tests.
