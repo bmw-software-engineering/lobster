@@ -21,8 +21,8 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
         Ensures the tool runs on files specified in the yaml config file and
         generates expected output.
         """
-        # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
-        # lobster-trace: Usecases.Incorrect_number_of_requirement_references_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
+        # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
         OUT_FILE = "multiple_files.lobster"
         self._test_runner.cmd_args.config = str(
             self._data_directory / "multiple_files_config.yaml")
@@ -55,8 +55,8 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
         extensions. Ensures the tool runs on all files in the directory and generates
         output for all valid files in the directory.
         """
-        # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
-        # lobster-trace: Usecases.Incorrect_number_of_requirement_references_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
+        # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
         OUT_FILE = "valid_invalid_files.lobster"
         self._test_runner.cmd_args.config = str(
             self._data_directory / "valid_invalid_files_config.yaml")
@@ -89,7 +89,7 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
         An input file provided in YAML config file which does not exist in working
         directory.
         """
-        # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
         self._test_runner.cmd_args.config = str(
             self._data_directory / "no_input_file_config.yaml")
 

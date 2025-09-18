@@ -23,7 +23,11 @@ req.TestSpecification Incorrect_data_Extraction_from_TRLC {
         The configuration specifies to extract only "Requirement" items.
         The test needs to verify that these 6 requirement items are consistent with the LOBSTER output.
     '''
-    verifies = [Wrong_Extraction_from_TRLC]
+    verifies = [
+        Wrong_Extraction_from_TRLC,
+        Too_few_Extraction_from_TRLC,
+        Too_many_Extraction_from_TRLC,
+    ]
 }
 
 req.TestSpecification TRLC_Config_File_Missing {

@@ -21,7 +21,7 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         Tests that all C++ files in the current directory are consumed.
         It also picks files from nested directories.
         """
-        # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
         OUT_FILE = "nested_directories.lobster"
 
         self._test_runner.declare_input_file(self._data_directory / "no_references.cpp")
@@ -60,7 +60,7 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         """
         Test for processing files from a specific directory.
         """
-        # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
         OUT_FILE = "specific_directory.lobster"
 
         # Copy the "cpp_test_files" directory into the working directory
@@ -94,7 +94,7 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         Test for processing files from a specific directory
         as well as files provided as input.
         """
-        # lobster-trace: Usecases.Incorrect_Number_of_Cpp_Tests_in_Output
+        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
         OUT_FILE = "directory_files.lobster"
 
         self._test_runner.declare_input_file(self._data_directory / "no_references.cpp")
