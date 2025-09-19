@@ -8,6 +8,7 @@ Level1 Level1_Item {
     integer_array_field1 = [1, 2, 3]
     decimal_array_field1 = [1.1, 2.2, 3.3]
     boolean_array_field1 = [true, false, true, true]
+    test_version = 1234
 }
 
 Level2A Level2A_Item {

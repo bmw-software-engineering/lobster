@@ -427,3 +427,25 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
                 lobster_item.just_global,
                 expected_just_global,
             )
+
+    def test_version_field(self):
+        """Tests that version field is handled correctly"""
+        conversion_rule = ConversionRule(
+            record_type="Level1",
+            package=self.PACKAGE_NAME,
+            applies_to_derived_types=True,
+            namespace="req",
+            version_field="test_version",
+        )
+        converter = Converter(
+            conversion_rules=[conversion_rule],
+            to_string_rules=[],
+            symbol_table=self._trlc_data_provider.symbol_table,
+        )
+
+        record_objects = self._trlc_data_provider.get_record_objects()
+        lobster_item = converter.generate_lobster_object(record_objects[0])
+        self.assertEqual(
+            lobster_item.tag.version,
+            1234
+        )
