@@ -35,6 +35,7 @@ type Level1 {
     integer_array_field1 optional Integer[0..*]
     decimal_array_field1 optional Decimal[0..*]
     boolean_array_field1 optional Boolean[0..*]
+    test_version optional Integer
 }
 
 type Level2A extends Level1 {}

@@ -427,3 +427,57 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
                 lobster_item.just_global,
                 expected_just_global,
             )
+
+    def test_tag_version_with_rule_configured_and_object_field(self):
+        conversion_rule = ConversionRule(
+            record_type="Level1",
+            package=self.PACKAGE_NAME,
+            applies_to_derived_types=True,
+            namespace="req",
+            version_field="test_version",
+        )
+        converter = Converter(
+            conversion_rules=[conversion_rule],
+            to_string_rules=[],
+            symbol_table=self._trlc_data_provider.symbol_table,
+        )
+        # get the record object that actually has the field
+        record_object = self._trlc_data_provider.get_record_objects()[0]
+        lobster_item = converter.generate_lobster_object(record_object)
+        self.assertEqual(lobster_item.tag.version, 1234)
+
+    def test_tag_version_with_rule_configured_but_object_field_missing(self):
+        conversion_rule = ConversionRule(
+            record_type="Level1",
+            package=self.PACKAGE_NAME,
+            applies_to_derived_types=True,
+            namespace="req",
+            version_field="test_version",
+        )
+        converter = Converter(
+            conversion_rules=[conversion_rule],
+            to_string_rules=[],
+            symbol_table=self._trlc_data_provider.symbol_table,
+        )
+        # get a record object without the version field
+        record_object = self._trlc_data_provider.get_record_objects()[1]
+        lobster_item = converter.generate_lobster_object(record_object)
+        self.assertIsNone(lobster_item.tag.version)
+
+    def test_tag_version_without_rule_configured(self):
+        conversion_rule = ConversionRule(
+            record_type="Level1",
+            package=self.PACKAGE_NAME,
+            applies_to_derived_types=True,
+            namespace="req",
+            version_field="",
+        )
+        converter = Converter(
+            conversion_rules=[conversion_rule],
+            to_string_rules=[],
+            symbol_table=self._trlc_data_provider.symbol_table,
+        )
+        # regardless of whether they have a version field, always return None
+        for record_object in self._trlc_data_provider.get_record_objects():
+            lobster_item = converter.generate_lobster_object(record_object)
+            self.assertIsNone(lobster_item.tag.version)

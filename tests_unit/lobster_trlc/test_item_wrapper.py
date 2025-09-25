@@ -9,6 +9,7 @@ class ItemWrapperTest(TrlcToStringDataTestCase):
         def assertFieldIsNotNone(item_wrapper: ItemWrapper, field_name: str):
             self.assertTrue(item_wrapper.get_field(field_name))
             self.assertTrue(item_wrapper.get_field_raw(field_name))
+            self.assertTrue(item_wrapper.get_field_value_or_none(field_name))
 
         for record_object in self._trlc_data_provider.get_record_objects():
             item_wrapper = ItemWrapper(record_object)
@@ -16,6 +17,7 @@ class ItemWrapperTest(TrlcToStringDataTestCase):
                 assertFieldIsNotNone(item_wrapper, field_name)
             if record_object.name == "TONY":
                 self.assertIsNone(item_wrapper.get_field("berthed_ships"))
+                self.assertIsNone(item_wrapper.get_field_value_or_none("berthed_ships"))
                 # the raw field should still exist, even if the value is None
                 self.assertIsNotNone(item_wrapper.get_field_raw("berthed_ships"))
             else:
@@ -28,3 +30,4 @@ class ItemWrapperTest(TrlcToStringDataTestCase):
                 item_wrapper.get_field("non_existing_field")
             with self.assertRaises(RecordObjectComponentError):
                 item_wrapper.get_field_raw("non_existing_field")
+            self.assertIsNone(item_wrapper.get_field_value_or_none("non_existing_field"))

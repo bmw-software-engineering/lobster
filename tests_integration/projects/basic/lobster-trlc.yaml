@@ -8,6 +8,12 @@ to-string-rules:
       - "$(item)@$(version)"
       - "$(item)"
 
+  - package: example
+    tuple-type: Requirement_Id
+    to-string:
+      - "$(item)@$(version)"
+      - "$(item)"
+
 conversion-rules:
   - package: example
     record-type: Requirement
@@ -18,19 +24,34 @@ conversion-rules:
       - just_up
     justification-down-fields:
       - just_down
+    version-field: p_version
+    applies-to-derived-types: false
   
   - package: example
     record-type: Tagged_Requirement
     namespace: req
+    version-field: p_version
     description-fields:
+      - text
       - extra_text
     tags:
       - field: trace_cb
         namespace: req
+    justification-up-fields:
+      - just_up
+    justification-down-fields:
+      - just_down
 
   - package: example
     record-type: Linked_Requirement
+    version-field: p_version
     namespace: req
+    description-fields:
+      - text
     tags:
       - field: trace_trlc
         namespace: req
+    justification-up-fields:
+      - just_up
+    justification-down-fields:
+      - just_down

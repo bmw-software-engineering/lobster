@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from dataclasses import dataclass
 import unittest
 from tests_system.lobster_trlc.lobster_system_test_case_base import (
@@ -10,7 +10,9 @@ from tests_system.asserter import Asserter
 class TestSetup:
     name: str
     num_expected_items: int
-    record_type: str
+    record_type: Optional[str] = None
+    rules: Optional[List] = None
+    out_file: Optional[str] = None
     applies_to_derived_types: Optional[bool] = None
 
 
@@ -122,6 +124,57 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+    def test_tag_version(self):
+        base_rule = {
+            "package": "test_reqs",
+            "record-type": "featReq",
+            "namespace": "req",
+            "description-fields": ["description"],
+        }
+        test_setups = [
+            # lobster-trace: trlc_req.Tag_Version_From_Record_Field
+            TestSetup(
+                name="version_field_configured_return_value",
+                num_expected_items=2,
+                rules=[{**base_rule, "version-field": "version"}],
+                out_file="reqs_tag_version_value.out.lobster",
+            ),
+            # lobster-trace: trlc_req.Tag_Version_None_If_Field_Missing
+            TestSetup(
+                name="version_field_not_configured_return_none",
+                num_expected_items=2,
+                rules=[base_rule],
+                out_file="reqs_tag_version_none.out.lobster",
+            ),
+            # lobster-trace: trlc_req.Tag_Version_None_If_Not_Configured
+            TestSetup(
+                name="version_field_mis_configured_return_none",
+                num_expected_items=2,
+                rules=[{**base_rule, "version-field": "versino"}],
+                out_file="reqs_tag_version_none.out.lobster",
+            ),
+        ]
+
+        for setup in test_setups:
+            with self.subTest(setup=setup.name):
+                out_file = setup.out_file
+                test_runner = self.create_test_runner()
+                test_runner.cmd_args.out = out_file
+                test_runner.config_file_data.conversion_rules = setup.rules
+                test_runner.declare_output_file(self._data_directory / out_file)
+                test_runner.declare_input_file(self._data_directory / "reqs.rsl")
+                test_runner.declare_input_file(self._data_directory / "reqs.trlc")
+
+                completed_process = test_runner.run_tool_test()
+                asserter = Asserter(self, completed_process, test_runner)
+                asserter.assertNoStdErrText()
+                asserter.assertStdOutText(
+                    f"lobster-trlc: successfully wrote {setup.num_expected_items} "
+                    f"items to {out_file}\n",
+                )
+                asserter.assertExitCode(0)
+                asserter.assertOutputFiles()
 
 
 if __name__ == "__main__":

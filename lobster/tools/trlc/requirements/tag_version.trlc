@@ -1,0 +1,25 @@
+package trlc_req
+import req
+
+req.System_Requirement Tag_Version_From_Record_Field {
+    description = '''
+      If the conversion rule configuration contains a "version-field: xxx" entry
+      and the record object has a field named "xxx",
+      then the tool shall set the tag version to the value of that field.
+    '''
+}
+
+req.System_Requirement Tag_Version_None_If_Field_Missing {
+    description = '''
+      If the conversion rule configuration contains a "version-field: xxx" entry
+      but the record object does not have a field named "xxx",
+      then the tool shall set the tag version to None.
+    '''
+}
+
+req.System_Requirement Tag_Version_None_If_Not_Configured {
+    description = '''
+      If the conversion rule configuration does not contain any "version-field: xxx" entry,
+      then the tool shall set the tag version to None, regardless of the record object.
+    '''
+}

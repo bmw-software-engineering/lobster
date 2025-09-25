@@ -20,3 +20,8 @@ class ItemWrapper:
             return self._n_obj.field[field_name]
         except KeyError as ex:
             raise RecordObjectComponentError(field_name, self._n_obj) from ex
+
+    def get_field_value_or_none(self, field_name: str) -> Any:
+        if field := self._n_obj.field.get(field_name, None):
+            return field.to_python_object()
+        return None

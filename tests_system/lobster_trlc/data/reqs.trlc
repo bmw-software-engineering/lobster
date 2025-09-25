@@ -1,0 +1,11 @@
+package test_reqs
+
+featReq req_with_version {
+    description = "Feature requirement with an explicit version"
+    version = 1234
+}
+
+featReq req_without_version {
+    description = "Feature requirement without a version"
+}
+
