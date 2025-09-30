@@ -82,5 +82,5 @@ The following words shall be written in capital letters for visual enhancement:
 - SHALL
 
 ## Example
-Please have a look at [json/input_files.trlc](json/input_files.trlc)
+Please have a look at [input_files.trlc](json/requirements/input_files.trlc)
 to find an example `*.trlc` file that is using the `System_Requirement_Aspect` type.

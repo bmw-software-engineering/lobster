@@ -43,7 +43,7 @@ pycode.lobster: nor.py
 		--parse-decorator trlc_reference requirement
 
 software-requirements.lobster:
-	@lobster-trlc --config="trlc_config.yaml" --out="software-requirements.lobster"
+	@lobster-trlc --config="lobster-trlc.yaml" --out="software-requirements.lobster"
 
 json.lobster:
 	@lobster-json --config="config.yaml" \
