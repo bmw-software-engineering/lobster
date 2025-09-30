@@ -3,6 +3,7 @@ package example
 Tagged_Requirement req_implication
 {
    text = "provide a utility function for logical implication"
+   p_version = 10
    trace_cb = [12345]
 }
 
@@ -15,6 +16,7 @@ Tagged_Requirement req_xor
 Tagged_Requirement req_nand
 {
   text = "provide a utility function for logical negated and"
+  p_version = 30
   extra_text = "potato"
   trace_cb = [12345@42]
 }
@@ -22,6 +24,7 @@ Tagged_Requirement req_nand
 Requirement req_nor
 {
    text = "provide a utility function for logical negated or"
+   p_version = 40
 }
 
 Requirement req_implies
@@ -39,5 +42,5 @@ Information potato
 Linked_Requirement req_important
 {
   text = "this is important"
-  trace_trlc = [req_nor, req_nand]
+  trace_trlc = [req_implication, req_nor@40, req_nand@31]
 }

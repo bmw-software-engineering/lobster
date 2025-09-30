@@ -11,6 +11,7 @@ type Requirement
   text               String
   just_up   optional String
   just_down optional String
+  p_version optional Integer
 }
 
 type Information
@@ -24,9 +25,16 @@ type Tagged_Requirement extends Requirement
   trace_cb optional Codebeamer_Id [1 .. *]
 }
 
+tuple Requirement_Id
+{
+  item Requirement
+  separator @
+  version optional Integer
+}
+
 type Linked_Requirement extends Requirement
 {
-  trace_trlc optional Requirement [1 .. *]
+  trace_trlc optional Requirement_Id [1 .. *]
 }
 
 checks Requirement {

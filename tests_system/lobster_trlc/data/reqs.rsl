@@ -1,0 +1,6 @@
+package test_reqs
+
+type featReq {
+    description        String
+    version  optional  Integer
+}

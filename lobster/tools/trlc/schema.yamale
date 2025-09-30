@@ -19,6 +19,7 @@ conversion_rule_properties:
     package: str()
     record-type: str()
     namespace: str()
+    version-field: str(required=False)
     description-fields: any(str(), list(str()), required=False)
     justification-down-fields: any(str(), list(str()), required=False)
     justification-up-fields: any(str(), list(str()), required=False)
