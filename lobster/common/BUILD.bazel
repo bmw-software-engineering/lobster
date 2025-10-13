@@ -1,5 +1,5 @@
 load("@rules_python//python:defs.bzl", "py_binary", "py_library")
-load("//:requirements.bzl", "requirement")
+load("@lobster_dependencies//:requirements.bzl", "requirement")
 
 py_binary(
     name = "lexer",
