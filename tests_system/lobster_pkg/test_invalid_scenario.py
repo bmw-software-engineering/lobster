@@ -33,8 +33,8 @@ class InvalidInputFilePkgTest(LobsterPKGSystemTestCaseBase):
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
-        asserter.assertInStdErr('the following arguments are required: FILE|DIR')
-        asserter.assertExitCode(2)
+        asserter.assertInStdErr('lobster-pkg: No input files found to process!\n')
+        asserter.assertExitCode(1)
 
     def test_not_existing_output_path(self):
         """Test that a missing output path causes non-zero exit code"""
@@ -66,7 +66,7 @@ class InvalidInputFilePkgTest(LobsterPKGSystemTestCaseBase):
         expected_output = (
             'WARNING: misplaced lobster-trace in misplaced_lobster_trace.pkg: '
             'lobster-trace: misplaced.req1,misplaced.req2\n'
-            'Written output for 1 items to report.lobster\n'
+            'lobster-pkg: wrote 1 items to report.lobster\n'
         )
         asserter.assertStdOutText(expected_output)
         asserter.assertExitCode(0)
@@ -107,18 +107,6 @@ class InvalidInputFilePkgTest(LobsterPKGSystemTestCaseBase):
         )
         asserter.assertStdOutText(expected_output)
         asserter.assertExitCode(1)
-
-    def test_invalid_input_pkg_file_without_output_argument(self):
-        self._test_runner.cmd_args.files = [
-            str(self._data_directory / "valid_file1.pkg")
-        ]
-
-        completed_process = self._test_runner.run_tool_test()
-
-        asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
-
-        asserter.assertExitCode(2)
-        asserter.assertInStdErr("the following arguments are required: --out")
 
 
 if __name__ == "__main__":
