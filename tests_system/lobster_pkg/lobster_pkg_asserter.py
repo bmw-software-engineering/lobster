@@ -10,5 +10,5 @@ __unittest = True
 class LobsterPkgAsserter(Asserter):
     def assertStdOutNumAndFile(self, num_items: int, out_file: str):
         self.assertStdOutText(
-            f"Written output for {num_items} items to {out_file}\n"
+            f"lobster-pkg: wrote {num_items} items to {out_file}\n"
         )
