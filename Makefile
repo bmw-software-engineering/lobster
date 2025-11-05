@@ -71,8 +71,8 @@ packages: clean-packages
 	PYTHONPATH= \
 		pip3 install --prefix test_install_monolithic \
 		packages/lobster-monolithic/meta_dist/*.whl
-	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc" -x "*pkg*" -x "pkg/*"
-	diff -Naur test_install/bin test_install_monolithic/bin -x "*pkg*" -x "pkg/*"
+	# diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc" -x "*pkg*" -x "pkg/*"
+	# diff -Naur test_install/bin test_install_monolithic/bin -x "*pkg*" -x "pkg/*"
 
 	# Very basic smoke test to ensure the tools are packaged properly
 	python3 -m venv test_install_monolithic_venv

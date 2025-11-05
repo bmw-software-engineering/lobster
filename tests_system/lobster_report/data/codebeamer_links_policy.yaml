@@ -1,0 +1,15 @@
+Requirements: !LevelDefinition
+  name: Requirements
+  source:
+  - file: codebeamer_items.lobster
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Code
+
+Code: !LevelDefinition
+  name: Code
+  source:
+  - file: codebeamer_funny_impl.lobster
+  needs_tracing_up: true
+  traces:
+  - Requirements

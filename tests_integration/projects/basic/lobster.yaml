@@ -1,0 +1,39 @@
+System Requirements: !LevelDefinition
+  name: System Requirements
+  source:
+  - file: system-requirements.lobster
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Software Requirements
+
+Software Requirements: !LevelDefinition
+  name: Software Requirements
+  source:
+  - file: software-requirements.lobster
+  needs_tracing_up: true
+  traces:
+  - System Requirements
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Code
+  - - Verification Test
+
+Code: !LevelDefinition
+  name: Code
+  source:
+  - file: cppcode.lobster
+  - file: mcode.lobster
+  - file: pycode.lobster
+  needs_tracing_up: true
+  traces:
+  - Software Requirements
+
+Verification Test: !LevelDefinition
+  name: Verification Test
+  source:
+  - file: gtests.lobster
+  - file: mtests.lobster
+  - file: json.lobster
+  needs_tracing_up: true
+  traces:
+  - Software Requirements

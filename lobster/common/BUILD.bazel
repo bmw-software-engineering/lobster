@@ -35,6 +35,7 @@ py_library(
         "report.py",
         "tool.py",
         "version.py",
+        "tracing_policy_schema.yamale",
     ],
     visibility = ["//visibility:public"],
     deps = [

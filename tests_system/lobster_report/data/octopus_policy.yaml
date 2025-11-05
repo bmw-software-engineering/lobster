@@ -1,0 +1,27 @@
+Requirements: !LevelDefinition
+  name: Requirements
+  source:
+  - file: octopus_system.lobster
+  - file: octopus_software.lobster
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Code
+  - - test
+
+Code: !LevelDefinition
+  name: Code
+  source:
+  - file: tentacle_commander_code.lobster
+  - file: tentacle_toolkit_code.lobster
+  needs_tracing_up: true
+  traces:
+  - Requirements
+
+test: !LevelDefinition
+  name: test
+  source:
+  - file: tentacle_commander_test.lobster
+  - file: tentacle_toolkit_test.lobster
+  needs_tracing_up: true
+  traces:
+  - Requirements
