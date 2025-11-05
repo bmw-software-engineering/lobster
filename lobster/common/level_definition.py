@@ -5,7 +5,7 @@ from typing import List, Any
 @dataclass
 class LevelDefinition:
     name: str
-    kind: str
+    kind: str = ""
     traces: List[str] = field(default_factory=list)
     source: List[Any] = field(default_factory=list)
     needs_tracing_up: bool = False

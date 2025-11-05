@@ -5,7 +5,7 @@
   "levels": [
     {
       "name": "Software Requirements",
-      "kind": "requirements",
+      "kind": "",
       "items": [
         {
           "tag": "req fruits.Buy_Banana1",
@@ -399,7 +399,7 @@
     },
     {
       "name": "Code",
-      "kind": "implementation",
+      "kind": "",
       "items": [
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14",
@@ -792,7 +792,7 @@
     },
     {
       "name": "Verification Test",
-      "kind": "activity",
+      "kind": "",
       "items": [
         {
           "tag": "gtest FruitTest:BasicProperties",
@@ -917,7 +917,7 @@
   "policy": {
     "Software Requirements": {
       "name": "Software Requirements",
-      "kind": "requirements",
+      "kind": "",
       "traces": [],
       "source": [
         {
@@ -937,7 +937,7 @@
     },
     "Code": {
       "name": "Code",
-      "kind": "implementation",
+      "kind": "",
       "traces": [
         "Software Requirements"
       ],
@@ -952,7 +952,7 @@
     },
     "Verification Test": {
       "name": "Verification Test",
-      "kind": "activity",
+      "kind": "",
       "traces": [
         "Software Requirements"
       ],

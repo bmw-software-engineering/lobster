@@ -11,7 +11,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     # Tests for the report generation with different statuses
-    # Status Ok
+    # Status Ok with "lobster_ok.conf"
     def test_status_ok(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Ok
@@ -31,11 +31,36 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
+        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
+                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    # Status Ok with "lobster_ok.yaml" (no kind)
+    def test_status_ok_yaml(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
+        # lobster-trace: core_report_req.Status_Ok
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "lobster_ok.yaml")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "trlc_ok.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "python_ok.lobster")
+
+        conf_file = "lobster_ok.yaml"
+        out_file = "report_ok_yaml.lobster"
+        self._test_runner.cmd_args.lobster_config = conf_file
+        self._test_runner.cmd_args.out = out_file
+        self._test_runner.declare_output_file(self._data_directory / out_file)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
         asserter.assertNoStdOutText()
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    # Status Missing
+    # Status Missing with "lobster_missing.conf"
     def test_status_missing(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Missing
@@ -55,11 +80,36 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
+        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
+                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    # Status Missing with "lobster_missing.yaml"
+    def test_status_missing_yaml(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
+        # lobster-trace: core_report_req.Status_Missing
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "lobster_missing.yaml")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "trlc_missing.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "python_missing.lobster")
+
+        conf_file = "lobster_missing.yaml"
+        out_file = "report_missing_yaml.lobster"
+        self._test_runner.cmd_args.lobster_config = conf_file
+        self._test_runner.cmd_args.out = out_file
+        self._test_runner.declare_output_file(self._data_directory / out_file)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
         asserter.assertNoStdOutText()
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_status_missing_mixed(self):
+    def test_status_mixed(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Missing
         self._test_runner.declare_input_file(self._data_directory /
@@ -78,11 +128,35 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
+        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
+                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_status_mixed_yaml(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
+        # lobster-trace: core_report_req.Status_Missing
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "lobster_mixed.yaml")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "trlc_mixed.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "python_mixed.lobster")
+
+        conf_file = "lobster_mixed.yaml"
+        out_file = "report_mixed_yaml.lobster"
+        self._test_runner.cmd_args.lobster_config = conf_file
+        self._test_runner.cmd_args.out = out_file
+        self._test_runner.declare_output_file(self._data_directory / out_file)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
         asserter.assertNoStdOutText()
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    # Status Justified
+    # Status Justified with "lobster_justified.conf"
     def test_status_justified(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Justified_Global
@@ -95,6 +169,31 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
 
         conf_file = "lobster_justified.conf"
         out_file = "report_justified.lobster"
+        self._test_runner.cmd_args.lobster_config = conf_file
+        self._test_runner.cmd_args.out = out_file
+        self._test_runner.declare_output_file(self._data_directory / out_file)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
+                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    # Status Justified with "lobster_justified.yaml"
+    def test_status_justified_yaml(self):
+        # lobster-trace: UseCases.Tracing_Policy_Output_File
+        # lobster-trace: core_report_req.Status_Justified_Global
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "lobster_justified.yaml")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "trlc_justified.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "python_justified.lobster")
+
+        conf_file = "lobster_justified.yaml"
+        out_file = "report_justified_yaml.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)

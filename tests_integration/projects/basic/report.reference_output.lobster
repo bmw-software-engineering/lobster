@@ -5,7 +5,7 @@
   "levels": [
     {
       "name": "System Requirements",
-      "kind": "requirements",
+      "kind": "",
       "items": [
         {
           "tag": "req 12345@42",
@@ -39,7 +39,7 @@
     },
     {
       "name": "Software Requirements",
-      "kind": "requirements",
+      "kind": "",
       "items": [
         {
           "tag": "req example.req_implication@10",
@@ -215,7 +215,7 @@
     },
     {
       "name": "Code",
-      "kind": "implementation",
+      "kind": "",
       "items": [
         {
           "tag": "cpp foo.cpp:1:implication:3",
@@ -433,7 +433,7 @@
     },
     {
       "name": "Verification Test",
-      "kind": "activity",
+      "kind": "",
       "items": [
         {
           "tag": "gtest ImplicationTest:BasicTest",
@@ -555,7 +555,7 @@
   "policy": {
     "System Requirements": {
       "name": "System Requirements",
-      "kind": "requirements",
+      "kind": "",
       "traces": [],
       "source": [
         {
@@ -572,7 +572,7 @@
     },
     "Software Requirements": {
       "name": "Software Requirements",
-      "kind": "requirements",
+      "kind": "",
       "traces": [
         "System Requirements"
       ],
@@ -594,7 +594,7 @@
     },
     "Code": {
       "name": "Code",
-      "kind": "implementation",
+      "kind": "",
       "traces": [
         "Software Requirements"
       ],
@@ -615,7 +615,7 @@
     },
     "Verification Test": {
       "name": "Verification Test",
-      "kind": "activity",
+      "kind": "",
       "traces": [
         "Software Requirements"
       ],

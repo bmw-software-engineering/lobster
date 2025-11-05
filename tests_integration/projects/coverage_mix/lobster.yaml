@@ -1,0 +1,24 @@
+Requirements A: !LevelDefinition
+  name: Requirements A
+  source:
+  - file: req_a.lobster
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Requirements B
+    - Test A
+
+Requirements B: !LevelDefinition
+  name: Requirements B
+  source:
+  - file: req_b.lobster
+  needs_tracing_up: true
+  traces:
+  - Requirements A
+
+Test A: !LevelDefinition
+  name: Test A
+  source:
+  - file: test_a.lobster
+  needs_tracing_up: true
+  traces:
+  - Requirements A

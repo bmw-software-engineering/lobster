@@ -1,0 +1,24 @@
+Software Requirements: !LevelDefinition
+  name: Software Requirements
+  source:
+  - file: software-requirements.lobster
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Code
+    - Verification Test
+
+Code: !LevelDefinition
+  name: Code
+  source:
+  - file: cppcode.lobster
+  needs_tracing_up: true
+  traces:
+  - Software Requirements
+
+Verification Test: !LevelDefinition
+  name: Verification Test
+  source:
+  - file: gtests.lobster
+  needs_tracing_up: true
+  traces:
+  - Software Requirements

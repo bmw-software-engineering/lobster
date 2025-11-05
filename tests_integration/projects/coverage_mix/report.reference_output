@@ -5,7 +5,7 @@
   "levels": [
     {
       "name": "Requirements A",
-      "kind": "requirements",
+      "kind": "",
       "items": [
         {
           "tag": "req coverage_mix.banana",
@@ -35,7 +35,7 @@
     },
     {
       "name": "Requirements B",
-      "kind": "requirements",
+      "kind": "",
       "items": [
         {
           "tag": "req coverage_mix.banana_skin",
@@ -63,7 +63,7 @@
     },
     {
       "name": "Test A",
-      "kind": "requirements",
+      "kind": "",
       "items": [
         {
           "tag": "req coverage_mix.banana_color_test",
@@ -97,7 +97,7 @@
   "policy": {
     "Requirements A": {
       "name": "Requirements A",
-      "kind": "requirements",
+      "kind": "",
       "traces": [],
       "source": [
         {
@@ -114,7 +114,7 @@
     },
     "Requirements B": {
       "name": "Requirements B",
-      "kind": "requirements",
+      "kind": "",
       "traces": [
         "Requirements A"
       ],
@@ -129,7 +129,7 @@
     },
     "Test A": {
       "name": "Test A",
-      "kind": "requirements",
+      "kind": "",
       "traces": [
         "Requirements A"
       ],
