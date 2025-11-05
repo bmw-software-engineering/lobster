@@ -5,7 +5,6 @@
   "levels": [
     {
       "name": "System Requirements",
-      "kind": "requirements",
       "items": [
         {
           "tag": "req sysreq_coverage_example.requirement_1",
@@ -35,7 +34,6 @@
     },
     {
       "name": "Software Requirements",
-      "kind": "requirements",
       "items": [
         {
           "tag": "req softreq_coverage_example.requirement_2",
@@ -67,7 +65,6 @@
   "policy": {
     "System Requirements": {
       "name": "System Requirements",
-      "kind": "requirements",
       "traces": [],
       "source": [
         {
@@ -84,7 +81,6 @@
     },
     "Software Requirements": {
       "name": "Software Requirements",
-      "kind": "requirements",
       "traces": [
         "System Requirements"
       ],

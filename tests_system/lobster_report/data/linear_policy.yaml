@@ -1,0 +1,26 @@
+System Requirements: !LevelDefinition
+  name: System Requirements
+  source:
+  - file: linear_system_requirements.lobster
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Software Requirements
+
+Software Requirements: !LevelDefinition
+  name: Software Requirements
+  source:
+  - file: linear_software_requirements.lobster
+  needs_tracing_up: true
+  traces:
+  - System Requirements
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Code
+
+Code: !LevelDefinition
+  name: Code
+  source:
+  - file: code_linear.lobster
+  needs_tracing_up: true
+  traces:
+  - Software Requirements

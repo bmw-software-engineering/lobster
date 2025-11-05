@@ -1,0 +1,15 @@
+System Requirements: !LevelDefinition
+  name: System Requirements
+  source:
+  - file: sysreq.lobster
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Software Requirements
+
+Software Requirements: !LevelDefinition
+  name: Software Requirements
+  source:
+  - file: softreq.lobster
+  needs_tracing_up: true
+  traces:
+  - System Requirements

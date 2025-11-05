@@ -90,7 +90,7 @@ class Tracing_Status(Enum):
 
 
 class Item(metaclass=ABCMeta):
-    def __init__(self, tag: Tracing_Tag, location: Location):
+    def __init__(self, tag: Tracing_Tag, location: Location, name: str = ""):
         assert isinstance(tag, Tracing_Tag)
         assert isinstance(location, Location)
 
@@ -98,6 +98,8 @@ class Item(metaclass=ABCMeta):
         self.tag       = tag
         self.location  = location
         self.name      = tag.tag
+        if name:
+            self.name = name
 
         self.ref_up   = []
         self.ref_down = []
@@ -203,6 +205,8 @@ class Item(metaclass=ABCMeta):
         self.just_global = data.get("just_global", [])
         if "tracing_status" in data:
             self.tracing_status = Tracing_Status[data["tracing_status"]]
+        if "name" in data:
+            self.name = data["name"]
 
     def to_json(self):
         rv = {
@@ -222,7 +226,22 @@ class Item(metaclass=ABCMeta):
             rv["ref_down"] = [tag.to_json() for tag in self.ref_down]
         if self.tracing_status:
             rv["tracing_status"] = self.tracing_status.name
+
         return rv
+    
+    @classmethod
+    def from_json(cls, level, data, schema_version):
+        assert isinstance(level, str)
+        assert isinstance(data, dict)
+        assert schema_version >= 3
+
+        item = Item(tag      = Tracing_Tag.from_json(data["tag"]),
+                    location = Location.from_json(data["location"]),
+                    name     = data.get("name", ""))
+        item.set_level(level)
+        item.additional_data_from_json(level, data, schema_version)
+
+        return item
 
 
 class Requirement(Item):
