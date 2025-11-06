@@ -34,84 +34,11 @@ h2 {
   height: 24px;
   vertical-align: middle;
 }
-#custom-data-banner {
-  position: absolute;
-  top: 1em;
-  right: 2em;
-  font-size: 0.9em;
-  color: white;
-}
-.item-ok, .item-partial, .item-missing, .item-justified {
-  border: 1px solid black;
-  border-radius: 0.5em;
-  margin-top: 0.4em;
-  padding: 0.25em;
-}
-.item-ok:target, .item-partial:target, .item-missing:target, .item-justified:target {
-  border: 3px solid black;
-}
-.subtle-ok, .subtle-partial, .subtle-missing, .subtle-justified {
-  padding-left: 0.2em;
-}
 .item-ok {
   background-color: #efe;
 }
-.item-partial {
-  background-color: #ffe;
-}
 .item-missing {
   background-color: #fee;
-}
-.item-justified {
-  background-color: #eee;
-}
-.subtle-ok {
-  border-left: 0.2em solid #8f8;
-}
-.subtle-partial {
-  border-left: 0.2em solid #ff8;
-}
-.subtle-missing {
-  border-left: 0.2em solid #f88;
-}
-.subtle-justified {
-  border-left: 0.2em solid #888;
-}
-.item-name {
-  font-size: 125%;
-  font-weight: bold;
-}
-.attribute {
-  margin-top: 0.5em;
-}
-.columns {
-  display: flex;
-}
-.columns .column {
-  flex: 45%;
-}
-thead tr {
-  font-weight: bold;
-}
-tbody tr.alt {
-  background-color: #eee;
-}
-blockquote {
-  font-style: italic;
-  border-left: 0.2em solid gray;
-  padding-left: 0.4em;
-  margin-left: 0.5em;
-}
-footer {
-  margin-top: 1rem;
-  padding: .2rem;
-  text-align: right;
-  color: #666;
-  font-size: .7rem;
-}
-.js-plotly-plot {
-  z-index: 1;
-  position: relative;
 }
 #navbar {
   overflow: hidden;
@@ -191,6 +118,134 @@ footer {
 .sticky .dropdown-content {
   position: fixed;
 }
+/* Item styles */
+#custom-data-banner {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.item-ok,
+.item-partial,
+.item-missing,
+.item-justified {
+    border: 1px solid #000;
+    border-radius: 0.5rem;
+    margin-top: 0.4rem;
+    padding: 0.25rem;
+}
+
+.item-ok:target,
+.item-partial:target,
+.item-missing:target,
+.item-justified:target {
+    border-width: 3px;
+    border-color: #000;
+}
+
+.subtle-ok,
+.subtle-partial,
+.subtle-missing,
+.subtle-justified {
+    padding-left: 0.2rem;
+}
+
+.item-partial {
+    background-color: #ffffee;
+}
+
+.item-justified {
+    background-color: #eeeeee;
+}
+
+.subtle-ok {
+    border-left: 0.2rem solid #88ff88;
+}
+
+.subtle-partial {
+    border-left: 0.2rem solid #ffff88;
+}
+
+.subtle-missing {
+    border-left: 0.2rem solid #ff8888;
+}
+
+.subtle-justified {
+    border-left: 0.2rem solid #888888;
+}
+
+.item-name {
+    font-size: 125%;
+    font-weight: bold;
+}
+
+.attribute {
+    margin-top: 0.5rem;
+}
+
+/* Tables */
+thead tr {
+    font-weight: bold;
+}
+
+tbody tr.alt {
+    background-color: #eeeeee;
+}
+
+/* Text */
+blockquote {
+    font-style: italic;
+    border-left: 0.2rem solid gray;
+    padding-left: 0.4rem;
+    margin-left: 0.5rem;
+}
+
+/* Footer */
+footer {
+    margin-top: 1rem;
+    padding: 0.2rem;
+    text-align: right;
+    color: #666666;
+    font-size: 0.7rem;
+}
+
+/* Columns layout */
+.columns {
+    display: flex;
+}
+
+.columns .column {
+    flex: 45%;
+}
+
+/* Table styling */
+thead tr {
+    font-weight: bold;
+}
+
+tbody tr.alt {
+    background-color: #eeeeee;
+}
+
+/* Text formatting */
+blockquote {
+    font-style: italic;
+    border-left: 0.2rem solid gray;
+    padding-left: 0.4rem;
+    margin-left: 0.5rem;
+}
+
+/* Footer styling */
+footer {
+    margin-top: 1rem;
+    padding: 0.2rem;
+    text-align: right;
+    color: #666666;
+    font-size: 0.7rem;
+}
+
 .button {
     background-color: #818589;
     border: none;
@@ -330,6 +385,11 @@ footer {
     border: 5px solid #000099
 }
 
+.js-plotly-plot {
+    z-index: 1;
+    position: relative;
+}
+
 </style>
 </head>
 <body>
@@ -431,13 +491,7 @@ footer {
 </div>
 <div class="column">
 <h3>Tracing policy</h3>
-<html>
-<head><meta charset="utf-8" /></head>
-<body>
-    <div>                        <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
-        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.0.1.min.js" integrity="sha256-oy6Be7Eh6eiQFs5M7oXuPxxm9qbJXEtTpfSI93dW16Q=" crossorigin="anonymous"></script>                <div id="8cfe7807-95b3-4479-bfc6-7d02ade36760" class="plotly-graph-div" style="height:500px; width:900px;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("8cfe7807-95b3-4479-bfc6-7d02ade36760")) {                    Plotly.newPlot(                        "8cfe7807-95b3-4479-bfc6-7d02ade36760",                        [],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"shapes":[{"fillcolor":"white","line":{"color":"black"},"type":"rect","x0":0.33,"x1":0.6699999999999999,"y0":0.9,"y1":1.1},{"fillcolor":"white","line":{"color":"black"},"type":"rect","x0":0.36,"x1":0.64,"y0":0.5,"y1":0.7}],"annotations":[{"font":{"size":12},"hoverlabel":{"bgcolor":"white"},"hovertext":"#sec-5a2ebfb8baa378cfcfcba58bbb1380c2","showarrow":false,"text":"\u003cspan section=\"#sec-5a2ebfb8baa378cfcfcba58bbb1380c2\"\u003eRequirements\u003c\u002fspan\u003e","x":0.5,"y":1.0},{"font":{"size":12},"hoverlabel":{"bgcolor":"white"},"hovertext":"#sec-ca0dbad92a874b2f69b549293387925e","showarrow":false,"text":"\u003cspan section=\"#sec-ca0dbad92a874b2f69b549293387925e\"\u003eCode\u003c\u002fspan\u003e","x":0.5,"y":0.6},{"arrowcolor":"black","arrowhead":2,"arrowsize":2,"arrowwidth":1,"ax":0.5,"axref":"x","ay":0.9,"ayref":"y","showarrow":true,"x":0.5,"y":0.7},{"align":"center","bgcolor":"white","font":{"color":"black","size":11},"opacity":0.85,"showarrow":false,"text":"trace to","x":0.5,"y":0.8}],"xaxis":{"visible":false,"range":[0.5,0.5],"scaleanchor":"y","scaleratio":1},"yaxis":{"visible":false,"range":[0.52,1.08]},"height":500,"width":900,"plot_bgcolor":"white"},                        {"responsive": true}                    )                };            </script>        </div>
-</body>
-</html>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="main-svg" width="700" height="500" style="" viewBox="0 0 700 500"><rect x="0" y="0" width="700" height="500" style="fill: rgb(255, 255, 255); fill-opacity: 1;" /><defs id="defs-7da2ce"><g class="clips"><clipPath id="clip7da2cexyplot" class="plotclip"><rect width="540" height="320" /></clipPath><clipPath class="axesclip" id="clip7da2cex"><rect x="80" y="0" width="540" height="500" /></clipPath><clipPath class="axesclip" id="clip7da2cey"><rect x="0" y="100" width="700" height="320" /></clipPath><clipPath class="axesclip" id="clip7da2cexy"><rect x="80" y="100" width="540" height="320" /></clipPath></g><g class="gradients" /><g class="patterns" /></defs><g class="bglayer" /><g class="layer-below"><g class="imagelayer" /><g class="shapelayer" /></g><g class="cartesianlayer"><g class="subplot xy"><g class="layer-subplot"><g class="shapelayer" /><g class="imagelayer" /></g><g class="minor-gridlayer"><g class="x" /><g class="y" /></g><g class="gridlayer"><g class="x" /><g class="y" /></g><g class="zerolinelayer" /><g class="layer-between"><g class="shapelayer" /><g class="imagelayer" /></g><path class="xlines-below" /><path class="ylines-below" /><g class="overlines-below" /><g class="xaxislayer-below" /><g class="yaxislayer-below" /><g class="overaxes-below" /><g class="overplot"><g class="xy" transform="translate(80,100)" clip-path="url(#clip7da2cexyplot)" /></g><path class="xlines-above crisp" d="M0,0" style="fill: none;" /><path class="ylines-above crisp" d="M0,0" style="fill: none;" /><g class="overlines-above" /><g class="xaxislayer-above" /><g class="yaxislayer-above" /><g class="overaxes-above" /></g></g><g class="polarlayer" /><g class="smithlayer" /><g class="ternarylayer" /><g class="geolayer" /><g class="funnelarealayer" /><g class="pielayer" /><g class="iciclelayer" /><g class="treemaplayer" /><g class="sunburstlayer" /><g class="glimages" /><defs id="topdefs-7da2ce"><g class="clips" /></defs><g class="layer-above"><g class="imagelayer" /><g class="shapelayer"><g class="shape-group" data-index="0" clip-path="url(#clip7da2cexy)"><path data-index="0" fill-rule="evenodd" d="M304.1,233H395.9V179H304.1Z" style="opacity: 1; stroke: rgb(0, 0, 0); stroke-opacity: 1; fill: rgb(255, 255, 255); fill-opacity: 1; stroke-width: 2px;" /></g><g class="shape-group" data-index="1" clip-path="url(#clip7da2cexy)"><path data-index="1" fill-rule="evenodd" d="M312.2,341H387.8V287H312.2Z" style="opacity: 1; stroke: rgb(0, 0, 0); stroke-opacity: 1; fill: rgb(255, 255, 255); fill-opacity: 1; stroke-width: 2px;" /></g></g></g><g class="infolayer"><g class="g-gtitle" /><g class="annotation" data-index="0" style="opacity: 1;"><g class="annotation-text-g" transform="rotate(0,350,206)"><g class="cursor-pointer" transform="translate(306,197)"><rect class="bg" x="0.5" y="0.5" width="87" height="18" style="stroke-width: 1px; stroke: rgb(0, 0, 0); stroke-opacity: 0; fill: rgb(0, 0, 0); fill-opacity: 0;" /><a xlink:href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2"><text class="annotation-text" text-anchor="middle" x="43.6171875" y="14" style="font-family: 'Open Sans', verdana, arial, sans-serif; font-size: 12px; fill: rgb(42, 63, 95); fill-opacity: 1; white-space: pre;">Requirements</text></a></g></g></g><g class="annotation" data-index="1" style="opacity: 1;"><g class="annotation-text-g" transform="rotate(0,350,314)"><g class="cursor-pointer" transform="translate(333,305)"><rect class="bg" x="0.5" y="0.5" width="33" height="18" style="stroke-width: 1px; stroke: rgb(0, 0, 0); stroke-opacity: 0; fill: rgb(0, 0, 0); fill-opacity: 0;" /><a xlink:href="#sec-ca0dbad92a874b2f69b549293387925e"><text class="annotation-text" text-anchor="middle" x="17.1484375" y="14" style="font-family: 'Open Sans', verdana, arial, sans-serif; font-size: 12px; fill: rgb(42, 63, 95); fill-opacity: 1; white-space: pre;">Code</text></a></g></g></g><g class="annotation" data-index="2" style="opacity: 1;"><g class="annotation-text-g" transform="rotate(0,350,233)"><g class="cursor-pointer" transform="translate(346,224)"><rect class="bg" x="0.5" y="0.5" width="7" height="18" style="stroke-width: 1px; stroke: rgb(0, 0, 0); stroke-opacity: 0; fill: rgb(0, 0, 0); fill-opacity: 0;" /><text class="annotation-text" text-anchor="middle" x="4.109375" y="14" style="font-family: 'Open Sans', verdana, arial, sans-serif; font-size: 12px; fill: rgb(42, 63, 95); fill-opacity: 1; white-space: pre;"> </text></g></g><g class="annotation-arrow-g" style="opacity: 1;"><path d="M350,242L350,287" style="stroke-width: 1px; stroke: rgb(0, 0, 0); stroke-opacity: 1; stroke-dasharray: 0px, 0px, 42.4px, 45px;" /><path d="M-3.7,-2.5V2.5L1.3,0Z" transform="translate(350,284.3999938964844)rotate(90)scale(2)" style="fill: rgb(0, 0, 0); stroke-width: 0;" /></g></g><g class="annotation" data-index="3" style="opacity: 0.85;"><g class="annotation-text-g" transform="rotate(0,350,260)"><g class="cursor-pointer" transform="translate(327,252)"><rect class="bg" x="0.5" y="0.5" width="46" height="16" style="stroke-width: 1px; stroke: rgb(0, 0, 0); stroke-opacity: 0; fill: rgb(255, 255, 255); fill-opacity: 1;" /><a xlink:href="#sec-a3b91b776578988cd7c62757f91c42df"><text class="annotation-text" text-anchor="middle" x="23.3046875" y="13" style="font-family: 'Open Sans', verdana, arial, sans-serif; font-size: 11px; fill: rgb(0, 0, 0); fill-opacity: 1; white-space: pre;">trace to</text></a></g></g></g></g></svg>
 </div>
 </div>
 </div>
@@ -530,7 +584,7 @@ Status: status1
 </div>
 </div>
 <footer>
-<p>LOBSTER Version: 0.14.6-dev</p>
+<p>LOBSTER Version: 1.0.3-dev</p>
 </footer>
 </div>
 </div>
@@ -622,22 +676,6 @@ function searchItem() {
         }
     }
 }
-
-document.querySelectorAll('.annotation').forEach(function(ann) {
-    ann.style.cursor = "pointer";
-    ann.addEventListener('click', function(e) {
-        var textElem = ann.querySelector('text.annotation-text');
-        if (textElem) {
-            var unformatted = textElem.getAttribute('data-unformatted');
-            // Extract the section anchor from the <span section="...">
-            var match = unformatted && unformatted.match(/section="([^"]+)"/);
-            if (match && match[1].startsWith("#sec-")) {
-                window.location.hash = match[1];
-                e.preventDefault();
-            }
-        }
-    });
-});
 </script>
 <script>
 

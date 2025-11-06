@@ -1,11 +1,47 @@
-# pylint: disable=invalid-name
 import hashlib
 from typing import Optional, Tuple
-import plotly.graph_objects as go
 from xml.etree import ElementTree as ET
+import plotly.graph_objects as go
 
-from lobster.html import htmldoc
-from lobster.report import Report
+from lobster.htmldoc import htmldoc
+from lobster.common.report import Report
+
+# Node layout constants
+NODE_SPACING_X = 0.8                  # Horizontal spacing between nodes
+DEFAULT_NODE_X = 0.5                  # Default horizontal center for node placement
+Y_POSITIONS = {"requirements": 1.0, "implementation": 0.6, "activity": 0.2}
+
+# Node appearance constants
+CHAR_WIDTH = 0.02                     # Estimated width per character for node sizing
+NODE_HEIGHT = 0.2                     # Fixed node height
+NODE_LABEL_FONT_SIZE = 12             # Font size for node labels
+NODE_MIN_WIDTH = 0.28                 # Minimum width for node rectangles
+NODE_LABEL_PADDING = 0.1              # Extra padding added to node width for label
+
+# Arrow constants
+ARROW_CURVE_AMOUNT_BIDIRECTIONAL = 0.08     # Amount of curve for bidirectional
+ARROW_CURVE_AMOUNT_NON_BIDIRECTIONAL = 0.4  # Amount of curve for non-bidirectional
+ARROW_SHORTEN_FACTOR = 0.9                  # Factor to shorten arrowhead along curve
+DEFAULT_ARROW_LABEL = "trace to"            # Default label for arrows if not specified
+
+# Figure constants
+FIG_HEIGHT = 500                      # Height of the Plotly figure in pixels
+FIG_WIDTH = 900                       # Width of the Plotly figure in pixels
+MARGIN_RATIO = 0.2                    # Ratio for calculating diagram margins
+DEFAULT_MARGIN = 0.5                  # Default margin if only one node exists
+
+# Calculation constants
+MIDPOINT_FRACTION = 0.5               # Fraction for midpoint calculation in labels
+
+ARROW_STYLE = {
+    "showarrow": True,
+    "arrowhead": 2,
+    "arrowsize": 2,
+    "arrowwidth": 1,
+    "arrowcolor": "black",
+    "axref": "x",
+    "ayref": "y"
+}
 
 
 def name_hash(name: str) -> str:
@@ -35,9 +71,6 @@ def add_arrow_label(
     x_start, y_start = start
     x_end, y_end = end
 
-    # Determines that the label is placed at 50% (the middle) between the start
-    # and end points.
-    MIDPOINT_FRACTION = 0.5
     if ctrl is not None:
         ctrl_x, ctrl_y = ctrl
         # Quadratic Bézier midpoint
@@ -139,18 +172,15 @@ def prepare_nodes(report):
 
     node_data = {}
     node_positions = {}
-    NODE_SPACING_X = 0.8              # Horizontal spacing between nodes
-    DEFAULT_NODE_X = 0.5              # Default horizontal center for node placement
 
-    Y_POSITIONS = {"requirements": 1.0, "implementation": 0.6, "activity": 0.2}
     type_levels = {"requirements": [], "implementation": [], "activity": []}
 
     for level in report.config.values():
-        type_levels[level["kind"]].append(level)
+        type_levels[level.kind].append(level)
     for type_name, levels in type_levels.items():
         levels_count = len(levels)
         for idx, level in enumerate(levels):
-            node_id = f"n_{name_hash(level['name'])}"
+            node_id = f"n_{name_hash(level.name)}"
             x = DEFAULT_NODE_X + (idx - (levels_count - 1) / 2) * NODE_SPACING_X
             y = Y_POSITIONS[type_name]
             node_positions[node_id] = (x, y)
@@ -161,35 +191,30 @@ def prepare_nodes(report):
 def prepare_edges(report):
     """
     Prepare edge data and arrow labels for the diagram.
-
-    Parameters:
-        report: The report object containing configuration and traceability data.
-
-    Returns:
-        edges: List of tuples (source_id, target_id, label, bidirectional).
-        arrow_labels: Dict mapping (source_id, target_id) to label.
     """
-
-    DEFAULT_ARROW_LABEL = "trace to"  # Default label for arrows if not specified
-
     edge_pairs = set()
     arrow_labels = {}
+
     for level in report.config.values():
-        source_id = f"n_{name_hash(level['name'])}"
-        for target_name in level.get("traces", []):
+        source_id = f"n_{name_hash(level.name)}"
+        for target_name in getattr(level, "traces", []):
             target_id = f"n_{name_hash(target_name)}"
             edge_pairs.add((source_id, target_id))
-            arrow_labels[(source_id, target_id)] = level.get("arrow_label",
-                                                             DEFAULT_ARROW_LABEL)
+            arrow_labels[(source_id, target_id)] = getattr(
+                level,
+                "arrow_label",
+                DEFAULT_ARROW_LABEL)
+
     edges = []
     for (source_id, target_id) in edge_pairs:
         is_bidirectional = (target_id, source_id) in edge_pairs
         label = arrow_labels.get((source_id, target_id), "")
         if is_bidirectional:
-            if source_id < target_id:
+            if source_id < target_id:  # Only add once for bidirectional
                 edges.append((source_id, target_id, label, True))
         else:
             edges.append((source_id, target_id, label, False))
+
     return edges, arrow_labels
 
 
@@ -203,17 +228,9 @@ def draw_nodes(fig, node_data, node_positions, node_dimensions):
         node_positions: Dict mapping node_id to (x, y) positions.
         node_dimensions: Dict to store node_id to (width, height).
     """
-
-    CHAR_WIDTH = 0.02                 # Estimated width per character for node sizing
-    NODE_HEIGHT = 0.2                 # Fixed node heigh
-
-    NODE_LABEL_FONT_SIZE = 12         # Font size for node labels
-    NODE_MIN_WIDTH = 0.28             # Minimum width for node rectangles
-    NODE_LABEL_PADDING = 0.1          # Extra padding added to node width for label
-
     for node_id, level in node_data.items():
         x, y = node_positions[node_id]
-        label = level["name"]
+        label = level.name
         node_width = max(NODE_MIN_WIDTH, (len(label) * CHAR_WIDTH) + NODE_LABEL_PADDING)
         fig.add_shape(
             type="rect",
@@ -231,6 +248,149 @@ def draw_nodes(fig, node_data, node_positions, node_dimensions):
         )
 
 
+def draw_curved_edge(
+        fig,
+        source_endpoint,
+        target_endpoint,
+        curve_offset,
+        arrow_label,
+        arrow_style,
+        shorten_factor):
+    """
+    Draw a single curved edge with arrowhead and label.
+
+    Parameters:
+        fig: The Plotly figure to draw on.
+        source_endpoint: (x, y) coordinates where the arrow starts.
+        target_endpoint: (x, y) coordinates where the arrow ends.
+        curve_offset: Amount of curve perpendicular to the line.
+        arrow_label: Text label for the arrow.
+        arrow_style: Dictionary of arrow styling parameters.
+        shorten_factor: Factor to shorten arrowhead along curve.
+    """
+    delta_x = target_endpoint[0] - source_endpoint[0]
+    delta_y = target_endpoint[1] - source_endpoint[1]
+    arrow_length = (delta_x ** 2 + delta_y ** 2) ** 0.5 or 1
+
+    # Calculate perpendicular offset for curve
+    perpendicular_offset_x = -delta_y / arrow_length * curve_offset
+    perpendicular_offset_y = delta_x / arrow_length * curve_offset
+
+    # Calculate curve control point
+    curve_control_point = (
+        (source_endpoint[0] + target_endpoint[0]) / 2 + perpendicular_offset_x,
+        (source_endpoint[1] + target_endpoint[1]) / 2 + perpendicular_offset_y
+    )
+
+    # Calculate arrowhead point (shortened along curve)
+    arrowhead_point = (
+        curve_control_point[0] *
+        (1 - shorten_factor) + target_endpoint[0] *
+        shorten_factor,
+        curve_control_point[1] *
+        (1 - shorten_factor) + target_endpoint[1] *
+        shorten_factor
+    )
+
+    # Draw curved path
+    fig.add_shape(
+        type="path",
+        path=(
+            f"M{source_endpoint[0]},{source_endpoint[1]} "
+            f"Q{curve_control_point[0]},{curve_control_point[1]} "
+            f"{target_endpoint[0]},{target_endpoint[1]}"
+        ),
+        line={"color": "black", "width": 1},
+        layer="above"
+    )
+
+    # Add arrowhead
+    fig.add_annotation(
+        x=target_endpoint[0], y=target_endpoint[1],
+        ax=arrowhead_point[0], ay=arrowhead_point[1],
+        **arrow_style
+    )
+
+    # Add label
+    add_arrow_label(
+        fig,
+        source_endpoint,
+        target_endpoint,
+        curve_control_point,
+        arrow_label)
+
+
+def draw_straight_edge(fig, source_endpoint, target_endpoint, arrow_label, arrow_style):
+    """
+    Draw a single straight edge with arrowhead and label.
+
+    Parameters:
+        fig: The Plotly figure to draw on.
+        source_endpoint: (x, y) coordinates where the arrow starts.
+        target_endpoint: (x, y) coordinates where the arrow ends.
+        arrow_label: Text label for the arrow.
+        arrow_style: Dictionary of arrow styling parameters.
+    """
+    # Draw straight arrow
+    fig.add_annotation(
+        x=target_endpoint[0], y=target_endpoint[1],
+        ax=source_endpoint[0], ay=source_endpoint[1],
+        **arrow_style
+    )
+
+    # Add label
+    add_arrow_label(fig, source_endpoint, target_endpoint, text=arrow_label)
+
+
+def should_curve_edge(source_id, target_id, edges, node_positions):
+    """
+    Determine if an edge needs to be curved based on competing edges.
+
+    Parameters:
+        source_id: Source node ID of the current edge
+        target_id: Target node ID of the current edge
+        edges: List of all edges [(source_id, target_id, label), ...]
+        node_positions: Dict mapping node_id to (x, y) positions
+
+    Returns:
+        bool: True if the edge should be curved, False if it should be straight
+    """
+
+    # Count edges sharing the same source or target
+    competing_edges = []
+    for other_source, other_target, _, other_bidirectional in edges:
+        if (not other_bidirectional and
+            (other_source == source_id or other_target == target_id)):
+            # Calculate edge length
+            other_source_pos = node_positions[other_source]
+            other_target_pos = node_positions[other_target]
+            other_length = ((other_target_pos[0] - other_source_pos[0])**2 +
+                            (other_target_pos[1] - other_source_pos[1])**2)**0.5
+            competing_edges.append((other_length, other_source, other_target))
+
+    # If only one edge (no competition), no curve needed
+    if len(competing_edges) <= 1:
+        return False
+
+    # Calculate current edge length
+    source_pos = node_positions[source_id]
+    target_pos = node_positions[target_id]
+    delta_x = target_pos[0] - source_pos[0]
+    delta_y = target_pos[1] - source_pos[1]
+    edge_length = (delta_x ** 2 + delta_y ** 2) ** 0.5
+
+    # Check if this is the shortest edge among competitors
+    is_shortest = True
+    for other_length, other_source, other_target in competing_edges:
+        if ((other_source != source_id or other_target != target_id) and
+            other_length < edge_length):
+            is_shortest = False
+            break
+
+    # Curve if not the shortest (shortest edge stays straight)
+    return not is_shortest
+
+
 def draw_edges(fig, edges, node_positions, node_dimensions, arrow_labels):
     """
     Draw arrows (edges) between nodes on the Plotly figure.
@@ -243,125 +403,59 @@ def draw_edges(fig, edges, node_positions, node_dimensions, arrow_labels):
         arrow_labels: Dict mapping (source_id, target_id) to label.
     """
 
-    ARROW_STYLE = {
-        "showarrow": True,
-        "arrowhead": 2,
-        "arrowsize": 2,
-        "arrowwidth": 1,
-        "arrowcolor": "black",
-        "axref": "x",
-        "ayref": "y"
-    }
-    ARROW_CURVE_AMOUNT = 0.08         # Amount of curve for bidirectional arrows
-    ARROW_SHORTEN_FACTOR = 0.9        # Factor to shorten arrowhead along curve
-
     for source_id, target_id, arrow_label, bidirectional in edges:
         source_pos = node_positions[source_id]
         target_pos = node_positions[target_id]
         source_dim = node_dimensions[source_id]
         target_dim = node_dimensions[target_id]
 
-        target_endpoint = adjust_endpoint_for_rect(
+        source_endpoint = adjust_endpoint_for_rect(
             source_pos, target_pos,
             half_width=target_dim[0] / 2,
             half_height=target_dim[1] / 2
         )
-        source_endpoint = adjust_endpoint_for_rect(
+        target_endpoint = adjust_endpoint_for_rect(
             target_pos, source_pos,
             half_width=source_dim[0] / 2,
             half_height=source_dim[1] / 2
         )
 
         if bidirectional and source_id < target_id:
-            # Curve amount for separation
-            curve = ARROW_CURVE_AMOUNT
-            delta_x_arrow = source_endpoint[0] - target_endpoint[0]
-            delta_y_arrow = source_endpoint[1] - target_endpoint[1]
-            arrow_length = (delta_x_arrow ** 2 + delta_y_arrow ** 2) ** 0.5 or 1
-            perpendicular_offset_x = -delta_y_arrow / arrow_length * curve
-            perpendicular_offset_y = delta_x_arrow / arrow_length * curve
-
-            # Arrow from target to source (curved one way)
-            curve_control_point_1 = (
-                (target_endpoint[0] + source_endpoint[0]) / 2 + perpendicular_offset_x,
-                (target_endpoint[1] + source_endpoint[1]) / 2 + perpendicular_offset_y
-            )
-            shorten = ARROW_SHORTEN_FACTOR
-            arrowhead_point_1 = (
-                curve_control_point_1[0] * (1 - shorten) + source_endpoint[0] * shorten,
-                curve_control_point_1[1] * (1 - shorten) + source_endpoint[1] * shorten
-            )
-
-            fig.add_shape(
-                type="path",
-                path=(
-                    f"M{target_endpoint[0]},{target_endpoint[1]} "
-                    f"Q{curve_control_point_1[0]},{curve_control_point_1[1]} "
-                    f"{source_endpoint[0]},{source_endpoint[1]}"
-                ),
-                line={"color": "black", "width": 1},
-                layer="above"
-            )
-            fig.add_annotation(
-                x=source_endpoint[0], y=source_endpoint[1],
-                ax=arrowhead_point_1[0], ay=arrowhead_point_1[1],
-                **ARROW_STYLE
-            )
-
-            # Arrow from source to target (curved the other way)
-            curve_control_point_2 = (
-                (target_endpoint[0] + source_endpoint[0]) / 2 - perpendicular_offset_x,
-                (target_endpoint[1] + source_endpoint[1]) / 2 - perpendicular_offset_y
-            )
-            reverse_arrow_label = arrow_labels.get((target_id, source_id), "")
-            arrowhead_point_2 = (
-                curve_control_point_2[0] * (1 - shorten) + target_endpoint[0] * shorten,
-                curve_control_point_2[1] * (1 - shorten) + target_endpoint[1] * shorten
-            )
-
-            fig.add_shape(
-                type="path",
-                path=(
-                    f"M{source_endpoint[0]},{source_endpoint[1]} "
-                    f"Q{curve_control_point_2[0]},{curve_control_point_2[1]} "
-                    f"{target_endpoint[0]},{target_endpoint[1]}"
-                ),
-                line={"color": "black", "width": 1},
-                layer="above"
-            )
-            fig.add_annotation(
-                x=target_endpoint[0], y=target_endpoint[1],
-                ax=arrowhead_point_2[0], ay=arrowhead_point_2[1],
-                **ARROW_STYLE
-            )
-
-            add_arrow_label(
-                fig, target_endpoint, source_endpoint,
-                curve_control_point_1, arrow_label
-            )
-            add_arrow_label(
+            # First arrow: source to target (curved one way)
+            draw_curved_edge(
                 fig, source_endpoint, target_endpoint,
-                curve_control_point_2, reverse_arrow_label
+                ARROW_CURVE_AMOUNT_BIDIRECTIONAL,
+                arrow_label, ARROW_STYLE, ARROW_SHORTEN_FACTOR
+            )
+
+            # Second arrow: target to source (curved the other way)
+            reverse_arrow_label = arrow_labels.get((target_id, source_id), "")
+            draw_curved_edge(
+                fig, target_endpoint, source_endpoint,
+                -ARROW_CURVE_AMOUNT_BIDIRECTIONAL,
+                reverse_arrow_label, ARROW_STYLE, ARROW_SHORTEN_FACTOR
             )
 
         elif not bidirectional:
-            fig.add_annotation(
-                x=source_endpoint[0], y=source_endpoint[1],
-                ax=target_endpoint[0], ay=target_endpoint[1],
-                **ARROW_STYLE
-            )
-            add_arrow_label(
-                fig, target_endpoint, source_endpoint,
-                text=arrow_label
-            )
+            need_curve = should_curve_edge(source_id, target_id, edges, node_positions)
+            if need_curve:
+                draw_curved_edge(
+                    fig, source_endpoint, target_endpoint,
+                    ARROW_CURVE_AMOUNT_NON_BIDIRECTIONAL,
+                    arrow_label, ARROW_STYLE, ARROW_SHORTEN_FACTOR
+                )
+            else:
+                draw_straight_edge(fig, source_endpoint, target_endpoint,
+                                   arrow_label, ARROW_STYLE)
         else:
             continue
 
 
 def add_svg_links(svg_content):
     """
-    Post-processes Plotly SVG to wrap each <text class="annotation-text"> node label
-    with <a xlink:href="...">, where the href is generated as f"#sec-{name_hash(label)}".
+    Post-processes Plotly SVG to wrap each <text class="annotation-text">
+    node label with <a xlink:href="...">, where the href is generated as
+    f"#sec-{name_hash(label)}".
     """
     ET.register_namespace('xlink', "http://www.w3.org/1999/xlink")
     root = ET.fromstring(svg_content)
@@ -372,7 +466,8 @@ def add_svg_links(svg_content):
             yield from iter_with_parent(child)
 
     for text_elem, parent in iter_with_parent(root):
-        if text_elem.tag.endswith('text') and 'annotation-text' in text_elem.attrib.get('class', ''):
+        if (text_elem.tag.endswith('text') and
+            'annotation-text' in text_elem.attrib.get('class', '')):
             # Try to get label from tspan
             label = None
             for tspan in text_elem.findall('{http://www.w3.org/2000/svg}tspan'):
@@ -396,6 +491,7 @@ def add_svg_links(svg_content):
     svg_str = svg_str.replace('ns0:', '').replace(':ns0', '')
     return svg_str
 
+
 def create_policy_diagram_plotly(doc: htmldoc.Document, report: Report):
     """
     Generates a policy diagram as an interactive Plotly HTML visualization.
@@ -416,12 +512,6 @@ def create_policy_diagram_plotly(doc: htmldoc.Document, report: Report):
         - Handles bidirectional and unidirectional traces.
         - Adds the resulting Plotly HTML to the provided document.
     """
-
-    FIG_HEIGHT = 500                  # Height of the Plotly figure in pixels
-    FIG_WIDTH = 900                   # Width of the Plotly figure in pixels
-    MARGIN_RATIO = 0.2                # Ratio for calculating diagram margins
-    DEFAULT_MARGIN = 0.5              # Default margin if only one node exists
-
     node_data, node_positions = prepare_nodes(report)
     edges, arrow_labels = prepare_edges(report)
 
