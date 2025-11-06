@@ -20,11 +20,13 @@ import os.path
 import argparse
 import html
 import subprocess
+import sys
+from dataclasses import dataclass
 from datetime import datetime, timezone
-from typing import Optional, Sequence
-
+from typing import Optional, Sequence, Union
 import markdown
 
+from lobster.common.errors import LOBSTER_Error
 from lobster.common.version import LOBSTER_VERSION
 from lobster.htmldoc import htmldoc
 from lobster.common.report import Report
@@ -42,7 +44,14 @@ from lobster.tools.core.html_report.diagram_generator import (
     create_policy_diagram_plotly, name_hash)
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
+TOOL_NAME = "lobster-html-report"
 
+@dataclass
+class Config:
+    lobster_report_path: str
+    output_html_path: str
+    high_contrast: bool = False
+    render_md: bool = False
 
 def xref_item(item, link=True, brief=False):
     assert isinstance(item, Item)
@@ -224,7 +233,7 @@ def generate_custom_data(report) -> str:
     return "".join(content)
 
 
-def write_html(fd, report, high_contrast, render_md):
+def write_html(output_html_path, report, high_contrast, render_md):
     assert isinstance(report, Report)
 
     doc = htmldoc.Document(
@@ -232,62 +241,12 @@ def write_html(fd, report, high_contrast, render_md):
         "Lightweight Open BMW Software Traceability Evidence Report"
     )
 
-    # Item styles
-    doc.style["#custom-data-banner"] = {
-        "position": "absolute",
-        "top": "1em",
-        "right": "2em",
-        "font-size": "0.9em",
-        "color": "white",
-    }
-    doc.style[".item-ok, .item-partial, .item-missing, .item-justified"] = {
-        "border"        : "1px solid black",
-        "border-radius" : "0.5em",
-        "margin-top"    : "0.4em",
-        "padding"       : "0.25em",
-    }
-    doc.style[".item-ok:target, "
-              ".item-partial:target, "
-              ".item-missing:target, "
-              ".item-justified:target"] = {
-        "border" : "3px solid black",
-    }
-    doc.style[".subtle-ok, "
-              ".subtle-partial, "
-              ".subtle-missing, "
-              ".subtle-justified"] = {
-        "padding-left"  : "0.2em",
-    }
     doc.style[".item-ok"] = {
         "background-color" : "#b2e1b2" if high_contrast else "#efe",
     }
-    doc.style[".item-partial"] = {
-        "background-color" : "#ffe",
-    }
+
     doc.style[".item-missing"] = {
         "background-color" : "#ffb2ff" if high_contrast else "#fee",
-    }
-    doc.style[".item-justified"] = {
-        "background-color" : "#eee",
-    }
-    doc.style[".subtle-ok"] = {
-        "border-left" : "0.2em solid #8f8",
-    }
-    doc.style[".subtle-partial"] = {
-        "border-left" : "0.2em solid #ff8",
-    }
-    doc.style[".subtle-missing"] = {
-        "border-left" : "0.2em solid #f88",
-    }
-    doc.style[".subtle-justified"] = {
-        "border-left" : "0.2em solid #888",
-    }
-    doc.style[".item-name"] = {
-        "font-size" : "125%",
-        "font-weight" : "bold",
-    }
-    doc.style[".attribute"] = {
-        "margin-top" : "0.5em",
     }
 
     # Render MD
@@ -305,44 +264,6 @@ def write_html(fd, report, high_contrast, render_md):
             "border-bottom" : "unset",
             "text-align"    : "unset"
         }
-
-    # Columns
-    doc.style[".columns"] = {
-        "display" : "flex",
-    }
-    doc.style[".columns .column"] = {
-        "flex" : "45%",
-    }
-
-    # Tables
-    doc.style["thead tr"] = {
-        "font-weight" : "bold",
-    }
-    doc.style["tbody tr.alt"] = {
-        "background-color" : "#eee",
-    }
-
-    # Text
-    doc.style["blockquote"] = {
-        "font-style"   : "italic",
-        "border-left"  : "0.2em solid gray",
-        "padding-left" : "0.4em",
-        "margin-left"  : "0.5em",
-    }
-
-    # Footer
-    doc.style["footer"] = {
-        "margin-top"    : "1rem",
-        "padding"       : ".2rem",
-        "text-align"    : "right",
-        "color"         : "#666",
-        "font-size"     : ".7rem",
-    }
-    # Plotly graph
-    doc.style[".js-plotly-plot"] = {
-        "z-index": "1",
-        "position": "relative"
-    }
 
     ### Menu & Navigation
     doc.navbar.add_link("Overview", "#sec-overview")
@@ -510,7 +431,32 @@ def write_html(fd, report, high_contrast, render_md):
     # Add javascript from assets/html_report.js file
     doc.scripts.append(JAVA_SCRIPT.lstrip())
 
-    return doc.render()
+    with open(output_html_path, "w", encoding="UTF-8") as fd:
+        fd.write(doc.render() + "\n")
+
+
+def run_lobster_html_report(config: Config) -> None:
+    """
+    The main function to generate an HTML report from a LOBSTER report file.
+
+    Parameters
+    ----------
+    config : Config
+        The configuration setting
+    """
+    if not os.path.isfile(config.lobster_report_path):
+            raise FileNotFoundError(f"{config.lobster_report_path} is not a file")
+
+    report = Report()
+    report.load_report(config.lobster_report_path)
+
+    write_html(
+        output_html_path = config.output_html_path,
+        report = report,
+        high_contrast = config.high_contrast,
+        render_md = config.render_md,
+    )
+    print("LOBSTER HTML report written to %s" % config.output_html_path)
 
 
 class HtmlReportTool(MetaDataToolBase):
@@ -535,34 +481,36 @@ class HtmlReportTool(MetaDataToolBase):
                         help="Renders MD in description.")
 
     def _run_impl(self, options: argparse.Namespace) -> int:
-        if not os.path.isfile(options.lobster_report):
-            self._argument_parser.error(f"{options.lobster_report} is not a file")
+        try:
+            self._execute(options)
+            return 0
+        except FileNotFoundError as file_not_found_error:
+            self._print_error(file_not_found_error)
+        except ValueError as value_error:
+            self._print_error(value_error)
+        except KeyError as key_error:
+            self._print_error(key_error)
+        except LOBSTER_Error as lobster_error:
+            self._print_error(lobster_error)
+        return 1
 
-        report = Report()
-        report.load_report(options.lobster_report)
+    @staticmethod
+    def _print_error(error: Union[Exception, str]):
+        print(f"{TOOL_NAME}: {error}", file=sys.stderr)
 
-        html_content = write_html(
-            report = report,
-            dot = options.dot,
-            high_contrast = options.high_contrast,
-            render_md = options.render_md,
-        )
-        with open(options.out, "w", encoding="UTF-8") as fd:
-            write_html(
-                fd = fd,
-                report = report,
-                high_contrast = options.high_contrast,
-                render_md = options.render_md,
-            )
-            print("LOBSTER HTML report written to %s" % options.out)
-
-        return 0
+    @staticmethod
+    def _execute(options: argparse.Namespace) -> None:
+        run_lobster_html_report(config=Config(
+            lobster_report_path=options.lobster_report,
+            output_html_path=options.out,
+            high_contrast=options.high_contrast,
+            render_md=options.render_md
+        ))
 
 
 def lobster_html_report(
     lobster_report_path: str,
     output_html_path: str,
-    dot_path: str = None,
     high_contrast: bool = False,
     render_md: bool = False
 ) -> None:
@@ -572,21 +520,16 @@ def lobster_html_report(
     Args:
         lobster_report_path (str): Path to the input LOBSTER report file.
         output_html_path (str): Path to the output HTML file.
-        dot_path (str, optional): Path to the Graphviz 'dot' utility.
         high_contrast (bool, optional): Use high contrast colors.
         render_md (bool, optional): Render Markdown in descriptions.
     """
-    report = Report()
-    report.load_report(lobster_report_path)
-    html_content = write_html(
-        report=report,
-        dot=dot_path,
+    # This is an API function.
+    run_lobster_html_report(config=Config(
+        lobster_report_path=lobster_report_path,
+        output_html_path=output_html_path,
         high_contrast=high_contrast,
-        render_md=render_md,
-    )
-    with open(output_html_path, "w", encoding="UTF-8") as fd:
-        fd.write(html_content)
-        fd.write("\n")
+        render_md=render_md
+    ))
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

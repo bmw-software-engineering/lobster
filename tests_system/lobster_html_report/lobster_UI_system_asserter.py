@@ -52,6 +52,21 @@ class LobsterUIAsserter(Asserter):
                 '<script src="https://cdn.plot.ly/plotly-VERSION.min.js"></script>',
                 html
             )
+            # Normalize timestamps - replace dynamic timestamps with static placeholder
+            html = re.sub(
+                r'Timestamp: \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\+\d{2}:\d{2} UTC',
+                'Timestamp: NORMALIZED-TIMESTAMP UTC',
+                html
+            )
+
+            # Normalize the entire SVG block with all dynamic content
+            html = re.sub(
+                r'<svg xmlns="http://www\.w3\.org/2000/svg"[^>]*>.*?</svg>',
+                '<svg>Normalized SVG Content</svg>',
+                html,
+                flags=re.DOTALL
+            )
+
             return html
 
         for expected_file_ref in self._test_runner.tool_output_files:

@@ -4,8 +4,8 @@ from typing import Optional, Tuple
 import plotly.graph_objects as go
 from xml.etree import ElementTree as ET
 
-from lobster.html import htmldoc
-from lobster.report import Report
+from lobster.htmldoc import htmldoc
+from lobster.common.report import Report
 
 
 def name_hash(name: str) -> str:
@@ -146,11 +146,11 @@ def prepare_nodes(report):
     type_levels = {"requirements": [], "implementation": [], "activity": []}
 
     for level in report.config.values():
-        type_levels[level["kind"]].append(level)
+        type_levels[level.kind].append(level)
     for type_name, levels in type_levels.items():
         levels_count = len(levels)
         for idx, level in enumerate(levels):
-            node_id = f"n_{name_hash(level['name'])}"
+            node_id = f"n_{name_hash(level.name)}"
             x = DEFAULT_NODE_X + (idx - (levels_count - 1) / 2) * NODE_SPACING_X
             y = Y_POSITIONS[type_name]
             node_positions[node_id] = (x, y)
@@ -175,12 +175,11 @@ def prepare_edges(report):
     edge_pairs = set()
     arrow_labels = {}
     for level in report.config.values():
-        source_id = f"n_{name_hash(level['name'])}"
-        for target_name in level.get("traces", []):
+        source_id = f"n_{name_hash(level.name)}"
+        for target_name in getattr(level, "traces", []):
             target_id = f"n_{name_hash(target_name)}"
             edge_pairs.add((source_id, target_id))
-            arrow_labels[(source_id, target_id)] = level.get("arrow_label",
-                                                             DEFAULT_ARROW_LABEL)
+            arrow_labels[(source_id, target_id)] = getattr(level, "arrow_label", DEFAULT_ARROW_LABEL)
     edges = []
     for (source_id, target_id) in edge_pairs:
         is_bidirectional = (target_id, source_id) in edge_pairs
@@ -213,7 +212,7 @@ def draw_nodes(fig, node_data, node_positions, node_dimensions):
 
     for node_id, level in node_data.items():
         x, y = node_positions[node_id]
-        label = level["name"]
+        label = level.name
         node_width = max(NODE_MIN_WIDTH, (len(label) * CHAR_WIDTH) + NODE_LABEL_PADDING)
         fig.add_shape(
             type="rect",
