@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PACKAGE format-rev="7" prog-version="2023.4.3.143937+fa3cbd256512" xmlns="http://www.tracetronic.de/xml/ecu-test" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.tracetronic.de/xml/ecu-test package.xsd">
+	<INFORMATION format-rev="2" xsi:type="packageInfo">
+		<TAGS>
+			<TAG xsi:type="string">TESTCASE</TAG>
+		</TAGS>
+		<DESCRIPTION xsi:type="string">&quot;RequirementTrace&quot;:  [
+                &quot;banana.reqE&quot;,
+                &quot;banana.reqF&quot;]</DESCRIPTION>
+		<VERSION xsi:type="string"/>
+		<ALTERNATE-CALL-REPRESENTATION-ACTION-FIELD-TEMPLATE xsi:type="string"/>
+		<ALTERNATE-CALL-REPRESENTATION-EXPECTATION-FIELD-TEMPLATE xsi:type="string"/>
+	</INFORMATION>
+    <TESTSTEPS xsi:type="testCase">
+        <TESTSTEP format-rev="3" id="1" name="TsBlock" xsi:type="utility-11111111111">
+            <VALUE xsi:type="string">lobster-trace: banana.reqA,banana.reqB</VALUE>
+            <TESTSTEP format-rev="3" id="2" name="TsBlock" xsi:type="utility-22222222222">
+                <VALUE xsi:type="string">lobster-trace: allowed.req1,allowed.req2</VALUE>
+                <TESTSTEP format-rev="3" id="3" name="TsBlock" xsi:type="utility-33333333333">
+                    <VALUE xsi:type="string">lobster-trace: misplaced.req1,misplaced.req2</VALUE>
+                </TESTSTEP>
+            </TESTSTEP>
+        </TESTSTEP>
+    </TESTSTEPS>
+    <TRACE-ANALYSIS>
+		<!-- Valid: DESCRIPTION is direct child of ANALYSISITEM (type=episode) -->
+		<ANALYSISITEM xsi:type="episode">
+			<NAME>Episode1</NAME>
+			<DESCRIPTION>lobster-trace: valid.req1,valid.req2</DESCRIPTION>
+		</ANALYSISITEM>
+		<!-- Misplaced: DESCRIPTION is nested inside another ANALYSISITEM -->
+		<ANALYSISITEM xsi:type="episode">
+			<NAME>Episode2</NAME>
+			<ANALYSISITEM xsi:type="other">
+				<DESCRIPTION>lobster-trace: misplaced.req1,misplaced.req2</DESCRIPTION>
+			</ANALYSISITEM>
+		</ANALYSISITEM>
+	</TRACE-ANALYSIS>
+</PACKAGE>

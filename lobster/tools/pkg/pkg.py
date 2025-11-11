@@ -16,51 +16,26 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
-import os.path
 from pathlib import Path
 import sys
 import xml.etree.ElementTree as ET
 import json
 import re
-from typing import Dict, List, Optional, Sequence
+from typing import Dict, Optional, Sequence
 from xml.dom import minidom
 from argparse import Namespace
 
+from lobster.common.multi_file_input_config import Config
+from lobster.common.multi_file_input_tool import create_worklist, MultiFileInputTool
 from lobster.common.exceptions import LOBSTER_Exception
-from lobster.common.io import lobster_write
 from lobster.common.items import Activity, Tracing_Tag
 from lobster.common.location import File_Reference
-from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 NS = {
     "ecu": "http://www.tracetronic.de/xml/ecu-test",
     "xsi": "http://www.w3.org/2001/XMLSchema-instance",
 }
 TSBLOCK = "TsBlock"
-
-
-def get_valid_files(
-    file_dir: List[str]
-) -> List[str]:
-    file_list = []
-    for item in file_dir:
-        if os.path.isfile(item):
-            file_list.append(item)
-        elif os.path.isdir(item):
-            for path, _, files in os.walk(item):
-                for filename in files:
-                    _, ext = os.path.splitext(filename)
-                    if ext in (".pkg", ".ta"):
-                        file_list.append(os.path.join(path, filename))
-        else:
-            raise FileNotFoundError("%s is not a file or directory" % item)
-    return file_list
-
-
-def write_to_file(options: Namespace, data: Dict[str, Activity]) -> None:
-    with open(options.out, "w", encoding="UTF-8") as file:
-        lobster_write(file, Activity, "lobster-pkg", data.values())
-        print("Written output for %u items to %s" % (len(data), options.out))
 
 
 def create_raw_entry(
@@ -284,87 +259,93 @@ def extract_lobster_traces_from_trace_analysis(tree, filename):
     return valid_traces, misplaced_traces
 
 
-def lobster_pkg(options):
-    """
-    The main function to parse tracing information from .pkg files for LOBSTER.
-
-    This function processes the input files or directories specified in 'options.files',
-    extracts tracing tags and activities from XML content (including both standard and
-    TRACE-ANALYSIS blocks), and writes the results to an output file
-
-    Parameters
-    ----------
-        options (Namespace): Parsed command-line arguments with at least:
-            - files: list of file or directory paths to process
-            - out: output file path (optional; if not set, output is report.lobster)
-    """
-    file_list = get_valid_files(options.files)
-    data = {}
-
-    for file_path in file_list:
-        filename = Path(file_path).name
-        with open(file_path, "r", encoding="UTF-8") as file:
-            try:
-                file_content = file.read()
-
-                tree = ET.fromstring(file_content)
-
-                getvalues = xml_parser(file_content, filename)
-
-                # Also extract from TRACE-ANALYSIS blocks
-                valid_traces, misplaced_traces = (
-                    extract_lobster_traces_from_trace_analysis(
-                        tree, filename
-                    )
-                )
-                getvalues.extend(valid_traces)
-                for msg in misplaced_traces:
-                    print(msg)
-
-                if getvalues:
-                    create_raw_entry(data, file.name, json.dumps(getvalues))
-                else:
-                    create_default_activity(file_content, filename, data)
-
-            except ET.ParseError as err:
-                print(f"Error parsing XML file '{filename}' : {err}")
-                raise
-            except LOBSTER_Exception as err:
-                err.dump()
-                raise
-
-    # Set default output file if not specified
-    output_file = getattr(options, "out", None)
-    if not output_file:
-        options.out = "report.lobster"
-
-    write_to_file(options, data)
-
-    return 0
-
-
-class PkgTool(MetaDataToolBase):
+class PkgTool(MultiFileInputTool):
     def __init__(self):
         super().__init__(
             name="pkg",
             description="Extract tracing tags from pkg files for LOBSTER",
+            extensions=["pkg", "ta"],
             official=True,
         )
-        self._argument_parser.add_argument(
-            "files",
-            nargs="+",
-            metavar="FILE|DIR",
-            help="Path to pkg file or directory.",
+
+    def _add_config_argument(self):
+        # This tool does not use a config file
+        pass
+
+    def lobster_pkg(self, options):
+        """
+        The main function to parse tracing information from .pkg files for LOBSTER.
+
+        This function processes the input files or directories specified in
+        'options.files', extracts tracing tags and activities from XML content
+        (including both standard and TRACE-ANALYSIS blocks), and writes the
+        results to an output file
+
+        Parameters
+        ----------
+            options (Namespace): Parsed command-line arguments with at least:
+                - dir_or_files: list of file or directory paths to process
+                - out: output file path (optional; if not set, output is report.lobster)
+        """
+        config = Config(
+            inputs=None,
+            inputs_from_file=None,
+            extensions=self._extensions,
+            exclude_patterns=None,
+            schema=Activity,
         )
-        self._argument_parser.add_argument(
-            "--out",
-            required=True,
-            help="write output to this file; otherwise output is report.lobster",
+        file_list = create_worklist(config, options.dir_or_files)
+        if not file_list:
+            raise ValueError("No input files found to process!")
+
+        data = {}
+
+        for file_path in file_list:
+            filename = Path(file_path).name
+            with open(file_path, "r", encoding="UTF-8") as file:
+                try:
+                    file_content = file.read()
+
+                    tree = ET.fromstring(file_content)
+
+                    getvalues = xml_parser(file_content, filename)
+
+                    # Also extract from TRACE-ANALYSIS blocks
+                    valid_traces, misplaced_traces = (
+                        extract_lobster_traces_from_trace_analysis(
+                            tree, filename
+                        )
+                    )
+                    getvalues.extend(valid_traces)
+                    for msg in misplaced_traces:
+                        print(msg)
+
+                    if getvalues:
+                        create_raw_entry(data, file.name, json.dumps(getvalues))
+                    else:
+                        create_default_activity(file_content, filename, data)
+
+                except ET.ParseError as err:
+                    print(f"Error parsing XML file '{filename}' : {err}")
+                    raise
+                except LOBSTER_Exception as err:
+                    err.dump()
+                    raise
+
+        items = (
+            list(data.values())
+            if not isinstance(data.values(), list)
+            else data.values()
+        )
+        self._write_output(
+            schema=config.schema,
+            out_file=options.out,
+            items=items,
         )
 
     def _run_impl(self, options: Namespace) -> int:
         try:
-            lobster_pkg(options)
+            self.lobster_pkg(options)
             return 0
         except (ValueError, FileNotFoundError,
                 LOBSTER_Exception, ET.ParseError) as exception:
