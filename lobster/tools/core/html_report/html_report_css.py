@@ -1,4 +1,133 @@
 CSS = """
+
+/* Item styles */
+#custom-data-banner {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.item-ok,
+.item-partial,
+.item-missing,
+.item-justified {
+    border: 1px solid #000;
+    border-radius: 0.5rem;
+    margin-top: 0.4rem;
+    padding: 0.25rem;
+}
+
+.item-ok:target,
+.item-partial:target,
+.item-missing:target,
+.item-justified:target {
+    border-width: 3px;
+    border-color: #000;
+}
+
+.subtle-ok,
+.subtle-partial,
+.subtle-missing,
+.subtle-justified {
+    padding-left: 0.2rem;
+}
+
+.item-partial {
+    background-color: #ffffee;
+}
+
+.item-justified {
+    background-color: #eeeeee;
+}
+
+.subtle-ok {
+    border-left: 0.2rem solid #88ff88;
+}
+
+.subtle-partial {
+    border-left: 0.2rem solid #ffff88;
+}
+
+.subtle-missing {
+    border-left: 0.2rem solid #ff8888;
+}
+
+.subtle-justified {
+    border-left: 0.2rem solid #888888;
+}
+
+.item-name {
+    font-size: 125%;
+    font-weight: bold;
+}
+
+.attribute {
+    margin-top: 0.5rem;
+}
+
+/* Tables */
+thead tr {
+    font-weight: bold;
+}
+
+tbody tr.alt {
+    background-color: #eeeeee;
+}
+
+/* Text */
+blockquote {
+    font-style: italic;
+    border-left: 0.2rem solid gray;
+    padding-left: 0.4rem;
+    margin-left: 0.5rem;
+}
+
+/* Footer */
+footer {
+    margin-top: 1rem;
+    padding: 0.2rem;
+    text-align: right;
+    color: #666666;
+    font-size: 0.7rem;
+}
+
+/* Columns layout */
+.columns {
+    display: flex;
+}
+
+.columns .column {
+    flex: 45%;
+}
+
+/* Table styling */
+thead tr {
+    font-weight: bold;
+}
+
+tbody tr.alt {
+    background-color: #eeeeee;
+}
+
+/* Text formatting */
+blockquote {
+    font-style: italic;
+    border-left: 0.2rem solid gray;
+    padding-left: 0.4rem;
+    margin-left: 0.5rem;
+}
+
+/* Footer styling */
+footer {
+    margin-top: 1rem;
+    padding: 0.2rem;
+    text-align: right;
+    color: #666666;
+    font-size: 0.7rem;
+}
+
 .button {
     background-color: #818589;
     border: none;
@@ -136,5 +265,10 @@ CSS = """
 .buttonActive.buttonBlue {
     text-decoration: none;
     border: 5px solid #000099
+}
+
+.js-plotly-plot {
+    z-index: 1;
+    position: relative;
 }
 """
