@@ -24,6 +24,7 @@ import re
 from typing import Dict, Optional, Sequence
 from xml.dom import minidom
 from argparse import Namespace
+from dataclasses import dataclass
 
 from lobster.common.multi_file_input_config import Config
 from lobster.common.multi_file_input_tool import create_worklist, MultiFileInputTool
@@ -36,6 +37,12 @@ NS = {
     "xsi": "http://www.w3.org/2001/XMLSchema-instance",
 }
 TSBLOCK = "TsBlock"
+
+
+@dataclass
+class PKGToolConfig:
+    files: Sequence[Path]
+    out: Optional[Path] = None
 
 
 def create_raw_entry(
@@ -272,7 +279,7 @@ class PkgTool(MultiFileInputTool):
         # This tool does not use a config file
         pass
 
-    def lobster_pkg(self, options):
+    def _run_lobster_pkg(self, options):
         """
         The main function to parse tracing information from .pkg files for LOBSTER.
 
@@ -345,7 +352,7 @@ class PkgTool(MultiFileInputTool):
 
     def _run_impl(self, options: Namespace) -> int:
         try:
-            self.lobster_pkg(options)
+            self._run_lobster_pkg(options)
             return 0
         except (ValueError, FileNotFoundError,
                 LOBSTER_Exception, ET.ParseError) as exception:
@@ -354,6 +361,26 @@ class PkgTool(MultiFileInputTool):
                 file=sys.stderr,
             )
         return 1
+
+
+def lobster_pkg(config: PKGToolConfig) -> int:
+    """
+    This is an API function.
+
+    Expected config attributes:
+        - inputs: list of input files/directories
+        - output: output file path (optional)
+    """
+    args: Optional[Sequence[str]] = []
+
+    if config.files:
+        for input_path in config.files:
+            args.append(str(input_path))
+
+    if config.out:
+        args.extend(['--out', str(config.out)])
+
+    return PkgTool().run(args)
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:
