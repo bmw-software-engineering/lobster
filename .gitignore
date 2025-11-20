@@ -20,3 +20,6 @@ test_install_monolithic_venv
 *.lobster
 *.html
 .idea
+
+# Bazel
+MODULE.bazel.lock
