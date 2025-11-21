@@ -43,7 +43,7 @@ class LevelDefinition:
         """Create a Level instance from a JSON-compatible dictionary."""
         return cls(
             name=data["name"],
-            kind=data["kind"],
+            kind=data.get("kind", ""),
             traces=data.get("traces", []),
             source=data.get("source", []),
             needs_tracing_up=data.get("needs_tracing_up", False),

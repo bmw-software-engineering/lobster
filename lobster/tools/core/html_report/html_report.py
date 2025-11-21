@@ -76,10 +76,11 @@ def xref_item(item, link=True, brief=False):
     elif isinstance(item, Implementation):
         rv = html.escape(item.language + " " +
                          item.kind.capitalize())
-    else:
-        assert isinstance(item, Activity)
+    elif isinstance(item, Activity):
         rv = html.escape(item.framework + " " +
                          item.kind.capitalize())
+    elif isinstance(item, Item):
+        rv = html.escape("Item")
     if not brief:
         rv += " "
 
@@ -97,13 +98,15 @@ def create_policy_diagram(doc, report, dot):
 
     graph = 'digraph "LOBSTER Tracing Policy" {\n'
     for level in report.config.values():
+        style = 'shape=box, style=rounded'
+
         if level.kind == "requirements":
             style = 'shape=box, style=rounded'
         elif level.kind == "implementation":
             style = 'shape=box'
-        else:
-            assert level.kind == "activity"
+        elif level.kind == "activity":
             style = 'shape=hexagon'
+
         style += f', href="#sec-{name_hash(level.name)}"'
 
         graph += '  n_%s [label="%s", %s];\n' % \

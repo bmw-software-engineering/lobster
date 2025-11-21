@@ -382,9 +382,6 @@ footer {
 </symbol>
 </defs>
 </svg>
-<div class="content">
-<div id="custom-data-banner">component: LSS<br>branch: stable-25<br>ci_run: 2025-05-21 01:00 UTC<br></div>
-</div>
 <h2 id="sec-overview" class="heading-overview">Overview</h2>
 <div class="content">
 <div class="columns">
@@ -402,25 +399,25 @@ footer {
 </tbody>
 <tr class="coverage-table-requirements">
 <td><a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</a></td>
-<td>0.0%</td>
+<td>100.0%</td>
 <td>
-<progress value="0" max="1">
-0.00%
+<progress value="4" max="4">
+100.00%
 </progress>
 </td>
-<td align="right">0</td>
-<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
 </tr>
 <tr class="coverage-table-code">
 <td><a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a></td>
-<td>0.0%</td>
+<td>100.0%</td>
 <td>
-<progress value="0" max="1">
-0.00%
+<progress value="4" max="4">
+100.00%
 </progress>
 </td>
-<td align="right">0</td>
-<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
 </tr>
 </table>
 </div>
@@ -482,11 +479,7 @@ footer {
 <h2 id="sec-issues" class="heading-issues">Issues</h2>
 <div class="content">
 <div id="issues-section" style="display:none">
-<ul>
-<li class="issue issue-missing issue-missing-req">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: status is status1, expected abc or def</li>
-<li class="issue issue-missing issue-missing-req">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: missing reference to Code</li>
-<li class="issue issue-missing issue-missing-python">Python Function <a href='#item-b08d67b92006da35eaff57131eb330052bacbfb7'>software.Example</a>: missing up reference</li>
-</ul>
+<div>No traceability issues found.</div>
 </div>
 </div>
 <h2 id="sec-detailed-report" class="heading-detailed-report">Detailed report</h2>
@@ -495,25 +488,81 @@ footer {
 <h3 id="heading-requirements-and-specification">Requirements and Specification</h3>
 <div id="section-requirements">
 <h4 id="sec-5a2ebfb8baa378cfcfcba58bbb1380c2" class="heading-requirements">Requirements</h4>
-<h5>.\demo.trlc</h5>
-<!-- begin item req example.adas_100_A -->
-<div class="item-missing" id="item-ae6eef0f9ce6a72c16e8546860450b94d5499085">
-<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> TRLC Requirement example.adas_100_A</div>
+<h5>Codebeamer https://localhost:8999, tracker 10000</h5>
+<!-- begin item req 1 -->
+<div class="item-ok" id="item-414fdc15bc46f3d644e52ffd8c710dd80273fa26">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> codebeamer Codebeamer item Requirement 1: Dynamic name</div>
 <div class="attribute">Source: 
 <svg class="icon"><use href="#svg-external-link"></use></svg>
-<a href=".\demo.trlc" target="_blank">.\demo.trlc</a>
+<a href="https://localhost:8999/issue/1?version=100" target="_blank">cb item 1 'Requirement 1: Dynamic name'</a>
 </div>
 <div class="attribute">
-Status: status1
+Status: Status 1
 </div>
 <div class="attribute">
-<blockquote>keep the vehicle flying</blockquote>
-</div>
-<div class="attribute">
-<div>Issues:
+<div>Traces to:
 <ul>
-<li>status is status1, expected abc or def</li>
-<li>missing reference to Code</li>
+<li>Python Function <a href='#item-46794687f394a199ff7caa1d7ad2f71e11782ce3'>codebeamer_funny_impl.translate_dog_barking</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>Codebeamer https://localhost:8999, tracker 20000</h5>
+<!-- begin item req 2 -->
+<div class="item-ok" id="item-9e7ba200a9c96e10ae27f8c1492bd20f2f755e45">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> codebeamer Codebeamer item Requirement 2: Dynamic name</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="https://localhost:8999/issue/2?version=200" target="_blank">cb item 2 'Requirement 2: Dynamic name'</a>
+</div>
+<div class="attribute">
+Status: Status 2
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Function <a href='#item-4169236d77cce01e95bb193e936876a8520e948c'>codebeamer_funny_impl.organize_cloud_shapes</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>Codebeamer https://localhost:8999, tracker 30000</h5>
+<!-- begin item req 3 -->
+<div class="item-ok" id="item-7249ade4880c1a3da180ab26b48faf64f07fbb40">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> codebeamer Codebeamer item Requirement 3: Dynamic name</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="https://localhost:8999/issue/3?version=300" target="_blank">cb item 3 'Requirement 3: Dynamic name'</a>
+</div>
+<div class="attribute">
+Status: Status 3
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Function <a href='#item-36469d2319845030194e1b263dd3de1517c79d73'>codebeamer_funny_impl.schedule_cat_meetings</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>Codebeamer https://localhost:8999, tracker 40000</h5>
+<!-- begin item req 4 -->
+<div class="item-ok" id="item-a2f7b8236d17e242093340a975a5b833b463b7ad">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> codebeamer Codebeamer item Requirement 4: Dynamic name</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="https://localhost:8999/issue/4?version=400" target="_blank">cb item 4 'Requirement 4: Dynamic name'</a>
+</div>
+<div class="attribute">
+Status: Status 4
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Function <a href='#item-b3f6329ff9bfd6ad4a1726d3fcdadae3ef43fcd2'>codebeamer_funny_impl.calibrate_sandwich_perfection</a></li>
 </ul>
 </div>
 </div>
@@ -525,18 +574,66 @@ Status: status1
 <h3 id="heading-implementation">Implementation</h3>
 <div id="section-code">
 <h4 id="sec-ca0dbad92a874b2f69b549293387925e" class="heading-code">Code</h4>
-<h5>.\software.py</h5>
-<!-- begin item python software.Example -->
-<div class="item-missing" id="item-b08d67b92006da35eaff57131eb330052bacbfb7">
-<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Python Function software.Example</div>
+<h5>codebeamer_funny_impl.py</h5>
+<!-- begin item python codebeamer_funny_impl.translate_dog_barking -->
+<div class="item-ok" id="item-46794687f394a199ff7caa1d7ad2f71e11782ce3">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Function codebeamer_funny_impl.translate_dog_barking</div>
 <div class="attribute">Source: 
 <svg class="icon"><use href="#svg-external-link"></use></svg>
-<a href=".\software.py" target="_blank">.\software.py</a>
+<a href="codebeamer_funny_impl.py" target="_blank">codebeamer_funny_impl.py</a>
 </div>
 <div class="attribute">
-<div>Issues:
+<div>Derived from:
 <ul>
-<li>missing up reference</li>
+<li>codebeamer Codebeamer item <a href='#item-414fdc15bc46f3d644e52ffd8c710dd80273fa26'>Requirement 1: Dynamic name</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python codebeamer_funny_impl.organize_cloud_shapes -->
+<div class="item-ok" id="item-4169236d77cce01e95bb193e936876a8520e948c">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Function codebeamer_funny_impl.organize_cloud_shapes</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="codebeamer_funny_impl.py" target="_blank">codebeamer_funny_impl.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>codebeamer Codebeamer item <a href='#item-9e7ba200a9c96e10ae27f8c1492bd20f2f755e45'>Requirement 2: Dynamic name</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python codebeamer_funny_impl.schedule_cat_meetings -->
+<div class="item-ok" id="item-36469d2319845030194e1b263dd3de1517c79d73">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Function codebeamer_funny_impl.schedule_cat_meetings</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="codebeamer_funny_impl.py" target="_blank">codebeamer_funny_impl.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>codebeamer Codebeamer item <a href='#item-7249ade4880c1a3da180ab26b48faf64f07fbb40'>Requirement 3: Dynamic name</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python codebeamer_funny_impl.calibrate_sandwich_perfection -->
+<div class="item-ok" id="item-b3f6329ff9bfd6ad4a1726d3fcdadae3ef43fcd2">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Function codebeamer_funny_impl.calibrate_sandwich_perfection</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="codebeamer_funny_impl.py" target="_blank">codebeamer_funny_impl.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>codebeamer Codebeamer item <a href='#item-a2f7b8236d17e242093340a975a5b833b463b7ad'>Requirement 4: Dynamic name</a></li>
 </ul>
 </div>
 </div>

@@ -160,7 +160,7 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
     def test_invalid_json_not_dict_yaml(self):
         # lobster-trace: core_report_req.Invalid_JSON_Not_Dict
         self._test_runner.declare_input_file(self._data_directory /
-                                             "json_not_dict.Yaml")
+                                             "json_not_dict.yaml")
         self._test_runner.declare_input_file(self._data_directory /
                                              "trlc_json_not_dict.lobster")
 

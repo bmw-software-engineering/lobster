@@ -4,8 +4,7 @@ Requirements A: !LevelDefinition
   - file: req_a.lobster
   needs_tracing_down: true
   breakdown_requirements:
-  - - Requirements B
-    - Test A
+  - - Test A
 
 Requirements B: !LevelDefinition
   name: Requirements B

@@ -5,7 +5,6 @@
   "levels": [
     {
       "name": "System Requirements",
-      "kind": "",
       "items": [
         {
           "tag": "req coverage_half.requirement_1a",
@@ -35,7 +34,6 @@
     },
     {
       "name": "Software Requirements",
-      "kind": "",
       "items": [
         {
           "tag": "req coverage_half.requirement_2a",
@@ -88,7 +86,6 @@
   "policy": {
     "System Requirements": {
       "name": "System Requirements",
-      "kind": "",
       "traces": [],
       "source": [
         {
@@ -105,7 +102,6 @@
     },
     "Software Requirements": {
       "name": "Software Requirements",
-      "kind": "",
       "traces": [
         "System Requirements"
       ],

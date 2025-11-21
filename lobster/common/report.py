@@ -26,7 +26,7 @@ from dataclasses import dataclass, asdict
 from pathlib import Path
 
 from lobster.common.level_definition import LevelDefinition
-from lobster.common.items import Tracing_Status, Requirement, Implementation, Activity
+from lobster.common.items import Tracing_Status, Requirement, Implementation, Activity, Item
 from lobster.common.parser import load as load_config
 from lobster.common.errors import Message_Handler
 from lobster.common.io import lobster_read
@@ -286,20 +286,25 @@ class Report:
             self.coverage.update({level["name"]: coverage})
 
             for item_data in level["items"]:
-                if level["kind"] == "requirements":
+                item_kind = level.get("kind", "")
+                if item_kind == "requirements":
                     item = Requirement.from_json(level["name"],
                                                  item_data,
                                                  3)
-                elif level["kind"] == "implementation":
+                elif item_kind == "implementation":
                     item = Implementation.from_json(level["name"],
                                                     item_data,
                                                     3)
-                else:
-                    if level["kind"] != "activity":
-                        raise ValueError(f"unknown level kind '{level['kind']}'")
+                elif item_kind == "activity":
                     item = Activity.from_json(level["name"],
                                               item_data,
                                               3)
+                else:
+                    if item_kind != "":
+                        raise ValueError(f"unknown level kind '{item_kind}'")
+                    item = Item.from_json(level["name"],
+                                          item_data,
+                                          3)
 
                 self.items[item.tag.key()] = item
                 self.coverage[item.level].items += 1

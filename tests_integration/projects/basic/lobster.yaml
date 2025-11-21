@@ -16,7 +16,7 @@ Software Requirements: !LevelDefinition
   needs_tracing_down: true
   breakdown_requirements:
   - - Code
-    - Verification Test
+  - - Verification Test
 
 Code: !LevelDefinition
   name: Code

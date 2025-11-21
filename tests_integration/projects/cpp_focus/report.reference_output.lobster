@@ -5,7 +5,6 @@
   "levels": [
     {
       "name": "Software Requirements",
-      "kind": "",
       "items": [
         {
           "tag": "req fruits.Buy_Banana1",
@@ -27,11 +26,7 @@
           "ref_down": [
             "cpp fruit.cpp:1:buyBanana:90"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Add one banana to the basket!",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
           "tag": "req fruits.Buy_Banana2",
@@ -53,11 +48,7 @@
           "ref_down": [
             "cpp fruit.cpp:1:buyBanana:90"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Add one banana to the basket quickly!",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
           "tag": "req fruits.Sell_Banana1",
@@ -79,11 +70,7 @@
           "ref_down": [
             "cpp fruit.cpp:1:sellBanana:96"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Sell one banana from the basket!",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
           "tag": "req fruits.Sell_Banana2",
@@ -105,11 +92,7 @@
           "ref_down": [
             "cpp fruit.cpp:1:sellBanana:96"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Sell one banana from the basket quickly!",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
           "tag": "req fruits.Clear_Basket",
@@ -131,11 +114,7 @@
             "gtest FruitTest:BasicProperties",
             "gtest CitrusTest:Sweetness"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Clear the basket upon request.",
-          "status": null
+          "tracing_status": "OK"
         },
         {
           "tag": "req fruits.Check_Basket",
@@ -157,11 +136,7 @@
           "ref_down": [
             "cpp fruit.cpp:1:checkBasket:121"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Only go shopping if the basket is empty.",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
           "tag": "req fruits.Throw_Banana",
@@ -183,11 +158,7 @@
           "ref_down": [
             "cpp fruit.cpp:1:throwBanana:132"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Throw the banana away!",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
           "tag": "req fruits.Sweet_Banana",
@@ -209,11 +180,7 @@
           "ref_down": [
             "gtest BasketTest:ClearBasket"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "The banana shall contain at least 12 grams of natural sugar\nper 100 grams of fruit.",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
           "tag": "req fruits.Fruit_Less_Than_Operator",
@@ -234,11 +201,7 @@
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator<:33",
             "gtest BasketTest:FindInBasketTemplate"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "The operator < shall compare the weight of two fruits.",
-          "status": null
+          "tracing_status": "OK"
         },
         {
           "tag": "req fruits.Fruit_Copy_Constructor",
@@ -260,11 +223,7 @@
           "ref_down": [
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "The operator = shall copy the name and weight of the fruit.",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
           "tag": "req fruits.Magic",
@@ -285,11 +244,7 @@
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator<:33",
             "gtest BasketTest:AddAndShowContents"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "The one who eats the fruit shall be happy!",
-          "status": null
+          "tracing_status": "OK"
         },
         {
           "tag": "req fruits.SameLine1",
@@ -310,11 +265,7 @@
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14",
             "gtest CitrusTest:Sweetness"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "lobster-cpp shall support comma-separated lists of tags in one line.",
-          "status": null
+          "tracing_status": "OK"
         },
         {
           "tag": "req fruits.SameLine2",
@@ -336,11 +287,7 @@
           "ref_down": [
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "see SameLine1",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
           "tag": "req fruits.SameLine3",
@@ -362,11 +309,7 @@
           "ref_down": [
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "see SameLine1",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
           "tag": "req fruits.SameLine4",
@@ -388,18 +331,13 @@
           "ref_down": [
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "see SameLine1",
-          "status": null
+          "tracing_status": "MISSING"
         }
       ],
       "coverage": 26.666666666666668
     },
     {
       "name": "Code",
-      "kind": "",
       "items": [
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14",
@@ -423,9 +361,7 @@
             "req fruits.Fruit_Copy_Constructor"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator*:26",
@@ -448,9 +384,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator<:33",
@@ -471,9 +405,7 @@
             "req fruits.Fruit_Less_Than_Operator"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator>:39",
@@ -491,9 +423,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator&:44",
@@ -511,9 +441,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator|:49",
@@ -531,9 +459,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator/:54",
@@ -551,9 +477,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator[]:59",
@@ -571,9 +495,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator~:64",
@@ -591,9 +513,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::complicatedFunc:79",
@@ -611,9 +531,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::refAndPtrFunc:83",
@@ -631,9 +549,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::crazySignature:87",
@@ -651,9 +567,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:buyBanana:90",
@@ -674,9 +588,7 @@
             "req fruits.Buy_Banana1"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:sellBanana:96",
@@ -697,9 +609,7 @@
             "req fruits.Sell_Banana1"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:clearBasket:113",
@@ -719,9 +629,7 @@
             "req fruits.Clear_Basket"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:checkBasket:121",
@@ -741,9 +649,7 @@
             "req fruits.Check_Basket"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:throwBanana:132",
@@ -763,9 +669,7 @@
             "req fruits.Throw_Banana"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:main:148",
@@ -783,16 +687,13 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "main function"
+          "tracing_status": "MISSING"
         }
       ],
       "coverage": 38.888888888888886
     },
     {
       "name": "Verification Test",
-      "kind": "",
       "items": [
         {
           "tag": "gtest FruitTest:BasicProperties",
@@ -812,10 +713,7 @@
             "req fruits.Clear_Basket"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "GoogleTest",
-          "kind": "test",
-          "status": "ok"
+          "tracing_status": "OK"
         },
         {
           "tag": "gtest CitrusTest:Sweetness",
@@ -836,10 +734,7 @@
             "req fruits.Clear_Basket"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "GoogleTest",
-          "kind": "test",
-          "status": "ok"
+          "tracing_status": "OK"
         },
         {
           "tag": "gtest BasketTest:AddAndShowContents",
@@ -859,10 +754,7 @@
             "req fruits.Magic"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "GoogleTest",
-          "kind": "test",
-          "status": "ok"
+          "tracing_status": "OK"
         },
         {
           "tag": "gtest BasketTest:ClearBasket",
@@ -882,10 +774,7 @@
             "req fruits.Sweet_Banana"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "GoogleTest",
-          "kind": "test",
-          "status": "fail"
+          "tracing_status": "OK"
         },
         {
           "tag": "gtest BasketTest:FindInBasketTemplate",
@@ -905,10 +794,7 @@
             "req fruits.Fruit_Less_Than_Operator"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "GoogleTest",
-          "kind": "test",
-          "status": "ok"
+          "tracing_status": "OK"
         }
       ],
       "coverage": 100.0
@@ -917,7 +803,6 @@
   "policy": {
     "Software Requirements": {
       "name": "Software Requirements",
-      "kind": "",
       "traces": [],
       "source": [
         {
@@ -937,7 +822,6 @@
     },
     "Code": {
       "name": "Code",
-      "kind": "",
       "traces": [
         "Software Requirements"
       ],
@@ -952,7 +836,6 @@
     },
     "Verification Test": {
       "name": "Verification Test",
-      "kind": "",
       "traces": [
         "Software Requirements"
       ],
