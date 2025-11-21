@@ -84,6 +84,19 @@ h2 {
 .attribute {
   margin-top: 0.5em;
 }
+.md_description {
+  font-style: unset;
+}
+.md_description h1 {
+  padding: unset;
+  margin: unset;
+}
+.md_description h2 {
+  padding: unset;
+  margin: unset;
+  border-bottom: unset;
+  text-align: unset;
+}
 .columns {
   display: flex;
 }
@@ -382,9 +395,6 @@ footer {
 </symbol>
 </defs>
 </svg>
-<div class="content">
-<div id="custom-data-banner">component: LSS<br>branch: stable-25<br>ci_run: 2025-05-21 01:00 UTC<br></div>
-</div>
 <h2 id="sec-overview" class="heading-overview">Overview</h2>
 <div class="content">
 <div class="columns">
@@ -507,7 +517,30 @@ footer {
 Status: status1
 </div>
 <div class="attribute">
-<blockquote>keep the vehicle flying</blockquote>
+<blockquote class="md_description"><h1>Test</h1>
+<h2>List</h2>
+<ul>
+<li>first</li>
+<li>second</li>
+<li>third</li>
+</ul>
+<h3>Table</h3>
+<table>
+<thead>
+<tr>
+<th>H1</th>
+<th>H2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1</td>
+<td>B2</td>
+</tr>
+</tbody>
+</table>
+<p><em>italic</em><br />
+<strong>bold</strong></p></blockquote>
 </div>
 <div class="attribute">
 <div>Issues:
