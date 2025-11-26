@@ -39,12 +39,6 @@ Notes:
   On the other hand, a test that verifies the output based on a certain input
   can have that input located anywhere in the file system.
   Here it is not necessary to copy the files. 
-- The tool `lobster-html-report` should be executed in a virtual environment
-  where one can control whether `graphviz` is available.
-  The tool behaves differently whether the package is or is not available.
-  Hence the system test framework should control the creation of the virtual
-  environment.
-  This is currently not supported.
 
 ## Test Execution
 After test execution the `Asserter` class can compare actual values of the following data against their expectation values:

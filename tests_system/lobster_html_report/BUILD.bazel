@@ -8,6 +8,7 @@ py_library(
     name = "lobster_html_report",
     srcs = [
         "lobster_UI_system_test_case_base.py",
+        "lobster_UI_system_asserter.py",
         "lobster_UI_test_runner.py",
     ],
     data = [
@@ -19,7 +20,9 @@ py_library(
     deps = [
         "//tests_system",
         requirement("certifi"),
+        requirement("kaleido"),
         requirement("packaging"),
+        requirement("plotly"),
         requirement("requests"),
         requirement("selenium"),
         requirement("urllib3"),
@@ -50,6 +53,8 @@ py_test(
         "//lobster/tools/core/html_report",
         "//tests_system",
         "//tests_system/tests_utils",
+        requirement("kaleido"),
+        requirement("plotly"),
     ],
 )
 
@@ -61,6 +66,8 @@ py_test(
         "//lobster/tools/core/html_report",
         "//tests_system",
         "//tests_system/tests_utils",
+        requirement("kaleido"),
+        requirement("plotly"),
     ],
 )
 
@@ -72,5 +79,7 @@ py_test(
         "//lobster/tools/core/html_report",
         "//tests_system",
         "//tests_system/tests_utils",
+        requirement("kaleido"),
+        requirement("plotly"),
     ],
 )
