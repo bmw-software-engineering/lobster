@@ -177,7 +177,7 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements_dev.txt
-          sudo apt install cmake ninja-build graphviz
+          sudo apt install cmake ninja-build
       - name: Setup bazel (for lobster-gtest)
         uses: jwlawson/actions-setup-bazel@v2
         with:

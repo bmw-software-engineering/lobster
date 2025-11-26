@@ -39,10 +39,10 @@ Alternatively, use `pipx`:
 $ pipx install bmw-lobster --include-deps
 ```
 
-For the HTML Report `graphviz` is also used to generate the tracing policy diagram. More on that in the user [manual](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/user-manual.md).
+For the HTML Report `plotly` is also used to generate the tracing policy diagram. More on that in the user [manual](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/user-manual.md).
 
 ```
-$ sudo apt-get install -y graphviz
+$ sudo apt-get install -y plotly
 ```
 
 The `lobster-cpp` converter tool needs a specific version of `clang-tidy`. Please see [here](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/user-manual.md#clang-tidy-file-generation) to create it.
@@ -221,3 +221,7 @@ The following inputs are planned but not implemented yet:
 The copyright holder of LOBSTER is the Bayerische Motoren Werke
 Aktiengesellschaft (BMW AG), and LOBSTER is published under the [GNU
 Affero General Public License, Version 3](LICENSE.md).
+
+## Third-Party Licenses
+
+This project uses [Plotly](https://github.com/plotly/plotly.py), which is licensed under the MIT License.

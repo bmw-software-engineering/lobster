@@ -5,3 +5,5 @@ PyYAML>=6.0
 Markdown~=3.7
 yamale>=6.0.0
 GitPython>=3.1.30
+plotly==5.10.0
+kaleido>=0.2.1,<0.3.0  # Required for fig.to_image() in diagram_generator.py

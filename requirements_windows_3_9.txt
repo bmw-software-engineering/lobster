@@ -3,7 +3,6 @@ requests>=2.31.0
 libcst>=1.1.0
 PyYAML>=6.0
 Markdown~=3.7
-graphviz==0.20.3
 pycodestyle==2.12.0
 pylint==3.2.4
 coverage>=7.2
@@ -12,3 +11,5 @@ selenium
 webdriver-manager
 flask
 yamale>=6.0.0
+plotly==5.10.0
+kaleido>=0.2.1,<0.3.0  # Required for fig.to_image() in diagram_generator.py
