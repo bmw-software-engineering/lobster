@@ -19,5 +19,7 @@ py_library(
         "//lobster/common",
         "//lobster/htmldoc",
         requirement("markdown"),
+        requirement("plotly"),
+        requirement("kaleido"),
     ],
 )

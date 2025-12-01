@@ -9,6 +9,22 @@ from ..asserter import Asserter, is_valid_json, sort_json
 __unittest = True
 
 
+PLOTLY_ID_PATTERN = re.compile(r'id="[^"]+" class="plotly-graph-div"')
+PLOTLY_NEWPLOT_PATTERN = re.compile(r'Plotly\.newPlot\(\s*"[^"]+"')
+PLOTLY_GETELEMENTBYID_PATTERN = re.compile(r'document\.getElementById\("([^"]+)"\)')
+PLOTLY_CDN_PATTERN = re.compile(
+    r'<script[^>]*src="https://cdn\.plot\.ly/plotly-[^"]+\.min\.js"[^>]*>'
+    r'</script>'
+)
+TIMESTAMP_PATTERN = re.compile(
+    r'Timestamp: \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\+\d{2}:\d{2} UTC'
+)
+SVG_PATTERN = re.compile(
+    r'<svg xmlns="http://www\.w3\.org/2000/svg"[^>]*>.*?</svg>',
+    flags=re.DOTALL
+)
+
+
 class LobsterUIAsserter(Asserter):
     def assertOutputFiles(self):
         """For each expected file, checks if an actual file has been created with the
@@ -29,44 +45,30 @@ class LobsterUIAsserter(Asserter):
         # lobster-trace: system_test.Compare_Output_Files
 
         def normalize_plotly_ids_and_cdn(html):
-            # Normalize Plotly div ids
-            html = re.sub(
-                r'id="[^"]+" class="plotly-graph-div"',
+            html = PLOTLY_ID_PATTERN.sub(
                 'id="PLOTLY_ID" class="plotly-graph-div"',
                 html
             )
-            html = re.sub(
-                r'Plotly\.newPlot\(\s*"[^"]+"',
+            html = PLOTLY_NEWPLOT_PATTERN.sub(
                 'Plotly.newPlot("PLOTLY_ID"',
                 html
             )
-            html = re.sub(
-                r'document\.getElementById\("([^"]+)"\)',
+            html = PLOTLY_GETELEMENTBYID_PATTERN.sub(
                 'document.getElementById("PLOTLY_ID")',
                 html
             )
-            # Ignore the entire script tag that loads plotly from CDN
-            html = re.sub(
-                r'<script[^>]*src="https://cdn\.plot\.ly/plotly-[^"]+\.min\.js"[^>]*>'
-                r'</script>',
+            html = PLOTLY_CDN_PATTERN.sub(
                 '<script src="https://cdn.plot.ly/plotly-VERSION.min.js"></script>',
                 html
             )
-            # Normalize timestamps - replace dynamic timestamps with static placeholder
-            html = re.sub(
-                r'Timestamp: \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\+\d{2}:\d{2} UTC',
+            html = TIMESTAMP_PATTERN.sub(
                 'Timestamp: NORMALIZED-TIMESTAMP UTC',
                 html
             )
-
-            # Normalize the entire SVG block with all dynamic content
-            html = re.sub(
-                r'<svg xmlns="http://www\.w3\.org/2000/svg"[^>]*>.*?</svg>',
+            html = SVG_PATTERN.sub(
                 '<svg>Normalized SVG Content</svg>',
-                html,
-                flags=re.DOTALL
+                html
             )
-
             return html
 
         for expected_file_ref in self._test_runner.tool_output_files:

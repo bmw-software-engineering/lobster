@@ -10,6 +10,8 @@ from lobster.common.report import Report
 NODE_SPACING_X = 0.8                  # Horizontal spacing between nodes
 DEFAULT_NODE_X = 0.5                  # Default horizontal center for node placement
 Y_POSITIONS = {"requirements": 1.0, "implementation": 0.6, "activity": 0.2}
+DEFAULT_FONT_SIZE = 11
+OPACITY = 0.85
 
 # Node appearance constants
 CHAR_WIDTH = 0.02                     # Estimated width per character for node sizing
@@ -52,7 +54,7 @@ def name_hash(name: str) -> str:
 
 def add_arrow_label(
     fig: go.Figure, start: Tuple, end: Tuple,
-    ctrl: Optional[Tuple] = None, text: str = "", font_size: int = 11
+    ctrl: Optional[Tuple] = None, text: str = "", font_size: int = DEFAULT_FONT_SIZE
 ):
     """
     Adds a label at the midpoint of a quadratic curve (if ctrl is provided)
@@ -97,7 +99,7 @@ def add_arrow_label(
         font={"size": font_size, "color": "black"},
         align="center",
         bgcolor="white",
-        opacity=0.85,
+        opacity=OPACITY,
     )
 
 
