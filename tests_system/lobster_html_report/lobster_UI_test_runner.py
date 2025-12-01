@@ -15,6 +15,7 @@ class CmdArgs:
     out: Optional[str] = None
     high_contrast: Optional[str] = None
     render_md: bool = False
+    disable_policy_image: bool = True
 
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list"""
@@ -29,6 +30,8 @@ class CmdArgs:
 
         if self.render_md:
             cmd_args.append("--render-md")
+
+        cmd_args.append("--disable-policy-image")
 
         append_if_string("--out", self.out)
         append_if_string("--high-contrast", self.high_contrast)

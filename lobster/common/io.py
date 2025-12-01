@@ -17,6 +17,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import os
 import json
 from typing import Dict, Optional, Sequence, TextIO, Type, Union, Iterable
 
@@ -145,3 +146,10 @@ def signal_duplicate_items(
                         f"{items[item.tag.key()].location.to_string()}",
                 fatal=(counter == len(duplicate_items)),
             )
+
+
+def ensure_output_directory(file_path: str) -> None:
+    """Create parent directories for the output file if they don't exist."""
+    output_dir = os.path.dirname(file_path)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)

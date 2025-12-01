@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from unittest import TestCase
 from tests_system.testrunner import TestRunner, TestRunResult
 
@@ -77,7 +78,13 @@ class Asserter:
             )
 
         for expected_file_ref in self._test_runner.tool_output_files:
-            expected_location = self._test_runner.working_dir / expected_file_ref.name
+            # Accept both str and Path for expected_file_ref
+            if isinstance(expected_file_ref, str):
+                expected_file_ref_path = Path(expected_file_ref)
+            else:
+                expected_file_ref_path = expected_file_ref
+            expected_location = (self._test_runner.working_dir /
+                                 expected_file_ref_path.name)
             try:
                 with open(
                     expected_file_ref,

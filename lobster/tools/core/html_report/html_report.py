@@ -53,6 +53,7 @@ class Config:
     output_html_path: str
     high_contrast: bool = False
     render_md: bool = False
+    disable_policy_image: bool = False
 
 
 def xref_item(item, link=True, brief=False):
@@ -235,7 +236,12 @@ def generate_custom_data(report) -> str:
     return "".join(content)
 
 
-def write_html(output_html_path, report, high_contrast, render_md):
+def write_html(
+    output_html_path,
+    report, high_contrast,
+    render_md,
+    disable_policy_image
+):
     assert isinstance(report, Report)
 
     doc = htmldoc.Document(
@@ -291,10 +297,11 @@ def write_html(output_html_path, report, high_contrast, render_md):
     doc.add_heading(3, "Coverage", html_identifier=True)
     create_item_coverage(doc, report)
     doc.add_line('</div>')
-    doc.add_line('<div class="column">')
-    doc.add_heading(3, "Tracing policy")
-    create_policy_diagram_plotly(doc, report)
-    doc.add_line('</div>')
+    if not disable_policy_image:
+        doc.add_line('<div class="column">')
+        doc.add_heading(3, "Tracing policy")
+        create_policy_diagram_plotly(doc, report)
+        doc.add_line('</div>')
     doc.add_line('</div>')
 
     ### Filtering
@@ -457,6 +464,7 @@ def run_lobster_html_report(config: Config) -> None:
         report=report,
         high_contrast=config.high_contrast,
         render_md=config.render_md,
+        disable_policy_image=config.disable_policy_image,
     )
     print("LOBSTER HTML report written to %s" % config.output_html_path)
 
@@ -481,6 +489,9 @@ class HtmlReportTool(MetaDataToolBase):
         ap.add_argument("--render-md",
                         action="store_true",
                         help="Renders MD in description.")
+        ap.add_argument("--disable-policy-image",
+                        action="store_true",
+                        help="Disables the policy diagram image.")
 
     def _run_impl(self, options: argparse.Namespace) -> int:
         try:
@@ -506,7 +517,8 @@ class HtmlReportTool(MetaDataToolBase):
             lobster_report_path=options.lobster_report,
             output_html_path=options.out,
             high_contrast=options.high_contrast,
-            render_md=options.render_md
+            render_md=options.render_md,
+            disable_policy_image=options.disable_policy_image,
         ))
 
 
@@ -514,7 +526,8 @@ def lobster_html_report(
     lobster_report_path: str,
     output_html_path: str,
     high_contrast: bool = False,
-    render_md: bool = False
+    render_md: bool = False,
+    disable_policy_image: bool = False,
 ) -> None:
     """
     API function to generate an HTML report from a LOBSTER report file.
@@ -524,13 +537,15 @@ def lobster_html_report(
         output_html_path (str): Path to the output HTML file.
         high_contrast (bool, optional): Use high contrast colors.
         render_md (bool, optional): Render Markdown in descriptions.
+        disable_policy_image (bool, optional): Disable policy diagram image.
     """
     # This is an API function.
     run_lobster_html_report(config=Config(
         lobster_report_path=lobster_report_path,
         output_html_path=output_html_path,
         high_contrast=high_contrast,
-        render_md=render_md
+        render_md=render_md,
+        disable_policy_image=disable_policy_image
     ))
 
 

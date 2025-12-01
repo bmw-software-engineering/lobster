@@ -9,8 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from tests_system.lobster_html_report.\
     lobster_UI_system_test_case_base import LobsterUISystemTestCaseBase
-from tests_system.lobster_html_report.\
-    lobster_UI_system_asserter import LobsterUIAsserter as Asserter
+from tests_system.asserter import Asserter
 
 
 class LobsterUIReportTests(LobsterUISystemTestCaseBase):

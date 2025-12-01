@@ -19,7 +19,7 @@
 
 import sys
 from argparse import Namespace
-import os.path
+import os
 from copy import copy
 from dataclasses import dataclass, field
 from typing import List, Optional, Sequence, Union
@@ -29,7 +29,7 @@ from lobster.common.errors import LOBSTER_Error
 from lobster.common.exceptions import LOBSTER_Exception
 from lobster.common.items import Tracing_Tag, Activity
 from lobster.common.location import File_Reference
-from lobster.common.io import lobster_write
+from lobster.common.io import lobster_write, ensure_output_directory
 from lobster.common.file_tag_generator import FileTagGenerator
 from lobster.tools.cpptest.constants import Constants
 from lobster.tools.cpptest.requirements_parser import \
@@ -303,16 +303,16 @@ def write_lobster_items_output_dict(lobster_items_output_dict: dict):
         lobster_items_dict.update(orphan_test_items)
         item_count = len(lobster_items_dict)
 
-        if output_file_name:
-            with open(output_file_name, "w", encoding="UTF-8") as output_file:
-                lobster_write(
-                    output_file,
-                    Activity,
-                    lobster_generator,
-                    lobster_items_dict.values()
-                )
-            print(f'Written {item_count} lobster items to '
-                  f'"{output_file_name}".')
+        ensure_output_directory(output_file_name)
+        with open(output_file_name, "w", encoding="UTF-8") as output_file:
+            lobster_write(
+                output_file,
+                Activity,
+                lobster_generator,
+                lobster_items_dict.values()
+            )
+        print(f'Written {item_count} lobster items to '
+                f'"{output_file_name}".')
 
 
 def run_lobster_cpptest(config: Config):

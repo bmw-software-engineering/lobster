@@ -1,9 +1,8 @@
 from pathlib import Path
 import unittest
-from tests_system.lobster_html_report.lobster_UI_system_test_case_base import (
-    LobsterUISystemTestCaseBase)
-from tests_system.lobster_html_report.lobster_UI_system_asserter import (
-    LobsterUIAsserter as Asserter)
+from tests_system.lobster_html_report.lobster_UI_system_test_case_base import\
+    LobsterUISystemTestCaseBase
+from tests_system.asserter import Asserter
 from tests_system.tests_utils.update_version_in_html import update_version_in_html_file
 
 
@@ -66,7 +65,15 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         displayed in the HTML report header."""
         output = "custom_data_tracing_policy.html"
         input_file = self._data_directory / "custom_data_report.lobster"
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / output))
+        self.test_runner.declare_output_file(self.output_dir / output)
 
+        update_version_in_html_file(
+            self.output_dir / output,
+        )
+
+        self.test_runner.cmd_args.out = output
         self.test_runner.declare_output_file(self._data_directory / output)
         self.test_runner.cmd_args.out = output
         self.test_runner.cmd_args.lobster_report = str(input_file)

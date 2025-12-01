@@ -41,10 +41,6 @@ $ pipx install bmw-lobster --include-deps
 
 For the HTML Report `plotly` is also used to generate the tracing policy diagram. More on that in the user [manual](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/user-manual.md).
 
-```
-$ sudo apt-get install -y plotly
-```
-
 The `lobster-cpp` converter tool needs a specific version of `clang-tidy`. Please see [here](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/user-manual.md#clang-tidy-file-generation) to create it.
 
 ## Supported inputs
@@ -105,6 +101,7 @@ The individual PyPI packages that `bmw-lobster` depends on are:
 
 * [System Test Coverage Report](https://bmw-software-engineering.github.io/lobster/htmlcov-system/index.html)
 * [Unit Test Coverage Report](https://bmw-software-engineering.github.io/lobster/htmlcov-unit/index.html)
+* [LOBSTER API Documentation](https://bmw-software-engineering.github.io/lobster/api_documentation/)
 * [Coding Guideline](CODING_GUIDELINE.md)
 * [Requirements Guideline](lobster/tools/REQUIREMENTS.md)
 * [System Test Framework](tests_system/README.md)

@@ -1,9 +1,8 @@
 from pathlib import Path
 import unittest
-from tests_system.lobster_html_report.lobster_UI_system_test_case_base import (
-    LobsterUISystemTestCaseBase)
-from tests_system.lobster_html_report.\
-    lobster_UI_system_asserter import LobsterUIAsserter as Asserter
+from tests_system.lobster_html_report.lobster_UI_system_test_case_base import\
+    LobsterUISystemTestCaseBase
+from tests_system.asserter import Asserter
 from tests_system.tests_utils.update_version_in_html import update_version_in_html_file
 
 
