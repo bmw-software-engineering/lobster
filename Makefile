@@ -183,6 +183,8 @@ docs:
 	@-make tracing
 	@-make tracing-stf
 	@-./tracing/tracing.sh
+	# Build Sphinx HTML so index.rst becomes index.html at docs/ root
+	@sphinx-build -c sphinx -b html . docs
 
 clean-docs:
 	rm -rf docs
