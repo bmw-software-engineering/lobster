@@ -87,6 +87,7 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out()
         cfg.import_query = 54321
+        cfg.schema = "Requirement"
         cfg.page_size = 5
 
         self.extract_requirements(
@@ -105,6 +106,7 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out()
         cfg.import_query = "projectId%3D10"
+        cfg.schema = "Requirement"
         cfg.page_size = 5
 
         self.extract_requirements(

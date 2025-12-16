@@ -45,6 +45,35 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
+    def test_valid_extension_file_no_schema(self):
+        """
+        Test checks that the C++ files with valid extensions are processed correctly.
+        """
+        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
+        # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "valid_extension_config_no_kind.yaml")
+        self._test_runner.declare_input_file(
+            self._data_directory / "valid_extension.cpp"
+        )
+        OUT_FILE = "valid_extension_no_schema.lobster"
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / OUT_FILE))
+        self._test_runner.declare_output_file(self.output_dir /
+                                              OUT_FILE)
+
+        update_cpptest_output_file(
+            self.output_dir / OUT_FILE,
+            self._test_runner.working_dir
+        )
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(41, OUT_FILE)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
     def test_invalid_extension_file(self):
         """
         Test processing of C++ files with invalid extensions but valid data.
@@ -75,6 +104,35 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
+    def test_invalid_extension_file_no_schema(self):
+        """
+        Test processing of C++ files with invalid extensions but valid data.
+        Hence, the tool should still be able to process the files correctly.
+        """
+        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "invalid_extension_config_no_kind.yaml")
+        self._test_runner.declare_input_file(
+            self._data_directory / "invalid_extension.xyz"
+        )
+        OUT_FILE = "invalid_extension_no_schema.lobster"
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / OUT_FILE))
+        self._test_runner.declare_output_file(self.output_dir /
+                                              OUT_FILE)
+
+        update_cpptest_output_file(
+            self.output_dir / OUT_FILE,
+            self._test_runner.working_dir
+        )
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(40, OUT_FILE)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
     def test_no_input_file(self):
         """
         Test processing of C++ files with no input files.
@@ -82,6 +140,21 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         """
         self._test_runner.cmd_args.config = str(
             self._data_directory / "no_input_file_config.yaml")
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertStdErrText(
+            'lobster-cpptest: "no_input_file.cpp" is not a file or directory.\n'
+        )
+        asserter.assertExitCode(1)
+
+    def test_no_input_file_no_kind(self):
+        """
+        Test processing of C++ files with no input files.
+        Input file provided in YAML config file does not exist.
+        """
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "no_input_file_config_no_kind.yaml")
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)

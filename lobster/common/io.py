@@ -22,34 +22,41 @@ from typing import Dict, Optional, Sequence, TextIO, Type, Union, Iterable
 
 from lobster.common.errors import Message_Handler
 from lobster.common.location import File_Reference
-from lobster.common.items import Requirement, Implementation, Activity
+from lobster.common.items import Requirement, Implementation, Activity, Item
 
 
 def lobster_write(
         fd: TextIO,
-        kind: Union[Type[Requirement], Type[Implementation], Type[Activity]],
+        kind: Union[Type[Requirement], Type[Implementation], Type[Activity], Type[Item]],
         generator: str,
         items: Iterable,
 ):
-    if not all(isinstance(item, kind) for item in items):
-        raise ValueError(
-            f"All elements in 'items' must be of the type {kind.__name__}!",
-        )
-
+    if kind in (Requirement, Implementation, Activity):
+        if not all(isinstance(item, kind) for item in items):
+            raise ValueError(
+                f"All elements in 'items' must be of the type {kind.__name__}!",
+            )
+        
     if kind is Requirement:
         schema  = "lobster-req-trace"
         version = 4
     elif kind is Implementation:
         schema  = "lobster-imp-trace"
         version = 3
-    else:
+    elif kind is Activity:
         schema  = "lobster-act-trace"
         version = 3
+    else: # kind is Item
+        schema  = None
+        version = 5
 
     data = {"data"      : list(x.to_json() for x in items),
             "generator" : generator,
-            "schema"    : schema,
             "version"   : version}
+    
+    if schema:
+        data["schema"] = schema
+
     json.dump(data, fd, indent=2)
     fd.write("\n")
 
@@ -74,10 +81,11 @@ def lobster_read(
                      err.msg)
 
     # Validate basic structure
+    # with version 5, lobster files do not contain lobster-specific schema anymore,
     if not isinstance(data, dict):
         mh.error(loc, "parsed json is not an object")
 
-    for rkey in ("schema", "version", "generator", "data"):
+    for rkey in ("version", "generator", "data"):
         if rkey not in data:
             mh.error(loc, "required top-levelkey %s not present" % rkey)
         if rkey == "data":
@@ -90,28 +98,50 @@ def lobster_read(
             if not isinstance(data[rkey], str):
                 mh.error(loc, "%s is not a string" % rkey)
 
-    # Validate indicated schema
-    supported_schema = {
-        "lobster-req-trace" : set([3, 4]),
-        "lobster-imp-trace" : set([3]),
-        "lobster-act-trace" : set([3]),
-    }
-    if data["schema"] not in supported_schema:
-        mh.error(loc, "unknown schema kind %s" % data["schema"])
-    if data["version"] not in supported_schema[data["schema"]]:
+    validate_schema = False
+    lobster_contains_schema = "schema" in data
+    lobster_contains_valid_schema = False
+    if data["version"] < 5:
+        validate_schema = True
+
+    if validate_schema or lobster_contains_schema:
+        if "schema" not in data:
+            mh.error(loc, "required top-levelkey schema not present")
+        if not isinstance(data["schema"], str):
+            mh.error(loc, "schema is not a string")
+
+        # Validate indicated schema
+        supported_schema = {
+            "lobster-req-trace" : set([3, 4]),
+            "lobster-imp-trace" : set([3]),
+            "lobster-act-trace" : set([3]),
+        }
+        if data["schema"] not in supported_schema:
+            mh.error(loc, "unknown schema kind %s" % data["schema"])
+        if data["version"] not in supported_schema[data["schema"]]:
+            mh.error(loc,
+                    "version %u for schema %s is not supported" %
+                    (data["version"], data["schema"]))
+            
+        lobster_contains_valid_schema = True
+
+    if lobster_contains_schema and data["version"] >= 5:
         mh.error(loc,
-                 "version %u for schema %s is not supported" %
-                 (data["version"], data["schema"]))
+                 "schema is not supported in version %u" %
+                 data["version"])
 
     duplicate_items = []
     # Convert to items, and integrate into symbol table
     for raw in data["data"]:
-        if data["schema"] == "lobster-req-trace":
-            item = Requirement.from_json(level, raw, data["version"])
-        elif data["schema"] == "lobster-imp-trace":
-            item = Implementation.from_json(level, raw, data["version"])
+        if lobster_contains_valid_schema:
+            if data["schema"] == "lobster-req-trace":
+                item = Requirement.from_json(level, raw, data["version"])
+            elif data["schema"] == "lobster-imp-trace":
+                item = Implementation.from_json(level, raw, data["version"])
+            else:
+                item = Activity.from_json(level, raw, data["version"])
         else:
-            item = Activity.from_json(level, raw, data["version"])
+            item = Item.from_json(level, raw, data["version"])
 
         if source_info is not None:
             item.perform_source_checks(source_info)

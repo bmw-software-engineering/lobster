@@ -160,18 +160,18 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
                                   "to earlier errors.\n")
         asserter.assertExitCode(1)
 
-    def test_missing_version_yaml(self):
+    def test_missing_version_yaml_no_schema(self):
         # lobster-trace: core_report_req.Missing_Version_Key
         self._test_runner.declare_input_file(
-            self._data_directory / "missing_version.yaml")
+            self._data_directory / "missing_version_no_schema.yaml")
         self._test_runner.declare_input_file(
-            self._data_directory / "trlc_missing_version.lobster")
-        self._test_runner.cmd_args.lobster_config = "missing_version.yaml"
+            self._data_directory / "trlc_missing_version_no_schema.lobster")
+        self._test_runner.cmd_args.lobster_config = "missing_version_no_schema.yaml"
 
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText("trlc_missing_version.lobster: "
+        asserter.assertStdOutText("trlc_missing_version_no_schema.lobster: "
                                   "lobster error: required top-levelkey "
                                   "version not present\n\n"
                                   "lobster-report: aborting due "

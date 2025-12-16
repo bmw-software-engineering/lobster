@@ -28,7 +28,7 @@ from argparse import Namespace
 
 from lobster.common.exceptions import LOBSTER_Exception
 from lobster.common.io import lobster_write
-from lobster.common.items import Activity, Tracing_Tag
+from lobster.common.items import Item, Activity, Tracing_Tag
 from lobster.common.location import File_Reference
 from lobster.common.meta_data_tool_base import MetaDataToolBase
 
@@ -57,50 +57,68 @@ def get_valid_files(
     return file_list
 
 
-def write_to_file(options: Namespace, data: Dict[str, Activity]) -> None:
+def write_to_file(options: Namespace, data: Dict[str, Item], kind: str = "itm") -> None:
     with open(options.out, "w", encoding="UTF-8") as file:
-        lobster_write(file, Activity, "lobster-pkg", data.values())
+        lobster_class = Item
+        if kind == "act":
+            lobster_class = Activity
+
+        lobster_write(file, lobster_class, "lobster-pkg", data.values())
         print("Written output for %u items to %s" % (len(data), options.out))
 
 
 def create_raw_entry(
-    data: Dict[str, Activity], file_name: str, trace_list: list
+    data: Dict[str, Item], file_name: str, trace_list: list, kind: str = "itm"
 ) -> None:
 
-    activity_list = json.loads(trace_list)
+    item_list = json.loads(trace_list)
     # Collect all traces marked as "first"
     traces = []
-    for item in activity_list:
-        if item.get("activity") == "first":
+    for item in item_list:
+        if item.get("item") == "first":
             trace_parts = [s.strip() for s in re.split(r"[:,]", item.get("trace"))]
             traces.extend(trace_parts[1:])  # skip the "lobster-trace" prefix
 
     tag = Tracing_Tag("pkg", f"{file_name}")
     loc = File_Reference(file_name)
-    data[tag.key()] = Activity(
-        tag=tag, location=loc, framework="lobster-pkg", kind="test"
-    )
-    for trace_value in traces:
-        data[tag.key()].add_tracing_target(Tracing_Tag("req", trace_value))
+    if kind == "act":
+        data[tag.key()] = Activity(
+            tag=tag, location=loc, framework="lobster-pkg", kind="test"
+        )
+        for trace_value in traces:
+            data[tag.key()].add_tracing_target(Tracing_Tag("req", trace_value))
+    else:
+        data[tag.key()] = Item(
+            tag=tag, location=loc
+        )
+        for trace_value in traces:
+            data[tag.key()].add_tracing_target(Tracing_Tag("itm", trace_value))
 
     # Handle other activities (if any)
-    for item in activity_list:
-        if item.get("activity") != "first":
+    for item in item_list:
+        if item.get("item") != "first":
             trace2 = [s.strip() for s in re.split(r"[:,]", item.get("trace"))]
             action = item.get("action")
             line = item.get("line")
             tag = Tracing_Tag("pkg", f"{file_name}::{action}::{line}")
             loc = File_Reference(file_name, int(item.get("line")))
-            data[tag.key()] = Activity(
-                tag=tag, location=loc, framework="lobster-pkg", kind="test"
-            )
-            for trace_value in trace2[1:]:
-                data[tag.key()].add_tracing_target(Tracing_Tag("req", trace_value))
+            if kind == "act":
+                data[tag.key()] = Activity(
+                    tag=tag, location=loc, framework="lobster-pkg", kind="test"
+                )
+                for trace_value in trace2[1:]:
+                    data[tag.key()].add_tracing_target(Tracing_Tag("req", trace_value))
+            else:
+                data[tag.key()] = Item(
+                    tag=tag, location=loc
+                )
+                for trace_value in trace2[1:]:
+                    data[tag.key()].add_tracing_target(Tracing_Tag("itm", trace_value))
 
 
-def create_default_activity(file_content, file_name: str,
-                            data: Dict[str, Activity]) -> None:
-    # Only create a default Activity entry for packages with
+def create_default_item(file_content, file_name: str,
+                        data: Dict[str, Item], kind: str = "itm") -> None:
+    # Only create a default Item entry for packages with
     # the TESTCASE tag
     # Check for TESTCASE tag in INFORMATION/TAGS
     tree = ET.fromstring(file_content)
@@ -120,16 +138,22 @@ def create_default_activity(file_content, file_name: str,
     if is_testcase:
         tag = Tracing_Tag("pkg", f"{file_name}")
         loc = File_Reference(file_name)
-        data[tag.key()] = Activity(
-            tag=tag,
-            location=loc,
-            framework="lobster-pkg",
-            kind="test",
+        if kind == "act":
+            data[tag.key()] = Activity(
+                tag=tag,
+                location=loc,
+                framework="lobster-pkg",
+                kind="test",
+            )
+        else:
+            data[tag.key()] = Item(
+                tag=tag,
+                location=loc,
         )
 
 
 def xml_parser(file_content, filename):
-    activity_list = []
+    item_list = []
     misplaced_lobster_lines = []
     tree = ET.fromstring(file_content)
 
@@ -143,7 +167,7 @@ def xml_parser(file_content, filename):
                     is_testcase = True
                     break
     if not is_testcase:
-        return activity_list
+        return item_list
 
     tag_teststep = f"{{{NS['ecu']}}}TESTSTEP"
     tag_value = f"{{{NS['ecu']}}}VALUE"
@@ -153,7 +177,7 @@ def xml_parser(file_content, filename):
         ".//ecu:TESTSTEPS", NS
     )
     if teststeps_parent is None:
-        return activity_list
+        return item_list
 
     # Find the first relevant TsBlock (first level under TESTSTEPS)
     first_level_tsblocks = [
@@ -162,7 +186,7 @@ def xml_parser(file_content, filename):
         if elem.tag == tag_teststep and elem.attrib.get("name") == TSBLOCK
     ]
     if not first_level_tsblocks:
-        return activity_list
+        return item_list
 
     # The first TsBlock determines the allowed parent level
     allowed_parent = first_level_tsblocks[0]
@@ -202,9 +226,9 @@ def xml_parser(file_content, filename):
         for trace_search in obj_value:
             if "lobster-trace:" in (trace_search.text or ""):
                 if is_allowed:
-                    # Allowed: add to activity_list
-                    activity_obj = {"trace": trace_search.text, "activity": "first"}
-                    activity_list.append(activity_obj)
+                    # Allowed: add to item_list
+                    item_obj = {"trace": trace_search.text, "item": "first"}
+                    item_list.append(item_obj)
                 else:
                     # Misplaced: not at allowed nesting
                     search_string = trace_search.text
@@ -220,7 +244,7 @@ def xml_parser(file_content, filename):
                 f" at line(s): {misplaced_lobster_lines}"
             )
 
-    return activity_list
+    return item_list
 
 
 def extract_lobster_traces_from_trace_analysis(tree, filename):
@@ -262,7 +286,7 @@ def extract_lobster_traces_from_trace_analysis(tree, filename):
                         valid_traces.append(
                             {
                                 "trace": child.text.strip(),
-                                "activity": "first",
+                                "item": "first",
                                 "name": episode.findtext(
                                     "ecu:NAME", default="", namespaces=NS
                                 ),
@@ -322,9 +346,9 @@ def lobster_pkg(options):
                     print(msg)
 
                 if getvalues:
-                    create_raw_entry(data, file.name, json.dumps(getvalues))
+                    create_raw_entry(data, file.name, json.dumps(getvalues), options.kind)
                 else:
-                    create_default_activity(file_content, filename, data)
+                    create_default_item(file_content, filename, data, options.kind)
 
             except ET.ParseError as err:
                 print(f"Error parsing XML file '{filename}' : {err}")
@@ -338,7 +362,7 @@ def lobster_pkg(options):
     if not output_file:
         options.out = "report.lobster"
 
-    write_to_file(options, data)
+    write_to_file(options, data, options.kind)
 
     return 0
 
@@ -360,6 +384,13 @@ class PkgTool(MetaDataToolBase):
             "--out",
             required=True,
             help="write output to this file; otherwise output is report.lobster",
+        )
+        self._argument_parser.add_argument(
+            "--kind",
+            required=False,
+            choices=["itm", "act"],
+            default="itm",
+            help="Kind of LOBSTER entries to create: 'itm' for Item, 'act' for Activity",
         )
 
     def _run_impl(self, options: Namespace) -> int:

@@ -36,19 +36,19 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    # Status Ok with "lobster_ok.yaml" (no kind)
-    def test_status_ok_yaml(self):
+    # Status Ok with "lobster_ok_no_schema.yaml" (no kind)
+    def test_status_ok_yaml_no_schema(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Ok
         self._test_runner.declare_input_file(self._data_directory /
-                                             "lobster_ok.yaml")
+                                             "lobster_ok_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "trlc_ok.lobster")
+                                             "trlc_ok_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "python_ok.lobster")
+                                             "python_ok_no_schema.lobster")
 
-        conf_file = "lobster_ok.yaml"
-        out_file = "report_ok_yaml.lobster"
+        conf_file = "lobster_ok_no_schema.yaml"
+        out_file = "report_ok_yaml_no_schema.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -85,19 +85,19 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    # Status Missing with "lobster_missing.yaml"
-    def test_status_missing_yaml(self):
+    # Status Missing with "lobster_missing_no_schema.yaml"
+    def test_status_missing_yaml_no_schema(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Missing
         self._test_runner.declare_input_file(self._data_directory /
-                                             "lobster_missing.yaml")
+                                             "lobster_missing_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "trlc_missing.lobster")
+                                             "trlc_missing_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "python_missing.lobster")
+                                             "python_missing_no_schema.lobster")
 
-        conf_file = "lobster_missing.yaml"
-        out_file = "report_missing_yaml.lobster"
+        conf_file = "lobster_missing_no_schema.yaml"
+        out_file = "report_missing_yaml_no_schema.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -133,18 +133,18 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_status_mixed_yaml(self):
+    def test_status_mixed_yaml_no_schema(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Missing
         self._test_runner.declare_input_file(self._data_directory /
-                                             "lobster_mixed.yaml")
+                                             "lobster_mixed_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "trlc_mixed.lobster")
+                                             "trlc_mixed_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "python_mixed.lobster")
+                                             "python_mixed_no_schema.lobster")
 
-        conf_file = "lobster_mixed.yaml"
-        out_file = "report_mixed_yaml.lobster"
+        conf_file = "lobster_mixed_no_schema.yaml"
+        out_file = "report_mixed_yaml_no_schema.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -181,19 +181,19 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    # Status Justified with "lobster_justified.yaml"
-    def test_status_justified_yaml(self):
+    # Status Justified with "lobster_justified_no_schema.yaml"
+    def test_status_justified_yaml_no_schema(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Status_Justified_Global
         self._test_runner.declare_input_file(self._data_directory /
-                                             "lobster_justified.yaml")
+                                             "lobster_justified_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "trlc_justified.lobster")
+                                             "trlc_justified_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "python_justified.lobster")
+                                             "python_justified_no_schema.lobster")
 
-        conf_file = "lobster_justified.yaml"
-        out_file = "report_justified_yaml.lobster"
+        conf_file = "lobster_justified_no_schema.yaml"
+        out_file = "report_justified_yaml_no_schema.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)

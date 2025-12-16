@@ -39,23 +39,23 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_linear_policy_yaml(self):
+    def test_linear_policy_yaml_no_schema(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: core_report_req.Linear_Policy_Support
         """
         This test checks that the lobster report tool can handle a linear policy
         """
         self._test_runner.declare_input_file(self._data_directory /
-                                             "linear_policy.yaml")
+                                             "linear_policy_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "linear_system_requirements.lobster")
+                                             "linear_system_requirements_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "linear_software_requirements.lobster")
+                                             "linear_software_requirements_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "code_linear.lobster")
+                                             "code_linear_no_schema.lobster")
 
-        conf_file = "linear_policy.yaml"
-        out_file = "report_linear_yaml.lobster"
+        conf_file = "linear_policy_no_schema.yaml"
+        out_file = "report_linear_yaml_no_schema.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -104,7 +104,7 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_pizza_policy_yaml(self):
+    def test_pizza_policy_yaml_no_schema(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: UseCases.Requirement_to_software_Test_Mapping_in_Output
         # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
@@ -115,20 +115,20 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         code, unit tests, and component tests.
         """
         self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_policy.yaml")
+                                             "pizza_policy_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_system_requirements.lobster")
+                                             "pizza_system_requirements_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_software_requirements.lobster")
+                                             "pizza_software_requirements_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_code.lobster")
+                                             "pizza_code_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_component_tests.lobster")
+                                             "pizza_component_tests_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_unit_tests.lobster")
+                                             "pizza_unit_tests_no_schema.lobster")
 
-        conf_file = "pizza_policy.yaml"
-        out_file = "report_pizza_yaml.lobster"
+        conf_file = "pizza_policy_no_schema.yaml"
+        out_file = "report_pizza_yaml_no_schema.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -167,21 +167,21 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_codebeamer_links_yaml(self):
+    def test_codebeamer_links_yaml_no_schema(self):
         # lobster-trace: UseCases.Correct_Item_Data_in_Output_File
         """
         This test checks that the report contains
         the Codebeamer items present in the input file.
         """
         self._test_runner.declare_input_file(self._data_directory /
-                                             "codebeamer_links_policy.yaml")
+                                             "codebeamer_links_policy_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "codebeamer_items.lobster")
+                                             "codebeamer_items_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "codebeamer_funny_impl.lobster")
+                                             "codebeamer_funny_impl_no_schema.lobster")
 
-        conf_file = "codebeamer_links_policy.yaml"
-        out_file = "report_codebeamer_links_yaml.lobster"
+        conf_file = "codebeamer_links_policy_no_schema.yaml"
+        out_file = "report_codebeamer_links_yaml_no_schema.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)

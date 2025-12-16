@@ -20,6 +20,28 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         OUT_FILE = "valid_file1.lobster"
         self._test_runner.declare_input_file(self._data_directory / "valid_file1.pkg")
         self._test_runner.cmd_args.files = ["valid_file1.pkg"]
+        self._test_runner.cmd_args.kind = "act"
+
+        self._test_runner.cmd_args.out = OUT_FILE
+        completed_process = self._test_runner.run_tool_test()
+
+        out_file = self._data_directory / OUT_FILE
+        self._test_runner.declare_output_file(out_file)
+
+        asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_valid_input_pkg_file_no_schema(self):
+        # lobster-trace: UseCases.PKG_Items_Extraction
+        # lobster-trace: req.Pkg_File_Item
+        # lobster-trace: req.Trace_in_Test_Step_Node
+        # lobster-trace: req.Trace_in_Analysis_Node
+        OUT_FILE = "valid_file1_no_schema.lobster"
+        self._test_runner.declare_input_file(self._data_directory / "valid_file1.pkg")
+        self._test_runner.cmd_args.files = ["valid_file1.pkg"]
 
         self._test_runner.cmd_args.out = OUT_FILE
         completed_process = self._test_runner.run_tool_test()
@@ -38,6 +60,27 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         # lobster-trace: req.Pkg_File_Item
         # lobster-trace: req.Trace_in_Analysis_Node
         OUT_FILE = "valid_ta_file.lobster"
+        self._test_runner.declare_input_file(self._data_directory / "valid_file.ta")
+        self._test_runner.cmd_args.files = ["valid_file.ta"]
+        self._test_runner.cmd_args.kind = "act"
+
+        self._test_runner.cmd_args.out = OUT_FILE
+        completed_process = self._test_runner.run_tool_test()
+
+        out_file = self._data_directory / OUT_FILE
+        self._test_runner.declare_output_file(out_file)
+
+        asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_valid_input_ta_file_no_schema(self):
+        # lobster-trace: UseCases.PKG_Items_Extraction
+        # lobster-trace: req.Pkg_File_Item
+        # lobster-trace: req.Trace_in_Analysis_Node
+        OUT_FILE = "valid_ta_file_no_schema.lobster"
         self._test_runner.declare_input_file(self._data_directory / "valid_file.ta")
         self._test_runner.cmd_args.files = ["valid_file.ta"]
 
@@ -117,6 +160,30 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
             self._test_runner.declare_input_file(self._data_directory / file)
             self._test_runner.cmd_args.files.append(file)
 
+        self._test_runner.cmd_args.kind = "act"
+        self._test_runner.cmd_args.out = OUT_FILE
+        completed_process = self._test_runner.run_tool_test()
+
+        out_file = self._data_directory / OUT_FILE
+        self._test_runner.declare_output_file(out_file)
+
+        asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
+
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(2, OUT_FILE)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_valid_input_pkg_files_no_schema(self):
+        # lobster-trace: UseCases.PKG_Items_Extraction
+        # lobster-trace: req.Pkg_File_Item
+        # lobster-trace: req.Trace_in_Test_Step_Node
+        # lobster-trace: req.Trace_in_Analysis_Node
+        OUT_FILE = "valid_file1_and_valid_file2_no_schema.lobster"
+        for file in ("valid_file1.pkg", "valid_file2.pkg"):
+            self._test_runner.declare_input_file(self._data_directory / file)
+            self._test_runner.cmd_args.files.append(file)
+
         self._test_runner.cmd_args.out = OUT_FILE
         completed_process = self._test_runner.run_tool_test()
 
@@ -136,7 +203,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         # lobster-trace: req.Pkg_File_Item
         # lobster-trace: req.Trace_in_Test_Step_Node
         # lobster-trace: req.Trace_in_Analysis_Node
-        OUT_FILE = "valid_file1.lobster"
+        OUT_FILE = "valid_file1_no_schema.lobster"
         IN_FILES = ("valid_file1.pkg", "valid_file2.pkg")
         for f in IN_FILES:
             self._test_runner.copy_file_to_working_directory(self._data_directory / f)
@@ -169,6 +236,35 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         shutil.copy(src_pkg, dst_pkg)
 
         self._test_runner.cmd_args.files = ["pkg_files"]
+        self._test_runner.cmd_args.kind = "act"
+
+        self._test_runner.cmd_args.out = OUT_FILE
+        completed_process = self._test_runner.run_tool_test()
+
+        out_file = self._data_directory / OUT_FILE
+        self._test_runner.declare_output_file(out_file)
+        asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
+
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_valid_input_pkg_folder_no_schema(self):
+        # lobster-trace: UseCases.PKG_Items_Extraction
+        # lobster-trace: req.Pkg_File_Item
+        # lobster-trace: req.Trace_in_Test_Step_Node
+        # lobster-trace: req.Trace_in_Analysis_Node
+        OUT_FILE = "valid_file1_folder_no_schema.lobster"
+
+        pkg_files_dir = Path(self._test_runner.working_dir) / "pkg_files"
+        pkg_files_dir.mkdir(parents=True, exist_ok=True)
+
+        src_pkg = self._data_directory / "valid_file1.pkg"
+        dst_pkg = pkg_files_dir / "valid_file1.pkg"
+        shutil.copy(src_pkg, dst_pkg)
+
+        self._test_runner.cmd_args.files = ["pkg_files"]
 
         self._test_runner.cmd_args.out = OUT_FILE
         completed_process = self._test_runner.run_tool_test()
@@ -189,6 +285,27 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         self._test_runner.declare_input_file(self._data_directory /
                                              "without_lobster_trace.pkg")
         self._test_runner.cmd_args.files = ["without_lobster_trace.pkg"]
+        self._test_runner.cmd_args.kind = "act"
+
+        self._test_runner.cmd_args.out = OUT_FILE
+        completed_process = self._test_runner.run_tool_test()
+
+        out_file = self._data_directory / OUT_FILE
+        self._test_runner.declare_output_file(out_file)
+
+        asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_valid_file_without_lobster_trace_no_schema(self):
+        # lobster-trace: req.Pkg_File_Item
+        # lobster-trace: UseCases.PKG_Items_Extraction
+        OUT_FILE = "without_lobster_trace_no_schema.lobster"
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "without_lobster_trace.pkg")
+        self._test_runner.cmd_args.files = ["without_lobster_trace.pkg"]
 
         self._test_runner.cmd_args.out = OUT_FILE
         completed_process = self._test_runner.run_tool_test()
@@ -206,6 +323,27 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         # lobster-trace: req.Pkg_File_Item
         # lobster-trace: UseCases.PKG_Items_Extraction
         OUT_FILE = "without_testcase_tag.lobster"
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "without_testcase_tag.pkg")
+        self._test_runner.cmd_args.files = ["without_testcase_tag.pkg"]
+        self._test_runner.cmd_args.kind = "act"
+
+        self._test_runner.cmd_args.out = OUT_FILE
+        completed_process = self._test_runner.run_tool_test()
+
+        out_file = self._data_directory / OUT_FILE
+        self._test_runner.declare_output_file(out_file)
+
+        asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_valid_file_without_testcase_tag_no_schema(self):
+        # lobster-trace: req.Pkg_File_Item
+        # lobster-trace: UseCases.PKG_Items_Extraction
+        OUT_FILE = "without_testcase_tag_no_schema.lobster"
         self._test_runner.declare_input_file(self._data_directory /
                                              "without_testcase_tag.pkg")
         self._test_runner.cmd_args.files = ["without_testcase_tag.pkg"]

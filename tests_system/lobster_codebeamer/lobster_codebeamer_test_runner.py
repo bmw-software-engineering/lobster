@@ -17,6 +17,7 @@ class ConfigFileData:
     page_size: Optional[int] = None
     num_request_retry: Optional[int] = None
     retry_error_codes: Optional[List[int]] = None
+    schema: Optional[str] = None
 
     def set_default_root_token_out(self):
         self.root = f"https://localhost:{PORT}"
@@ -38,6 +39,7 @@ class ConfigFileData:
         append_if_not_none("page_size", self.page_size)
         append_if_not_none("num_request_retry", self.num_request_retry)
         append_if_not_none("retry_error_codes", self.retry_error_codes)
+        append_if_not_none("schema", self.schema)
 
         with open(filename, mode='w', encoding="UTF-8") as file:
             yaml.dump(data, file)

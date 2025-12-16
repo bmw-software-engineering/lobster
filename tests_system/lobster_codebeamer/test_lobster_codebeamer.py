@@ -86,6 +86,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         cfg.retry_error_codes = [429]
         cfg.num_request_retry = 2
         cfg.import_query = 123123123123123123
+        cfg.schema = "Requirement"
         self._test_runner.declare_output_file(
             self._data_directory / self._test_runner.config_file_data.out)
 
@@ -93,6 +94,58 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         asserter = Asserter(self, completed_process, self._test_runner)
         self.assertIn(
             "Written 1 requirements to codebeamer.lobster\n",
+            completed_process.stdout,
+        )
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_retry_then_success_no_schema(self):
+        """Ensure the tool retries and uses successful response
+        if received within retry limit."""
+        # lobster-trace: codebeamer_req.Retry_On_Specific_HTTPS_Status_Codes
+        response_data = {
+            'page': 1,
+            'pageSize': 1,
+            'total': 1,
+            'items': [
+                {
+                    'item': {
+                        'id': 5,
+                        'name': 'Requirement 5: Dynamic name',
+                        'description': 'Dynamic description for requirement 5.',
+                        'status': {
+                            'id': 5,
+                            'name': 'Status 5',
+                            'type': 'ChoiceOptionReference'
+                        },
+                        'tracker': {
+                            'id': 5,
+                            'name': 'Tracker_Name_5',
+                            'type': 'TrackerReference'
+                        },
+                        'version': 1
+                    }
+                }
+            ]
+        }
+        self.codebeamer_flask.responses = [
+            Response(status=429),
+            Response(status=429),
+            Response(json.dumps(response_data), status=200),
+        ]
+        cfg = self._test_runner.config_file_data
+        cfg.set_default_root_token_out()
+        cfg.retry_error_codes = [429]
+        cfg.num_request_retry = 2
+        cfg.import_query = 123123123123123123
+        cfg.out = "codebeamer_no_schema.lobster"
+        self._test_runner.declare_output_file(
+            self._data_directory / self._test_runner.config_file_data.out)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        self.assertIn(
+            "Written 1 requirements to codebeamer_no_schema.lobster\n",
             completed_process.stdout,
         )
         asserter.assertExitCode(0)

@@ -1,5 +1,7 @@
+from fnmatch import fnmatch
 import os
 import json
+import re
 import unittest
 from tempfile import TemporaryDirectory
 from os.path import dirname
@@ -13,8 +15,18 @@ from lobster.tools.pkg.pkg import (
     get_valid_files,
     write_to_file,
     xml_parser,
-    create_default_activity,
+    create_default_item,
 )
+
+def wildcard_to_regex(pattern: str) -> str:
+    escaped = re.escape(pattern)
+    return escaped.replace(r'\*', '.*').replace(r'\?', '.')
+
+def wildcard_not_in_text(pattern: str, text: str, *, case_sensitive: bool = True) -> bool:
+    regex = wildcard_to_regex(pattern)
+    flags = 0 if case_sensitive else re.IGNORECASE
+    return re.search(regex, text, flags) is None
+
 
 class LobsterPkgTests(unittest.TestCase):
     # unit tests for lobster-pkg
@@ -79,10 +91,48 @@ class LobsterPkgTests(unittest.TestCase):
                     self.assertIsInstance(file_list, list)
                     self.assertEqual(test_case["expected_length"], len(file_list))
 
-    def test_lobster_pkg_functions_with_valid_xml_format(self):
+    def test_lobster_pkg_functions_activity_with_valid_xml_format(self):
         data = {}
         options = SimpleNamespace(out=self.output_pkg_file_1)
         expected_values = ["req banana.reqA", "req banana.reqB", "req valid.req1", "req valid.req2"]
+        with open(self.test_pkg_file_1, "r", encoding="UTF-8") as file:
+            filename = Path(self.test_pkg_file_1).name
+            file_content = file.read()
+            getvalues = xml_parser(file_content, filename)
+
+            self.assertIsInstance(getvalues, list)
+            self.assertEqual(1, len(getvalues))
+            self.assertEqual("lobster-trace: banana.reqA,banana.reqB", getvalues[0].get('trace'))
+
+            tree = ET.fromstring(file_content)
+            valid_traces, misplaced_traces = extract_lobster_traces_from_trace_analysis(
+                tree, filename
+            )
+            self.assertIsInstance(valid_traces, list)
+            self.assertEqual(1, len(valid_traces))
+            self.assertEqual("lobster-trace: valid.req1,valid.req2", valid_traces[0].get('trace'))
+
+            self.assertIsInstance(misplaced_traces, list)
+            self.assertEqual(1, len(misplaced_traces))
+            self.assertIn("lobster-trace: misplaced.req1,misplaced.req2", misplaced_traces[0])
+
+            getvalues.extend(valid_traces)
+            create_raw_entry(data, file.name, json.dumps(getvalues), kind="act")
+
+            write_to_file(options, data, kind="act")
+
+        with open(self.output_pkg_file_1, "r", encoding="UTF-8") as lobster_file:
+            file_content = lobster_file.read()
+            self.assertIn('"generator": "lobster-pkg"', file_content)
+            self.assertIn('"schema": "lobster-act-trace"', file_content)
+            self.assertIn('"version": 3', file_content)
+            for excpected_value in expected_values:
+                self.assertIn(excpected_value, file_content)
+
+    def test_lobster_pkg_functions_item_with_valid_xml_format(self):
+        data = {}
+        options = SimpleNamespace(out=self.output_pkg_file_1)
+        expected_values = ["itm banana.reqA", "itm banana.reqB", "itm valid.req1", "itm valid.req2"]
         with open(self.test_pkg_file_1, "r", encoding="UTF-8") as file:
             filename = Path(self.test_pkg_file_1).name
             file_content = file.read()
@@ -111,10 +161,13 @@ class LobsterPkgTests(unittest.TestCase):
 
         with open(self.output_pkg_file_1, "r", encoding="UTF-8") as lobster_file:
             file_content = lobster_file.read()
+            self.assertIn('"generator": "lobster-pkg"', file_content)
+            assert wildcard_not_in_text('"schema": "lobster-*-trace"', file_content)
+            self.assertIn('"version": 5', file_content)
             for excpected_value in expected_values:
                 self.assertIn(excpected_value, file_content)
 
-    def test_lobster_pkg_functions_with_invalid_xml_format(self):
+    def test_lobster_pkg_functions_activity_with_invalid_xml_format(self):
         data = {}
         options = SimpleNamespace(out=self.output_pkg_file_2)
 
@@ -138,15 +191,48 @@ class LobsterPkgTests(unittest.TestCase):
             self.assertIsInstance(misplaced_traces, list)
             self.assertEqual(0, len(misplaced_traces))
 
-            create_default_activity(file_content, filename, data)
+            create_default_item(file_content, filename, data, kind="act")
 
-            write_to_file(options, data)
+            write_to_file(options, data, kind="act")
 
             with open(self.output_pkg_file_2, "r", encoding="UTF-8") as lobster_file:
                 file_content = lobster_file.read()
                 for excpected_value in expected_values:
                     self.assertIn(excpected_value, file_content)
 
+    def test_lobster_pkg_functions_item_with_invalid_xml_format(self):
+        data = {}
+        options = SimpleNamespace(out=self.output_pkg_file_2)
+
+        expected_values = ['"version": 5', '"generator": "lobster-pkg"']
+
+        with open(self.test_pkg_file_2, "r", encoding="UTF-8") as file:
+            filename = Path(self.test_pkg_file_2).name
+            file_content = file.read()
+            getvalues = xml_parser(file_content, filename)
+
+            self.assertIsInstance(getvalues, list)
+            self.assertEqual(0, len(getvalues))
+
+            tree = ET.fromstring(file_content)
+            valid_traces, misplaced_traces = extract_lobster_traces_from_trace_analysis(
+                tree, filename
+            )
+            self.assertIsInstance(valid_traces, list)
+            self.assertEqual(0, len(valid_traces))
+
+            self.assertIsInstance(misplaced_traces, list)
+            self.assertEqual(0, len(misplaced_traces))
+
+            create_default_item(file_content, filename, data)
+
+            write_to_file(options, data)
+
+            with open(self.output_pkg_file_2, "r", encoding="UTF-8") as lobster_file:
+                file_content = lobster_file.read()
+                assert wildcard_not_in_text('"schema": "lobster-*-trace"', file_content)
+                for excpected_value in expected_values:
+                    self.assertIn(excpected_value, file_content)
 
     def tearDown(self):
         self.temp_dir.cleanup()

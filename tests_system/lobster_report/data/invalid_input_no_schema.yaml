@@ -1,0 +1,4 @@
+Code: !LevelDefinition
+  name: Code
+  source:
+  - file: python_invalid_input_no_schema.lobster

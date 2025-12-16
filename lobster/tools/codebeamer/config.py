@@ -19,10 +19,10 @@ class Config:
     import_query: Union[str, int]
     verify_ssl: bool
     page_size: int
-    schema: str
     timeout: int
     out: str
     cb_auth_conf: AuthenticationConfig
+    schema: Optional[str] = "Item"
 
     @property
     def base(self) -> str:

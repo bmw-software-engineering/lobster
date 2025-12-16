@@ -1,4 +1,5 @@
 import json
+import traceback
 from unittest import TestCase
 from tests_system.testrunner import TestRunner, TestRunResult
 
@@ -130,7 +131,7 @@ def is_valid_json(json_string):
 
 def sort_json(json_data):
     if isinstance(json_data, dict):
-        return sorted((keys, sort_json(values)) for keys, values in json_data.items())
+        return {k: sort_json(json_data[k]) for k in sorted(json_data)}
     if isinstance(json_data, list):
-        return sorted(sort_json(items) for items in json_data)
+        return [sort_json(item) for item in json_data]
     return json_data

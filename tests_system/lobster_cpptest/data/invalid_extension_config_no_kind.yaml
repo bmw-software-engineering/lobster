@@ -1,0 +1,4 @@
+output_file: "invalid_extension_no_schema.lobster"
+files:
+  - 'invalid_extension.xyz'
+codebeamer_url: "https://codebeamer.com"

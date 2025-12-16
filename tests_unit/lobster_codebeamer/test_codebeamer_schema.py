@@ -56,6 +56,16 @@ class CbConfigTest(unittest.TestCase):
             str(context.exception),
         )
 
+    def test_config_no_schema(self):
+        config = parse_config_data(
+            {
+                'root': 'https://example.com',
+                "import_query": 8805855,
+            }
+        )
+        self.assertIsNotNone(config)
+        self.assertEqual(config.schema, "Item")
+
     def test_unsupported_config_keys(self):
         with self.assertRaises(KeyError) as context:
             parse_config_data(
