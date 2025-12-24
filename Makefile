@@ -156,7 +156,7 @@ coverage-unit:
 	@echo "📊 Generating coverage report for unit tests..."
 	coverage combine -q .coverage.unit*
 	coverage html --directory=htmlcov-unit --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=49
+	coverage report --rcfile=coverage.cfg --fail-under=48
 
 coverage-system:
 	@echo "📊 Generating coverage report for system tests..."

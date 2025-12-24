@@ -5,6 +5,13 @@
 
 ### 1.0.3-dev
 
+* `lobster-codebeamer`:
+  - Improved error messages with detailed troubleshooting information:
+    - Connection timeout errors now include the URL and suggest increasing timeout parameter
+    - Connection errors provide actionable steps like checking internet connection and increasing retries
+    - Network errors include clear failure reasons and suggested actions
+    - HTTP response errors now include status code and reason.
+
 * `lobster-python`:
   - Added system test infrastructure and Bazel targets under `tests_system/lobster_python`.
 
