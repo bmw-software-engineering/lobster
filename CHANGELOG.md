@@ -15,6 +15,7 @@
   prevents unexpected failures when working with nested directory structures.
 
 * `lobster-codebeamer`:
+  - Enabled parallel execution for system tests, improving test suite performance.
   - Improved error messages with detailed troubleshooting information:
     - Connection timeout errors now include the URL and suggest increasing timeout parameter
     - Connection errors provide actionable steps like checking internet connection and increasing retries
