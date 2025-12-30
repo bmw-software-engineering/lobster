@@ -37,19 +37,22 @@ class InvalidInputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertExitCode(1)
 
     def test_not_existing_output_path(self):
-        """Test that a missing output path causes non-zero exit code"""
-        # lobster-trace: UseCases.PKG_Files_Missing
-        OUT_FILE = "not_existing/not_existing.lobster"
+        """Test that a missing output path is created automatically"""
+        OUT_FILE = str(self._data_directory / "not_existing/not_existing.lobster")
+        self._test_runner.declare_input_file(self._data_directory / "valid_file1.pkg")
         self._test_runner.cmd_args.files = [
             str(self._data_directory / "valid_file1.pkg")
         ]
 
         self._test_runner.cmd_args.out = OUT_FILE
-
         completed_process = self._test_runner.run_tool_test()
+
+        self._test_runner.declare_output_file(OUT_FILE)
+
         asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
-        asserter.assertInStdErr(f'No such file or directory: \'{OUT_FILE}\'')
-        asserter.assertExitCode(1)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertExitCode(0)
 
     def test_misplaced_lobster_trace_file(self):
         """Test that a misplaced lobster-trace in ANALYSISITEM causes a warning

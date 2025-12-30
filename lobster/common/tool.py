@@ -29,7 +29,7 @@ import yaml
 from lobster.common.errors import Message_Handler
 from lobster.common.location import File_Reference
 from lobster.common.items import Requirement, Implementation, Activity
-from lobster.common.io import lobster_write
+from lobster.common.io import lobster_write, ensure_output_directory
 from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 
@@ -262,6 +262,7 @@ class LOBSTER_Tool(MetaDataToolBase, SupportedCommonConfigKeys, metaclass=ABCMet
                    for item in items)
 
         if options.out:
+            ensure_output_directory(options.out)
             with open(options.out, "w", encoding="UTF-8") as fd:
                 lobster_write(fd, self.schema, self.name, items)
             print(f"{self.name}: wrote {len(items)} items to {options.out}")

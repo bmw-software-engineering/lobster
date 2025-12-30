@@ -62,7 +62,7 @@ class OutputCorrectnessTest(LobsterTrlcSystemTestCaseBase):
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutText(
-            "lobster-trlc: successfully wrote 5 items to "
+            "lobster-trlc: wrote 5 items to "
             "output_correctness_test.out.lobster\n",
         )
         asserter.assertExitCode(0)

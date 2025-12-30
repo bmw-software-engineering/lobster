@@ -44,7 +44,7 @@ class InputFromFilesAndInputsTest(LobsterTrlcSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"lobster-trlc: successfully wrote 2 items to "
+        asserter.assertStdOutText(f"lobster-trlc: wrote 2 items to "
                                   f"{OUT_FILE}\n")
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
