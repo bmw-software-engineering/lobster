@@ -43,7 +43,6 @@ py_library(
 py_test(
     name = "test_extract_requirements",
     srcs = ["test_extract_requirements.py"],
-    tags = ["exclusive"],
     deps = [
         ":lobster_codebeamer",
         requirement("flask"),
@@ -53,7 +52,6 @@ py_test(
 py_test(
     name = "test_lobster_codebeamer",
     srcs = ["test_lobster_codebeamer.py"],
-    tags = ["exclusive"],
     deps = [
         ":lobster_codebeamer",
         "//tests_system",
@@ -64,7 +62,6 @@ py_test(
 py_test(
     name = "test_valid_flow",
     srcs = ["test_valid_flow.py"],
-    tags = ["exclusive"],
     deps = [
         ":lobster_codebeamer",
         requirement("flask"),

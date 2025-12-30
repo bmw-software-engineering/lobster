@@ -4,6 +4,8 @@ from flask import Response
 from tests_system.lobster_codebeamer.lobster_codebeamer_system_test_case_base import (
     LobsterCodebeamerSystemTestCaseBase)
 from tests_system.asserter import Asserter
+from tests_system.lobster_codebeamer.lobster_codebeamer_asserter import (
+    LobsterCodebeamerAsserter)
 from tests_system.lobster_codebeamer.mock_server_setup import get_mock_app
 
 
@@ -28,7 +30,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
 
         self.codebeamer_flask.responses = [Response(status=429)] * 3
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.retry_error_codes = [429]
         cfg.num_request_retry = 2
         cfg.import_query = 999
@@ -82,7 +84,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
             Response(json.dumps(response_data), status=200),
         ]
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.retry_error_codes = [429]
         cfg.num_request_retry = 2
         cfg.import_query = 123123123123123123
@@ -90,7 +92,12 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
             self._data_directory / self._test_runner.config_file_data.out)
 
         completed_process = self._test_runner.run_tool_test()
-        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter = LobsterCodebeamerAsserter(
+            self,
+            completed_process,
+            self._test_runner,
+            port=self.codebeamer_flask.port,
+        )
         self.assertIn(
             "Written 1 requirements to codebeamer.lobster\n",
             completed_process.stdout,
@@ -103,7 +110,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         # lobster-trace: codebeamer_req.Missing_Error_Code
         self.codebeamer_flask.responses = [Response(status=429)]
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = 1111
 
         completed_process = self._test_runner.run_tool_test()

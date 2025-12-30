@@ -18,6 +18,7 @@
 # <https://www.gnu.org/licenses/>.
 
 from argparse import Namespace
+import sys
 import os.path
 import multiprocessing
 import functools

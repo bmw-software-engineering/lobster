@@ -65,15 +65,18 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
                     self.assertEqual(actual_url, f"{expected_url}".format(cfg=cfg, i=i))
                     self.assertEqual(request['method'], 'GET')
 
-                asserter = LobsterCodebeamerAsserter(self,
-                                                     completed_process,
-                                                     self._test_runner,
-                                                     )
+                asserter = LobsterCodebeamerAsserter(
+                    self,
+                    completed_process,
+                    self._test_runner,
+                    port=self.codebeamer_flask.port,
+                )
                 asserter.assertStdOutNumAndFile(
                     num_items=total_items,
                     out_file=self._test_runner.config_file_data.out,
                     page_size=cfg.page_size,
                     import_query=cfg.import_query,
+                    port=self.codebeamer_flask.port,
                 )
                 asserter.assertExitCode(0)
                 asserter.assertOutputFiles()
@@ -85,7 +88,7 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
         # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_Items_in_Output
 
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = 54321
         cfg.page_size = 5
 
@@ -103,7 +106,7 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
         # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_Items_in_Output
 
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = "projectId%3D10"
         cfg.page_size = 5
 

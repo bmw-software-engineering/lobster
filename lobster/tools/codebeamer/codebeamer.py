@@ -655,13 +655,6 @@ class CodebeamerTool(MetaDataToolBase):
             print(f"Written {len(items)} requirements to {cb_config.out}")
 
 
-def _ensure_output_directory(file_path: str) -> None:
-    """Create parent directories for the output file if they don't exist."""
-    directory = os.path.dirname(file_path)
-    if directory:
-        os.makedirs(directory, exist_ok=True)
-
-
 def _get_out_stream(config_out: Optional[str]) -> TextIO:
     if config_out:
         ensure_output_directory(config_out)
