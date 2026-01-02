@@ -3,10 +3,38 @@ Codebeamer Python API
 
 This section describes the end-user facing Codebeamer API for LOBSTER.
 
-First, prepare a configuration programmatically and authenticate:
+API
+---
 
-Programmatic API
-----------------
+::
+
+   from lobster.tools.codebeamer.codebeamer import lobster_codebeamer
+   lobster_codebeamer(config: Config, out_file: str)
+
+First, prepare a configuration:
+
+Configuration Parameters
+------------------------
+
+Attributes accepted by ``AuthenticationConfig`` and ``Config`` when used in Python.
+
+AuthenticationConfig
+~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   from lobster.tools.codebeamer.codebeamer import AuthenticationConfig
+
+   auth = AuthenticationConfig(token="<TOKEN>", root="https://codebeamer.example")
+
+- ``token`` (str | None): Bearer token for Codebeamer. Preferred over user/password.
+- ``user`` (str | None): Username (used only if ``token`` is not provided).
+- ``password`` (str | None): Password (paired with ``user``); may be auto-populated via ``~/.netrc``.
+- ``root`` (str): Base HTTPS URL of the Codebeamer instance (must start with ``https://``).
+
+Config
+~~~~~~
+
 ::
 
    from lobster.tools.codebeamer.codebeamer import AuthenticationConfig, Config
@@ -26,47 +54,8 @@ Programmatic API
          cb_auth_conf=auth,
    )
 
-Then call the API function to fetch items from codebeamer and write LOBSTER output:
-
-::
-
-   from lobster.tools.codebeamer.codebeamer import lobster_codebeamer
-   lobster_codebeamer(conf, "cb_requirements.lobster")
-
-Stable API Functions
---------------------
-
-``lobster_codebeamer(config: Config, out_file: str) -> None``
-   Loads items (via query or tagged import) and writes them to a LOBSTER interchange file.
-
-``Config`` / ``AuthenticationConfig``
-   Data containers; instantiate directly (no builder pattern) for explicitness.
-
-Core Goals
-----------
-
-- Import by query/report ID → set ``import_query`` (int or cbQL string).
-- Import by referenced IDs → set ``import_tagged`` to a prior LOBSTER artefact.
-- Control item kind → set ``schema`` (``requirement`` / ``implementation`` / ``activity``).
-- Harden network calls → tune ``num_request_retry`` & ``retry_error_codes``; enable ``verify_ssl``.
-- Tune performance → adjust ``page_size`` & ``timeout``.
-- Trace extra relationships → list custom field names in ``references``.
-
-Configuration Parameters (Programmatic API)
-------------------------------------------
-Attributes accepted by ``AuthenticationConfig`` and ``Config`` when used in Python.
-
-AuthenticationConfig
---------------------
-- ``token`` (str | None): Bearer token for Codebeamer. Preferred over user/password.
-- ``user`` (str | None): Username (used only if ``token`` is not provided).
-- ``password`` (str | None): Password (paired with ``user``); may be auto-populated via ``~/.netrc``.
-- ``root`` (str): Base HTTPS URL of the Codebeamer instance (must start with ``https://``).
-
-Config
-------
 - ``references`` (List[str]): Names of Codebeamer fields whose referenced items should be traced (converted to ``req`` tags).
-- ``import_tagged`` (str | None): Path to an existing LOBSTER artefact whose unresolved ``req`` references define item IDs to import.
+- ``import_tagged`` (str | None): Path to an existing LOBSTER artifact whose unresolved ``req`` references define item IDs to import.
 - ``import_query`` (int | str | None): Report ID (int) or cbQL query string used to fetch items directly.
 - ``verify_ssl`` (bool): Whether to verify TLS certificates; set ``True`` in production for security.
 - ``page_size`` (int): Pagination size for REST queries; a trade-off between round trips and response size (default typically 100).
@@ -77,9 +66,48 @@ Config
 - ``retry_error_codes`` (List[int]): HTTP status codes that trigger retry logic (e.g. [500, 502, 503, 504]).
 - ``cb_auth_conf`` (AuthenticationConfig): Authentication + root endpoint.
 
-Minimum Required
-----------------
-- ``cb_auth_conf.root`` (HTTPS) AND one of ``import_query`` / ``import_tagged``.
+Stable API Function
+-------------------
+
+``lobster_codebeamer(config: Config, out_file: str) -> None``
+  Loads items (via query or tagged import) and writes them to a LOBSTER interchange file.
+
+Example (Using Query with Custom Settings)
+-------------------------------------------
+
+::
+
+   from lobster.tools.codebeamer.codebeamer import AuthenticationConfig, Config, lobster_codebeamer
+
+   auth = AuthenticationConfig(
+      token="my_secret_token_123",
+      root="https://codebeamer.example.com"
+   )
+
+   conf = Config(
+      references=["Depends On", "Related To"],
+      import_tagged=None,
+      import_query=5678,
+      verify_ssl=True,
+      page_size=200,
+      schema="implementation",
+      timeout=60,
+      out=None,
+      num_request_retry=3,
+      retry_error_codes=[500, 502, 503, 504],
+      cb_auth_conf=auth,
+   )
+
+   lobster_codebeamer(conf, "codebeamer_items.lobster")
+
+Core Goals
+----------
+- Fetch items using a query or report ID by setting ``import_query``.
+- Fetch items referenced in an existing LOBSTER file by setting ``import_tagged``.
+- Choose the item type (requirement, implementation, or activity) using ``schema``.
+- Make network calls more reliable by configuring ``num_request_retry`` and ``verify_ssl``.
+- Improve performance by adjusting ``page_size`` and ``timeout``.
+- Trace additional relationships by listing custom field names in ``references``.
 
 Behavioral Notes
 ----------------
@@ -94,21 +122,3 @@ Error Conditions
 - Absent both ``import_query`` & ``import_tagged`` → ``KeyError``.
 - ``num_request_retry <= 0`` → ``ValueError``.
 - Unrecognised ``schema`` → ``KeyError``.
-
-Performance Tips
-----------------
-- Lower ``page_size`` for slow links; raise moderately for fewer requests.
-- Increase ``timeout`` for large reports.
-- Use only transient server codes in ``retry_error_codes`` (e.g. 500/502/503/504).
-
-Security Tips
--------------
-- Always prefer a ``token`` over password auth.
-- Set ``verify_ssl=True`` outside controlled test environments.
-- Rotate tokens periodically.
-
-Module Reference
-----------------
-
-Import path: ``lobster.tools.codebeamer.codebeamer``.
-

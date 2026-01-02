@@ -36,7 +36,7 @@ autodoc_default_options = {
 # HTML output options
 html_theme = "alabaster"
 html_theme_options = {
-    "description": "Traceability tooling APIs for requirements, code, tests, and reports",
+    "description": "Traceability APIs for requirements, code, tests, and reports",
     "sidebar_width": "250px",
     "page_width": "1080px",
     "fixed_sidebar": True,
@@ -46,7 +46,6 @@ html_theme_options = {
 
 # Syntax highlighting & HTML polish
 pygments_style = "friendly"
-html_static_path = ["_static"]
 html_css_files = ["custom.css"]
 
 # Prevent cluttered sidebars (focus on pages, not every symbol)

@@ -5,7 +5,10 @@
 
 ### 1.0.3-dev
 
-
+* API documentation
+  - Created comprehensive API documentation using Sphinx for better user experience across all LOBSTER tools
+  - Added detailed examples and configuration parameters for `lobster-codebeamer`,
+  `lobster-cpptest`, `lobster-report`, `lobster-html_report`, and `lobster-online_report` tools
 
 ### 1.0.2
  

@@ -179,12 +179,11 @@ test-unit: clean-coverage unit-tests
 	make coverage-unit
 
 docs:
-	mkdir -p docs
+	mkdir -p docs/api_documentation
 	@-make tracing
 	@-make tracing-stf
 	@-./tracing/tracing.sh
-	# Build Sphinx HTML so index.rst becomes index.html at docs/ root
-	@sphinx-build -c sphinx -b html . docs
+	@sphinx-build -c sphinx -b html . docs/api_documentation
 
 clean-docs:
 	rm -rf docs
