@@ -5,6 +5,9 @@
 
 ### 1.0.3-dev
 
+* `lobster-python`:
+  - Added system test infrastructure and Bazel targets under `tests_system/lobster_python`.
+
 * API documentation
   - Created comprehensive API documentation using Sphinx for better user experience across all LOBSTER tools
   - Added detailed examples and configuration parameters for `lobster-codebeamer`,

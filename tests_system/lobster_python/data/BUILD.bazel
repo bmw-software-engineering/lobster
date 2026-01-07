@@ -1,0 +1,8 @@
+filegroup(
+    name = "python_data_system",
+    srcs = glob([
+        "*.py",
+        "*.lobster",
+    ]),
+    visibility = ["//visibility:public"],
+)
