@@ -39,8 +39,15 @@ import netrc
 from typing import Dict, Iterable, List, Optional, Sequence, TextIO, Union
 from urllib.parse import quote, urlparse
 from enum import Enum
+from http import HTTPStatus
+
 import requests
 from requests.adapters import HTTPAdapter
+from requests.exceptions import (
+    Timeout,
+    ConnectionError as RequestsConnectionError,
+    RequestException,
+)
 import yaml
 from urllib3.util.retry import Retry
 
@@ -88,6 +95,26 @@ def get_authentication(cb_auth_config: AuthenticationConfig) -> requests.auth.Au
                                        cb_auth_config.password)
 
 
+def _get_response_message(response: requests.Response) -> str:
+    try:
+        data = response.json()
+        if isinstance(data, dict) and "message" in data:
+            return data["message"]
+    except ValueError:
+        pass
+
+    return response.text.strip() or "Unknown error"
+
+
+def _get_http_reason(response: requests.Response) -> str:
+    if response.reason:
+        return response.reason
+    try:
+        return HTTPStatus(response.status_code).phrase
+    except ValueError:
+        return "Unknown Status"
+
+
 def query_cb_single(cb_config: Config, url: str):
     if cb_config.num_request_retry <= 0:
         raise ValueError("Retry is disabled (num_request_retry is set to 0). "
@@ -107,18 +134,53 @@ def query_cb_single(cb_config: Config, url: str):
     session.mount("https://", adapter)
     session.mount("http://", adapter)
 
-    response = session.get(
-        url,
-        auth=get_authentication(cb_config.cb_auth_conf),
-        timeout=cb_config.timeout,
-        verify=cb_config.verify_ssl,
-    )
+    try:
+        response = session.get(
+            url,
+            auth=get_authentication(cb_config.cb_auth_conf),
+            timeout=cb_config.timeout,
+            verify=cb_config.verify_ssl,
+        )
+    except Timeout as ex:
+        raise QueryException(
+            "Connection timed out while contacting Codebeamer\n"
+            f"URL: {url}\n"
+            f"Reason: {ex}\n"
+            "\nPossible actions:\n"
+            "• Increase the timeout using the 'timeout' parameter"
+        ) from ex
+
+    except RequestsConnectionError as ex:
+        raise QueryException(
+            "Unable to connect to Codebeamer\n"
+            f"URL: {url}\n"
+            f"Reason: {ex}\n"
+            "\nPossible actions:\n"
+            "• Check internet connection\n"
+            "• Increase retries using 'num_request_retry'"
+        ) from ex
+
+    except RequestException as ex:
+        raise QueryException(
+            "Unexpected network error while connecting to Codebeamer\n"
+            f"URL: {url}\n"
+            f"Reason: {ex}"
+            "\nPossible actions:\n"
+            "• Check network stability\n"
+        ) from ex
 
     if response.status_code == 200:
         return response.json()
 
-    # Final error handling after all retries
-    raise QueryException(f"Could not fetch {url}.")
+    error_message = _get_response_message(response)
+    reason = _get_http_reason(response)
+
+    raise QueryException(
+        "Codebeamer request failed:\n"
+        f" URL: {url}\n"
+        f" HTTP Status: {response.status_code} ({reason})\n"
+        f"Reason: {error_message}"
+    )
 
 
 def get_single_item(cb_config: Config, item_id: int):
@@ -503,11 +565,6 @@ class CodebeamerTool(MetaDataToolBase):
             print(ex)
         except QueryException as query_ex:
             print(query_ex)
-            print("You can either:")
-            print("* increase the timeout with the timeout parameter")
-            print("* decrease the query size with the query_size parameter")
-            print("* increase the retry count with the parameters (num_request_retry, "
-                  "retry_error_codes)")
         except FileNotFoundError as file_ex:
             self._print_error(f"File '{file_ex.filename}' not found.")
         except IsADirectoryError as isdir_ex:
