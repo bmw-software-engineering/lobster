@@ -30,6 +30,7 @@ from lobster.common.errors import LOBSTER_Error
 from lobster.common.version import LOBSTER_VERSION
 from lobster.htmldoc import htmldoc
 from lobster.common.report import Report
+from lobster.common.io import ensure_output_directory
 from lobster.common.location import (Void_Reference,
                                      File_Reference,
                                      Github_Reference,
