@@ -76,7 +76,7 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
                 asserter = Asserter(self, completed_process, test_runner)
                 asserter.assertNoStdErrText()
                 asserter.assertStdOutText(
-                    f"lobster-trlc: successfully wrote {setup.num_expected_items} "
+                    f"lobster-trlc: wrote {setup.num_expected_items} "
                     f"items to {out_file}\n",
                 )
                 asserter.assertExitCode(0)
@@ -120,7 +120,7 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
         asserter = Asserter(self, completed_process, test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutText(
-            f"lobster-trlc: successfully wrote 4 items to {out_file}\n",
+            f"lobster-trlc: wrote 4 items to {out_file}\n",
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
@@ -170,7 +170,7 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
                 asserter = Asserter(self, completed_process, test_runner)
                 asserter.assertNoStdErrText()
                 asserter.assertStdOutText(
-                    f"lobster-trlc: successfully wrote {setup.num_expected_items} "
+                    f"lobster-trlc: wrote {setup.num_expected_items} "
                     f"items to {out_file}\n",
                 )
                 asserter.assertExitCode(0)

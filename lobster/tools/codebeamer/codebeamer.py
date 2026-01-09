@@ -54,7 +54,7 @@ from urllib3.util.retry import Retry
 from lobster.common.items import Tracing_Tag, Requirement, Implementation, Activity
 from lobster.common.location import Codebeamer_Reference
 from lobster.common.errors import Message_Handler, LOBSTER_Error
-from lobster.common.io import lobster_read, lobster_write
+from lobster.common.io import lobster_read, lobster_write, ensure_output_directory
 from lobster.common.meta_data_tool_base import MetaDataToolBase
 from lobster.tools.codebeamer.bearer_auth import BearerAuth
 from lobster.tools.codebeamer.config import AuthenticationConfig, Config
@@ -657,6 +657,7 @@ class CodebeamerTool(MetaDataToolBase):
 
 def _get_out_stream(config_out: Optional[str]) -> TextIO:
     if config_out:
+        ensure_output_directory(config_out)
         return open(config_out, "w", encoding="UTF-8")
     return sys.stdout
 
@@ -672,6 +673,7 @@ def lobster_codebeamer(config: Config, out_file: str) -> None:
     """
     # This is an API function.
     items = get_query(config, config.import_query)
+    ensure_output_directory(out_file)
     with open(out_file, "w", encoding="UTF-8") as fd:
         _cb_items_to_lobster(items, config, fd)
 

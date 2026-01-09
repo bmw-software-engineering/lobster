@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
-
 import json
 from collections import OrderedDict
 from dataclasses import dataclass
@@ -25,7 +24,7 @@ from lobster.common.level_definition import LevelDefinition
 from lobster.common.items import Tracing_Status, Requirement, Implementation, Activity
 from lobster.common.parser import load as load_config
 from lobster.common.errors import Message_Handler
-from lobster.common.io import lobster_read
+from lobster.common.io import lobster_read, ensure_output_directory
 from lobster.common.location import File_Reference
 
 
@@ -141,6 +140,7 @@ class Report:
             "matrix"    : [],
         }
 
+        ensure_output_directory(filename)
         with open(filename, "w", encoding="UTF-8") as fd:
             json.dump(report, fd, indent=2)
             fd.write("\n")
