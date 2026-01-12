@@ -28,7 +28,7 @@ from argparse import Namespace
 
 from lobster.common.exceptions import LOBSTER_Exception
 from lobster.common.io import lobster_write
-from lobster.common.items import Item, Activity, Tracing_Tag
+from lobster.common.items import Item, Activity, Tracing_Tag, KindTypes
 from lobster.common.location import File_Reference
 from lobster.common.meta_data_tool_base import MetaDataToolBase
 
@@ -57,10 +57,10 @@ def get_valid_files(
     return file_list
 
 
-def write_to_file(options: Namespace, data: Dict[str, Item], kind: str = "itm") -> None:
+def write_to_file(options: Namespace, data: Dict[str, Item], kind: str = KindTypes.ITM.value) -> None:
     with open(options.out, "w", encoding="UTF-8") as file:
         lobster_class = Item
-        if kind == "act":
+        if kind == KindTypes.ACT.value:
             lobster_class = Activity
 
         lobster_write(file, lobster_class, "lobster-pkg", data.values())
@@ -68,7 +68,7 @@ def write_to_file(options: Namespace, data: Dict[str, Item], kind: str = "itm") 
 
 
 def create_raw_entry(
-    data: Dict[str, Item], file_name: str, trace_list: list, kind: str = "itm"
+    data: Dict[str, Item], file_name: str, trace_list: list, kind: str = KindTypes.ITM.value
 ) -> None:
 
     item_list = json.loads(trace_list)
@@ -81,7 +81,7 @@ def create_raw_entry(
 
     tag = Tracing_Tag("pkg", f"{file_name}")
     loc = File_Reference(file_name)
-    if kind == "act":
+    if kind == KindTypes.ACT.value:
         data[tag.key()] = Activity(
             tag=tag, location=loc, framework="lobster-pkg", kind="test"
         )
@@ -102,7 +102,7 @@ def create_raw_entry(
             line = item.get("line")
             tag = Tracing_Tag("pkg", f"{file_name}::{action}::{line}")
             loc = File_Reference(file_name, int(item.get("line")))
-            if kind == "act":
+            if kind == KindTypes.ACT.value:
                 data[tag.key()] = Activity(
                     tag=tag, location=loc, framework="lobster-pkg", kind="test"
                 )
@@ -117,7 +117,7 @@ def create_raw_entry(
 
 
 def create_default_item(file_content, file_name: str,
-                        data: Dict[str, Item], kind: str = "itm") -> None:
+                        data: Dict[str, Item], kind: str = KindTypes.ITM.value) -> None:
     # Only create a default Item entry for packages with
     # the TESTCASE tag
     # Check for TESTCASE tag in INFORMATION/TAGS
@@ -138,7 +138,7 @@ def create_default_item(file_content, file_name: str,
     if is_testcase:
         tag = Tracing_Tag("pkg", f"{file_name}")
         loc = File_Reference(file_name)
-        if kind == "act":
+        if kind == KindTypes.ACT.value:
             data[tag.key()] = Activity(
                 tag=tag,
                 location=loc,
