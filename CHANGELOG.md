@@ -15,8 +15,6 @@
 
     (For installation instructions, see the [Installing](README.md#installing) section
     in the README.)
-  - The `lobster-html-report` tool now supports argument `--disable-policy-image` to disable
-    the tracing policy diagram.
 
   - The `lobster-html-report` tool now supports argument `--disable-policy-image` to disable
     the tracing policy diagram.
