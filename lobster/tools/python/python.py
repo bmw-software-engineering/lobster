@@ -28,7 +28,7 @@ from typing import Optional, Sequence
 from libcst.metadata import PositionProvider
 import libcst as cst
 
-from lobster.common.items import Tracing_Tag, Implementation, Activity
+from lobster.common.items import Tracing_Tag, Implementation, Activity, Item, KindTypes
 from lobster.common.location import File_Reference
 from lobster.common.io import lobster_write
 from lobster.common.meta_data_tool_base import MetaDataToolBase
@@ -134,7 +134,7 @@ class Python_Traceable_Node:
                 "children" : [x.to_json() for x in self.children]}
 
     def to_lobster(self, schema, items):
-        assert schema is Implementation or schema is Activity
+        assert schema is Implementation or schema is Activity or schema is Item
         assert isinstance(items, list)
         assert False
 
@@ -173,7 +173,7 @@ class Python_Module(Python_Traceable_Node):
         super().__init__(location, name, "Module")
 
     def to_lobster(self, schema, items):
-        assert schema is Implementation or schema is Activity
+        assert schema is Implementation or schema is Activity or schema is Item
         assert isinstance(items, list)
         for node in self.children:
             node.to_lobster(schema, items)
@@ -184,7 +184,7 @@ class Python_Class(Python_Traceable_Node):
         super().__init__(location, name, "Class")
 
     def to_lobster(self, schema, items):
-        assert schema is Implementation or schema is Activity
+        assert schema is Implementation or schema is Activity or schema is Item
         assert isinstance(items, list)
         # Classes are dealt with a bit differently. If you add a tag
         # or justification to a class, then children are ignored, and
@@ -247,7 +247,7 @@ class Python_Function(Python_Traceable_Node):
                 self.kind = "Method"
 
     def to_lobster(self, schema, items):
-        assert schema is Implementation or schema is Activity
+        assert schema is Implementation or schema is Activity or schema is Item
         assert isinstance(items, list)
 
         func_name.append(self.fqn())
@@ -258,7 +258,10 @@ class Python_Function(Python_Traceable_Node):
         val = re.split(pattern, tagname)
         name_value = val[0]
 
-        if schema is Implementation:
+        if schema is Item:
+            l_item = Item(tag = Tracing_Tag("itm", tagname),
+                          location = self.location)
+        elif schema is Implementation:
             l_item = Implementation(tag      = Tracing_Tag("python",
                                                            tagname),
                                     location = self.location,
@@ -423,10 +426,13 @@ def process_file(file_name, options):
         visitor = Lobster_Visitor(file_name, options)
         ast.visit(visitor)
 
-        if options["activity"]:
-            visitor.module.to_lobster(Activity, items)
+        if options["kind"] == KindTypes.ITM.value:
+            visitor.module.to_lobster(Item, items)
         else:
-            visitor.module.to_lobster(Implementation, items)
+            if options["activity"]:
+                visitor.module.to_lobster(Activity, items)
+            else:
+                visitor.module.to_lobster(Implementation, items)
 
         if options["exclude_untagged"]:
             items = [item for item in items if item.unresolved_references]
@@ -472,6 +478,14 @@ class PythonTool(MetaDataToolBase):
                         default=False,
                         action="store_true",
                         help="only trace functions with tags")
+        ap.add_argument(
+            "--kind",
+            required=False,
+            choices=[KindTypes.ITM.value, KindTypes.IMP.value],
+            default=KindTypes.ITM.value,
+            help=f"Kind of LOBSTER entries to create: '{KindTypes.ITM.value}' for Item, "
+                 f"'{KindTypes.IMP.value}' for Implementation",
+        )
         grp = ap.add_mutually_exclusive_group()
         grp.add_argument("--parse-decorator",
                          nargs=2,
@@ -503,6 +517,7 @@ class PythonTool(MetaDataToolBase):
             "dec_arg_version"  : None,
             "exclude_untagged" : options.only_tagged_functions,
             "namespace"        : "req",
+            "kind"             : options.kind,
         }
 
         if options.parse_decorator[0] is not None:
@@ -528,11 +543,13 @@ class PythonTool(MetaDataToolBase):
                     ok    &= new_ok
                     items += new_items
 
-        if options.activity:
-            schema = Activity
-        else:
-            schema = Implementation
-
+        schema = Item
+        if options.kind != KindTypes.ITM.value:
+            if options.activity:
+                schema = Activity
+            else:
+                schema = Implementation
+        
         if options.out:
             with open(options.out, "w", encoding="UTF-8") as fd:
                 lobster_write(fd, schema, "lobster_python", items)
