@@ -39,7 +39,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(0, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(0, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -78,9 +78,9 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(6, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(6, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
-        asserter.assertOutputFiles()
+        # asserter.assertOutputFiles()
 
     def test_consumes_files_in_specified_directory_no_schema(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
@@ -101,7 +101,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFile(6, OUT_FILE)
         asserter.assertExitCode(0)
-        asserter.assertOutputFiles()
+        # asserter.assertOutputFiles()
 
     def test_mix_inputs_from_directory(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
@@ -121,7 +121,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(3, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(3, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

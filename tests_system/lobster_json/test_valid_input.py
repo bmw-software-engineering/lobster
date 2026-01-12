@@ -27,8 +27,12 @@ class ValidInputTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
+        version = 3
+        schema = "lobster-act-trace"
         asserter.assertStdOutText(
-            "lobster-json: wrote 2 items to specific_schema.lobster\n"
+            f"Lobster file version {version} containing 'schema' = '{schema}' is deprecated, "
+            f"please migrate to version 5\n"
+            f"lobster-json: wrote 2 items to specific_schema.lobster\n"
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()

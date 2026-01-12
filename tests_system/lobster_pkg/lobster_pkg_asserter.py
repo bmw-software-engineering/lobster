@@ -12,3 +12,10 @@ class LobsterPkgAsserter(Asserter):
         self.assertStdOutText(
             f"Written output for {num_items} items to {out_file}\n"
         )
+    
+    def assertStdOutNumAndFileDeprecated(self, num_items: int, out_file: str, schema: str, version: int):
+        self.assertStdOutText(
+            f"Lobster file version {version} containing 'schema' = '{schema}' is deprecated, "
+            f"please migrate to version 5\n"
+            f"Written output for {num_items} items to {out_file}\n"
+        )

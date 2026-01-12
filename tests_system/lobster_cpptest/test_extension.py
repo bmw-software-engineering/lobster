@@ -41,7 +41,7 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(41, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(41, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -100,7 +100,7 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(40, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(40, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

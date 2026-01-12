@@ -75,7 +75,11 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
                 completed_process = test_runner.run_tool_test()
                 asserter = Asserter(self, completed_process, test_runner)
                 asserter.assertNoStdErrText()
+                lobster_schema = "lobster-req-trace"
+                lobster_version = 4
                 asserter.assertStdOutText(
+                    f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
+                    f"please migrate to version 5\n"
                     f"lobster-trlc: successfully wrote {setup.num_expected_items} "
                     f"items to {out_file}\n",
                 )
@@ -183,7 +187,11 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
         completed_process = test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, test_runner)
         asserter.assertNoStdErrText()
+        lobster_schema = "lobster-req-trace"
+        lobster_version = 4
         asserter.assertStdOutText(
+            f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
+            f"please migrate to version 5\n"
             f"lobster-trlc: successfully wrote 4 items to {out_file}\n",
         )
         asserter.assertExitCode(0)
@@ -275,7 +283,11 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
                 completed_process = test_runner.run_tool_test()
                 asserter = Asserter(self, completed_process, test_runner)
                 asserter.assertNoStdErrText()
+                lobster_schema = "lobster-req-trace"
+                lobster_version = 4
                 asserter.assertStdOutText(
+                    f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
+                    f"please migrate to version 5\n"
                     f"lobster-trlc: successfully wrote {setup.num_expected_items} "
                     f"items to {out_file}\n",
                 )

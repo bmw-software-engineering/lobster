@@ -74,6 +74,8 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
                     out_file=self._test_runner.config_file_data.out,
                     page_size=cfg.page_size,
                     import_query=cfg.import_query,
+                    schema="lobster-req-trace",
+                    version=4,
                 )
                 asserter.assertExitCode(0)
                 asserter.assertOutputFiles()

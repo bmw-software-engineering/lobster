@@ -40,7 +40,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(8, out_file)
+        asserter.assertStdOutNumAndFileDeprecated(8, out_file, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -92,7 +92,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(0, out_file)
+        asserter.assertStdOutNumAndFileDeprecated(0, out_file, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -142,7 +142,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(5, out_file)
+        asserter.assertStdOutNumAndFileDeprecated(5, out_file, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -203,7 +203,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(13, out_file)
+        asserter.assertStdOutNumAndFileDeprecated(13, out_file, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

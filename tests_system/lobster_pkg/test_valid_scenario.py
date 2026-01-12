@@ -30,7 +30,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
 
         asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(1, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -72,7 +72,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
 
         asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(1, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -170,7 +170,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
 
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(2, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(2, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -246,7 +246,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
 
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(1, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -295,7 +295,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
 
         asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(1, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -336,7 +336,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
 
         asserter = LobsterPkgAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(1, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

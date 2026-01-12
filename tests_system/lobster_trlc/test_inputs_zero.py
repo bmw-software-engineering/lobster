@@ -26,8 +26,13 @@ class ZeroInputTest(LobsterTrlcSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"lobster-trlc: successfully wrote 0 items to "
-                                  f"{OUT_FILE}\n")
+        lobster_schema = "lobster-req-trace"
+        lobster_version = 4
+        asserter.assertStdOutText(
+            f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
+            f"please migrate to version 5\n"
+            f"lobster-trlc: successfully wrote 0 items to "
+            f"{OUT_FILE}\n")
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -67,8 +72,13 @@ class ZeroInputTest(LobsterTrlcSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"lobster-trlc: successfully wrote 0 items to "
-                                  f"{OUT_FILE}\n")
+        lobster_schema = "lobster-req-trace"
+        lobster_version = 4
+        asserter.assertStdOutText(
+            f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
+            f"please migrate to version 5\n"
+            f"lobster-trlc: successfully wrote 0 items to "
+            f"{OUT_FILE}\n")
         asserter.assertExitCode(0)
 
     def test_orphan_conversion_rules(self):
