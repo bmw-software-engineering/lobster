@@ -63,7 +63,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
 
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
     def test_complex_tracing_policy_data(self):
         # lobster-trace: UseCases.Correct_Item_Data
@@ -109,7 +109,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
 
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
     def test_multiple_input_files_in_working_directory(self):
         # lobster-trace: html_req.Only_Given_Input_File_Consumed
@@ -159,7 +159,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
 
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
     def test_html_content_with_multiple_status(self):
         # lobster-trace: html_req.Processing_Data_With_Justifications
@@ -207,7 +207,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
 
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
     def test_codebeamer_links(self):
         # lobster-trace: UseCases.Source_location_in_output
@@ -253,7 +253,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
 
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
     def test_message_in_item(self):
         # lobster-trace: UseCases.Correct_Item_Data
@@ -301,7 +301,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
 
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
 
 if __name__ == "__main__":

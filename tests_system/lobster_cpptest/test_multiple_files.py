@@ -47,7 +47,7 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFileDeprecated(22, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
     def test_multiple_files_no_schema(self):
         """
@@ -81,7 +81,7 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFile(22, OUT_FILE)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
     def test_multiple_valid_invalid_files(self):
         """
@@ -115,7 +115,7 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFileDeprecated(33, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
     def test_multiple_valid_invalid_files_no_schema(self):
         """
@@ -149,7 +149,7 @@ class MultipleFilesCpptestTest(LobsterCpptestSystemTestCaseBase):
         asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFile(33, OUT_FILE)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
     def test_no_input_file(self):
         """

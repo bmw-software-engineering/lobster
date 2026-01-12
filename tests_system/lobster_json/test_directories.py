@@ -80,7 +80,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFileDeprecated(6, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
     def test_consumes_files_in_specified_directory_no_schema(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
@@ -101,7 +101,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFile(6, OUT_FILE)
         asserter.assertExitCode(0)
-        # asserter.assertOutputFiles()
+        asserter.assertOutputFiles()
 
     def test_mix_inputs_from_directory(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
