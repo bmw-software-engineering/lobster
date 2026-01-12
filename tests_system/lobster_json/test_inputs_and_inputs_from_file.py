@@ -33,7 +33,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(14, out_file)
+        asserter.assertStdOutNumAndFileDeprecated(14, out_file, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -70,7 +70,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(14, out_file)
+        asserter.assertStdOutNumAndFileDeprecated(14, out_file, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -105,7 +105,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(10, out_file)
+        asserter.assertStdOutNumAndFileDeprecated(10, out_file, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -147,7 +147,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(15, out_file)
+        asserter.assertStdOutNumAndFileDeprecated(15, out_file, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -189,7 +189,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(18, out_file)
+        asserter.assertStdOutNumAndFileDeprecated(18, out_file, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
 
     def test_inputs_from_file_and_input_no_schema(self):

@@ -39,7 +39,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(0, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(0, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -78,7 +78,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(6, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(6, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -121,7 +121,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(3, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(3, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

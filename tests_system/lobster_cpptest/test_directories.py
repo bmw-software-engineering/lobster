@@ -52,7 +52,7 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(101, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(101, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -125,7 +125,7 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(30, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(30, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -195,7 +195,7 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(43, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(43, OUT_FILE, "lobster-act-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

@@ -65,6 +65,8 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         asserter.assertStdOutNumAndFile(
             num_items=len(response_data['items']),
             page_size=1,
+            schema="lobster-req-trace",
+            version=4,
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
@@ -170,6 +172,8 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
             num_items=len(response_data['items']),
             page_size=1,
             out_file=cfg.out,
+            schema="lobster-req-trace",
+            version=4,
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()

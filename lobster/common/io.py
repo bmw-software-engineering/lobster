@@ -54,8 +54,10 @@ def lobster_write(
             "generator" : generator,
             "version"   : version}
     
-    if schema:
+    if version < 5 and schema:
         data["schema"] = schema
+        print(f"Lobster file version {version} containing 'schema' = '{schema}' is deprecated, "
+              f"please migrate to version 5")
 
     json.dump(data, fd, indent=2)
     fd.write("\n")

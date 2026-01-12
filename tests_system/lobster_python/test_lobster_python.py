@@ -39,7 +39,7 @@ class LobsterPythonSystemTest(LobsterPythonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutNumAndFile(1, OUT_FILE)
+        asserter.assertStdOutNumAndFileDeprecated(1, OUT_FILE, "lobster-imp-trace", 3)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
