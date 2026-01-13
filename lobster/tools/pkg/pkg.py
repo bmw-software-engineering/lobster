@@ -40,7 +40,10 @@ TSBLOCK = "TsBlock"
 
 
 def create_raw_entry(
-    data: Dict[str, Item], file_name: str, trace_list: list, kind: str = KindTypes.ITM.value
+    data: Dict[str, Item], 
+    file_name: str, 
+    trace_list: list, 
+    kind: str = KindTypes.ITM.value
 ) -> None:
 
     item_list = json.loads(trace_list)
@@ -121,7 +124,7 @@ def create_default_item(file_content, file_name: str,
             data[tag.key()] = Item(
                 tag=tag,
                 location=loc,
-        )
+           )
 
 
 def xml_parser(file_content, filename):
@@ -288,6 +291,14 @@ class PkgTool(MultiFileInputTool):
             extensions=["pkg", "ta"],
             official=True,
         )
+        self._argument_parser.add_argument(
+            "--kind",
+            required=False,
+            choices=["itm", "act"],
+            default="itm",
+            help="Kind of LOBSTER entries to create: " \
+                 "'itm' for Item, 'act' for Activity",
+        )
 
     def _add_config_argument(self):
         # This tool does not use a config file
@@ -313,8 +324,12 @@ class PkgTool(MultiFileInputTool):
             inputs_from_file=None,
             extensions=self._extensions,
             exclude_patterns=None,
-            schema=Activity,
+            schema=Item,
         )
+
+        if options.kind == KindTypes.ACT.value:
+            config.schema = Activity
+
         file_list = create_worklist(config, options.dir_or_files)
         if not file_list:
             raise ValueError("No input files found to process!")
@@ -342,9 +357,19 @@ class PkgTool(MultiFileInputTool):
                         print(msg)
 
                     if getvalues:
-                        create_raw_entry(data, file.name, json.dumps(getvalues))
+                        create_raw_entry(
+                            data, 
+                            file.name, 
+                            json.dumps(getvalues), 
+                            kind=options.kind
+                        )
                     else:
-                        create_default_activity(file_content, filename, data)
+                        create_default_item(
+                            file_content, 
+                            filename, 
+                            data, 
+                            kind=options.kind
+                        )
 
                 except ET.ParseError as err:
                     print(f"Error parsing XML file '{filename}' : {err}")
@@ -362,13 +387,6 @@ class PkgTool(MultiFileInputTool):
             schema=config.schema,
             out_file=options.out,
             items=items,
-        )
-        self._argument_parser.add_argument(
-            "--kind",
-            required=False,
-            choices=["itm", "act"],
-            default="itm",
-            help="Kind of LOBSTER entries to create: 'itm' for Item, 'act' for Activity",
         )
 
     def _run_impl(self, options: Namespace) -> int:

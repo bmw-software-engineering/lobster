@@ -34,8 +34,10 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+        )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -45,14 +47,18 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         """
         This test checks that the lobster report tool can handle a linear policy
         """
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "linear_policy_no_schema.yaml")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "linear_system_requirements_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "linear_software_requirements_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "code_linear_no_schema.lobster")
+        self._test_runner.declare_input_file(
+            self._data_directory / "linear_policy_no_schema.yaml"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "linear_system_requirements_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "linear_software_requirements_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "code_linear_no_schema.lobster"
+        )
 
         conf_file = "linear_policy_no_schema.yaml"
         out_file = "report_linear_yaml_no_schema.lobster"
@@ -99,8 +105,10 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+        )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -114,18 +122,24 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         which consists of 5 levels: system requirements, software requirements,
         code, unit tests, and component tests.
         """
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_policy_no_schema.yaml")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_system_requirements_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_software_requirements_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_code_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_component_tests_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_unit_tests_no_schema.lobster")
+        self._test_runner.declare_input_file(
+            self._data_directory / "pizza_policy_no_schema.yaml"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "pizza_system_requirements_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "pizza_software_requirements_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "pizza_code_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "pizza_component_tests_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "pizza_unit_tests_no_schema.lobster"
+        )
 
         conf_file = "pizza_policy_no_schema.yaml"
         out_file = "report_pizza_yaml_no_schema.lobster"
@@ -162,8 +176,10 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+        )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

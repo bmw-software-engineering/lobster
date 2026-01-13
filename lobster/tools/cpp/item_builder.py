@@ -27,8 +27,8 @@ class ItemBuilder:
             match: Match,
     ) -> Item:
         """
-        Builds and insert a new Item or Implementation object into the database if it does not
-        already exist.
+        Builds and insert a new Item or Implementation object into the database
+        if it does not already exist.
         Otherwise, it returns the existing Item or Implementation object.
         """
         impl = self.from_match(match)
@@ -44,7 +44,7 @@ class ItemBuilder:
         except ValueError as exc:
             raise ValueError(f"Invalid line number '{line_nr}' "
                              f"in regex group '{match.group(2)}'!") from exc
-        
+
         item = Item(
             tag = self._get_tag(filename, function_name, line_nr),
             location = self._get_location(filename, line_nr),
@@ -58,7 +58,7 @@ class ItemBuilder:
                 kind = kind,
                 name = function_name,
             )
-        
+
         return item
 
     def _get_tag(self, file: str, function_name: str, line_nr: int) -> Tracing_Tag:

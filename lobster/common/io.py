@@ -28,7 +28,12 @@ from lobster.common.items import Requirement, Implementation, Activity, Item
 
 def lobster_write(
         fd: TextIO,
-        kind: Union[Type[Requirement], Type[Implementation], Type[Activity], Type[Item]],
+        kind: Union[
+            Type[Requirement], 
+            Type[Implementation], 
+            Type[Activity], 
+            Type[Item]
+        ],
         generator: str,
         items: Iterable,
 ):
@@ -37,7 +42,7 @@ def lobster_write(
             raise ValueError(
                 f"All elements in 'items' must be of the type {kind.__name__}!",
             )
-        
+
     if kind is Requirement:
         schema  = "lobster-req-trace"
         version = 4
@@ -47,17 +52,18 @@ def lobster_write(
     elif kind is Activity:
         schema  = "lobster-act-trace"
         version = 3
-    else: # kind is Item
+    else:
         schema  = None
         version = 5
 
     data = {"data"      : list(x.to_json() for x in items),
             "generator" : generator,
             "version"   : version}
-    
+
     if version < 5 and schema:
         data["schema"] = schema
-        print(f"Lobster file version {version} containing 'schema' = '{schema}' is deprecated, "
+        print(f"Lobster file version {version} "
+              f"containing 'schema' = '{schema}' is deprecated, "
               f"please migrate to version 5")
 
     json.dump(data, fd, indent=2)
@@ -122,10 +128,12 @@ def lobster_read(
         if data["schema"] not in supported_schema:
             mh.error(loc, "unknown schema kind %s" % data["schema"])
         if data["version"] not in supported_schema[data["schema"]]:
-            mh.error(loc,
-                    "version %u for schema %s is not supported" %
-                    (data["version"], data["schema"]))
-            
+            mh.error(
+                loc,
+                "version %u for schema %s is not supported" %
+                (data["version"], data["schema"])
+            )
+
         lobster_contains_valid_schema = True
 
     if lobster_contains_schema and data["version"] >= 5:

@@ -483,7 +483,8 @@ class PythonTool(MetaDataToolBase):
             required=False,
             choices=[KindTypes.ITM.value, KindTypes.IMP.value],
             default=KindTypes.ITM.value,
-            help=f"Kind of LOBSTER entries to create: '{KindTypes.ITM.value}' for Item, "
+            help=f"Kind of LOBSTER entries to create: "
+                 f"'{KindTypes.ITM.value}' for Item, "
                  f"'{KindTypes.IMP.value}' for Implementation",
         )
         grp = ap.add_mutually_exclusive_group()
@@ -549,7 +550,7 @@ class PythonTool(MetaDataToolBase):
                 schema = Activity
             else:
                 schema = Implementation
-        
+
         if options.out:
             ensure_output_directory(options.out)
             with open(options.out, "w", encoding="UTF-8") as fd:

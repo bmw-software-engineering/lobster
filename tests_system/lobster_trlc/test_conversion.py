@@ -78,9 +78,10 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
                 lobster_schema = "lobster-req-trace"
                 lobster_version = 4
                 asserter.assertStdOutText(
-                    f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
+                    f"Lobster file version {lobster_version} "
+                    f"containing 'schema' = '{lobster_schema}' is deprecated, "
                     f"please migrate to version 5\n"
-                    f"lobster-trlc: successfully wrote {setup.num_expected_items} "
+                    f"lobster-trlc: wrote {setup.num_expected_items} "
                     f"items to {out_file}\n",
                 )
                 asserter.assertExitCode(0)
@@ -190,9 +191,10 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
         lobster_schema = "lobster-req-trace"
         lobster_version = 4
         asserter.assertStdOutText(
-            f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
+            f"Lobster file version {lobster_version} "
+            f"containing 'schema' = '{lobster_schema}' is deprecated, "
             f"please migrate to version 5\n"
-            f"lobster-trlc: successfully wrote 4 items to {out_file}\n",
+            f"lobster-trlc: wrote 4 items to {out_file}\n",
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
@@ -286,9 +288,10 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
                 lobster_schema = "lobster-req-trace"
                 lobster_version = 4
                 asserter.assertStdOutText(
-                    f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
+                    f"Lobster file version {lobster_version} "
+                    f"containing 'schema' = '{lobster_schema}' is deprecated, "
                     f"please migrate to version 5\n"
-                    f"lobster-trlc: successfully wrote {setup.num_expected_items} "
+                    f"lobster-trlc: wrote {setup.num_expected_items} "
                     f"items to {out_file}\n",
                 )
                 asserter.assertExitCode(0)

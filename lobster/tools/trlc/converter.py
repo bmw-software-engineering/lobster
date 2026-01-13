@@ -85,7 +85,8 @@ class Converter:
         if not rule:
             return None
 
-        if (rule.lobster_namespace != KindTypes.REQ.value) and (rule.lobster_namespace != KindTypes.ITM.value):
+        if ((rule.lobster_namespace != KindTypes.REQ.value) and
+            (rule.lobster_namespace != KindTypes.ITM.value)):
             raise NotImplementedError(
                 f"Conversion for namespace '{rule.lobster_namespace}' not implemented."
             )
@@ -109,7 +110,7 @@ class Converter:
         rv = Item(
             tag=item_tag,
             location=item_loc,
-        ) 
+        )
 
         if rule.lobster_namespace == KindTypes.REQ.value:
             item_text = self._get_description(item_wrapper, rule.description_fields)

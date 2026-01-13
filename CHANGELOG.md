@@ -25,6 +25,11 @@
   - Added detailed examples and configuration parameters for `lobster-codebeamer`,
   `lobster-cpptest`, `lobster-report`, `lobster-html_report`, and `lobster-online_report` tools
 
+* LOBSTER report
+  - New yaml configuration file.
+  - Without need to specify level types like requirement, implementation or activity.
+  - All lobster tools will create .lobster files without schema, all elements are items.
+
 ### 1.0.2
  
 * `lobster-trlc`:

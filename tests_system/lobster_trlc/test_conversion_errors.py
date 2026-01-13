@@ -54,7 +54,7 @@ class ConversionRuleErrorTest(LobsterTrlcSystemTestCaseBase):
         print(completed_process.stderr)
         asserter = Asserter(self, completed_process, test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"lobster-trlc: successfully wrote 2 items to "
+        asserter.assertStdOutText(f"lobster-trlc: wrote 2 items to "
                                   f"{OUT_FILE}\n")
         asserter.assertExitCode(0)
 

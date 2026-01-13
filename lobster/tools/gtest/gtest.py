@@ -47,7 +47,8 @@ class GtestTool(MetaDataToolBase):
             required=False,
             choices=[KindTypes.ITM.value, KindTypes.ACT.value],
             default=KindTypes.ITM.value,
-            help=f"Kind of LOBSTER entries to create: '{KindTypes.ITM.value}' for Item, "
+            help=f"Kind of LOBSTER entries to create: "
+                 f"'{KindTypes.ITM.value}' for Item, "
                  f"'{KindTypes.ACT.value}' for Activity, ",
         )
 
@@ -160,7 +161,7 @@ class GtestTool(MetaDataToolBase):
         lobster_kind = Item
         if options.kind == KindTypes.ACT.value:
             lobster_kind = Activity
-        
+
         if options.out:
             ensure_output_directory(options.out)
             with open(options.out, "w", encoding="UTF-8") as fd:

@@ -242,7 +242,7 @@ def create_lobster_items_output_dict_from_test_cases(
                 tag=tag,
                 location=loc
             )
-        
+
         if item_kind != KindTypes.ITM.value:
             item = \
                 Activity(
@@ -284,7 +284,10 @@ def create_lobster_items_output_dict_from_test_cases(
     return lobster_items_output_dict
 
 
-def write_lobster_items_output_dict(lobster_items_output_dict: dict, config: Config) -> None:
+def write_lobster_items_output_dict(
+        lobster_items_output_dict: dict,
+        config: Config
+    ) -> None:
     """
     Write the lobster items to the output.
     If the output file name is empty everything is written to stdout.
@@ -306,7 +309,7 @@ def write_lobster_items_output_dict(lobster_items_output_dict: dict, config: Con
         kind = config.kind
         lobster_kind = Item
         if kind != KindTypes.ITM.value:
-            lobster_kind = Activity 
+            lobster_kind = Activity
 
         ensure_output_directory(output_file_name)
         with open(output_file_name, "w", encoding="UTF-8") as output_file:
