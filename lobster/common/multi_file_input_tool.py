@@ -21,7 +21,7 @@ from abc import ABCMeta
 from typing import Iterable, List, Optional, Type, Union
 from lobster.common.errors import Message_Handler
 from lobster.common.items import Requirement, Implementation, Activity, Item
-from lobster.common.io import lobster_write
+from lobster.common.io import lobster_write, ensure_output_directory
 from lobster.common.meta_data_tool_base import MetaDataToolBase
 from lobster.common.multi_file_input_config import Config
 from lobster.common.file_collector import FileCollector
@@ -132,6 +132,7 @@ class MultiFileInputTool(MetaDataToolBase, metaclass=ABCMeta):
             out_file: str,
             items: List[Union[Activity, Implementation, Requirement]],
     ):
+        ensure_output_directory(out_file)
         with open(out_file, "w", encoding="UTF-8") as fd:
             lobster_write(fd, schema, self.name, items)
         print(f"{self.name}: wrote {len(items)} items to {out_file}")

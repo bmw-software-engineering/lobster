@@ -37,12 +37,12 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         asserter = Asserter(self, completed_process, self._test_runner)
         self.assertEqual(
             "Fetching page 1 of query...\n"
-            "Could not fetch "
+            "Codebeamer request failed:\n"
+            " URL: "
             f"{self._test_runner.config_file_data.root}/api/v3/reports"
-            f"/{cfg.import_query}/items?page=1&pageSize=100.\n"
-            "You can either:\n* increase the timeout with the timeout parameter\n* "
-            "decrease the query size with the query_size parameter\n* increase the "
-            "retry count with the parameters (num_request_retry, retry_error_codes)\n",
+            f"/{cfg.import_query}/items?page=1&pageSize=100\n"
+            " HTTP Status: 429 (TOO MANY REQUESTS)\n"
+            "Reason: Unknown error\n",
             completed_process.stdout,
         )
         asserter.assertExitCode(1)
@@ -161,13 +161,14 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
-        self.assertIn(
-            "Fetching page 1 of query...\nCould not fetch"
-            f" {self._test_runner.config_file_data.root}/api/v3/reports/"
-            f"{cfg.import_query}/items?page=1&pageSize=100.\n"
-            "You can either:\n* increase the timeout with the timeout parameter\n*"
-            " decrease the query size with the query_size parameter\n* increase the "
-            "retry count with the parameters (num_request_retry, retry_error_codes)\n",
+        self.assertEqual(
+            "Fetching page 1 of query...\n"
+            "Codebeamer request failed:\n"
+            " URL: "
+            f"{self._test_runner.config_file_data.root}/api/v3/reports"
+            f"/{cfg.import_query}/items?page=1&pageSize=100\n"
+            " HTTP Status: 429 (TOO MANY REQUESTS)\n"
+            "Reason: Unknown error\n",
             completed_process.stdout,
         )
         self.assertNotIn("Retrying request", completed_process.stdout)

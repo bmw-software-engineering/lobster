@@ -66,7 +66,7 @@ class OutputCorrectnessTest(LobsterTrlcSystemTestCaseBase):
         asserter.assertStdOutText(
             f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
             f"please migrate to version 5\n"
-            f"lobster-trlc: successfully wrote 5 items to "
+            f"lobster-trlc: wrote 5 items to "
             f"output_correctness_test.out.lobster\n",
         )
         asserter.assertExitCode(0)
@@ -122,7 +122,7 @@ class OutputCorrectnessTest(LobsterTrlcSystemTestCaseBase):
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutText(
-            "lobster-trlc: successfully wrote 5 items to "
+            "lobster-trlc: wrote 5 items to "
             "output_correctness_test.out_no_schema.lobster\n",
         )
         asserter.assertExitCode(0)

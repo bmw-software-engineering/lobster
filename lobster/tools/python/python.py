@@ -30,7 +30,7 @@ import libcst as cst
 
 from lobster.common.items import Tracing_Tag, Implementation, Activity, Item, KindTypes
 from lobster.common.location import File_Reference
-from lobster.common.io import lobster_write
+from lobster.common.io import lobster_write, ensure_output_directory
 from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 LOBSTER_TRACE_PREFIX = "# lobster-trace: "
@@ -551,6 +551,7 @@ class PythonTool(MetaDataToolBase):
                 schema = Implementation
         
         if options.out:
+            ensure_output_directory(options.out)
             with open(options.out, "w", encoding="UTF-8") as fd:
                 lobster_write(fd, schema, "lobster_python", items)
             print(f"Written output for {len(items)} items to {options.out}")

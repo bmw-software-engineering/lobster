@@ -119,7 +119,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
             'lobster-trace:12345678\n'
             'WARNING: misplaced lobster-trace in with_misplaced_traces.ta: '
             'lobster-trace:98765432\n'
-            'Written output for 1 items to with_misplaced_traces.lobster\n'
+            'lobster-pkg: wrote 1 items to with_misplaced_traces.lobster\n'
         )
         asserter.assertExitCode(0)
 
@@ -146,7 +146,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
             'lobster-trace: misplaced.req1,misplaced.req2\n'
             'WARNING: misplaced lobster-trace in with_misplaced_traces.pkg: '
             'lobster-trace: misplaced.req3,misplaced.req4\n'
-            'Written output for 1 items to valid_file1.lobster\n'
+            'lobster-pkg: wrote 1 items to valid_file1.lobster\n'
         )
         asserter.assertExitCode(0)
 

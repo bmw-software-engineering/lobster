@@ -140,15 +140,8 @@ class LOBSTER_Trlc(MultiFileInputTool):
         if only_contains_req_namespaces:
             lobster_kind = Requirement 
 
-        with open(options.out, "w", encoding="UTF-8") as fd:
-            # lobster-trace: trlc_req.Output_File
-            lobster_write(
-                fd=fd,
-                kind=lobster_kind,
-                generator="lobster-trlc",
-                items=items,
-            )
-        print(f"lobster-trlc: successfully wrote {len(items)} items to {options.out}")
+        # lobster-trace: trlc_req.Output_File
+        self._write_output(lobster_kind, options.out, items)
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

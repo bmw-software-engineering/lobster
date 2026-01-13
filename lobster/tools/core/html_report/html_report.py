@@ -30,6 +30,7 @@ import markdown
 from lobster.common.version import LOBSTER_VERSION
 from lobster.htmldoc import htmldoc
 from lobster.common.report import Report
+from lobster.common.io import ensure_output_directory
 from lobster.common.location import (Void_Reference,
                                      File_Reference,
                                      Github_Reference,
@@ -287,6 +288,14 @@ def generate_custom_data(report) -> str:
         if value
     ]
     return "".join(content)
+
+
+def write_html_to_file(html_content: str, output_path: str) -> None:
+    """Write HTML content to file, creating parent directories if needed."""
+    ensure_output_directory(output_path)
+    with open(output_path, "w", encoding="UTF-8") as fd:
+        fd.write(html_content)
+        fd.write("\n")
 
 
 def write_html(report, dot, high_contrast, render_md) -> str:
@@ -616,9 +625,7 @@ class HtmlReportTool(MetaDataToolBase):
             high_contrast = options.high_contrast,
             render_md = options.render_md,
         )
-        with open(options.out, "w", encoding="UTF-8") as fd:
-            fd.write(html_content)
-            fd.write("\n")
+        write_html_to_file(html_content, options.out)
         print(f"LOBSTER HTML report written to {options.out}")
 
         return 0
@@ -649,9 +656,7 @@ def lobster_html_report(
         high_contrast=high_contrast,
         render_md=render_md,
     )
-    with open(output_html_path, "w", encoding="UTF-8") as fd:
-        fd.write(html_content)
-        fd.write("\n")
+    write_html_to_file(html_content, output_html_path)
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

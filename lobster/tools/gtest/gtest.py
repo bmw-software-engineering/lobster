@@ -19,13 +19,13 @@
 
 from argparse import Namespace
 import sys
-import os.path
+import os
 from typing import Optional, Sequence
 import xml.etree.ElementTree as ET
 
 from lobster.common.items import Tracing_Tag, Activity, Item, KindTypes
 from lobster.common.location import Void_Reference, File_Reference
-from lobster.common.io import lobster_write
+from lobster.common.io import lobster_write, ensure_output_directory
 from lobster.common.meta_data_tool_base import MetaDataToolBase
 
 
@@ -162,6 +162,7 @@ class GtestTool(MetaDataToolBase):
             lobster_kind = Activity
         
         if options.out:
+            ensure_output_directory(options.out)
             with open(options.out, "w", encoding="UTF-8") as fd:
                 lobster_write(fd, lobster_kind, "lobster_gtest", items)
             print(f"Written output for {len(items)} items to {options.out}")

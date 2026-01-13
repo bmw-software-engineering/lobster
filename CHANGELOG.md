@@ -5,7 +5,25 @@
 
 ### 1.0.3-dev
 
+* All tools now automatically create output directories if they don't exist.
+  Previously, tools would crash with an exception if the specified output
+  directory path did not exist. This enhancement improves usability and
+  prevents unexpected failures when working with nested directory structures.
 
+* `lobster-codebeamer`:
+  - Improved error messages with detailed troubleshooting information:
+    - Connection timeout errors now include the URL and suggest increasing timeout parameter
+    - Connection errors provide actionable steps like checking internet connection and increasing retries
+    - Network errors include clear failure reasons and suggested actions
+    - HTTP response errors now include status code and reason.
+
+* `lobster-python`:
+  - Added system test infrastructure and Bazel targets under `tests_system/lobster_python`.
+
+* API documentation
+  - Created comprehensive API documentation using Sphinx for better user experience across all LOBSTER tools
+  - Added detailed examples and configuration parameters for `lobster-codebeamer`,
+  `lobster-cpptest`, `lobster-report`, `lobster-html_report`, and `lobster-online_report` tools
 
 ### 1.0.2
  
