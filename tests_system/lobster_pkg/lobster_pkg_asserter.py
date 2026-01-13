@@ -17,5 +17,5 @@ class LobsterPkgAsserter(Asserter):
         self.assertStdOutText(
             f"Lobster file version {version} containing 'schema' = '{schema}' is deprecated, "
             f"please migrate to version 5\n"
-            f"Written output for {num_items} items to {out_file}\n"
+            f"lobster-pkg: wrote {num_items} items to {out_file}\n"
         )

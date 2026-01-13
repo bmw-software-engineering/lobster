@@ -28,7 +28,7 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
         asserter.assertStdOutText(
             f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
             f"please migrate to version 5\n"
-            f"lobster-trlc:  wrote 1 items to "
+            f"lobster-trlc: wrote 1 items to "
             f"{OUT_FILE}\n")
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()

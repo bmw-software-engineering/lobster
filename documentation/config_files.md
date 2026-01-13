@@ -67,7 +67,7 @@ Code: !LevelDefinition
   - Requirements
 ```
 
-#### requires
+#### breakdown_requirements and needs_tracing_down
 
 Sometimes you might want alternatives. For example we could have two
 possibly ways to verify a requirement: by proof or by test. If we just
