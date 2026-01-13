@@ -20,7 +20,7 @@ import os
 from abc import ABCMeta
 from typing import Iterable, List, Optional, Type, Union
 from lobster.common.errors import Message_Handler
-from lobster.common.items import Requirement, Implementation, Activity
+from lobster.common.items import Requirement, Implementation, Activity, Item
 from lobster.common.io import lobster_write
 from lobster.common.meta_data_tool_base import MetaDataToolBase
 from lobster.common.multi_file_input_config import Config
@@ -128,7 +128,7 @@ class MultiFileInputTool(MetaDataToolBase, metaclass=ABCMeta):
 
     def _write_output(
             self,
-            schema: Union[Type[Requirement], Type[Implementation], Type[Activity]],
+            schema: Union[Type[Requirement], Type[Implementation], Type[Activity], Type[Item]],
             out_file: str,
             items: List[Union[Activity, Implementation, Requirement]],
     ):

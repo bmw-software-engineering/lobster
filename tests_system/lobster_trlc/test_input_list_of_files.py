@@ -23,6 +23,28 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
+        lobster_schema = "lobster-req-trace"
+        lobster_version = 4
+        asserter.assertStdOutText(
+            f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
+            f"please migrate to version 5\n"
+            f"lobster-trlc: successfully wrote 1 items to "
+            f"{OUT_FILE}\n")
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_input_files_list_no_schema(self):
+        # lobster-trace: trlc_req.Input_List_Of_Files
+        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
+        self._test_runner.config_file_data.conversion_rules = [
+            self.NAMASTE_CONVERSION_RULE_NO_SCHEMA,
+        ]
+        OUT_FILE = "input_files_list_no_schema.lobster"
+        self._test_runner.cmd_args.out = OUT_FILE
+        self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
         asserter.assertStdOutText(f"lobster-trlc: successfully wrote 1 items to "
                                   f"{OUT_FILE}\n")
         asserter.assertExitCode(0)
@@ -70,6 +92,38 @@ class CmdArgsInputTest(LobsterTrlcSystemTestCaseBase):
             self.NAMASTE_CONVERSION_RULE,
         ]
         OUT_FILE = "input_files_list.lobster"
+        test_runner.cmd_args.out = OUT_FILE
+        test_runner.declare_output_file(self._data_directory / OUT_FILE)
+        completed_process = test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, test_runner)
+        asserter.assertNoStdErrText()
+        lobster_schema = "lobster-req-trace"
+        lobster_version = 4
+        asserter.assertStdOutText(
+            f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
+            f"please migrate to version 5\n"
+            f"lobster-trlc: successfully wrote 1 items to "
+            f"{OUT_FILE}\n")
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_input_files_list_no_schema(self):
+        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
+        """Test that input files can be specified as command line arguments"""
+        test_runner = self.create_test_runner()
+
+        test_runner.cmd_args.dir_or_files = [
+            "default_file.rsl",
+            "default_file.trlc",
+        ]
+
+        for file in test_runner.cmd_args.dir_or_files:
+            test_runner.copy_file_to_working_directory(self._data_directory / file)
+
+        test_runner.config_file_data.conversion_rules = [
+            self.NAMASTE_CONVERSION_RULE_NO_SCHEMA,
+        ]
+        OUT_FILE = "input_files_list_no_schema.lobster"
         test_runner.cmd_args.out = OUT_FILE
         test_runner.declare_output_file(self._data_directory / OUT_FILE)
         completed_process = test_runner.run_tool_test()

@@ -51,6 +51,13 @@ command line might look like:
 $ lobster_gtest . --out gtests.lobster
 ```
 
+Per default lobster-gtest will generate a .lobster file with version 5 without schema `lobster-imp-trace`.
+To generate a version 3 with schema `lobster-imp-trace` add the command line argument `kind`,
+
+```sh
+$ lobster_gtest --kind="imp" ...
+```
+
 ## Example
 
 The LOBSTER testsuite contains a working example:

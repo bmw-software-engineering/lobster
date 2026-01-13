@@ -30,19 +30,18 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
                                   "to earlier errors.\n")
         asserter.assertExitCode(1)
 
-    def test_invalid_json_yaml(self):
+    def test_invalid_json_yaml_no_schema(self):
         # lobster-trace: core_report_req.Invalid_JSON_File
         self._test_runner.declare_input_file(self._data_directory /
-                                             "invalid_json.yaml")
+                                             "invalid_json_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "trlc_invalid_json.lobster")
+                                             "trlc_invalid_json_no_schema.lobster")
 
-        self._test_runner.cmd_args.lobster_config = "invalid_json.yaml"
-
+        self._test_runner.cmd_args.lobster_config = "invalid_json_no_schema.yaml"
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText("trlc_invalid_json.lobster:6:2: "
+        asserter.assertStdOutText("trlc_invalid_json_no_schema.lobster:5:2: "
                                   "lobster error: Extra data\n\n"
                                   "lobster-report: aborting due "
                                   "to earlier errors.\n")
@@ -116,14 +115,14 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         )
         asserter.assertExitCode(1)
 
-    def test_lobster_exception_dump_yaml(self):
+    def test_lobster_exception_dump_yaml_no_schema(self):
         # lobster-trace: core_report_req.Lobster_Exception_Dump_Invalid_Input
         self._test_runner.declare_input_file(self._data_directory /
-                                             "invalid_input.yaml")
+                                             "invalid_input_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "python_invalid_input.lobster")
+                                             "python_invalid_input_no_schema.lobster")
 
-        self._test_runner.cmd_args.lobster_config = "invalid_input.yaml"
+        self._test_runner.cmd_args.lobster_config = "invalid_input_no_schema.yaml"
 
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
@@ -157,19 +156,19 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
                                   "to earlier errors.\n")
         asserter.assertExitCode(1)
 
-    def test_invalid_json_not_dict_yaml(self):
+    def test_invalid_json_not_dict_yaml_no_schema(self):
         # lobster-trace: core_report_req.Invalid_JSON_Not_Dict
         self._test_runner.declare_input_file(self._data_directory /
-                                             "json_not_dict.yaml")
+                                             "json_not_dict_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "trlc_json_not_dict.lobster")
+                                             "trlc_json_not_dict_no_schema.lobster")
 
-        self._test_runner.cmd_args.lobster_config = "json_not_dict.yaml"
+        self._test_runner.cmd_args.lobster_config = "json_not_dict_no_schema.yaml"
 
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText("trlc_json_not_dict.lobster: "
+        asserter.assertStdOutText("trlc_json_not_dict_no_schema.lobster: "
                                   "lobster error: parsed json is not an object\n\n"
                                   "lobster-report: aborting due "
                                   "to earlier errors.\n")

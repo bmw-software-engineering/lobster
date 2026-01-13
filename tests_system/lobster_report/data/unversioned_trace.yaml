@@ -1,4 +1,0 @@
-Code: !LevelDefinition
-  name: Code
-  source:
-  - file: python_unversioned_trace_dest.lobster

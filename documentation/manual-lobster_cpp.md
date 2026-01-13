@@ -9,3 +9,10 @@ for example:
 
 Here the error `clang-diagnostic-error` will be ignored.
 You can also specify a list of errors to ignore.
+
+Per default lobster-cpp will generate a .lobster file with version 5 without schema `lobster-imp-trace`.
+To generate a version 3 with schema `lobster-imp-trace` add the command line argument `kind`,
+for example:
+```bash
+> lobster-cpp --kind="imp" ...
+```

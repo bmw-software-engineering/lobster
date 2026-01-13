@@ -1,0 +1,26 @@
+usecases: !LevelDefinition
+  name: usecases
+  source:
+  - file: just_usecases_no_schema.lobster
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - System Requirements
+
+System Requirements: !LevelDefinition
+  name: System Requirements
+  source:
+  - file: just_system_requirements_no_schema.lobster
+  needs_tracing_up: true
+  traces:
+  - usecases
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Software Requirements
+
+Software Requirements: !LevelDefinition
+  name: Software Requirements
+  source:
+  - file: just_software_requirements_no_schema.lobster
+  needs_tracing_up: true
+  traces:
+  - System Requirements

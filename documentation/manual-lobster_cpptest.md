@@ -78,16 +78,22 @@ The regex used for each test-tag is as follows:
 ## Preparing cpptest YAML config-file
 
 You have to provide a YAML configuration file that defines the settings to be applied by the tool.
-The tool supports exactly four configuration attributes:
-`output_file`, `codebeamer_url`, `kind`, and `files`.
+The tool supports three configuration attributes:
+`output_file`, `codebeamer_url` and `files`.
 
 This file must include the `codebeamer_url`. All other attributes are optional.
 
 ```cpptest-config.yaml
 output_file: "unit_tests.lobster"
-kind: "req"
 
 codebeamer_url: "https://codebeamer.example.com/cb"
+ ```
+
+Per default lobster-cpptest will generate a .lobster file with version 5 without schema `lobster-act-trace`.
+To generate a version 3 with schema `lobster-act-trace` add the optional configuration attribute `kind`,
+
+```cpptest-config.yaml
+kind: "req"
  ```
 
 * Note: Orphan tests, will be always written into the output_file.

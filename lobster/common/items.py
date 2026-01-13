@@ -25,6 +25,13 @@ from typing import Optional
 from lobster.common.location import Location
 
 
+class KindTypes(str, Enum):
+    REQ = "req"
+    ACT = "act"
+    IMP = "imp"
+    ITM = "itm"
+
+
 class Tracing_Tag:
     def __init__(
             self,

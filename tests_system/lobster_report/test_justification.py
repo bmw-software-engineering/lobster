@@ -43,7 +43,7 @@ class ReportJustificationTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_justification_and_coverage_yaml(self):
+    def test_justification_and_coverage_yaml_no_schema(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: UseCases.Coverage_calculation_in_Output
         # lobster-trace: core_report_req.Status_Justified_Global
@@ -54,16 +54,16 @@ class ReportJustificationTest(LobsterReportSystemTestCaseBase):
         and coverage changes according to justifications and generate lobster report.
         """
         self._test_runner.declare_input_file(self._data_directory /
-                                             "just_policy.yaml")
+                                             "just_policy_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "just_usecases.lobster")
+                                             "just_usecases_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "just_system_requirements.lobster")
+                                             "just_system_requirements_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "just_software_requirements.lobster")
+                                             "just_software_requirements_no_schema.lobster")
 
-        conf_file = "just_policy.yaml"
-        out_file = "just_report_yaml.lobster"
+        conf_file = "just_policy_no_schema.yaml"
+        out_file = "just_report_yaml_no_schema.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)

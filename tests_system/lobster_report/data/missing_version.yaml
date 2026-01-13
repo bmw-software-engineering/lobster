@@ -1,4 +1,0 @@
-Requirements: !LevelDefinition
-  name: Requirements
-  source:
-  - file: trlc_missing_version.lobster

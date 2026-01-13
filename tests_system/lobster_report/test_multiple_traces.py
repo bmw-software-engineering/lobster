@@ -42,7 +42,7 @@ class ReportMultipleTracesTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
-    def test_multiple_traces_justification_yaml(self):
+    def test_multiple_traces_justification_yaml_no_schema(self):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
         # lobster-trace: core_report_req.Multiple_Traces_Support
@@ -52,16 +52,16 @@ class ReportMultipleTracesTest(LobsterReportSystemTestCaseBase):
          with justifications in code as well as tests
         """
         self._test_runner.declare_input_file(self._data_directory /
-                                             "multiple_traces_just.yaml")
+                                             "multiple_traces_just_no_schema.yaml")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "just_requirements.lobster")
+                                             "just_requirements_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "multiple_traces_code.lobster")
+                                             "multiple_traces_code_no_schema.lobster")
         self._test_runner.declare_input_file(self._data_directory /
-                                             "multiple_traces_test.lobster")
+                                             "multiple_traces_test_no_schema.lobster")
 
-        conf_file = "multiple_traces_just.yaml"
-        out_file = "report_multiple_traces_just_yaml.lobster"
+        conf_file = "multiple_traces_just_no_schema.yaml"
+        out_file = "report_multiple_traces_just_yaml_no_schema.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
