@@ -29,9 +29,9 @@ from lobster.common.items import Requirement, Implementation, Activity, Item
 def lobster_write(
         fd: TextIO,
         kind: Union[
-            Type[Requirement], 
-            Type[Implementation], 
-            Type[Activity], 
+            Type[Requirement],
+            Type[Implementation],
+            Type[Activity],
             Type[Item]
         ],
         generator: str,

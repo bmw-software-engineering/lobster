@@ -31,8 +31,10 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+        )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

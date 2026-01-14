@@ -24,7 +24,6 @@ class ValidCasesPython(LobsterPythonSystemTestCaseBase):
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.cmd_args.kind = "imp"
 
-
         self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
 
         completed_process = self._test_runner.run_tool_test()

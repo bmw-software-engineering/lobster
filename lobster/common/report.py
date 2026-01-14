@@ -103,7 +103,7 @@ class Report:
         try:
             full_path_name = Path(filename).resolve()
             yamale_data_filename = Path(
-                full_path_name.parent, 
+                full_path_name.parent,
                 f"yamale_{full_path_name.name}"
             )
 

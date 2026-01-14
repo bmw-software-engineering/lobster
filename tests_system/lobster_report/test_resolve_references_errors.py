@@ -102,7 +102,8 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
             "report_unversioned_trace_dest_yaml_no_schema.lobster"
         )
         self._test_runner.declare_output_file(
-            self._data_directory / "report_unversioned_trace_dest_yaml_no_schema.lobster"
+            self._data_directory /
+            "report_unversioned_trace_dest_yaml_no_schema.lobster"
         )
 
         result = self._test_runner.run_tool_test()
@@ -154,7 +155,8 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
             "report_ver_mismatch_trace_dest_yaml_no_schema.lobster"
         )
         self._test_runner.declare_output_file(
-            self._data_directory / "report_ver_mismatch_trace_dest_yaml_no_schema.lobster"
+            self._data_directory /
+            "report_ver_mismatch_trace_dest_yaml_no_schema.lobster"
         )
 
         result = self._test_runner.run_tool_test()

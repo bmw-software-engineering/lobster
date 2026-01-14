@@ -270,5 +270,6 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
             'lobster-cpptest: "[\'.\']" does not contain any test file.\n')
         asserter.assertExitCode(1)
 
+
 if __name__ == "__main__":
     unittest.main()

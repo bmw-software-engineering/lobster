@@ -286,8 +286,7 @@ def create_lobster_items_output_dict_from_test_cases(
 
 def write_lobster_items_output_dict(
         lobster_items_output_dict: dict,
-        config: Config
-    ) -> None:
+        config: Config) -> None:
     """
     Write the lobster items to the output.
     If the output file name is empty everything is written to stdout.

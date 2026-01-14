@@ -129,9 +129,9 @@ class MultiFileInputTool(MetaDataToolBase, metaclass=ABCMeta):
     def _write_output(
         self,
         schema: Union[
-            Type[Requirement], 
-            Type[Implementation], 
-            Type[Activity], 
+            Type[Requirement],
+            Type[Implementation],
+            Type[Activity],
             Type[Item]
         ],
         out_file: str,
