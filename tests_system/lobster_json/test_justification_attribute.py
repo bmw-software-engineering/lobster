@@ -16,7 +16,7 @@ class JsonJustificationAttributeTest(LobsterJsonSystemTestCaseBase):
             self._data_directory / "justification_attribute_given.json")
 
         self._test_runner.config_file_data.justification_attribute = "Justification"
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         out_file = "justification_attribute_given.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -49,7 +49,7 @@ class JsonJustificationAttributeTest(LobsterJsonSystemTestCaseBase):
             self._data_directory / "justification_attribute_given.json")
 
         self._test_runner.config_file_data.justification_attribute = "missingkey"
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
 
         out_file = "justification_attribute_irrelavent.lobster"
         self._test_runner.cmd_args.out = out_file
@@ -83,7 +83,7 @@ class JsonJustificationAttributeTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.declare_input_file(
             self._data_directory / "justification_attribute_given.json")
 
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         out_file = "justification_attribute_not_given.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)

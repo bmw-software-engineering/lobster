@@ -18,7 +18,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         Tests the processing of input files specified in a configuration file
         using the 'inputs' parameter.
         """
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         self._test_runner.config_file_data.inputs = [
             "basic.json",
             "multi1.json",
@@ -81,7 +81,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         """
         out_file = "empty.lobster"
         self._test_runner.cmd_args.out = out_file
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         self._test_runner.config_file_data.inputs.append("one")
         self._test_runner.declare_output_file(self._data_directory / out_file)
 
@@ -124,7 +124,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         """
         out_file = "valid_dir.lobster"
         self._test_runner.cmd_args.out = out_file
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
 
         self._test_runner.declare_output_file(self._data_directory / out_file)
         self._test_runner.declare_inputs_from_file(
@@ -183,7 +183,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         """
         out_file = "both_inputs_with_extra_files.lobster"
         self._test_runner.cmd_args.out = out_file
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
 
         self._test_runner.declare_output_file(self._data_directory / out_file)
         self._test_runner.declare_input_file(self._data_directory / "basic.json")

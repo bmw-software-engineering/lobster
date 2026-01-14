@@ -34,7 +34,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         empty_dir_path = self._data_directory / empty_dir_name
         self._test_runner.config_file_data.inputs.append(str(empty_dir_path))
         self._test_runner.config_file_data.tag_attribute = "directory_test"
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
@@ -67,7 +67,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.config_file_data.tag_attribute = "tags"
         self._test_runner.config_file_data.name_attribute = "name"
         self._test_runner.config_file_data.inputs.append("valid_directory")
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
 
         source_dir = self._data_directory / "valid_directory"
         dest_dir = self._test_runner.working_dir / "valid_directory"
@@ -110,7 +110,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.config_file_data.tag_attribute = "tags"
         self._test_runner.config_file_data.name_attribute = "name"
         self._test_runner.config_file_data.inputs.append("input_dir_mix")
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
 
         source_dir = self._data_directory / "input_dir_mix"
         dest_dir = self._test_runner.working_dir / "input_dir_mix"

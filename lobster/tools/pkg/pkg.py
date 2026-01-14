@@ -28,7 +28,6 @@ from argparse import Namespace
 from lobster.common.multi_file_input_config import Config
 from lobster.common.multi_file_input_tool import create_worklist, MultiFileInputTool
 from lobster.common.exceptions import LOBSTER_Exception
-from lobster.common.io import lobster_write
 from lobster.common.items import Item, Activity, Tracing_Tag, KindTypes
 from lobster.common.location import File_Reference
 
@@ -40,10 +39,10 @@ TSBLOCK = "TsBlock"
 
 
 def create_raw_entry(
-    data: Dict[str, Item],
-    file_name: str,
-    trace_list: list,
-    kind: str = KindTypes.ITM.value) -> None:
+        data: Dict[str, Item],
+        file_name: str,
+        trace_list: list,
+        kind: str = KindTypes.ITM.value) -> None:
 
     item_list = json.loads(trace_list)
     # Collect all traces marked as "first"

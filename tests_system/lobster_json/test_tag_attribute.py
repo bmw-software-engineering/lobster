@@ -13,7 +13,7 @@ class JsonTagAttributeTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.declare_input_file(
             self._data_directory / "tag_attribute_given.json")
         self._test_runner.config_file_data.tag_attribute = "Requirements"
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         out_file = "tag_attribute_requirements.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -44,7 +44,7 @@ class JsonTagAttributeTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.declare_input_file(
             self._data_directory / "tag_attribute_given_key_missing.json")
         self._test_runner.config_file_data.tag_attribute = "missingkey"
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         out_file = "tag_attribute_irrelavent.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)

@@ -17,12 +17,12 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 import json
+from collections import OrderedDict
+from dataclasses import dataclass
+from pathlib import Path
+
 import yaml
 import yamale
-
-from collections import OrderedDict
-from dataclasses import dataclass, asdict
-from pathlib import Path
 
 from lobster.common.level_definition import LevelDefinition
 from lobster.common.items import (
@@ -121,8 +121,8 @@ class Report:
             yamale_schema_filename = Path(Path(__file__).parent, YAMALE_SCHEMA_FILENAME)
             schema = yamale.make_schema(yamale_schema_filename)
             data = yamale.make_data(yamale_data_filename)
-            validation_result = yamale.validate(schema, data)
-        except Exception as e:
+            yamale.validate(schema, data)
+        except (ValueError, FileNotFoundError, yamale.YamaleError) as e:
             self.mh.error(loc, f"Failed to validate yaml config file: {e}")
 
     def load_config_from_yaml_file(self, filename):
@@ -140,7 +140,7 @@ class Report:
 
             with open(filename, 'r', encoding="UTF-8") as f:
                 self.config = yaml.load(f, Loader=YamlConfigLoader)
-        except Exception as e:
+        except (ValueError, FileNotFoundError, yamale.YamaleError) as e:
             self.mh.error(loc, f"Failed to load yaml config file: {e}")
 
     def print_deprecated_warning(self, filename):

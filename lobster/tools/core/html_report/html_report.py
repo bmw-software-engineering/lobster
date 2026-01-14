@@ -80,7 +80,8 @@ def xref_item(item, link=True, brief=False):
     elif isinstance(item, Activity):
         rv = html.escape(item.framework + " " +
                          item.kind.capitalize())
-    elif isinstance(item, Item):
+    else:
+        assert isinstance(item, Item)
         rv = html.escape("Item")
     if not brief:
         rv += " "

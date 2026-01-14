@@ -17,7 +17,7 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         # lobster-trace: json_req.Name_Attribute_Given
         self._test_runner.declare_input_file(self._data_directory / "basic.json")
         self._test_runner.config_file_data.name_attribute = "name"
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         out_file = "basic-with-name.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -85,7 +85,7 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         out_file = "basic-without-name.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
@@ -120,7 +120,7 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         out_file = "basic-without-name-nested.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
