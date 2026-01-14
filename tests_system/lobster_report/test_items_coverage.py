@@ -30,8 +30,10 @@ class ReportItemsCoverageTest(LobsterReportSystemTestCaseBase):
 
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+        )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -81,8 +83,10 @@ class ReportItemsCoverageTest(LobsterReportSystemTestCaseBase):
 
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+        )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -90,15 +94,20 @@ class ReportItemsCoverageTest(LobsterReportSystemTestCaseBase):
         # lobster-trace: UseCases.Tracing_Policy_Output_File
         # lobster-trace: UseCases.Coverage_calculation_in_Output
         # lobster-trace: core_report_req.Message_Trace_Coverage
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "message_trace_coverage_no_schema.yaml")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "python_message_trace_coverage_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "trlc_message_trace_coverage_no_schema.lobster")
+        self._test_runner.declare_input_file(
+            self._data_directory / "message_trace_coverage_no_schema.yaml"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "python_message_trace_coverage_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "trlc_message_trace_coverage_no_schema.lobster"
+        )
 
         out_file = "report_message_trace_coverage_yaml_no_schema.lobster"
-        self._test_runner.cmd_args.lobster_config = "message_trace_coverage_no_schema.yaml"
+        self._test_runner.cmd_args.lobster_config = (
+            "message_trace_coverage_no_schema.yaml"
+        )
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
 

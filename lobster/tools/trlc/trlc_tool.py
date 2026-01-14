@@ -138,7 +138,7 @@ class LOBSTER_Trlc(MultiFileInputTool):
                 only_contains_req_namespaces = False
 
         if only_contains_req_namespaces:
-            lobster_kind = Requirement 
+            lobster_kind = Requirement
 
         # lobster-trace: trlc_req.Output_File
         self._write_output(lobster_kind, options.out, items)

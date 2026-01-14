@@ -25,7 +25,9 @@ from dataclasses import dataclass, asdict
 from pathlib import Path
 
 from lobster.common.level_definition import LevelDefinition
-from lobster.common.items import Tracing_Status, Requirement, Implementation, Activity, Item
+from lobster.common.items import (
+    Tracing_Status, Requirement, Implementation, Activity, Item
+)
 from lobster.common.parser import load as load_config
 from lobster.common.errors import Message_Handler
 from lobster.common.io import lobster_read, ensure_output_directory
@@ -34,12 +36,15 @@ from lobster.common.location import File_Reference
 LEVEL_DEFINITION_TAG = '!LevelDefinition'
 YAMALE_SCHEMA_FILENAME = 'tracing_policy_schema.yamale'
 
+
 class YamlConfigLoader(yaml.SafeLoader):
     pass
+
 
 def level_definition_constructor(loader, node):
     values = loader.construct_mapping(node, deep=True)
     return LevelDefinition(**values)
+
 
 def ordered_dict_constructor(loader, node):
     loader.flatten_mapping(node)
@@ -97,7 +102,10 @@ class Report:
 
         try:
             full_path_name = Path(filename).resolve()
-            yamale_data_filename = Path(full_path_name.parent, f"yamale_{full_path_name.name}")
+            yamale_data_filename = Path(
+                full_path_name.parent, 
+                f"yamale_{full_path_name.name}"
+            )
 
             # Read the file and remove '!LevelDefinition'
             with open(filename, "r", encoding="UTF-8") as yaml_file:

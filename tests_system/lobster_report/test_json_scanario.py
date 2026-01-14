@@ -22,12 +22,14 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n"
-                                  "trlc_invalid_json.lobster:6:2: "
-                                  "lobster error: Extra data\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+            f"trlc_invalid_json.lobster:6:2: "
+            f"lobster error: Extra data\n\n"
+            f"lobster-report: aborting due "
+            f"to earlier errors.\n"
+        )
         asserter.assertExitCode(1)
 
     def test_invalid_json_yaml_no_schema(self):
@@ -69,7 +71,8 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutText(
-            "non_existent_input.yaml: lobster error: Failed to validate yaml config file: "
+            "non_existent_input.yaml: lobster error: "
+            "Failed to validate yaml config file: "
             "[Errno 2] No such file or directory: 'non_existent_input.yaml'\n"
             "\n"
             "lobster-report: aborting due to earlier errors.\n"
@@ -148,12 +151,14 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n"
-                                  "trlc_json_not_dict.lobster: "
-                                  "lobster error: parsed json is not an object\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+            f"trlc_json_not_dict.lobster: "
+            f"lobster error: parsed json is not an object\n\n"
+            f"lobster-report: aborting due "
+            f"to earlier errors.\n"
+        )
         asserter.assertExitCode(1)
 
     def test_invalid_json_not_dict_yaml_no_schema(self):

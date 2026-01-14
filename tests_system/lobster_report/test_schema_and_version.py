@@ -23,13 +23,15 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n"
-                                  "python_invalid_schema.lobster: "
-                                  "lobster error: unknown schema kind "
-                                  "invalid-schema-name\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+            f"python_invalid_schema.lobster: "
+            f"lobster error: unknown schema kind "
+            f"invalid-schema-name\n\n"
+            f"lobster-report: aborting due "
+            f"to earlier errors.\n"
+        )
         asserter.assertExitCode(1)
 
     def test_invalid_schema_yaml(self):
@@ -66,13 +68,15 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n"
-                                  "trlc_missing_schema.lobster: "
-                                  "lobster error: required top-levelkey "
-                                  "schema not present\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+            f"trlc_missing_schema.lobster: "
+            f"lobster error: required top-levelkey "
+            f"schema not present\n\n"
+            f"lobster-report: aborting due "
+            f"to earlier errors.\n"
+        )
         asserter.assertExitCode(1)
 
     def test_missing_schema_yaml(self):
@@ -108,13 +112,15 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n"
-                                  "python_invalid_version.lobster: "
-                                  "lobster error: version 99 for schema "
-                                  "lobster-req-trace is not supported\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+            f"python_invalid_version.lobster: "
+            f"lobster error: version 99 for schema "
+            f"lobster-req-trace is not supported\n\n"
+            f"lobster-report: aborting due "
+            f"to earlier errors.\n"
+        )
         asserter.assertExitCode(1)
 
     def test_invalid_version_yaml(self):
@@ -151,13 +157,15 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n"
-                                  "trlc_missing_version.lobster: "
-                                  "lobster error: required top-levelkey "
-                                  "version not present\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+            f"trlc_missing_version.lobster: "
+            f"lobster error: required top-levelkey "
+            f"version not present\n\n"
+            f"lobster-report: aborting due "
+            f"to earlier errors.\n"
+        )
         asserter.assertExitCode(1)
 
     def test_missing_version_yaml_no_schema(self):

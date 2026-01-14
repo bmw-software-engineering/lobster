@@ -93,7 +93,8 @@ class CppTool(MultiFileInputTool):
             required=False,
             choices=[KindTypes.ITM.value, KindTypes.IMP.value],
             default=KindTypes.ITM.value,
-            help=f"Kind of LOBSTER entries to create: '{KindTypes.ITM.value}' for Item, "
+            help=f"Kind of LOBSTER entries to create: "
+                 f"'{KindTypes.ITM.value}' for Item, "
                  f"'{KindTypes.IMP.value}' for Implementation",
         )
 
@@ -112,7 +113,7 @@ class CppTool(MultiFileInputTool):
 
         if options.kind == KindTypes.IMP.value:
             config.schema = Implementation
-        
+
         file_list = create_worklist(config, options.dir_or_files)
         clang_tidy_path = os.path.expanduser(options.clang_tidy)
 

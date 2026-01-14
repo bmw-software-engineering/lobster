@@ -235,7 +235,7 @@ class Item(metaclass=ABCMeta):
             rv["tracing_status"] = self.tracing_status.name
 
         return rv
-    
+
     @classmethod
     def from_json(cls, level, data, schema_version):
         assert isinstance(level, str)

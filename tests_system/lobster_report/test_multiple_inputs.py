@@ -43,8 +43,10 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+        )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -139,7 +141,10 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertStdErrText("")
-        asserter.assertStdOutText("[Errno 2] No such file or directory: 'multiple_traces_test_no_schema.lobster'\n")
+        asserter.assertStdOutText(
+            "[Errno 2] No such file or directory: "
+            "'multiple_traces_test_no_schema.lobster'\n"
+        )
         asserter.assertExitCode(1)
 
     def test_multiple_source_files(self):
@@ -176,8 +181,10 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText(f"{conf_file}: lobster warning: configuration file format '.conf' "
-                                  "is deprecated, please migrate to '.yaml' format\n")
+        asserter.assertStdOutText(
+            f"{conf_file}: lobster warning: configuration file format '.conf' "
+            f"is deprecated, please migrate to '.yaml' format\n"
+        )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -191,20 +198,27 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         given at different levels of tracing policy.
         The tool should isolate item data of items and do not mix it.
         """
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "octopus_policy_no_schema.yaml")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "octopus_system_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "octopus_software_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "tentacle_commander_code_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "tentacle_toolkit_code_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "tentacle_commander_test_no_schema.lobster")
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "tentacle_toolkit_test_no_schema.lobster")
+        self._test_runner.declare_input_file(
+            self._data_directory / "octopus_policy_no_schema.yaml"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "octopus_system_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "octopus_software_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "tentacle_commander_code_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "tentacle_toolkit_code_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "tentacle_commander_test_no_schema.lobster"
+        )
+        self._test_runner.declare_input_file(
+            self._data_directory / "tentacle_toolkit_test_no_schema.lobster"
+        )
 
         conf_file = "octopus_policy_no_schema.yaml"
         out_file = "report_octopus_yaml_no_schema.lobster"

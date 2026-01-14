@@ -40,7 +40,10 @@ TSBLOCK = "TsBlock"
 
 
 def create_raw_entry(
-    data: Dict[str, Item], file_name: str, trace_list: list, kind: str = KindTypes.ITM.value
+    data: Dict[str, Item], 
+    file_name: str, 
+    trace_list: list, 
+    kind: str = KindTypes.ITM.value
 ) -> None:
 
     item_list = json.loads(trace_list)
@@ -121,7 +124,7 @@ def create_default_item(file_content, file_name: str,
             data[tag.key()] = Item(
                 tag=tag,
                 location=loc,
-        )
+           )
 
 
 def xml_parser(file_content, filename):
@@ -293,7 +296,8 @@ class PkgTool(MultiFileInputTool):
             required=False,
             choices=["itm", "act"],
             default="itm",
-            help="Kind of LOBSTER entries to create: 'itm' for Item, 'act' for Activity",
+            help="Kind of LOBSTER entries to create: " \
+                 "'itm' for Item, 'act' for Activity",
         )
 
     def _add_config_argument(self):
@@ -353,9 +357,19 @@ class PkgTool(MultiFileInputTool):
                         print(msg)
 
                     if getvalues:
-                        create_raw_entry(data, file.name, json.dumps(getvalues), kind=options.kind)
+                        create_raw_entry(
+                            data, 
+                            file.name, 
+                            json.dumps(getvalues), 
+                            kind=options.kind
+                        )
                     else:
-                        create_default_item(file_content, filename, data, kind=options.kind)
+                        create_default_item(
+                            file_content, 
+                            filename, 
+                            data, 
+                            kind=options.kind
+                        )
 
                 except ET.ParseError as err:
                     print(f"Error parsing XML file '{filename}' : {err}")

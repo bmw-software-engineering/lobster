@@ -27,7 +27,8 @@ class InputFromFilesTest(LobsterTrlcSystemTestCaseBase):
         lobster_schema = "lobster-req-trace"
         lobster_version = 4
         asserter.assertStdOutText(
-            f"Lobster file version {lobster_version} containing 'schema' = '{lobster_schema}' is deprecated, "
+            f"Lobster file version {lobster_version} "
+            f"containing 'schema' = '{lobster_schema}' is deprecated, "
             f"please migrate to version 5\n"
             f"lobster-trlc: wrote 1 items to "
             f"{OUT_FILE}\n")

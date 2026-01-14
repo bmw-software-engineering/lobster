@@ -127,10 +127,15 @@ class MultiFileInputTool(MetaDataToolBase, metaclass=ABCMeta):
         )
 
     def _write_output(
-            self,
-            schema: Union[Type[Requirement], Type[Implementation], Type[Activity], Type[Item]],
-            out_file: str,
-            items: List[Union[Activity, Implementation, Requirement]],
+        self,
+        schema: Union[
+            Type[Requirement], 
+            Type[Implementation], 
+            Type[Activity], 
+            Type[Item]
+        ],
+        out_file: str,
+        items: List[Union[Activity, Implementation, Requirement]],
     ):
         ensure_output_directory(out_file)
         with open(out_file, "w", encoding="UTF-8") as fd:

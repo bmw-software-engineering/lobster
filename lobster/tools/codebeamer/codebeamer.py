@@ -51,7 +51,9 @@ from requests.exceptions import (
 import yaml
 from urllib3.util.retry import Retry
 
-from lobster.common.items import Tracing_Tag, Requirement, Implementation, Activity, Item
+from lobster.common.items import (
+    Tracing_Tag, Requirement, Implementation, Activity, Item
+)
 from lobster.common.location import Codebeamer_Reference
 from lobster.common.errors import Message_Handler, LOBSTER_Error
 from lobster.common.io import lobster_read, lobster_write, ensure_output_directory

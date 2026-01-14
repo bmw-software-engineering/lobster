@@ -30,7 +30,8 @@ class ValidInputTest(LobsterJsonSystemTestCaseBase):
         version = 3
         schema = "lobster-act-trace"
         asserter.assertStdOutText(
-            f"Lobster file version {version} containing 'schema' = '{schema}' is deprecated, "
+            f"Lobster file version {version} "
+            f"containing 'schema' = '{schema}' is deprecated, "
             f"please migrate to version 5\n"
             f"lobster-json: wrote 2 items to specific_schema.lobster\n"
         )

@@ -28,7 +28,8 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         schema = "lobster-act-trace"
         asserter.assertStdOutText(
             f"<config>: lobster warning: not a .json file\n"
-            f"Lobster file version {version} containing 'schema' = '{schema}' is deprecated, "
+            f"Lobster file version {version} "
+            f"containing 'schema' = '{schema}' is deprecated, "
             f"please migrate to version 5\n"
             f"lobster-json: wrote 1 items to {OUT_FILE}\n"
         )
@@ -70,7 +71,8 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         schema = "lobster-act-trace"
         asserter.assertStdOutText(
             f"<config>: lobster warning: not a .json file\n"
-            f"Lobster file version {version} containing 'schema' = '{schema}' is deprecated, "
+            f"Lobster file version {version} "
+            f"containing 'schema' = '{schema}' is deprecated, "
             f"please migrate to version 5\n"
             f"lobster-json: wrote 2 items to {OUT_FILE}\n"
         )
@@ -136,7 +138,8 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         asserter.assertStdOutText(
             f"<config>: lobster warning: not a .json file\n"
             f"valid_invalid.txt:1: lobster warning: not a .json file\n"
-            f"Lobster file version {version} containing 'schema' = '{schema}' is deprecated, "
+            f"Lobster file version {version} "
+            f"containing 'schema' = '{schema}' is deprecated, "
             f"please migrate to version 5\n"
             f"lobster-json: wrote 15 items to {out_file}\n"
         )

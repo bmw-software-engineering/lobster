@@ -6,8 +6,6 @@ from tests_system.lobster_python.\
     lobster_python_system_test_case_base import LobsterPythonSystemTestCaseBase
 from tests_system.lobster_python.\
     lobster_python_asserter import LobsterPythonAsserter as Asserter
-from tests_system.tests_utils.\
-    update_cpptest_expected_output import update_cpptest_output_file
 
 
 class LobsterPythonSystemTest(LobsterPythonSystemTestCaseBase):
@@ -48,7 +46,7 @@ class LobsterPythonSystemTest(LobsterPythonSystemTestCaseBase):
         Tests hello_world.py in the current directory.
         Output written without schema and version 5.
         """
-        
+
         OUT_FILE = "hello_world_no_schema.lobster"
         IN_FILE = "hello_world.py"
 
@@ -67,6 +65,7 @@ class LobsterPythonSystemTest(LobsterPythonSystemTestCaseBase):
         asserter.assertStdOutNumAndFile(1, OUT_FILE)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
 
 if __name__ == "__main__":
     unittest.main()
