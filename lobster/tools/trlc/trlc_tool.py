@@ -28,7 +28,6 @@ from trlc.errors import Message_Handler, TRLC_Error
 from trlc.trlc import Source_Manager
 
 from lobster.common.errors import PathError
-from lobster.common.io import lobster_write
 from lobster.common.items import Requirement, Item, KindTypes
 from lobster.common.multi_file_input_tool import create_worklist, MultiFileInputTool
 

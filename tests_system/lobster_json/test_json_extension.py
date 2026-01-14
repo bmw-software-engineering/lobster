@@ -15,7 +15,7 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
     def test_single_non_json_extensions(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
         # lobster-trace: json_req.Input_File_JSON_Extension
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         self._test_runner.declare_input_file(self._data_directory / "valid-json.txt")
         OUT_FILE = "banana.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
@@ -57,7 +57,7 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
     def test_mixed_extensions(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
         # lobster-trace: json_req.Input_File_JSON_Extension
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         self._test_runner.declare_input_file(self._data_directory / "valid-mini.json")
         self._test_runner.declare_input_file(self._data_directory / "valid-json.txt")
         OUT_FILE = "apple-banana.lobster"
@@ -112,7 +112,7 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         Tests the processing of multiple input files with mixed extensions,
         including both valid and invalid JSON files.
         """
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         self._test_runner.config_file_data.tag_attribute = "tags"
         self._test_runner.config_file_data.name_attribute = "name"
         out_file = "multiple_files_mixed_ext.lobster"

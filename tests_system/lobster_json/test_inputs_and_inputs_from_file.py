@@ -18,7 +18,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
 
     def test_inputs(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         self._test_runner.declare_input_file(
             self._data_directory / "inputs_safety.json")
         self._test_runner.declare_input_file(
@@ -59,7 +59,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
 
     def test_inputs_from_file(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "inputs_from_file.txt", self._data_directory)
 
@@ -92,7 +92,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
 
     def test_consume_files_from_cwd(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         self._test_runner.copy_file_to_working_directory(
             self._data_directory / "inputs_non_critical.json")
         self._test_runner.copy_file_to_working_directory(
@@ -129,7 +129,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
 
     def test_consume_files_and_nested_directory_from_cwd(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         self._test_runner.copy_file_to_working_directory(
             self._data_directory / "inputs_non_critical.json")
         self._test_runner.copy_file_to_working_directory(
@@ -176,7 +176,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
 
     def test_inputs_from_file_and_input(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
-        self._test_runner.config_file_data.kind = "act"
+        self._test_runner.cmd_args.kind = "act"
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "inputs_from_file.txt", self._data_directory)
         self._test_runner.declare_input_file(

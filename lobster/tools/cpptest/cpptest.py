@@ -23,7 +23,6 @@ import os
 from copy import copy
 from dataclasses import dataclass, field
 from typing import List, Optional, Sequence, Union
-from enum import Enum
 import yaml
 from lobster.common.errors import LOBSTER_Error
 from lobster.common.exceptions import LOBSTER_Exception

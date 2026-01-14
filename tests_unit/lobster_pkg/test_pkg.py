@@ -1,7 +1,5 @@
-from fnmatch import fnmatch
 import os
 import json
-import re
 import unittest
 from tempfile import TemporaryDirectory
 from os.path import dirname

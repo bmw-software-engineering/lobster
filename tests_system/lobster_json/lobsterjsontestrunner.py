@@ -15,7 +15,6 @@ class ConfigFileData:
     justification_attribute: Optional[str] = None
     inputs_from_file: Optional[str] = None
     test_list: Optional[str] = None
-    kind: Optional[str] = "itm"
 
     def __post_init__(self):
         self.inputs = []
@@ -34,7 +33,6 @@ class ConfigFileData:
         append_if_not_none("justification_attribute", self.justification_attribute)
         append_if_not_none("inputs_from_file", self.inputs_from_file)
         append_if_not_none("test_list", self.test_list)
-        append_if_not_none("kind", self.kind)
 
         with open(filename, mode='w', encoding="UTF-8") as file:
             yaml.dump(data, file)
@@ -44,6 +42,7 @@ class ConfigFileData:
 class CmdArgs:
     out: Optional[str] = None
     config: Optional[str] = None
+    kind: Optional[str] = "itm"
 
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list"""
@@ -55,6 +54,7 @@ class CmdArgs:
 
         append_if_string("--out", self.out)
         append_if_string("--config", self.config)
+        append_if_string("--kind", self.kind)
         return cmd_args
 
 

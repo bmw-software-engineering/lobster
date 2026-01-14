@@ -15,10 +15,10 @@ class ValidInputTest(LobsterJsonSystemTestCaseBase):
         # lobster-trace: UseCases.Incorrect_number_of_requirement_refs_in_JSON_Output
         out_file = "specific_schema.lobster"
         self._test_runner.cmd_args.out = out_file
+        self._test_runner.cmd_args.kind = "act"
 
         self._test_runner.config_file_data.tag_attribute = "requirements"
         self._test_runner.config_file_data.name_attribute = "description"
-        self._test_runner.config_file_data.kind = "act"
 
         self._test_runner.declare_output_file(self._data_directory / out_file)
         self._test_runner.declare_input_file(self._data_directory /

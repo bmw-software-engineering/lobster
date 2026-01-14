@@ -79,7 +79,16 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
             name        = "json",
             description = "Extract tracing data from JSON files.",
             extensions  = ["json"],
-            official    = True)
+            official    = True
+        )
+        self._argument_parser.add_argument(
+            "--kind",
+            required=False,
+            choices=["itm", "act"],
+            default="itm",
+            help="Kind of LOBSTER entries to create: "
+                 "'itm' for Item, 'act' for Activity",
+        )
 
     # Supported config parameters for lobster-json
     TEST_LIST = "test_list"
@@ -87,7 +96,6 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
     TAG_ATTRIBUTE = "tag_attribute"
     JUSTIFICATION_ATTRIBUTE = "justification_attribute"
     SINGLE = "single"
-    KIND = "kind"
 
     @classmethod
     def get_config_keys_manual(cls):
@@ -102,7 +110,6 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
                 cls.JUSTIFICATION_ATTRIBUTE: "Member name indicator for "
                                              "justifications.",
                 cls.SINGLE: "Avoid use of multiprocessing.",
-                cls.KIND: "Kind of item to create (e.g., itm, act)."
             }
         )
         return help_dict
@@ -130,7 +137,6 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
         options.tag_attribute = self.config.get(self.TAG_ATTRIBUTE)
         options.justification_attribute = self.config.get(self.JUSTIFICATION_ATTRIBUTE)
         options.single = self.config.get(self.SINGLE, False)
-        options.kind = self.config.get(self.KIND, KindTypes.ITM.value)
         return work_list
 
     def process_tool_options(
@@ -140,8 +146,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
     ):
         super().process_tool_options(options, work_list)
         self.schema = Item
-        kind_type = self.config.get(self.KIND, KindTypes.ITM.value)
-        if kind_type == KindTypes.ACT.value:
+        if options.kind == KindTypes.ACT.value:
             self.schema = Activity
 
     @classmethod
