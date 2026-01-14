@@ -129,8 +129,8 @@
           "ref_up": [],
           "ref_down": [
             "req example.req_important",
-            "python nor.Example.helper_function",
-            "python nor.Example.nor"
+            "itm nor.Example.helper_function",
+            "itm nor.Example.nor"
           ],
           "tracing_status": "MISSING"
         },
@@ -195,7 +195,7 @@
             "file": "tests_integration/projects/basic/foo.cpp",
             "line": 3
           },
-          "name": "implication",
+          "name": "foo.cpp:1:implication:3",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -215,7 +215,7 @@
             "file": "tests_integration/projects/basic/foo.cpp",
             "line": 9
           },
-          "name": "exclusive_or",
+          "name": "foo.cpp:1:exclusive_or:9",
           "messages": [
             "missing up reference"
           ],
@@ -233,7 +233,7 @@
             "file": "tests_integration/projects/basic/foo.cpp",
             "line": 14
           },
-          "name": "potato",
+          "name": "foo.cpp:1:potato:14",
           "messages": [
             "unknown tracing target req example.doesnt_exist",
             "missing up reference"
@@ -320,7 +320,7 @@
           "tracing_status": "OK"
         },
         {
-          "tag": "python nor.trlc_reference",
+          "tag": "itm nor.trlc_reference",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -338,7 +338,7 @@
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "python nor.Example.helper_function",
+          "tag": "itm nor.Example.helper_function",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -358,7 +358,7 @@
           "tracing_status": "OK"
         },
         {
-          "tag": "python nor.Example.nor",
+          "tag": "itm nor.Example.nor",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
