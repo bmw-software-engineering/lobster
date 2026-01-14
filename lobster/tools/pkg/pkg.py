@@ -43,8 +43,7 @@ def create_raw_entry(
     data: Dict[str, Item],
     file_name: str,
     trace_list: list,
-    kind: str = KindTypes.ITM.value
-) -> None:
+    kind: str = KindTypes.ITM.value) -> None:
 
     item_list = json.loads(trace_list)
     # Collect all traces marked as "first"
