@@ -348,7 +348,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 14
           },
-          "name": "orchard::Fruit<double>::operator=",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator=:14",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -372,7 +372,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 26
           },
-          "name": "orchard::Fruit<double>::operator*",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator*:26",
           "messages": [
             "unknown tracing target req cd-456",
             "unknown tracing target req ab-123",
@@ -395,7 +395,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 33
           },
-          "name": "orchard::Fruit<double>::operator<",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator<:33",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -416,7 +416,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 39
           },
-          "name": "orchard::Fruit<double>::operator>",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator>:39",
           "messages": [
             "missing up reference"
           ],
@@ -434,7 +434,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 44
           },
-          "name": "orchard::Fruit<double>::operator&",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator&:44",
           "messages": [
             "missing up reference"
           ],
@@ -452,7 +452,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 49
           },
-          "name": "orchard::Fruit<double>::operator|",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator|:49",
           "messages": [
             "missing up reference"
           ],
@@ -470,7 +470,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 54
           },
-          "name": "orchard::Fruit<double>::operator/",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator/:54",
           "messages": [
             "missing up reference"
           ],
@@ -488,7 +488,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 59
           },
-          "name": "orchard::Fruit<double>::operator[]",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator[]:59",
           "messages": [
             "missing up reference"
           ],
@@ -506,7 +506,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 64
           },
-          "name": "orchard::Fruit<double>::operator~",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator~:64",
           "messages": [
             "missing up reference"
           ],
@@ -524,7 +524,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 79
           },
-          "name": "orchard::Fruit<double>::complicatedFunc",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::complicatedFunc:79",
           "messages": [
             "missing up reference"
           ],
@@ -542,7 +542,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 83
           },
-          "name": "orchard::Fruit<double>::refAndPtrFunc",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::refAndPtrFunc:83",
           "messages": [
             "missing up reference"
           ],
@@ -560,7 +560,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 87
           },
-          "name": "orchard::Fruit<double>::crazySignature",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::crazySignature:87",
           "messages": [
             "missing up reference"
           ],
@@ -578,7 +578,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 90
           },
-          "name": "buyBanana",
+          "name": "fruit.cpp:1:buyBanana:90",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -599,7 +599,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 96
           },
-          "name": "sellBanana",
+          "name": "fruit.cpp:1:sellBanana:96",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -620,7 +620,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 113
           },
-          "name": "clearBasket",
+          "name": "fruit.cpp:1:clearBasket:113",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -640,7 +640,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 121
           },
-          "name": "checkBasket",
+          "name": "fruit.cpp:1:checkBasket:121",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -660,7 +660,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 132
           },
-          "name": "throwBanana",
+          "name": "fruit.cpp:1:throwBanana:132",
           "messages": [],
           "just_up": [],
           "just_down": [],
@@ -680,7 +680,7 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 148
           },
-          "name": "main",
+          "name": "fruit.cpp:1:main:148",
           "messages": [
             "missing up reference"
           ],
