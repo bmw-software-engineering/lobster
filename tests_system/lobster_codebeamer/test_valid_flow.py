@@ -20,6 +20,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         super().setUp()
         self.codebeamer_flask.reset()
         self._test_runner = self.create_test_runner()
+        self._test_runner.config_file_data.verify_ssl = False
 
     def test_valid_query_id(self):
         # lobster-trace: codebeamer_req.Query_Id_Parameter
