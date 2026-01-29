@@ -157,7 +157,9 @@ def query_cb_single(cb_config: Config, url: str):
             f"Reason: {ex}\n"
             "\nPossible actions:\n"
             "• Check internet connection\n"
-            "• Increase retries using 'num_request_retry'"
+            "• Increase retries using 'num_request_retry'\n"
+            "• Check SSL certificates or disable verification by setting "
+            f"'{SupportedConfigKeys.VERIFY_SSL.value}' to false"
         ) from ex
 
     except RequestException as ex:
@@ -507,7 +509,7 @@ def parse_config_data(data: dict) -> Config:
         references=ensure_list(data.get(SupportedConfigKeys.REFS.value, [])),
         import_tagged=data.get(SupportedConfigKeys.IMPORT_TAGGED.value),
         import_query=data.get(SupportedConfigKeys.IMPORT_QUERY.value),
-        verify_ssl=data.get(SupportedConfigKeys.VERIFY_SSL.value, False),
+        verify_ssl=data.get(SupportedConfigKeys.VERIFY_SSL.value, True),
         page_size=data.get(SupportedConfigKeys.PAGE_SIZE.value, 100),
         schema=data.get(SupportedConfigKeys.SCHEMA.value, "Requirement"),
         timeout=data.get(SupportedConfigKeys.TIMEOUT.value, 30),
