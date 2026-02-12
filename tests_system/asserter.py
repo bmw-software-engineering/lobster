@@ -42,6 +42,21 @@ class Asserter:
     def assertNoStdOutText(self, msg="STDOUT contains output"):
         self.assertStdOutText("", msg)
 
+    def assertStdErrEqual(self, expected: str,
+                                msg="STDERR does not match exactly"):
+        """
+        Assert that stderr exactly matches the expected string.
+        """
+        self._test_case.assertEqual(
+            expected,
+            self._completed_process.stderr,
+            (
+                f"{msg}\n"
+                f"Expected: {expected!r}\n"
+                f"STDERR was: {self._completed_process.stderr!r}"
+            )
+        )
+
     def assertInStdErr(self, expected_substring: str,
                              msg="STDERR does not contain expected text"):
         """
