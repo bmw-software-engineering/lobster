@@ -18,6 +18,7 @@
 # <https://www.gnu.org/licenses/>.
 import argparse
 import json
+import sys
 from pathlib import PurePath
 from pprint import pprint
 from typing import Optional, Sequence, Tuple, List, Set
@@ -146,6 +147,10 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
             data = get_item(root     = data,
                             path     = options.test_list,
                             required = True)
+        except json.JSONDecodeError:
+            print("%s: Input file contains invalid JSON." % file_name,
+                  file=sys.stderr)
+            return False, []
         except UnicodeDecodeError as decode_error:
             print("%s: File is not encoded in utf-8: %s" % (file_name, decode_error))
             return False, []
