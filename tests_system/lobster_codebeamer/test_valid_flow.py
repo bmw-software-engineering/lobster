@@ -25,7 +25,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
     def test_valid_query_id(self):
         # lobster-trace: codebeamer_req.Query_Id_Parameter
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = 10203
         self._test_runner.declare_output_file(
             self._data_directory / self._test_runner.config_file_data.out)
@@ -61,10 +61,16 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         ]
 
         completed_process = self._test_runner.run_tool_test()
-        asserter = LobsterCodebeamerAsserter(self, completed_process, self._test_runner)
+        asserter = LobsterCodebeamerAsserter(
+            self,
+            completed_process,
+            self._test_runner,
+            port=self.codebeamer_flask.port,
+        )
         asserter.assertStdOutNumAndFile(
             num_items=len(response_data['items']),
             page_size=1,
+            port=self.codebeamer_flask.port,
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
@@ -72,7 +78,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
     def test_references_tracing_tag_added(self):
         # lobster-trace: codebeamer_req.References_Field_Support
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = 424242
         cfg.out = "refs_tracing_tag.lobster"
         self._test_runner.declare_output_file(
@@ -115,11 +121,17 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         ]
 
         completed_process = self._test_runner.run_tool_test()
-        asserter = LobsterCodebeamerAsserter(self, completed_process, self._test_runner)
+        asserter = LobsterCodebeamerAsserter(
+            self,
+            completed_process,
+            self._test_runner,
+            port=self.codebeamer_flask.port,
+        )
         asserter.assertStdOutNumAndFile(
             num_items=len(response_data['items']),
             page_size=1,
             out_file=cfg.out,
+            port=self.codebeamer_flask.port,
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
