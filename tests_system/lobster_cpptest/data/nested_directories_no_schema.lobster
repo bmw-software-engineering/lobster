@@ -320,8 +320,8 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "itm 123",
-        "itm 456"
+        "req 123",
+        "req 456"
       ]
     },
     {
