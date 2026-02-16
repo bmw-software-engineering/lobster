@@ -1,4 +1,5 @@
 from pathlib import Path
+from lobster.tools.python import python as lobster_python_tool
 from tests_system.lobster_python.lobster_python_test_runner import (
     LobsterPythonTestRunner,
 )
@@ -9,6 +10,10 @@ class LobsterPythonSystemTestCaseBase(SystemTestCaseBase):
     def __init__(self, methodName):
         super().__init__(methodName)
         self._data_directory = Path(__file__).parents[0] / "data"
+
+    def setUp(self):
+        super().setUp()
+        lobster_python_tool.func_name.clear()
 
     def create_test_runner(self) -> LobsterPythonTestRunner:
         tool_name = Path(__file__).parents[0].name
