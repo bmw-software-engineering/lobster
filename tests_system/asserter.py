@@ -139,5 +139,19 @@ def sort_json(json_data):
     if isinstance(json_data, dict):
         return {k: sort_json(json_data[k]) for k in sorted(json_data)}
     if isinstance(json_data, list):
-        return [sort_json(item) for item in json_data]
+        sorted_list = [sort_json(item) for item in json_data]
+        return sorted(sorted_list, key=_sort_key_for_list_item)
     return json_data
+
+
+def _sort_key_for_list_item(item):
+    if isinstance(item, dict):
+        if "tag" in item:
+            return (0, item.get("tag"))
+        if "name" in item:
+            return (1, item.get("name"))
+        if "location" in item:
+            return (2, json.dumps(item.get("location"), sort_keys=True))
+        return (3, json.dumps(item, sort_keys=True))
+    return (4, json.dumps(item, sort_keys=True))
+
