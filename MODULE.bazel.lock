@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 6,
-  "moduleFileHash": "7b3a662b7ae4b612662dd0ba50731fb66c7a0286c8eddd5163111cb11cd6c57d",
+  "moduleFileHash": "b8080c6106098a65908de683514ed2b19c6a8e980de6b89219f42a56631ff03c",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -130,14 +130,14 @@
             "column": 20
           },
           "imports": {
-            "pip": "pip"
+            "lobster_pip_hub_dependencies": "lobster_pip_hub_dependencies"
           },
           "devImports": [],
           "tags": [
             {
               "tagName": "parse",
               "attributeValues": {
-                "hub_name": "pip",
+                "hub_name": "lobster_pip_hub_dependencies",
                 "envsubst": [
                   "PIP_INDEX_URL"
                 ],
@@ -155,7 +155,7 @@
             {
               "tagName": "parse",
               "attributeValues": {
-                "hub_name": "pip",
+                "hub_name": "lobster_pip_hub_dependencies",
                 "envsubst": [
                   "PIP_INDEX_URL"
                 ],
@@ -173,7 +173,7 @@
             {
               "tagName": "parse",
               "attributeValues": {
-                "hub_name": "pip",
+                "hub_name": "lobster_pip_hub_dependencies",
                 "envsubst": [
                   "PIP_INDEX_URL"
                 ],
@@ -191,7 +191,7 @@
             {
               "tagName": "parse",
               "attributeValues": {
-                "hub_name": "pip",
+                "hub_name": "lobster_pip_hub_dependencies",
                 "envsubst": [
                   "PIP_INDEX_URL"
                 ],

@@ -35,7 +35,7 @@ pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 
 [
     pip.parse(
-        hub_name = "pip",
+        hub_name = "lobster_pip_hub_dependencies",
          envsubst = ["PIP_INDEX_URL"],
         # For all .whl artifacts use the Bazel downloader, allowing caching of artifacts.
         # Also, the Bazel download approach is supposed to be faster and on top offers parallel downloading.
@@ -47,7 +47,7 @@ pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
     for version in ["9", "10", "11", "12"]
 ]
 
-use_repo(pip, "pip")
+use_repo(pip, "lobster_pip_hub_dependencies")
 
 bazel_dep(name = "gazelle", version = "0.44.0", repo_name = "bazel_gazelle")
 
