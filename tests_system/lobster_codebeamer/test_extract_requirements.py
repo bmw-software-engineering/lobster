@@ -20,6 +20,7 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
     def setUp(self):
         super().setUp()
         self._test_runner = self.create_test_runner()
+        self._test_runner.config_file_data.verify_ssl = False
 
     def extract_requirements(self,
                              cfg: ConfigFileData,

@@ -15,7 +15,8 @@
     - Connection timeout errors now include the URL and suggest increasing timeout parameter
     - Connection errors provide actionable steps like checking internet connection and increasing retries
     - Network errors include clear failure reasons and suggested actions
-    - HTTP response errors now include status code and reason.
+    - HTTP response errors now include status code and reason
+  - Changed default value of `verify_ssl` to `True`
 
 * `lobster-python`:
   - Added system test infrastructure and Bazel targets under `tests_system/lobster_python`.

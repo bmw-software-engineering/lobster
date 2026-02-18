@@ -18,6 +18,7 @@ class ConfigFileData:
     num_request_retry: Optional[int] = None
     retry_error_codes: Optional[List[int]] = None
     schema: Optional[str] = None
+    verify_ssl: Optional[bool] = None
 
     def set_default_root_token_out(self):
         self.root = f"https://localhost:{PORT}"
@@ -40,6 +41,7 @@ class ConfigFileData:
         append_if_not_none("num_request_retry", self.num_request_retry)
         append_if_not_none("retry_error_codes", self.retry_error_codes)
         append_if_not_none("schema", self.schema)
+        append_if_not_none("verify_ssl", self.verify_ssl)
 
         with open(filename, mode='w', encoding="UTF-8") as file:
             yaml.dump(data, file)

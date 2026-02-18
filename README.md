@@ -130,11 +130,6 @@ Here are the links to the individual requirement coverage reports:
 * [Requirement Coverage Report Core Report](https://bmw-software-engineering.github.io/lobster/tracing-core_report.html)
 * [Requirement Coverage Report Codebeamer](https://bmw-software-engineering.github.io/lobster/tracing-codebeamer.html)
 
-### Simple lobster-demo
-
-A simple example can be found in the repository: [lobster-demo](https://github.com/bmw-software-engineering/lobster-demo).
-It is still work in progress.
-
 ## Workflow of LOBSTER
 
 The lobster tool uses several steps to accomplish a fully modular software traceability

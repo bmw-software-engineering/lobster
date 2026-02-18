@@ -20,6 +20,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         super().setUp()
         self.codebeamer_flask.reset()
         self._test_runner = self.create_test_runner()
+        self._test_runner.config_file_data.verify_ssl = False
 
     def test_retry_if_configured(self):
         """Ensure the tool retries and exits after exhausting
