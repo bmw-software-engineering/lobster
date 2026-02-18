@@ -18,6 +18,8 @@
 # <https://www.gnu.org/licenses/>.
 
 import html
+from abc import abstractmethod, ABC
+from typing import List
 
 from lobster.htmldoc import assets
 
@@ -37,14 +39,13 @@ function stickyNavbar() {
 """
 
 
-class Menu_Item:
+class Menu_Item(ABC):
     def __init__(self, name):
-        assert isinstance(name, str)
         self.name = name
 
-    def generate(self, doc):
-        assert isinstance(doc, Document)
-        assert False
+    @abstractmethod
+    def generate(self, doc) -> List[str]:
+        pass
 
 
 class Menu_Link(Menu_Item):
@@ -54,7 +55,7 @@ class Menu_Link(Menu_Item):
 
         self.target = target
 
-    def generate(self, doc):
+    def generate(self, doc) -> List[str]:
         assert isinstance(doc, Document)
         rv = (
             f'<a href="{self.target}" '
@@ -75,7 +76,7 @@ class Dropdown_Menu(Menu_Item):
     def add_link(self, name, target):
         self.items.append(Menu_Link(name, target))
 
-    def generate(self, doc):
+    def generate(self, doc) -> List[str]:
         assert isinstance(doc, Document)
 
         doc.style["#navbar .dropdown"] = {
@@ -144,8 +145,8 @@ class Dropdown_Menu(Menu_Item):
 
 class Navigation_Bar:
     def __init__(self):
-        self.left_items  = []
-        self.right_items = []
+        self.left_items: List[Menu_Item]  = []
+        self.right_items: List[Menu_Item] = []
 
     def add_link(self, name, target, alignment="left"):
         assert alignment in ("left", "right")
