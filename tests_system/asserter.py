@@ -154,4 +154,3 @@ def _sort_key_for_list_item(item):
             return (2, json.dumps(item.get("location"), sort_keys=True))
         return (3, json.dumps(item, sort_keys=True))
     return (4, json.dumps(item, sort_keys=True))
-
