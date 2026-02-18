@@ -20,17 +20,16 @@ import os.path
 import argparse
 import html
 import subprocess
-import hashlib
-import tempfile
+import sys
+from dataclasses import dataclass
 from datetime import datetime, timezone
-from typing import Optional, Sequence
-
+from typing import Optional, Sequence, Union
 import markdown
 
+from lobster.common.errors import LOBSTER_Error
 from lobster.common.version import LOBSTER_VERSION
 from lobster.htmldoc import htmldoc
 from lobster.common.report import Report
-from lobster.common.io import ensure_output_directory
 from lobster.common.location import (Void_Reference,
                                      File_Reference,
                                      Github_Reference,
@@ -41,27 +40,20 @@ from lobster.common.items import (Tracing_Status, Item,
 from lobster.common.meta_data_tool_base import MetaDataToolBase
 from lobster.tools.core.html_report.html_report_css import CSS
 from lobster.tools.core.html_report.html_report_js import JAVA_SCRIPT
-
+from lobster.tools.core.html_report.diagram_generator import (
+    create_policy_diagram_plotly, name_hash)
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
+TOOL_NAME = "lobster-html-report"
 
 
-def is_dot_available(dot):
-    try:
-        subprocess.run([dot if dot else "dot", "-V"],
-                       stdout=subprocess.PIPE,
-                       stderr=subprocess.PIPE,
-                       encoding="UTF-8",
-                       check=True)
-        return True
-    except FileNotFoundError:
-        return False
-
-
-def name_hash(name):
-    hobj = hashlib.md5()
-    hobj.update(name.encode("UTF-8"))
-    return hobj.hexdigest()
+@dataclass
+class Config:
+    lobster_report_path: str
+    output_html_path: str
+    high_contrast: bool = False
+    render_md: bool = False
+    disable_policy_image: bool = False
 
 
 def xref_item(item, link=True, brief=False):
@@ -90,49 +82,6 @@ def xref_item(item, link=True, brief=False):
         rv += html.escape(item.name)
 
     return rv
-
-
-def create_policy_diagram(doc, report, dot):
-    assert isinstance(doc, htmldoc.Document)
-    assert isinstance(report, Report)
-
-    graph = 'digraph "LOBSTER Tracing Policy" {\n'
-    for level in report.config.values():
-        if level.kind == "requirements":
-            style = 'shape=box, style=rounded'
-        elif level.kind == "implementation":
-            style = 'shape=box'
-        else:
-            assert level.kind == "activity"
-            style = 'shape=hexagon'
-        style += f', href="#sec-{name_hash(level.name)}"'
-
-        graph += '  n_%s [label="%s", %s];\n' % \
-            (name_hash(level.name),
-             level.name,
-             style)
-
-    for level in report.config.values():
-        source = name_hash(level.name)
-        for target in map(name_hash, level.traces):
-            # Not a mistake; we want to show the tracing down, whereas
-            # in the config file we indicate how we trace up.
-            graph += '  n_%s -> n_%s;\n' % (target, source)
-    graph += "}\n"
-
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        graph_name = os.path.join(tmp_dir, "graph.dot")
-        with open(graph_name, "w", encoding="UTF-8") as tmp_fd:
-            tmp_fd.write(graph)
-        svg = subprocess.run([dot if dot else "dot", "-Tsvg", graph_name],
-                             stdout=subprocess.PIPE,
-                             encoding="UTF-8",
-                             check=True)
-        assert svg.returncode == 0
-        image = svg.stdout[svg.stdout.index("<svg "):]
-
-    for line in image.splitlines():
-        doc.add_line(line)
 
 
 def create_item_coverage(doc, report):
@@ -287,15 +236,12 @@ def generate_custom_data(report) -> str:
     return "".join(content)
 
 
-def write_html_to_file(html_content: str, output_path: str) -> None:
-    """Write HTML content to file, creating parent directories if needed."""
-    ensure_output_directory(output_path)
-    with open(output_path, "w", encoding="UTF-8") as fd:
-        fd.write(html_content)
-        fd.write("\n")
-
-
-def write_html(report, dot, high_contrast, render_md) -> str:
+def write_html(
+    output_html_path,
+    report, high_contrast,
+    render_md,
+    disable_policy_image
+):
     assert isinstance(report, Report)
 
     doc = htmldoc.Document(
@@ -303,62 +249,12 @@ def write_html(report, dot, high_contrast, render_md) -> str:
         "Lightweight Open BMW Software Traceability Evidence Report"
     )
 
-    # Item styles
-    doc.style["#custom-data-banner"] = {
-        "position": "absolute",
-        "top": "1em",
-        "right": "2em",
-        "font-size": "0.9em",
-        "color": "white",
-    }
-    doc.style[".item-ok, .item-partial, .item-missing, .item-justified"] = {
-        "border"        : "1px solid black",
-        "border-radius" : "0.5em",
-        "margin-top"    : "0.4em",
-        "padding"       : "0.25em",
-    }
-    doc.style[".item-ok:target, "
-              ".item-partial:target, "
-              ".item-missing:target, "
-              ".item-justified:target"] = {
-        "border" : "3px solid black",
-    }
-    doc.style[".subtle-ok, "
-              ".subtle-partial, "
-              ".subtle-missing, "
-              ".subtle-justified"] = {
-        "padding-left"  : "0.2em",
-    }
     doc.style[".item-ok"] = {
         "background-color" : "#b2e1b2" if high_contrast else "#efe",
     }
-    doc.style[".item-partial"] = {
-        "background-color" : "#ffe",
-    }
+
     doc.style[".item-missing"] = {
         "background-color" : "#ffb2ff" if high_contrast else "#fee",
-    }
-    doc.style[".item-justified"] = {
-        "background-color" : "#eee",
-    }
-    doc.style[".subtle-ok"] = {
-        "border-left" : "0.2em solid #8f8",
-    }
-    doc.style[".subtle-partial"] = {
-        "border-left" : "0.2em solid #ff8",
-    }
-    doc.style[".subtle-missing"] = {
-        "border-left" : "0.2em solid #f88",
-    }
-    doc.style[".subtle-justified"] = {
-        "border-left" : "0.2em solid #888",
-    }
-    doc.style[".item-name"] = {
-        "font-size" : "125%",
-        "font-weight" : "bold",
-    }
-    doc.style[".attribute"] = {
-        "margin-top" : "0.5em",
     }
 
     # Render MD
@@ -376,39 +272,6 @@ def write_html(report, dot, high_contrast, render_md) -> str:
             "border-bottom" : "unset",
             "text-align"    : "unset"
         }
-
-    # Columns
-    doc.style[".columns"] = {
-        "display" : "flex",
-    }
-    doc.style[".columns .column"] = {
-        "flex" : "45%",
-    }
-
-    # Tables
-    doc.style["thead tr"] = {
-        "font-weight" : "bold",
-    }
-    doc.style["tbody tr.alt"] = {
-        "background-color" : "#eee",
-    }
-
-    # Text
-    doc.style["blockquote"] = {
-        "font-style"   : "italic",
-        "border-left"  : "0.2em solid gray",
-        "padding-left" : "0.4em",
-        "margin-left"  : "0.5em",
-    }
-
-    # Footer
-    doc.style["footer"] = {
-        "margin-top"    : "1rem",
-        "padding"       : ".2rem",
-        "text-align"    : "right",
-        "color"         : "#666",
-        "font-size"     : ".7rem",
-    }
 
     ### Menu & Navigation
     doc.navbar.add_link("Overview", "#sec-overview")
@@ -434,15 +297,11 @@ def write_html(report, dot, high_contrast, render_md) -> str:
     doc.add_heading(3, "Coverage", html_identifier=True)
     create_item_coverage(doc, report)
     doc.add_line('</div>')
-    if is_dot_available(dot):
+    if not disable_policy_image:
         doc.add_line('<div class="column">')
         doc.add_heading(3, "Tracing policy")
-        create_policy_diagram(doc, report, dot)
+        create_policy_diagram_plotly(doc, report)
         doc.add_line('</div>')
-    else:
-        print("warning: dot utility not found, report will not "
-              "include the tracing policy visualisation")
-        print("> please install Graphviz (https://graphviz.org)")
     doc.add_line('</div>')
 
     ### Filtering
@@ -581,7 +440,33 @@ def write_html(report, dot, high_contrast, render_md) -> str:
     # Add javascript from assets/html_report.js file
     doc.scripts.append(JAVA_SCRIPT.lstrip())
 
-    return doc.render()
+    with open(output_html_path, "w", encoding="UTF-8") as fd:
+        fd.write(doc.render() + "\n")
+
+
+def run_lobster_html_report(config: Config) -> None:
+    """
+    The main function to generate an HTML report from a LOBSTER report file.
+
+    Parameters
+    ----------
+    config : Config
+        The configuration setting
+    """
+    if not os.path.isfile(config.lobster_report_path):
+        raise FileNotFoundError(f"{config.lobster_report_path} is not a file")
+
+    report = Report()
+    report.load_report(config.lobster_report_path)
+
+    write_html(
+        output_html_path=config.output_html_path,
+        report=report,
+        high_contrast=config.high_contrast,
+        render_md=config.render_md,
+        disable_policy_image=config.disable_policy_image,
+    )
+    print("LOBSTER HTML report written to %s" % config.output_html_path)
 
 
 class HtmlReportTool(MetaDataToolBase):
@@ -598,42 +483,51 @@ class HtmlReportTool(MetaDataToolBase):
                         default="report.lobster")
         ap.add_argument("--out",
                         default="lobster_report.html")
-        ap.add_argument("--dot",
-                        help="path to dot utility (https://graphviz.org), \
-                        by default expected in PATH",
-                        default=None)
         ap.add_argument("--high-contrast",
                         action="store_true",
                         help="Uses a color palette with a higher contrast.")
         ap.add_argument("--render-md",
                         action="store_true",
                         help="Renders MD in description.")
+        ap.add_argument("--disable-policy-image",
+                        action="store_true",
+                        help="Disables the policy diagram image.")
 
     def _run_impl(self, options: argparse.Namespace) -> int:
-        if not os.path.isfile(options.lobster_report):
-            self._argument_parser.error(f"{options.lobster_report} is not a file")
+        try:
+            self._execute(options)
+            return 0
+        except FileNotFoundError as file_not_found_error:
+            self._print_error(file_not_found_error)
+        except ValueError as value_error:
+            self._print_error(value_error)
+        except KeyError as key_error:
+            self._print_error(key_error)
+        except LOBSTER_Error as lobster_error:
+            self._print_error(lobster_error)
+        return 1
 
-        report = Report()
-        report.load_report(options.lobster_report)
+    @staticmethod
+    def _print_error(error: Union[Exception, str]):
+        print(f"{TOOL_NAME}: {error}", file=sys.stderr)
 
-        html_content = write_html(
-            report = report,
-            dot = options.dot,
-            high_contrast = options.high_contrast,
-            render_md = options.render_md,
-        )
-        write_html_to_file(html_content, options.out)
-        print(f"LOBSTER HTML report written to {options.out}")
-
-        return 0
+    @staticmethod
+    def _execute(options: argparse.Namespace) -> None:
+        run_lobster_html_report(config=Config(
+            lobster_report_path=options.lobster_report,
+            output_html_path=options.out,
+            high_contrast=options.high_contrast,
+            render_md=options.render_md,
+            disable_policy_image=options.disable_policy_image,
+        ))
 
 
 def lobster_html_report(
     lobster_report_path: str,
     output_html_path: str,
-    dot_path: str = None,
     high_contrast: bool = False,
-    render_md: bool = False
+    render_md: bool = False,
+    disable_policy_image: bool = False,
 ) -> None:
     """
     API function to generate an HTML report from a LOBSTER report file.
@@ -641,19 +535,18 @@ def lobster_html_report(
     Args:
         lobster_report_path (str): Path to the input LOBSTER report file.
         output_html_path (str): Path to the output HTML file.
-        dot_path (str, optional): Path to the Graphviz 'dot' utility.
         high_contrast (bool, optional): Use high contrast colors.
         render_md (bool, optional): Render Markdown in descriptions.
+        disable_policy_image (bool, optional): Disable policy diagram image.
     """
-    report = Report()
-    report.load_report(lobster_report_path)
-    html_content = write_html(
-        report=report,
-        dot=dot_path,
+    # This is an API function.
+    run_lobster_html_report(config=Config(
+        lobster_report_path=lobster_report_path,
+        output_html_path=output_html_path,
         high_contrast=high_contrast,
         render_md=render_md,
-    )
-    write_html_to_file(html_content, output_html_path)
+        disable_policy_image=disable_policy_image
+    ))
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

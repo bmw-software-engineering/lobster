@@ -20,19 +20,20 @@ manifest:
     dotenv: python_dotenv
     exceptiongroup: exceptiongroup
     flask: flask
-    graphviz: graphviz
     h11: h11
     idna: idna
     importlib_metadata: importlib_metadata
     isort: isort
     itsdangerous: itsdangerous
     jinja2: jinja2
+    kaleido: kaleido
     libcst: libcst
     markdown: markdown
     markupsafe: MarkupSafe
     mccabe: mccabe
     outcome: outcome
     packaging: packaging
+    plotly: plotly
     platformdirs: platformdirs
     pycodestyle: pycodestyle
     pylint: pylint

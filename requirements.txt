@@ -5,3 +5,12 @@ PyYAML>=6.0
 Markdown~=3.7
 yamale>=6.0.0
 GitPython>=3.1.30
+plotly==5.10.0
+# Windows kaleido required for fig.to_image() in diagram_generator.py
+kaleido==0.1.0.post1; sys_platform == "win32"
+
+# macOS
+kaleido>=0.2.1,<0.3.0; sys_platform == "darwin"
+
+# Linux
+kaleido>=0.2.1,<0.3.0; sys_platform == "linux"

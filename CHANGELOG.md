@@ -5,6 +5,20 @@
 
 ### 1.0.3-dev
 
+* `lobster-html-report`:
+  - The tracing policy diagram is always included in the HTML report.
+    The `dot` tool from the [Graphviz](https://graphviz.org) project is no longer
+    needed.
+    The python package `plotly` is required instead.
+    If `lobster-html-report` is installed with the help of `pip`, then `plotly` will be
+    installed automatically.
+
+    (For installation instructions, see the [Installing](README.md#installing) section
+    in the README.)
+
+  - The `lobster-html-report` tool now supports argument `--disable-policy-image` to disable
+    the tracing policy diagram.
+
 * All tools now automatically create output directories if they don't exist.
   Previously, tools would crash with an exception if the specified output
   directory path did not exist. This enhancement improves usability and

@@ -10,6 +10,7 @@ py_library(
         "html_report.py",
         "html_report_css.py",
         "html_report_js.py",
+        "diagram_generator.py",
     ],
     visibility = [
         "//visibility:public",
@@ -18,5 +19,7 @@ py_library(
         "//lobster/common",
         "//lobster/htmldoc",
         requirement("markdown"),
+        requirement("plotly"),
+        requirement("kaleido"),
     ],
 )

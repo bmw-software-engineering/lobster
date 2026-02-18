@@ -34,80 +34,11 @@ h2 {
   height: 24px;
   vertical-align: middle;
 }
-#custom-data-banner {
-  position: absolute;
-  top: 1em;
-  right: 2em;
-  font-size: 0.9em;
-  color: white;
-}
-.item-ok, .item-partial, .item-missing, .item-justified {
-  border: 1px solid black;
-  border-radius: 0.5em;
-  margin-top: 0.4em;
-  padding: 0.25em;
-}
-.item-ok:target, .item-partial:target, .item-missing:target, .item-justified:target {
-  border: 3px solid black;
-}
-.subtle-ok, .subtle-partial, .subtle-missing, .subtle-justified {
-  padding-left: 0.2em;
-}
 .item-ok {
   background-color: #efe;
 }
-.item-partial {
-  background-color: #ffe;
-}
 .item-missing {
   background-color: #fee;
-}
-.item-justified {
-  background-color: #eee;
-}
-.subtle-ok {
-  border-left: 0.2em solid #8f8;
-}
-.subtle-partial {
-  border-left: 0.2em solid #ff8;
-}
-.subtle-missing {
-  border-left: 0.2em solid #f88;
-}
-.subtle-justified {
-  border-left: 0.2em solid #888;
-}
-.item-name {
-  font-size: 125%;
-  font-weight: bold;
-}
-.attribute {
-  margin-top: 0.5em;
-}
-.columns {
-  display: flex;
-}
-.columns .column {
-  flex: 45%;
-}
-thead tr {
-  font-weight: bold;
-}
-tbody tr.alt {
-  background-color: #eee;
-}
-blockquote {
-  font-style: italic;
-  border-left: 0.2em solid gray;
-  padding-left: 0.4em;
-  margin-left: 0.5em;
-}
-footer {
-  margin-top: 1rem;
-  padding: .2rem;
-  text-align: right;
-  color: #666;
-  font-size: .7rem;
 }
 #navbar {
   overflow: hidden;
@@ -131,6 +62,7 @@ footer {
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 1000;
 }
 .sticky + .htmlbody {
   padding-top: 60px;
@@ -186,6 +118,134 @@ footer {
 .sticky .dropdown-content {
   position: fixed;
 }
+/* Item styles */
+#custom-data-banner {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.item-ok,
+.item-partial,
+.item-missing,
+.item-justified {
+    border: 1px solid #000;
+    border-radius: 0.5rem;
+    margin-top: 0.4rem;
+    padding: 0.25rem;
+}
+
+.item-ok:target,
+.item-partial:target,
+.item-missing:target,
+.item-justified:target {
+    border-width: 3px;
+    border-color: #000;
+}
+
+.subtle-ok,
+.subtle-partial,
+.subtle-missing,
+.subtle-justified {
+    padding-left: 0.2rem;
+}
+
+.item-partial {
+    background-color: #ffffee;
+}
+
+.item-justified {
+    background-color: #eeeeee;
+}
+
+.subtle-ok {
+    border-left: 0.2rem solid #88ff88;
+}
+
+.subtle-partial {
+    border-left: 0.2rem solid #ffff88;
+}
+
+.subtle-missing {
+    border-left: 0.2rem solid #ff8888;
+}
+
+.subtle-justified {
+    border-left: 0.2rem solid #888888;
+}
+
+.item-name {
+    font-size: 125%;
+    font-weight: bold;
+}
+
+.attribute {
+    margin-top: 0.5rem;
+}
+
+/* Tables */
+thead tr {
+    font-weight: bold;
+}
+
+tbody tr.alt {
+    background-color: #eeeeee;
+}
+
+/* Text */
+blockquote {
+    font-style: italic;
+    border-left: 0.2rem solid gray;
+    padding-left: 0.4rem;
+    margin-left: 0.5rem;
+}
+
+/* Footer */
+footer {
+    margin-top: 1rem;
+    padding: 0.2rem;
+    text-align: right;
+    color: #666666;
+    font-size: 0.7rem;
+}
+
+/* Columns layout */
+.columns {
+    display: flex;
+}
+
+.columns .column {
+    flex: 45%;
+}
+
+/* Table styling */
+thead tr {
+    font-weight: bold;
+}
+
+tbody tr.alt {
+    background-color: #eeeeee;
+}
+
+/* Text formatting */
+blockquote {
+    font-style: italic;
+    border-left: 0.2rem solid gray;
+    padding-left: 0.4rem;
+    margin-left: 0.5rem;
+}
+
+/* Footer styling */
+footer {
+    margin-top: 1rem;
+    padding: 0.2rem;
+    text-align: right;
+    color: #666666;
+    font-size: 0.7rem;
+}
+
 .button {
     background-color: #818589;
     border: none;
@@ -325,6 +385,11 @@ footer {
     border: 5px solid #000099
 }
 
+.js-plotly-plot {
+    z-index: 1;
+    position: relative;
+}
+
 </style>
 </head>
 <body>
@@ -424,40 +489,6 @@ footer {
 </tr>
 </table>
 </div>
-<div class="column">
-<h3>Tracing policy</h3>
-<svg width="125pt" height="116pt"
- viewBox="0.00 0.00 125.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
-<title>LOBSTER Tracing Policy</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 121,-112 121,4 -4,4"/>
-<!-- n_5a2ebfb8baa378cfcfcba58bbb1380c2 -->
-<g id="node1" class="node">
-<title>n_5a2ebfb8baa378cfcfcba58bbb1380c2</title>
-<g id="a_node1"><a xlink:href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2" xlink:title="Requirements">
-<path fill="none" stroke="black" d="M105,-108C105,-108 12,-108 12,-108 6,-108 0,-102 0,-96 0,-96 0,-84 0,-84 0,-78 6,-72 12,-72 12,-72 105,-72 105,-72 111,-72 117,-78 117,-84 117,-84 117,-96 117,-96 117,-102 111,-108 105,-108"/>
-<text text-anchor="middle" x="58.5" y="-86.3" font-family="Times,serif" font-size="14.00">Requirements</text>
-</a>
-</g>
-</g>
-<!-- n_ca0dbad92a874b2f69b549293387925e -->
-<g id="node2" class="node">
-<title>n_ca0dbad92a874b2f69b549293387925e</title>
-<g id="a_node2"><a xlink:href="#sec-ca0dbad92a874b2f69b549293387925e" xlink:title="Code">
-<polygon fill="none" stroke="black" points="85.5,-36 31.5,-36 31.5,0 85.5,0 85.5,-36"/>
-<text text-anchor="middle" x="58.5" y="-14.3" font-family="Times,serif" font-size="14.00">Code</text>
-</a>
-</g>
-</g>
-<!-- n_5a2ebfb8baa378cfcfcba58bbb1380c2&#45;&gt;n_ca0dbad92a874b2f69b549293387925e -->
-<g id="edge1" class="edge">
-<title>n_5a2ebfb8baa378cfcfcba58bbb1380c2&#45;&gt;n_ca0dbad92a874b2f69b549293387925e</title>
-<path fill="none" stroke="black" d="M58.5,-71.7C58.5,-63.98 58.5,-54.71 58.5,-46.11"/>
-<polygon fill="black" stroke="black" points="62,-46.1 58.5,-36.1 55,-46.1 62,-46.1"/>
-</g>
-</g>
-</svg>
-</div>
 </div>
 </div>
 <h2 id="sec-filtering-options" class="heading-filtering">Filtering</h2>
@@ -549,7 +580,7 @@ Status: status1
 </div>
 </div>
 <footer>
-<p>LOBSTER Version: 0.14.6-dev</p>
+<p>LOBSTER Version: 1.0.3-dev</p>
 </footer>
 </div>
 </div>

@@ -51,13 +51,6 @@ req.System_Requirement Fail_on_Output_File_Mismatch {
     '''
 }
 
-req.Software_Requirement Provide_Virtual_Environment {
-    description = '''
-        The test runner shall run tests of "lobster-html-report" inside a virtual environment
-        where "graphviz" is available according to the needs of the test.
-    '''
-}
-
 req.Software_Requirement Enrich_With_Hash {
     description = '''
         The function 'update_json' shall enrich a LOBSTER file (which
