@@ -1,10 +1,8 @@
 load("@trlc//:trlc.bzl", "TrlcProviderInfo")
+load("//bazel:providers.bzl", _LobsterProvider = "LobsterProvider")
 
-LobsterProvider = provider(
-    fields = {
-        "lobster_input": "ABC",
-    },
-)
+# Re-export LobsterProvider so it can be loaded from this file
+LobsterProvider = _LobsterProvider
 
 def _lobster_test_impl(ctx):
     lobster_report = ctx.actions.declare_file(ctx.attr.name + "_report.json")
