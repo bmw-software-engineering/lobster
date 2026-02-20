@@ -1,8 +1,62 @@
 load("//bazel:providers.bzl", "LobsterProvider")
 
-def _lobster_test_impl(ctx):
-    lobster_report = ctx.actions.declare_file(ctx.attr.name + "_report.json")
+def _lobster_report_subrule_impl(ctx, inputs, lobster_config, _lobster_report):
+    lobster_report = ctx.actions.declare_file(ctx.label.name + "_report.json")
 
+    args = ctx.actions.args()
+    args.add_all(["--lobster-config", lobster_config.path])
+    args.add_all(["--out", lobster_report.path])
+
+    ctx.actions.run(
+        executable = _lobster_report,
+        inputs = depset(inputs + [lobster_config]),
+        outputs = [lobster_report],
+        arguments = [args],
+        progress_message = "lobster-report {}".format(lobster_report.path),
+    )
+
+    return lobster_report
+
+subrule_lobster_report = subrule(
+    implementation = _lobster_report_subrule_impl,
+    attrs = {
+        "_lobster_report": attr.label(
+            default = "//:lobster-report",
+            executable = True,
+            cfg = "exec",
+        ),
+    },
+)
+
+def _lobster_html_report_subrule_impl(ctx, lobster_report, _lobster_html_report):
+    lobster_html_report = ctx.actions.declare_file("{}_report.html".format(ctx.label.name))
+
+    args = ctx.actions.args()
+    args.add(lobster_report.path)
+    args.add_all(["--out", lobster_html_report.path])
+
+    ctx.actions.run(
+        executable = _lobster_html_report,
+        inputs = [lobster_report],
+        outputs = [lobster_html_report],
+        arguments = [args],
+        progress_message = "lobster-html-report {}".format(lobster_html_report.path),
+    )
+
+    return lobster_html_report
+
+subrule_lobster_html_report = subrule(
+    implementation = _lobster_html_report_subrule_impl,
+    attrs = {
+        "_lobster_html_report": attr.label(
+            default = "//:lobster-html-report",
+            executable = True,
+            cfg = "exec",
+        ),
+    },
+)
+
+def _lobster_test_impl(ctx):
     lobster_config_substitutions = {}
     for input_config in ctx.attr.inputs:
         lobster_config_substitutions.update(input_config[LobsterProvider].lobster_input)
@@ -15,34 +69,8 @@ def _lobster_test_impl(ctx):
         substitutions = lobster_config_substitutions,
     )
 
-    args = ctx.actions.args()
-    args.add_all(["--lobster-config", lobster_config.path])
-    args.add_all(["--out", lobster_report.path])
-
-    ctx.actions.run(
-        executable = ctx.executable._lobster_report,
-        inputs = depset(ctx.files.inputs + [lobster_config]),
-        outputs = [lobster_report],
-        arguments = [args],
-        progress_message = "lobster-report {}".format(lobster_report.path),
-    )
-    ###############
-
-    lobster_html_report = ctx.actions.declare_file("{}_report.html".format(ctx.attr.name))
-
-    args = ctx.actions.args()
-    args.add(lobster_report.path)
-    args.add_all(["--out", lobster_html_report.path])
-
-    ctx.actions.run(
-        executable = ctx.executable._lobster_html_report,
-        inputs = [lobster_report],
-        outputs = [lobster_html_report],
-        arguments = [args],
-        progress_message = "lobster-html-report {}".format(lobster_html_report.path),
-    )
-
-    ###############
+    lobster_report = subrule_lobster_report(ctx.files.inputs, lobster_config)
+    lobster_html_report = subrule_lobster_html_report(lobster_report)
 
     test_executable = ctx.actions.declare_file("{}_lobster_ci_test_executable".format(ctx.attr.name))
     command = "set -o pipefail; {} {}".format(ctx.executable._lobster_ci_report.short_path, lobster_report.short_path)
@@ -74,20 +102,6 @@ lobster_test = rule(
             mandatory = True,
             allow_single_file = True,
         ),
-        "source_filter": attr.string_list(
-            doc = "List of strings, which are used to exclude source and test files if they start with any of the strings.",
-            default = [],
-        ),
-        "_lobster_report": attr.label(
-            default = "//:lobster-report",
-            executable = True,
-            cfg = "exec",
-        ),
-        "_lobster_html_report": attr.label(
-            default = "//:lobster-html-report",
-            executable = True,
-            cfg = "exec",
-        ),
         "_lobster_ci_report": attr.label(
             default = "//:lobster-ci-report",
             executable = True,
@@ -95,4 +109,5 @@ lobster_test = rule(
         ),
     },
     test = True,
+    subrules = [subrule_lobster_report, subrule_lobster_html_report],
 )
