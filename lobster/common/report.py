@@ -19,13 +19,36 @@
 import json
 from collections import OrderedDict
 from dataclasses import dataclass
+from pathlib import Path
+
+import yaml
+import yamale
 
 from lobster.common.level_definition import LevelDefinition
-from lobster.common.items import Tracing_Status, Requirement, Implementation, Activity
+from lobster.common.items import (
+    Tracing_Status, Requirement, Implementation, Activity, Item
+)
 from lobster.common.parser import load as load_config
 from lobster.common.errors import Message_Handler
 from lobster.common.io import lobster_read, ensure_output_directory
 from lobster.common.location import File_Reference
+
+LEVEL_DEFINITION_TAG = '!LevelDefinition'
+YAMALE_SCHEMA_FILENAME = 'tracing_policy_schema.yamale'
+
+
+class YamlConfigLoader(yaml.SafeLoader):
+    pass
+
+
+def level_definition_constructor(loader, node):
+    values = loader.construct_mapping(node, deep=True)
+    return LevelDefinition(**values)
+
+
+def ordered_dict_constructor(loader, node):
+    loader.flatten_mapping(node)
+    return OrderedDict(loader.construct_pairs(node))
 
 
 @dataclass
@@ -57,7 +80,7 @@ class Report:
         """
 
         # Load config
-        self.config = load_config(self.mh, filename)
+        self.load_config_from_file(filename)
 
         # Load requested files
         for level in self.config:
@@ -73,6 +96,77 @@ class Report:
 
         # Compute coverage for items
         self.compute_coverage_for_items()
+
+    def validate_config_from_yaml_file(self, filename):
+        loc = File_Reference(filename)
+
+        try:
+            full_path_name = Path(filename).resolve()
+            yamale_data_filename = Path(
+                full_path_name.parent,
+                f"yamale_{full_path_name.name}"
+            )
+
+            # Read the file and remove '!LevelDefinition'
+            with open(filename, "r", encoding="UTF-8") as yaml_file:
+                yaml_content = yaml_file.read()
+
+            # Remove the tag
+            yamale_content = yaml_content.replace(LEVEL_DEFINITION_TAG, "")
+
+            # Write the cleaned content to a new file
+            with open(yamale_data_filename, "w", encoding="UTF-8") as yamale_file:
+                yamale_file.write(yamale_content)
+
+            yamale_schema_filename = Path(Path(__file__).parent, YAMALE_SCHEMA_FILENAME)
+            schema = yamale.make_schema(yamale_schema_filename)
+            data = yamale.make_data(yamale_data_filename)
+            yamale.validate(schema, data)
+        except (ValueError, FileNotFoundError, yamale.YamaleError) as e:
+            self.mh.error(loc, f"Failed to validate yaml config file: {e}")
+
+    def load_config_from_yaml_file(self, filename):
+        loc = File_Reference(filename)
+
+        try:
+            YamlConfigLoader.add_constructor(
+                LEVEL_DEFINITION_TAG,
+                level_definition_constructor
+            )
+            YamlConfigLoader.add_constructor(
+                yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+                ordered_dict_constructor
+            )
+
+            with open(filename, 'r', encoding="UTF-8") as f:
+                self.config = yaml.load(f, Loader=YamlConfigLoader)
+        except (ValueError, FileNotFoundError, yamale.YamaleError) as e:
+            self.mh.error(loc, f"Failed to load yaml config file: {e}")
+
+    def print_deprecated_warning(self, filename):
+        loc = File_Reference(filename)
+        self.mh.warning(loc,
+                        "configuration file format '.conf' is deprecated,"
+                        " please migrate to '.yaml' format")
+
+    def print_unsupported_file_format_error(self, filename):
+        loc = File_Reference(filename)
+        self.mh.error(loc,
+                        "configuration file format is unsupported,"
+                        " please use '.yaml' format")
+
+    def load_config_from_conf_file(self, filename):
+        self.config = load_config(self.mh, filename)
+
+    def load_config_from_file(self, filename):
+        if str(filename).endswith('.yaml') or str(filename).endswith('.yml'):
+            self.validate_config_from_yaml_file(filename)
+            self.load_config_from_yaml_file(filename)
+        elif str(filename).endswith('.conf'):
+            self.load_config_from_conf_file(filename)
+            self.print_deprecated_warning(filename)
+        else:
+            self.print_unsupported_file_format_error(filename)
 
     def resolve_references_for_items(self):
         for src_item in self.items.values():
@@ -122,21 +216,28 @@ class Report:
         for level_config in self.config.values():
             level = {
                 "name"     : level_config.name,
-                "kind"     : level_config.kind,
                 "items"    : [item.to_json()
                               for item in self.items.values()
                               if item.level == level_config.name],
                 "coverage" : self.coverage[level_config.name].coverage
             }
+            if level_config.kind:
+                level["kind"] = level_config.kind
             levels.append(level)
+
+        policy = {}
+        for level, level_definition in self.config.items():
+            level_definition_dict = level_definition.to_json()
+            if 'kind' in level_definition_dict and level_definition_dict['kind'] == '':
+                del level_definition_dict['kind']
+            policy[level] = level_definition_dict
 
         report = {
             "schema"    : "lobster-report",
             "version"   : 2,
             "generator" : "lobster_report",
             "levels"    : levels,
-            "policy"    : {key: value.to_json()
-                           for key, value in self.config.items()},
+            "policy"    : policy,
             "matrix"    : [],
         }
 
@@ -193,20 +294,25 @@ class Report:
             self.coverage.update({level["name"]: coverage})
 
             for item_data in level["items"]:
-                if level["kind"] == "requirements":
+                item_kind = level.get("kind", "")
+                if item_kind == "requirements":
                     item = Requirement.from_json(level["name"],
                                                  item_data,
                                                  3)
-                elif level["kind"] == "implementation":
+                elif item_kind == "implementation":
                     item = Implementation.from_json(level["name"],
                                                     item_data,
                                                     3)
-                else:
-                    if level["kind"] != "activity":
-                        raise ValueError(f"unknown level kind '{level['kind']}'")
+                elif item_kind == "activity":
                     item = Activity.from_json(level["name"],
                                               item_data,
                                               3)
+                else:
+                    if item_kind != "":
+                        raise ValueError(f"unknown level kind '{item_kind}'")
+                    item = Item.from_json(level["name"],
+                                          item_data,
+                                          3)
 
                 self.items[item.tag.key()] = item
                 self.coverage[item.level].items += 1

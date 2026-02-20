@@ -1,0 +1,15 @@
+# tracing policy yaml schema
+any(map(str(), include('level_definition')))
+
+---
+level_definition:
+  name: str()
+  traces: list(str(), required=False)
+  source: list(any(), required=False)
+  needs_tracing_up: bool(required=False)
+  needs_tracing_down: bool(required=False)
+  breakdown_requirements: list(any(), required=False)
+  raw_trace_requirements: list(any(), required=False)
+  serialize_needs_tracing_up: bool(required=False)
+  serialize_needs_tracing_down: bool(required=False)
+  serialize_breakdown_requirements: bool(required=False)

@@ -51,7 +51,9 @@ from requests.exceptions import (
 import yaml
 from urllib3.util.retry import Retry
 
-from lobster.common.items import Tracing_Tag, Requirement, Implementation, Activity
+from lobster.common.items import (
+    Tracing_Tag, Requirement, Implementation, Activity, Item
+)
 from lobster.common.location import Codebeamer_Reference
 from lobster.common.errors import Message_Handler, LOBSTER_Error
 from lobster.common.io import lobster_read, lobster_write, ensure_output_directory
@@ -305,6 +307,7 @@ def get_schema_config(cb_config: Config) -> dict:
         'requirement': {"namespace": "req", "class": Requirement},
         'implementation': {"namespace": "imp", "class": Implementation},
         'activity': {"namespace": "act", "class": Activity},
+        'item': {"namespace": "itm", "class": Item},
     }
     schema = cb_config.schema.lower()
 
@@ -380,7 +383,7 @@ def _create_common_params(namespace: str, cb_item: dict, cb_root: str,
     Returns:
     dict: Common parameters including tag, location, and kind.
     """
-    return {
+    common_params = {
         'tag': Tracing_Tag(
             namespace=namespace,
             tag=str(cb_item["id"]),
@@ -392,9 +395,11 @@ def _create_common_params(namespace: str, cb_item: dict, cb_root: str,
             item=cb_item["id"],
             version=cb_item["version"],
             name=item_name
-        ),
-        'kind': kind
+        )
     }
+    if namespace != "itm":
+        common_params['kind'] = kind
+    return common_params
 
 
 def _create_lobster_item(schema_class, common_params, item_name, status):
@@ -424,11 +429,17 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
             name= item_name,
         )
 
-    else:
+    elif schema_class is Activity:
         return Activity(
             **common_params,
             framework="codebeamer",
             status=status
+        )
+
+    else:
+        return Item(
+            **common_params,
+            name= item_name,
         )
 
 
@@ -511,7 +522,7 @@ def parse_config_data(data: dict) -> Config:
         import_query=data.get(SupportedConfigKeys.IMPORT_QUERY.value),
         verify_ssl=data.get(SupportedConfigKeys.VERIFY_SSL.value, True),
         page_size=data.get(SupportedConfigKeys.PAGE_SIZE.value, 100),
-        schema=data.get(SupportedConfigKeys.SCHEMA.value, "Requirement"),
+        schema=data.get(SupportedConfigKeys.SCHEMA.value, "Item"),
         timeout=data.get(SupportedConfigKeys.TIMEOUT.value, 30),
         out=data.get(SupportedConfigKeys.OUT.value),
         num_request_retry=data.get(SupportedConfigKeys.NUM_REQUEST_RETRY.value, 5),

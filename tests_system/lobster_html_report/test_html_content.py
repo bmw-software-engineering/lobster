@@ -30,7 +30,11 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         This test checks that the data is not mixed
         and unique data in each item processed correctly
         """
-        output_filename = "octopus.html"
+        dot_present = is_dot_available(dot=None)
+        if dot_present:
+            output_filename = "octopus_tracing_policy.html"
+        else:
+            output_filename = "octopus.html"
         inputfile2 = self._data_directory / "report_octopus.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
@@ -46,7 +50,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
-        if is_dot_available(dot=None):
+        if dot_present:
             expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
 
         else:
@@ -72,7 +76,11 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         This test checks that the data created using complex tracing
         policy is processed correctly.
         """
-        output_filename = "pizza.html"
+        dot_present = is_dot_available(dot=None)
+        if dot_present:
+            output_filename = "pizza_tracing_policy.html"
+        else:
+            output_filename = "pizza.html"
         inputfile = self._data_directory / "report_pizza.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
@@ -88,7 +96,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
-        if is_dot_available(dot=None):
+        if dot_present:
             expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
 
         else:
@@ -115,7 +123,11 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         This test checks that the tool shall process only the provided input file
         and ignore all other files in the working directory.
         """
-        output_filename = "pizza.html"
+        dot_present = is_dot_available(dot=None)
+        if dot_present:
+            output_filename = "pizza_tracing_policy.html"
+        else:
+            output_filename = "pizza.html"
         inputfile1 = self._data_directory / "report_pizza.lobster"
         inputfile2 = self._data_directory / "report_octopus.lobster"
 
@@ -134,7 +146,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
-        if is_dot_available(dot=None):
+        if dot_present:
             expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
 
         else:
@@ -162,7 +174,11 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         with multiple status like ok, missing, partial, justified
         and displays content correctly according to its status.
         """
-        output_filename = "all_status.html"
+        dot_present = is_dot_available(dot=None)
+        if dot_present:
+            output_filename = "all_status_tracing_policy.html"
+        else:
+            output_filename = "all_status.html"
         inputfile = self._data_directory / "report_all_status.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
@@ -178,7 +194,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
-        if is_dot_available(dot=None):
+        if dot_present:
             expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
 
         else:
@@ -204,7 +220,11 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         It also covers that the correct codebeamer links i.e codebeamer source location
         is included in output
         """
-        output_filename = "codebeamer_links.html"
+        dot_present = is_dot_available(dot=None)
+        if dot_present:
+            output_filename = "codebeamer_links_tracing_policy.html"
+        else:
+            output_filename = "codebeamer_links.html"
         inputfile = self._data_directory / "codebeamer_links.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
@@ -220,7 +240,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
-        if is_dot_available(dot=None):
+        if dot_present:
             expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
 
         else:
@@ -248,7 +268,11 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         This test checks the input .lobster file has a content in message attributes
         and HTML tool correctly processes it and write correct output file.
         """
-        output_filename = "octopus.html"
+        dot_present = is_dot_available(dot=None)
+        if dot_present:
+            output_filename = "octopus_tracing_policy.html"
+        else:
+            output_filename = "octopus.html"
         inputfile = self._data_directory / "report_octopus.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
@@ -264,7 +288,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
-        if is_dot_available(dot=None):
+        if dot_present:
             expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
 
         else:

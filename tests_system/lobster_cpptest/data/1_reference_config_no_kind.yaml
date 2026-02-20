@@ -1,0 +1,4 @@
+output_file: "1_reference_no_schema.lobster"
+files:
+  - '1_reference.cpp'
+codebeamer_url: "https://codebeamer.com"
