@@ -2,7 +2,7 @@
     If the repo does not have requirement(), we emulate it.
 """
 
-load("@pip//:requirements.bzl", pip_requirement = "requirement")
+load("@lobster_pip_hub_dependencies//:requirements.bzl", pip_requirement = "requirement")
 
 _mapping = {
     "certifi": "@certifi//:lib",

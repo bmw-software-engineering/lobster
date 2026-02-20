@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 6,
-  "moduleFileHash": "fec3a396f9c90f4e27ca846f39a4dea6d93d964b2983991f9ce1267fbcd0f603",
+  "moduleFileHash": "b8080c6106098a65908de683514ed2b19c6a8e980de6b89219f42a56631ff03c",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -34,35 +34,86 @@
             "column": 23
           },
           "imports": {
-            "python_versions": "python_versions",
-            "python_3_9": "python_3_9"
+            "python_versions": "python_versions"
           },
           "devImports": [],
           "tags": [
             {
-              "tagName": "defaults",
-              "attributeValues": {
-                "python_version": "3.9",
-                "python_version_env": "BAZEL_PYTHON_VERSION"
-              },
-              "devDependency": false,
-              "location": {
-                "file": "@@//:MODULE.bazel",
-                "line": 16,
-                "column": 16
-              }
-            },
-            {
               "tagName": "toolchain",
               "attributeValues": {
+                "is_default": true,
                 "configure_coverage_tool": true,
                 "python_version": "3.9"
               },
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
+                "line": 17,
+                "column": 17
+              }
+            },
+            {
+              "tagName": "toolchain",
+              "attributeValues": {
+                "python_version": "3.10"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
                 "line": 22,
                 "column": 17
+              }
+            },
+            {
+              "tagName": "toolchain",
+              "attributeValues": {
+                "python_version": "3.11"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 23,
+                "column": 17
+              }
+            },
+            {
+              "tagName": "toolchain",
+              "attributeValues": {
+                "python_version": "3.12"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 24,
+                "column": 17
+              }
+            }
+          ],
+          "hasDevUseExtension": false,
+          "hasNonDevUseExtension": true
+        },
+        {
+          "extensionBzlFile": "@rules_python//python/uv:uv.bzl",
+          "extensionName": "uv",
+          "usingModule": "<root>",
+          "location": {
+            "file": "@@//:MODULE.bazel",
+            "line": 28,
+            "column": 19
+          },
+          "imports": {},
+          "devImports": [],
+          "tags": [
+            {
+              "tagName": "configure",
+              "attributeValues": {
+                "version": "0.8.24"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 29,
+                "column": 13
               }
             }
           ],
@@ -75,41 +126,84 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 32,
+            "line": 34,
             "column": 20
           },
           "imports": {
-            "pip": "pip"
+            "lobster_pip_hub_dependencies": "lobster_pip_hub_dependencies"
           },
           "devImports": [],
           "tags": [
             {
               "tagName": "parse",
               "attributeValues": {
-                "hub_name": "lobster_dependencies",
-                "python_version": "3.11",
-                "requirements_lock": "//:requirements.txt"
+                "hub_name": "lobster_pip_hub_dependencies",
+                "envsubst": [
+                  "PIP_INDEX_URL"
+                ],
+                "experimental_index_url": "${PIP_INDEX_URL:-https://pypi.org/simple}",
+                "python_version": "3.9",
+                "requirements_lock": "//:requirements_lock.txt"
               },
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 34,
-                "column": 10
+                "line": 37,
+                "column": 14
               }
             },
             {
               "tagName": "parse",
               "attributeValues": {
-                "hub_name": "pip",
-                "python_version": "3.9",
-                "requirements_lock": "//:requirements_lock_3_9.txt",
-                "requirements_windows": "//:requirements_windows_3_9.txt"
+                "hub_name": "lobster_pip_hub_dependencies",
+                "envsubst": [
+                  "PIP_INDEX_URL"
+                ],
+                "experimental_index_url": "${PIP_INDEX_URL:-https://pypi.org/simple}",
+                "python_version": "3.10",
+                "requirements_lock": "//:requirements_lock.txt"
               },
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 40,
-                "column": 10
+                "line": 37,
+                "column": 14
+              }
+            },
+            {
+              "tagName": "parse",
+              "attributeValues": {
+                "hub_name": "lobster_pip_hub_dependencies",
+                "envsubst": [
+                  "PIP_INDEX_URL"
+                ],
+                "experimental_index_url": "${PIP_INDEX_URL:-https://pypi.org/simple}",
+                "python_version": "3.11",
+                "requirements_lock": "//:requirements_lock.txt"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 37,
+                "column": 14
+              }
+            },
+            {
+              "tagName": "parse",
+              "attributeValues": {
+                "hub_name": "lobster_pip_hub_dependencies",
+                "envsubst": [
+                  "PIP_INDEX_URL"
+                ],
+                "experimental_index_url": "${PIP_INDEX_URL:-https://pypi.org/simple}",
+                "python_version": "3.12",
+                "requirements_lock": "//:requirements_lock.txt"
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 37,
+                "column": 14
               }
             }
           ],
@@ -590,7 +684,7 @@
               "tagName": "toolchain",
               "attributeValues": {
                 "is_default": true,
-                "python_version": "3.11"
+                "python_version": "3.12"
               },
               "devDependency": false,
               "location": {
@@ -621,7 +715,7 @@
               "tagName": "parse",
               "attributeValues": {
                 "hub_name": "trlc_dependencies",
-                "python_version": "3.11",
+                "python_version": "3.12",
                 "requirements_lock": "//:requirements.txt"
               },
               "devDependency": false,
@@ -3133,17 +3227,156 @@
             "attributes": {
               "toolchain_type": "'@@rules_python~//python/uv:uv_toolchain_type'",
               "toolchain_names": [
-                "none"
+                "0_8_24_aarch64_apple_darwin",
+                "0_8_24_aarch64_unknown_linux_gnu",
+                "0_8_24_powerpc64_unknown_linux_gnu",
+                "0_8_24_powerpc64le_unknown_linux_gnu",
+                "0_8_24_s390x_unknown_linux_gnu",
+                "0_8_24_x86_64_apple_darwin",
+                "0_8_24_x86_64_pc_windows_msvc",
+                "0_8_24_x86_64_unknown_linux_gnu"
               ],
               "toolchain_implementations": {
-                "none": "'@@rules_python~//python:none'"
+                "0_8_24_aarch64_apple_darwin": "@uv_0_8_24_aarch64_apple_darwin//:uv_toolchain",
+                "0_8_24_aarch64_unknown_linux_gnu": "@uv_0_8_24_aarch64_unknown_linux_gnu//:uv_toolchain",
+                "0_8_24_powerpc64_unknown_linux_gnu": "@uv_0_8_24_powerpc64_unknown_linux_gnu//:uv_toolchain",
+                "0_8_24_powerpc64le_unknown_linux_gnu": "@uv_0_8_24_powerpc64le_unknown_linux_gnu//:uv_toolchain",
+                "0_8_24_s390x_unknown_linux_gnu": "@uv_0_8_24_s390x_unknown_linux_gnu//:uv_toolchain",
+                "0_8_24_x86_64_apple_darwin": "@uv_0_8_24_x86_64_apple_darwin//:uv_toolchain",
+                "0_8_24_x86_64_pc_windows_msvc": "@uv_0_8_24_x86_64_pc_windows_msvc//:uv_toolchain",
+                "0_8_24_x86_64_unknown_linux_gnu": "@uv_0_8_24_x86_64_unknown_linux_gnu//:uv_toolchain"
               },
               "toolchain_compatible_with": {
-                "none": [
-                  "@platforms//:incompatible"
+                "0_8_24_aarch64_apple_darwin": [
+                  "'@@platforms//os:macos'",
+                  "'@@platforms//cpu:aarch64'"
+                ],
+                "0_8_24_aarch64_unknown_linux_gnu": [
+                  "'@@platforms//os:linux'",
+                  "'@@platforms//cpu:aarch64'"
+                ],
+                "0_8_24_powerpc64_unknown_linux_gnu": [
+                  "'@@platforms//os:linux'",
+                  "'@@platforms//cpu:ppc'"
+                ],
+                "0_8_24_powerpc64le_unknown_linux_gnu": [
+                  "'@@platforms//os:linux'",
+                  "'@@platforms//cpu:ppc64le'"
+                ],
+                "0_8_24_s390x_unknown_linux_gnu": [
+                  "'@@platforms//os:linux'",
+                  "'@@platforms//cpu:s390x'"
+                ],
+                "0_8_24_x86_64_apple_darwin": [
+                  "'@@platforms//os:macos'",
+                  "'@@platforms//cpu:x86_64'"
+                ],
+                "0_8_24_x86_64_pc_windows_msvc": [
+                  "'@@platforms//os:windows'",
+                  "'@@platforms//cpu:x86_64'"
+                ],
+                "0_8_24_x86_64_unknown_linux_gnu": [
+                  "'@@platforms//os:linux'",
+                  "'@@platforms//cpu:x86_64'"
                 ]
               },
               "toolchain_target_settings": {}
+            }
+          },
+          "uv_0_8_24_x86_64_pc_windows_msvc": {
+            "bzlFile": "@@rules_python~//python/uv/private:uv_repository.bzl",
+            "ruleClassName": "uv_repository",
+            "attributes": {
+              "version": "0.8.24",
+              "platform": "x86_64-pc-windows-msvc",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.8.24/uv-x86_64-pc-windows-msvc.zip"
+              ],
+              "sha256": "5055be7909a844f703c54e8846d14ab676c34be6ea0d969ee74c5747feaedda0"
+            }
+          },
+          "uv_0_8_24_x86_64_unknown_linux_gnu": {
+            "bzlFile": "@@rules_python~//python/uv/private:uv_repository.bzl",
+            "ruleClassName": "uv_repository",
+            "attributes": {
+              "version": "0.8.24",
+              "platform": "x86_64-unknown-linux-gnu",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.8.24/uv-x86_64-unknown-linux-gnu.tar.gz"
+              ],
+              "sha256": "db8179fffd97b7557b9a519bae82eaa4f499b02ef546f738a35e74e26c47e6b7"
+            }
+          },
+          "uv_0_8_24_powerpc64le_unknown_linux_gnu": {
+            "bzlFile": "@@rules_python~//python/uv/private:uv_repository.bzl",
+            "ruleClassName": "uv_repository",
+            "attributes": {
+              "version": "0.8.24",
+              "platform": "powerpc64le-unknown-linux-gnu",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.8.24/uv-powerpc64le-unknown-linux-gnu.tar.gz"
+              ],
+              "sha256": "0e757a7109aecbe5b6759470164d466e2a2a234808d84095e6db52a13a62f399"
+            }
+          },
+          "uv_0_8_24_powerpc64_unknown_linux_gnu": {
+            "bzlFile": "@@rules_python~//python/uv/private:uv_repository.bzl",
+            "ruleClassName": "uv_repository",
+            "attributes": {
+              "version": "0.8.24",
+              "platform": "powerpc64-unknown-linux-gnu",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.8.24/uv-powerpc64-unknown-linux-gnu.tar.gz"
+              ],
+              "sha256": "22dfcf44c1e8b273640e13aa41c72856654da650d58e0b39d1143dbdb4ee7997"
+            }
+          },
+          "uv_0_8_24_aarch64_unknown_linux_gnu": {
+            "bzlFile": "@@rules_python~//python/uv/private:uv_repository.bzl",
+            "ruleClassName": "uv_repository",
+            "attributes": {
+              "version": "0.8.24",
+              "platform": "aarch64-unknown-linux-gnu",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.8.24/uv-aarch64-unknown-linux-gnu.tar.gz"
+              ],
+              "sha256": "9526f8b0eddd13f5162c18df5ecf35c21e4f96567d21849750356b60121882df"
+            }
+          },
+          "uv_0_8_24_aarch64_apple_darwin": {
+            "bzlFile": "@@rules_python~//python/uv/private:uv_repository.bzl",
+            "ruleClassName": "uv_repository",
+            "attributes": {
+              "version": "0.8.24",
+              "platform": "aarch64-apple-darwin",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.8.24/uv-aarch64-apple-darwin.tar.gz"
+              ],
+              "sha256": "5f0d9d14b17ba3f0af4602a7a5a2e4faececf0a9463736cf8e6269c49569b2fa"
+            }
+          },
+          "uv_0_8_24_s390x_unknown_linux_gnu": {
+            "bzlFile": "@@rules_python~//python/uv/private:uv_repository.bzl",
+            "ruleClassName": "uv_repository",
+            "attributes": {
+              "version": "0.8.24",
+              "platform": "s390x-unknown-linux-gnu",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.8.24/uv-s390x-unknown-linux-gnu.tar.gz"
+              ],
+              "sha256": "8167af20bf336179f5ffb96421d38cc7cb5d54dfa9b90820154cffbb456032de"
+            }
+          },
+          "uv_0_8_24_x86_64_apple_darwin": {
+            "bzlFile": "@@rules_python~//python/uv/private:uv_repository.bzl",
+            "ruleClassName": "uv_repository",
+            "attributes": {
+              "version": "0.8.24",
+              "platform": "x86_64-apple-darwin",
+              "urls": [
+                "https://github.com/astral-sh/uv/releases/download/0.8.24/uv-x86_64-apple-darwin.tar.gz"
+              ],
+              "sha256": "b75ccf924654ad168efac2ec6934704b3d6b9cbff1650b35e17fa3d26d2bea1f"
             }
           }
         },

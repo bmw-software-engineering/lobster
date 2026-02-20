@@ -1,9 +1,9 @@
 # load("@bazel_gazelle//:def.bzl", "gazelle")
 # load("@pip//:requirements.bzl", "all_whl_requirements")
-# load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 # load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
 # load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
 load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+load("@rules_python//python/uv:lock.bzl", "lock")
 load("//:requirements.bzl", "requirement")
 
 # # BUILD.bazel
@@ -45,16 +45,11 @@ load("//:requirements.bzl", "requirement")
 #     pip_repository_name = "pip",
 #     requirements = "requirements_lock_3_9.txt",
 # )
-#
-# # This stanza calls a rule that generates targets for managing pip dependencies
-# # with pip-compile for a particular python version.
-# compile_pip_requirements(
-#     name = "requirements_3_9",
-#     timeout = "moderate",
-#     src = "requirements.in",
-#     requirements_txt = "requirements_lock_3_9.txt",
-#     requirements_windows = "requirements_windows_3_9.txt",
-# )
+lock(
+    name = "python_dependencies",
+    srcs = ["requirements_dev.txt", "requirements.txt"],
+    out = "requirements_lock.txt",
+)
 
 py_library(
     name = "lobster",
