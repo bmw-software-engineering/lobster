@@ -4,7 +4,7 @@
       "tag": "req 1@100",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 10000,
         "item": 1,
         "version": 100,
@@ -24,7 +24,7 @@
       "tag": "req 2@200",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 20000,
         "item": 2,
         "version": 200,
@@ -44,7 +44,7 @@
       "tag": "req 3@300",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 30000,
         "item": 3,
         "version": 300,
@@ -64,7 +64,7 @@
       "tag": "req 4@400",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 40000,
         "item": 4,
         "version": 400,
@@ -84,7 +84,7 @@
       "tag": "req 5@500",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 50000,
         "item": 5,
         "version": 500,
@@ -104,7 +104,7 @@
       "tag": "req 6@600",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 60000,
         "item": 6,
         "version": 600,
@@ -124,7 +124,7 @@
       "tag": "req 7@700",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 70000,
         "item": 7,
         "version": 700,
@@ -144,7 +144,7 @@
       "tag": "req 8@800",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 80000,
         "item": 8,
         "version": 800,
@@ -164,7 +164,7 @@
       "tag": "req 9@900",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 90000,
         "item": 9,
         "version": 900,
@@ -184,7 +184,7 @@
       "tag": "req 10@1000",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 100000,
         "item": 10,
         "version": 1000,
@@ -204,7 +204,7 @@
       "tag": "req 11@1100",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 110000,
         "item": 11,
         "version": 1100,

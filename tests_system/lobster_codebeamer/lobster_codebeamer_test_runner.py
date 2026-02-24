@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional, Union
 import yaml
-from tests_system.lobster_codebeamer.mock_server import PORT
 from tests_system.testrunner import TestRunResult, TestRunner
 from lobster.tools.codebeamer.codebeamer import main
 
@@ -19,8 +18,8 @@ class ConfigFileData:
     retry_error_codes: Optional[List[int]] = None
     verify_ssl: Optional[bool] = None
 
-    def set_default_root_token_out(self):
-        self.root = f"https://localhost:{PORT}"
+    def set_default_root_token_out(self, port: int):
+        self.root = f"https://localhost:{port}"
         self.token = "abcdef1234567890"
         self.out = "codebeamer.lobster"
 

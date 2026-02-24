@@ -4,7 +4,7 @@
       "tag": "req 1@100",
       "location": {
         "kind": "codebeamer",
-        "cb_root": "https://localhost:8999",
+        "cb_root": "https://localhost:MOCK_SERVER_PORT",
         "tracker": 10000,
         "item": 1,
         "version": 100,

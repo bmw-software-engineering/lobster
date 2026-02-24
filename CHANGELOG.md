@@ -5,6 +5,9 @@
 
 ### 1.0.3-dev
 
+* `lobster-codebeamer`:
+  - Enabled parallel execution for system tests, improving test suite performance.
+
 * All tools now automatically create output directories if they don't exist.
   Previously, tools would crash with an exception if the specified output
   directory path did not exist. This enhancement improves usability and
