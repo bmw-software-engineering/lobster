@@ -67,6 +67,7 @@
           "tracing_status": "PARTIAL",
           "framework": "framework_03",
           "kind": "kind_03",
+          "text": null,
           "status": null
         },
         {
@@ -86,6 +87,7 @@
           "tracing_status": "MISSING",
           "framework": "framework_04",
           "kind": "kind_04",
+          "text": null,
           "status": null
         }
       ],

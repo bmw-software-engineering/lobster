@@ -456,6 +456,7 @@
           "tracing_status": "OK",
           "framework": "GoogleTest",
           "kind": "test",
+          "text": null,
           "status": "ok"
         },
         {
@@ -479,6 +480,7 @@
           "tracing_status": "OK",
           "framework": "MATLAB",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -502,6 +504,7 @@
           "tracing_status": "OK",
           "framework": "JSON",
           "kind": "Test Vector",
+          "text": null,
           "status": null
         },
         {
@@ -525,6 +528,7 @@
           "tracing_status": "OK",
           "framework": "JSON",
           "kind": "Test Vector",
+          "text": null,
           "status": null
         },
         {
@@ -546,6 +550,7 @@
           "tracing_status": "JUSTIFIED",
           "framework": "JSON",
           "kind": "Test Vector",
+          "text": null,
           "status": null
         }
       ],
