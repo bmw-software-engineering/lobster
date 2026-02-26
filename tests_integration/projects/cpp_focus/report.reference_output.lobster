@@ -815,6 +815,7 @@
           "tracing_status": "OK",
           "framework": "GoogleTest",
           "kind": "test",
+          "text": null,
           "status": "ok"
         },
         {
@@ -839,6 +840,7 @@
           "tracing_status": "OK",
           "framework": "GoogleTest",
           "kind": "test",
+          "text": null,
           "status": "ok"
         },
         {
@@ -862,6 +864,7 @@
           "tracing_status": "OK",
           "framework": "GoogleTest",
           "kind": "test",
+          "text": null,
           "status": "ok"
         },
         {
@@ -885,6 +888,7 @@
           "tracing_status": "OK",
           "framework": "GoogleTest",
           "kind": "test",
+          "text": null,
           "status": "fail"
         },
         {
@@ -908,6 +912,7 @@
           "tracing_status": "OK",
           "framework": "GoogleTest",
           "kind": "test",
+          "text": null,
           "status": "ok"
         }
       ],

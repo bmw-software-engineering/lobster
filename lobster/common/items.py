@@ -325,21 +325,25 @@ class Activity(Item):
             location: Location,
             framework: str,
             kind: str,
+            text: Optional[str] = None,
             status: Optional[str] = None,
     ):
         super().__init__(tag, location)
         assert isinstance(framework, str)
         assert isinstance(kind, str)
+        assert isinstance(text, str) or text is None
         assert isinstance(status, str) or status is None
 
         self.framework = framework
         self.kind      = kind
+        self.text      = text
         self.status    = status
 
     def to_json(self):
         rv = super().to_json()
         rv["framework"] = self.framework
         rv["kind"]      = self.kind
+        rv["text"]      = self.text
         rv["status"]    = self.status
         return rv
 
@@ -353,6 +357,7 @@ class Activity(Item):
                         location  = Location.from_json(data["location"]),
                         framework = data["framework"],
                         kind      = data["kind"],
+                        text      = data.get("text", None),
                         status    = data.get("status", None))
         item.additional_data_from_json(level, data, schema_version)
 
