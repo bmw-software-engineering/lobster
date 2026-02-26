@@ -21,6 +21,7 @@
       ],
       "framework": "lobster-pkg",
       "kind": "test",
+      "text": null,
       "status": null
     },
     {
@@ -38,6 +39,7 @@
       "just_global": [],
       "framework": "lobster-pkg",
       "kind": "test",
+      "text": null,
       "status": null
     }
   ],

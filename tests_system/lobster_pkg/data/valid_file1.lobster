@@ -21,6 +21,7 @@
       ],
       "framework": "lobster-pkg",
       "kind": "test",
+      "text": null,
       "status": null
     }
   ],

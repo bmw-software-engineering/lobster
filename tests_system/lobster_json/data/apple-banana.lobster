@@ -15,6 +15,7 @@
       "just_global": [],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     },
     {
@@ -32,6 +33,7 @@
       "just_global": [],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     }
   ],

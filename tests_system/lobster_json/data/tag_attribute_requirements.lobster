@@ -19,6 +19,7 @@
       ],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     },
     {
@@ -40,6 +41,7 @@
       ],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     },
     {
@@ -61,6 +63,7 @@
       ],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     },
     {
@@ -82,6 +85,7 @@
       ],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     },
     {
@@ -102,6 +106,7 @@
       ],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     },
     {
@@ -122,6 +127,7 @@
       ],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     },
     {
@@ -143,6 +149,7 @@
       ],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     },
     {
@@ -164,6 +171,7 @@
       ],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     }
   ],

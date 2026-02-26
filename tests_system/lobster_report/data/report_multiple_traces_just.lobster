@@ -569,6 +569,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -591,6 +592,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -613,6 +615,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -635,6 +638,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -657,6 +661,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -679,6 +684,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -701,6 +707,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -723,6 +730,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -745,6 +753,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -767,6 +776,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -792,6 +802,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -823,6 +834,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -846,6 +858,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -869,6 +882,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         },
         {
@@ -894,6 +908,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
+          "text": null,
           "status": null
         }
       ],

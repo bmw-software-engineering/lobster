@@ -1,6 +1,63 @@
 {
   "data": [
     {
+      "tag": "json valid_directory/nested_dir/test_two.json:Test_4",
+      "location": {
+        "kind": "file",
+        "file": "valid_directory/nested_dir/test_two.json",
+        "line": null,
+        "column": null
+      },
+      "name": "valid_directory/nested_dir/test_two.json:Test_4",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "JSON",
+      "kind": "Test Vector",
+      "text": null,
+      "status": null
+    },
+    {
+      "tag": "json valid_directory/nested_dir/test_two.json:Test_5",
+      "location": {
+        "kind": "file",
+        "file": "valid_directory/nested_dir/test_two.json",
+        "line": null,
+        "column": null
+      },
+      "name": "valid_directory/nested_dir/test_two.json:Test_5",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "refs": [
+        "req example.req4"
+      ],
+      "framework": "JSON",
+      "kind": "Test Vector",
+      "text": null,
+      "status": null
+    },
+    {
+      "tag": "json valid_directory/nested_dir/test_two.json:Test_6",
+      "location": {
+        "kind": "file",
+        "file": "valid_directory/nested_dir/test_two.json",
+        "line": null,
+        "column": null
+      },
+      "name": "valid_directory/nested_dir/test_two.json:Test_6",
+      "messages": [],
+      "just_up": [],
+      "just_down": [],
+      "just_global": [],
+      "framework": "JSON",
+      "kind": "Test Vector",
+      "text": null,
+      "status": null
+    },
+    {
       "tag": "json valid_directory/test_one.json:Test_1",
       "location": {
         "kind": "file",
@@ -18,6 +75,7 @@
       ],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     },
     {
@@ -35,6 +93,7 @@
       "just_global": [],
       "framework": "JSON",
       "kind": "Test Vector",
+      "text": null,
       "status": null
     },
     {
@@ -56,60 +115,7 @@
       ],
       "framework": "JSON",
       "kind": "Test Vector",
-      "status": null
-    },
-    {
-      "tag": "json valid_directory/nested_dir/test_two.json:Test_4",
-      "location": {
-        "kind": "file",
-        "file": "valid_directory/nested_dir/test_two.json",
-        "line": null,
-        "column": null
-      },
-      "name": "valid_directory/nested_dir/test_two.json:Test_4",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "JSON",
-      "kind": "Test Vector",
-      "status": null
-    },
-    {
-      "tag": "json valid_directory/nested_dir/test_two.json:Test_5",
-      "location": {
-        "kind": "file",
-        "file": "valid_directory/nested_dir/test_two.json",
-        "line": null,
-        "column": null
-      },
-      "name": "valid_directory/nested_dir/test_two.json:Test_5",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "refs": [
-        "req example.req4"
-      ],
-      "framework": "JSON",
-      "kind": "Test Vector",
-      "status": null
-    },
-    {
-      "tag": "json valid_directory/nested_dir/test_two.json:Test_6",
-      "location": {
-        "kind": "file",
-        "file": "valid_directory/nested_dir/test_two.json",
-        "line": null,
-        "column": null
-      },
-      "name": "valid_directory/nested_dir/test_two.json:Test_6",
-      "messages": [],
-      "just_up": [],
-      "just_down": [],
-      "just_global": [],
-      "framework": "JSON",
-      "kind": "Test Vector",
+      "text": null,
       "status": null
     }
   ],

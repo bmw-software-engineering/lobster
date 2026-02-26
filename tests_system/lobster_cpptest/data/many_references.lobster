@@ -19,6 +19,7 @@
       ],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -39,6 +40,7 @@
       ],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -59,6 +61,7 @@
       ],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -79,6 +82,7 @@
       ],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -96,6 +100,7 @@
       "just_global": [],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -113,6 +118,7 @@
       "just_global": [],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -130,6 +136,7 @@
       "just_global": [],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -147,6 +154,7 @@
       "just_global": [],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -164,6 +172,7 @@
       "just_global": [],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -181,6 +190,7 @@
       "just_global": [],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -198,6 +208,7 @@
       "just_global": [],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -215,6 +226,7 @@
       "just_global": [],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     },
     {
@@ -232,6 +244,7 @@
       "just_global": [],
       "framework": "cpptest",
       "kind": "Function",
+      "text": null,
       "status": null
     }
   ],

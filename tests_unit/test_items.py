@@ -456,6 +456,7 @@ class TestActivity(ItemsTests):
             "item_property": "item_value",
             "framework": "mock_framework",
             "kind": "mock_kind",
+            "text": None,
             "status": None
         }
         result = self.activity.to_json()
