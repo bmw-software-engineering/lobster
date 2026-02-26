@@ -5,6 +5,10 @@
 
 ### 1.0.3-dev
 
+* `lobster-json`:
+  - Fixed crash when processing empty JSON files. The tool now exits gracefully with
+    return code 1 and prints a proper error message to stderr: "Input file contains invalid JSON."
+
 * All tools now automatically create output directories if they don't exist.
   Previously, tools would crash with an exception if the specified output
   directory path did not exist. This enhancement improves usability and

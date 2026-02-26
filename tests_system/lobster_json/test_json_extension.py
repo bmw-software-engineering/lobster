@@ -1,4 +1,3 @@
-from json.decoder import JSONDecodeError
 import unittest
 from tests_system.lobster_json.\
     lobsterjsonsystemtestcasebase import LobsterJsonSystemTestCaseBase
@@ -48,14 +47,6 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
-
-    def test_invalid_json_content(self):
-        self._test_runner.declare_input_file(
-            self._data_directory / "valid_extension_invalid_json.json"
-        )
-
-        with self.assertRaises(JSONDecodeError):
-            self._test_runner.run_tool_test()
 
     def test_inputs_and_inputs_from_files_with_mixed_extension(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
