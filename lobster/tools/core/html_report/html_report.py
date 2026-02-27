@@ -523,7 +523,7 @@ def write_html(report, dot, high_contrast, render_md) -> str:
         doc.add_line(f'<div class="detailed-report-{title.lower().replace(" ", "-")}">')
         doc.add_heading(3, title, html_identifier=True)
         for level in report.config.values():
-            if level.kind != kind:
+            if level.kind and level.kind != kind:
                 continue
             doc.add_line(f'<div id="section-{level.name.lower().replace(" ", "-")}">')
             doc.add_heading(4,
