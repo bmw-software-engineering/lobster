@@ -14,6 +14,7 @@ class CmdArgs:
     only_tagged_functions: bool = False
     parse_decorator: Optional[List[str]] = None
     parse_versioned_decorator: Optional[List[str]] = None
+    kind: Optional[str] = None
 
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list for lobster-python"""
@@ -45,6 +46,8 @@ class CmdArgs:
         # Positional file/dir arguments come last
         if self.files:
             cmd_args.extend(self.files)
+        if self.kind:
+            cmd_args.extend(["--kind", self.kind])
 
         return cmd_args
 

@@ -1,5 +1,6 @@
 from pathlib import Path
 import unittest
+from lobster.tools.core.html_report.html_report import is_dot_available
 from tests_system.lobster_html_report.lobster_UI_system_test_case_base import (
     LobsterUISystemTestCaseBase)
 from tests_system.asserter import Asserter
@@ -29,7 +30,11 @@ class LobsterOnlineReportInputTest(LobsterUISystemTestCaseBase):
         the online report file is created using complex tracing policy
         which contains requirements, code and tests.
         """
-        output_filename = "pizza_online.html"
+        dot_present = is_dot_available(dot=None)
+        if dot_present:
+            output_filename = "pizza_online_tracing_policy.html"
+        else:
+            output_filename = "pizza_online.html"
         valid_inputfile = self._data_directory / "pizza_online_report.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(

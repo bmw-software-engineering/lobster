@@ -11,7 +11,7 @@ from lobster.tools.pkg.pkg import (
     create_raw_entry,
     extract_lobster_traces_from_trace_analysis,
     xml_parser,
-    create_default_activity,
+    create_default_item,
 )
 
 
@@ -57,12 +57,13 @@ class LobsterPkgTests(unittest.TestCase):
             self.assertIn("lobster-trace: misplaced.req1,misplaced.req2", misplaced_traces[0])
 
             getvalues.extend(valid_traces)
-            create_raw_entry(data, file.name, json.dumps(getvalues))
+            create_raw_entry(data, file.name, json.dumps(getvalues), kind="act")
 
         lobster_items = list(data.values())
         for item in lobster_items:
             lobster_item = item.to_json()
             self.assertTrue(lobster_item['refs'] == expected_values)
+
 
     def test_lobster_pkg_functions_with_misplaced_lobster_lines(self):
         with open(self.test_pkg_file_with_misplaced, "r", encoding="UTF-8") as file:
@@ -96,7 +97,7 @@ class LobsterPkgTests(unittest.TestCase):
             self.assertIsInstance(misplaced_traces, list)
             self.assertEqual(0, len(misplaced_traces))
 
-            create_default_activity(file_content, filename, data)
+            create_default_item(file_content, filename, data, kind="act")
 
             self.assertIn('pkg sample2.pkg',list(data.keys()))
             lobster_items = list(data.values())

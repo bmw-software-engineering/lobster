@@ -67,6 +67,17 @@ You can now configure retry behavior for failed HTTPS requests using the followi
   num_request_retry: 3
   ```
 
+- `schema`
+
+  *Type*: `str`
+
+  *Description*: Per default lobster-codebeamer will generate a .lobster file with version 5 without schema `lobster-req-trace`.
+                 To generate a version 4 with schema `lobster-req-trace` add Requirement as schema into your YAML configuration file.
+  *Example*:
+  ```yaml
+  schema: Requirement
+  ```
+
 Notes:
 - Retries will **only** be attempted if `retry_error_codes` parameter is defined in the config.
 - If `num_request_retry` not defined, the default value of 5 will be used.

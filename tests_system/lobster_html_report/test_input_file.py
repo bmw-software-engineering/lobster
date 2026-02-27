@@ -40,7 +40,11 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         # lobster-trace: html_req.Valid_Lobster_File
         # lobster-trace: UseCases.Missing_tracing_policy_violation_in_output
         """Verify the tool runs successfully with a valid .lobster file."""
-        output_filename = "is_actually_html.html"
+        dot_present = is_dot_available(dot=None)
+        if dot_present:
+            output_filename = "is_actually_html_tracing_policy.html"
+        else:
+            output_filename = "is_actually_html.html"
         valid_inputfile = self._data_directory / "awesome.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
@@ -57,7 +61,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
-        if is_dot_available(dot=None):
+        if dot_present:
             expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
 
         else:
@@ -115,7 +119,11 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         # lobster-trace: html_req.Valid_Lobster_File_With_Md_Content
         # lobster-trace: UseCases.Missing_tracing_policy_violation_in_output
         """Verify tool runs successfully with a valid .lobster file with md content."""
-        output_filename = "to_render_md_content.html"
+        dot_present = is_dot_available(dot=None)
+        if dot_present:
+            output_filename = "to_render_md_content_tracing_policy.html"
+        else:
+            output_filename = "to_render_md_content.html"
         valid_inputfile = self._data_directory / "to_render_md_content.lobster"
 
         self.output_dir = self.create_output_directory_and_copy_expected(
@@ -132,7 +140,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
-        if is_dot_available(dot=None):
+        if dot_present:
             expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
 
         else:

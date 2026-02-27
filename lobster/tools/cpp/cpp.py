@@ -23,9 +23,9 @@ import subprocess
 import re
 from typing import Optional, Sequence
 
-from lobster.common.items import Tracing_Tag, Implementation
+from lobster.common.items import Tracing_Tag, Implementation, Item, KindTypes
 from lobster.common.multi_file_input_config import Config
-from lobster.tools.cpp.implementation_builder import ImplementationBuilder
+from lobster.tools.cpp.item_builder import ItemBuilder
 from lobster.common.multi_file_input_tool import create_worklist, MultiFileInputTool
 
 
@@ -88,6 +88,15 @@ class CppTool(MultiFileInputTool):
             metavar="FINDINGS",
             help="List of all clang-tidy errors to ignore.",
         )
+        self._argument_parser.add_argument(
+            "--kind",
+            required=False,
+            choices=[KindTypes.ITM.value, KindTypes.IMP.value],
+            default=KindTypes.ITM.value,
+            help=f"Kind of LOBSTER entries to create: "
+                 f"'{KindTypes.ITM.value}' for Item, "
+                 f"'{KindTypes.IMP.value}' for Implementation",
+        )
 
     def _add_config_argument(self):
         # This tool does not use a config file
@@ -99,8 +108,12 @@ class CppTool(MultiFileInputTool):
             inputs_from_file=None,
             extensions=self._extensions,
             exclude_patterns=None,
-            schema=Implementation,
+            schema=Item,
         )
+
+        if options.kind == KindTypes.IMP.value:
+            config.schema = Implementation
+
         file_list = create_worklist(config, options.dir_or_files)
         clang_tidy_path = os.path.expanduser(options.clang_tidy)
 
@@ -158,7 +171,7 @@ class CppTool(MultiFileInputTool):
                         return 1
 
         db = {}
-        implementation_builder = ImplementationBuilder()
+        item_builder = ItemBuilder()
 
         for line in rv.stdout.splitlines():
             if not line.endswith("[lobster-tracing]"):
@@ -166,23 +179,23 @@ class CppTool(MultiFileInputTool):
 
             match = re.match(RE_NOTAGS, line)
             if match:
-                impl = implementation_builder.from_match(match)
+                impl = item_builder.from_match(match)
                 assert impl.tag.key() not in db
                 db[impl.tag.key()] = impl
                 continue
 
             match = re.match(RE_JUST, line)
             if match:
-                impl = implementation_builder.from_match_if_new(db, match)
+                impl = item_builder.from_match_if_new(db, match)
                 impl.just_up.append(
-                    match.group(implementation_builder.REASON_GROUP_NUM),
+                    match.group(item_builder.REASON_GROUP_NUM),
                 )
                 continue
 
             match = re.match(RE_TAGS, line)
             if match:
-                impl = implementation_builder.from_match_if_new(db, match)
-                all_tags = match.group(implementation_builder.REFERENCE_GROUP_NUM)
+                impl = item_builder.from_match_if_new(db, match)
+                all_tags = match.group(item_builder.REFERENCE_GROUP_NUM)
                 for tag in re.split(r"[, ]+", all_tags.strip()):
                     if tag:
                         impl.add_tracing_target(

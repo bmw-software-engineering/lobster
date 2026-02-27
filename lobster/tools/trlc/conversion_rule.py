@@ -13,7 +13,7 @@ class ConversionRule:
             self,
             package: str,
             record_type: str,
-            namespace: str,
+            namespace: Optional[str] = "itm",
             version_field: Optional[str] = None,
             description_fields: Optional[Union[str, Iterable[str]]] = None,
             justification_up_fields: Optional[Union[str, Iterable[str]]] = None,
@@ -24,7 +24,8 @@ class ConversionRule:
     ):
         self._record_type_name = record_type
         self._package_name = package
-        self._lobster_namespace = namespace
+        if namespace:
+            self._lobster_namespace = namespace
         self._version = version_field
         self._description_fields = self._as_string_list(description_fields)
         self._justification_up_fields = self._as_string_list(justification_up_fields)

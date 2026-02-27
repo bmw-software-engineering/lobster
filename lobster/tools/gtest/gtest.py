@@ -23,7 +23,7 @@ import os
 from typing import Optional, Sequence
 import xml.etree.ElementTree as ET
 
-from lobster.common.items import Tracing_Tag, Activity
+from lobster.common.items import Tracing_Tag, Activity, Item, KindTypes
 from lobster.common.location import Void_Reference, File_Reference
 from lobster.common.io import lobster_write, ensure_output_directory
 from lobster.common.meta_data_tool_base import MetaDataToolBase
@@ -42,6 +42,15 @@ class GtestTool(MetaDataToolBase):
             metavar="FILE|DIR",
         )
         self._argument_parser.add_argument("--out", default=None)
+        self._argument_parser.add_argument(
+            "--kind",
+            required=False,
+            choices=[KindTypes.ITM.value, KindTypes.ACT.value],
+            default=KindTypes.ITM.value,
+            help=f"Kind of LOBSTER entries to create: "
+                 f"'{KindTypes.ITM.value}' for Item, "
+                 f"'{KindTypes.ACT.value}' for Activity, ",
+        )
 
     def _run_impl(self, options: Namespace) -> int:
         c_files_rel = {}
@@ -74,7 +83,12 @@ class GtestTool(MetaDataToolBase):
         items = []
 
         for filename in file_list:
-            tree = ET.parse(filename)
+            try:
+                tree = ET.parse(filename)
+            except ET.ParseError as parse_error:
+                print(f"Warning: Could not parse XML file '{filename}': {parse_error}",
+                      file=sys.stderr)
+                continue
             root = tree.getroot()
             if root.tag != "testsuites":
                 continue
@@ -130,23 +144,31 @@ class GtestTool(MetaDataToolBase):
                         status = "not run"
 
                     tag  = Tracing_Tag("gtest", uid)
-                    item = Activity(tag       = tag,
-                                    location  = test_source,
-                                    framework = "GoogleTest",
-                                    kind      = "test",
-                                    status    = status)
+                    if options.kind == KindTypes.ACT.value:
+                        item = Activity(tag       = tag,
+                                        location  = test_source,
+                                        framework = "GoogleTest",
+                                        kind      = "test",
+                                        status    = status)
+                    else:
+                        item = Item(tag       = tag,
+                                    location  = test_source)
                     for ref in test_tags:
                         item.add_tracing_target(Tracing_Tag("req", ref))
 
                     items.append(item)
 
+        lobster_kind = Item
+        if options.kind == KindTypes.ACT.value:
+            lobster_kind = Activity
+
         if options.out:
             ensure_output_directory(options.out)
             with open(options.out, "w", encoding="UTF-8") as fd:
-                lobster_write(fd, Activity, "lobster_gtest", items)
+                lobster_write(fd, lobster_kind, "lobster_gtest", items)
             print(f"Written output for {len(items)} items to {options.out}")
         else:
-            lobster_write(sys.stdout, Activity, "lobster_gtest", items)
+            lobster_write(sys.stdout, lobster_kind, "lobster_gtest", items)
             print()
 
         return 0

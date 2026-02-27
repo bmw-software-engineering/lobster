@@ -77,10 +77,12 @@ def xref_item(item, link=True, brief=False):
     elif isinstance(item, Implementation):
         rv = html.escape(item.language + " " +
                          item.kind.capitalize())
-    else:
-        assert isinstance(item, Activity)
+    elif isinstance(item, Activity):
         rv = html.escape(item.framework + " " +
                          item.kind.capitalize())
+    else:
+        assert isinstance(item, Item)
+        rv = html.escape("Item")
     if not brief:
         rv += " "
 
@@ -98,13 +100,15 @@ def create_policy_diagram(doc, report, dot):
 
     graph = 'digraph "LOBSTER Tracing Policy" {\n'
     for level in report.config.values():
+        style = 'shape=box, style=rounded'
+
         if level.kind == "requirements":
             style = 'shape=box, style=rounded'
         elif level.kind == "implementation":
             style = 'shape=box'
-        else:
-            assert level.kind == "activity"
+        elif level.kind == "activity":
             style = 'shape=hexagon'
+
         style += f', href="#sec-{name_hash(level.name)}"'
 
         graph += '  n_%s [label="%s", %s];\n' % \
@@ -519,7 +523,7 @@ def write_html(report, dot, high_contrast, render_md) -> str:
         doc.add_line(f'<div class="detailed-report-{title.lower().replace(" ", "-")}">')
         doc.add_heading(3, title, html_identifier=True)
         for level in report.config.values():
-            if level.kind != kind:
+            if level.kind and level.kind != kind:
                 continue
             doc.add_line(f'<div id="section-{level.name.lower().replace(" ", "-")}">')
             doc.add_heading(4,
