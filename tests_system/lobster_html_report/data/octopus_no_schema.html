@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<title>L.O.B.S.T.E.R.</title>
+<style>
+html {
+  scroll-padding-top: 5em;
+}
+body {
+  margin: 0;
+}
+.title {
+  background-color: #009ada;
+  color: white;
+  padding: 0.5em;
+  margin: 0;
+}
+h1 {
+  padding: 0;
+  margin: 0;
+}
+h2 {
+  padding: 0.5em;
+  margin: 0;
+  border-bottom: 0.25em solid #009ada;
+  text-align: right;
+}
+.content {
+  padding: 0.5em;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+#custom-data-banner {
+  position: absolute;
+  top: 1em;
+  right: 2em;
+  font-size: 0.9em;
+  color: white;
+}
+.item-ok, .item-partial, .item-missing, .item-justified {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  margin-top: 0.4em;
+  padding: 0.25em;
+}
+.item-ok:target, .item-partial:target, .item-missing:target, .item-justified:target {
+  border: 3px solid black;
+}
+.subtle-ok, .subtle-partial, .subtle-missing, .subtle-justified {
+  padding-left: 0.2em;
+}
+.item-ok {
+  background-color: #efe;
+}
+.item-partial {
+  background-color: #ffe;
+}
+.item-missing {
+  background-color: #fee;
+}
+.item-justified {
+  background-color: #eee;
+}
+.subtle-ok {
+  border-left: 0.2em solid #8f8;
+}
+.subtle-partial {
+  border-left: 0.2em solid #ff8;
+}
+.subtle-missing {
+  border-left: 0.2em solid #f88;
+}
+.subtle-justified {
+  border-left: 0.2em solid #888;
+}
+.item-name {
+  font-size: 125%;
+  font-weight: bold;
+}
+.attribute {
+  margin-top: 0.5em;
+}
+.columns {
+  display: flex;
+}
+.columns .column {
+  flex: 45%;
+}
+thead tr {
+  font-weight: bold;
+}
+tbody tr.alt {
+  background-color: #eee;
+}
+blockquote {
+  font-style: italic;
+  border-left: 0.2em solid gray;
+  padding-left: 0.4em;
+  margin-left: 0.5em;
+}
+footer {
+  margin-top: 1rem;
+  padding: .2rem;
+  text-align: right;
+  color: #666;
+  font-size: .7rem;
+}
+#navbar {
+  overflow: hidden;
+  background-color: #009ada;
+}
+.navbar-right {
+  float: right;
+}
+#navbar a {
+  float: left;
+  display: block;
+  color: white;
+  padding: 14px;
+  text-decoration: none;
+}
+#navbar a:hover {
+  background-color: white;
+  color: #009ada;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.sticky + .htmlbody {
+  padding-top: 60px;
+}
+#navbar .dropdown {
+  float: left;
+  overflow: hidden;
+}
+.navbar-right .dropdown {
+  float: right;
+  overflow: hidden;
+}
+.dropdown .dropbtn {
+  font-size: inherit;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  background-color: inherit;
+  color: white;
+  font-family: inherit;
+  margin: 0;
+}
+.dropdown:hover .dropbtn {
+  background-color: white;
+  color: #009ada;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #009ada;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.navbar-right .dropdown-content {
+  right: 0;
+}
+.dropdown-content a {
+  float: none;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+.dropdown-content a:hover {
+  color: #009ada;
+  background-color: white;
+}
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+.sticky .dropdown-content {
+  position: fixed;
+}
+.button {
+    background-color: #818589;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 12px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer
+}
+
+.button active:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 15px 0 0;
+    border-color: #333 transparent transparent transparent
+}
+
+.buttonActive.button {
+    text-decoration: none;
+    border: 5px solid #000000
+}
+
+.buttonOK {
+    background-color: #04AA6D;
+    color: white;
+    border: 2px solid #04AA6D;
+    border-radius: 5px
+}
+
+.buttonOK:hover {
+    background-color: #026641;
+    color: white;
+    border: 2px solid #026641
+}
+
+.buttonActive.buttonOK {
+    text-decoration: none;
+    border: 5px solid #026641
+}
+
+.buttonPartial {
+    background-color: #17a2b8;
+    color: white;
+    border: 2px solid #17a2b8;
+    border-radius: 5px
+}
+
+.buttonPartial:hover {
+    background-color: #0e616e;
+    color: white;
+    border: 2px solid #0e616e
+}
+
+.buttonActive.buttonPartial {
+    text-decoration: none;
+    border: 5px solid #0e616e
+}
+
+.buttonMissing {
+    background-color: #f44336;
+    color: white;
+    border: 2px solid #f44336;
+    border-radius: 5px
+}
+
+.buttonMissing:hover {
+    background-color: #a91409;
+    color: white;
+    border: 2px solid #a91409
+}
+
+.buttonActive.buttonMissing {
+    text-decoration: none;
+    border: 5px solid #a91409
+}
+
+.buttonJustified {
+    background-color: #6c757d;
+    color: white;
+    border: 2px solid #6c757d;
+    border-radius: 5px
+}
+
+.buttonJustified:hover {
+    background-color: #41464b;
+    color: white;
+    border: 2px solid #41464b
+}
+
+.buttonActive.buttonJustified {
+    text-decoration: none;
+    border: 5px solid #41464b
+}
+
+.buttonWarning {
+    background-color: #ffbf00;
+    color: white;
+    border: 2px solid #ffbf00;
+    border-radius: 5px
+}
+
+.buttonWarning:hover {
+    background-color: #997300;
+    color: white;
+    border: 2px solid #997300
+}
+
+.buttonActive.buttonWarning {
+    text-decoration: none;
+    border: 5px solid #997300
+}
+
+.buttonBlue {
+    background-color: #0000ff;
+    color: white;
+    border: 2px solid #0000ff;
+    border-radius: 5px
+}
+
+.buttonBlue:hover {
+    background-color: #000099;
+    color: white;
+    border: 2px solid #000099
+}
+
+.buttonActive.buttonBlue {
+    text-decoration: none;
+    border: 5px solid #000099
+}
+
+</style>
+</head>
+<body>
+<div class="title">
+<h1>L.O.B.S.T.E.R.</h1>
+<div class="subtitle">Lightweight Open BMW Software Traceability Evidence Report</div>
+</div>
+<div id="navbar">
+<a href="#sec-overview" id="menu-item-overview">Overview</a>
+<a href="#sec-issues" id="menu-item-issues">Issues</a>
+<div class="dropdown">
+<button class="dropbtn">Detailed report<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
+<div class="dropdown-content">
+<a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2" id="menu-item-requirements">Requirements</a>
+<a href="#sec-ca0dbad92a874b2f69b549293387925e" id="menu-item-code">Code</a>
+<a href="#sec-098f6bcd4621d373cade4e832627b4f6" id="menu-item-test">test</a>
+</div>
+</div>
+<div class="navbar-right">
+<div class="dropdown">
+<button class="dropbtn">LOBSTER<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
+<div class="dropdown-content">
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md" id="menu-item-documentation"><svg class="icon"><use href="#svg-external-link"></use></svg> Documentation</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md" id="menu-item-license"><svg class="icon"><use href="#svg-external-link"></use></svg> License</a>
+<a href="https://github.com/bmw-software-engineering/lobster" id="menu-item-source"><svg class="icon"><use href="#svg-external-link"></use></svg> Source</a>
+</div>
+</div>
+</div>
+</div>
+<div class="htmlbody">
+<svg style="display: none;">
+<defs>
+<symbol id="svg-check-square" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-alert-triangle" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-external-link" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-chevron-down" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</symbol>
+</defs>
+</svg>
+<h2 id="sec-overview" class="heading-overview">Overview</h2>
+<div class="content">
+<div class="columns">
+<div class="column">
+<h3 id="heading-coverage">Coverage</h3>
+<table>
+<thead><tr>
+<td>Category</td>
+<td>Ratio</td>
+<td>Coverage</td>
+<td>OK Items</td>
+<td>Total Items</td>
+</tr><thead>
+<tbody>
+</tbody>
+<tr class="coverage-table-requirements">
+<td><a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</a></td>
+<td>100.0%</td>
+<td>
+<progress value="8" max="8">
+100.00%
+</progress>
+</td>
+<td align="right">8</td>
+<td align="right">8</td>
+</tr>
+<tr class="coverage-table-code">
+<td><a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a></td>
+<td>80.0%</td>
+<td>
+<progress value="8" max="10">
+80.00%
+</progress>
+</td>
+<td align="right">8</td>
+<td align="right">10</td>
+</tr>
+<tr class="coverage-table-test">
+<td><a href="#sec-098f6bcd4621d373cade4e832627b4f6">test</a></td>
+<td>81.8%</td>
+<td>
+<progress value="9" max="11">
+81.82%
+</progress>
+</td>
+<td align="right">9</td>
+<td align="right">11</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<h2 id="sec-filtering-options" class="heading-filtering">Filtering</h2>
+<div class="content">
+<h3 id="heading-item-filters">Item Filters</h3>
+<div id = "btnFilterItem">
+<button class="button buttonAll buttonActive" onclick="buttonFilter('all')"> Show All </button>
+<button class ="button buttonOK" onclick="buttonFilter('ok')" > OK </button>
+<button class ="button buttonMissing" onclick="buttonFilter('missing')" > Missing </button>
+<button class ="button buttonPartial" onclick="buttonFilter('partial')" > Partial </button>
+<button class ="button buttonJustified" onclick="buttonFilter('justified')" > Justified </button>
+<button class ="button buttonWarning" onclick="buttonFilter('warning')" > Warning </button>
+</div>
+<h3 id="heading-show-issues">Show Issues</h3>
+<div id = "ContainerBtnToggleIssue">
+<button class ="button buttonBlue" id="BtnToggleIssue" onclick="ToggleIssues()"> Show Issues </button>
+</div>
+<h3 id="sec-filter" class="heading-filter">Filter</h3>
+<input type="text" id="search" placeholder="Filter..." onkeyup="searchItem()">
+<div id="search-sec-id"
+</div>
+<h2 id="sec-issues" class="heading-issues">Issues</h2>
+<div class="content">
+<div id="issues-section" style="display:none">
+<ul>
+<li class="issue issue-missing issue-missing-python">Item <a href='#item-65c9f37adf97674454a4b4463c94621ca97a397c'>tentacle_commander.DenSecurity</a>: unknown tracing target req octopus_example.den_security</li>
+<li class="issue issue-missing issue-missing-python">Item <a href='#item-65c9f37adf97674454a4b4463c94621ca97a397c'>tentacle_commander.DenSecurity</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-python">Item <a href='#item-e70dc1c3f97b6472665a02063bb47b5c55c1fe18'>tentacle_toolkit.ConstructionPlanner</a>: unknown tracing target req octopus_example.rock_arrangement_planner</li>
+<li class="issue issue-missing issue-missing-python">Item <a href='#item-e70dc1c3f97b6472665a02063bb47b5c55c1fe18'>tentacle_toolkit.ConstructionPlanner</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-pyunit">Item <a href='#item-96586fd418c143ab49cdb8c2b80dbfb41aefc7e4'>test_tentacle_commander.TestDenSecurity.test_secure_den:62</a>: unknown tracing target req octopus_example.den_security</li>
+<li class="issue issue-missing issue-missing-pyunit">Item <a href='#item-96586fd418c143ab49cdb8c2b80dbfb41aefc7e4'>test_tentacle_commander.TestDenSecurity.test_secure_den:62</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-pyunit">Item <a href='#item-c3d63908be382cd7ea18ee1a68080efdadfdb134'>test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</a>: unknown tracing target req octopus_example.rock_arrangement_planner</li>
+<li class="issue issue-missing issue-missing-pyunit">Item <a href='#item-c3d63908be382cd7ea18ee1a68080efdadfdb134'>test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</a>: missing up reference</li>
+</ul>
+</div>
+</div>
+<h2 id="sec-detailed-report" class="heading-detailed-report">Detailed report</h2>
+<div class="content">
+<div class="detailed-report-requirements-and-specification">
+<h3 id="heading-requirements-and-specification">Requirements and Specification</h3>
+<div id="section-requirements">
+<h4 id="sec-5a2ebfb8baa378cfcfcba58bbb1380c2" class="heading-requirements">Requirements</h4>
+<h5>octopus_requirements.trlc</h5>
+<!-- begin item req octopus_example.tentacle_motor_control -->
+<div class="item-ok" id="item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.tentacle_motor_control</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-ed1ee3b9ba7afdb4b659e38bfbd15db3020b0be9'>tentacle_toolkit.MotorController</a></li>
+<li>Item <a href='#item-a6207fb65af3563db799bf062e915b1467b9605b'>test_tentacle_toolkit.TestMotorController.test_control_motors:18</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req octopus_example.chromatophore_processor -->
+<div class="item-ok" id="item-24e1314283cbb67433c1511023645b60962a0d1e">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.chromatophore_processor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-1a83d87239fc9aa70877f8d06c52c60913182290'>tentacle_toolkit.ColorProcessor</a></li>
+<li>Item <a href='#item-3caff57e7dca87c5a68e709b2e5f6eda341057c0'>test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req octopus_example.ink_sac_trigger -->
+<div class="item-ok" id="item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.ink_sac_trigger</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-78908898fa195d39293a2e1846966087de26879b'>tentacle_toolkit.InkTrigger</a></li>
+<li>Item <a href='#item-25f9dbe53fdbe5daa978da7aa3fcc1af20ad519d'>test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req octopus_example.vision_processing_unit -->
+<div class="item-ok" id="item-98ac0a09ab50e33e5e11e90334c68031ac7be707">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.vision_processing_unit</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-f2f40820fed6658843a9b9ca8f99687894e91c4b'>tentacle_toolkit.VisionProcessor</a></li>
+<li>Item <a href='#item-93f7c070b92a877a1ed4369cf8300f419906c453'>test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-10728f00d2b3dbeb33e929580c1af57ec39a0f72'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements1.trlc</h5>
+<!-- begin item req octopus_example.tentacle_coordination -->
+<div class="item-ok" id="item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.tentacle_coordination</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements1.trlc" target="_blank">octopus_requirements1.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe'>octopus_example.tentacle_motor_control</a></li>
+<li>Item <a href='#item-8229955f310683983ce5962e617bec3e258aa536'>tentacle_commander.TentacleCoordinator</a></li>
+<li>Item <a href='#item-1546976fee669da7eb04d6d27dbef04ce6a5704f'>test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements2.trlc</h5>
+<!-- begin item req octopus_example.color_camouflage -->
+<div class="item-ok" id="item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.color_camouflage</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements2.trlc" target="_blank">octopus_requirements2.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-24e1314283cbb67433c1511023645b60962a0d1e'>octopus_example.chromatophore_processor</a></li>
+<li>Item <a href='#item-29e209f267a9f6405de2b71a9c47fcbe7ad37cff'>tentacle_commander.ColorCamouflage</a></li>
+<li>Item <a href='#item-2254c2abf5d24212f847bfe443cea5bf2fd410c5'>test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28</a></li>
+<li>Item <a href='#item-340e4d2001fe507f1a7863ac7d9caa6cd1bec813'>test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements3.trlc</h5>
+<!-- begin item req octopus_example.ink_defense -->
+<div class="item-ok" id="item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.ink_defense</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements3.trlc" target="_blank">octopus_requirements3.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3'>octopus_example.ink_sac_trigger</a></li>
+<li>Item <a href='#item-4111373f42b55d111bac61cc249c625c8c63c0c1'>tentacle_commander.InkDefense</a></li>
+<li>Item <a href='#item-d7f9755f13524f24a5562d7b926f4f2485cd55f6'>test_tentacle_commander.TestInkDefense.test_deploy_ink:42</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements4.trlc</h5>
+<!-- begin item req octopus_example.prey_detection -->
+<div class="item-ok" id="item-10728f00d2b3dbeb33e929580c1af57ec39a0f72">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.prey_detection</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements4.trlc" target="_blank">octopus_requirements4.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-98ac0a09ab50e33e5e11e90334c68031ac7be707'>octopus_example.vision_processing_unit</a></li>
+<li>Item <a href='#item-991c4ac5d4863023380b73f265986bf64a28183c'>tentacle_commander.PreyDetection</a></li>
+<li>Item <a href='#item-d7c71f5482c7f479282d232f0e4bbf6fabbaea13'>test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-code">
+<h4 id="sec-ca0dbad92a874b2f69b549293387925e" class="heading-code">Code</h4>
+<h5>tentacle_commander.py</h5>
+<!-- begin item python tentacle_commander.TentacleCoordinator -->
+<div class="item-ok" id="item-8229955f310683983ce5962e617bec3e258aa536">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.TentacleCoordinator</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.ColorCamouflage -->
+<div class="item-ok" id="item-29e209f267a9f6405de2b71a9c47fcbe7ad37cff">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.ColorCamouflage</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.InkDefense -->
+<div class="item-ok" id="item-4111373f42b55d111bac61cc249c625c8c63c0c1">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.InkDefense</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.PreyDetection -->
+<div class="item-ok" id="item-991c4ac5d4863023380b73f265986bf64a28183c">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.PreyDetection</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-10728f00d2b3dbeb33e929580c1af57ec39a0f72'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.DenSecurity -->
+<div class="item-missing" id="item-65c9f37adf97674454a4b4463c94621ca97a397c">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item tentacle_commander.DenSecurity</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.den_security</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>tentacle_toolkit.py</h5>
+<!-- begin item python tentacle_toolkit.MotorController -->
+<div class="item-ok" id="item-ed1ee3b9ba7afdb4b659e38bfbd15db3020b0be9">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.MotorController</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe'>octopus_example.tentacle_motor_control</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.ColorProcessor -->
+<div class="item-ok" id="item-1a83d87239fc9aa70877f8d06c52c60913182290">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.ColorProcessor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-24e1314283cbb67433c1511023645b60962a0d1e'>octopus_example.chromatophore_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.InkTrigger -->
+<div class="item-ok" id="item-78908898fa195d39293a2e1846966087de26879b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.InkTrigger</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3'>octopus_example.ink_sac_trigger</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.VisionProcessor -->
+<div class="item-ok" id="item-f2f40820fed6658843a9b9ca8f99687894e91c4b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.VisionProcessor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-98ac0a09ab50e33e5e11e90334c68031ac7be707'>octopus_example.vision_processing_unit</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.ConstructionPlanner -->
+<div class="item-missing" id="item-e70dc1c3f97b6472665a02063bb47b5c55c1fe18">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item tentacle_toolkit.ConstructionPlanner</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.rock_arrangement_planner</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-test">
+<h4 id="sec-098f6bcd4621d373cade4e832627b4f6" class="heading-test">test</h4>
+<h5>test_tentacle_commander.py</h5>
+<!-- begin item pyunit test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18 -->
+<div class="item-ok" id="item-1546976fee669da7eb04d6d27dbef04ce6a5704f">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28 -->
+<div class="item-ok" id="item-2254c2abf5d24212f847bfe443cea5bf2fd410c5">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33 -->
+<div class="item-ok" id="item-340e4d2001fe507f1a7863ac7d9caa6cd1bec813">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestInkDefense.test_deploy_ink:42 -->
+<div class="item-ok" id="item-d7f9755f13524f24a5562d7b926f4f2485cd55f6">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestInkDefense.test_deploy_ink:42</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52 -->
+<div class="item-ok" id="item-d7c71f5482c7f479282d232f0e4bbf6fabbaea13">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-10728f00d2b3dbeb33e929580c1af57ec39a0f72'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestDenSecurity.test_secure_den:62 -->
+<div class="item-missing" id="item-96586fd418c143ab49cdb8c2b80dbfb41aefc7e4">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item test_tentacle_commander.TestDenSecurity.test_secure_den:62</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.den_security</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>test_tentacle_toolkit.py</h5>
+<!-- begin item pyunit test_tentacle_toolkit.TestMotorController.test_control_motors:18 -->
+<div class="item-ok" id="item-a6207fb65af3563db799bf062e915b1467b9605b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestMotorController.test_control_motors:18</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe'>octopus_example.tentacle_motor_control</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28 -->
+<div class="item-ok" id="item-3caff57e7dca87c5a68e709b2e5f6eda341057c0">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-24e1314283cbb67433c1511023645b60962a0d1e'>octopus_example.chromatophore_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38 -->
+<div class="item-ok" id="item-25f9dbe53fdbe5daa978da7aa3fcc1af20ad519d">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3'>octopus_example.ink_sac_trigger</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48 -->
+<div class="item-ok" id="item-93f7c070b92a877a1ed4369cf8300f419906c453">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-98ac0a09ab50e33e5e11e90334c68031ac7be707'>octopus_example.vision_processing_unit</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58 -->
+<div class="item-missing" id="item-c3d63908be382cd7ea18ee1a68080efdadfdb134">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.rock_arrangement_planner</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+</div>
+<div class="detailed-report-implementation">
+<h3 id="heading-implementation">Implementation</h3>
+<div id="section-requirements">
+<h4 id="sec-5a2ebfb8baa378cfcfcba58bbb1380c2" class="heading-requirements">Requirements</h4>
+<h5>octopus_requirements.trlc</h5>
+<!-- begin item req octopus_example.tentacle_motor_control -->
+<div class="item-ok" id="item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.tentacle_motor_control</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-ed1ee3b9ba7afdb4b659e38bfbd15db3020b0be9'>tentacle_toolkit.MotorController</a></li>
+<li>Item <a href='#item-a6207fb65af3563db799bf062e915b1467b9605b'>test_tentacle_toolkit.TestMotorController.test_control_motors:18</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req octopus_example.chromatophore_processor -->
+<div class="item-ok" id="item-24e1314283cbb67433c1511023645b60962a0d1e">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.chromatophore_processor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-1a83d87239fc9aa70877f8d06c52c60913182290'>tentacle_toolkit.ColorProcessor</a></li>
+<li>Item <a href='#item-3caff57e7dca87c5a68e709b2e5f6eda341057c0'>test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req octopus_example.ink_sac_trigger -->
+<div class="item-ok" id="item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.ink_sac_trigger</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-78908898fa195d39293a2e1846966087de26879b'>tentacle_toolkit.InkTrigger</a></li>
+<li>Item <a href='#item-25f9dbe53fdbe5daa978da7aa3fcc1af20ad519d'>test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req octopus_example.vision_processing_unit -->
+<div class="item-ok" id="item-98ac0a09ab50e33e5e11e90334c68031ac7be707">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.vision_processing_unit</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-f2f40820fed6658843a9b9ca8f99687894e91c4b'>tentacle_toolkit.VisionProcessor</a></li>
+<li>Item <a href='#item-93f7c070b92a877a1ed4369cf8300f419906c453'>test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-10728f00d2b3dbeb33e929580c1af57ec39a0f72'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements1.trlc</h5>
+<!-- begin item req octopus_example.tentacle_coordination -->
+<div class="item-ok" id="item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.tentacle_coordination</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements1.trlc" target="_blank">octopus_requirements1.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe'>octopus_example.tentacle_motor_control</a></li>
+<li>Item <a href='#item-8229955f310683983ce5962e617bec3e258aa536'>tentacle_commander.TentacleCoordinator</a></li>
+<li>Item <a href='#item-1546976fee669da7eb04d6d27dbef04ce6a5704f'>test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements2.trlc</h5>
+<!-- begin item req octopus_example.color_camouflage -->
+<div class="item-ok" id="item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.color_camouflage</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements2.trlc" target="_blank">octopus_requirements2.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-24e1314283cbb67433c1511023645b60962a0d1e'>octopus_example.chromatophore_processor</a></li>
+<li>Item <a href='#item-29e209f267a9f6405de2b71a9c47fcbe7ad37cff'>tentacle_commander.ColorCamouflage</a></li>
+<li>Item <a href='#item-2254c2abf5d24212f847bfe443cea5bf2fd410c5'>test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28</a></li>
+<li>Item <a href='#item-340e4d2001fe507f1a7863ac7d9caa6cd1bec813'>test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements3.trlc</h5>
+<!-- begin item req octopus_example.ink_defense -->
+<div class="item-ok" id="item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.ink_defense</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements3.trlc" target="_blank">octopus_requirements3.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3'>octopus_example.ink_sac_trigger</a></li>
+<li>Item <a href='#item-4111373f42b55d111bac61cc249c625c8c63c0c1'>tentacle_commander.InkDefense</a></li>
+<li>Item <a href='#item-d7f9755f13524f24a5562d7b926f4f2485cd55f6'>test_tentacle_commander.TestInkDefense.test_deploy_ink:42</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements4.trlc</h5>
+<!-- begin item req octopus_example.prey_detection -->
+<div class="item-ok" id="item-10728f00d2b3dbeb33e929580c1af57ec39a0f72">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.prey_detection</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements4.trlc" target="_blank">octopus_requirements4.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-98ac0a09ab50e33e5e11e90334c68031ac7be707'>octopus_example.vision_processing_unit</a></li>
+<li>Item <a href='#item-991c4ac5d4863023380b73f265986bf64a28183c'>tentacle_commander.PreyDetection</a></li>
+<li>Item <a href='#item-d7c71f5482c7f479282d232f0e4bbf6fabbaea13'>test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-code">
+<h4 id="sec-ca0dbad92a874b2f69b549293387925e" class="heading-code">Code</h4>
+<h5>tentacle_commander.py</h5>
+<!-- begin item python tentacle_commander.TentacleCoordinator -->
+<div class="item-ok" id="item-8229955f310683983ce5962e617bec3e258aa536">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.TentacleCoordinator</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.ColorCamouflage -->
+<div class="item-ok" id="item-29e209f267a9f6405de2b71a9c47fcbe7ad37cff">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.ColorCamouflage</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.InkDefense -->
+<div class="item-ok" id="item-4111373f42b55d111bac61cc249c625c8c63c0c1">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.InkDefense</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.PreyDetection -->
+<div class="item-ok" id="item-991c4ac5d4863023380b73f265986bf64a28183c">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.PreyDetection</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-10728f00d2b3dbeb33e929580c1af57ec39a0f72'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.DenSecurity -->
+<div class="item-missing" id="item-65c9f37adf97674454a4b4463c94621ca97a397c">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item tentacle_commander.DenSecurity</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.den_security</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>tentacle_toolkit.py</h5>
+<!-- begin item python tentacle_toolkit.MotorController -->
+<div class="item-ok" id="item-ed1ee3b9ba7afdb4b659e38bfbd15db3020b0be9">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.MotorController</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe'>octopus_example.tentacle_motor_control</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.ColorProcessor -->
+<div class="item-ok" id="item-1a83d87239fc9aa70877f8d06c52c60913182290">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.ColorProcessor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-24e1314283cbb67433c1511023645b60962a0d1e'>octopus_example.chromatophore_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.InkTrigger -->
+<div class="item-ok" id="item-78908898fa195d39293a2e1846966087de26879b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.InkTrigger</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3'>octopus_example.ink_sac_trigger</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.VisionProcessor -->
+<div class="item-ok" id="item-f2f40820fed6658843a9b9ca8f99687894e91c4b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.VisionProcessor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-98ac0a09ab50e33e5e11e90334c68031ac7be707'>octopus_example.vision_processing_unit</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.ConstructionPlanner -->
+<div class="item-missing" id="item-e70dc1c3f97b6472665a02063bb47b5c55c1fe18">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item tentacle_toolkit.ConstructionPlanner</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.rock_arrangement_planner</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-test">
+<h4 id="sec-098f6bcd4621d373cade4e832627b4f6" class="heading-test">test</h4>
+<h5>test_tentacle_commander.py</h5>
+<!-- begin item pyunit test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18 -->
+<div class="item-ok" id="item-1546976fee669da7eb04d6d27dbef04ce6a5704f">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28 -->
+<div class="item-ok" id="item-2254c2abf5d24212f847bfe443cea5bf2fd410c5">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33 -->
+<div class="item-ok" id="item-340e4d2001fe507f1a7863ac7d9caa6cd1bec813">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestInkDefense.test_deploy_ink:42 -->
+<div class="item-ok" id="item-d7f9755f13524f24a5562d7b926f4f2485cd55f6">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestInkDefense.test_deploy_ink:42</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52 -->
+<div class="item-ok" id="item-d7c71f5482c7f479282d232f0e4bbf6fabbaea13">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-10728f00d2b3dbeb33e929580c1af57ec39a0f72'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestDenSecurity.test_secure_den:62 -->
+<div class="item-missing" id="item-96586fd418c143ab49cdb8c2b80dbfb41aefc7e4">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item test_tentacle_commander.TestDenSecurity.test_secure_den:62</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.den_security</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>test_tentacle_toolkit.py</h5>
+<!-- begin item pyunit test_tentacle_toolkit.TestMotorController.test_control_motors:18 -->
+<div class="item-ok" id="item-a6207fb65af3563db799bf062e915b1467b9605b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestMotorController.test_control_motors:18</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe'>octopus_example.tentacle_motor_control</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28 -->
+<div class="item-ok" id="item-3caff57e7dca87c5a68e709b2e5f6eda341057c0">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-24e1314283cbb67433c1511023645b60962a0d1e'>octopus_example.chromatophore_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38 -->
+<div class="item-ok" id="item-25f9dbe53fdbe5daa978da7aa3fcc1af20ad519d">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3'>octopus_example.ink_sac_trigger</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48 -->
+<div class="item-ok" id="item-93f7c070b92a877a1ed4369cf8300f419906c453">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-98ac0a09ab50e33e5e11e90334c68031ac7be707'>octopus_example.vision_processing_unit</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58 -->
+<div class="item-missing" id="item-c3d63908be382cd7ea18ee1a68080efdadfdb134">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.rock_arrangement_planner</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+</div>
+<div class="detailed-report-verification-and-validation">
+<h3 id="heading-verification-and-validation">Verification and Validation</h3>
+<div id="section-requirements">
+<h4 id="sec-5a2ebfb8baa378cfcfcba58bbb1380c2" class="heading-requirements">Requirements</h4>
+<h5>octopus_requirements.trlc</h5>
+<!-- begin item req octopus_example.tentacle_motor_control -->
+<div class="item-ok" id="item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.tentacle_motor_control</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-ed1ee3b9ba7afdb4b659e38bfbd15db3020b0be9'>tentacle_toolkit.MotorController</a></li>
+<li>Item <a href='#item-a6207fb65af3563db799bf062e915b1467b9605b'>test_tentacle_toolkit.TestMotorController.test_control_motors:18</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req octopus_example.chromatophore_processor -->
+<div class="item-ok" id="item-24e1314283cbb67433c1511023645b60962a0d1e">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.chromatophore_processor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-1a83d87239fc9aa70877f8d06c52c60913182290'>tentacle_toolkit.ColorProcessor</a></li>
+<li>Item <a href='#item-3caff57e7dca87c5a68e709b2e5f6eda341057c0'>test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req octopus_example.ink_sac_trigger -->
+<div class="item-ok" id="item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.ink_sac_trigger</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-78908898fa195d39293a2e1846966087de26879b'>tentacle_toolkit.InkTrigger</a></li>
+<li>Item <a href='#item-25f9dbe53fdbe5daa978da7aa3fcc1af20ad519d'>test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req octopus_example.vision_processing_unit -->
+<div class="item-ok" id="item-98ac0a09ab50e33e5e11e90334c68031ac7be707">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.vision_processing_unit</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-f2f40820fed6658843a9b9ca8f99687894e91c4b'>tentacle_toolkit.VisionProcessor</a></li>
+<li>Item <a href='#item-93f7c070b92a877a1ed4369cf8300f419906c453'>test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-10728f00d2b3dbeb33e929580c1af57ec39a0f72'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements1.trlc</h5>
+<!-- begin item req octopus_example.tentacle_coordination -->
+<div class="item-ok" id="item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.tentacle_coordination</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements1.trlc" target="_blank">octopus_requirements1.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe'>octopus_example.tentacle_motor_control</a></li>
+<li>Item <a href='#item-8229955f310683983ce5962e617bec3e258aa536'>tentacle_commander.TentacleCoordinator</a></li>
+<li>Item <a href='#item-1546976fee669da7eb04d6d27dbef04ce6a5704f'>test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements2.trlc</h5>
+<!-- begin item req octopus_example.color_camouflage -->
+<div class="item-ok" id="item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.color_camouflage</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements2.trlc" target="_blank">octopus_requirements2.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-24e1314283cbb67433c1511023645b60962a0d1e'>octopus_example.chromatophore_processor</a></li>
+<li>Item <a href='#item-29e209f267a9f6405de2b71a9c47fcbe7ad37cff'>tentacle_commander.ColorCamouflage</a></li>
+<li>Item <a href='#item-2254c2abf5d24212f847bfe443cea5bf2fd410c5'>test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28</a></li>
+<li>Item <a href='#item-340e4d2001fe507f1a7863ac7d9caa6cd1bec813'>test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements3.trlc</h5>
+<!-- begin item req octopus_example.ink_defense -->
+<div class="item-ok" id="item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.ink_defense</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements3.trlc" target="_blank">octopus_requirements3.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3'>octopus_example.ink_sac_trigger</a></li>
+<li>Item <a href='#item-4111373f42b55d111bac61cc249c625c8c63c0c1'>tentacle_commander.InkDefense</a></li>
+<li>Item <a href='#item-d7f9755f13524f24a5562d7b926f4f2485cd55f6'>test_tentacle_commander.TestInkDefense.test_deploy_ink:42</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements4.trlc</h5>
+<!-- begin item req octopus_example.prey_detection -->
+<div class="item-ok" id="item-10728f00d2b3dbeb33e929580c1af57ec39a0f72">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.prey_detection</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements4.trlc" target="_blank">octopus_requirements4.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-98ac0a09ab50e33e5e11e90334c68031ac7be707'>octopus_example.vision_processing_unit</a></li>
+<li>Item <a href='#item-991c4ac5d4863023380b73f265986bf64a28183c'>tentacle_commander.PreyDetection</a></li>
+<li>Item <a href='#item-d7c71f5482c7f479282d232f0e4bbf6fabbaea13'>test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-code">
+<h4 id="sec-ca0dbad92a874b2f69b549293387925e" class="heading-code">Code</h4>
+<h5>tentacle_commander.py</h5>
+<!-- begin item python tentacle_commander.TentacleCoordinator -->
+<div class="item-ok" id="item-8229955f310683983ce5962e617bec3e258aa536">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.TentacleCoordinator</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.ColorCamouflage -->
+<div class="item-ok" id="item-29e209f267a9f6405de2b71a9c47fcbe7ad37cff">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.ColorCamouflage</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.InkDefense -->
+<div class="item-ok" id="item-4111373f42b55d111bac61cc249c625c8c63c0c1">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.InkDefense</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.PreyDetection -->
+<div class="item-ok" id="item-991c4ac5d4863023380b73f265986bf64a28183c">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.PreyDetection</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-10728f00d2b3dbeb33e929580c1af57ec39a0f72'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_commander.DenSecurity -->
+<div class="item-missing" id="item-65c9f37adf97674454a4b4463c94621ca97a397c">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item tentacle_commander.DenSecurity</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.den_security</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>tentacle_toolkit.py</h5>
+<!-- begin item python tentacle_toolkit.MotorController -->
+<div class="item-ok" id="item-ed1ee3b9ba7afdb4b659e38bfbd15db3020b0be9">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.MotorController</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe'>octopus_example.tentacle_motor_control</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.ColorProcessor -->
+<div class="item-ok" id="item-1a83d87239fc9aa70877f8d06c52c60913182290">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.ColorProcessor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-24e1314283cbb67433c1511023645b60962a0d1e'>octopus_example.chromatophore_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.InkTrigger -->
+<div class="item-ok" id="item-78908898fa195d39293a2e1846966087de26879b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.InkTrigger</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3'>octopus_example.ink_sac_trigger</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.VisionProcessor -->
+<div class="item-ok" id="item-f2f40820fed6658843a9b9ca8f99687894e91c4b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.VisionProcessor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-98ac0a09ab50e33e5e11e90334c68031ac7be707'>octopus_example.vision_processing_unit</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python tentacle_toolkit.ConstructionPlanner -->
+<div class="item-missing" id="item-e70dc1c3f97b6472665a02063bb47b5c55c1fe18">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item tentacle_toolkit.ConstructionPlanner</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.rock_arrangement_planner</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-test">
+<h4 id="sec-098f6bcd4621d373cade4e832627b4f6" class="heading-test">test</h4>
+<h5>test_tentacle_commander.py</h5>
+<!-- begin item pyunit test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18 -->
+<div class="item-ok" id="item-1546976fee669da7eb04d6d27dbef04ce6a5704f">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-3baa600642f37a61c7b694885b0e2b4cebe6c9bb'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28 -->
+<div class="item-ok" id="item-2254c2abf5d24212f847bfe443cea5bf2fd410c5">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33 -->
+<div class="item-ok" id="item-340e4d2001fe507f1a7863ac7d9caa6cd1bec813">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-4b5b7bb9ce7f1ab505a38fdd34bc7865fd0c68b4'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestInkDefense.test_deploy_ink:42 -->
+<div class="item-ok" id="item-d7f9755f13524f24a5562d7b926f4f2485cd55f6">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestInkDefense.test_deploy_ink:42</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6c3f5f6f968f0be98f8bbd82c7b31e4218f837e6'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52 -->
+<div class="item-ok" id="item-d7c71f5482c7f479282d232f0e4bbf6fabbaea13">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-10728f00d2b3dbeb33e929580c1af57ec39a0f72'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_commander.TestDenSecurity.test_secure_den:62 -->
+<div class="item-missing" id="item-96586fd418c143ab49cdb8c2b80dbfb41aefc7e4">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item test_tentacle_commander.TestDenSecurity.test_secure_den:62</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.den_security</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>test_tentacle_toolkit.py</h5>
+<!-- begin item pyunit test_tentacle_toolkit.TestMotorController.test_control_motors:18 -->
+<div class="item-ok" id="item-a6207fb65af3563db799bf062e915b1467b9605b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestMotorController.test_control_motors:18</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-d5be748ad3e0abb21c32bf5ca9759186c6dfabbe'>octopus_example.tentacle_motor_control</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28 -->
+<div class="item-ok" id="item-3caff57e7dca87c5a68e709b2e5f6eda341057c0">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-24e1314283cbb67433c1511023645b60962a0d1e'>octopus_example.chromatophore_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38 -->
+<div class="item-ok" id="item-25f9dbe53fdbe5daa978da7aa3fcc1af20ad519d">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-567389de82bd8aa6487eb889b9f0358f6fb5a4b3'>octopus_example.ink_sac_trigger</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48 -->
+<div class="item-ok" id="item-93f7c070b92a877a1ed4369cf8300f419906c453">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-98ac0a09ab50e33e5e11e90334c68031ac7be707'>octopus_example.vision_processing_unit</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58 -->
+<div class="item-missing" id="item-c3d63908be382cd7ea18ee1a68080efdadfdb134">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target req octopus_example.rock_arrangement_planner</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+</div>
+</div>
+<footer>
+<p>LOBSTER Version: 1.0.3-dev</p>
+</footer>
+</div>
+</div>
+<script>
+function buttonFilter(filter) {
+    var elms = document.getElementsByTagName("div");
+    var issue_elms = document.getElementsByClassName("issue");
+    for (i = 0; i < elms.length; i++) {
+        if (elms[i].id.startsWith("item-")) {
+            console.log("elms[i].className ", elms[i].className)
+            if (filter == "all") {
+                elms[i].style.display = "block";
+            } else if (elms[i].className == "item-" + filter) {
+                elms[i].style.display = "block";
+            } else {
+                elms[i].style.display = "none";
+            }
+        }
+    }
+    // filter the issues list based on the issue filter button clicked
+    for (i = 0; i < issue_elms.length; i++) {
+        console.log("log ", issue_elms[i].className)
+        if (filter == "all") {
+            issue_elms[i].style.display = "list-item";
+        } else if (issue_elms[i].className.includes("issue issue-" + filter)) {
+            issue_elms[i].style.display = "list-item";
+        } else {
+            issue_elms[i].style.display = "none";
+        }
+    }
+    activeButton(filter);
+    //call the search filering which could have been overwritten by the current filtering
+    searchItem();
+}
+
+
+function activeButton(filter) {
+    var elms = document.getElementsByTagName("button");
+    console.log("the click buitton is " + filter);
+    for (i = 0; i < elms.length; i++) {
+        if (elms[i].className.includes("buttonActive")) {
+            console.log("elem active found : " + elms[i].className);
+            elms[i].className = elms[i].className.replace("buttonActive", "");
+        } else if (elms[i].className.toLowerCase().includes("button" + filter.toLowerCase())) {
+            console.log("elem to be activated found : " + elms[i].className);
+            elms[i].className = elms[i].className + " buttonActive";
+        }
+    }
+}
+
+
+function ToggleIssues() {
+    var div_issue = document.getElementById("issues-section");
+    if (div_issue.style.display == "block" || div_issue.style.display == "") {
+        div_issue.style.display = "none";
+        document.getElementById("BtnToggleIssue").innerHTML = "Show Issues";
+        document.getElementById("BtnToggleIssue").className = document.getElementById("BtnToggleIssue").className + " buttonActive";
+    } else {
+        div_issue.style = 'display: block; flex-direction: column; height: 200px;' +
+            'overflow:auto;';
+        document.getElementById("BtnToggleIssue").innerHTML = "Hide Issues";
+        document.getElementById("BtnToggleIssue").className = document.getElementById("BtnToggleIssue").className.replace("buttonActive", "");
+    }
+}
+
+
+function searchItem() {
+    var input = document.getElementById('search').value
+    input = input.toLowerCase();
+
+    var divs = document.getElementsByClassName('item-name');
+    for (i = 0; i < divs.length; i++) {
+        var title = divs[i].parentNode.getAttribute("title");
+        // get requirement name: 2nd part when we cut the long string with /svg
+        var reqname = divs[i].innerHTML.toLowerCase().split("</svg>").pop();
+        reqname = reqname.split(" ").pop();
+        if (reqname.includes(input)) {
+            // the search pattern has been found, if this elem has the title "hidden-not-matching", put it back to diplayed
+            if (title) {
+                if (title.startsWith("hidden-not-matching")) {
+                    divs[i].parentNode.style.display = "block";
+                }
+            }
+            divs[i].parentNode.setAttribute("title", "matching-" + input)
+        } else {
+            // not maching, we hide
+            divs[i].parentNode.setAttribute("title", "hidden-not-matching")
+            divs[i].parentNode.style.display = "none";
+        }
+    }
+}
+</script>
+<script>
+
+window.onscroll = function() {stickyNavbar()};
+
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+function stickyNavbar() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+</body>
+</html>

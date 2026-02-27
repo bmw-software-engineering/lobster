@@ -31,6 +31,7 @@ class LobsterPythonSystemTest(LobsterPythonSystemTestCaseBase):
 
         self._test_runner.cmd_args.files.append(IN_FILE)
         self._test_runner.cmd_args.out = OUT_FILE
+        self._test_runner.cmd_args.single = True
 
         self._test_runner.cmd_args.kind = "imp"
 
@@ -58,6 +59,7 @@ class LobsterPythonSystemTest(LobsterPythonSystemTestCaseBase):
 
         self._test_runner.cmd_args.files.append(IN_FILE)
         self._test_runner.cmd_args.out = OUT_FILE
+        self._test_runner.cmd_args.single = True
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
