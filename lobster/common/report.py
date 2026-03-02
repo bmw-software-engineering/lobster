@@ -37,6 +37,7 @@ LEVEL_DEFINITION_TAG = '!LevelDefinition'
 YAMALE_SCHEMA_FILENAME = 'tracing_policy_schema.yamale'
 
 
+# pylint: disable=too-many-ancestors
 class YamlConfigLoader(yaml.SafeLoader):
     pass
 
