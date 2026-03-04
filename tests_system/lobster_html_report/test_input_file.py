@@ -28,7 +28,7 @@ class LobsterHtmlReportInputFileTest(LobsterUISystemTestCaseBase):
         expected_stderr = (
             "usage: lobster-html-report [-h] [-v] [--out OUT] [--dot DOT] "
             "[--high-contrast]\n"
-            "                           [--render-md]\n"
+            "                           [--render-md] [--source-root SOURCE_ROOT]\n"
             "                           [lobster_report]\n"
             f"lobster-html-report: error: {str(missing_lobster_file)} is not a file\n"
         )

@@ -38,11 +38,12 @@ class Coverage:
 
 class Report:
     def __init__(self):
-        self.mh       = Message_Handler()
-        self.config   = OrderedDict()
-        self.items    = {}
-        self.coverage = {}
+        self.mh          = Message_Handler()
+        self.config      = OrderedDict()
+        self.items       = {}
+        self.coverage    = {}
         self.custom_data = {}
+        self.source_root = ""
 
     def parse_config(self, filename):
         """

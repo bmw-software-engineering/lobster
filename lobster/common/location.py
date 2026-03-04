@@ -33,7 +33,7 @@ class Location(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def to_html(self) -> str:
+    def to_html(self, source_root="") -> str:
         pass
 
     @abstractmethod
@@ -81,7 +81,7 @@ class Void_Reference(Location):
     def to_string(self):
         return "<unknown location>"
 
-    def to_html(self):
+    def to_html(self, source_root=""):
         return html.escape(self.to_string())
 
     def to_json(self):
@@ -123,8 +123,9 @@ class File_Reference(Location):
             rv += ":%u" % self.column
         return rv
 
-    def to_html(self):
-        return '<a href="%s" target="_blank">%s</a>' % (self.filename,
+    def to_html(self, source_root=""):
+        href = source_root + self.filename if source_root else self.filename
+        return '<a href="%s" target="_blank">%s</a>' % (href,
                                                         self.filename)
 
     def to_json(self):
@@ -174,7 +175,7 @@ class Github_Reference(Location):
         else:
             return self.filename
 
-    def to_html(self):
+    def to_html(self, source_root=""):
         file_ref = self.filename
         if self.line:
             file_ref += "#L%u" % self.line
@@ -229,7 +230,7 @@ class Codebeamer_Reference(Location):
         else:
             return "cb item %u" % self.item
 
-    def to_html(self):
+    def to_html(self, source_root=""):
         # lobster-trace: Codebeamer_URL
         url = self.cb_root
         url += "/issue/%u" % self.item
