@@ -31,9 +31,17 @@ subrule_lobster_report = subrule(
 def _lobster_html_report_subrule_impl(ctx, lobster_report, _lobster_html_report):
     lobster_html_report = ctx.actions.declare_file("{}_report.html".format(ctx.label.name))
 
+    # Compute relative path from the HTML output back to the workspace root so
+    # that file:// links in the report work when opening via bazel-bin.
+
+    package = ctx.label.package
+    package_depth = len(package.split("/")) if package else 0
+    source_root = "/".join([".." for _ in range(package_depth + 1)]) + "/"
+
     args = ctx.actions.args()
     args.add(lobster_report.path)
     args.add_all(["--out", lobster_html_report.path])
+    args.add_all(["--source-root", source_root])
 
     ctx.actions.run(
         executable = _lobster_html_report,
