@@ -4,7 +4,7 @@ import json
 from unittest.mock import patch, create_autospec, mock_open, ANY
 from lobster.common.errors import Message_Handler, LOBSTER_Error
 from lobster.common.location import File_Reference
-from lobster.common.items import Tracing_Tag, Requirement, Implementation, Activity
+from lobster.common.items import Tracing_Tag, Requirement, Implementation, Activity, Item
 from lobster.common.io import lobster_write, lobster_read
 from lobster.common.location import Location
 
@@ -20,6 +20,11 @@ class LobsterWriteReadTests(unittest.TestCase):
         self.mock_language = "mock_language"
         self.mock_location = create_autospec(Location, instance = True)
         self.tracing_tag = Tracing_Tag(self.mock_namespace, self.mock_tag)
+        self.item = Item(
+            self.tracing_tag,
+            self.mock_location,
+            self.mock_name,
+        )
         self.requirement = Requirement(
             self.tracing_tag,
             self.mock_location,
@@ -57,6 +62,28 @@ class LobsterWriteReadTests(unittest.TestCase):
             "ref_up": ["mock_value"],
             "ref_down": ["mock_value"],
         }
+
+    @patch("lobster.common.io.json")
+    @patch("lobster.common.items.Tracing_Tag.to_json")
+    @patch("lobster.common.items.Item.to_json")
+    def test_lobster_write_item(self, mock_item_to_json, mock_tracing_tag_to_json, mock_json):
+        generator = "mock_generator"
+        mock_tracing_tag_to_json.return_value = "mock_value"
+        self.source_data["tracing_status"] = "mock_status"
+        mock_item_to_json.return_value = self.source_data
+        items = [self.item]
+        self.source_data["tracing_status"] = "mock_status"
+        self.source_data["framework"] = "mock_framework"
+        fd_req = io.StringIO()
+        mock_data = {
+            "data" : [self.source_data],
+            "generator" : generator,
+            "version" : 5
+        }
+        lobster_write(fd_req, Item, generator, items)
+        fd_req.seek(0)
+        mock_json.dump.assert_called_once_with(mock_data, fd_req, indent=2)
+
 
     @patch("lobster.common.io.json")
     @patch("lobster.common.items.Tracing_Tag.to_json")
@@ -129,6 +156,33 @@ class LobsterWriteReadTests(unittest.TestCase):
             "version" : 3
         }
         mock_json.dump.assert_called_once_with(mock_data, fd_act, indent=2)
+
+    @patch("lobster.common.items.Item.additional_data_from_json")
+    @patch("lobster.common.items.Tracing_Tag.key")
+    @patch("lobster.common.items.Tracing_Tag.from_json")
+    def test_lobster_read_valid_item(self, mock_from_json, mock_key, mock_additional_data_from_json):
+        mock_key.return_value = "mock_namespace mock_tag"
+        mock_from_json.return_value = self.tracing_tag
+        self.source_data.update({"location" : {
+                    "kind": "file",
+                    "file": "example.txt"
+                }})
+        self.source_data["tracing_status"] = "mock_status"
+        self.source_data["framework"] = "mock_framework"
+        mock_data_req = {
+            "version" : 5,
+            "generator" : "mock_generator",
+            "data" : [self.source_data]
+            }
+        read_data = json.dumps(mock_data_req, indent=4)
+        with patch("os.path.isfile", return_value=True):
+            with patch("builtins.open", mock_open(read_data=read_data)):
+                lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
+                self.assertEqual(len(self.items), 1)
+                mock_additional_data_from_json.assert_called_once_with(
+                    self.level,
+                    self.source_data, mock_data_req["version"],
+                )
 
     @patch("lobster.common.items.Item.additional_data_from_json")
     @patch("lobster.common.items.Tracing_Tag.key")
@@ -239,14 +293,25 @@ class LobsterWriteReadTests(unittest.TestCase):
     @patch(
         "builtins.open",
         new_callable=unittest.mock.mock_open,
-        read_data='{"schema": "lobster-req-trace", "version": 5, "generator": "test_gen", "data": []}',
+        read_data='{"schema": "lobster-req-trace", "generator": "mock_generator", "data": []}',
+    )
+    def test_lobster_read_missing_versio_key(self, mock_file_open, mock_isfile):
+        with self.assertRaises(LOBSTER_Error):
+            lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
+            self.mh.error.assert_called_with(ANY, "required top-level key version not present")
+
+    @patch("os.path.isfile", return_value=True)
+    @patch(
+        "builtins.open",
+        new_callable=unittest.mock.mock_open,
+        read_data='{"schema": "lobster-imp-trace", "version": 4, "generator": "test_gen", "data": []}',
     )
     def test_lobster_read_unsupported_version(self, mock_file_open, mock_isfile):
         with self.assertRaises(LOBSTER_Error):
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
             self.mh.error.assert_called_with(
                 File_Reference(self.filename),
-                "version 5 for schema lobster-req-trace is not supported",
+                "version 4 for schema lobster-imp-trace is not supported",
             )
 
     @patch("os.path.isfile", return_value=True)
