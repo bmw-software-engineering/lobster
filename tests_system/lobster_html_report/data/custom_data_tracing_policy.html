@@ -113,9 +113,6 @@ footer {
   overflow: hidden;
   background-color: #009ada;
 }
-.navbar-right {
-  float: right;
-}
 #navbar a {
   float: left;
   display: block;
@@ -342,14 +339,12 @@ footer {
 <a href="#sec-ca0dbad92a874b2f69b549293387925e" id="menu-item-code">Code</a>
 </div>
 </div>
-<div class="navbar-right">
 <div class="dropdown">
 <button class="dropbtn">LOBSTER<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
 <div class="dropdown-content">
 <a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md" id="menu-item-documentation"><svg class="icon"><use href="#svg-external-link"></use></svg> Documentation</a>
 <a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md" id="menu-item-license"><svg class="icon"><use href="#svg-external-link"></use></svg> License</a>
 <a href="https://github.com/bmw-software-engineering/lobster" id="menu-item-source"><svg class="icon"><use href="#svg-external-link"></use></svg> Source</a>
-</div>
 </div>
 </div>
 </div>
@@ -482,7 +477,6 @@ footer {
 <h2 id="sec-issues" class="heading-issues">Issues</h2>
 <div class="content">
 <div id="issues-section" style="display:none">
-<ul>
 <li class="issue issue-missing issue-missing-req">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: status is status1, expected abc or def</li>
 <li class="issue issue-missing issue-missing-req">TRLC Requirement <a href='#item-ae6eef0f9ce6a72c16e8546860450b94d5499085'>example.adas_100_A</a>: missing reference to Code</li>
 <li class="issue issue-missing issue-missing-python">Python Function <a href='#item-b08d67b92006da35eaff57131eb330052bacbfb7'>software.Example</a>: missing up reference</li>
@@ -512,8 +506,11 @@ Status: status1
 <div class="attribute">
 <div>Issues:
 <ul>
-<li>status is status1, expected abc or def</li>
-<li>missing reference to Code</li>
+<ul>
+<div class="attribute"><li>status is status1, expected abc or def</li></div>
+</ul>
+<ul>
+<div class="attribute"><li>missing reference to Code</li></div>
 </ul>
 </div>
 </div>
@@ -536,7 +533,8 @@ Status: status1
 <div class="attribute">
 <div>Issues:
 <ul>
-<li>missing up reference</li>
+<ul>
+<div class="attribute"><li>missing up reference</li></div>
 </ul>
 </div>
 </div>
@@ -549,7 +547,7 @@ Status: status1
 </div>
 </div>
 <footer>
-<p>LOBSTER Version: 0.14.6-dev</p>
+<p>LOBSTER Version: 1.0.3-dev</p>
 </footer>
 </div>
 </div>

@@ -255,8 +255,13 @@ def write_item_tracing(doc, report, item):
         doc.add_line("<div>Issues:")
         doc.add_line("<ul>")
         for msg in item.messages:
-            doc.add_line("<li>%s</li>" % html.escape(msg))
-        doc.add_line("</ul>")
+            doc.add_line("<ul>")
+            doc.add_line(
+                f'<div class="attribute">'
+                f'<li>{msg}</li>'
+                f'</div>'
+            )
+            doc.add_line("</ul>")
         doc.add_line("</div>")
 
     doc.add_line("</div>")
@@ -420,7 +425,7 @@ def write_html(report, dot, high_contrast, render_md) -> str:
     if report.custom_data:
         content = generate_custom_data(report)
         doc.add_line(f'<div id="custom-data-banner">{content}</div>')
-    menu = doc.navbar.add_dropdown("LOBSTER", "right")
+    menu = doc.navbar.add_dropdown("LOBSTER")
     menu.add_link("Documentation",
                   "%s/blob/main/README.md" % LOBSTER_GH)
     menu.add_link("License",
@@ -490,7 +495,6 @@ def write_html(report, dot, high_contrast, render_md) -> str:
             for message in item.messages:
                 if not has_issues:
                     has_issues = True
-                    doc.add_line("<ul>")
                 doc.add_line(
                     f'<li class="issue issue-{item.tracing_status.name.lower()}'
                     f' issue-{item.tracing_status.name.lower()}-'
@@ -550,7 +554,7 @@ def write_html(report, dot, high_contrast, render_md) -> str:
                         doc.add_line('<div class="attribute">')
                         doc.add_line("Status: %s" % html.escape(item.status))
                         doc.add_line('</div>')
-                    if isinstance(item, Requirement) and item.text:
+                    if (isinstance(item, (Requirement, Activity)) and item.text):
                         if render_md:
                             bq_class = ' class="md_description"'
                             bq_text = markdown.markdown(item.text,

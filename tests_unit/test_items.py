@@ -34,7 +34,12 @@ class ItemsTests(unittest.TestCase):
             self.mock_kind,
             self.mock_name,
         )
-        self.activity = Activity(self.tracing_tag, self.mock_location, self.mock_framework, self.mock_kind)
+        self.activity = Activity(
+            self.tracing_tag,
+            self.mock_location,
+            self.mock_framework,
+            self.mock_kind
+        )
 
     def set_location_data(self, location_type):
         if location_type == "file":
@@ -456,6 +461,24 @@ class TestActivity(ItemsTests):
             "item_property": "item_value",
             "framework": "mock_framework",
             "kind": "mock_kind",
+            "status": None
+        }
+        result = self.activity.to_json()
+
+        mock_super_to_json.assert_called_once_with()
+        self.assertEqual(result, expected_result)
+
+    @patch("lobster.common.items.Item.to_json")
+    def test_to_json_text_not_null(self, mock_super_to_json):
+        mock_super_to_json.return_value = {
+            "item_property": "item_value",
+        }
+        self.activity.text = "mock_text"
+        expected_result = {
+            "item_property": "item_value",
+            "framework": "mock_framework",
+            "kind": "mock_kind",
+            "text": "mock_text",
             "status": None
         }
         result = self.activity.to_json()
