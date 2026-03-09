@@ -344,7 +344,7 @@ class Activity(Item):
         rv["framework"] = self.framework
         rv["kind"]      = self.kind
         if self.text is not None:
-            rv["text"]      = self.text
+            rv["text"] = self.text
         rv["status"]    = self.status
         return rv
 
