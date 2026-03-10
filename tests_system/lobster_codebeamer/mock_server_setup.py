@@ -12,7 +12,7 @@ def _start_mock_server() -> CodebeamerFlask:
     if codebeamer_flask:
         return codebeamer_flask
 
-    codebeamer_flask = create_app()
+    codebeamer_flask = create_app(port=0)  # Use dynamic port allocation
     mock_server_thread = threading.Thread(
         target=codebeamer_flask.start_server,
         daemon=True
