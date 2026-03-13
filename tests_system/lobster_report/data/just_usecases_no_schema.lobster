@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "req complex_just_example.lost_sock_scenario",
+      "tag": "itm complex_just_example.lost_sock_scenario",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -14,14 +14,10 @@
         "Not applicable up reference"
       ],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "usecase",
-      "text": "User loses a sock during laundry and needs to find it quickly",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req complex_just_example.monday_motivation_scenario",
+      "tag": "itm complex_just_example.monday_motivation_scenario",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -34,14 +30,10 @@
       "just_down": [
         "Not applicable down reference"
       ],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "usecase",
-      "text": "User wakes up feeling unmotivated on Monday morning",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req complex_just_example.pizza_waiting_scenario",
+      "tag": "itm complex_just_example.pizza_waiting_scenario",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -54,14 +46,10 @@
       "just_down": [
         "Not applicable down reference"
       ],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "usecase",
-      "text": "User orders pizza and anxiously waits for delivery",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req complex_just_example.cat_communication_scenario",
+      "tag": "itm complex_just_example.cat_communication_scenario",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -74,14 +62,10 @@
       "just_down": [],
       "just_global": [
         "Not applicable up and down reference"
-      ],
-      "framework": "TRLC",
-      "kind": "usecase",
-      "text": "User tries to understand what their cat wants",
-      "status": null
+      ]
     },
     {
-      "tag": "req complex_just_example.remote_hunting_scenario",
+      "tag": "itm complex_just_example.remote_hunting_scenario",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -96,14 +80,10 @@
       "just_down": [
         "Not applicable down reference"
       ],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "usecase",
-      "text": "User wants to watch TV but cannot find the remote control",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req complex_just_example.sadness_relief_scenario",
+      "tag": "itm complex_just_example.sadness_relief_scenario",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -114,14 +94,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "usecase",
-      "text": "User feels sad and needs cheering up",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req complex_just_example.midnight_snack_temptation_scenario",
+      "tag": "itm complex_just_example.midnight_snack_temptation_scenario",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -132,11 +108,7 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "usecase",
-      "text": "User is tempted to eat unhealthy snacks late at night",
-      "status": null
+      "just_global": []
     }
   ],
   "generator": "lobster-trlc",

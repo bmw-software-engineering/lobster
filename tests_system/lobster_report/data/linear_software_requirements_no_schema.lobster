@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "req software_example.search_books",
+      "tag": "itm software_example.search_books",
       "location": {
         "kind": "file",
         "file": "linear_requirements.trlc",
@@ -14,15 +14,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req software_example.finder"
-      ],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall implement book search functionality",
-      "status": null
+        "itm software_example.finder"
+      ]
     },
     {
-      "tag": "req software_example.reading_tracker",
+      "tag": "itm software_example.reading_tracker",
       "location": {
         "kind": "file",
         "file": "linear_requirements.trlc",
@@ -35,15 +31,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req software_example.tracker"
-      ],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall track reading progress and statistics",
-      "status": null
+        "itm software_example.tracker"
+      ]
     },
     {
-      "tag": "req software_example.library_manager",
+      "tag": "itm software_example.library_manager",
       "location": {
         "kind": "file",
         "file": "linear_requirements.trlc",
@@ -56,15 +48,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req software_example.organizer"
-      ],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall organize and categorize books",
-      "status": null
+        "itm software_example.organizer"
+      ]
     },
     {
-      "tag": "req software_example.book_reviews",
+      "tag": "itm software_example.book_reviews",
       "location": {
         "kind": "file",
         "file": "linear_requirements.trlc",
@@ -77,12 +65,8 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req software_example.reviews"
-      ],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall collect and display book reviews",
-      "status": null
+        "itm software_example.reviews"
+      ]
     }
   ],
   "generator": "lobster-trlc",

@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "pyunit test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18",
+      "tag": "itm test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18",
       "location": {
         "kind": "file",
         "file": "test_tentacle_commander.py",
@@ -14,14 +14,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.tentacle_coordination"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm octopus_example.tentacle_coordination"
+      ]
     },
     {
-      "tag": "pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28",
+      "tag": "itm test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28",
       "location": {
         "kind": "file",
         "file": "test_tentacle_commander.py",
@@ -34,14 +31,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.color_camouflage"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm octopus_example.color_camouflage"
+      ]
     },
     {
-      "tag": "pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33",
+      "tag": "itm test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33",
       "location": {
         "kind": "file",
         "file": "test_tentacle_commander.py",
@@ -54,14 +48,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.color_camouflage"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm octopus_example.color_camouflage"
+      ]
     },
     {
-      "tag": "pyunit test_tentacle_commander.TestInkDefense.test_deploy_ink:42",
+      "tag": "itm test_tentacle_commander.TestInkDefense.test_deploy_ink:42",
       "location": {
         "kind": "file",
         "file": "test_tentacle_commander.py",
@@ -74,14 +65,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.ink_defense"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm octopus_example.ink_defense"
+      ]
     },
     {
-      "tag": "pyunit test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52",
+      "tag": "itm test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52",
       "location": {
         "kind": "file",
         "file": "test_tentacle_commander.py",
@@ -94,14 +82,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.prey_detection"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm octopus_example.prey_detection"
+      ]
     },
     {
-      "tag": "pyunit test_tentacle_commander.TestDenSecurity.test_secure_den:62",
+      "tag": "itm test_tentacle_commander.TestDenSecurity.test_secure_den:62",
       "location": {
         "kind": "file",
         "file": "test_tentacle_commander.py",
@@ -114,11 +99,8 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.den_security"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm octopus_example.den_security"
+      ]
     }
   ],
   "generator": "lobster_python",

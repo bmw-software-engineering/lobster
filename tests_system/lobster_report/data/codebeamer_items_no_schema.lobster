@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "req 1@100",
+      "tag": "itm 1@100",
       "location": {
         "kind": "codebeamer",
         "cb_root": "https://localhost:8999",
@@ -14,14 +14,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "codebeamer",
-      "kind": "codebeamer item",
-      "text": null,
-      "status": "Status 1"
+      "just_global": []
     },
     {
-      "tag": "req 2@200",
+      "tag": "itm 2@200",
       "location": {
         "kind": "codebeamer",
         "cb_root": "https://localhost:8999",
@@ -34,14 +30,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "codebeamer",
-      "kind": "codebeamer item",
-      "text": null,
-      "status": "Status 2"
+      "just_global": []
     },
     {
-      "tag": "req 3@300",
+      "tag": "itm 3@300",
       "location": {
         "kind": "codebeamer",
         "cb_root": "https://localhost:8999",
@@ -54,14 +46,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "codebeamer",
-      "kind": "codebeamer item",
-      "text": null,
-      "status": "Status 3"
+      "just_global": []
     },
     {
-      "tag": "req 4@400",
+      "tag": "itm 4@400",
       "location": {
         "kind": "codebeamer",
         "cb_root": "https://localhost:8999",
@@ -74,11 +62,7 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "codebeamer",
-      "kind": "codebeamer item",
-      "text": null,
-      "status": "Status 4"
+      "just_global": []
     }
   ],
   "generator": "lobster_codebeamer",

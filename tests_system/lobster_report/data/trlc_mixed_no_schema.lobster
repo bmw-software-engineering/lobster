@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "req example.adas_100_A",
+      "tag": "itm example.adas_100_A",
       "location": {
         "kind": "file",
         "file": ".\\demo.trlc",
@@ -12,14 +12,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "Requirement",
-      "text": "keep the vehicle in lane for A.",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req example.adas_100_B",
+      "tag": "itm example.adas_100_B",
       "location": {
         "kind": "file",
         "file": ".\\demo.trlc",
@@ -30,11 +26,7 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "Requirement",
-      "text": "keep the vehicle in lane for B.",
-      "status": null
+      "just_global": []
     }
   ],
   "generator": "lobster-trlc",

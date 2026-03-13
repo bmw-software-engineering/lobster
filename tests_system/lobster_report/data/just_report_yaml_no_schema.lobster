@@ -7,7 +7,7 @@
       "name": "usecases",
       "items": [
         {
-          "tag": "req complex_just_example.lost_sock_scenario",
+          "tag": "itm complex_just_example.lost_sock_scenario",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -26,7 +26,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req complex_just_example.monday_motivation_scenario",
+          "tag": "itm complex_just_example.monday_motivation_scenario",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -42,12 +42,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req complex_just_example.monday_mood"
+            "itm complex_just_example.monday_mood"
           ],
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req complex_just_example.pizza_waiting_scenario",
+          "tag": "itm complex_just_example.pizza_waiting_scenario",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -64,7 +64,7 @@
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req complex_just_example.cat_communication_scenario",
+          "tag": "itm complex_just_example.cat_communication_scenario",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -81,7 +81,7 @@
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req complex_just_example.remote_hunting_scenario",
+          "tag": "itm complex_just_example.remote_hunting_scenario",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -100,7 +100,7 @@
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req complex_just_example.sadness_relief_scenario",
+          "tag": "itm complex_just_example.sadness_relief_scenario",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -114,12 +114,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req complex_just_example.joke_generator"
+            "itm complex_just_example.joke_generator"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req complex_just_example.midnight_snack_temptation_scenario",
+          "tag": "itm complex_just_example.midnight_snack_temptation_scenario",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -142,7 +142,7 @@
       "name": "System Requirements",
       "items": [
         {
-          "tag": "req complex_just_example.sock_finder",
+          "tag": "itm complex_just_example.sock_finder",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -161,7 +161,7 @@
           "tracing_status": "PARTIAL"
         },
         {
-          "tag": "req complex_just_example.monday_mood",
+          "tag": "itm complex_just_example.monday_mood",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -176,13 +176,13 @@
           ],
           "just_global": [],
           "ref_up": [
-            "req complex_just_example.monday_motivation_scenario"
+            "itm complex_just_example.monday_motivation_scenario"
           ],
           "ref_down": [],
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req complex_just_example.pizza_detector",
+          "tag": "itm complex_just_example.pizza_detector",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -201,7 +201,7 @@
           "tracing_status": "PARTIAL"
         },
         {
-          "tag": "req complex_just_example.cat_translator",
+          "tag": "itm complex_just_example.cat_translator",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -218,7 +218,7 @@
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req complex_just_example.remote_locator",
+          "tag": "itm complex_just_example.remote_locator",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -237,7 +237,7 @@
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req complex_just_example.joke_generator",
+          "tag": "itm complex_just_example.joke_generator",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -250,15 +250,15 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req complex_just_example.sadness_relief_scenario"
+            "itm complex_just_example.sadness_relief_scenario"
           ],
           "ref_down": [
-            "req complex_just_example.pun_database"
+            "itm complex_just_example.pun_database"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req complex_just_example.cookie_guard",
+          "tag": "itm complex_just_example.cookie_guard",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -282,7 +282,7 @@
       "name": "Software Requirements",
       "items": [
         {
-          "tag": "req complex_just_example.sock_scanner",
+          "tag": "itm complex_just_example.sock_scanner",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -299,7 +299,7 @@
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req complex_just_example.mood_analyzer",
+          "tag": "itm complex_just_example.mood_analyzer",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -318,7 +318,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req complex_just_example.pizza_radar",
+          "tag": "itm complex_just_example.pizza_radar",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -335,7 +335,7 @@
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req complex_just_example.meow_processor",
+          "tag": "itm complex_just_example.meow_processor",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -354,7 +354,7 @@
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req complex_just_example.pun_database",
+          "tag": "itm complex_just_example.pun_database",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",
@@ -367,13 +367,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req complex_just_example.joke_generator"
+            "itm complex_just_example.joke_generator"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "req complex_just_example.cushion_explorer",
+          "tag": "itm complex_just_example.cushion_explorer",
           "location": {
             "kind": "file",
             "file": "just_requirements.trlc",

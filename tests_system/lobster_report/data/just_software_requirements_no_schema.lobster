@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "req complex_just_example.sock_scanner",
+      "tag": "itm complex_just_example.sock_scanner",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -14,14 +14,10 @@
         "Not applicable up reference"
       ],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall scan washing machines and dryers for sock presence",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req complex_just_example.mood_analyzer",
+      "tag": "itm complex_just_example.mood_analyzer",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -34,14 +30,10 @@
       "just_down": [
         "Not applicable down reference"
       ],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall analyze user facial expressions and deploy happiness algorithms",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req complex_just_example.pizza_radar",
+      "tag": "itm complex_just_example.pizza_radar",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -54,14 +46,10 @@
       "just_down": [],
       "just_global": [
         "Not applicable up and down reference"
-      ],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall monitor GPS coordinates of pizza delivery vehicles",
-      "status": null
+      ]
     },
     {
-      "tag": "req complex_just_example.meow_processor",
+      "tag": "itm complex_just_example.meow_processor",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -76,14 +64,10 @@
       "just_down": [
         "Not applicable down reference"
       ],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall process cat vocalizations using advanced feline linguistics",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req complex_just_example.pun_database",
+      "tag": "itm complex_just_example.pun_database",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -96,15 +80,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req complex_just_example.joke_generator"
-      ],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall maintain a database of dad jokes sorted by cringe level",
-      "status": null
+        "itm complex_just_example.joke_generator"
+      ]
     },
     {
-      "tag": "req complex_just_example.cushion_explorer",
+      "tag": "itm complex_just_example.cushion_explorer",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -115,11 +95,7 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall map couch cushion topography for remote detection",
-      "status": null
+      "just_global": []
     }
   ],
   "generator": "lobster-trlc",

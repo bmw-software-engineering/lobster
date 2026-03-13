@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "python simple_book_system.SimpleBookSystem.search_books",
+      "tag": "itm simple_book_system.SimpleBookSystem.search_books",
       "location": {
         "kind": "file",
         "file": "simple_book_system.py",
@@ -14,13 +14,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req software_example.search_books"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm software_example.search_books"
+      ]
     },
     {
-      "tag": "python simple_book_system.SimpleBookSystem.track_progress",
+      "tag": "itm simple_book_system.SimpleBookSystem.track_progress",
       "location": {
         "kind": "file",
         "file": "simple_book_system.py",
@@ -33,13 +31,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req software_example.reading_tracker"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm software_example.reading_tracker"
+      ]
     },
     {
-      "tag": "python simple_book_system.SimpleBookSystem.organize_library",
+      "tag": "itm simple_book_system.SimpleBookSystem.organize_library",
       "location": {
         "kind": "file",
         "file": "simple_book_system.py",
@@ -52,13 +48,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req software_example.library_manager"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm software_example.library_manager"
+      ]
     },
     {
-      "tag": "python simple_book_system.SimpleBookSystem.add_review",
+      "tag": "itm simple_book_system.SimpleBookSystem.add_review",
       "location": {
         "kind": "file",
         "file": "simple_book_system.py",
@@ -71,13 +65,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req software_example.book_reviews"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm software_example.book_reviews"
+      ]
     },
     {
-      "tag": "python simple_book_system.SimpleBookSystem.show_reviews",
+      "tag": "itm simple_book_system.SimpleBookSystem.show_reviews",
       "location": {
         "kind": "file",
         "file": "simple_book_system.py",
@@ -90,10 +82,8 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req software_example.book_reviews"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm software_example.book_reviews"
+      ]
     }
   ],
   "generator": "lobster_python",

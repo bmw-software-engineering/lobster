@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "python vehicle_implementation.StupidVehicle.vehicle_exists",
+      "tag": "itm vehicle_implementation.StupidVehicle.vehicle_exists",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -14,13 +14,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.vehicle"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.vehicle"
+      ]
     },
     {
-      "tag": "python vehicle_implementation.StupidVehicle.run_engine",
+      "tag": "itm vehicle_implementation.StupidVehicle.run_engine",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -33,13 +31,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.engine"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.engine"
+      ]
     },
     {
-      "tag": "python vehicle_implementation.StupidVehicle.activate_safety_system",
+      "tag": "itm vehicle_implementation.StupidVehicle.activate_safety_system",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -52,13 +48,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.safety_system"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.safety_system"
+      ]
     },
     {
-      "tag": "python vehicle_implementation.StupidVehicle.apply_brakes",
+      "tag": "itm vehicle_implementation.StupidVehicle.apply_brakes",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -71,13 +65,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.braking_system"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.braking_system"
+      ]
     },
     {
-      "tag": "python vehicle_implementation.StupidVehicle.check_electrical_system",
+      "tag": "itm vehicle_implementation.StupidVehicle.check_electrical_system",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -90,13 +82,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.electrical_system"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.electrical_system"
+      ]
     },
     {
-      "tag": "python vehicle_implementation.StupidVehicle.operate_fuel_system",
+      "tag": "itm vehicle_implementation.StupidVehicle.operate_fuel_system",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -109,13 +99,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.fuel_system"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.fuel_system"
+      ]
     },
     {
-      "tag": "python vehicle_implementation.StupidVehicle.operate_transmission_system",
+      "tag": "itm vehicle_implementation.StupidVehicle.operate_transmission_system",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -128,13 +116,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.transmission_system"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.transmission_system"
+      ]
     },
     {
-      "tag": "python vehicle_implementation.StupidVehicle.control_steering_system",
+      "tag": "itm vehicle_implementation.StupidVehicle.control_steering_system",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -147,13 +133,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.steering_system"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.steering_system"
+      ]
     },
     {
-      "tag": "python vehicle_implementation.StupidVehicle.operate_lighting_system",
+      "tag": "itm vehicle_implementation.StupidVehicle.operate_lighting_system",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -166,13 +150,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.lighting_system"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.lighting_system"
+      ]
     },
     {
-      "tag": "python vehicle_implementation.StupidVehicle.control_climate_system",
+      "tag": "itm vehicle_implementation.StupidVehicle.control_climate_system",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -185,13 +167,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.climate_control"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.climate_control"
+      ]
     },
     {
-      "tag": "python vehicle_implementation.StupidVehicle.comprehensive_system_check",
+      "tag": "itm vehicle_implementation.StupidVehicle.comprehensive_system_check",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -204,16 +184,14 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.engine",
-        "req example.electrical_system",
-        "req example.fuel_system",
-        "req example.safety_system"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.engine",
+        "itm example.electrical_system",
+        "itm example.fuel_system",
+        "itm example.safety_system"
+      ]
     },
     {
-      "tag": "python vehicle_implementation.StupidVehicle.run_vehicle_diagnostics",
+      "tag": "itm vehicle_implementation.StupidVehicle.run_vehicle_diagnostics",
       "location": {
         "kind": "file",
         "file": "vehicle_implementation.py",
@@ -226,12 +204,10 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.vehicle",
-        "req example.engine",
-        "req example.safety_system"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm example.vehicle",
+        "itm example.engine",
+        "itm example.safety_system"
+      ]
     }
   ],
   "generator": "lobster_python",

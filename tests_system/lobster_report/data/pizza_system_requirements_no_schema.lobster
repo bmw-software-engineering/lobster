@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "req pizza_example.oven",
+      "tag": "itm pizza_example.oven",
       "location": {
         "kind": "file",
         "file": "pizza_system_requirements.trlc",
@@ -12,14 +12,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall heat pizzas to perfect crispy goodness",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.delivery",
+      "tag": "itm pizza_example.delivery",
       "location": {
         "kind": "file",
         "file": "pizza_system_requirements.trlc",
@@ -30,14 +26,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall transport pizzas while they are still hot",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.ordering",
+      "tag": "itm pizza_example.ordering",
       "location": {
         "kind": "file",
         "file": "pizza_system_requirements.trlc",
@@ -48,14 +40,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall accept pizza orders from hungry customers",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.payment",
+      "tag": "itm pizza_example.payment",
       "location": {
         "kind": "file",
         "file": "pizza_system_requirements.trlc",
@@ -66,14 +54,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall process money without stealing tips",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.tracking",
+      "tag": "itm pizza_example.tracking",
       "location": {
         "kind": "file",
         "file": "pizza_system_requirements.trlc",
@@ -84,14 +68,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall show where the pizza is on its journey",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.inventory",
+      "tag": "itm pizza_example.inventory",
       "location": {
         "kind": "file",
         "file": "pizza_system_requirements.trlc",
@@ -102,14 +82,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall keep track of cheese and pepperoni supplies",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.communication",
+      "tag": "itm pizza_example.communication",
       "location": {
         "kind": "file",
         "file": "pizza_system_requirements.trlc",
@@ -120,14 +96,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall notify customers when pizza arrives",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.quality",
+      "tag": "itm pizza_example.quality",
       "location": {
         "kind": "file",
         "file": "pizza_system_requirements.trlc",
@@ -138,11 +110,7 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall ensure pizzas taste better than cardboard",
-      "status": null
+      "just_global": []
     }
   ],
   "generator": "lobster-trlc",

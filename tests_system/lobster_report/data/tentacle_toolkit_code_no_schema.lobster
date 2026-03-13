@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "python tentacle_toolkit.MotorController",
+      "tag": "itm tentacle_toolkit.MotorController",
       "location": {
         "kind": "file",
         "file": "tentacle_toolkit.py",
@@ -14,13 +14,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.tentacle_motor_control"
-      ],
-      "language": "Python",
-      "kind": "Class"
+        "itm octopus_example.tentacle_motor_control"
+      ]
     },
     {
-      "tag": "python tentacle_toolkit.ColorProcessor",
+      "tag": "itm tentacle_toolkit.ColorProcessor",
       "location": {
         "kind": "file",
         "file": "tentacle_toolkit.py",
@@ -33,13 +31,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.chromatophore_processor"
-      ],
-      "language": "Python",
-      "kind": "Class"
+        "itm octopus_example.chromatophore_processor"
+      ]
     },
     {
-      "tag": "python tentacle_toolkit.InkTrigger",
+      "tag": "itm tentacle_toolkit.InkTrigger",
       "location": {
         "kind": "file",
         "file": "tentacle_toolkit.py",
@@ -52,13 +48,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.ink_sac_trigger"
-      ],
-      "language": "Python",
-      "kind": "Class"
+        "itm octopus_example.ink_sac_trigger"
+      ]
     },
     {
-      "tag": "python tentacle_toolkit.VisionProcessor",
+      "tag": "itm tentacle_toolkit.VisionProcessor",
       "location": {
         "kind": "file",
         "file": "tentacle_toolkit.py",
@@ -71,13 +65,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.vision_processing_unit"
-      ],
-      "language": "Python",
-      "kind": "Class"
+        "itm octopus_example.vision_processing_unit"
+      ]
     },
     {
-      "tag": "python tentacle_toolkit.ConstructionPlanner",
+      "tag": "itm tentacle_toolkit.ConstructionPlanner",
       "location": {
         "kind": "file",
         "file": "tentacle_toolkit.py",
@@ -90,10 +82,8 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.rock_arrangement_planner"
-      ],
-      "language": "Python",
-      "kind": "Class"
+        "itm octopus_example.rock_arrangement_planner"
+      ]
     }
   ],
   "generator": "lobster_python",

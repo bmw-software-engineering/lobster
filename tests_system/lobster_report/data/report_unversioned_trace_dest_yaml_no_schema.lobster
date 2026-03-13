@@ -7,7 +7,7 @@
       "name": "Code",
       "items": [
         {
-          "tag": "python software.Example",
+          "tag": "itm software.Example",
           "location": {
             "kind": "file",
             "file": "./software.py",
@@ -16,16 +16,16 @@
           },
           "name": "software.Example",
           "messages": [
-            "tracing destination python software.Example is unversioned"
+            "tracing destination itm software.Example is unversioned"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "python software.Example@1.0"
+            "itm software.Example@1.0"
           ],
           "ref_down": [
-            "python software.Example"
+            "itm software.Example"
           ],
           "tracing_status": "MISSING"
         }

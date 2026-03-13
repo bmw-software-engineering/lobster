@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "req complex_just_example.sock_finder",
+      "tag": "itm complex_just_example.sock_finder",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -14,14 +14,10 @@
         "Not applicable up reference"
       ],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall locate missing socks from the laundry dimension",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req complex_just_example.monday_mood",
+      "tag": "itm complex_just_example.monday_mood",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -36,15 +32,11 @@
       ],
       "just_global": [],
       "refs": [
-        "req complex_just_example.monday_motivation_scenario"
-      ],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall automatically improve user mood on Monday mornings",
-      "status": null
+        "itm complex_just_example.monday_motivation_scenario"
+      ]
     },
     {
-      "tag": "req complex_just_example.pizza_detector",
+      "tag": "itm complex_just_example.pizza_detector",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -57,14 +49,10 @@
       "just_down": [
         "Not applicable down reference"
       ],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall detect when pizza delivery arrives within 5 miles",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req complex_just_example.cat_translator",
+      "tag": "itm complex_just_example.cat_translator",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -77,14 +65,10 @@
       "just_down": [],
       "just_global": [
         "Not applicable up and down reference"
-      ],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall translate cat meows into human language",
-      "status": null
+      ]
     },
     {
-      "tag": "req complex_just_example.remote_locator",
+      "tag": "itm complex_just_example.remote_locator",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -99,14 +83,10 @@
       "just_down": [
         "Not applicable down reference"
       ],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall find TV remotes hiding in couch cushions",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req complex_just_example.joke_generator",
+      "tag": "itm complex_just_example.joke_generator",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -119,15 +99,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req complex_just_example.sadness_relief_scenario"
-      ],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall tell dad jokes when users are feeling sad",
-      "status": null
+        "itm complex_just_example.sadness_relief_scenario"
+      ]
     },
     {
-      "tag": "req complex_just_example.cookie_guard",
+      "tag": "itm complex_just_example.cookie_guard",
       "location": {
         "kind": "file",
         "file": "just_requirements.trlc",
@@ -138,11 +114,7 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall protect cookies from midnight snack attacks",
-      "status": null
+      "just_global": []
     }
   ],
   "generator": "lobster-trlc",

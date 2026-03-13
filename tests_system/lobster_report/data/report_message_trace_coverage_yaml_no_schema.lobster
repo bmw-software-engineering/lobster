@@ -7,7 +7,7 @@
       "name": "Requirements",
       "items": [
         {
-          "tag": "req example.adas_100",
+          "tag": "itm example.adas_100",
           "location": {
             "kind": "file",
             "file": "./demo.trlc",
@@ -21,7 +21,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python software.Example"
+            "itm software.Example"
           ],
           "tracing_status": "OK"
         }
@@ -32,7 +32,7 @@
       "name": "Code",
       "items": [
         {
-          "tag": "python software.Example",
+          "tag": "itm software.Example",
           "location": {
             "kind": "file",
             "file": "./software.py",
@@ -47,7 +47,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.adas_100"
+            "itm example.adas_100"
           ],
           "ref_down": [],
           "tracing_status": "PARTIAL"

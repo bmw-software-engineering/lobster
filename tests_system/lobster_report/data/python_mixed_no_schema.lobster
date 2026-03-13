@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "python software.Example",
+      "tag": "itm software.Example",
       "location": {
         "kind": "file",
         "file": ".\\software.py",
@@ -14,10 +14,8 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.adas_100_A"
-      ],
-      "language": "Python",
-      "kind": "Function"
+        "itm example.adas_100_A"
+      ]
     }
   ],
   "generator": "lobster_python",

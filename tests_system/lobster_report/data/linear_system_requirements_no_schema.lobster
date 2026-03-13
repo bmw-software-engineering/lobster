@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "req software_example.finder",
+      "tag": "itm software_example.finder",
       "location": {
         "kind": "file",
         "file": "linear_requirements.trlc",
@@ -12,14 +12,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall find books that people actually want to read",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req software_example.tracker",
+      "tag": "itm software_example.tracker",
       "location": {
         "kind": "file",
         "file": "linear_requirements.trlc",
@@ -30,14 +26,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall count pages read without making people feel guilty",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req software_example.organizer",
+      "tag": "itm software_example.organizer",
       "location": {
         "kind": "file",
         "file": "linear_requirements.trlc",
@@ -48,14 +40,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall arrange books so they can be found again",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req software_example.reviews",
+      "tag": "itm software_example.reviews",
       "location": {
         "kind": "file",
         "file": "linear_requirements.trlc",
@@ -66,11 +54,7 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "system_requirement",
-      "text": "The system shall gather opinions about books from real humans",
-      "status": null
+      "just_global": []
     }
   ],
   "generator": "lobster-trlc",

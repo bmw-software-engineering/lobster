@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "python pizza_implementation.OvenController.start_cooking",
+      "tag": "itm pizza_implementation.OvenController.start_cooking",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -14,14 +14,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.oven_controller",
-        "req pizza_example.oven"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.oven_controller",
+        "itm pizza_example.oven"
+      ]
     },
     {
-      "tag": "python pizza_implementation.OvenController.check_cooking_status",
+      "tag": "itm pizza_implementation.OvenController.check_cooking_status",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -34,14 +32,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.oven_controller",
-        "req pizza_example.oven"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.oven_controller",
+        "itm pizza_example.oven"
+      ]
     },
     {
-      "tag": "python pizza_implementation.RouteOptimizer.calculate_route",
+      "tag": "itm pizza_implementation.RouteOptimizer.calculate_route",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -54,14 +50,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.route_planner",
-        "req pizza_example.delivery"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.route_planner",
+        "itm pizza_example.delivery"
+      ]
     },
     {
-      "tag": "python pizza_implementation.OrderProcessor.create_customer",
+      "tag": "itm pizza_implementation.OrderProcessor.create_customer",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -74,14 +68,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.order_processor",
-        "req pizza_example.ordering"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.order_processor",
+        "itm pizza_example.ordering"
+      ]
     },
     {
-      "tag": "python pizza_implementation.OrderProcessor.place_order",
+      "tag": "itm pizza_implementation.OrderProcessor.place_order",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -94,14 +86,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.order_processor",
-        "req pizza_example.ordering"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.order_processor",
+        "itm pizza_example.ordering"
+      ]
     },
     {
-      "tag": "python pizza_implementation.PaymentGateway.process_payment",
+      "tag": "itm pizza_implementation.PaymentGateway.process_payment",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -114,14 +104,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.payment_gateway",
-        "req pizza_example.payment"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.payment_gateway",
+        "itm pizza_example.payment"
+      ]
     },
     {
-      "tag": "python pizza_implementation.DeliveryTracker.start_delivery",
+      "tag": "itm pizza_implementation.DeliveryTracker.start_delivery",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -134,14 +122,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.gps_tracker",
-        "req pizza_example.tracking"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.gps_tracker",
+        "itm pizza_example.tracking"
+      ]
     },
     {
-      "tag": "python pizza_implementation.InventoryManager.use_ingredients",
+      "tag": "itm pizza_implementation.InventoryManager.use_ingredients",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -154,14 +140,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.stock_manager",
-        "req pizza_example.inventory"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.stock_manager",
+        "itm pizza_example.inventory"
+      ]
     },
     {
-      "tag": "python pizza_implementation.InventoryManager.check_for_alerts",
+      "tag": "itm pizza_implementation.InventoryManager.check_for_alerts",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -174,14 +158,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.stock_manager",
-        "req pizza_example.inventory"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.stock_manager",
+        "itm pizza_example.inventory"
+      ]
     },
     {
-      "tag": "python pizza_implementation.NotificationSystem.send_sms",
+      "tag": "itm pizza_implementation.NotificationSystem.send_sms",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -194,14 +176,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.notification_system",
-        "req pizza_example.communication"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.notification_system",
+        "itm pizza_example.communication"
+      ]
     },
     {
-      "tag": "python pizza_implementation.NotificationSystem.notify_order_status",
+      "tag": "itm pizza_implementation.NotificationSystem.notify_order_status",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -214,14 +194,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.notification_system",
-        "req pizza_example.communication"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.notification_system",
+        "itm pizza_example.communication"
+      ]
     },
     {
-      "tag": "python pizza_implementation.RecipeDatabase.get_recipe",
+      "tag": "itm pizza_implementation.RecipeDatabase.get_recipe",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -234,14 +212,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.recipe_database",
-        "req pizza_example.quality"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.recipe_database",
+        "itm pizza_example.quality"
+      ]
     },
     {
-      "tag": "python pizza_implementation.RecipeDatabase.validate_quality",
+      "tag": "itm pizza_implementation.RecipeDatabase.validate_quality",
       "location": {
         "kind": "file",
         "file": "pizza_implementation.py",
@@ -254,11 +230,9 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req pizza_example.recipe_database",
-        "req pizza_example.quality"
-      ],
-      "language": "Python",
-      "kind": "Method"
+        "itm pizza_example.recipe_database",
+        "itm pizza_example.quality"
+      ]
     }
   ],
   "generator": "lobster_python",

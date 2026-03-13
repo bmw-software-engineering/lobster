@@ -7,7 +7,7 @@
       "name": "Requirements",
       "items": [
         {
-          "tag": "req example.adas_100_A",
+          "tag": "itm example.adas_100_A",
           "location": {
             "kind": "file",
             "file": "./demo.trlc",
@@ -30,7 +30,7 @@
       "name": "Code",
       "items": [
         {
-          "tag": "python software.Example",
+          "tag": "itm software.Example",
           "location": {
             "kind": "file",
             "file": "./software.py",

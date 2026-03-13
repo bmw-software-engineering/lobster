@@ -7,7 +7,7 @@
       "name": "Code",
       "items": [
         {
-          "tag": "python software.Example@2",
+          "tag": "itm software.Example@2",
           "location": {
             "kind": "file",
             "file": "./software.py",
@@ -16,16 +16,16 @@
           },
           "name": "software.Example",
           "messages": [
-            "tracing destination python software.Example has version 2 (expected 1)"
+            "tracing destination itm software.Example has version 2 (expected 1)"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "python software.Example@1"
+            "itm software.Example@1"
           ],
           "ref_down": [
-            "python software.Example@2"
+            "itm software.Example@2"
           ],
           "tracing_status": "MISSING"
         }

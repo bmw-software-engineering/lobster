@@ -7,7 +7,7 @@
       "name": "Requirements",
       "items": [
         {
-          "tag": "req example.vehicle",
+          "tag": "itm example.vehicle",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -21,15 +21,15 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.vehicle_exists",
-            "python vehicle_implementation.StupidVehicle.run_vehicle_diagnostics",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_vehicle_exists:25",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150"
+            "itm vehicle_implementation.StupidVehicle.vehicle_exists",
+            "itm vehicle_implementation.StupidVehicle.run_vehicle_diagnostics",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_vehicle_exists:25",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req example.engine",
+          "tag": "itm example.engine",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -45,19 +45,19 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.run_engine",
-            "python vehicle_implementation.StupidVehicle.comprehensive_system_check",
-            "python vehicle_implementation.StupidVehicle.run_vehicle_diagnostics",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_engine_functionality:31",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
-            "pyunit test_vehicle_implementation.TestVehicleIntegration.test_engine_fuel_integration:172",
-            "pyunit test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196"
+            "itm vehicle_implementation.StupidVehicle.run_engine",
+            "itm vehicle_implementation.StupidVehicle.comprehensive_system_check",
+            "itm vehicle_implementation.StupidVehicle.run_vehicle_diagnostics",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_engine_functionality:31",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
+            "itm test_vehicle_implementation.TestVehicleIntegration.test_engine_fuel_integration:172",
+            "itm test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196"
           ],
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req example.safety_system",
+          "tag": "itm example.safety_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -71,18 +71,18 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.activate_safety_system",
-            "python vehicle_implementation.StupidVehicle.comprehensive_system_check",
-            "python vehicle_implementation.StupidVehicle.run_vehicle_diagnostics",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_safety_system_activation:45",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
-            "pyunit test_vehicle_implementation.TestVehicleIntegration.test_safety_electrical_integration:185"
+            "itm vehicle_implementation.StupidVehicle.activate_safety_system",
+            "itm vehicle_implementation.StupidVehicle.comprehensive_system_check",
+            "itm vehicle_implementation.StupidVehicle.run_vehicle_diagnostics",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_safety_system_activation:45",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
+            "itm test_vehicle_implementation.TestVehicleIntegration.test_safety_electrical_integration:185"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req example.braking_system",
+          "tag": "itm example.braking_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -96,15 +96,15 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.apply_brakes",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_braking_system:51",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
-            "pyunit test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196"
+            "itm vehicle_implementation.StupidVehicle.apply_brakes",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_braking_system:51",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
+            "itm test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req example.electrical_system",
+          "tag": "itm example.electrical_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -118,17 +118,17 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.check_electrical_system",
-            "python vehicle_implementation.StupidVehicle.comprehensive_system_check",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_electrical_system:65",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
-            "pyunit test_vehicle_implementation.TestVehicleIntegration.test_safety_electrical_integration:185"
+            "itm vehicle_implementation.StupidVehicle.check_electrical_system",
+            "itm vehicle_implementation.StupidVehicle.comprehensive_system_check",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_electrical_system:65",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
+            "itm test_vehicle_implementation.TestVehicleIntegration.test_safety_electrical_integration:185"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req example.fuel_system",
+          "tag": "itm example.fuel_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -142,17 +142,17 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.operate_fuel_system",
-            "python vehicle_implementation.StupidVehicle.comprehensive_system_check",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_fuel_system_operation:77",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
-            "pyunit test_vehicle_implementation.TestVehicleIntegration.test_engine_fuel_integration:172"
+            "itm vehicle_implementation.StupidVehicle.operate_fuel_system",
+            "itm vehicle_implementation.StupidVehicle.comprehensive_system_check",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_fuel_system_operation:77",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
+            "itm test_vehicle_implementation.TestVehicleIntegration.test_engine_fuel_integration:172"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req example.transmission_system",
+          "tag": "itm example.transmission_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -166,15 +166,15 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.operate_transmission_system",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_transmission_system:90",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
-            "pyunit test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196"
+            "itm vehicle_implementation.StupidVehicle.operate_transmission_system",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_transmission_system:90",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
+            "itm test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req example.steering_system",
+          "tag": "itm example.steering_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -188,15 +188,15 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.control_steering_system",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_steering_system:102",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
-            "pyunit test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196"
+            "itm vehicle_implementation.StupidVehicle.control_steering_system",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_steering_system:102",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
+            "itm test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req example.lighting_system",
+          "tag": "itm example.lighting_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -210,14 +210,14 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.operate_lighting_system",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_lighting_system:114",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150"
+            "itm vehicle_implementation.StupidVehicle.operate_lighting_system",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_lighting_system:114",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req example.climate_control",
+          "tag": "itm example.climate_control",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -231,9 +231,9 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.control_climate_system",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_climate_control:123",
-            "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150"
+            "itm vehicle_implementation.StupidVehicle.control_climate_system",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_climate_control:123",
+            "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150"
           ],
           "tracing_status": "OK"
         }
@@ -244,7 +244,7 @@
       "name": "Code",
       "items": [
         {
-          "tag": "python vehicle_implementation.StupidVehicle.vehicle_exists",
+          "tag": "itm vehicle_implementation.StupidVehicle.vehicle_exists",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -257,13 +257,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.vehicle"
+            "itm example.vehicle"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.run_engine",
+          "tag": "itm vehicle_implementation.StupidVehicle.run_engine",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -276,13 +276,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.engine"
+            "itm example.engine"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.activate_safety_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.activate_safety_system",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -295,13 +295,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.safety_system"
+            "itm example.safety_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.apply_brakes",
+          "tag": "itm vehicle_implementation.StupidVehicle.apply_brakes",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -314,13 +314,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.braking_system"
+            "itm example.braking_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.check_electrical_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.check_electrical_system",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -333,13 +333,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.electrical_system"
+            "itm example.electrical_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.operate_fuel_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.operate_fuel_system",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -352,13 +352,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.fuel_system"
+            "itm example.fuel_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.operate_transmission_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.operate_transmission_system",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -371,13 +371,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.transmission_system"
+            "itm example.transmission_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.control_steering_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.control_steering_system",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -390,13 +390,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.steering_system"
+            "itm example.steering_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.operate_lighting_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.operate_lighting_system",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -409,13 +409,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.lighting_system"
+            "itm example.lighting_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.control_climate_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.control_climate_system",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -428,13 +428,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.climate_control"
+            "itm example.climate_control"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.comprehensive_system_check",
+          "tag": "itm vehicle_implementation.StupidVehicle.comprehensive_system_check",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -447,16 +447,16 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.safety_system",
-            "req example.fuel_system",
-            "req example.electrical_system",
-            "req example.engine"
+            "itm example.safety_system",
+            "itm example.fuel_system",
+            "itm example.electrical_system",
+            "itm example.engine"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.run_vehicle_diagnostics",
+          "tag": "itm vehicle_implementation.StupidVehicle.run_vehicle_diagnostics",
           "location": {
             "kind": "file",
             "file": "vehicle_implementation.py",
@@ -469,9 +469,9 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.safety_system",
-            "req example.engine",
-            "req example.vehicle"
+            "itm example.safety_system",
+            "itm example.engine",
+            "itm example.vehicle"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -483,7 +483,7 @@
       "name": "Test",
       "items": [
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_vehicle_exists:25",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_vehicle_exists:25",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -496,13 +496,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.vehicle"
+            "itm example.vehicle"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_engine_functionality:31",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_engine_functionality:31",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -515,13 +515,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.engine"
+            "itm example.engine"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_safety_system_activation:45",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_safety_system_activation:45",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -534,13 +534,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.safety_system"
+            "itm example.safety_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_braking_system:51",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_braking_system:51",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -553,13 +553,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.braking_system"
+            "itm example.braking_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_electrical_system:65",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_electrical_system:65",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -572,13 +572,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.electrical_system"
+            "itm example.electrical_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_fuel_system_operation:77",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_fuel_system_operation:77",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -591,13 +591,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.fuel_system"
+            "itm example.fuel_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_transmission_system:90",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_transmission_system:90",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -610,13 +610,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.transmission_system"
+            "itm example.transmission_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_steering_system:102",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_steering_system:102",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -629,13 +629,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.steering_system"
+            "itm example.steering_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_lighting_system:114",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_lighting_system:114",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -648,13 +648,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.lighting_system"
+            "itm example.lighting_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_climate_control:123",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_climate_control:123",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -667,13 +667,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.climate_control"
+            "itm example.climate_control"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -686,16 +686,16 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.safety_system",
-            "req example.fuel_system",
-            "req example.electrical_system",
-            "req example.engine"
+            "itm example.safety_system",
+            "itm example.fuel_system",
+            "itm example.electrical_system",
+            "itm example.engine"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
+          "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -708,22 +708,22 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.climate_control",
-            "req example.lighting_system",
-            "req example.steering_system",
-            "req example.transmission_system",
-            "req example.fuel_system",
-            "req example.electrical_system",
-            "req example.braking_system",
-            "req example.safety_system",
-            "req example.engine",
-            "req example.vehicle"
+            "itm example.climate_control",
+            "itm example.lighting_system",
+            "itm example.steering_system",
+            "itm example.transmission_system",
+            "itm example.fuel_system",
+            "itm example.electrical_system",
+            "itm example.braking_system",
+            "itm example.safety_system",
+            "itm example.engine",
+            "itm example.vehicle"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestVehicleIntegration.test_engine_fuel_integration:172",
+          "tag": "itm test_vehicle_implementation.TestVehicleIntegration.test_engine_fuel_integration:172",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -736,14 +736,14 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.fuel_system",
-            "req example.engine"
+            "itm example.fuel_system",
+            "itm example.engine"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestVehicleIntegration.test_safety_electrical_integration:185",
+          "tag": "itm test_vehicle_implementation.TestVehicleIntegration.test_safety_electrical_integration:185",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -756,14 +756,14 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.electrical_system",
-            "req example.safety_system"
+            "itm example.electrical_system",
+            "itm example.safety_system"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196",
+          "tag": "itm test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196",
           "location": {
             "kind": "file",
             "file": "test_vehicle_implementation.py",
@@ -776,10 +776,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.braking_system",
-            "req example.steering_system",
-            "req example.transmission_system",
-            "req example.engine"
+            "itm example.braking_system",
+            "itm example.steering_system",
+            "itm example.transmission_system",
+            "itm example.engine"
           ],
           "ref_down": [],
           "tracing_status": "OK"

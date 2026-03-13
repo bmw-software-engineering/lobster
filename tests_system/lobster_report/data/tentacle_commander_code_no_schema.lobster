@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "python tentacle_commander.TentacleCoordinator",
+      "tag": "itm tentacle_commander.TentacleCoordinator",
       "location": {
         "kind": "file",
         "file": "tentacle_commander.py",
@@ -14,13 +14,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.tentacle_coordination"
-      ],
-      "language": "Python",
-      "kind": "Class"
+        "itm octopus_example.tentacle_coordination"
+      ]
     },
     {
-      "tag": "python tentacle_commander.ColorCamouflage",
+      "tag": "itm tentacle_commander.ColorCamouflage",
       "location": {
         "kind": "file",
         "file": "tentacle_commander.py",
@@ -33,13 +31,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.color_camouflage"
-      ],
-      "language": "Python",
-      "kind": "Class"
+        "itm octopus_example.color_camouflage"
+      ]
     },
     {
-      "tag": "python tentacle_commander.InkDefense",
+      "tag": "itm tentacle_commander.InkDefense",
       "location": {
         "kind": "file",
         "file": "tentacle_commander.py",
@@ -52,13 +48,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.ink_defense"
-      ],
-      "language": "Python",
-      "kind": "Class"
+        "itm octopus_example.ink_defense"
+      ]
     },
     {
-      "tag": "python tentacle_commander.PreyDetection",
+      "tag": "itm tentacle_commander.PreyDetection",
       "location": {
         "kind": "file",
         "file": "tentacle_commander.py",
@@ -71,13 +65,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.prey_detection"
-      ],
-      "language": "Python",
-      "kind": "Class"
+        "itm octopus_example.prey_detection"
+      ]
     },
     {
-      "tag": "python tentacle_commander.DenSecurity",
+      "tag": "itm tentacle_commander.DenSecurity",
       "location": {
         "kind": "file",
         "file": "tentacle_commander.py",
@@ -90,10 +82,8 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.den_security"
-      ],
-      "language": "Python",
-      "kind": "Class"
+        "itm octopus_example.den_security"
+      ]
     }
   ],
   "generator": "lobster_python",

@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "python codebeamer_funny_impl.translate_dog_barking",
+      "tag": "itm codebeamer_funny_impl.translate_dog_barking",
       "location": {
         "kind": "file",
         "file": "codebeamer_funny_impl.py",
@@ -14,13 +14,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req 1@100"
-      ],
-      "language": "Python",
-      "kind": "Function"
+        "itm 1@100"
+      ]
     },
     {
-      "tag": "python codebeamer_funny_impl.organize_cloud_shapes",
+      "tag": "itm codebeamer_funny_impl.organize_cloud_shapes",
       "location": {
         "kind": "file",
         "file": "codebeamer_funny_impl.py",
@@ -33,13 +31,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req 2@200"
-      ],
-      "language": "Python",
-      "kind": "Function"
+        "itm 2@200"
+      ]
     },
     {
-      "tag": "python codebeamer_funny_impl.schedule_cat_meetings",
+      "tag": "itm codebeamer_funny_impl.schedule_cat_meetings",
       "location": {
         "kind": "file",
         "file": "codebeamer_funny_impl.py",
@@ -52,13 +48,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req 3@300"
-      ],
-      "language": "Python",
-      "kind": "Function"
+        "itm 3@300"
+      ]
     },
     {
-      "tag": "python codebeamer_funny_impl.calibrate_sandwich_perfection",
+      "tag": "itm codebeamer_funny_impl.calibrate_sandwich_perfection",
       "location": {
         "kind": "file",
         "file": "codebeamer_funny_impl.py",
@@ -71,10 +65,8 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req 4@400"
-      ],
-      "language": "Python",
-      "kind": "Function"
+        "itm 4@400"
+      ]
     }
   ],
   "generator": "lobster_python",

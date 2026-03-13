@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "req pizza_example.oven_controller",
+      "tag": "itm pizza_example.oven_controller",
       "location": {
         "kind": "file",
         "file": "pizza_software_requirements.trlc",
@@ -12,14 +12,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall control oven temperature and cooking timer",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.route_planner",
+      "tag": "itm pizza_example.route_planner",
       "location": {
         "kind": "file",
         "file": "pizza_software_requirements.trlc",
@@ -30,14 +26,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall calculate fastest delivery routes",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.order_processor",
+      "tag": "itm pizza_example.order_processor",
       "location": {
         "kind": "file",
         "file": "pizza_software_requirements.trlc",
@@ -48,14 +40,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall manage pizza orders and customer details",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.payment_gateway",
+      "tag": "itm pizza_example.payment_gateway",
       "location": {
         "kind": "file",
         "file": "pizza_software_requirements.trlc",
@@ -66,14 +54,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall handle credit card transactions securely",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.gps_tracker",
+      "tag": "itm pizza_example.gps_tracker",
       "location": {
         "kind": "file",
         "file": "pizza_software_requirements.trlc",
@@ -84,14 +68,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall provide real-time delivery location updates",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.stock_manager",
+      "tag": "itm pizza_example.stock_manager",
       "location": {
         "kind": "file",
         "file": "pizza_software_requirements.trlc",
@@ -102,14 +82,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall monitor ingredient levels and send alerts",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.notification_system",
+      "tag": "itm pizza_example.notification_system",
       "location": {
         "kind": "file",
         "file": "pizza_software_requirements.trlc",
@@ -120,14 +96,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall send SMS and email updates to customers",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req pizza_example.recipe_database",
+      "tag": "itm pizza_example.recipe_database",
       "location": {
         "kind": "file",
         "file": "pizza_software_requirements.trlc",
@@ -138,11 +110,7 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall store pizza recipes and quality standards",
-      "status": null
+      "just_global": []
     }
   ],
   "generator": "lobster-trlc",

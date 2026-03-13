@@ -7,7 +7,7 @@
       "name": "System Requirements",
       "items": [
         {
-          "tag": "req software_example.finder",
+          "tag": "itm software_example.finder",
           "location": {
             "kind": "file",
             "file": "linear_requirements.trlc",
@@ -21,12 +21,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req software_example.search_books"
+            "itm software_example.search_books"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req software_example.tracker",
+          "tag": "itm software_example.tracker",
           "location": {
             "kind": "file",
             "file": "linear_requirements.trlc",
@@ -40,12 +40,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req software_example.reading_tracker"
+            "itm software_example.reading_tracker"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req software_example.organizer",
+          "tag": "itm software_example.organizer",
           "location": {
             "kind": "file",
             "file": "linear_requirements.trlc",
@@ -59,12 +59,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req software_example.library_manager"
+            "itm software_example.library_manager"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req software_example.reviews",
+          "tag": "itm software_example.reviews",
           "location": {
             "kind": "file",
             "file": "linear_requirements.trlc",
@@ -78,7 +78,7 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req software_example.book_reviews"
+            "itm software_example.book_reviews"
           ],
           "tracing_status": "OK"
         }
@@ -89,7 +89,7 @@
       "name": "Software Requirements",
       "items": [
         {
-          "tag": "req software_example.search_books",
+          "tag": "itm software_example.search_books",
           "location": {
             "kind": "file",
             "file": "linear_requirements.trlc",
@@ -102,15 +102,15 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req software_example.finder"
+            "itm software_example.finder"
           ],
           "ref_down": [
-            "python simple_book_system.SimpleBookSystem.search_books"
+            "itm simple_book_system.SimpleBookSystem.search_books"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req software_example.reading_tracker",
+          "tag": "itm software_example.reading_tracker",
           "location": {
             "kind": "file",
             "file": "linear_requirements.trlc",
@@ -123,15 +123,15 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req software_example.tracker"
+            "itm software_example.tracker"
           ],
           "ref_down": [
-            "python simple_book_system.SimpleBookSystem.track_progress"
+            "itm simple_book_system.SimpleBookSystem.track_progress"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req software_example.library_manager",
+          "tag": "itm software_example.library_manager",
           "location": {
             "kind": "file",
             "file": "linear_requirements.trlc",
@@ -144,15 +144,15 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req software_example.organizer"
+            "itm software_example.organizer"
           ],
           "ref_down": [
-            "python simple_book_system.SimpleBookSystem.organize_library"
+            "itm simple_book_system.SimpleBookSystem.organize_library"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req software_example.book_reviews",
+          "tag": "itm software_example.book_reviews",
           "location": {
             "kind": "file",
             "file": "linear_requirements.trlc",
@@ -165,11 +165,11 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req software_example.reviews"
+            "itm software_example.reviews"
           ],
           "ref_down": [
-            "python simple_book_system.SimpleBookSystem.add_review",
-            "python simple_book_system.SimpleBookSystem.show_reviews"
+            "itm simple_book_system.SimpleBookSystem.add_review",
+            "itm simple_book_system.SimpleBookSystem.show_reviews"
           ],
           "tracing_status": "OK"
         }
@@ -180,7 +180,7 @@
       "name": "Code",
       "items": [
         {
-          "tag": "python simple_book_system.SimpleBookSystem.search_books",
+          "tag": "itm simple_book_system.SimpleBookSystem.search_books",
           "location": {
             "kind": "file",
             "file": "simple_book_system.py",
@@ -193,13 +193,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req software_example.search_books"
+            "itm software_example.search_books"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python simple_book_system.SimpleBookSystem.track_progress",
+          "tag": "itm simple_book_system.SimpleBookSystem.track_progress",
           "location": {
             "kind": "file",
             "file": "simple_book_system.py",
@@ -212,13 +212,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req software_example.reading_tracker"
+            "itm software_example.reading_tracker"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python simple_book_system.SimpleBookSystem.organize_library",
+          "tag": "itm simple_book_system.SimpleBookSystem.organize_library",
           "location": {
             "kind": "file",
             "file": "simple_book_system.py",
@@ -231,13 +231,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req software_example.library_manager"
+            "itm software_example.library_manager"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python simple_book_system.SimpleBookSystem.add_review",
+          "tag": "itm simple_book_system.SimpleBookSystem.add_review",
           "location": {
             "kind": "file",
             "file": "simple_book_system.py",
@@ -250,13 +250,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req software_example.book_reviews"
+            "itm software_example.book_reviews"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python simple_book_system.SimpleBookSystem.show_reviews",
+          "tag": "itm simple_book_system.SimpleBookSystem.show_reviews",
           "location": {
             "kind": "file",
             "file": "simple_book_system.py",
@@ -269,7 +269,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req software_example.book_reviews"
+            "itm software_example.book_reviews"
           ],
           "ref_down": [],
           "tracing_status": "OK"

@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "req octopus_example.tentacle_motor_control",
+      "tag": "itm octopus_example.tentacle_motor_control",
       "location": {
         "kind": "file",
         "file": "octopus_requirements.trlc",
@@ -14,15 +14,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.tentacle_coordination"
-      ],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall implement motor control algorithms for independent tentacle movement",
-      "status": null
+        "itm octopus_example.tentacle_coordination"
+      ]
     },
     {
-      "tag": "req octopus_example.chromatophore_processor",
+      "tag": "itm octopus_example.chromatophore_processor",
       "location": {
         "kind": "file",
         "file": "octopus_requirements.trlc",
@@ -35,15 +31,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.color_camouflage"
-      ],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall process color-changing commands to chromatophore cells in real-time",
-      "status": null
+        "itm octopus_example.color_camouflage"
+      ]
     },
     {
-      "tag": "req octopus_example.ink_sac_trigger",
+      "tag": "itm octopus_example.ink_sac_trigger",
       "location": {
         "kind": "file",
         "file": "octopus_requirements.trlc",
@@ -56,15 +48,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.ink_defense"
-      ],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall trigger ink sac release with precise timing and volume control",
-      "status": null
+        "itm octopus_example.ink_defense"
+      ]
     },
     {
-      "tag": "req octopus_example.vision_processing_unit",
+      "tag": "itm octopus_example.vision_processing_unit",
       "location": {
         "kind": "file",
         "file": "octopus_requirements.trlc",
@@ -77,12 +65,8 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req octopus_example.prey_detection"
-      ],
-      "framework": "TRLC",
-      "kind": "software_requirement",
-      "text": "The software shall process multiple camera feeds for 360-degree underwater vision",
-      "status": null
+        "itm octopus_example.prey_detection"
+      ]
     }
   ],
   "generator": "lobster-trlc",

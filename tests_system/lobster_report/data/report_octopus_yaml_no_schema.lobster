@@ -7,7 +7,7 @@
       "name": "Requirements",
       "items": [
         {
-          "tag": "req octopus_example.tentacle_coordination",
+          "tag": "itm octopus_example.tentacle_coordination",
           "location": {
             "kind": "file",
             "file": "octopus_requirements1.trlc",
@@ -21,14 +21,14 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req octopus_example.tentacle_motor_control",
-            "python tentacle_commander.TentacleCoordinator",
-            "pyunit test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18"
+            "itm octopus_example.tentacle_motor_control",
+            "itm tentacle_commander.TentacleCoordinator",
+            "itm test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req octopus_example.color_camouflage",
+          "tag": "itm octopus_example.color_camouflage",
           "location": {
             "kind": "file",
             "file": "octopus_requirements2.trlc",
@@ -42,15 +42,15 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req octopus_example.chromatophore_processor",
-            "python tentacle_commander.ColorCamouflage",
-            "pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28",
-            "pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33"
+            "itm octopus_example.chromatophore_processor",
+            "itm tentacle_commander.ColorCamouflage",
+            "itm test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28",
+            "itm test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req octopus_example.ink_defense",
+          "tag": "itm octopus_example.ink_defense",
           "location": {
             "kind": "file",
             "file": "octopus_requirements3.trlc",
@@ -64,14 +64,14 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req octopus_example.ink_sac_trigger",
-            "python tentacle_commander.InkDefense",
-            "pyunit test_tentacle_commander.TestInkDefense.test_deploy_ink:42"
+            "itm octopus_example.ink_sac_trigger",
+            "itm tentacle_commander.InkDefense",
+            "itm test_tentacle_commander.TestInkDefense.test_deploy_ink:42"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req octopus_example.prey_detection",
+          "tag": "itm octopus_example.prey_detection",
           "location": {
             "kind": "file",
             "file": "octopus_requirements4.trlc",
@@ -85,14 +85,14 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req octopus_example.vision_processing_unit",
-            "python tentacle_commander.PreyDetection",
-            "pyunit test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52"
+            "itm octopus_example.vision_processing_unit",
+            "itm tentacle_commander.PreyDetection",
+            "itm test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req octopus_example.tentacle_motor_control",
+          "tag": "itm octopus_example.tentacle_motor_control",
           "location": {
             "kind": "file",
             "file": "octopus_requirements.trlc",
@@ -105,16 +105,16 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.tentacle_coordination"
+            "itm octopus_example.tentacle_coordination"
           ],
           "ref_down": [
-            "python tentacle_toolkit.MotorController",
-            "pyunit test_tentacle_toolkit.TestMotorController.test_control_motors:18"
+            "itm tentacle_toolkit.MotorController",
+            "itm test_tentacle_toolkit.TestMotorController.test_control_motors:18"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req octopus_example.chromatophore_processor",
+          "tag": "itm octopus_example.chromatophore_processor",
           "location": {
             "kind": "file",
             "file": "octopus_requirements.trlc",
@@ -127,16 +127,16 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.color_camouflage"
+            "itm octopus_example.color_camouflage"
           ],
           "ref_down": [
-            "python tentacle_toolkit.ColorProcessor",
-            "pyunit test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28"
+            "itm tentacle_toolkit.ColorProcessor",
+            "itm test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req octopus_example.ink_sac_trigger",
+          "tag": "itm octopus_example.ink_sac_trigger",
           "location": {
             "kind": "file",
             "file": "octopus_requirements.trlc",
@@ -149,16 +149,16 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.ink_defense"
+            "itm octopus_example.ink_defense"
           ],
           "ref_down": [
-            "python tentacle_toolkit.InkTrigger",
-            "pyunit test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38"
+            "itm tentacle_toolkit.InkTrigger",
+            "itm test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req octopus_example.vision_processing_unit",
+          "tag": "itm octopus_example.vision_processing_unit",
           "location": {
             "kind": "file",
             "file": "octopus_requirements.trlc",
@@ -171,11 +171,11 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.prey_detection"
+            "itm octopus_example.prey_detection"
           ],
           "ref_down": [
-            "python tentacle_toolkit.VisionProcessor",
-            "pyunit test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48"
+            "itm tentacle_toolkit.VisionProcessor",
+            "itm test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48"
           ],
           "tracing_status": "OK"
         }
@@ -186,7 +186,7 @@
       "name": "Code",
       "items": [
         {
-          "tag": "python tentacle_commander.TentacleCoordinator",
+          "tag": "itm tentacle_commander.TentacleCoordinator",
           "location": {
             "kind": "file",
             "file": "tentacle_commander.py",
@@ -199,13 +199,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.tentacle_coordination"
+            "itm octopus_example.tentacle_coordination"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python tentacle_commander.ColorCamouflage",
+          "tag": "itm tentacle_commander.ColorCamouflage",
           "location": {
             "kind": "file",
             "file": "tentacle_commander.py",
@@ -218,13 +218,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.color_camouflage"
+            "itm octopus_example.color_camouflage"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python tentacle_commander.InkDefense",
+          "tag": "itm tentacle_commander.InkDefense",
           "location": {
             "kind": "file",
             "file": "tentacle_commander.py",
@@ -237,13 +237,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.ink_defense"
+            "itm octopus_example.ink_defense"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python tentacle_commander.PreyDetection",
+          "tag": "itm tentacle_commander.PreyDetection",
           "location": {
             "kind": "file",
             "file": "tentacle_commander.py",
@@ -256,13 +256,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.prey_detection"
+            "itm octopus_example.prey_detection"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python tentacle_commander.DenSecurity",
+          "tag": "itm tentacle_commander.DenSecurity",
           "location": {
             "kind": "file",
             "file": "tentacle_commander.py",
@@ -271,7 +271,7 @@
           },
           "name": "tentacle_commander.DenSecurity",
           "messages": [
-            "unknown tracing target req octopus_example.den_security",
+            "unknown tracing target itm octopus_example.den_security",
             "missing up reference"
           ],
           "just_up": [],
@@ -280,7 +280,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "python tentacle_toolkit.MotorController",
+          "tag": "itm tentacle_toolkit.MotorController",
           "location": {
             "kind": "file",
             "file": "tentacle_toolkit.py",
@@ -293,13 +293,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.tentacle_motor_control"
+            "itm octopus_example.tentacle_motor_control"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python tentacle_toolkit.ColorProcessor",
+          "tag": "itm tentacle_toolkit.ColorProcessor",
           "location": {
             "kind": "file",
             "file": "tentacle_toolkit.py",
@@ -312,13 +312,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.chromatophore_processor"
+            "itm octopus_example.chromatophore_processor"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python tentacle_toolkit.InkTrigger",
+          "tag": "itm tentacle_toolkit.InkTrigger",
           "location": {
             "kind": "file",
             "file": "tentacle_toolkit.py",
@@ -331,13 +331,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.ink_sac_trigger"
+            "itm octopus_example.ink_sac_trigger"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python tentacle_toolkit.VisionProcessor",
+          "tag": "itm tentacle_toolkit.VisionProcessor",
           "location": {
             "kind": "file",
             "file": "tentacle_toolkit.py",
@@ -350,13 +350,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.vision_processing_unit"
+            "itm octopus_example.vision_processing_unit"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "python tentacle_toolkit.ConstructionPlanner",
+          "tag": "itm tentacle_toolkit.ConstructionPlanner",
           "location": {
             "kind": "file",
             "file": "tentacle_toolkit.py",
@@ -365,7 +365,7 @@
           },
           "name": "tentacle_toolkit.ConstructionPlanner",
           "messages": [
-            "unknown tracing target req octopus_example.rock_arrangement_planner",
+            "unknown tracing target itm octopus_example.rock_arrangement_planner",
             "missing up reference"
           ],
           "just_up": [],
@@ -380,7 +380,7 @@
       "name": "test",
       "items": [
         {
-          "tag": "pyunit test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18",
+          "tag": "itm test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18",
           "location": {
             "kind": "file",
             "file": "test_tentacle_commander.py",
@@ -393,13 +393,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.tentacle_coordination"
+            "itm octopus_example.tentacle_coordination"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28",
+          "tag": "itm test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28",
           "location": {
             "kind": "file",
             "file": "test_tentacle_commander.py",
@@ -412,13 +412,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.color_camouflage"
+            "itm octopus_example.color_camouflage"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33",
+          "tag": "itm test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33",
           "location": {
             "kind": "file",
             "file": "test_tentacle_commander.py",
@@ -431,13 +431,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.color_camouflage"
+            "itm octopus_example.color_camouflage"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_tentacle_commander.TestInkDefense.test_deploy_ink:42",
+          "tag": "itm test_tentacle_commander.TestInkDefense.test_deploy_ink:42",
           "location": {
             "kind": "file",
             "file": "test_tentacle_commander.py",
@@ -450,13 +450,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.ink_defense"
+            "itm octopus_example.ink_defense"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52",
+          "tag": "itm test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52",
           "location": {
             "kind": "file",
             "file": "test_tentacle_commander.py",
@@ -469,13 +469,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.prey_detection"
+            "itm octopus_example.prey_detection"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_tentacle_commander.TestDenSecurity.test_secure_den:62",
+          "tag": "itm test_tentacle_commander.TestDenSecurity.test_secure_den:62",
           "location": {
             "kind": "file",
             "file": "test_tentacle_commander.py",
@@ -484,7 +484,7 @@
           },
           "name": "test_tentacle_commander.TestDenSecurity.test_secure_den:62",
           "messages": [
-            "unknown tracing target req octopus_example.den_security",
+            "unknown tracing target itm octopus_example.den_security",
             "missing up reference"
           ],
           "just_up": [],
@@ -493,7 +493,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "pyunit test_tentacle_toolkit.TestMotorController.test_control_motors:18",
+          "tag": "itm test_tentacle_toolkit.TestMotorController.test_control_motors:18",
           "location": {
             "kind": "file",
             "file": "test_tentacle_toolkit.py",
@@ -506,13 +506,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.tentacle_motor_control"
+            "itm octopus_example.tentacle_motor_control"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28",
+          "tag": "itm test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28",
           "location": {
             "kind": "file",
             "file": "test_tentacle_toolkit.py",
@@ -525,13 +525,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.chromatophore_processor"
+            "itm octopus_example.chromatophore_processor"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38",
+          "tag": "itm test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38",
           "location": {
             "kind": "file",
             "file": "test_tentacle_toolkit.py",
@@ -544,13 +544,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.ink_sac_trigger"
+            "itm octopus_example.ink_sac_trigger"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48",
+          "tag": "itm test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48",
           "location": {
             "kind": "file",
             "file": "test_tentacle_toolkit.py",
@@ -563,13 +563,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req octopus_example.vision_processing_unit"
+            "itm octopus_example.vision_processing_unit"
           ],
           "ref_down": [],
           "tracing_status": "OK"
         },
         {
-          "tag": "pyunit test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58",
+          "tag": "itm test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58",
           "location": {
             "kind": "file",
             "file": "test_tentacle_toolkit.py",
@@ -578,7 +578,7 @@
           },
           "name": "test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58",
           "messages": [
-            "unknown tracing target req octopus_example.rock_arrangement_planner",
+            "unknown tracing target itm octopus_example.rock_arrangement_planner",
             "missing up reference"
           ],
           "just_up": [],

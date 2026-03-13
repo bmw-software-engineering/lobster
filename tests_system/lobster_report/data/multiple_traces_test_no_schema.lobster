@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_vehicle_exists:25",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_vehicle_exists:25",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -14,14 +14,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.vehicle"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.vehicle"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_engine_functionality:31",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_engine_functionality:31",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -34,14 +31,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.engine"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.engine"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_safety_system_activation:45",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_safety_system_activation:45",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -54,14 +48,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.safety_system"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.safety_system"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_braking_system:51",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_braking_system:51",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -74,14 +65,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.braking_system"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.braking_system"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_electrical_system:65",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_electrical_system:65",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -94,14 +82,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.electrical_system"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.electrical_system"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_fuel_system_operation:77",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_fuel_system_operation:77",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -114,14 +99,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.fuel_system"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.fuel_system"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_transmission_system:90",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_transmission_system:90",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -134,14 +116,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.transmission_system"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.transmission_system"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_steering_system:102",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_steering_system:102",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -154,14 +133,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.steering_system"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.steering_system"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_lighting_system:114",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_lighting_system:114",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -174,14 +150,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.lighting_system"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.lighting_system"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_climate_control:123",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_climate_control:123",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -194,14 +167,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.climate_control"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.climate_control"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_comprehensive_system_check:135",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -214,17 +184,14 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.engine",
-        "req example.electrical_system",
-        "req example.fuel_system",
-        "req example.safety_system"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.engine",
+        "itm example.electrical_system",
+        "itm example.fuel_system",
+        "itm example.safety_system"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
+      "tag": "itm test_vehicle_implementation.TestStupidVehicle.test_full_vehicle_diagnostics:150",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -237,23 +204,20 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.vehicle",
-        "req example.engine",
-        "req example.safety_system",
-        "req example.braking_system",
-        "req example.electrical_system",
-        "req example.fuel_system",
-        "req example.transmission_system",
-        "req example.steering_system",
-        "req example.lighting_system",
-        "req example.climate_control"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.vehicle",
+        "itm example.engine",
+        "itm example.safety_system",
+        "itm example.braking_system",
+        "itm example.electrical_system",
+        "itm example.fuel_system",
+        "itm example.transmission_system",
+        "itm example.steering_system",
+        "itm example.lighting_system",
+        "itm example.climate_control"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestVehicleIntegration.test_engine_fuel_integration:172",
+      "tag": "itm test_vehicle_implementation.TestVehicleIntegration.test_engine_fuel_integration:172",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -266,15 +230,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.engine",
-        "req example.fuel_system"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.engine",
+        "itm example.fuel_system"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestVehicleIntegration.test_safety_electrical_integration:185",
+      "tag": "itm test_vehicle_implementation.TestVehicleIntegration.test_safety_electrical_integration:185",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -287,15 +248,12 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.safety_system",
-        "req example.electrical_system"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.safety_system",
+        "itm example.electrical_system"
+      ]
     },
     {
-      "tag": "pyunit test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196",
+      "tag": "itm test_vehicle_implementation.TestVehicleIntegration.test_mobility_systems_integration:196",
       "location": {
         "kind": "file",
         "file": "test_vehicle_implementation.py",
@@ -308,14 +266,11 @@
       "just_down": [],
       "just_global": [],
       "refs": [
-        "req example.engine",
-        "req example.transmission_system",
-        "req example.steering_system",
-        "req example.braking_system"
-      ],
-      "framework": "PyUnit",
-      "kind": "Test",
-      "status": null
+        "itm example.engine",
+        "itm example.transmission_system",
+        "itm example.steering_system",
+        "itm example.braking_system"
+      ]
     }
   ],
   "generator": "lobster_python",

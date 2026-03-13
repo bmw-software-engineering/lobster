@@ -8,7 +8,7 @@
       "kind": "requirements",
       "items": [
         {
-          "tag": "req example.vehicle",
+          "tag": "itm example.vehicle",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -22,16 +22,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.vehicle_exists"
+            "itm vehicle_implementation.StupidVehicle.vehicle_exists"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "requirement",
-          "text": "This is a requirement for vehicle",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req example.engine",
+          "tag": "itm example.engine",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -45,16 +41,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.run_engine"
+            "itm vehicle_implementation.StupidVehicle.run_engine"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "requirement",
-          "text": "The vehicle shall have an efficient engine system",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req example.safety_system",
+          "tag": "itm example.safety_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -68,16 +60,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.activate_safety_system"
+            "itm vehicle_implementation.StupidVehicle.activate_safety_system"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "requirement",
-          "text": "The vehicle shall include comprehensive safety features",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req example.braking_system",
+          "tag": "itm example.braking_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -91,16 +79,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.apply_brakes"
+            "itm vehicle_implementation.StupidVehicle.apply_brakes"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "requirement",
-          "text": "The vehicle shall have responsive braking capability",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req example.electrical_system",
+          "tag": "itm example.electrical_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -114,16 +98,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.check_electrical_system"
+            "itm vehicle_implementation.StupidVehicle.check_electrical_system"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "requirement",
-          "text": "The vehicle shall have reliable electrical components",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req example.fuel_system",
+          "tag": "itm example.fuel_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -137,16 +117,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.operate_fuel_system"
+            "itm vehicle_implementation.StupidVehicle.operate_fuel_system"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "requirement",
-          "text": "The vehicle shall have efficient fuel delivery",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req example.transmission_system",
+          "tag": "itm example.transmission_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -160,16 +136,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.operate_transmission_system"
+            "itm vehicle_implementation.StupidVehicle.operate_transmission_system"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "requirement",
-          "text": "The vehicle shall have a smooth gear transmission system",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req example.steering_system",
+          "tag": "itm example.steering_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -183,16 +155,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.control_steering_system"
+            "itm vehicle_implementation.StupidVehicle.control_steering_system"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "requirement",
-          "text": "The vehicle shall have precise steering control",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req example.lighting_system",
+          "tag": "itm example.lighting_system",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -206,16 +174,12 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.operate_lighting_system"
+            "itm vehicle_implementation.StupidVehicle.operate_lighting_system"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "requirement",
-          "text": "The vehicle shall have functional headlights and taillights",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req example.climate_control",
+          "tag": "itm example.climate_control",
           "location": {
             "kind": "file",
             "file": "demo.trlc",
@@ -229,13 +193,9 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "python vehicle_implementation.StupidVehicle.control_climate_system"
+            "itm vehicle_implementation.StupidVehicle.control_climate_system"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "requirement",
-          "text": "The vehicle shall maintain comfortable cabin temperature",
-          "status": null
+          "tracing_status": "OK"
         }
       ],
       "coverage": 100.0
@@ -245,7 +205,7 @@
       "kind": "implementation",
       "items": [
         {
-          "tag": "python vehicle_implementation.StupidVehicle.vehicle_exists",
+          "tag": "itm vehicle_implementation.StupidVehicle.vehicle_exists",
           "location": {
             "kind": "file",
             "file": "./vehicle_implementation.py",
@@ -266,7 +226,7 @@
           "kind": "Method"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.run_engine",
+          "tag": "itm vehicle_implementation.StupidVehicle.run_engine",
           "location": {
             "kind": "file",
             "file": "./vehicle_implementation.py",
@@ -287,7 +247,7 @@
           "kind": "Method"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.activate_safety_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.activate_safety_system",
           "location": {
             "kind": "file",
             "file": "./vehicle_implementation.py",
@@ -308,7 +268,7 @@
           "kind": "Method"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.apply_brakes",
+          "tag": "itm vehicle_implementation.StupidVehicle.apply_brakes",
           "location": {
             "kind": "file",
             "file": "./vehicle_implementation.py",
@@ -329,7 +289,7 @@
           "kind": "Method"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.check_electrical_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.check_electrical_system",
           "location": {
             "kind": "file",
             "file": "./vehicle_implementation.py",
@@ -350,7 +310,7 @@
           "kind": "Method"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.operate_fuel_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.operate_fuel_system",
           "location": {
             "kind": "file",
             "file": "./vehicle_implementation.py",
@@ -371,7 +331,7 @@
           "kind": "Method"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.operate_transmission_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.operate_transmission_system",
           "location": {
             "kind": "file",
             "file": "./vehicle_implementation.py",
@@ -392,7 +352,7 @@
           "kind": "Method"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.control_steering_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.control_steering_system",
           "location": {
             "kind": "file",
             "file": "./vehicle_implementation.py",
@@ -413,7 +373,7 @@
           "kind": "Method"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.operate_lighting_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.operate_lighting_system",
           "location": {
             "kind": "file",
             "file": "./vehicle_implementation.py",
@@ -434,7 +394,7 @@
           "kind": "Method"
         },
         {
-          "tag": "python vehicle_implementation.StupidVehicle.control_climate_system",
+          "tag": "itm vehicle_implementation.StupidVehicle.control_climate_system",
           "location": {
             "kind": "file",
             "file": "./vehicle_implementation.py",

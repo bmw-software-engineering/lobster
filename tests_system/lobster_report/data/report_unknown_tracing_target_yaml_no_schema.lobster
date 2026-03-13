@@ -7,7 +7,7 @@
       "name": "Code",
       "items": [
         {
-          "tag": "python software.Example",
+          "tag": "itm software.Example",
           "location": {
             "kind": "file",
             "file": "./software.py",
@@ -16,7 +16,7 @@
           },
           "name": "software.Example",
           "messages": [
-            "unknown tracing target req example.adas_100"
+            "unknown tracing target itm example.adas_100"
           ],
           "just_up": [],
           "just_down": [],

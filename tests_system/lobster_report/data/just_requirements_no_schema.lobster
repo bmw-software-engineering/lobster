@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tag": "req example.vehicle",
+      "tag": "itm example.vehicle",
       "location": {
         "kind": "file",
         "file": "demo.trlc",
@@ -12,14 +12,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "requirement",
-      "text": "This is a requirement for vehicle",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req example.engine",
+      "tag": "itm example.engine",
       "location": {
         "kind": "file",
         "file": "demo.trlc",
@@ -32,14 +28,10 @@
         "Not applicable everywhere"
       ],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "requirement",
-      "text": "The vehicle shall have an efficient engine system",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req example.safety_system",
+      "tag": "itm example.safety_system",
       "location": {
         "kind": "file",
         "file": "demo.trlc",
@@ -50,14 +42,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "requirement",
-      "text": "The vehicle shall include comprehensive safety features",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req example.braking_system",
+      "tag": "itm example.braking_system",
       "location": {
         "kind": "file",
         "file": "demo.trlc",
@@ -68,14 +56,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "requirement",
-      "text": "The vehicle shall have responsive braking capability",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req example.electrical_system",
+      "tag": "itm example.electrical_system",
       "location": {
         "kind": "file",
         "file": "demo.trlc",
@@ -86,14 +70,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "requirement",
-      "text": "The vehicle shall have reliable electrical components",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req example.fuel_system",
+      "tag": "itm example.fuel_system",
       "location": {
         "kind": "file",
         "file": "demo.trlc",
@@ -104,14 +84,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "requirement",
-      "text": "The vehicle shall have efficient fuel delivery",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req example.transmission_system",
+      "tag": "itm example.transmission_system",
       "location": {
         "kind": "file",
         "file": "demo.trlc",
@@ -122,14 +98,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "requirement",
-      "text": "The vehicle shall have a smooth gear transmission system",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req example.steering_system",
+      "tag": "itm example.steering_system",
       "location": {
         "kind": "file",
         "file": "demo.trlc",
@@ -140,14 +112,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "requirement",
-      "text": "The vehicle shall have precise steering control",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req example.lighting_system",
+      "tag": "itm example.lighting_system",
       "location": {
         "kind": "file",
         "file": "demo.trlc",
@@ -158,14 +126,10 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "requirement",
-      "text": "The vehicle shall have functional headlights and taillights",
-      "status": null
+      "just_global": []
     },
     {
-      "tag": "req example.climate_control",
+      "tag": "itm example.climate_control",
       "location": {
         "kind": "file",
         "file": "demo.trlc",
@@ -176,11 +140,7 @@
       "messages": [],
       "just_up": [],
       "just_down": [],
-      "just_global": [],
-      "framework": "TRLC",
-      "kind": "requirement",
-      "text": "The vehicle shall maintain comfortable cabin temperature",
-      "status": null
+      "just_global": []
     }
   ],
   "generator": "lobster-trlc",
