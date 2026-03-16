@@ -26,7 +26,6 @@ lint-system-tests: style
 	python3 -m pylint --rcfile=tests_system/pylint3.cfg \
 		--reports=no \
 		tests_system/asserter.py \
-		tests_system/lobster_cpp \
 		tests_system/lobster_gtest \
 		tests_system/lobster_html_report \
 		tests_system/lobster_json \

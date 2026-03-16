@@ -18,6 +18,8 @@
 # <https://www.gnu.org/licenses/>.
 
 import html
+from abc import abstractmethod, ABC
+from typing import List, Optional
 
 from lobster.htmldoc import assets
 
@@ -37,25 +39,22 @@ function stickyNavbar() {
 """
 
 
-class Menu_Item:
+class Menu_Item(ABC):
     def __init__(self, name):
-        assert isinstance(name, str)
         self.name = name
 
-    def generate(self, doc):
-        assert isinstance(doc, Document)
-        assert False
+    @abstractmethod
+    def generate(self, doc) -> List[str]:
+        pass
 
 
 class Menu_Link(Menu_Item):
     def __init__(self, name, target):
-        assert isinstance(target, str)
         super().__init__(name)
 
         self.target = target
 
-    def generate(self, doc):
-        assert isinstance(doc, Document)
+    def generate(self, doc) -> List[str]:
         rv = (
             f'<a href="{self.target}" '
             f'id="menu-item-{html.escape(self.name).replace(" ", "-").lower()}">'
@@ -75,8 +74,7 @@ class Dropdown_Menu(Menu_Item):
     def add_link(self, name, target):
         self.items.append(Menu_Link(name, target))
 
-    def generate(self, doc):
-        assert isinstance(doc, Document)
+    def generate(self, doc) -> List[str]:
 
         doc.style["#navbar .dropdown"] = {
             "float"    : "left",
@@ -144,8 +142,8 @@ class Dropdown_Menu(Menu_Item):
 
 class Navigation_Bar:
     def __init__(self):
-        self.left_items  = []
-        self.right_items = []
+        self.left_items: List[Menu_Item]  = []
+        self.right_items: List[Menu_Item] = []
 
     def add_link(self, name, target, alignment="left"):
         assert alignment in ("left", "right")
@@ -168,8 +166,6 @@ class Navigation_Bar:
         return menu
 
     def generate(self, doc):
-        assert isinstance(doc, Document)
-
         doc.style["#navbar"] = {
             "overflow"         : "hidden",
             "background-color" : doc.primary_color,
@@ -217,8 +213,6 @@ class Navigation_Bar:
 
 class Document:
     def __init__(self, title, subtitle):
-        assert isinstance(title, str)
-        assert isinstance(subtitle, str)
         self.title = title
         self.subtitle = subtitle
 
@@ -258,16 +252,18 @@ class Document:
         self.css = []
 
     def add_line(self, line):
-        assert isinstance(line, str)
         if len(self.body) == 0:
             self.body.append('<div class="content">')
         self.body.append(line)
 
-    def add_heading(self, level, text, anchor=None, html_identifier=False):
-        assert isinstance(level, int)
-        assert isinstance(text, str)
+    def add_heading(
+        self,
+        level: int,
+        text: str,
+        anchor: Optional[str] = None,
+        html_identifier: bool = False,
+    ):
         assert 2 <= level <= 7
-        assert anchor is None or isinstance(anchor, str)
 
         if level == 2 and self.body:
             self.body.append("</div>")

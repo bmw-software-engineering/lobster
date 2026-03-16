@@ -42,6 +42,21 @@ class Asserter:
     def assertNoStdOutText(self, msg="STDOUT contains output"):
         self.assertStdOutText("", msg)
 
+    def assertStdErrEqual(self, expected: str,
+                                msg="STDERR does not match exactly"):
+        """
+        Assert that stderr exactly matches the expected string.
+        """
+        self._test_case.assertEqual(
+            expected,
+            self._completed_process.stderr,
+            (
+                f"{msg}\n"
+                f"Expected: {expected!r}\n"
+                f"STDERR was: {self._completed_process.stderr!r}"
+            )
+        )
+
     def assertInStdErr(self, expected_substring: str,
                              msg="STDERR does not contain expected text"):
         """
@@ -55,6 +70,16 @@ class Asserter:
                 f"Expected to find: {expected_substring!r}\n"
                 f"STDERR was: {self._completed_process.stderr!r}"
             )
+        )
+
+    def apply_replacements(self, content: str) -> str:
+        """
+        Apply placeholder replacements to expected file content.
+        Override this method in subclasses to add custom replacements.
+        """
+        return content.replace(
+            "CURRENT_WORKING_DIRECTORY",
+            str(self._test_runner.working_dir),
         )
 
     def assertOutputFiles(self):
@@ -101,9 +126,8 @@ class Asserter:
                             modified_actual = actual_file.read().replace("\\\\", "/")
 
                             # lobster-trace: system_test.CWD_Placeholder
-                            modified_expected = expected_file.read().replace(
-                                "CURRENT_WORKING_DIRECTORY",
-                                str(self._test_runner.working_dir),
+                            modified_expected = self.apply_replacements(
+                                expected_file.read()
                             )
                             modified_actual_json = is_valid_json(modified_actual)
                             modified_expected_json = is_valid_json(modified_expected)

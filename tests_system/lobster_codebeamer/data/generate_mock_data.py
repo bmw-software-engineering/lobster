@@ -16,7 +16,7 @@ for filename in os.listdir(folder):
                 "tag": f"req {i}@{i * 100}",
                 "location": {
                     "kind": "codebeamer",
-                    "cb_root": "https://localhost:8999",
+                    "cb_root": "https://localhost:MOCK_SERVER_PORT",
                     "tracker": i * 10000,
                     "item": i,
                     "version": i * 100,

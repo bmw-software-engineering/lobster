@@ -5,12 +5,17 @@
 
 ### 1.0.3-dev
 
+* `lobster-json`:
+  - Fixed crash when processing empty JSON files. The tool now exits gracefully with
+    return code 1 and prints a proper error message to stderr: "Input file contains invalid JSON."
+
 * All tools now automatically create output directories if they don't exist.
   Previously, tools would crash with an exception if the specified output
   directory path did not exist. This enhancement improves usability and
   prevents unexpected failures when working with nested directory structures.
 
 * `lobster-codebeamer`:
+  - Enabled parallel execution for system tests, improving test suite performance.
   - Improved error messages with detailed troubleshooting information:
     - Connection timeout errors now include the URL and suggest increasing timeout parameter
     - Connection errors provide actionable steps like checking internet connection and increasing retries
