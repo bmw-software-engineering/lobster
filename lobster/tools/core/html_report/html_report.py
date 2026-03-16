@@ -77,10 +77,12 @@ def xref_item(item, link=True, brief=False):
     elif isinstance(item, Implementation):
         rv = html.escape(item.language + " " +
                          item.kind.capitalize())
-    else:
-        assert isinstance(item, Activity)
+    elif isinstance(item, Activity):
         rv = html.escape(item.framework + " " +
                          item.kind.capitalize())
+    else:
+        assert isinstance(item, Item)
+        rv = html.escape("Item")
     if not brief:
         rv += " "
 
@@ -98,13 +100,15 @@ def create_policy_diagram(doc, report, dot):
 
     graph = 'digraph "LOBSTER Tracing Policy" {\n'
     for level in report.config.values():
+        style = 'shape=box, style=rounded'
+
         if level.kind == "requirements":
             style = 'shape=box, style=rounded'
         elif level.kind == "implementation":
             style = 'shape=box'
-        else:
-            assert level.kind == "activity"
+        elif level.kind == "activity":
             style = 'shape=hexagon'
+
         style += f', href="#sec-{name_hash(level.name)}"'
 
         graph += '  n_%s [label="%s", %s];\n' % \
@@ -510,12 +514,17 @@ def write_html(report, dot, high_contrast, render_md) -> str:
         items_by_level[level] = [item
                                  for item in report.items.values()
                                  if item.level == level]
-    for kind, title in [("requirements",
-                         "Requirements and Specification"),
-                        ("implementation",
-                         "Implementation"),
-                        ("activity",
-                         "Verification and Validation")]:
+
+    kind_title_map = [("", "Items")]
+    item_kinds = set(level.kind for level in report.config.values())
+    if {"requirements", "implementation", "activity"}.intersection(item_kinds):
+        kind_title_map = [
+            ("requirements", "Requirements and Specification"),
+            ("implementation", "Implementation"),
+            ("activity", "Verification and Validation"),
+        ]
+
+    for kind, title in kind_title_map:
         doc.add_line(f'<div class="detailed-report-{title.lower().replace(" ", "-")}">')
         doc.add_heading(3, title, html_identifier=True)
         for level in report.config.values():

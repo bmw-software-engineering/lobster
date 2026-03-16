@@ -1,7 +1,7 @@
 from typing import Iterable, List, Optional
 from trlc import ast
 
-from lobster.common.items import Item, Requirement, Tracing_Tag
+from lobster.common.items import Item, Requirement, Tracing_Tag, KindTypes
 from lobster.common.location import File_Reference
 from lobster.tools.trlc.conversion_rule import ConversionRule
 from lobster.tools.trlc.conversion_rule_lookup import (
@@ -85,7 +85,7 @@ class Converter:
         if not rule:
             return None
 
-        if rule.lobster_namespace != "req":
+        if rule.lobster_namespace not in (KindTypes.REQ.value, KindTypes.ITM.value):
             raise NotImplementedError(
                 f"Conversion for namespace '{rule.lobster_namespace}' not implemented."
             )
@@ -106,15 +106,21 @@ class Converter:
             column=n_obj.location.col_no
         )
 
-        item_text = self._get_description(item_wrapper, rule.description_fields)
-        rv = Requirement(
+        rv = Item(
             tag=item_tag,
             location=item_loc,
-            framework="TRLC",
-            kind=n_obj.n_typ.name,
-            name=n_obj.fully_qualified_name(),
-            text=item_text
         )
+
+        if rule.lobster_namespace == KindTypes.REQ.value:
+            item_text = self._get_description(item_wrapper, rule.description_fields)
+            rv = Requirement(
+                tag=item_tag,
+                location=item_loc,
+                framework="TRLC",
+                kind=n_obj.n_typ.name,
+                name=n_obj.fully_qualified_name(),
+                text=item_text
+            )
 
         for tag_entry in rule.tags:
             for field_str_value in self._generate_text(item_wrapper, tag_entry.field):

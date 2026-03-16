@@ -1,0 +1,3 @@
+files: ["a", "b"]
+output_file: "component_tests.lobster"
+codebeamer_url: "https://codebeamer.com"

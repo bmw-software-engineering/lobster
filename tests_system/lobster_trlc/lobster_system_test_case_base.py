@@ -11,10 +11,22 @@ class LobsterTrlcSystemTestCaseBase(SystemTestCaseBase):
         "description-fields": ["description"],
     }
 
+    NAMASTE_CONVERSION_RULE_NO_SCHEMA = {
+        "package": "test_default",
+        "record-type": "namaste",
+        "description-fields": ["description"],
+    }
+
     BERRY_CONVERSION_RULE = {
         "package": "sweet_fruits",
         "record-type": "berry",
         "namespace": "req",
+        "description-fields": ["description"],
+    }
+
+    BERRY_CONVERSION_RULE_NO_SCHEMA = {
+        "package": "sweet_fruits",
+        "record-type": "berry",
         "description-fields": ["description"],
     }
 

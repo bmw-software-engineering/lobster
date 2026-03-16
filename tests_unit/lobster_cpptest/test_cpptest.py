@@ -4,6 +4,7 @@ import unittest
 from os.path import dirname
 from pathlib import Path
 
+from lobster.common.items import KindTypes
 from lobster.tools.cpptest.cpptest import (
     OUTPUT_FILE,
     CODEBEAMER_URL,
@@ -31,6 +32,7 @@ class LobsterCpptestTests(unittest.TestCase):
         self.test_case_file = str(Path(dirname(__file__), "data", "test_case.cpp"))
         self.test_config_1 = str(Path(dirname(__file__), "data", "cpptest-config_1.yaml"))
         self.test_config_2 = str(Path(dirname(__file__), "data", "cpptest-config_2.yaml"))
+        self.test_config_no_kind_2 = str(Path(dirname(__file__), "data", "cpptest-config_no_kind_2.yaml"))
 
         self.output_file_name = f'{self.lobster_generator}_{os.path.basename(self.test_case_file)}'
         self.output_file_name = self.output_file_name.replace('.', '_')
@@ -70,7 +72,19 @@ class LobsterCpptestTests(unittest.TestCase):
         self.assertEqual(
             [CODEBEAMER_URL, KIND, FILES, OUTPUT_FILE],
             list(vars(config))
-)
+        )
+        self.assertEqual(KindTypes.REQ.value, config.kind)
+
+    def test_parse_config_file_no_kind(self):
+        config = parse_config_file(self.test_config_no_kind_2)
+        self.assertIsNotNone(config)
+        self.assertIsInstance(config, Config)
+        self.assertEqual(4, len(vars(config)))
+        self.assertEqual(
+            [CODEBEAMER_URL, KIND, FILES, OUTPUT_FILE],
+            list(vars(config))
+        )
+        self.assertEqual(KindTypes.ITM.value, config.kind)
 
     def test_get_test_file_list(self):
         file_dir_list = [self.test_data_dir]
@@ -130,7 +144,7 @@ class LobsterCpptestTests(unittest.TestCase):
         config = Config(
             files=[self.test_case_file],
             codebeamer_url="https://codebeamer.com",
-            kind="req",
+            kind=KindTypes.ITM.value,
             output_file=self.output_file_name
         )
 
@@ -161,7 +175,7 @@ class LobsterCpptestTests(unittest.TestCase):
         config = Config(
             files=[self.test_data_dir],
             codebeamer_url="https://codebeamer.com",
-            kind="req",
+            kind=KindTypes.ITM.value,
             output_file=self.output_data_file_name
         )
 
@@ -183,7 +197,7 @@ class LobsterCpptestTests(unittest.TestCase):
         config = Config(
             files=[self.test_fake_dir],
             codebeamer_url="https://codebeamer.com",
-            kind="req",
+            kind=KindTypes.ITM.value,
             output_file=self.output_file_name
         )
 
@@ -252,6 +266,61 @@ class LobsterCpptestTests(unittest.TestCase):
                 expected_refs = expected_unit_test_refs_dicts.get(tag)
                 self.assertListEqual(expected_refs, refs)
 
+
+    def test_separate_output_config_no_kind(self):
+        config: Config = parse_config_file(self.test_config_no_kind_2)
+        config.files = [self.test_case_file]
+
+        run_lobster_cpptest(
+            config=config
+        )
+
+        self.assertEqual(os.path.exists(self.unit_test_lobster_file), True)
+
+        with open(self.unit_test_lobster_file, "r", encoding="UTF-8") as unit_test_file:
+            unit_test_lobster_file_dict = json.loads(unit_test_file.read())
+
+        unit_test_lobster_items = []
+        orphan_test_lobster_items = []
+        lobster_items = unit_test_lobster_file_dict.get('data')
+        self.assertIsNotNone(lobster_items)
+        self.assertIsInstance(lobster_items, list)
+        self.assertEqual(46, len(lobster_items))
+
+        for lobster_item in lobster_items:
+            if 'refs' in lobster_item.keys():
+                unit_test_lobster_items.append(lobster_item)
+            else:
+                orphan_test_lobster_items.append(lobster_item)
+
+        self.assertIsNotNone(unit_test_lobster_items)
+        self.assertIsInstance(unit_test_lobster_items, list)
+        self.assertEqual(10, len(unit_test_lobster_items))
+
+        self.assertIsNotNone(orphan_test_lobster_items)
+        self.assertIsInstance(orphan_test_lobster_items, list)
+        self.assertEqual(36, len(orphan_test_lobster_items))
+
+        # just check a few refs from the written unit test lobster items
+        expected_unit_test_refs_dicts = {
+            'cpp test_case.cpp:1:RequirementAsComments:70':
+                ['itm 0815', 'itm 0816'],
+            'cpp test_case.cpp:1:Requirement:64':
+                ['itm 0815']
+        }
+
+        for lobster_item in unit_test_lobster_items:
+            self.assertIsNotNone(lobster_item)
+            self.assertIsInstance(lobster_item, dict)
+            file_name = lobster_item.get('location').get('file')
+            self.assertTrue(os.path.isabs(file_name))
+            tag = lobster_item.get('tag')
+            refs = lobster_item.get('refs')
+            self.assertIsInstance(refs, list)
+            if tag in expected_unit_test_refs_dicts:
+                expected_refs = expected_unit_test_refs_dicts.get(tag)
+                self.assertListEqual(expected_refs, refs)
+
     def test_test_case_parsing(self):
         """
         Verify that the test case parsing is working correctly
@@ -298,27 +367,27 @@ class LobsterCpptestTests(unittest.TestCase):
              "test_name": "BriefTagMultipleLines"},
             # Verify that the requirement tags are correctly parsed
             {"suite": "RequirementTagTest", "test_name": "Requirement",
-             "req": ["CB-#0815"]},
+             "itm": ["CB-#0815"]},
             {"suite": "RequirementTagTest1", "test_name": "RequirementAsOneLineComments",
-             "req": ["CB-#0815", "CB-#0816"]},
+             "itm": ["CB-#0815", "CB-#0816"]},
             {"suite": "RequirementTagTest1", "test_name": "RequirementAsComments",
-             "req": ["CB-#0815", "CB-#0816"]},
+             "itm": ["CB-#0815", "CB-#0816"]},
             {"suite": "RequirementTagTest1", "test_name": "RequirementsAsMultipleComments",
-             "req": ["CB-#0815", "CB-#0816", "CB-#0817", "CB-#0818", "CB-#0819", "CB-#0820"]},
+             "itm": ["CB-#0815", "CB-#0816", "CB-#0817", "CB-#0818", "CB-#0819", "CB-#0820"]},
             {"suite": "RequirementTagTest2", "test_name": "URLRequirement",
-             "req": []},
+             "itm": []},
             {"suite": "RequirementTagTest2", "test_name": "URLRequirementsCommaSeparated",
-             "req": []},
+             "itm": []},
             {"suite": "RequirementTagTest2", "test_name": "URLRequirementsAsCommentsSpaceSeparated",
-             "req": []},
+             "itm": []},
             {"suite": "RequirementTagTest2", "test_name": "MultipleURLRequirements",
-             "req": []},
+             "itm": []},
             {"suite": "RequirementTagTest3", "test_name": "MixedRequirements",
-             "req": ["CB-#0816"]},
+             "itm": ["CB-#0816"]},
             {"suite": "RequirementTagTest4", "test_name": "InvalidRequirement",
-             "req": []},
+             "itm": []},
             {"suite": "RequirementTagTest4", "test_name": "MissingRequirementReference",
-             "req": []},
+             "itm": []},
             # Verify that the required-by tag is correctly parsed
             {"suite": "RequirementByTest1", "test_name": "RequiredByWithAt",
              "req_by": ["FOO0::BAR0"]},
@@ -347,16 +416,16 @@ class LobsterCpptestTests(unittest.TestCase):
                 "version": ["1", "42"],
             },
             {"suite": "VersionTagTest", "test_name": "MoreVersionsThanRequirements", "version": ["12", "70"],
-             "req": ["CB-#0815"]},
+             "itm": ["CB-#0815"]},
             {"suite": "VersionTagTest", "test_name": "MoreRequirementsThanVersions", "version": ["28", "28"],
-             "req": ["CB-#0815", "CB-#0816"]},
+             "itm": ["CB-#0815", "CB-#0816"]},
             {"suite": "VersionTagTest", "test_name": "VersionSpaceSeparated", "version": ["28", "99"],
-             "req": ["CB-#123", "CB-#456"]},
+             "itm": ["CB-#123", "CB-#456"]},
             # Verify that all at once is correctly parsed
             {"suite": "AllTogetherTest", "test_name": "ImplementationMultipleLines",
              "docu_start": 207, "docu_end": 214, "def_start": 215, "def_end": 217, "version": ["42", "2"],
              "test": "foo", "brief": "this test tests something",
-             "req": ["CB-#0815", "CB-#0816"],
+             "itm": ["CB-#0815", "CB-#0816"],
              "req_by": ["FOO0::BAR0"], "testmethods": ["TM_BOUNDARY", "TM_REQUIREMENT"]},
             {"suite": "RequirementTest1", "test_name": "TestMultipleComments",
              "docu_start": 238, "docu_end": 253, "def_start": 254, "def_end": 254}
@@ -390,10 +459,10 @@ class LobsterCpptestTests(unittest.TestCase):
                     expectation["def_end"],
                     f"def_end does not match for test_name {test_cases[i].test_name}",
                 )
-            if "req" in expectation:
+            if "itm" in expectation:
                 self.assertEqual(
                     test_cases[i].requirements,
-                    expectation["req"],
+                    expectation["itm"],
                     f"req does not match for test_name {test_cases[i].test_name}",
                 )
             if "req_by" in expectation:

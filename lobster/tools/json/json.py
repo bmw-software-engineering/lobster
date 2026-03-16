@@ -24,7 +24,7 @@ from pprint import pprint
 from typing import Optional, Sequence, Tuple, List, Set
 
 from lobster.common.tool import LOBSTER_Per_File_Tool
-from lobster.common.items import Tracing_Tag, Activity
+from lobster.common.items import Tracing_Tag, Activity, Item, KindTypes
 from lobster.common.location import File_Reference
 
 
@@ -80,7 +80,16 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
             name        = "json",
             description = "Extract tracing data from JSON files.",
             extensions  = ["json"],
-            official    = True)
+            official    = True
+        )
+        self._argument_parser.add_argument(
+            "--kind",
+            required=False,
+            choices=["itm", "act"],
+            default="itm",
+            help="Kind of LOBSTER entries to create: "
+                 "'itm' for Item, 'act' for Activity",
+        )
 
     # Supported config parameters for lobster-json
     TEST_LIST = "test_list"
@@ -101,7 +110,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
                 cls.TAG_ATTRIBUTE: "Member name indicator for test tracing tags.",
                 cls.JUSTIFICATION_ATTRIBUTE: "Member name indicator for "
                                              "justifications.",
-                cls.SINGLE: "Avoid use of multiprocessing."
+                cls.SINGLE: "Avoid use of multiprocessing.",
             }
         )
         return help_dict
@@ -137,10 +146,12 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
             work_list: List[Tuple[File_Reference, str]],
     ):
         super().process_tool_options(options, work_list)
-        self.schema = Activity
+        self.schema = Item
+        if options.kind == KindTypes.ACT.value:
+            self.schema = Activity
 
     @classmethod
-    def process(cls, options, file_name) -> Tuple[bool, List[Activity]]:
+    def process(cls, options, file_name) -> Tuple[bool, List[Item]]:
         try:
             with open(file_name, "r", encoding="UTF-8") as fd:
                 data = json.load(fd)
@@ -210,13 +221,20 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
                                           " or list",
                                           item_just)
 
-                l_item = Activity(
-                    tag       = Tracing_Tag(namespace = "json",
-                                            tag       = "%s:%s" %
-                                            (file_name, item_name)),
-                    location  = File_Reference(file_name),
-                    framework = "JSON",
-                    kind      = "Test Vector")
+                if options.kind == KindTypes.ACT.value:
+                    l_item = Activity(
+                        tag       = Tracing_Tag(namespace = "json",
+                                                tag       = "%s:%s" %
+                                                (file_name, item_name)),
+                        location  = File_Reference(file_name),
+                        framework = "JSON",
+                        kind      = "Test Vector")
+                else:
+                    l_item = Item(
+                        tag       = Tracing_Tag(namespace = "json",
+                                                tag       = "%s:%s" %
+                                                (file_name, item_name)),
+                        location  = File_Reference(file_name))
                 for tag in item_tags:
                     l_item.add_tracing_target(
                         Tracing_Tag(namespace = "req",

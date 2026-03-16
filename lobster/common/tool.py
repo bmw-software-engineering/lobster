@@ -28,7 +28,7 @@ from typing import Iterable, List, Sequence, Union, Tuple, Set, Dict
 import yaml
 from lobster.common.errors import Message_Handler
 from lobster.common.location import File_Reference
-from lobster.common.items import Requirement, Implementation, Activity
+from lobster.common.items import Requirement, Implementation, Activity, Item
 from lobster.common.io import lobster_write, ensure_output_directory
 from lobster.common.meta_data_tool_base import MetaDataToolBase
 
@@ -252,13 +252,14 @@ class LOBSTER_Tool(MetaDataToolBase, SupportedCommonConfigKeys, metaclass=ABCMet
     def write_output(
             self,
             options: argparse.Namespace,
-            items: List[Union[Activity, Implementation, Requirement]],
+            items: List[Union[Activity, Implementation, Requirement, Item]],
     ):
         assert isinstance(options, argparse.Namespace)
         assert isinstance(items, list)
         assert all(isinstance(item, (Requirement,
                                      Implementation,
-                                     Activity))
+                                     Activity,
+                                     Item))
                    for item in items)
 
         if options.out:

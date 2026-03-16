@@ -1,0 +1,4 @@
+output_file: "specific_directory_no_schema.lobster"
+files:
+  - cpp_test_files
+codebeamer_url: "https://codebeamer.com"
