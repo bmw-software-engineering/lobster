@@ -116,7 +116,7 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
         # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_Items_in_Output
 
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = 54321
         cfg.page_size = 5
 
@@ -155,7 +155,7 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
         # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_Items_in_Output
 
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = "projectId%3D10"
         cfg.page_size = 5
 

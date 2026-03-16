@@ -142,7 +142,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
             Response(json.dumps(response_data), status=200),
         ]
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.retry_error_codes = [429]
         cfg.num_request_retry = 2
         cfg.import_query = 123123123123123123
@@ -151,7 +151,12 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
             self._data_directory / self._test_runner.config_file_data.out)
 
         completed_process = self._test_runner.run_tool_test()
-        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter = LobsterCodebeamerAsserter(
+            self,
+            completed_process,
+            self._test_runner,
+            port=self.codebeamer_flask.port,
+        )
         self.assertIn(
             "Written 1 requirements to codebeamer_no_schema.lobster\n",
             completed_process.stdout,
