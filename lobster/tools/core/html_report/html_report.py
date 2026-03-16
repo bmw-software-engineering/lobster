@@ -514,16 +514,21 @@ def write_html(report, dot, high_contrast, render_md) -> str:
         items_by_level[level] = [item
                                  for item in report.items.values()
                                  if item.level == level]
-    for kind, title in [("requirements",
-                         "Requirements and Specification"),
-                        ("implementation",
-                         "Implementation"),
-                        ("activity",
-                         "Verification and Validation")]:
+
+    kind_title_map = [("", "Items")]
+    item_kinds = set(level.kind for level in report.config.values())
+    if {"requirements", "implementation", "activity"}.intersection(item_kinds):
+        kind_title_map = [
+            ("requirements", "Requirements and Specification"),
+            ("implementation", "Implementation"),
+            ("activity", "Verification and Validation"),
+        ]
+
+    for kind, title in kind_title_map:
         doc.add_line(f'<div class="detailed-report-{title.lower().replace(" ", "-")}">')
         doc.add_heading(3, title, html_identifier=True)
         for level in report.config.values():
-            if level.kind and level.kind != kind:
+            if level.kind != kind:
                 continue
             doc.add_line(f'<div id="section-{level.name.lower().replace(" ", "-")}">')
             doc.add_heading(4,
