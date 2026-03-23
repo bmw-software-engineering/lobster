@@ -30,6 +30,7 @@ import markdown
 from lobster.common.version import LOBSTER_VERSION
 from lobster.htmldoc import htmldoc
 from lobster.common.report import Report
+from lobster.common.io import ensure_output_directory
 from lobster.common.location import (Void_Reference,
                                      File_Reference,
                                      Github_Reference,
@@ -198,7 +199,7 @@ def get_commit_timestamp_utc(commit_hash, submodule_path=None):
     return "Unknown"
 
 
-def write_item_box_begin(doc, item):
+def write_item_box_begin(doc, item, report):
     assert isinstance(doc, htmldoc.Document)
     assert isinstance(item, Item)
 
@@ -217,7 +218,7 @@ def write_item_box_begin(doc, item):
     doc.add_line('<div class="attribute">Source: ')
     doc.add_line('<svg class="icon"><use href="#svg-external-link"></use></svg>')
 
-    doc.add_line(item.location.to_html())
+    doc.add_line(item.location.to_html(source_root=report.source_root))
     doc.add_line("</div>")
 
 
@@ -284,6 +285,14 @@ def generate_custom_data(report) -> str:
         if value
     ]
     return "".join(content)
+
+
+def write_html_to_file(html_content: str, output_path: str) -> None:
+    """Write HTML content to file, creating parent directories if needed."""
+    ensure_output_directory(output_path)
+    with open(output_path, "w", encoding="UTF-8") as fd:
+        fd.write(html_content)
+        fd.write("\n")
 
 
 def write_html(report, dot, high_contrast, render_md) -> str:
@@ -536,12 +545,12 @@ def write_html(report, dot, high_contrast, render_md) -> str:
                         file_heading = new_file_heading
                         doc.add_heading(5, html.escape(file_heading))
 
-                    write_item_box_begin(doc, item)
+                    write_item_box_begin(doc, item, report)
                     if isinstance(item, Requirement) and item.status:
                         doc.add_line('<div class="attribute">')
                         doc.add_line("Status: %s" % html.escape(item.status))
                         doc.add_line('</div>')
-                    if isinstance(item, Requirement) and item.text:
+                    if (isinstance(item, (Requirement, Activity)) and item.text):
                         if render_md:
                             bq_class = ' class="md_description"'
                             bq_text = markdown.markdown(item.text,
@@ -599,6 +608,11 @@ class HtmlReportTool(MetaDataToolBase):
         ap.add_argument("--render-md",
                         action="store_true",
                         help="Renders MD in description.")
+        ap.add_argument("--source-root",
+                        default="",
+                        help="Prefix to prepend to file reference links, "
+                             "e.g. a path from the HTML output location "
+                             "back to the workspace root.")
 
     def _run_impl(self, options: argparse.Namespace) -> int:
         if not os.path.isfile(options.lobster_report):
@@ -606,6 +620,7 @@ class HtmlReportTool(MetaDataToolBase):
 
         report = Report()
         report.load_report(options.lobster_report)
+        report.source_root = options.source_root
 
         html_content = write_html(
             report = report,
@@ -613,9 +628,7 @@ class HtmlReportTool(MetaDataToolBase):
             high_contrast = options.high_contrast,
             render_md = options.render_md,
         )
-        with open(options.out, "w", encoding="UTF-8") as fd:
-            fd.write(html_content)
-            fd.write("\n")
+        write_html_to_file(html_content, options.out)
         print(f"LOBSTER HTML report written to {options.out}")
 
         return 0
@@ -626,7 +639,8 @@ def lobster_html_report(
     output_html_path: str,
     dot_path: str = None,
     high_contrast: bool = False,
-    render_md: bool = False
+    render_md: bool = False,
+    source_root: str = "",
 ) -> None:
     """
     API function to generate an HTML report from a LOBSTER report file.
@@ -637,18 +651,18 @@ def lobster_html_report(
         dot_path (str, optional): Path to the Graphviz 'dot' utility.
         high_contrast (bool, optional): Use high contrast colors.
         render_md (bool, optional): Render Markdown in descriptions.
+        source_root (str, optional): Prefix to prepend to file reference links.
     """
     report = Report()
     report.load_report(lobster_report_path)
+    report.source_root = source_root
     html_content = write_html(
         report=report,
         dot=dot_path,
         high_contrast=high_contrast,
         render_md=render_md,
     )
-    with open(output_html_path, "w", encoding="UTF-8") as fd:
-        fd.write(html_content)
-        fd.write("\n")
+    write_html_to_file(html_content, output_html_path)
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

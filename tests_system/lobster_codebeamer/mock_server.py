@@ -1,4 +1,5 @@
 import json
+import socket
 from time import sleep
 from typing import List
 from flask import Flask, Response, request
@@ -14,7 +15,6 @@ log.setLevel(logging.ERROR)
 # Config
 CERT_PATH = 'tests_system/lobster_codebeamer/data/ssl/cert.pem'
 KEY_PATH = 'tests_system/lobster_codebeamer/data/ssl/key.pem'
-PORT = 8999
 MOCK_ROUTE_QUERY_ID = '/api/v3/reports/<int:report_id>/items'
 MOCK_ROUTE_QUERY_STRING = '/api/v3/items/query'
 ARE_YOU_RUNNING_ROUTE = '/are-you-running'
@@ -24,13 +24,30 @@ class CodebeamerFlask(Flask):
     STARTUP_ANSWER = "Yes, I am running!"
 
     _HOST = "127.0.0.1"
-    _STARTUP_TEST_URL = f"https://{_HOST}:{PORT}{ARE_YOU_RUNNING_ROUTE}"
 
-    def __init__(self):
+    def __init__(self, port: int = 0):
         super().__init__(__name__)
         self._lock = Lock()
         self._responses = []
         self._received_requests = []
+        self._port = port if port != 0 else self._get_free_port()
+        self._STARTUP_TEST_URL = (
+            f"https://{self._HOST}:{self._port}{ARE_YOU_RUNNING_ROUTE}"
+        )
+
+    @staticmethod
+    def _get_free_port() -> int:
+        """Get a free port by binding to port 0 and letting the OS assign one."""
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind(('', 0))
+            s.listen(1)
+            port = s.getsockname()[1]
+        return port
+
+    @property
+    def port(self) -> int:
+        """Return the port this server is running on."""
+        return self._port
 
     def reset(self):
         """Reset the server state."""
@@ -63,7 +80,7 @@ class CodebeamerFlask(Flask):
     def start_server(self):
         self.run(
             host=self._HOST,
-            port=PORT,
+            port=self._port,
             ssl_context=(CERT_PATH, KEY_PATH),
             use_reloader=False
         )
@@ -141,8 +158,8 @@ def store_received_request(app: CodebeamerFlask):
     })
 
 
-def create_app():
-    app = CodebeamerFlask()
+def create_app(port: int = 0):
+    app = CodebeamerFlask(port=port)
 
     @app.route(MOCK_ROUTE_QUERY_ID, methods=['GET'])
     def mock_query_id_response(report_id):

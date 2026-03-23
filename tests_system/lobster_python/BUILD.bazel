@@ -1,0 +1,41 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_library(
+    name = "lobster_python",
+    srcs = [
+        "lobster_python_system_test_case_base.py",
+        "lobster_python_test_runner.py",
+        "lobster_python_asserter.py",
+    ],
+    data = [
+        "//tests_system/lobster_python/data:python_data_system",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//:lobster",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_multiple_identical_function_names",
+    srcs = ["test_multiple_identical_function_names.py"],
+    deps = [
+        ":lobster_python",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_valid_cases",
+    srcs = ["test_valid_cases.py"],
+    deps = [
+        ":lobster_python",
+        "//tests_system",
+    ],
+)

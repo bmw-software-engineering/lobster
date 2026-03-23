@@ -4,6 +4,8 @@ from flask import Response
 from tests_system.lobster_codebeamer.lobster_codebeamer_system_test_case_base import (
     LobsterCodebeamerSystemTestCaseBase)
 from tests_system.asserter import Asserter
+from tests_system.lobster_codebeamer.lobster_codebeamer_asserter import (
+    LobsterCodebeamerAsserter)
 from tests_system.lobster_codebeamer.mock_server_setup import get_mock_app
 
 
@@ -20,6 +22,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         super().setUp()
         self.codebeamer_flask.reset()
         self._test_runner = self.create_test_runner()
+        self._test_runner.config_file_data.verify_ssl = False
 
     def test_retry_if_configured(self):
         """Ensure the tool retries and exits after exhausting
@@ -28,7 +31,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
 
         self.codebeamer_flask.responses = [Response(status=429)] * 3
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.retry_error_codes = [429]
         cfg.num_request_retry = 2
         cfg.import_query = 999
@@ -37,12 +40,12 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         asserter = Asserter(self, completed_process, self._test_runner)
         self.assertEqual(
             "Fetching page 1 of query...\n"
-            "Could not fetch "
+            "Codebeamer request failed:\n"
+            " URL: "
             f"{self._test_runner.config_file_data.root}/api/v3/reports"
-            f"/{cfg.import_query}/items?page=1&pageSize=100.\n"
-            "You can either:\n* increase the timeout with the timeout parameter\n* "
-            "decrease the query size with the query_size parameter\n* increase the "
-            "retry count with the parameters (num_request_retry, retry_error_codes)\n",
+            f"/{cfg.import_query}/items?page=1&pageSize=100\n"
+            " HTTP Status: 429 (TOO MANY REQUESTS)\n"
+            "Reason: Unknown error\n",
             completed_process.stdout,
         )
         asserter.assertExitCode(1)
@@ -82,7 +85,7 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
             Response(json.dumps(response_data), status=200),
         ]
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.retry_error_codes = [429]
         cfg.num_request_retry = 2
         cfg.import_query = 123123123123123123
@@ -90,7 +93,12 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
             self._data_directory / self._test_runner.config_file_data.out)
 
         completed_process = self._test_runner.run_tool_test()
-        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter = LobsterCodebeamerAsserter(
+            self,
+            completed_process,
+            self._test_runner,
+            port=self.codebeamer_flask.port,
+        )
         self.assertIn(
             "Written 1 requirements to codebeamer.lobster\n",
             completed_process.stdout,
@@ -103,18 +111,19 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         # lobster-trace: codebeamer_req.Missing_Error_Code
         self.codebeamer_flask.responses = [Response(status=429)]
         cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out()
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = 1111
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
-        self.assertIn(
-            "Fetching page 1 of query...\nCould not fetch"
-            f" {self._test_runner.config_file_data.root}/api/v3/reports/"
-            f"{cfg.import_query}/items?page=1&pageSize=100.\n"
-            "You can either:\n* increase the timeout with the timeout parameter\n*"
-            " decrease the query size with the query_size parameter\n* increase the "
-            "retry count with the parameters (num_request_retry, retry_error_codes)\n",
+        self.assertEqual(
+            "Fetching page 1 of query...\n"
+            "Codebeamer request failed:\n"
+            " URL: "
+            f"{self._test_runner.config_file_data.root}/api/v3/reports"
+            f"/{cfg.import_query}/items?page=1&pageSize=100\n"
+            " HTTP Status: 429 (TOO MANY REQUESTS)\n"
+            "Reason: Unknown error\n",
             completed_process.stdout,
         )
         self.assertNotIn("Retrying request", completed_process.stdout)

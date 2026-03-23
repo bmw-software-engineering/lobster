@@ -121,11 +121,9 @@ jobs:
     if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
     strategy:
       matrix:
-        os: [ubuntu-24.04, windows-2022, macos-13, macos-14]
+        os: [ubuntu-24.04, windows-2022, macos-14]
         py-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
         include:
-          - os: macos-13
-            brew: "/usr/local"
           - os: macos-14
             brew: "/opt/homebrew"
     runs-on: ${{ matrix.os }}
@@ -179,9 +177,11 @@ jobs:
           python3 -m pip install -r requirements_dev.txt
           sudo apt install cmake ninja-build graphviz
       - name: Setup bazel (for lobster-gtest)
-        uses: jwlawson/actions-setup-bazel@v2
+        uses: bazel-contrib/setup-bazel@0.15.0
         with:
-          bazel-version: '7.1.0'
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
       - name: Run integration tests
         run: |
           make integration-tests

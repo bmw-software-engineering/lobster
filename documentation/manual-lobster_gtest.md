@@ -3,7 +3,7 @@
 ## Setup and requirements
 
 You will need to make available the
-[lobster_gtest.h](../support/gtest/lobster_gtest.h) file to your build
+[lobster_gtest.h](../support/gtest/include/lobster_gtest.h) file to your build
 environment. This file is in the public domain so you can include /
 copy / rework it as you wish.
 
@@ -55,12 +55,12 @@ $ lobster_gtest . --out gtests.lobster
 
 The LOBSTER testsuite contains a working example:
 
-* Bazel [BUILD](../tests_integration/projects/basic/BUILD) file to set up
+* Bazel [BUILD](../tests_integration/projects/basic/BUILD.bazel) file to set up
 * Test [test.cpp](../tests_integration/projects/basic/test.cpp) containing tracing tags
 * Requrements [potato.trlc](../tests_integration/projects/basic/potato.trlc)
   containing tracing the requirements mentioned by the test
 * [Makefile](../tests_integration/projects/basic/Makefile) gluing everything
-  together
+  together. In the MakeFile search for target `gtests.lobster`
 
 ## Notes & Caveats
 

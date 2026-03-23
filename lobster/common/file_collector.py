@@ -1,4 +1,3 @@
-import os.path
 from pathlib import Path
 from re import Pattern
 from typing import Iterable, List, Optional
@@ -38,7 +37,7 @@ class FileCollector:
 
     def _is_file_of_interest(self, file: str) -> bool:
         return (not self._extensions) or \
-            (os.path.splitext(file)[1].lower() in self._extensions)
+            (Path(file).suffix.lower() in self._extensions)
 
     def _is_dir_of_interest(self, dir_name: str) -> bool:
         return not any(pattern.match(dir_name)

@@ -105,6 +105,7 @@ The individual PyPI packages that `bmw-lobster` depends on are:
 
 * [System Test Coverage Report](https://bmw-software-engineering.github.io/lobster/htmlcov-system/index.html)
 * [Unit Test Coverage Report](https://bmw-software-engineering.github.io/lobster/htmlcov-unit/index.html)
+* [LOBSTER API Documentation](https://bmw-software-engineering.github.io/lobster/api_documentation/)
 * [Coding Guideline](CODING_GUIDELINE.md)
 * [Requirements Guideline](lobster/tools/REQUIREMENTS.md)
 * [System Test Framework](tests_system/README.md)
@@ -128,11 +129,6 @@ Here are the links to the individual requirement coverage reports:
 * Requirement Coverge Report Core Online Report Nogit: not yet available
 * [Requirement Coverage Report Core Report](https://bmw-software-engineering.github.io/lobster/tracing-core_report.html)
 * [Requirement Coverage Report Codebeamer](https://bmw-software-engineering.github.io/lobster/tracing-codebeamer.html)
-
-### Simple lobster-demo
-
-A simple example can be found in the repository: [lobster-demo](https://github.com/bmw-software-engineering/lobster-demo).
-It is still work in progress.
 
 ## Workflow of LOBSTER
 

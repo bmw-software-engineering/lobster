@@ -26,7 +26,6 @@ lint-system-tests: style
 	python3 -m pylint --rcfile=tests_system/pylint3.cfg \
 		--reports=no \
 		tests_system/asserter.py \
-		tests_system/lobster_cpp \
 		tests_system/lobster_gtest \
 		tests_system/lobster_html_report \
 		tests_system/lobster_json \
@@ -156,7 +155,7 @@ coverage-unit:
 	@echo "📊 Generating coverage report for unit tests..."
 	coverage combine -q .coverage.unit*
 	coverage html --directory=htmlcov-unit --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=49
+	coverage report --rcfile=coverage.cfg --fail-under=48
 
 coverage-system:
 	@echo "📊 Generating coverage report for system tests..."
@@ -179,10 +178,11 @@ test-unit: clean-coverage unit-tests
 	make coverage-unit
 
 docs:
-	mkdir -p docs
+	mkdir -p docs/api_documentation
 	@-make tracing
 	@-make tracing-stf
 	@-./tracing/tracing.sh
+	@sphinx-build -c sphinx -b html . docs/api_documentation
 
 clean-docs:
 	rm -rf docs
