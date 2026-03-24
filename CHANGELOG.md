@@ -5,6 +5,12 @@
 
 ### 1.0.3-dev
 
+* Introduced API function:
+  - `lobster_pkg`:
+    This is API function for the tool `lobster-pkg` which takes `PkgToolConfig` as input
+    and extracts tracing values from package files.
+    This is similar to running the tool `lobster-pkg`.
+
 * `lobster-json`:
   - Fixed crash when processing empty JSON files. The tool now exits gracefully with
     return code 1 and prints a proper error message to stderr: "Input file contains invalid JSON."
