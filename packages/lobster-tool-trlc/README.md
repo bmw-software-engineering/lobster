@@ -26,7 +26,7 @@ inputs:
   - potato.trlc
 
 conversion-rules:
-  - package: vegtables
+  - package: vegetables
     record-type: Requirement
     namespace: req
     description-fields:
@@ -42,7 +42,7 @@ conversion-rules:
     tags:
       - derived_from
     applies-to-derived-types: true
-  - package: vegtables
+  - package: vegetables
     record-type: Security_Requirement
     namespace: req
     description-fields:
@@ -53,10 +53,9 @@ conversion-rules:
         namespace: act
 
 to-string-rules:
-  - package: vegtables
-    tuple_type: External_Id
-    namespace: req
-    to_string:
+  - package: vegetables
+    tuple-type: External_Id
+    to-string:
       - "$(item)@$(version)"
       - "$(item)"
 ```
@@ -66,6 +65,59 @@ like this marks this type (and all its extensions) as things to trace.
 
 The `description-fields` specify which fields carry the description text that
 can be optionally included in LOBSTER.
+
+### Version parameter (`version-field`)
+
+Use `version-field` inside a `conversion-rules` entry to select which TRLC
+record field is written as the generated LOBSTER item version.
+
+Some teams call this a "version flag" in prose, but the exact configuration
+key is `version-field`.
+
+Example:
+
+```yaml
+conversion-rules:
+  - package: vegetables
+    record-type: Requirement
+    namespace: req
+    version-field: p_version
+```
+
+Behavior:
+
+- **Configured and field exists:** If `version-field` is configured and the record object
+  contains a field with that name, the tool sets the tag version to that field's value.
+- **Configured but field missing:** If `version-field` is configured but the record object
+  does not contain a field with that name, the tool sets the tag version to `None`.
+- **Not configured:** If no `version-field` entry is present in the conversion rule,
+  the tool sets the tag version to `None` regardless of the record object.
+
+When `to-string-rules` contain expressions like `$(item)@$(version)`, the version value
+(whether set or `None`) is used to build versioned tags or their fallback alternatives.
+
+Complete example (versioned tag preferred, fallback without version):
+
+```yaml
+to-string-rules:
+  - package: vegetables
+    tuple-type: External_Id
+    to-string:
+      - "$(item)@$(version)"
+      - "$(item)"
+
+conversion-rules:
+  - package: vegetables
+    record-type: Requirement
+    namespace: req
+    version-field: p_version
+    tags:
+      - external_id
+```
+
+In this example, if `p_version` exists in the TRLC record,
+`$(item)@$(version)` is used. If `p_version` is missing, the first expansion
+cannot be fully applied and the fallback `$(item)` is used.
 
 The `tags` field identifies the field carrying tags.
 In LOBSTER all tags are namespaced, and by default the namespace is "req" as that
@@ -120,12 +172,13 @@ tracing policy will be validated at all when considering this object.
 
 ## Executing lobster-trlc tool
 
-`lobster-trlc` takes two command line arguments as follows:
-* `--config` - Yaml based config file path in which the following parameters can be 
+`lobster-trlc` takes the following command line arguments:
+* `--config` - YAML based config file path in which the following parameters can be
   mentioned.
   * `inputs`: A list of input file paths (can include directories).
-  * `inputs_from_file`: A file containing paths to input files or directories.  
-* `out`: The name of the output file where results will be stored.
+  * `inputs-from-file`: A file containing paths to input files or directories.
+* `DIR|FILE` (optional positional arguments): Additional input directories or files.
+* `--out`: The name of the output file where results will be stored.
 
 ### Command
 
