@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<title>L.O.B.S.T.E.R.</title>
+<style>
+html {
+  scroll-padding-top: 5em;
+}
+body {
+  margin: 0;
+}
+.title {
+  background-color: #009ada;
+  color: white;
+  padding: 0.5em;
+  margin: 0;
+}
+h1 {
+  padding: 0;
+  margin: 0;
+}
+h2 {
+  padding: 0.5em;
+  margin: 0;
+  border-bottom: 0.25em solid #009ada;
+  text-align: right;
+}
+.content {
+  padding: 0.5em;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+#custom-data-banner {
+  position: absolute;
+  top: 1em;
+  right: 2em;
+  font-size: 0.9em;
+  color: white;
+}
+.item-ok, .item-partial, .item-missing, .item-justified {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  margin-top: 0.4em;
+  padding: 0.25em;
+}
+.item-ok:target, .item-partial:target, .item-missing:target, .item-justified:target {
+  border: 3px solid black;
+}
+.subtle-ok, .subtle-partial, .subtle-missing, .subtle-justified {
+  padding-left: 0.2em;
+}
+.item-ok {
+  background-color: #efe;
+}
+.item-partial {
+  background-color: #ffe;
+}
+.item-missing {
+  background-color: #fee;
+}
+.item-justified {
+  background-color: #eee;
+}
+.subtle-ok {
+  border-left: 0.2em solid #8f8;
+}
+.subtle-partial {
+  border-left: 0.2em solid #ff8;
+}
+.subtle-missing {
+  border-left: 0.2em solid #f88;
+}
+.subtle-justified {
+  border-left: 0.2em solid #888;
+}
+.item-name {
+  font-size: 125%;
+  font-weight: bold;
+}
+.attribute {
+  margin-top: 0.5em;
+}
+.columns {
+  display: flex;
+}
+.columns .column {
+  flex: 45%;
+}
+thead tr {
+  font-weight: bold;
+}
+tbody tr.alt {
+  background-color: #eee;
+}
+blockquote {
+  font-style: italic;
+  border-left: 0.2em solid gray;
+  padding-left: 0.4em;
+  margin-left: 0.5em;
+}
+footer {
+  margin-top: 1rem;
+  padding: .2rem;
+  text-align: right;
+  color: #666;
+  font-size: .7rem;
+}
+#navbar {
+  overflow: hidden;
+  background-color: #009ada;
+}
+.navbar-right {
+  float: right;
+}
+#navbar a {
+  float: left;
+  display: block;
+  color: white;
+  padding: 14px;
+  text-decoration: none;
+}
+#navbar a:hover {
+  background-color: white;
+  color: #009ada;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.sticky + .htmlbody {
+  padding-top: 60px;
+}
+#navbar .dropdown {
+  float: left;
+  overflow: hidden;
+}
+.navbar-right .dropdown {
+  float: right;
+  overflow: hidden;
+}
+.dropdown .dropbtn {
+  font-size: inherit;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  background-color: inherit;
+  color: white;
+  font-family: inherit;
+  margin: 0;
+}
+.dropdown:hover .dropbtn {
+  background-color: white;
+  color: #009ada;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #009ada;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.navbar-right .dropdown-content {
+  right: 0;
+}
+.dropdown-content a {
+  float: none;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+.dropdown-content a:hover {
+  color: #009ada;
+  background-color: white;
+}
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+.sticky .dropdown-content {
+  position: fixed;
+}
+.button {
+    background-color: #818589;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 12px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer
+}
+
+.button active:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 15px 0 0;
+    border-color: #333 transparent transparent transparent
+}
+
+.buttonActive.button {
+    text-decoration: none;
+    border: 5px solid #000000
+}
+
+.buttonOK {
+    background-color: #04AA6D;
+    color: white;
+    border: 2px solid #04AA6D;
+    border-radius: 5px
+}
+
+.buttonOK:hover {
+    background-color: #026641;
+    color: white;
+    border: 2px solid #026641
+}
+
+.buttonActive.buttonOK {
+    text-decoration: none;
+    border: 5px solid #026641
+}
+
+.buttonPartial {
+    background-color: #17a2b8;
+    color: white;
+    border: 2px solid #17a2b8;
+    border-radius: 5px
+}
+
+.buttonPartial:hover {
+    background-color: #0e616e;
+    color: white;
+    border: 2px solid #0e616e
+}
+
+.buttonActive.buttonPartial {
+    text-decoration: none;
+    border: 5px solid #0e616e
+}
+
+.buttonMissing {
+    background-color: #f44336;
+    color: white;
+    border: 2px solid #f44336;
+    border-radius: 5px
+}
+
+.buttonMissing:hover {
+    background-color: #a91409;
+    color: white;
+    border: 2px solid #a91409
+}
+
+.buttonActive.buttonMissing {
+    text-decoration: none;
+    border: 5px solid #a91409
+}
+
+.buttonJustified {
+    background-color: #6c757d;
+    color: white;
+    border: 2px solid #6c757d;
+    border-radius: 5px
+}
+
+.buttonJustified:hover {
+    background-color: #41464b;
+    color: white;
+    border: 2px solid #41464b
+}
+
+.buttonActive.buttonJustified {
+    text-decoration: none;
+    border: 5px solid #41464b
+}
+
+.buttonWarning {
+    background-color: #ffbf00;
+    color: white;
+    border: 2px solid #ffbf00;
+    border-radius: 5px
+}
+
+.buttonWarning:hover {
+    background-color: #997300;
+    color: white;
+    border: 2px solid #997300
+}
+
+.buttonActive.buttonWarning {
+    text-decoration: none;
+    border: 5px solid #997300
+}
+
+.buttonBlue {
+    background-color: #0000ff;
+    color: white;
+    border: 2px solid #0000ff;
+    border-radius: 5px
+}
+
+.buttonBlue:hover {
+    background-color: #000099;
+    color: white;
+    border: 2px solid #000099
+}
+
+.buttonActive.buttonBlue {
+    text-decoration: none;
+    border: 5px solid #000099
+}
+
+</style>
+</head>
+<body>
+<div class="title">
+<h1>L.O.B.S.T.E.R.</h1>
+<div class="subtitle">Lightweight Open BMW Software Traceability Evidence Report</div>
+</div>
+<div id="navbar">
+<a href="#sec-overview" id="menu-item-overview">Overview</a>
+<a href="#sec-issues" id="menu-item-issues">Issues</a>
+<div class="dropdown">
+<button class="dropbtn">Detailed report<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
+<div class="dropdown-content">
+<a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2" id="menu-item-requirements">Requirements</a>
+<a href="#sec-ca0dbad92a874b2f69b549293387925e" id="menu-item-code">Code</a>
+<a href="#sec-098f6bcd4621d373cade4e832627b4f6" id="menu-item-test">test</a>
+</div>
+</div>
+<div class="navbar-right">
+<div class="dropdown">
+<button class="dropbtn">LOBSTER<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
+<div class="dropdown-content">
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md" id="menu-item-documentation"><svg class="icon"><use href="#svg-external-link"></use></svg> Documentation</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md" id="menu-item-license"><svg class="icon"><use href="#svg-external-link"></use></svg> License</a>
+<a href="https://github.com/bmw-software-engineering/lobster" id="menu-item-source"><svg class="icon"><use href="#svg-external-link"></use></svg> Source</a>
+</div>
+</div>
+</div>
+</div>
+<div class="htmlbody">
+<svg style="display: none;">
+<defs>
+<symbol id="svg-check-square" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-alert-triangle" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-external-link" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-chevron-down" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</symbol>
+</defs>
+</svg>
+<h2 id="sec-overview" class="heading-overview">Overview</h2>
+<div class="content">
+<div class="columns">
+<div class="column">
+<h3 id="heading-coverage">Coverage</h3>
+<table>
+<thead><tr>
+<td>Category</td>
+<td>Ratio</td>
+<td>Coverage</td>
+<td>OK Items</td>
+<td>Total Items</td>
+</tr><thead>
+<tbody>
+</tbody>
+<tr class="coverage-table-requirements">
+<td><a href="#sec-5a2ebfb8baa378cfcfcba58bbb1380c2">Requirements</a></td>
+<td>100.0%</td>
+<td>
+<progress value="8" max="8">
+100.00%
+</progress>
+</td>
+<td align="right">8</td>
+<td align="right">8</td>
+</tr>
+<tr class="coverage-table-code">
+<td><a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a></td>
+<td>80.0%</td>
+<td>
+<progress value="8" max="10">
+80.00%
+</progress>
+</td>
+<td align="right">8</td>
+<td align="right">10</td>
+</tr>
+<tr class="coverage-table-test">
+<td><a href="#sec-098f6bcd4621d373cade4e832627b4f6">test</a></td>
+<td>81.8%</td>
+<td>
+<progress value="9" max="11">
+81.82%
+</progress>
+</td>
+<td align="right">9</td>
+<td align="right">11</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<h2 id="sec-filtering-options" class="heading-filtering">Filtering</h2>
+<div class="content">
+<h3 id="heading-item-filters">Item Filters</h3>
+<div id = "btnFilterItem">
+<button class="button buttonAll buttonActive" onclick="buttonFilter('all')"> Show All </button>
+<button class ="button buttonOK" onclick="buttonFilter('ok')" > OK </button>
+<button class ="button buttonMissing" onclick="buttonFilter('missing')" > Missing </button>
+<button class ="button buttonPartial" onclick="buttonFilter('partial')" > Partial </button>
+<button class ="button buttonJustified" onclick="buttonFilter('justified')" > Justified </button>
+<button class ="button buttonWarning" onclick="buttonFilter('warning')" > Warning </button>
+</div>
+<h3 id="heading-show-issues">Show Issues</h3>
+<div id = "ContainerBtnToggleIssue">
+<button class ="button buttonBlue" id="BtnToggleIssue" onclick="ToggleIssues()"> Show Issues </button>
+</div>
+<h3 id="sec-filter" class="heading-filter">Filter</h3>
+<input type="text" id="search" placeholder="Filter..." onkeyup="searchItem()">
+<div id="search-sec-id"
+</div>
+<h2 id="sec-issues" class="heading-issues">Issues</h2>
+<div class="content">
+<div id="issues-section" style="display:none">
+<ul>
+<li class="issue issue-missing issue-missing-itm">Item <a href='#item-f1a9fd2721fb0c82bf783f6ff73d0b38296d5f32'>tentacle_commander.DenSecurity</a>: unknown tracing target itm octopus_example.den_security</li>
+<li class="issue issue-missing issue-missing-itm">Item <a href='#item-f1a9fd2721fb0c82bf783f6ff73d0b38296d5f32'>tentacle_commander.DenSecurity</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-itm">Item <a href='#item-d1a56578ccc5466a3c0141db6671a1779540b2dd'>tentacle_toolkit.ConstructionPlanner</a>: unknown tracing target itm octopus_example.rock_arrangement_planner</li>
+<li class="issue issue-missing issue-missing-itm">Item <a href='#item-d1a56578ccc5466a3c0141db6671a1779540b2dd'>tentacle_toolkit.ConstructionPlanner</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-itm">Item <a href='#item-24c3fcb6b45b4d36648ecf2a687cefd80253a342'>test_tentacle_commander.TestDenSecurity.test_secure_den:62</a>: unknown tracing target itm octopus_example.den_security</li>
+<li class="issue issue-missing issue-missing-itm">Item <a href='#item-24c3fcb6b45b4d36648ecf2a687cefd80253a342'>test_tentacle_commander.TestDenSecurity.test_secure_den:62</a>: missing up reference</li>
+<li class="issue issue-missing issue-missing-itm">Item <a href='#item-9a52b0eec1dd6ca8f2fc97c5b8b90fff1f8728ec'>test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</a>: unknown tracing target itm octopus_example.rock_arrangement_planner</li>
+<li class="issue issue-missing issue-missing-itm">Item <a href='#item-9a52b0eec1dd6ca8f2fc97c5b8b90fff1f8728ec'>test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</a>: missing up reference</li>
+</ul>
+</div>
+</div>
+<h2 id="sec-detailed-report" class="heading-detailed-report">Detailed report</h2>
+<div class="content">
+<div class="detailed-report-items">
+<h3 id="heading-items">Items</h3>
+<div id="section-requirements">
+<h4 id="sec-5a2ebfb8baa378cfcfcba58bbb1380c2" class="heading-requirements">Requirements</h4>
+<h5>octopus_requirements.trlc</h5>
+<!-- begin item itm octopus_example.tentacle_motor_control -->
+<div class="item-ok" id="item-10ec6e7eacc1c18fb4de79e731ef3f3aba83772f">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.tentacle_motor_control</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-fdc4c3bfab6f9a2b57514daa5a415034f01efe2c'>tentacle_toolkit.MotorController</a></li>
+<li>Item <a href='#item-a0cf60584fa1e290fd518b815bb9f022e3cb2d5e'>test_tentacle_toolkit.TestMotorController.test_control_motors:18</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-a012a4c79478dd89da00f1c51f8a9fc9896bba50'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm octopus_example.chromatophore_processor -->
+<div class="item-ok" id="item-fd03dc48f83db84a4287718d47e3722d07ab1c6a">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.chromatophore_processor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-d11b241b8370b11bc71359b231decfb4840f07ed'>tentacle_toolkit.ColorProcessor</a></li>
+<li>Item <a href='#item-b4affd3b60e4ea5050f307598cc0a30647ef8ff8'>test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-fbe62dcbc65061a219885c25e0e4b909c088ff0a'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm octopus_example.ink_sac_trigger -->
+<div class="item-ok" id="item-16b517568cc34ba286fded6cd0d6b2315d0c27ac">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.ink_sac_trigger</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-86bddb2415928fe32f7373622a870bf270bc127a'>tentacle_toolkit.InkTrigger</a></li>
+<li>Item <a href='#item-bb3eed7e62d09087fa472c241566053be7a43964'>test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6da58973b0decaab640400d646a9bea75b75906e'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm octopus_example.vision_processing_unit -->
+<div class="item-ok" id="item-a0fbdad23c920fa7c623c644bb170545526251a6">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.vision_processing_unit</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements.trlc" target="_blank">octopus_requirements.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-f34824f8692229a6cae9ac831db8da7b9b722fda'>tentacle_toolkit.VisionProcessor</a></li>
+<li>Item <a href='#item-97be54947d793f17b1280d9cf729b4e08cfa8cf8'>test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48</a></li>
+</ul>
+</div>
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-b0e10f9009fbdd12d4f6e6e8916a875372835216'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements1.trlc</h5>
+<!-- begin item itm octopus_example.tentacle_coordination -->
+<div class="item-ok" id="item-a012a4c79478dd89da00f1c51f8a9fc9896bba50">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.tentacle_coordination</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements1.trlc" target="_blank">octopus_requirements1.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-10ec6e7eacc1c18fb4de79e731ef3f3aba83772f'>octopus_example.tentacle_motor_control</a></li>
+<li>Item <a href='#item-92c160ea14e57dd6fc3bfff8077248f5060ea8c6'>tentacle_commander.TentacleCoordinator</a></li>
+<li>Item <a href='#item-5136f88e91340d27b4f9064af582b089339c8c1e'>test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements2.trlc</h5>
+<!-- begin item itm octopus_example.color_camouflage -->
+<div class="item-ok" id="item-fbe62dcbc65061a219885c25e0e4b909c088ff0a">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.color_camouflage</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements2.trlc" target="_blank">octopus_requirements2.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-fd03dc48f83db84a4287718d47e3722d07ab1c6a'>octopus_example.chromatophore_processor</a></li>
+<li>Item <a href='#item-bbccbe54274d98253e92ad16ec35ca26c495140e'>tentacle_commander.ColorCamouflage</a></li>
+<li>Item <a href='#item-b3f8c717df0909f1f40d796429ab44a66f6548ca'>test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28</a></li>
+<li>Item <a href='#item-4dd15ebcec45cd44f4e48ad352a16586df1e35ef'>test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements3.trlc</h5>
+<!-- begin item itm octopus_example.ink_defense -->
+<div class="item-ok" id="item-6da58973b0decaab640400d646a9bea75b75906e">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.ink_defense</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements3.trlc" target="_blank">octopus_requirements3.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-16b517568cc34ba286fded6cd0d6b2315d0c27ac'>octopus_example.ink_sac_trigger</a></li>
+<li>Item <a href='#item-8a2092e4c79c9e7d70283251f18229cd04a6b759'>tentacle_commander.InkDefense</a></li>
+<li>Item <a href='#item-03ff9c028e048ea3a6e3d2bcdf40f775553f13f4'>test_tentacle_commander.TestInkDefense.test_deploy_ink:42</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>octopus_requirements4.trlc</h5>
+<!-- begin item itm octopus_example.prey_detection -->
+<div class="item-ok" id="item-b0e10f9009fbdd12d4f6e6e8916a875372835216">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item octopus_example.prey_detection</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="octopus_requirements4.trlc" target="_blank">octopus_requirements4.trlc</a>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Item <a href='#item-a0fbdad23c920fa7c623c644bb170545526251a6'>octopus_example.vision_processing_unit</a></li>
+<li>Item <a href='#item-98e5d435ca4988e95a704323d227b84594c2fce7'>tentacle_commander.PreyDetection</a></li>
+<li>Item <a href='#item-782761cc04addcbe89e81cd2b30ed4fabd5c05c6'>test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-code">
+<h4 id="sec-ca0dbad92a874b2f69b549293387925e" class="heading-code">Code</h4>
+<h5>tentacle_commander.py</h5>
+<!-- begin item itm tentacle_commander.TentacleCoordinator -->
+<div class="item-ok" id="item-92c160ea14e57dd6fc3bfff8077248f5060ea8c6">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.TentacleCoordinator</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-a012a4c79478dd89da00f1c51f8a9fc9896bba50'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm tentacle_commander.ColorCamouflage -->
+<div class="item-ok" id="item-bbccbe54274d98253e92ad16ec35ca26c495140e">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.ColorCamouflage</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-fbe62dcbc65061a219885c25e0e4b909c088ff0a'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm tentacle_commander.InkDefense -->
+<div class="item-ok" id="item-8a2092e4c79c9e7d70283251f18229cd04a6b759">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.InkDefense</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6da58973b0decaab640400d646a9bea75b75906e'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm tentacle_commander.PreyDetection -->
+<div class="item-ok" id="item-98e5d435ca4988e95a704323d227b84594c2fce7">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_commander.PreyDetection</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-b0e10f9009fbdd12d4f6e6e8916a875372835216'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm tentacle_commander.DenSecurity -->
+<div class="item-missing" id="item-f1a9fd2721fb0c82bf783f6ff73d0b38296d5f32">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item tentacle_commander.DenSecurity</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_commander.py" target="_blank">tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target itm octopus_example.den_security</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>tentacle_toolkit.py</h5>
+<!-- begin item itm tentacle_toolkit.MotorController -->
+<div class="item-ok" id="item-fdc4c3bfab6f9a2b57514daa5a415034f01efe2c">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.MotorController</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-10ec6e7eacc1c18fb4de79e731ef3f3aba83772f'>octopus_example.tentacle_motor_control</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm tentacle_toolkit.ColorProcessor -->
+<div class="item-ok" id="item-d11b241b8370b11bc71359b231decfb4840f07ed">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.ColorProcessor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-fd03dc48f83db84a4287718d47e3722d07ab1c6a'>octopus_example.chromatophore_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm tentacle_toolkit.InkTrigger -->
+<div class="item-ok" id="item-86bddb2415928fe32f7373622a870bf270bc127a">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.InkTrigger</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-16b517568cc34ba286fded6cd0d6b2315d0c27ac'>octopus_example.ink_sac_trigger</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm tentacle_toolkit.VisionProcessor -->
+<div class="item-ok" id="item-f34824f8692229a6cae9ac831db8da7b9b722fda">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item tentacle_toolkit.VisionProcessor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-a0fbdad23c920fa7c623c644bb170545526251a6'>octopus_example.vision_processing_unit</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm tentacle_toolkit.ConstructionPlanner -->
+<div class="item-missing" id="item-d1a56578ccc5466a3c0141db6671a1779540b2dd">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item tentacle_toolkit.ConstructionPlanner</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="tentacle_toolkit.py" target="_blank">tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target itm octopus_example.rock_arrangement_planner</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-test">
+<h4 id="sec-098f6bcd4621d373cade4e832627b4f6" class="heading-test">test</h4>
+<h5>test_tentacle_commander.py</h5>
+<!-- begin item itm test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18 -->
+<div class="item-ok" id="item-5136f88e91340d27b4f9064af582b089339c8c1e">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestTentacleCoordinator.test_move_tentacles:18</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-a012a4c79478dd89da00f1c51f8a9fc9896bba50'>octopus_example.tentacle_coordination</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28 -->
+<div class="item-ok" id="item-b3f8c717df0909f1f40d796429ab44a66f6548ca">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestColorCamouflage.test_change_color_coral:28</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-fbe62dcbc65061a219885c25e0e4b909c088ff0a'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33 -->
+<div class="item-ok" id="item-4dd15ebcec45cd44f4e48ad352a16586df1e35ef">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestColorCamouflage.test_change_color_sand:33</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-fbe62dcbc65061a219885c25e0e4b909c088ff0a'>octopus_example.color_camouflage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm test_tentacle_commander.TestInkDefense.test_deploy_ink:42 -->
+<div class="item-ok" id="item-03ff9c028e048ea3a6e3d2bcdf40f775553f13f4">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestInkDefense.test_deploy_ink:42</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-6da58973b0decaab640400d646a9bea75b75906e'>octopus_example.ink_defense</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52 -->
+<div class="item-ok" id="item-782761cc04addcbe89e81cd2b30ed4fabd5c05c6">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_commander.TestPreyDetection.test_scan_for_prey:52</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-b0e10f9009fbdd12d4f6e6e8916a875372835216'>octopus_example.prey_detection</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm test_tentacle_commander.TestDenSecurity.test_secure_den:62 -->
+<div class="item-missing" id="item-24c3fcb6b45b4d36648ecf2a687cefd80253a342">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item test_tentacle_commander.TestDenSecurity.test_secure_den:62</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_commander.py" target="_blank">test_tentacle_commander.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target itm octopus_example.den_security</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<h5>test_tentacle_toolkit.py</h5>
+<!-- begin item itm test_tentacle_toolkit.TestMotorController.test_control_motors:18 -->
+<div class="item-ok" id="item-a0cf60584fa1e290fd518b815bb9f022e3cb2d5e">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestMotorController.test_control_motors:18</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-10ec6e7eacc1c18fb4de79e731ef3f3aba83772f'>octopus_example.tentacle_motor_control</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28 -->
+<div class="item-ok" id="item-b4affd3b60e4ea5050f307598cc0a30647ef8ff8">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestColorProcessor.test_process_color_change:28</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-fd03dc48f83db84a4287718d47e3722d07ab1c6a'>octopus_example.chromatophore_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38 -->
+<div class="item-ok" id="item-bb3eed7e62d09087fa472c241566053be7a43964">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestInkTrigger.test_trigger_ink_release:38</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-16b517568cc34ba286fded6cd0d6b2315d0c27ac'>octopus_example.ink_sac_trigger</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48 -->
+<div class="item-ok" id="item-97be54947d793f17b1280d9cf729b4e08cfa8cf8">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Item test_tentacle_toolkit.TestVisionProcessor.test_process_vision:48</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>Item <a href='#item-a0fbdad23c920fa7c623c644bb170545526251a6'>octopus_example.vision_processing_unit</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item itm test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58 -->
+<div class="item-missing" id="item-9a52b0eec1dd6ca8f2fc97c5b8b90fff1f8728ec">
+<div class="item-name"><svg class="icon"><use href="#svg-alert-triangle"></use></svg> Item test_tentacle_toolkit.TestConstructionPlanner.test_plan_construction:58</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_tentacle_toolkit.py" target="_blank">test_tentacle_toolkit.py</a>
+</div>
+<div class="attribute">
+<div>Issues:
+<ul>
+<li>unknown tracing target itm octopus_example.rock_arrangement_planner</li>
+<li>missing up reference</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+</div>
+</div>
+<footer>
+<p>LOBSTER Version: 1.0.3-dev</p>
+</footer>
+</div>
+</div>
+<script>
+function buttonFilter(filter) {
+    var elms = document.getElementsByTagName("div");
+    var issue_elms = document.getElementsByClassName("issue");
+    for (i = 0; i < elms.length; i++) {
+        if (elms[i].id.startsWith("item-")) {
+            console.log("elms[i].className ", elms[i].className)
+            if (filter == "all") {
+                elms[i].style.display = "block";
+            } else if (elms[i].className == "item-" + filter) {
+                elms[i].style.display = "block";
+            } else {
+                elms[i].style.display = "none";
+            }
+        }
+    }
+    // filter the issues list based on the issue filter button clicked
+    for (i = 0; i < issue_elms.length; i++) {
+        console.log("log ", issue_elms[i].className)
+        if (filter == "all") {
+            issue_elms[i].style.display = "list-item";
+        } else if (issue_elms[i].className.includes("issue issue-" + filter)) {
+            issue_elms[i].style.display = "list-item";
+        } else {
+            issue_elms[i].style.display = "none";
+        }
+    }
+    activeButton(filter);
+    //call the search filering which could have been overwritten by the current filtering
+    searchItem();
+}
+
+
+function activeButton(filter) {
+    var elms = document.getElementsByTagName("button");
+    console.log("the click buitton is " + filter);
+    for (i = 0; i < elms.length; i++) {
+        if (elms[i].className.includes("buttonActive")) {
+            console.log("elem active found : " + elms[i].className);
+            elms[i].className = elms[i].className.replace("buttonActive", "");
+        } else if (elms[i].className.toLowerCase().includes("button" + filter.toLowerCase())) {
+            console.log("elem to be activated found : " + elms[i].className);
+            elms[i].className = elms[i].className + " buttonActive";
+        }
+    }
+}
+
+
+function ToggleIssues() {
+    var div_issue = document.getElementById("issues-section");
+    if (div_issue.style.display == "block" || div_issue.style.display == "") {
+        div_issue.style.display = "none";
+        document.getElementById("BtnToggleIssue").innerHTML = "Show Issues";
+        document.getElementById("BtnToggleIssue").className = document.getElementById("BtnToggleIssue").className + " buttonActive";
+    } else {
+        div_issue.style = 'display: block; flex-direction: column; height: 200px;' +
+            'overflow:auto;';
+        document.getElementById("BtnToggleIssue").innerHTML = "Hide Issues";
+        document.getElementById("BtnToggleIssue").className = document.getElementById("BtnToggleIssue").className.replace("buttonActive", "");
+    }
+}
+
+
+function searchItem() {
+    var input = document.getElementById('search').value
+    input = input.toLowerCase();
+
+    var divs = document.getElementsByClassName('item-name');
+    for (i = 0; i < divs.length; i++) {
+        var title = divs[i].parentNode.getAttribute("title");
+        // get requirement name: 2nd part when we cut the long string with /svg
+        var reqname = divs[i].innerHTML.toLowerCase().split("</svg>").pop();
+        reqname = reqname.split(" ").pop();
+        if (reqname.includes(input)) {
+            // the search pattern has been found, if this elem has the title "hidden-not-matching", put it back to diplayed
+            if (title) {
+                if (title.startsWith("hidden-not-matching")) {
+                    divs[i].parentNode.style.display = "block";
+                }
+            }
+            divs[i].parentNode.setAttribute("title", "matching-" + input)
+        } else {
+            // not maching, we hide
+            divs[i].parentNode.setAttribute("title", "hidden-not-matching")
+            divs[i].parentNode.style.display = "none";
+        }
+    }
+}
+</script>
+<script>
+
+window.onscroll = function() {stickyNavbar()};
+
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+function stickyNavbar() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+</body>
+</html>
