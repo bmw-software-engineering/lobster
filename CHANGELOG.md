@@ -5,6 +5,10 @@
 
 ### 1.0.3-dev
 
+* `lobster-trlc`:
+  - Updated documentation to explain how to use the version flag (`version-field`) parameter
+    in conversion rules and how it affects generated versioned tags.
+
 * `lobster-report`:
   - Fixed edge-case exception when loading a `*.lobster` file raised an `AssertionError`.
     The error was not propagated to the error output stream, but another exception was
