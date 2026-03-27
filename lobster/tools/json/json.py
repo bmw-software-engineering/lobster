@@ -35,7 +35,7 @@ class Malformed_Input(Exception):
         self.data = data
 
 
-def get_item(root, path, required):
+def get_item(root, path: str, required: bool):
     assert isinstance(path, str)
     assert isinstance(required, bool)
 
@@ -52,12 +52,11 @@ def get_item(root, path, required):
         if field in root:
             return get_item(root[field], tail, required)
         elif required:
-            raise Malformed_Input("object does not contain %s" % field,
-                                  root)
+            raise Malformed_Input(f"object does not contain {field}", root)
         return None
 
     elif required:
-        raise Malformed_Input("not an object", root)
+        raise Malformed_Input("not a dictionary", root)
     return None
 
 
@@ -175,6 +174,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
                 else:
                     item_name = "%s.%u" % (syn_test_name(PurePath(file_name)),
                                            item_id)
+
                 if not isinstance(item_name, str):
                     raise Malformed_Input("name is not a string",
                                           item_name)
