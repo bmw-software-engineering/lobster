@@ -90,14 +90,14 @@ def count_occurrence_of_last_function_from_function_name_list(function_names):
 def parse_value(val):
     if isinstance(val, cst.SimpleString):
         return val.value[1:-1]
-    elif isinstance(val, cst.List):
+    if isinstance(val, cst.List):
         return [parse_value(item.value)
                 for item in val.elements]
-    else:
-        rv = str(val.value)
-        if rv == "None":
-            rv = None
-        return rv
+
+    rv = str(val.value)
+    if rv == "None":
+        rv = None
+    return rv
 
 
 class Python_Traceable_Node:
@@ -320,15 +320,14 @@ class Lobster_Visitor(cst.CSTVisitor):
     def parse_dotted_name(self, name):
         if isinstance(name, cst.Call):
             return self.parse_dotted_name(name.func)
-        elif isinstance(name, cst.Name):
+        if isinstance(name, cst.Name):
             return name.value
-        elif isinstance(name, cst.Attribute):
+        if isinstance(name, cst.Attribute):
             # value -- prefix
             # attr  -- postfix
             return "%s.%s" % (self.parse_dotted_name(name.value),
                               self.parse_dotted_name(name.attr))
-        else:
-            return None
+        return None
 
     def parse_decorators(self, decorators):
         for dec in decorators:
@@ -544,9 +543,9 @@ class PythonTool(MetaDataToolBase):
 
         if ok:
             return 0
-        else:
-            print("Note: Earlier parse errors make actual output unreliable")
-            return 1
+
+        print("Note: Earlier parse errors make actual output unreliable")
+        return 1
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

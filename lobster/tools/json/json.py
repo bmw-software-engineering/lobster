@@ -51,12 +51,12 @@ def get_item(root, path, required):
     if isinstance(root, dict):
         if field in root:
             return get_item(root[field], tail, required)
-        elif required:
+        if required:
             raise Malformed_Input("object does not contain %s" % field,
                                   root)
         return None
 
-    elif required:
+    if required:
         raise Malformed_Input("not an object", root)
     return None
 

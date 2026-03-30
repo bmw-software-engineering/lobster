@@ -61,8 +61,7 @@ class CiReportTool(MetaDataToolBase):
 
         if report.mh.errors:
             return 1
-        else:
-            return 0
+        return 0
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:
