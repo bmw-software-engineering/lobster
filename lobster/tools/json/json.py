@@ -168,13 +168,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
         ok    = True
         for item_id, item in enumerate(data, 1):
             try:
-                if options.name_attribute:
-                    item_name = get_item(root     = item,
-                                         path     = options.name_attribute,
-                                         required = True)
-                else:
-                    item_name = "%s.%u" % (syn_test_name(PurePath(file_name)),
-                                           item_id)
+                item_name = build_name(item, options.name_attribute, file_name, item_id)
                 if not isinstance(item_name, str):
                     raise Malformed_Input("name is not a string",
                                           item_name)
@@ -231,6 +225,19 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
                 ok = False
 
         return ok, items
+
+
+def build_name(item, name_attribute, file_name, item_id):
+    if name_attribute:
+        item_name = get_item(root     = item,
+                             path     = name_attribute,
+                             required = True)
+        if not isinstance(item_name, str):
+            raise Malformed_Input("name is not a string",
+                                  item_name)
+    else:
+        item_name = f"{syn_test_name(PurePath(file_name))}.{item_id}"
+    return item_name
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:
