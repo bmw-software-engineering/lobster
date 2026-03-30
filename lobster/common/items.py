@@ -146,10 +146,9 @@ class Item(metaclass=ABCMeta):
 
         # Check up references
         ok_up = True
-        if level.needs_tracing_up:
-            if not has_up_ref and not has_just_up:
-                ok_up = False
-                self.messages.append("missing up reference")
+        if level.needs_tracing_up and (not has_up_ref) and (not has_just_up):
+            ok_up = False
+            self.messages.append("missing up reference")
 
         # Check set of down references
         ok_down = True
