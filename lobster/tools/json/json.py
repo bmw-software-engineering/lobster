@@ -141,22 +141,8 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
 
     @classmethod
     def process(cls, options, file_name) -> Tuple[bool, List[Activity]]:
-        try:
-            with open(file_name, "r", encoding="UTF-8") as fd:
-                data = json.load(fd)
-            data = get_item(root     = data,
-                            path     = options.test_list,
-                            required = True)
-        except json.JSONDecodeError:
-            print("%s: Input file contains invalid JSON." % file_name,
-                  file=sys.stderr)
-            return False, []
-        except UnicodeDecodeError as decode_error:
-            print("%s: File is not encoded in utf-8: %s" % (file_name, decode_error))
-            return False, []
-        except Malformed_Input as err:
-            pprint(err.data)
-            print("%s: malformed input: %s" % (file_name, err.msg))
+        ok, data = load_item(file_name, options.test_list)
+        if not ok:
             return False, []
 
         # Ensure we actually have a list now
@@ -225,6 +211,27 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
                 ok = False
 
         return ok, items
+
+
+def load_item(file_name, options_test_list):
+    try:
+        with open(file_name, "r", encoding="UTF-8") as fd:
+            data = json.load(fd)
+        data = get_item(root     = data,
+                        path     = options_test_list,
+                        required = True)
+        return True, data
+
+    except json.JSONDecodeError:
+        print(f"{file_name}: Input file contains invalid JSON.", file=sys.stderr)
+    except UnicodeDecodeError as decode_error:
+        print(f"{file_name}: File is not encoded in utf-8: {decode_error}",
+              file=sys.stderr)
+    except Malformed_Input as err:
+        pprint(err.data)
+        print(f"{file_name}: malformed input: {err.msg}", file=sys.stderr)
+
+    return False, []
 
 
 def build_name(item, name_attribute, file_name, item_id):
