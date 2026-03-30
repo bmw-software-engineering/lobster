@@ -176,23 +176,23 @@ class TestCase:
         blocks = general_pattern.findall(self.docu_lines)
         if not blocks:
             return
-        else:
-            http_requirements = []
-            for block in blocks:
-                self.requirements.extend(self._get_require_tags(block, tag))
-                http_requirements.extend(self._get_require_tags(block, tag_http))
 
-            for requirements_listed_behind_one_tag in http_requirements:
-                for requirement in requirements_listed_behind_one_tag:
-                    requirement_uri = self._get_uri_from_requirement_detection(
-                        requirement,
-                        tag_http_named
-                    )
-                    self._add_new_requirement_to_requirement_list(
-                        self,
-                        requirement_uri,
-                        tag_http_named
-                    )
+        http_requirements = []
+        for block in blocks:
+            self.requirements.extend(self._get_require_tags(block, tag))
+            http_requirements.extend(self._get_require_tags(block, tag_http))
+
+        for requirements_listed_behind_one_tag in http_requirements:
+            for requirement in requirements_listed_behind_one_tag:
+                requirement_uri = self._get_uri_from_requirement_detection(
+                    requirement,
+                    tag_http_named
+                )
+                self._add_new_requirement_to_requirement_list(
+                    self,
+                    requirement_uri,
+                    tag_http_named
+                )
 
     def _get_testmethod_tag(self) -> List[str]:
         """
@@ -268,7 +268,7 @@ class TestCase:
         if not case_intro.match(line):
             return True
         # If the test case is commented out
-        elif case.is_line_commented(lines, start_idx):
+        if case.is_line_commented(lines, start_idx):
             return True
         return False
 
@@ -279,8 +279,8 @@ class TestCase:
                 (test_case.docu_start_line - 1, test_case.docu_end_line)
         ):
             return True
-        elif Constants.NON_EXISTING_INFO in (test_case.suite_name,
-                                             test_case.test_name):
+        if Constants.NON_EXISTING_INFO in (test_case.suite_name,
+                                           test_case.test_name):
             return True
 
         return False
@@ -338,12 +338,11 @@ class TestCase:
         """
         if requirement == "":
             return None
-        else:
-            requirement_uri = re.search(tag_http_named, requirement)
-            if requirement_uri is None:
-                return None
-            else:
-                return requirement_uri.group()
+
+        requirement_uri = re.search(tag_http_named, requirement)
+        if requirement_uri is None:
+            return None
+        return requirement_uri.group()
 
     @staticmethod
     def _add_new_requirement_to_requirement_list(
@@ -361,18 +360,18 @@ class TestCase:
         """
         if requirement_uri is None:
             return
-        else:
-            named_requirement_number_match = re.match(
-                tag_http_named,
-                requirement_uri
-            )
-            requirement_number_dictionary = (
-                named_requirement_number_match.groupdict())
-            requirement_number = (
-                requirement_number_dictionary.get("number"))
-            requirement_cb = "CB-#" + requirement_number
-            if requirement_cb not in testcase.requirements:
-                testcase.requirements.append(requirement_cb)
+
+        named_requirement_number_match = re.match(
+            tag_http_named,
+            requirement_uri
+        )
+        requirement_number_dictionary = (
+            named_requirement_number_match.groupdict())
+        requirement_number = (
+            requirement_number_dictionary.get("number"))
+        requirement_cb = "CB-#" + requirement_number
+        if requirement_cb not in testcase.requirements:
+            testcase.requirements.append(requirement_cb)
 
     @staticmethod
     def _get_require_tags(match, filter_regex):
