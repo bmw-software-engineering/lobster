@@ -5,6 +5,10 @@
 
 ### 1.0.3-dev
 
+* `lobster-trlc`:
+  - Updated documentation to explain how to use the version flag (`version-field`) parameter
+    in conversion rules and how it affects generated versioned tags.
+
 * `lobster-json`:
   - Fixed crash when processing empty JSON files. The tool now exits gracefully with
     return code 1 and prints a proper error message to stderr: "Input file contains invalid JSON."
