@@ -27,6 +27,8 @@
     - Network errors include clear failure reasons and suggested actions
     - HTTP response errors now include status code and reason
   - Changed default value of `verify_ssl` to `True`
+  - If the configuration file contains an invalid schema value, an exception is raised.
+    Earlier the fallback "activity" was used.
 
 * `lobster-python`:
   - Added system test infrastructure and Bazel targets under `tests_system/lobster_python`.

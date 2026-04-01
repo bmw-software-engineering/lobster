@@ -417,19 +417,21 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
             name= item_name
         )
 
-    elif schema_class is Implementation:
+    if schema_class is Implementation:
         return Implementation(
             **common_params,
             language="python",
             name= item_name,
         )
 
-    else:
+    if schema_class is Activity:
         return Activity(
             **common_params,
             framework="codebeamer",
             status=status
         )
+
+    raise KeyError(f"Unsupported schema class '{schema_class}'!")
 
 
 def import_tagged(cb_config: Config, items_to_import: Iterable[int]):
