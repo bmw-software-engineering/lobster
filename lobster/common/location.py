@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2023, 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023, 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -52,22 +52,20 @@ class Location(metaclass=ABCMeta):
         try:
             if json["kind"] == "file":
                 return File_Reference.from_json(json)
-            elif json["kind"] == "github":
+            if json["kind"] == "github":
                 return Github_Reference.from_json(json)
-            elif json["kind"] == "codebeamer":
+            if json["kind"] == "codebeamer":
                 return Codebeamer_Reference.from_json(json)
-            elif json["kind"] == "void":
+            if json["kind"] == "void":
                 return Void_Reference.from_json(json)
-            else:
-                raise LOBSTER_Exception("unknown location kind %s" %
-                                        json["kind"])
+            raise LOBSTER_Exception(f"unknown location kind {json['kind']}")
         except KeyError as err:
             raise LOBSTER_Exception(
-                "malformed location data, missing %s" % err.args[0],
+                f"malformed location data, missing {err.args[0]}",
                 json) from err
-        except AssertionError:
+        except AssertionError as err:
             raise LOBSTER_Exception(
-                "malformed %s location data" % json["kind"],
+                f"malformed {json['kind']} location data",
                 json) from err
 
 
@@ -107,26 +105,22 @@ class File_Reference(Location):
         self.column   = column
 
     def sorting_key(self):
-        if self.line is not None:
-            if self.column is not None:
-                return (self.filename, self.line, self.column)
-            else:
-                return (self.filename, self.line)
-        else:
-            return (self.filename,)
+        values = (self.filename, self.line, self.column)
+        if None in values:
+            return values[:values.index(None)]
+        return values
 
     def to_string(self):
         rv = self.filename
         if self.line:
-            rv += ":%u" % self.line
+            rv += f":{self.line}"
         if self.column:
-            rv += ":%u" % self.column
+            rv += f":{self.column}"
         return rv
 
     def to_html(self, source_root=""):
         href = source_root + self.filename if source_root else self.filename
-        return '<a href="%s" target="_blank">%s</a>' % (href,
-                                                        self.filename)
+        return f'<a href="{href}" target="_blank">{self.filename}</a>'
 
     def to_json(self):
         return {"kind"   : "file",
@@ -166,19 +160,17 @@ class Github_Reference(Location):
     def sorting_key(self):
         if self.line is not None:
             return (self.filename, self.line)
-        else:
-            return (self.filename,)
+        return (self.filename,)
 
     def to_string(self):
         if self.line:
             return f"{self.filename}:{self.line}"
-        else:
-            return self.filename
+        return self.filename
 
     def to_html(self, source_root=""):
         file_ref = self.filename
         if self.line:
-            file_ref += "#L%u" % self.line
+            file_ref += f"#L{self.line}"
 
         return f'<a href="{self.gh_root}/blob/{self.commit}/{file_ref}" ' \
                f'target="_blank">{self.to_string()}</a>'
@@ -226,17 +218,16 @@ class Codebeamer_Reference(Location):
     def to_string(self):
         # lobster-trace: Codebeamer_Item_as_String
         if self.name:
-            return "cb item %u '%s'" % (self.item, self.name)
-        else:
-            return "cb item %u" % self.item
+            return f"cb item {self.item} '{self.name}'"
+        return f"cb item {self.item}"
 
     def to_html(self, source_root=""):
         # lobster-trace: Codebeamer_URL
         url = self.cb_root
-        url += "/issue/%u" % self.item
+        url += f"/issue/{self.item}"
         if self.version:
-            url += "?version=%u" % self.version
-        return '<a href="%s" target="_blank">%s</a>' % (url, self.to_string())
+            url += f"?version={self.version}"
+        return f'<a href="{url}" target="_blank">{self.to_string()}</a>'
 
     def to_json(self):
         return {"kind"    : "codebeamer",
