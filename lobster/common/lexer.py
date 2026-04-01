@@ -33,8 +33,7 @@ class Token:
     def value(self):
         if self.kind == "STRING":
             return self.text[1:-1]
-        else:
-            return self.text
+        return self.text
 
     def __repr__(self):
         return "Token(%s, %s, %s)" % (self.kind,

@@ -46,15 +46,13 @@ class Parser:
     def peek(self, kind, value=None):
         if self.nt is None:
             return kind is None
-        elif kind is None:
+        if kind is None:
             return False
-        elif self.nt.kind == kind:
+        if self.nt.kind == kind:
             if value is None:
                 return True
-            else:
-                return self.nt.value() == value
-        else:
-            return False
+            return self.nt.value() == value
+        return False
 
     def match(self, kind, value=None):
         if self.peek(kind, value):
