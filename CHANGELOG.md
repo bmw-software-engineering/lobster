@@ -5,6 +5,11 @@
 
 ### 1.0.3-dev
 
+* `lobster-report`:
+  - Fixed edge-case exception when loading a `*.lobster` file raised an `AssertionError`.
+    The error was not propagated to the error output stream, but another exception was
+    created instead.
+
 * `lobster-json`:
   - Fixed crash when processing empty JSON files. The tool now exits gracefully with
     return code 1 and prints a proper error message to stderr: "Input file contains invalid JSON."
