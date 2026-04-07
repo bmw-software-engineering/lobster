@@ -1,0 +1,7 @@
+load("@rules_python//python:defs.bzl", "py_test")
+
+py_test(
+    name = "test_sphinx_lobster_builder",
+    srcs = ["test_sphinx_lobster_builder.py"],
+    deps = ["//sphinx_lobster:sphinx_lobster_builder"],
+)

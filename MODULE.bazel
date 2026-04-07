@@ -56,3 +56,20 @@ git_override(
     module_name = "trlc",
     remote = "https://github.com/bmw-software-engineering/trlc.git",
 )
+
+pip.parse(
+    experimental_requirement_cycles = {
+        "sphinx": [
+            "sphinx",
+            "sphinxcontrib-serializinghtml",
+            "sphinxcontrib-qthelp",
+            "sphinxcontrib-htmlhelp",
+            "sphinxcontrib-devhelp",
+            "sphinxcontrib-applehelp",
+        ],
+    },
+    hub_name = "lobster_sphinx_dependencies",
+    python_version = "3.12",
+    requirements_lock = "//:requirements_dev.txt",
+)
+use_repo(pip, "lobster_sphinx_dependencies")
