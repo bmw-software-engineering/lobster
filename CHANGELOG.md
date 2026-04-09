@@ -5,6 +5,12 @@
 
 ### 1.0.3-dev
 
+* Introduced API function:
+  - `lobster_pkg`:
+    This is API function for the tool `lobster-pkg` which takes `PkgToolConfig` as input
+    and extracts tracing values from package files.
+    This is similar to running the tool `lobster-pkg`.
+
 * `lobster-report`:
   - Fixed edge-case exception when loading a `*.lobster` file raised an `AssertionError`.
     The error was not propagated to the error output stream, but another exception was
