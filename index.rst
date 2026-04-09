@@ -16,6 +16,7 @@ Browse the sections below to find the APIs and examples you need.
 
   manual/tools/codebeamer
   manual/tools/cpptest
+  manual/tools/pkg
   manual/tools/report
   manual/tools/online_report
   manual/tools/html_report
