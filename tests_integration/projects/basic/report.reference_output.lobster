@@ -7,7 +7,7 @@
       "name": "System Requirements",
       "items": [
         {
-          "tag": "req 12345@42",
+          "tag": "itm 12345@42",
           "location": {
             "kind": "codebeamer",
             "cb_root": "https://potato.kitten",
@@ -23,9 +23,9 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req example.req_implication@10",
-            "req example.req_xor",
-            "req example.req_nand@30"
+            "itm example.req_implication@10",
+            "itm example.req_xor",
+            "itm example.req_nand@30"
           ],
           "tracing_status": "OK"
         }
@@ -36,7 +36,7 @@
       "name": "Software Requirements",
       "items": [
         {
-          "tag": "req example.req_implication@10",
+          "tag": "itm example.req_implication@10",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -50,17 +50,17 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req 12345"
+            "itm 12345"
           ],
           "ref_down": [
-            "req example.req_important",
+            "itm example.req_important",
             "cpp foo.cpp:1:implication:3",
             "gtest ImplicationTest:BasicTest"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req example.req_xor",
+          "tag": "itm example.req_xor",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -70,13 +70,13 @@
           },
           "name": "example.req_xor",
           "messages": [
-            "tracing destination req 12345 has version 42 (expected 5)"
+            "tracing destination itm 12345 has version 42 (expected 5)"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req 12345@5"
+            "itm 12345@5"
           ],
           "ref_down": [
             "simulink exclusive_or/My_Exclusive_Or",
@@ -86,7 +86,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req example.req_nand@30",
+          "tag": "itm example.req_nand@30",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -100,17 +100,17 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req 12345@42"
+            "itm 12345@42"
           ],
           "ref_down": [
-            "req example.req_important",
+            "itm example.req_important",
             "matlab nand",
             "matlab nand_test::test_1"
           ],
           "tracing_status": "OK"
         },
         {
-          "tag": "req example.req_nor@40",
+          "tag": "itm example.req_nor@40",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -128,14 +128,14 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req example.req_important",
+            "itm example.req_important",
             "itm nor.Example.helper_function",
             "itm nor.Example.nor"
           ],
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req example.req_implies",
+          "tag": "itm example.req_implies",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -155,7 +155,7 @@
           "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req example.req_important",
+          "tag": "itm example.req_important",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -165,7 +165,7 @@
           },
           "name": "example.req_important",
           "messages": [
-            "tracing destination req example.req_nand has version 30 (expected 31)",
+            "tracing destination itm example.req_nand has version 30 (expected 31)",
             "missing reference to Code",
             "missing reference to Verification Test"
           ],
@@ -173,9 +173,9 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nand@31",
-            "req example.req_nor@40",
-            "req example.req_implication"
+            "itm example.req_nand@31",
+            "itm example.req_nor@40",
+            "itm example.req_implication"
           ],
           "ref_down": [],
           "tracing_status": "MISSING"
@@ -201,7 +201,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_implication"
+            "itm example.req_implication"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -235,7 +235,7 @@
           },
           "name": "foo.cpp:1:potato:14",
           "messages": [
-            "unknown tracing target req example.doesnt_exist",
+            "unknown tracing target itm example.doesnt_exist",
             "missing up reference"
           ],
           "just_up": [],
@@ -258,7 +258,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nand"
+            "itm example.req_nand"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -314,7 +314,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_xor"
+            "itm example.req_xor"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -352,7 +352,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nor"
+            "itm example.req_nor"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -372,7 +372,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nor"
+            "itm example.req_nor"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -398,7 +398,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_implication"
+            "itm example.req_implication"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -418,7 +418,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nand"
+            "itm example.req_nand"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -438,7 +438,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_xor"
+            "itm example.req_xor"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -458,7 +458,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_xor"
+            "itm example.req_xor"
           ],
           "ref_down": [],
           "tracing_status": "OK"

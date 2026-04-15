@@ -7,7 +7,7 @@
       "name": "Software Requirements",
       "items": [
         {
-          "tag": "req fruits.Buy_Banana1",
+          "tag": "itm fruits.Buy_Banana1",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -29,7 +29,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Buy_Banana2",
+          "tag": "itm fruits.Buy_Banana2",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -51,7 +51,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Sell_Banana1",
+          "tag": "itm fruits.Sell_Banana1",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -73,7 +73,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Sell_Banana2",
+          "tag": "itm fruits.Sell_Banana2",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -95,7 +95,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Clear_Basket",
+          "tag": "itm fruits.Clear_Basket",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -117,7 +117,7 @@
           "tracing_status": "OK"
         },
         {
-          "tag": "req fruits.Check_Basket",
+          "tag": "itm fruits.Check_Basket",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -139,7 +139,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Throw_Banana",
+          "tag": "itm fruits.Throw_Banana",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -161,7 +161,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Sweet_Banana",
+          "tag": "itm fruits.Sweet_Banana",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -183,7 +183,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Fruit_Less_Than_Operator",
+          "tag": "itm fruits.Fruit_Less_Than_Operator",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -204,7 +204,7 @@
           "tracing_status": "OK"
         },
         {
-          "tag": "req fruits.Fruit_Copy_Constructor",
+          "tag": "itm fruits.Fruit_Copy_Constructor",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -226,7 +226,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Magic",
+          "tag": "itm fruits.Magic",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -247,7 +247,7 @@
           "tracing_status": "OK"
         },
         {
-          "tag": "req fruits.SameLine1",
+          "tag": "itm fruits.SameLine1",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -268,7 +268,7 @@
           "tracing_status": "OK"
         },
         {
-          "tag": "req fruits.SameLine2",
+          "tag": "itm fruits.SameLine2",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -290,7 +290,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.SameLine3",
+          "tag": "itm fruits.SameLine3",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -312,7 +312,7 @@
           "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.SameLine4",
+          "tag": "itm fruits.SameLine4",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -354,11 +354,11 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.SameLine4",
-            "req fruits.SameLine3",
-            "req fruits.SameLine2",
-            "req fruits.SameLine1",
-            "req fruits.Fruit_Copy_Constructor"
+            "itm fruits.SameLine4",
+            "itm fruits.SameLine3",
+            "itm fruits.SameLine2",
+            "itm fruits.SameLine1",
+            "itm fruits.Fruit_Copy_Constructor"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -374,11 +374,11 @@
           },
           "name": "fruit.cpp:1:orchard::Fruit<double>::operator*:26",
           "messages": [
-            "unknown tracing target req cd-456",
-            "unknown tracing target req ab-123",
-            "unknown tracing target req 89",
-            "unknown tracing target req 456",
-            "unknown tracing target req 123",
+            "unknown tracing target itm cd-456",
+            "unknown tracing target itm ab-123",
+            "unknown tracing target itm 89",
+            "unknown tracing target itm 456",
+            "unknown tracing target itm 123",
             "missing up reference"
           ],
           "just_up": [],
@@ -401,8 +401,8 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Magic",
-            "req fruits.Fruit_Less_Than_Operator"
+            "itm fruits.Magic",
+            "itm fruits.Fruit_Less_Than_Operator"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -584,8 +584,8 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Buy_Banana2",
-            "req fruits.Buy_Banana1"
+            "itm fruits.Buy_Banana2",
+            "itm fruits.Buy_Banana1"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -605,8 +605,8 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Sell_Banana2",
-            "req fruits.Sell_Banana1"
+            "itm fruits.Sell_Banana2",
+            "itm fruits.Sell_Banana1"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -626,7 +626,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Clear_Basket"
+            "itm fruits.Clear_Basket"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -646,7 +646,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Check_Basket"
+            "itm fruits.Check_Basket"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -666,7 +666,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Throw_Banana"
+            "itm fruits.Throw_Banana"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -710,7 +710,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Clear_Basket"
+            "itm fruits.Clear_Basket"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -730,8 +730,8 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.SameLine1",
-            "req fruits.Clear_Basket"
+            "itm fruits.SameLine1",
+            "itm fruits.Clear_Basket"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -751,7 +751,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Magic"
+            "itm fruits.Magic"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -771,7 +771,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Sweet_Banana"
+            "itm fruits.Sweet_Banana"
           ],
           "ref_down": [],
           "tracing_status": "OK"
@@ -791,7 +791,7 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Fruit_Less_Than_Operator"
+            "itm fruits.Fruit_Less_Than_Operator"
           ],
           "ref_down": [],
           "tracing_status": "OK"

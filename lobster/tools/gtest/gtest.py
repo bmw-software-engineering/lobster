@@ -81,6 +81,9 @@ class GtestTool(MetaDataToolBase):
         file_list = {os.path.realpath(os.path.abspath(f)) for f in file_list}
 
         items = []
+        namespace = KindTypes.ITM.value
+        if options.kind == KindTypes.ACT.value:
+            namespace = KindTypes.REQ.value
 
         for filename in file_list:
             try:
@@ -154,7 +157,7 @@ class GtestTool(MetaDataToolBase):
                         item = Item(tag       = tag,
                                     location  = test_source)
                     for ref in test_tags:
-                        item.add_tracing_target(Tracing_Tag("req", ref))
+                        item.add_tracing_target(Tracing_Tag(namespace, ref))
 
                     items.append(item)
 

@@ -33,7 +33,7 @@ class ConversionRule:
             justification_down_fields)
         self._justification_global_fields = self._as_string_list(
             justification_global_fields)
-        self._tags = self._as_tag_list(tags)
+        self._tags = self._as_tag_list(tags, self._lobster_namespace)
         self._applies_to_derived_types = applies_to_derived_types
 
     def __hash__(self) -> int:
@@ -73,12 +73,14 @@ class ConversionRule:
     @staticmethod
     def _as_tag_list(
         tags: Optional[Iterable[Union[str, Dict[str, str]]]],
+        lobster_namespace: str,
+
     ) -> List[TagEntry]:
         result = []
         if tags is not None:
             for tag in tags:
                 if isinstance(tag, str):
-                    result.append(TagEntry(field=tag))
+                    result.append(TagEntry(field=tag, namespace=lobster_namespace))
                 elif isinstance(tag, dict):
                     result.append(TagEntry(**tag))
                 else:

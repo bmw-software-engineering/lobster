@@ -7,7 +7,7 @@
       "name": "Requirements A",
       "items": [
         {
-          "tag": "req coverage_mix.banana",
+          "tag": "itm coverage_mix.banana",
           "location": {
             "kind": "file",
             "file": "req_a.trlc",
@@ -21,13 +21,9 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req coverage_mix.banana_color_test"
+            "itm coverage_mix.banana_color_test"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "Requirement_A",
-          "text": "The banana must be yellow.",
-          "status": null
+          "tracing_status": "OK"
         }
       ],
       "coverage": 100.0
@@ -36,7 +32,7 @@
       "name": "Requirements B",
       "items": [
         {
-          "tag": "req coverage_mix.banana_skin",
+          "tag": "itm coverage_mix.banana_skin",
           "location": {
             "kind": "file",
             "file": "req_b.trlc",
@@ -50,11 +46,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "Requirement_B",
-          "text": "The banana skin must be yellow.",
-          "status": null
+          "tracing_status": "MISSING"
         }
       ],
       "coverage": 0.0
@@ -63,7 +55,7 @@
       "name": "Test A",
       "items": [
         {
-          "tag": "req coverage_mix.banana_color_test",
+          "tag": "itm coverage_mix.banana_color_test",
           "location": {
             "kind": "file",
             "file": "test_spec.trlc",
@@ -78,14 +70,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req coverage_mix.banana"
+            "itm coverage_mix.banana"
           ],
           "ref_down": [],
-          "tracing_status": "JUSTIFIED",
-          "framework": "TRLC",
-          "kind": "Test_Specification",
-          "text": "Look at the banana. Is it yellow?",
-          "status": null
+          "tracing_status": "JUSTIFIED"
         }
       ],
       "coverage": 100.0

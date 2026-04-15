@@ -6,8 +6,8 @@ inputs:
 conversion-rules:
   - package: coverage_half
     record-type: Software_Requirement
-    namespace: req
+    namespace: itm
     description-fields: text
     tags:
       - field: derived_from
-        namespace: req
+        namespace: itm

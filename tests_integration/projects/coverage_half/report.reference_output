@@ -7,7 +7,7 @@
       "name": "System Requirements",
       "items": [
         {
-          "tag": "req coverage_half.requirement_1a",
+          "tag": "itm coverage_half.requirement_1a",
           "location": {
             "kind": "file",
             "file": "sysreq_example.trlc",
@@ -21,13 +21,9 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req coverage_half.requirement_2a"
+            "itm coverage_half.requirement_2a"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "System_Requirement",
-          "text": "Requirement 1a",
-          "status": null
+          "tracing_status": "OK"
         }
       ],
       "coverage": 100.0
@@ -36,7 +32,7 @@
       "name": "Software Requirements",
       "items": [
         {
-          "tag": "req coverage_half.requirement_2a",
+          "tag": "itm coverage_half.requirement_2a",
           "location": {
             "kind": "file",
             "file": "softreq_example.trlc",
@@ -49,17 +45,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req coverage_half.requirement_1a"
+            "itm coverage_half.requirement_1a"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "Software_Requirement",
-          "text": "Requirement 2a",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req coverage_half.requirement_2b",
+          "tag": "itm coverage_half.requirement_2b",
           "location": {
             "kind": "file",
             "file": "softreq_example.trlc",
@@ -73,11 +65,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "Software_Requirement",
-          "text": "Requirement 2b",
-          "status": null
+          "tracing_status": "MISSING"
         }
       ],
       "coverage": 50.0

@@ -7,7 +7,7 @@ inputs:
 conversion-rules:
   - package: coverage_mix
     record-type: Test_Specification
-    namespace: req
+    namespace: itm
     description-fields: text
     justification-up-fields: just_up
     justification-down-fields: just_down

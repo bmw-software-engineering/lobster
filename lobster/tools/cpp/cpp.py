@@ -111,8 +111,10 @@ class CppTool(MultiFileInputTool):
             schema=Item,
         )
 
+        namespace = KindTypes.ITM.value
         if options.kind == KindTypes.IMP.value:
             config.schema = Implementation
+            namespace = KindTypes.REQ.value
 
         file_list = create_worklist(config, options.dir_or_files)
         clang_tidy_path = os.path.expanduser(options.clang_tidy)
@@ -200,7 +202,7 @@ class CppTool(MultiFileInputTool):
                     if tag:
                         impl.add_tracing_target(
                             Tracing_Tag(
-                                "req",
+                                namespace,
                                 tag,
                             ),
                         )
