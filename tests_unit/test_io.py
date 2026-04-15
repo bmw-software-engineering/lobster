@@ -1,9 +1,8 @@
 import unittest
 import io
 import json
-from unittest.mock import patch, create_autospec, mock_open, ANY
+from unittest.mock import patch, create_autospec, mock_open
 from lobster.common.errors import Message_Handler, LOBSTER_Error
-from lobster.common.location import File_Reference
 from lobster.common.items import Tracing_Tag, Requirement, Implementation, Activity
 from lobster.common.io import lobster_write, lobster_read
 from lobster.common.location import Location
@@ -231,9 +230,9 @@ class LobsterWriteReadTests(unittest.TestCase):
         read_data='{"schema": "lobster-req-trace", "version": 4, "generator": "mock_generator"}',
     )
     def test_lobster_read_missing_data_key(self, mock_file_open, mock_isfile):
-        with self.assertRaises(LOBSTER_Error):
+        with self.assertRaises(LOBSTER_Error) as exc_info:
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
-            self.mh.error.assert_called_with(ANY, "required top-level key data not present")
+        self.assertIn("required top-level key data not present", exc_info.exception.message)
 
     @patch("os.path.isfile", return_value=True)
     @patch(
@@ -242,12 +241,12 @@ class LobsterWriteReadTests(unittest.TestCase):
         read_data='{"schema": "lobster-req-trace", "version": 5, "generator": "test_gen", "data": []}',
     )
     def test_lobster_read_unsupported_version(self, mock_file_open, mock_isfile):
-        with self.assertRaises(LOBSTER_Error):
+        with self.assertRaises(LOBSTER_Error) as exc_info:
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
-            self.mh.error.assert_called_with(
-                File_Reference(self.filename),
-                "version 5 for schema lobster-req-trace is not supported",
-            )
+        self.assertEqual(
+            exc_info.exception.message,
+            "version 5 for schema lobster-req-trace is not supported",
+        )
 
     @patch("os.path.isfile", return_value=True)
     @patch(

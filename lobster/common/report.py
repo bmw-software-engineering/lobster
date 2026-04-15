@@ -262,6 +262,6 @@ class Report:
                      dict: "an object"}
         for rkey, rvalue in rkey_dict.items():
             if rkey not in data:
-                self.mh.error(loc, "required top-levelkey %s not present" % rkey)
+                self.mh.error(loc, "required top-level key %s not present" % rkey)
             if not isinstance(data[rkey], rvalue):
                 self.mh.error(loc, "%s is not %s." % (rkey, type_dict[rvalue]))

@@ -42,7 +42,7 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutText("trlc_missing_schema.lobster: "
-                                  "lobster error: required top-levelkey "
+                                  "lobster error: required top-level key "
                                   "schema not present\n\n"
                                   "lobster-report: aborting due "
                                   "to earlier errors.\n")
@@ -81,7 +81,7 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutText("trlc_missing_version.lobster: "
-                                  "lobster error: required top-levelkey "
+                                  "lobster error: required top-level key "
                                   "version not present\n\n"
                                   "lobster-report: aborting due "
                                   "to earlier errors.\n")
