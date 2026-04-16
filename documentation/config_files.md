@@ -1,10 +1,10 @@
 # LOBSTER Configuration Files
 
-A lobster config file (by default `lobster.yaml`) declares the tracing
+A lobster config file (by default the new `lobster.yaml`, replacing the deprecated `lobster.conf`) declares the tracing
 policy. The syntax is fairly simple and best explained by example.
 The new yaml configuration does not need an assignment to the three different 
 level types requirements, implementation or activity anymore.
-It just reflect a image of the internal stucture of the dictionary containing the 
+It just reflects an image of the internal stucture of the dictionary containing the 
 different level definitions.
 
 The new yaml configuration supports lobster files with version 5 and without schema.
@@ -43,7 +43,7 @@ The `traces` attribute declares the expected tracing link. This
 declares that the items in this level are expected to be linked to
 items from that level. It is possible to have more than one level
 mentioned here (but it probably makes no sense).
-`needs_tracing_up` need tobe set to true
+`needs_tracing_up` needs to be set to true
 
 For example, here we declare that requirements are the top-level
 (since there are no links expected), and code should trace to the
@@ -70,7 +70,7 @@ Code: !LevelDefinition
 #### breakdown_requirements and needs_tracing_down
 
 Sometimes you might want alternatives. For example we could have two
-possibly ways to verify a requirement: by proof or by test. If we just
+possible ways to verify a requirement: by proof or by test. If we just
 do this:
 
 ``` yaml

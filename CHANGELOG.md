@@ -32,9 +32,9 @@
   `lobster-cpptest`, `lobster-report`, `lobster-html_report`, and `lobster-online_report` tools
 
 * LOBSTER report
-  - New yaml configuration file.
+  - New YAMY configuration file.
   - Without need to specify level types like requirement, implementation or activity.
-  - All lobster tools will create .lobster files without schema, all elements are items.
+  - All LOBSTER tools will create .lobster files without schema, all elements are items.
 
 ### 1.0.2
  

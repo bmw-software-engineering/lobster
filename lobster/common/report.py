@@ -17,6 +17,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 import json
+import os
 from collections import OrderedDict
 from dataclasses import dataclass
 from pathlib import Path
@@ -124,6 +125,10 @@ class Report:
             schema = yamale.make_schema(yamale_schema_filename)
             data = yamale.make_data(yamale_data_filename)
             yamale.validate(schema, data)
+            try:
+                os.remove(yamale_data_filename)
+            except (FileNotFoundError, OSError, PermissionError) as e:
+                self.mh.warning(loc, f"Failed to remove temporary file {yamale_data_filename}: {e}")
         except (ValueError, FileNotFoundError, yamale.YamaleError) as e:
             self.mh.error(loc, f"Failed to validate yaml config file: {e}")
 
