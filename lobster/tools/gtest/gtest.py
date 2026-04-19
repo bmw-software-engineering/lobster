@@ -51,8 +51,9 @@ class GtestTool(MetaDataToolBase):
     def _is_c_file(filename: str) -> bool:
         return os.path.splitext(filename)[1] in (".cpp", ".cc", ".c")
 
-    @staticmethod
+    @classmethod
     def _collect_directory_files(
+            cls,
             item: str,
             c_files_rel,
             file_list,
@@ -62,10 +63,10 @@ class GtestTool(MetaDataToolBase):
                 full_path = os.path.join(path, filename)
                 if not os.path.isfile(full_path):
                     continue
-                if GtestTool._is_xml_file(filename):
+                if cls._is_xml_file(filename):
                     file_list.append(full_path)
                     continue
-                if not GtestTool._is_c_file(filename):
+                if not cls._is_c_file(filename):
                     continue
                 fullname = os.path.relpath(os.path.realpath(full_path))
                 if ".cache" in str(fullname):
