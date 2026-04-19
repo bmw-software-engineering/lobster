@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_gtest - Extract GoogleTest tracing tags for LOBSTER
-# Copyright (C) 2022-2024 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2022-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -85,7 +85,7 @@ class GtestTool(MetaDataToolBase):
             if os.path.isdir(item):
                 self._collect_directory_files(item, c_files_rel, file_list)
                 continue
-            self._argument_parser.error("%s is not a file or directory" % item)
+            self._argument_parser.error(f"{item} is not a file or directory")
 
         file_list = {os.path.realpath(os.path.abspath(f)) for f in file_list}
         return c_files_rel, file_list
@@ -162,7 +162,7 @@ class GtestTool(MetaDataToolBase):
                     test_source = self._resolve_test_source(
                         c_files_rel, source_file, source_line)
 
-                    uid = "%s:%s" % (suite_name, test_name)
+                    uid = f"{suite_name}:{test_name}"
                     status = self._resolve_test_status(test_executed, test_ok)
 
                     tag  = Tracing_Tag("gtest", uid)
