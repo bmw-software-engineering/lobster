@@ -43,33 +43,102 @@ class GtestTool(MetaDataToolBase):
         )
         self._argument_parser.add_argument("--out", default=None)
 
-    def _run_impl(self, options: Namespace) -> int:
+    @staticmethod
+    def _is_xml_file(filename: str) -> bool:
+        return os.path.splitext(filename)[1] == ".xml"
+
+    @staticmethod
+    def _is_c_file(filename: str) -> bool:
+        return os.path.splitext(filename)[1] in (".cpp", ".cc", ".c")
+
+    @staticmethod
+    def _collect_directory_files(
+            item: str,
+            c_files_rel,
+            file_list,
+    ) -> None:
+        for path, _, files in os.walk(item, followlinks=True):
+            for filename in files:
+                full_path = os.path.join(path, filename)
+                if not os.path.isfile(full_path):
+                    continue
+                if GtestTool._is_xml_file(filename):
+                    file_list.append(full_path)
+                    continue
+                if not GtestTool._is_c_file(filename):
+                    continue
+                fullname = os.path.relpath(os.path.realpath(full_path))
+                if ".cache" in str(fullname):
+                    continue
+                if filename not in c_files_rel:
+                    c_files_rel[filename] = set()
+                c_files_rel[filename].add(fullname)
+
+    def _collect_input_files(self, options: Namespace):
         c_files_rel = {}
         file_list = []
         for item in options.files:
             if os.path.isfile(item):
                 file_list.append(item)
-            elif os.path.isdir(item):
-                for path, _, files in os.walk(item, followlinks=True):
-                    for filename in files:
-                        if not os.path.isfile(os.path.join(path, filename)):
-                            continue
-                        _, ext = os.path.splitext(filename)
-                        if ext in (".xml", ):
-                            file_list.append(os.path.join(path, filename))
-                        elif ext in (".cpp", ".cc", ".c"):
-                            fullname = os.path.relpath(
-                                os.path.realpath(os.path.join(path, filename)))
-                            if ".cache" in str(fullname):
-                                continue
-                            if filename not in c_files_rel:
-                                c_files_rel[filename] = set()
-                            c_files_rel[filename].add(fullname)
-
-            else:
-                self._argument_parser.error("%s is not a file or directory" % item)
+                continue
+            if os.path.isdir(item):
+                self._collect_directory_files(item, c_files_rel, file_list)
+                continue
+            self._argument_parser.error("%s is not a file or directory" % item)
 
         file_list = {os.path.realpath(os.path.abspath(f)) for f in file_list}
+        return c_files_rel, file_list
+
+    @staticmethod
+    def _parse_testcase_properties(testcase):
+        test_ok = True
+        test_tags = []
+        source_file = testcase.attrib.get("file", None)
+        source_line = int(testcase.attrib["line"]) \
+            if "line" in testcase.attrib \
+            else None
+
+        for props in testcase:
+            if props.tag == "failure":
+                test_ok = False
+                continue
+            if props.tag != "properties":
+                continue
+            for prop in props:
+                assert prop.tag == "property"
+                if prop.attrib["name"] == "lobster-tracing":
+                    test_tags += [
+                        x.strip()
+                        for x in prop.attrib["value"].split(",")]
+                elif prop.attrib["name"] == "lobster-tracing-file":
+                    source_file = prop.attrib["value"]
+                elif prop.attrib["name"] == "lobster-tracing-line":
+                    source_line = int(prop.attrib["value"])
+
+        return test_ok, test_tags, source_file, source_line
+
+    @staticmethod
+    def _resolve_test_source(c_files_rel, source_file, source_line):
+        if source_file in c_files_rel and len(c_files_rel[source_file]) == 1:
+            return File_Reference(
+                filename = list(c_files_rel[source_file])[0],
+                line     = source_line)
+        if source_file is None:
+            return Void_Reference()
+        return File_Reference(
+            filename = source_file,
+            line     = source_line)
+
+    @staticmethod
+    def _resolve_test_status(test_executed: bool, test_ok: bool) -> str:
+        if not test_executed:
+            return "not run"
+        if test_ok:
+            return "ok"
+        return "fail"
+
+    def _run_impl(self, options: Namespace) -> int:
+        c_files_rel, file_list = self._collect_input_files(options)
 
         items = []
 
@@ -86,48 +155,14 @@ class GtestTool(MetaDataToolBase):
                         continue
                     test_name     = testcase.attrib["name"]
                     test_executed = testcase.attrib["status"] == "run"
-                    test_ok       = True
-                    test_tags     = []
-                    source_file   = testcase.attrib.get("file", None)
-                    source_line   = int(testcase.attrib["line"]) \
-                        if "line" in testcase.attrib \
-                        else None
-                    for props in testcase:
-                        if props.tag == "failure":
-                            test_ok = False
-                        elif props.tag == "properties":
-                            for prop in props:
-                                assert prop.tag == "property"
-                                if prop.attrib["name"] == "lobster-tracing":
-                                    test_tags += [
-                                        x.strip()
-                                        for x in prop.attrib["value"].split(",")]
-                                elif prop.attrib["name"] == "lobster-tracing-file":
-                                    source_file = prop.attrib["value"]
-                                elif prop.attrib["name"] == "lobster-tracing-line":
-                                    source_line = int(prop.attrib["value"])
+                    test_ok, test_tags, source_file, source_line = \
+                        self._parse_testcase_properties(testcase)
 
-                    if source_file in c_files_rel \
-                            and (len(c_files_rel[source_file]) == 1):
-
-                        test_source = File_Reference(
-                            filename = list(c_files_rel[source_file])[0],
-                            line     = source_line)
-                    elif source_file is None:
-                        test_source = Void_Reference()
-                    else:
-                        test_source = File_Reference(
-                            filename = source_file,
-                            line     = source_line)
+                    test_source = self._resolve_test_source(
+                        c_files_rel, source_file, source_line)
 
                     uid = "%s:%s" % (suite_name, test_name)
-                    if test_executed:
-                        if test_ok:
-                            status = "ok"
-                        else:
-                            status = "fail"
-                    else:
-                        status = "not run"
+                    status = self._resolve_test_status(test_executed, test_ok)
 
                     tag  = Tracing_Tag("gtest", uid)
                     item = Activity(tag       = tag,
