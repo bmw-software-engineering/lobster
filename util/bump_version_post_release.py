@@ -35,9 +35,7 @@ tmp = ""
 with open(VERSION_FILE, encoding="UTF-8") as fd:
     for raw_line in fd:
         if raw_line.startswith("VERSION_TUPLE"):
-            raw_line = 'VERSION_TUPLE = (%u, %u, %u)\n' % (major,
-                                                           minor,
-                                                           release)
+            raw_line = f'VERSION_TUPLE = ({major}, {minor}, {release})\n'
         elif raw_line.startswith("VERSION_SUFFIX"):
             raw_line = 'VERSION_SUFFIX = "dev"\n'
 
@@ -45,7 +43,7 @@ with open(VERSION_FILE, encoding="UTF-8") as fd:
 with open(VERSION_FILE, "w", encoding="UTF-8") as fd:
     fd.write(tmp)
 
-LOBSTER_VERSION = "%u.%u.%u-dev" % (major, minor, release)
+LOBSTER_VERSION = f"{major}.{minor}.{release}-dev"
 
 # Update changelog and docs, adding a new entry
 
