@@ -90,14 +90,13 @@ class Report:
                 # Check versions match, if specified
                 if dst_tag.version is not None:
                     if dst_item.tag.version is None:
-                        src_item.error("tracing destination %s is unversioned"
-                                       % dst_tag.key())
+                        src_item.error(
+                            f"tracing destination {dst_tag.key()} is unversioned"
+                        )
                     elif dst_tag.version != dst_item.tag.version:
-                        src_item.error("tracing destination %s has version %s"
-                                       " (expected %s)" %
-                                       (dst_tag.key(),
-                                        dst_item.tag.version,
-                                        dst_tag.version))
+                        msg = (f"tracing destination {dst_tag.key()} has version "
+                               f"{dst_item.tag.version} (expected {dst_tag.version})")
+                        src_item.error(msg)
 
     def compute_coverage_for_items(self):
         for level_obj in self.coverage.values():
@@ -237,8 +236,8 @@ class Report:
             self.mh.error(loc, f"unknown schema kind {data['schema']}")
         if data["version"] not in supported_schema[data["schema"]]:
             self.mh.error(loc,
-                          "version %u for schema %s is not supported" %
-                          (data["version"], data["schema"]))
+                          f"version {data['version']} for schema "
+                          f"{data['schema']} is not supported")
 
     def validate_basic_structure_of_lobster_file(self, data, loc):
         """

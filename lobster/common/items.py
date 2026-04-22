@@ -161,8 +161,8 @@ class Item(metaclass=ABCMeta):
                 if not any(has_trace[src] for src in chain) and \
                    not has_just_down:
                     ok_down = False
-                    self.messages.append("missing reference to %s" %
-                                         " or ".join(sorted(chain)))
+                    chain_str = " or ".join(sorted(chain))
+                    self.messages.append(f"missing reference to {chain_str}")
 
         # Set status
         if self.has_error:
