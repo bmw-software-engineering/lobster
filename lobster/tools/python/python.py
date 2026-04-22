@@ -325,8 +325,8 @@ class Lobster_Visitor(cst.CSTVisitor):
         if isinstance(name, cst.Attribute):
             # value -- prefix
             # attr  -- postfix
-            return "%s.%s" % (self.parse_dotted_name(name.value),
-                              self.parse_dotted_name(name.attr))
+            return f"{self.parse_dotted_name(name.value)}." \
+                f"{self.parse_dotted_name(name.attr)}"
         return None
 
     def parse_decorators(self, decorators):
@@ -415,7 +415,7 @@ def process_file(file_name, options):
 
     items = []
     try:
-        with open(file_name, "r", encoding="UTF-8") as fd:
+        with open(file_name, encoding="UTF-8") as fd:
             ast = cst.parse_module(fd.read())
 
         ast = cst.MetadataWrapper(ast)
@@ -441,7 +441,7 @@ def process_file(file_name, options):
         return False, []
 
     except Exception as exc:
-        print("Unspecified issue in file: %s" % file_name)
+        print(f"Unspecified issue in file: {file_name}")
         raise
 
 

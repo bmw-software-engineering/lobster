@@ -43,10 +43,9 @@ class Tracing_Tag:
         self.hash_val  = None
 
     def __str__(self):
-        rv = "%s %s" % (self.namespace,
-                        self.tag)
+        rv = f"{self.namespace} {self.tag}"
         if self.version:
-            rv += "@%s" % str(self.version)
+            rv += f"@{self.version}"
         return rv
 
     def key(self) -> str:

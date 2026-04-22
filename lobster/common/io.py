@@ -65,7 +65,7 @@ def lobster_read(
     loc = File_Reference(filename)
 
     # Read and validate JSON
-    with open(filename, "r", encoding="UTF-8") as fd:
+    with open(filename, encoding="UTF-8") as fd:
         try:
             data = json.load(fd)
         except json.decoder.JSONDecodeError as err:
@@ -80,7 +80,7 @@ def lobster_read(
 
     for rkey in ("schema", "version", "generator", "data"):
         if rkey not in data:
-            mh.error(loc, "required top-level key %s not present" % rkey)
+            mh.error(loc, f"required top-level key {rkey} not present")
         if rkey == "data":
             if not isinstance(data[rkey], list):
                 mh.error(loc, "data is not an array")
@@ -89,16 +89,16 @@ def lobster_read(
                 mh.error(loc, "version is not an integer")
         else:
             if not isinstance(data[rkey], str):
-                mh.error(loc, "%s is not a string" % rkey)
+                mh.error(loc, f"{rkey} is not a string")
 
     # Validate indicated schema
     supported_schema = {
-        "lobster-req-trace" : set([3, 4]),
-        "lobster-imp-trace" : set([3]),
-        "lobster-act-trace" : set([3]),
+        "lobster-req-trace" : {3, 4},
+        "lobster-imp-trace" : {3},
+        "lobster-act-trace" : {3},
     }
     if data["schema"] not in supported_schema:
-        mh.error(loc, "unknown schema kind %s" % data["schema"])
+        mh.error(loc, f"unknown schema kind {data['schema']}")
     if data["version"] not in supported_schema[data["schema"]]:
         mh.error(loc,
                  "version %u for schema %s is not supported" %

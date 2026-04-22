@@ -32,20 +32,17 @@ from lobster.common.multi_file_input_tool import create_worklist, MultiFileInput
 FILE_LINE_PATTERN = r"(.*):(\d+):\d+:"
 KIND_PATTERN = r"(function|main function|method)"
 NAME_PATTERN = r"([a-zA-Z0-9_:~^()&\s<>,=*!+-.|[\]/\"]+)"
-PREFIX = "^%s warning:" % FILE_LINE_PATTERN
+PREFIX = f"^{FILE_LINE_PATTERN} warning:"
 SUFFIX = r"\[lobster-tracing\]$"
 
 RE_NOTAGS = (PREFIX + " " +
-             r"%s %s has no tracing tags" % (KIND_PATTERN,
-                                             NAME_PATTERN) +
+             rf"{KIND_PATTERN} {NAME_PATTERN} has no tracing tags" +
              " " + SUFFIX)
 RE_TAGS = (PREFIX + " " +
-           r"%s %s traces to +([^,\n]+(?:\s*,\s*[^,\n]+)*) +" % (KIND_PATTERN,
-                                                                 NAME_PATTERN) +
+           rf"{KIND_PATTERN} {NAME_PATTERN} traces to +([^,\n]+(?:\s*,\s*[^,\n]+)*) +" +
            SUFFIX)
 RE_JUST = (PREFIX + " " +
-           r"%s %s exempt from tracing: +(.+) +" % (KIND_PATTERN,
-                                                    NAME_PATTERN) +
+           rf"{KIND_PATTERN} {NAME_PATTERN} exempt from tracing: +(.+) +" +
            SUFFIX)
 
 
