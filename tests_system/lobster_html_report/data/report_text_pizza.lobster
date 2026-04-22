@@ -822,8 +822,7 @@
           "ref_down": [],
           "tracing_status": "OK",
           "framework": "PyUnit",
-          "kind": "Test",
-          "text": "Test execution: PASSED\n",
+          "kind": "Test",          
           "status": null
         },
         {
@@ -849,7 +848,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
-          "text": "Test execution: PASSED\n",
+          "text": "\n",
           "status": null
         },
         {
@@ -939,7 +938,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
-          "text": "Test execution: PASSED\n",
+          "text": "!@#$%^&*()_+-=[]{}<>:/?;,.|~",
           "status": null
         }
       ],
@@ -1061,7 +1060,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
-          "text": "Test execution: PASSED\n",
+          "text": "    ",
           "status": null
         },
         {
@@ -1084,7 +1083,7 @@
           "tracing_status": "OK",
           "framework": "PyUnit",
           "kind": "Test",
-          "text": "Test execution: PASSED\n",
+          "text": "Test execution: PASSED\n New Line",
           "status": null
         },
         {
