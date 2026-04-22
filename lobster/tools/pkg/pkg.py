@@ -24,6 +24,7 @@ import re
 from typing import Dict, Optional, Sequence
 from xml.dom import minidom
 from argparse import Namespace
+from dataclasses import dataclass
 
 from lobster.common.multi_file_input_config import Config
 from lobster.common.multi_file_input_tool import create_worklist, MultiFileInputTool
@@ -36,6 +37,12 @@ NS = {
     "xsi": "http://www.w3.org/2001/XMLSchema-instance",
 }
 TSBLOCK = "TsBlock"
+
+
+@dataclass
+class PkgToolConfig:
+    files: Sequence[Path]
+    out: Optional[Path] = None
 
 
 def create_raw_entry(
@@ -272,20 +279,21 @@ class PkgTool(MultiFileInputTool):
         # This tool does not use a config file
         pass
 
-    def lobster_pkg(self, options):
+    def run_from_config(self, pkg_config: PkgToolConfig) -> None:
         """
         The main function to parse tracing information from .pkg files for LOBSTER.
 
         This function processes the input files or directories specified in
-        'options.files', extracts tracing tags and activities from XML content
-        (including both standard and TRACE-ANALYSIS blocks), and writes the
-        results to an output file
+        ``pkg_config.files``, extracts tracing tags and activities from XML
+        content (including both standard and TRACE-ANALYSIS blocks), and
+        writes the results to an output file.
 
         Parameters
         ----------
-            options (Namespace): Parsed command-line arguments with at least:
-                - dir_or_files: list of file or directory paths to process
-                - out: output file path (optional; if not set, output is report.lobster)
+            pkg_config (PKGToolConfig): Typed configuration with at least:
+                - files: list of file or directory paths to process
+                - out: output file path (optional; if not set,
+                  output is lobster-pkg.lobster)
         """
         config = Config(
             inputs=None,
@@ -294,7 +302,10 @@ class PkgTool(MultiFileInputTool):
             exclude_patterns=None,
             schema=Activity,
         )
-        file_list = create_worklist(config, options.dir_or_files)
+        file_list = create_worklist(
+            config,
+            [str(path) for path in pkg_config.files],
+        )
         if not file_list:
             raise ValueError("No input files found to process!")
 
@@ -339,13 +350,34 @@ class PkgTool(MultiFileInputTool):
         )
         self._write_output(
             schema=config.schema,
-            out_file=options.out,
+            out_file=pkg_config.out,
             items=items,
         )
 
     def _run_impl(self, options: Namespace) -> int:
+        """
+        Parse CLI options and run package trace extraction.
+
+        This CLI entrypoint converts parsed command-line arguments to
+        ``PKGToolConfig``, then delegates processing to the API function.
+
+        Parameters
+        ----------
+            options (Namespace): Parsed command-line arguments with at least:
+                - dir_or_files: list of file or directory paths to process
+                - out: output file path (optional)
+
+        Returns
+        -------
+            int: 0 on success, 1 on handled error.
+        """
         try:
-            self.lobster_pkg(options)
+            lobster_pkg(
+                PkgToolConfig(
+                    files=[Path(path) for path in options.dir_or_files],
+                    out=Path(options.out) if options.out else None,
+                )
+            )
             return 0
         except (ValueError, FileNotFoundError,
                 LOBSTER_Exception, ET.ParseError) as exception:
@@ -354,6 +386,17 @@ class PkgTool(MultiFileInputTool):
                 file=sys.stderr,
             )
         return 1
+
+
+def lobster_pkg(config: PkgToolConfig) -> None:
+    """
+    This is an API function.
+
+    Expected config attributes:
+        - files: list of input files/directories
+        - out: output file path (optional)
+    """
+    PkgTool().run_from_config(config)
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

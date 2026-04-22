@@ -5,6 +5,12 @@
 
 ### 1.0.3-dev
 
+* Introduced API function:
+  - `lobster-pkg`:
+    This is API function for the tool `lobster-pkg` which takes `PkgToolConfig` as input
+    and extracts tracing values from package files.
+    This is similar to running the tool `lobster-pkg`.
+
 * `lobster-trlc`:
   - Updated documentation to explain how to use the version flag (`version-field`) parameter
     in conversion rules and how it affects generated versioned tags.
