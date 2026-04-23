@@ -492,7 +492,7 @@ def load_config(file_name: str) -> Config:
         FileNotFoundError: If the file does not exist.
         KeyError: If required fields are missing or unsupported keys are present.
     """
-    with open(file_name, "r", encoding='utf-8') as file:
+    with open(file_name, encoding='utf-8') as file:
         return parse_config_data(yaml.safe_load(file) or {})
 
 

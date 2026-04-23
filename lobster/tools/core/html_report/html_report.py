@@ -107,17 +107,14 @@ def create_policy_diagram(doc, report, dot):
             style = 'shape=hexagon'
         style += f', href="#sec-{name_hash(level.name)}"'
 
-        graph += '  n_%s [label="%s", %s];\n' % \
-            (name_hash(level.name),
-             level.name,
-             style)
+        graph += f'  n_{name_hash(level.name)} [label="{level.name}", {style}];\n'
 
     for level in report.config.values():
         source = name_hash(level.name)
         for target in map(name_hash, level.traces):
             # Not a mistake; we want to show the tracing down, whereas
             # in the config file we indicate how we trace up.
-            graph += '  n_%s -> n_%s;\n' % (target, source)
+            graph += f'  n_{target} -> n_{source};\n'
     graph += "}\n"
 
     with tempfile.TemporaryDirectory() as tmp_dir:
@@ -157,11 +154,11 @@ def create_item_coverage(doc, report):
         doc.add_line('<td><a href="#sec-%s">%s</a></td>' %
                      (name_hash(level.name),
                       html.escape(level.name)))
-        doc.add_line("<td>%.1f%%</td>" % data.coverage)
+        doc.add_line(f"<td>{data.coverage:.1f}%</td>")
         doc.add_line("<td>")
         doc.add_line('<progress value="%u" max="%u">' %
                      (data.ok, data.items))
-        doc.add_line("%.2f%%" % data.coverage)
+        doc.add_line(f"{data.coverage:.2f}%")
         doc.add_line('</progress>')
         doc.add_line("</td>")
         doc.add_line('<td align="right">%u</td>' % data.ok)
@@ -232,14 +229,14 @@ def write_item_tracing(doc, report, item):
         doc.add_line("<div>Traces to:")
         doc.add_line("<ul>")
         for ref in item.ref_down:
-            doc.add_line("<li>%s</li>" % xref_item(report.items[ref.key()]))
+            doc.add_line(f"<li>{xref_item(report.items[ref.key()])}</li>")
         doc.add_line("</ul>")
         doc.add_line("</div>")
     if item.ref_up:
         doc.add_line("<div>Derived from:")
         doc.add_line("<ul>")
         for ref in item.ref_up:
-            doc.add_line("<li>%s</li>" % xref_item(report.items[ref.key()]))
+            doc.add_line(f"<li>{xref_item(report.items[ref.key()])}</li>")
         doc.add_line("</ul>")
         doc.add_line("</div>")
 
@@ -247,7 +244,7 @@ def write_item_tracing(doc, report, item):
         doc.add_line("<div>Justifications:")
         doc.add_line("<ul>")
         for msg in item.just_global + item.just_up + item.just_down:
-            doc.add_line("<li>%s</li>" % html.escape(msg))
+            doc.add_line(f"<li>{html.escape(msg)}</li>")
         doc.add_line("</ul>")
         doc.add_line("</div>")
 
@@ -255,7 +252,7 @@ def write_item_tracing(doc, report, item):
         doc.add_line("<div>Issues:")
         doc.add_line("<ul>")
         for msg in item.messages:
-            doc.add_line("<li>%s</li>" % html.escape(msg))
+            doc.add_line(f"<li>{html.escape(msg)}</li>")
         doc.add_line("</ul>")
         doc.add_line("</div>")
 
@@ -422,9 +419,9 @@ def write_html(report, dot, high_contrast, render_md) -> str:
         doc.add_line(f'<div id="custom-data-banner">{content}</div>')
     menu = doc.navbar.add_dropdown("LOBSTER", "right")
     menu.add_link("Documentation",
-                  "%s/blob/main/README.md" % LOBSTER_GH)
+                  f"{LOBSTER_GH}/blob/main/README.md")
     menu.add_link("License",
-                  "%s/blob/main/LICENSE.md" % LOBSTER_GH)
+                  f"{LOBSTER_GH}/blob/main/LICENSE.md")
     menu.add_link("Source", LOBSTER_GH)
 
     ### Summary (Coverage & Policy)
@@ -548,7 +545,7 @@ def write_html(report, dot, high_contrast, render_md) -> str:
                     write_item_box_begin(doc, item, report)
                     if isinstance(item, Requirement) and item.status:
                         doc.add_line('<div class="attribute">')
-                        doc.add_line("Status: %s" % html.escape(item.status))
+                        doc.add_line(f"Status: {html.escape(item.status)}")
                         doc.add_line('</div>')
                     if (isinstance(item, (Requirement, Activity)) and item.text):
                         if render_md:

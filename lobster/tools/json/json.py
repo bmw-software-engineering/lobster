@@ -52,7 +52,7 @@ def get_item(root, path, required):
         if field in root:
             return get_item(root[field], tail, required)
         if required:
-            raise Malformed_Input("object does not contain %s" % field,
+            raise Malformed_Input(f"object does not contain {field}",
                                   root)
         return None
 
@@ -192,8 +192,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
 
                 l_item = Activity(
                     tag       = Tracing_Tag(namespace = "json",
-                                            tag       = "%s:%s" %
-                                            (file_name, item_name)),
+                                            tag       = f"{file_name}:{item_name}"),
                     location  = File_Reference(file_name),
                     framework = "JSON",
                     kind      = "Test Vector")
@@ -207,7 +206,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
                 items.append(l_item)
             except Malformed_Input as err:
                 pprint(err.data)
-                print("%s: malformed input: %s" % (file_name, err.msg))
+                print(f"{file_name}: malformed input: {err.msg}")
                 ok = False
 
         return ok, items
@@ -215,7 +214,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
 
 def load_item(file_name, options_test_list):
     try:
-        with open(file_name, "r", encoding="UTF-8") as fd:
+        with open(file_name, encoding="UTF-8") as fd:
             data = json.load(fd)
         data = get_item(root     = data,
                         path     = options_test_list,

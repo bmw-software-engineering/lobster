@@ -28,7 +28,7 @@ class LOBSTER_Exception(Exception):
         self.data     = data
 
     def dump(self):
-        print("LOBSTER Error: %s" % self.message)
+        print(f"LOBSTER Error: {self.message}")
         if self.data:
             print("-" * 60)
             pprint(self.data)

@@ -31,7 +31,7 @@ VERSION_FILE = os.path.join("lobster", "common", "version.py")
 
 # pylint: disable=invalid-name
 tmp = ""
-with open(VERSION_FILE, "r", encoding="UTF-8") as fd:
+with open(VERSION_FILE, encoding="UTF-8") as fd:
     for raw_line in fd:
         if raw_line.startswith("VERSION_SUFFIX"):
             raw_line = 'VERSION_SUFFIX = ""\n'
@@ -51,4 +51,4 @@ util.changelog.set_current_title(LOBSTER_VERSION)
 # Commit & tag
 
 os.system("git add CHANGELOG.md lobster/common/version.py")
-os.system('git commit -m "LOBSTER Release %s"' % LOBSTER_VERSION)
+os.system(f'git commit -m "LOBSTER Release {LOBSTER_VERSION}"')

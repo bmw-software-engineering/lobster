@@ -235,7 +235,7 @@ class Document:
             "h2" : {
                 "padding"       : "0.5em",
                 "margin"        : "0",
-                "border-bottom" : "0.25em solid %s" % self.primary_color,
+                "border-bottom" : f"0.25em solid {self.primary_color}",
                 "text-align"    : "right",
             },
             ".content" : {
@@ -298,13 +298,13 @@ class Document:
             "<html>",
             "<head>",
             "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>",
-            "<title>%s</title>" % html.escape(self.title),
+            f"<title>{html.escape(self.title)}</title>",
             "<style>"
         ]
         for elem, style in self.style.items():
             rv.append("%s {" % elem)
             for attr, value in style.items():
-                rv.append("  %s: %s;" % (attr, value))
+                rv.append(f"  {attr}: {value};")
             rv.append("}")
 
         # add css files that are appended to self.files
@@ -315,9 +315,8 @@ class Document:
         rv.append("<body>")
 
         rv.append('<div class="title">')
-        rv.append("<h1>%s</h1>" % html.escape(self.title))
-        rv.append('<div class="subtitle">%s</div>' %
-                  html.escape(self.subtitle))
+        rv.append(f"<h1>{html.escape(self.title)}</h1>")
+        rv.append(f'<div class="subtitle">{html.escape(self.subtitle)}</div>')
         rv.append('</div>')
 
         rv += navbar_content

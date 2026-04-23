@@ -32,7 +32,7 @@ VERSION_FILE = os.path.join("lobster", "common", "version.py")
 
 # pylint: disable=invalid-name
 tmp = ""
-with open(VERSION_FILE, "r", encoding="UTF-8") as fd:
+with open(VERSION_FILE, encoding="UTF-8") as fd:
     for raw_line in fd:
         if raw_line.startswith("VERSION_TUPLE"):
             raw_line = 'VERSION_TUPLE = (%u, %u, %u)\n' % (major,
@@ -54,4 +54,4 @@ util.changelog.add_new_section(LOBSTER_VERSION)
 # Assemble commit
 
 os.system("git add CHANGELOG.md lobster/version.py ")
-os.system('git commit -m "Bump version to %s after release"' % LOBSTER_VERSION)
+os.system(f'git commit -m "Bump version to {LOBSTER_VERSION} after release"')

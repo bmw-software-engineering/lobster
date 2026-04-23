@@ -36,9 +36,7 @@ class Token:
         return self.text
 
     def __repr__(self):
-        return "Token(%s, %s, %s)" % (self.kind,
-                                      self.text,
-                                      self.loc)
+        return f"Token({self.kind}, {self.text}, {self.loc})"
 
 
 class Lexer:
@@ -50,7 +48,7 @@ class Lexer:
         self.file_name = file_name
         self.mh        = mh
 
-        with open(file_name, "r", encoding="UTF-8") as fd:
+        with open(file_name, encoding="UTF-8") as fd:
             self.content = fd.read()
             self.length  = len(self.content)
 
@@ -114,7 +112,7 @@ class Lexer:
             while self.nc.isalpha() or self.nc == "_":
                 self.advance()
         else:
-            self.error("unexpected character: '%s'" % self.cc)
+            self.error(f"unexpected character: '{self.cc}'")
 
         t_end = self.lexpos
 

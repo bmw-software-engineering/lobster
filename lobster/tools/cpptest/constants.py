@@ -9,8 +9,7 @@ class Constants:
         self.requirement_tag_http = ((r"([@\\]requirement(\s+"
                                       r"(CB-#\d+\s+)*({}\d+\s*,?\s*/*\*?)+)+)")
                                      .format(self.codebeamer_link))
-        self.requirement_tag_http_named = (r"({}(?P<number>\d+))"
-                                           .format(self.codebeamer_link))
+        self.requirement_tag_http_named = rf"({self.codebeamer_link}(?P<number>\d+))"
 
     NON_EXISTING_INFO = "---"
 
