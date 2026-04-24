@@ -107,13 +107,15 @@ class Converter:
         )
 
         item_text = self._get_description(item_wrapper, rule.description_fields)
+        asil_value = item_wrapper.get_field_value_or_none("asil")
         rv = Requirement(
             tag=item_tag,
             location=item_loc,
             framework="TRLC",
             kind=n_obj.n_typ.name,
             name=n_obj.fully_qualified_name(),
-            text=item_text
+            text=item_text,
+            asil=str(asil_value) if asil_value is not None else None,
         )
 
         for tag_entry in rule.tags:

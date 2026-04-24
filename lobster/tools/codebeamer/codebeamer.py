@@ -72,6 +72,7 @@ class SupportedConfigKeys(Enum):
     RETRY_ERROR_CODES = "retry_error_codes"
     IMPORT_TAGGED = "import_tagged"
     IMPORT_QUERY  = "import_query"
+    BASELINE_ID   = "baseline_id"
     VERIFY_SSL    = "verify_ssl"
     PAGE_SIZE     = "page_size"
     REFS          = "refs"
@@ -134,12 +135,33 @@ def query_cb_single(cb_config: Config, url: str):
     session.mount("https://", adapter)
     session.mount("http://", adapter)
 
+    # SSL verification modes:
+    # - false: disable verification (debug only)
+    # - true: use requests/urllib3 default trust store
+    # - "path/to/certs.pem": use user-supplied CA bundle (e.g. corporate root CA)
+    verify_cert: Union[bool, str]
+    if cb_config.verify_ssl is False:
+        verify_cert = False
+    elif isinstance(cb_config.verify_ssl, str):
+        verify_cert = cb_config.verify_ssl
+        if not os.path.isfile(verify_cert):
+            raise QueryException(
+                "SSL verification is configured with a certificate path that does not exist\n"
+                f"Configured path: {verify_cert}\n"
+                "\nPossible actions:\n"
+                "• Fix the certificate path in the config file\n"
+                "• Set 'verify_ssl: true' to use system/default trust store\n"
+                "• Set 'verify_ssl: false' only for debugging"
+            )
+    else:
+        verify_cert = True
+
     try:
         response = session.get(
             url,
             auth=get_authentication(cb_config.cb_auth_conf),
             timeout=cb_config.timeout,
-            verify=cb_config.verify_ssl,
+            verify=verify_cert,
         )
     except Timeout as ex:
         raise QueryException(
@@ -158,8 +180,9 @@ def query_cb_single(cb_config: Config, url: str):
             "\nPossible actions:\n"
             "• Check internet connection\n"
             "• Increase retries using 'num_request_retry'\n"
-            "• Check SSL certificates or disable verification by setting "
-            f"'{SupportedConfigKeys.VERIFY_SSL.value}' to false"
+            "• Use a corporate CA bundle by setting 'verify_ssl' to a PEM path\n"
+            "  Example: verify_ssl: C:/certs/bmw-root-ca.pem\n"
+            "• Disable verification only for debugging: verify_ssl: false"
         ) from ex
 
     except RequestException as ex:
@@ -231,12 +254,16 @@ def get_query(cb_config: Config, query: Union[int, str]):
                         query,
                         page_id,
                         cb_config.page_size))
+            if cb_config.baseline_id is not None:
+                url += f"&baselineId={cb_config.baseline_id}"
         elif isinstance(query, str):
             url = ("%s/items/query?page=%u&pageSize=%u&queryString=%s" %
                     (cb_config.base,
                         page_id,
                         cb_config.page_size,
                         query))
+            if cb_config.baseline_id is not None:
+                url += f"&baselineId={cb_config.baseline_id}"
         data = query_cb_single(cb_config, url)
         if len(data) != 4:
             raise MismatchException(
@@ -268,8 +295,26 @@ def get_query(cb_config: Config, query: Union[int, str]):
             )
 
         if isinstance(query, int):
-            rv += [to_lobster(cb_config, cb_item["item"])
-                    for cb_item in data["items"]]
+            for cb_item in data["items"]:
+                base_item = cb_item.get("item", {})
+                report_level_fields = {
+                    key: value for key, value in cb_item.items()
+                    if key != "item"
+                }
+                merged_item = _merge_preserving_non_null(base_item,
+                                                        report_level_fields)
+
+                detailed_item = _get_detailed_cb_item_if_possible(cb_config, merged_item)
+                effective_item = merged_item if detailed_item is None else \
+                    _merge_preserving_non_null(detailed_item,
+                                               report_level_fields)
+                rv.append(
+                    to_lobster(
+                        cb_config,
+                        effective_item,
+                        fetch_missing_details=False,
+                    ),
+                )
         elif isinstance(query, str):
             rv += [to_lobster(cb_config, cb_item)
                     for cb_item in data["items"]]
@@ -314,7 +359,10 @@ def get_schema_config(cb_config: Config) -> dict:
     return schema_map[schema]
 
 
-def to_lobster(cb_config: Config, cb_item: dict):
+def to_lobster(
+    cb_config: Config,
+    cb_item: dict,
+    fetch_missing_details: bool = True):
     if not isinstance(cb_item, dict):
         raise ValueError("'cb_item' must be of type 'dict'!")
     if "id" not in cb_item:
@@ -331,6 +379,43 @@ def to_lobster(cb_config: Config, cb_item: dict):
 
     status = cb_item["status"].get("name", None) if "status" in cb_item else None
 
+    # Extract ASIL from the native field first, then fallback to customFields.
+    asil = None
+    asil_field = cb_item.get("aSIL")
+    if isinstance(asil_field, dict):
+        asil = asil_field.get("name") or asil_field.get("value")
+    elif isinstance(asil_field, str):
+        asil = asil_field
+
+    if asil is None:
+        for custom_field in cb_item.get("customFields", []):
+            if custom_field.get("name", "").lower() != "asil":
+                continue
+            values = custom_field.get("values") or []
+            if not values:
+                break
+            first_value = values[0]
+            if isinstance(first_value, dict):
+                asil = first_value.get("name") or first_value.get("value")
+            elif isinstance(first_value, str):
+                asil = first_value
+            break
+
+    ver_val_setup = _extract_ver_val_setup(cb_item)
+    ver_val_rationalargumentation = _extract_ver_val_rationalargumentation(cb_item)
+
+    if fetch_missing_details and \
+            (ver_val_setup is None or ver_val_rationalargumentation is None):
+        detailed_item = _get_detailed_cb_item_if_possible(cb_config, cb_item)
+        if detailed_item is not None:
+            if ver_val_setup is None:
+                ver_val_setup = _extract_ver_val_setup(detailed_item)
+            if ver_val_rationalargumentation is None:
+                ver_val_rationalargumentation = _extract_ver_val_rationalargumentation(
+                    detailed_item,
+                )
+
+
     # Get item name. Sometimes items do not have one, in which case we
     # come up with one.
     if "name" in cb_item:
@@ -346,7 +431,12 @@ def to_lobster(cb_config: Config, cb_item: dict):
         cb_config.cb_auth_conf.root, item_name, kind)
     item = _create_lobster_item(
         schema_config["class"],
-        common_params, item_name, status)
+        common_params,
+        item_name,
+        status,
+        asil,
+        ver_val_setup,
+        ver_val_rationalargumentation)
 
     if cb_config.references:
         for displayed_name in cb_config.references:
@@ -365,6 +455,171 @@ def to_lobster(cb_config: Config, cb_item: dict):
                 item.add_tracing_target(Tracing_Tag("req", str(value["id"])))
 
     return item
+
+
+def _extract_ver_val_setup(cb_item: dict) -> Optional[str]:
+    return _extract_named_field(
+        cb_item,
+        direct_key_variants=[
+            "ver_ValSetup",
+            "ver_valsetup",
+            "Ver_Val setup",
+        ],
+        custom_field_name_variants=[
+            "ver_valsetup",
+            "ver_val setup",
+            "ver_Val setup",
+        ],
+    )
+
+
+def _extract_ver_val_rationalargumentation(cb_item: dict) -> Optional[str]:
+    return _extract_named_field(
+        cb_item,
+        direct_key_variants=[
+            "ver_ValRationalargumentation",
+            "ver_valrationalargumentation",
+            "Ver_Val rational/argumentation",
+            "Ver_Val Rational/Argumentation",
+            "ver_ValRationaleArgumentation",
+            "ver_Val rational argumentation",
+        ],
+        custom_field_name_variants=[
+            "ver_valrationalargumentation",
+            "ver_val rational/argumentation",
+            "ver_val rational argumentation",
+            "ver_val rationalisation",
+            "validation rationale",
+            "ver_val rationale argumentation",
+        ],
+    )
+
+
+def _extract_named_field(
+        cb_item: dict,
+        direct_key_variants: Sequence[str],
+        custom_field_name_variants: Sequence[str]) -> Optional[str]:
+    normalized_direct = {_normalize_field_name(name)
+                         for name in direct_key_variants}
+
+    for key, value in cb_item.items():
+        if _normalize_field_name(key) not in normalized_direct:
+            continue
+
+        extracted = _extract_first_text_value(value)
+        if extracted is not None:
+            return extracted
+
+    normalized_custom = {_normalize_field_name(name)
+                         for name in custom_field_name_variants}
+    for custom_field in cb_item.get("customFields", []):
+        field_name = custom_field.get("name", "")
+        if _normalize_field_name(field_name) not in normalized_custom:
+            continue
+
+        # Codebeamer may store custom field text either under `value`
+        # (e.g. WikiTextFieldValue) or under `values` (choice/reference fields).
+        direct_value = _extract_first_text_value(custom_field.get("value"))
+        if direct_value is not None:
+            return direct_value
+
+        values = custom_field.get("values") or []
+        if values:
+            extracted = _extract_first_text_value(values[0])
+            if extracted is not None:
+                return extracted
+
+    # Final fallback: recursively inspect the full payload for exact field keys.
+    for key_variant in direct_key_variants:
+        extracted = _extract_by_recursive_key_lookup(cb_item, key_variant)
+        if extracted is not None:
+            return extracted
+
+    return None
+
+
+def _extract_first_text_value(value) -> Optional[str]:
+    if isinstance(value, str):
+        stripped = value.strip()
+        return stripped if stripped else None
+
+    if isinstance(value, dict):
+        for key in ("name", "value", "text", "wikiText", "plainText", "content"):
+            nested_value = value.get(key)
+            if isinstance(nested_value, str):
+                stripped = nested_value.strip()
+                if stripped:
+                    return stripped
+
+        # Some codebeamer values can nest payloads under a child object.
+        for key in ("resolvedValue", "fieldValue"):
+            nested_value = value.get(key)
+            extracted = _extract_first_text_value(nested_value)
+            if extracted is not None:
+                return extracted
+
+    if isinstance(value, list) and value:
+        return _extract_first_text_value(value[0])
+
+    return None
+
+
+def _normalize_field_name(name: str) -> str:
+    if not isinstance(name, str):
+        return ""
+    return "".join(ch.lower() for ch in name if ch.isalnum())
+
+
+def _extract_by_recursive_key_lookup(payload, target_key: str) -> Optional[str]:
+    target_normalized = _normalize_field_name(target_key)
+
+    def _walk(node):
+        if isinstance(node, dict):
+            for key, value in node.items():
+                if _normalize_field_name(key) == target_normalized:
+                    extracted = _extract_first_text_value(value)
+                    if extracted is not None:
+                        return extracted
+
+                nested = _walk(value)
+                if nested is not None:
+                    return nested
+
+        elif isinstance(node, list):
+            for entry in node:
+                nested = _walk(entry)
+                if nested is not None:
+                    return nested
+
+        return None
+
+    return _walk(payload)
+
+
+def _merge_preserving_non_null(base: dict, override: dict) -> dict:
+    merged = dict(base)
+    for key, value in override.items():
+        if value is None and key in merged:
+            continue
+        merged[key] = value
+    return merged
+
+
+def _get_detailed_cb_item_if_possible(cb_config: Config,
+                                      cb_item: dict) -> Optional[dict]:
+    item_id = cb_item.get("id")
+    if not isinstance(item_id, int) or item_id <= 0:
+        return None
+
+    try:
+        detailed_item = get_single_item(cb_config, item_id)
+    except (QueryException, ValueError, KeyError):
+        return None
+
+    if isinstance(detailed_item, dict) and detailed_item.get("id") == item_id:
+        return detailed_item
+
+    return None
 
 
 def _create_common_params(namespace: str, cb_item: dict, cb_root: str,
@@ -397,7 +652,13 @@ def _create_common_params(namespace: str, cb_item: dict, cb_root: str,
     }
 
 
-def _create_lobster_item(schema_class, common_params, item_name, status):
+def _create_lobster_item(schema_class,
+                         common_params,
+                         item_name,
+                         status,
+                         asil=None,
+                         ver_val_setup=None,
+                         ver_val_rationalargumentation=None):
     """
     Creates and returns a Lobster item based on the schema class.
     Args:
@@ -405,6 +666,11 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
     common_params (dict): Common parameters for the item.
     item_name (str): Name of the item.
     status (str): Status of the item.
+    asil (str): ASIL level of the item (optional, for Requirements only).
+    ver_val_setup (str): Verification and validation setup value from
+        Codebeamer (optional, for Requirements only).
+    ver_val_rationalargumentation (str): Validation rationale text from
+        Codebeamer (optional, for Requirements only).
     Returns:
     Object: An instance of the schema class with the appropriate parameters.
     """
@@ -414,6 +680,9 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
             framework="codebeamer",
             text=None,
             status=status,
+            asil=asil,
+            ver_ValSetup=ver_val_setup,
+            ver_ValRationalargumentation=ver_val_rationalargumentation,
             name= item_name
         )
 
@@ -511,6 +780,7 @@ def parse_config_data(data: dict) -> Config:
         references=ensure_list(data.get(SupportedConfigKeys.REFS.value, [])),
         import_tagged=data.get(SupportedConfigKeys.IMPORT_TAGGED.value),
         import_query=data.get(SupportedConfigKeys.IMPORT_QUERY.value),
+        baseline_id=data.get(SupportedConfigKeys.BASELINE_ID.value),
         verify_ssl=data.get(SupportedConfigKeys.VERIFY_SSL.value, True),
         page_size=data.get(SupportedConfigKeys.PAGE_SIZE.value, 100),
         schema=data.get(SupportedConfigKeys.SCHEMA.value, "Requirement"),
@@ -537,6 +807,18 @@ def parse_config_data(data: dict) -> Config:
     if not config.cb_auth_conf.root.startswith("https://"):
         raise KeyError(f"{SupportedConfigKeys.CB_ROOT.value} must start with https://, "
                        f"but value is {config.cb_auth_conf.root}.")
+
+    if config.baseline_id is not None:
+        try:
+            config.baseline_id = int(config.baseline_id)
+        except (TypeError, ValueError) as exc:
+            raise KeyError(
+                f"{SupportedConfigKeys.BASELINE_ID.value} must be a positive integer."
+            ) from exc
+        if config.baseline_id <= 0:
+            raise KeyError(
+                f"{SupportedConfigKeys.BASELINE_ID.value} must be a positive integer."
+            )
 
     return config
 

@@ -233,6 +233,9 @@ class Requirement(Item):
             name: str,
             text: Optional[str] = None,
             status: Optional[str] = None,
+            asil: Optional[str] = None,
+            ver_ValSetup: Optional[str] = None,
+            ver_ValRationalargumentation: Optional[str] = None,
     ):
         super().__init__(tag, location)
         assert isinstance(framework, str)
@@ -240,12 +243,19 @@ class Requirement(Item):
         assert isinstance(name, str)
         assert isinstance(text, str) or text is None
         assert isinstance(status, str) or status is None
+        assert isinstance(asil, str) or asil is None
+        assert isinstance(ver_ValSetup, str) or ver_ValSetup is None
+        assert (isinstance(ver_ValRationalargumentation, str) or
+            ver_ValRationalargumentation is None)
 
         self.framework = framework
         self.kind      = kind
         self.name      = name
         self.text      = text
         self.status    = status
+        self.asil      = asil
+        self.ver_ValSetup = ver_ValSetup
+        self.ver_ValRationalargumentation = ver_ValRationalargumentation
 
     def to_json(self):
         rv = super().to_json()
@@ -253,6 +263,12 @@ class Requirement(Item):
         rv["kind"]      = self.kind
         rv["text"]      = self.text
         rv["status"]    = self.status
+        if self.asil is not None:
+            rv["asil"] = self.asil
+        if self.ver_ValSetup is not None:
+            rv["ver_ValSetup"] = self.ver_ValSetup
+        if self.ver_ValRationalargumentation is not None:
+            rv["ver_ValRationalargumentation"] = self.ver_ValRationalargumentation
         return rv
 
     def perform_source_checks(self, source_info):
@@ -270,7 +286,11 @@ class Requirement(Item):
                            kind      = data["kind"],
                            name      = data["name"],
                            text      = data.get("text", None),
-                           status    = data.get("status", None))
+                           status    = data.get("status", None),
+                           asil      = data.get("asil", None),
+                           ver_ValSetup=data.get("ver_ValSetup", None),
+                           ver_ValRationalargumentation=
+                           data.get("ver_ValRationalargumentation", None))
         item.additional_data_from_json(level, data, schema_version)
 
         return item
