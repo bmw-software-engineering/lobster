@@ -1,7 +1,9 @@
-from unittest import TestCase
+import os
 import json
 import tempfile
+from unittest import TestCase
 from unittest.mock import patch
+
 from lobster.common.report import Coverage, Report
 from lobster.common.level_definition import LevelDefinition
 from lobster.common.items import Requirement, Tracing_Tag
@@ -110,5 +112,4 @@ class ReportTests(TestCase):
                 "Validation rationale text",
             )
         finally:
-            import os
             os.remove(tmp_path)
