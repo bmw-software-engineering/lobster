@@ -1,5 +1,6 @@
 import operator
 from typing import List, Optional
+from unittest.mock import patch
 
 from lobster.common.items import Requirement, Tracing_Tag
 from lobster.common.location import Location
@@ -481,3 +482,26 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
         for record_object in self._trlc_data_provider.get_record_objects():
             lobster_item = converter.generate_lobster_object(record_object)
             self.assertIsNone(lobster_item.tag.version)
+
+    def test_asil_field_is_propagated_to_requirement(self):
+        conversion_rule = ConversionRule(
+            record_type="Level1",
+            package=self.PACKAGE_NAME,
+            applies_to_derived_types=True,
+            namespace="req",
+            description_fields=["field1"],
+        )
+        converter = Converter(
+            conversion_rules=[conversion_rule],
+            to_string_rules=[],
+            symbol_table=self._trlc_data_provider.symbol_table,
+        )
+        record_object = self._trlc_data_provider.get_record_objects()[0]
+
+        with patch(
+            "lobster.tools.trlc.converter.ItemWrapper.get_field_value_or_none",
+            side_effect=lambda field: "B" if field == "asil" else None,
+        ):
+            lobster_item = converter.generate_lobster_object(record_object)
+
+        self.assertEqual(lobster_item.asil, "B")

@@ -14,6 +14,7 @@ class ItemsTests(unittest.TestCase):
         self.mock_name = "mock_name"
         self.mock_text = "mock_text"
         self.mock_status = "active"
+        self.mock_asil = "B"
         self.mock_language = "mock_language"
         self.mock_location = create_autospec(Location, instance=True)
         self.tracing_tag = Tracing_Tag(self.mock_namespace, self.mock_tag)
@@ -355,6 +356,25 @@ class TestRequirement(ItemsTests):
         mock_super_to_json.assert_called_once_with()
         self.assertEqual(result, expected_result)
 
+    @patch("lobster.common.items.Item.to_json")
+    def test_to_json_with_asil(self, mock_super_to_json):
+        mock_super_to_json.return_value = {
+            "item_property": "item_value"
+        }
+        self.requirement.asil = self.mock_asil
+        expected_result = {
+            "item_property": "item_value",
+            "framework": "mock_framework",
+            "kind": "mock_kind",
+            "text": "mock_text",
+            "status": "active",
+            "asil": "B"
+        }
+        result = self.requirement.to_json()
+
+        mock_super_to_json.assert_called_once_with()
+        self.assertEqual(result, expected_result)
+
     def test_perform_source_checks_invalid_source_info(self):
         invalid_source_info = ["invalid", "list"]
 
@@ -376,7 +396,8 @@ class TestRequirement(ItemsTests):
                     "kind": "kind_data",
                     "name": "name_data",
                     "text": "text_data",
-                    "status": "status_data"
+                    "status": "status_data",
+                    "asil": "B"
                 }
                 result = self.requirement.from_json(mock_level, mock_data, mock_schema_version)
 
@@ -386,6 +407,7 @@ class TestRequirement(ItemsTests):
                 self.assertEqual(result.name, "name_data")
                 self.assertEqual(result.text, "text_data")
                 self.assertEqual(result.status, "status_data")
+                self.assertEqual(result.asil, "B")
                 if location_type == "file":
                     self.assertEqual(result.location.filename, location_data["file"])
                 elif location_type == "github":

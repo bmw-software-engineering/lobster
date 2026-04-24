@@ -124,7 +124,7 @@ class Report:
             level = {
                 "name"     : level_config.name,
                 "kind"     : level_config.kind,
-                "items"    : [item.to_json()
+                "items"    : [self._item_to_report_json(item)
                               for item in self.items.values()
                               if item.level == level_config.name],
                 "coverage" : self.coverage[level_config.name].coverage
@@ -145,6 +145,18 @@ class Report:
         with open(filename, "w", encoding="UTF-8") as fd:
             json.dump(report, fd, indent=2)
             fd.write("\n")
+
+    def _item_to_report_json(self, item):
+        payload = item.to_json()
+        if isinstance(item, Requirement):
+            # Keep these fields explicit in report output for downstream consumers.
+            payload["ver_ValSetup"] = getattr(item, "ver_ValSetup", None)
+            payload["ver_ValRationalargumentation"] = getattr(
+                item,
+                "ver_ValRationalargumentation",
+                None,
+            )
+        return payload
 
     def load_report(self, filename):
 
