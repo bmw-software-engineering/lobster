@@ -148,14 +148,6 @@ class Report:
 
     def _item_to_report_json(self, item):
         payload = item.to_json()
-        if isinstance(item, Requirement):
-            # Keep these fields explicit in report output for downstream consumers.
-            payload["ver_ValSetup"] = getattr(item, "ver_ValSetup", None)
-            payload["ver_ValRationalargumentation"] = getattr(
-                item,
-                "ver_ValRationalargumentation",
-                None,
-            )
         return payload
 
     def load_report(self, filename):
