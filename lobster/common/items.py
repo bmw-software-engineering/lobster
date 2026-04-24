@@ -254,8 +254,11 @@ class Requirement(Item):
         self.text      = text
         self.status    = status
         self.asil      = asil
-        self.ver_ValSetup = ver_ValSetup
-        self.ver_ValRationalargumentation = ver_ValRationalargumentation
+        # Keep these attribute names for backward compatibility with existing
+        # report/codebeamer field naming.
+        self.ver_ValSetup = ver_ValSetup  # pylint: disable=invalid-name
+        self.ver_ValRationalargumentation = \
+            ver_ValRationalargumentation  # pylint: disable=invalid-name
 
     def to_json(self):
         rv = super().to_json()
