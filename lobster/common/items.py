@@ -246,7 +246,7 @@ class Requirement(Item):
         assert isinstance(asil, str) or asil is None
         assert isinstance(ver_ValSetup, str) or ver_ValSetup is None
         assert (isinstance(ver_ValRationalargumentation, str) or
-            ver_ValRationalargumentation is None)
+                ver_ValRationalargumentation is None)
 
         self.framework = framework
         self.kind      = kind

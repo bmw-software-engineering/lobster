@@ -557,8 +557,8 @@ def write_html(report, dot, high_contrast, render_md) -> str:
                             "Ver_Val setup: %s" % html.escape(item.ver_ValSetup),
                         )
                         doc.add_line('</div>')
-                    if (isinstance(item, Requirement)
-                            and item.ver_ValRationalargumentation):
+                    if (isinstance(item, Requirement) and
+                            item.ver_ValRationalargumentation):
                         doc.add_line('<div class="attribute">')
                         doc.add_line(
                             "Ver_Val rational/argumentation: %s"

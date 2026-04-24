@@ -146,7 +146,8 @@ def query_cb_single(cb_config: Config, url: str):
         verify_cert = cb_config.verify_ssl
         if not os.path.isfile(verify_cert):
             raise QueryException(
-                "SSL verification is configured with a certificate path that does not exist\n"
+                "SSL verification is configured with a certificate path "
+                "that does not exist\n"
                 f"Configured path: {verify_cert}\n"
                 "\nPossible actions:\n"
                 "• Fix the certificate path in the config file\n"
@@ -301,13 +302,21 @@ def get_query(cb_config: Config, query: Union[int, str]):
                     key: value for key, value in cb_item.items()
                     if key != "item"
                 }
-                merged_item = _merge_preserving_non_null(base_item,
-                                                        report_level_fields)
+                merged_item = _merge_preserving_non_null(
+                    base_item,
+                    report_level_fields,
+                )
 
-                detailed_item = _get_detailed_cb_item_if_possible(cb_config, merged_item)
-                effective_item = merged_item if detailed_item is None else \
-                    _merge_preserving_non_null(detailed_item,
-                                               report_level_fields)
+                detailed_item = _get_detailed_cb_item_if_possible(
+                    cb_config,
+                    merged_item,
+                )
+                effective_item = merged_item
+                if detailed_item is not None:
+                    effective_item = _merge_preserving_non_null(
+                        detailed_item,
+                        report_level_fields,
+                    )
                 rv.append(
                     to_lobster(
                         cb_config,
@@ -362,7 +371,8 @@ def get_schema_config(cb_config: Config) -> dict:
 def to_lobster(
     cb_config: Config,
     cb_item: dict,
-    fetch_missing_details: bool = True):
+    fetch_missing_details: bool = True,
+):
     if not isinstance(cb_item, dict):
         raise ValueError("'cb_item' must be of type 'dict'!")
     if "id" not in cb_item:
@@ -414,7 +424,6 @@ def to_lobster(
                 ver_val_rationalargumentation = _extract_ver_val_rationalargumentation(
                     detailed_item,
                 )
-
 
     # Get item name. Sometimes items do not have one, in which case we
     # come up with one.
