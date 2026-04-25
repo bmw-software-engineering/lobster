@@ -151,18 +151,18 @@ def create_item_coverage(doc, report):
         doc.add_line(
             f'<tr class="coverage-table-{level.name.replace(" ", "-").lower()}">'
         )
-        doc.add_line('<td><a href="#sec-%s">%s</a></td>' %
-                     (name_hash(level.name),
-                      html.escape(level.name)))
+        doc.add_line(
+            f'<td><a href="#sec-{name_hash(level.name)}">'
+            f'{html.escape(level.name)}</a></td>'
+        )
         doc.add_line(f"<td>{data.coverage:.1f}%</td>")
         doc.add_line("<td>")
-        doc.add_line('<progress value="%u" max="%u">' %
-                     (data.ok, data.items))
+        doc.add_line(f'<progress value="{data.ok}" max="{data.items}">')
         doc.add_line(f"{data.coverage:.2f}%")
         doc.add_line('</progress>')
         doc.add_line("</td>")
-        doc.add_line('<td align="right">%u</td>' % data.ok)
-        doc.add_line('<td align="right">%u</td>' % data.items)
+        doc.add_line(f'<td align="right">{data.ok}</td>')
+        doc.add_line(f'<td align="right">{data.items}</td>')
         doc.add_line("</tr>")
     doc.add_line("</table>")
 
@@ -205,12 +205,13 @@ def write_item_box_begin(doc, item, report):
     doc.add_line(f'<div class="item-{html.escape(item.tracing_status.name.lower())}" '
                  f'id="item-{item.tag.hash()}">')
 
-    doc.add_line('<div class="item-name">%s %s</div>' %
-                 ('<svg class="icon"><use href="#svg-check-square"></use></svg>'
-                  if item.tracing_status in (Tracing_Status.OK,
-                                             Tracing_Status.JUSTIFIED)
-                  else '<svg class="icon"><use href="#svg-alert-triangle"></use></svg>',
-                  xref_item(item, link=False)))
+    svg_icon = (
+        '<svg class="icon"><use href="#svg-check-square"></use></svg>'
+        if item.tracing_status in (Tracing_Status.OK, Tracing_Status.JUSTIFIED)
+        else '<svg class="icon"><use href="#svg-alert-triangle"></use></svg>'
+    )
+    item_div_content = f'{svg_icon} {xref_item(item, link=False)}'
+    doc.add_line(f'<div class="item-name">{item_div_content}</div>')
 
     doc.add_line('<div class="attribute">Source: ')
     doc.add_line('<svg class="icon"><use href="#svg-external-link"></use></svg>')
@@ -533,9 +534,10 @@ def write_html(report, dot, high_contrast, render_md) -> str:
                                                     Github_Reference)):
                         new_file_heading = item.location.filename
                     elif isinstance(item.location, Codebeamer_Reference):
-                        new_file_heading = "Codebeamer %s, tracker %u" % \
-                            (item.location.cb_root,
-                             item.location.tracker)
+                        new_file_heading = (
+                            f"Codebeamer {item.location.cb_root},"
+                            f" tracker {item.location.tracker}"
+                        )
                     else:  # pragma: no cover
                         assert False
                     if new_file_heading != file_heading:
