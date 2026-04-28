@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 1.0.3-dev
+### 1.0.3
 
 * `lobster-html-report`:
   - [Bazel]: Added a parameter to specify the source root of the html report.
