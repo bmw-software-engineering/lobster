@@ -3,6 +3,10 @@
 ## Changelog
 
 
+### 1.0.4-dev
+
+
+
 ### 1.0.3
 
 * `lobster-html-report`:
