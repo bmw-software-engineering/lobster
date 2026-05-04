@@ -101,8 +101,8 @@ def lobster_read(
         mh.error(loc, f"unknown schema kind {data['schema']}")
     if data["version"] not in supported_schema[data["schema"]]:
         mh.error(loc,
-                 "version %u for schema %s is not supported" %
-                 (data["version"], data["schema"]))
+                 f"version {data['version']} for schema "
+                 f"{data['schema']} is not supported")
 
     duplicate_items = []
     # Convert to items, and integrate into symbol table
