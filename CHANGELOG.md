@@ -52,7 +52,7 @@
   - Added detailed examples and configuration parameters for `lobster-codebeamer`,
   `lobster-cpptest`, `lobster-report`, `lobster-html-report`, and `lobster-online-report` tools.
 
-* Included Python 3.13 in the CI test matrix.
+* Included Python 3.13 and 3.14 in the CI test matrix.
 
 ### 1.0.2
  
