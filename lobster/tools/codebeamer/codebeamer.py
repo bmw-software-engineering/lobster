@@ -400,12 +400,12 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
     """
     Creates and returns a Lobster item based on the schema class.
     Args:
-    schema_class: Class of the schema (Requirement, Implementation, Activity).
-    common_params (dict): Common parameters for the item.
-    item_name (str): Name of the item.
-    status (str): Status of the item.
+    - schema_class: Class of the schema (Requirement, Implementation, Activity).
+    - common_params (dict): Common parameters for the item.
+    - item_name (str): Name of the item.
+    - status (str): Status of the item.
     Returns:
-    Object: An instance of the schema class with the appropriate parameters.
+      An instance of the schema class with the appropriate parameters.
     """
     if schema_class is Requirement:
         return Requirement(
@@ -423,12 +423,11 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
             name= item_name,
         )
 
-    else:
-        return Activity(
-            **common_params,
-            framework="codebeamer",
-            status=status
-        )
+    return Activity(
+        **common_params,
+        framework="codebeamer",
+        status=status
+    )
 
 
 def import_tagged(cb_config: Config, items_to_import: Iterable[int]):

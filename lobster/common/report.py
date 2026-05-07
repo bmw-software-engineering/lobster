@@ -128,7 +128,10 @@ class Report:
             try:
                 os.remove(yamale_data_filename)
             except (FileNotFoundError, OSError, PermissionError) as e:
-                self.mh.warning(loc, f"Failed to remove temporary file {yamale_data_filename}: {e}")
+                self.mh.warning(
+                    loc,
+                    f"Failed to remove temporary file {yamale_data_filename}: {e}",
+                )
         except (ValueError, FileNotFoundError, yamale.YamaleError) as e:
             self.mh.error(loc, f"Failed to validate yaml config file: {e}")
 

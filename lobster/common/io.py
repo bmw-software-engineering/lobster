@@ -121,25 +121,24 @@ def lobster_read(
 
         # Validate indicated schema
         supported_schema = {
-        "lobster-req-trace" : {3, 4},
-        "lobster-imp-trace" : {3},
-        "lobster-act-trace" : {3},
+            "lobster-req-trace" : {3, 4},
+            "lobster-imp-trace" : {3},
+            "lobster-act-trace" : {3},
         }
         if data["schema"] not in supported_schema:
-            mh.error(loc, "unknown schema kind %s" % data["schema"])
+            mh.error(loc, f"unknown schema kind {data['schema']}")
         if data["version"] not in supported_schema[data["schema"]]:
             mh.error(
                 loc,
-                "version %u for schema %s is not supported" %
-                (data["version"], data["schema"])
+                f"version {data['version']} "
+                f"for schema {data['schema']} is not supported",
             )
 
         lobster_contains_valid_schema = True
 
     if lobster_contains_schema and data["version"] >= 5:
         mh.error(loc,
-                 "schema is not supported in version %u" %
-                 data["version"])
+                 f"schema is not supported in version {data['version']}")
 
     duplicate_items = []
     # Convert to items, and integrate into symbol table

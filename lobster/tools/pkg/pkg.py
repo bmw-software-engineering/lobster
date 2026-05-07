@@ -51,7 +51,7 @@ def create_raw_entry(
         file_name: str,
         trace_list: list,
         kind: str = KindTypes.ITM.value,
-    ) -> None:
+) -> None:
 
     item_list = json.loads(trace_list)
     # Collect all traces marked as "first"
@@ -373,14 +373,14 @@ class PkgTool(MultiFileInputTool):
                             data,
                             file.name,
                             json.dumps(getvalues),
-                            kind=options.kind
+                            kind=pkg_config.kind
                         )
                     else:
                         create_default_item(
                             file_content,
                             filename,
                             data,
-                            kind=options.kind
+                            kind=pkg_config.kind
                         )
 
                 except ET.ParseError as err:
