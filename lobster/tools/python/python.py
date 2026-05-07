@@ -90,14 +90,14 @@ def count_occurrence_of_last_function_from_function_name_list(function_names):
 def parse_value(val):
     if isinstance(val, cst.SimpleString):
         return val.value[1:-1]
-    elif isinstance(val, cst.List):
+    if isinstance(val, cst.List):
         return [parse_value(item.value)
                 for item in val.elements]
-    else:
-        rv = str(val.value)
-        if rv == "None":
-            rv = None
-        return rv
+
+    rv = str(val.value)
+    if rv == "None":
+        rv = None
+    return rv
 
 
 class Python_Traceable_Node:
@@ -155,17 +155,12 @@ class Python_Traceable_Node:
 
     def warn_ignored(self, reason):
         for tag in self.tags:
-            print("%s: warning: ignored tag %s because "
-                  "%s already has annotations" %
-                  (self.location.to_string(),
-                   tag,
-                   reason))
+            print(f"{self.location.to_string()}: warning: ignored tag {tag}"
+                  f" because {reason} already has annotations")
         for just in self.just:
-            print("%s: warning: ignored justification '%s' because "
-                  "%s already has annotations" %
-                  (self.location.to_string(),
-                   just,
-                   reason))
+            print(f"{self.location.to_string()}: warning: "
+                  f"ignored justification '{just}' "
+                  f"because {reason} already has annotations")
 
 
 class Python_Module(Python_Traceable_Node):
@@ -323,15 +318,14 @@ class Lobster_Visitor(cst.CSTVisitor):
     def parse_dotted_name(self, name):
         if isinstance(name, cst.Call):
             return self.parse_dotted_name(name.func)
-        elif isinstance(name, cst.Name):
+        if isinstance(name, cst.Name):
             return name.value
-        elif isinstance(name, cst.Attribute):
+        if isinstance(name, cst.Attribute):
             # value -- prefix
             # attr  -- postfix
-            return "%s.%s" % (self.parse_dotted_name(name.value),
-                              self.parse_dotted_name(name.attr))
-        else:
-            return None
+            return f"{self.parse_dotted_name(name.value)}." \
+                f"{self.parse_dotted_name(name.attr)}"
+        return None
 
     def parse_decorators(self, decorators):
         for dec in decorators:
@@ -419,7 +413,7 @@ def process_file(file_name, options):
 
     items = []
     try:
-        with open(file_name, "r", encoding="UTF-8") as fd:
+        with open(file_name, encoding="UTF-8") as fd:
             ast = cst.parse_module(fd.read())
 
         ast = cst.MetadataWrapper(ast)
@@ -448,7 +442,7 @@ def process_file(file_name, options):
         return False, []
 
     except Exception as exc:
-        print("Unspecified issue in file: %s" % file_name)
+        print(f"Unspecified issue in file: {file_name}")
         raise
 
 
@@ -562,9 +556,9 @@ class PythonTool(MetaDataToolBase):
 
         if ok:
             return 0
-        else:
-            print("Note: Earlier parse errors make actual output unreliable")
-            return 1
+
+        print("Note: Earlier parse errors make actual output unreliable")
+        return 1
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

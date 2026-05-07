@@ -25,7 +25,7 @@ def current_section():
     tmp = ""
     relevant_log = ""
     mode = "searching for changelog"
-    with open("CHANGELOG.md", "r", encoding="UTF-8") as fd:
+    with open("CHANGELOG.md", encoding="UTF-8") as fd:
         for raw_line in fd:
             if mode == "searching for changelog":
                 if raw_line.startswith("## Changelog"):
@@ -51,14 +51,14 @@ def set_current_title(new_title):
 
     tmp = ""
     mode = "searching for changelog"
-    with open("CHANGELOG.md", "r", encoding="UTF-8") as fd:
+    with open("CHANGELOG.md", encoding="UTF-8") as fd:
         for raw_line in fd:
             if mode == "searching for changelog":
                 if raw_line.startswith("## Changelog"):
                     mode = "searching for first entry"
             elif mode == "searching for first entry":
                 if raw_line.startswith("### "):
-                    raw_line = "### %s\n" % new_title
+                    raw_line = f"### {new_title}\n"
                     mode = "done"
             else:
                 pass
@@ -73,13 +73,13 @@ def add_new_section(new_title):
 
     tmp = ""
     mode = "searching for changelog"
-    with open("CHANGELOG.md", "r", encoding="UTF-8") as fd:
+    with open("CHANGELOG.md", encoding="UTF-8") as fd:
         for raw_line in fd:
             tmp += raw_line
             if mode == "searching for changelog":
                 if raw_line.startswith("## Changelog"):
                     mode = "done"
-                    tmp += "\n\n### %s\n\n" % new_title
+                    tmp += f"\n\n### {new_title}\n\n"
             else:
                 pass
     with open("CHANGELOG.md", "w", encoding="UTF-8") as fd:

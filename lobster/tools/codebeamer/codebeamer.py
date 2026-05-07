@@ -202,9 +202,9 @@ def get_many_items(cb_config: Config, item_ids: Iterable[int]):
                          f"({','.join(str(item_id) for item_id in item_ids)})")
 
     while True:
-        base_url = "%s/items/query?page=%u&pageSize=%u&queryString=%s"\
-                   % (cb_config.base, page_id,
-                      cb_config.page_size, query_string)
+        base_url = (f"{cb_config.base}/items/query?page={page_id}"
+                    f"&pageSize={cb_config.page_size}"
+                    f"&queryString={query_string}")
         data = query_cb_single(cb_config, base_url)
         rv += data["items"]
         if len(rv) == data["total"]:
@@ -226,19 +226,13 @@ def get_query(cb_config: Config, query: Union[int, str]):
     total_items = None
 
     while total_items is None or len(rv) < total_items:
-        print("Fetching page %u of query..." % page_id)
+        print(f"Fetching page {page_id} of query...")
         if isinstance(query, int):
-            url = ("%s/reports/%u/items?page=%u&pageSize=%u" %
-                    (cb_config.base,
-                        query,
-                        page_id,
-                        cb_config.page_size))
+            url = (f"{cb_config.base}/reports/{query}/items"
+                   f"?page={page_id}&pageSize={cb_config.page_size}")
         elif isinstance(query, str):
-            url = ("%s/items/query?page=%u&pageSize=%u&queryString=%s" %
-                    (cb_config.base,
-                        page_id,
-                        cb_config.page_size,
-                        query))
+            url = (f"{cb_config.base}/items/query?page={page_id}"
+                   f"&pageSize={cb_config.page_size}&queryString={query}")
         data = query_cb_single(cb_config, url)
         if len(data) != 4:
             raise MismatchException(
@@ -422,24 +416,18 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
             name= item_name
         )
 
-    elif schema_class is Implementation:
+    if schema_class is Implementation:
         return Implementation(
             **common_params,
             language="python",
             name= item_name,
         )
 
-    elif schema_class is Activity:
+    else:
         return Activity(
             **common_params,
             framework="codebeamer",
             status=status
-        )
-
-    else:
-        return Item(
-            **common_params,
-            name= item_name,
         )
 
 
@@ -501,7 +489,7 @@ def load_config(file_name: str) -> Config:
         FileNotFoundError: If the file does not exist.
         KeyError: If required fields are missing or unsupported keys are present.
     """
-    with open(file_name, "r", encoding='utf-8') as file:
+    with open(file_name, encoding='utf-8') as file:
         return parse_config_data(yaml.safe_load(file) or {})
 
 

@@ -32,7 +32,7 @@ def parse_args():
 def register_files(options: argparse.Namespace, sm: Source_Manager):
     for file in options.files:
         if not sm.register_file(file):
-            print("Error: %s" % sm.mh.get_error_message())
+            print(f"Error: {sm.mh.get_error_message()}")
             sys.exit(1)
 
 

@@ -50,10 +50,9 @@ class Tracing_Tag:
         self.hash_val  = None
 
     def __str__(self):
-        rv = "%s %s" % (self.namespace,
-                        self.tag)
+        rv = f"{self.namespace} {self.tag}"
         if self.version:
-            rv += "@%s" % str(self.version)
+            rv += f"@{self.version}"
         return rv
 
     def key(self) -> str:
@@ -155,10 +154,9 @@ class Item(metaclass=ABCMeta):
 
         # Check up references
         ok_up = True
-        if level.needs_tracing_up:
-            if not has_up_ref and not has_just_up:
-                ok_up = False
-                self.messages.append("missing up reference")
+        if level.needs_tracing_up and (not has_up_ref) and (not has_just_up):
+            ok_up = False
+            self.messages.append("missing up reference")
 
         # Check set of down references
         ok_down = True
@@ -172,8 +170,8 @@ class Item(metaclass=ABCMeta):
                 if not any(has_trace[src] for src in chain) and \
                    not has_just_down:
                     ok_down = False
-                    self.messages.append("missing reference to %s" %
-                                         " or ".join(sorted(chain)))
+                    chain_str = " or ".join(sorted(chain))
+                    self.messages.append(f"missing reference to {chain_str}")
 
         # Set status
         if self.has_error:

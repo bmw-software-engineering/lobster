@@ -180,7 +180,7 @@ class Report:
             while src_item.unresolved_references:
                 dst_tag = src_item.unresolved_references.pop()
                 if dst_tag.key() not in self.items:
-                    src_item.error("unknown tracing target %s" % dst_tag.key())
+                    src_item.error(f"unknown tracing target {dst_tag.key()}")
                     continue
                 dst_item = self.items[dst_tag.key()]
                 # TODO: Check if policy allows this link
@@ -190,14 +190,13 @@ class Report:
                 # Check versions match, if specified
                 if dst_tag.version is not None:
                     if dst_item.tag.version is None:
-                        src_item.error("tracing destination %s is unversioned"
-                                       % dst_tag.key())
+                        src_item.error(
+                            f"tracing destination {dst_tag.key()} is unversioned"
+                        )
                     elif dst_tag.version != dst_item.tag.version:
-                        src_item.error("tracing destination %s has version %s"
-                                       " (expected %s)" %
-                                       (dst_tag.key(),
-                                        dst_item.tag.version,
-                                        dst_tag.version))
+                        msg = (f"tracing destination {dst_tag.key()} has version "
+                               f"{dst_item.tag.version} (expected {dst_tag.version})")
+                        src_item.error(msg)
 
     def compute_coverage_for_items(self):
         for level_obj in self.coverage.values():
@@ -258,7 +257,7 @@ class Report:
         loc = File_Reference(filename)
 
         # Read and validate JSON
-        with open(filename, "r", encoding="UTF-8") as fd:
+        with open(filename, encoding="UTF-8") as fd:
             try:
                 data = json.load(fd)
             except json.decoder.JSONDecodeError as err:
@@ -343,14 +342,14 @@ class Report:
 
         """
         supported_schema = {
-            "lobster-report": set([2]),
+            "lobster-report": {2},
         }
         if data["schema"] not in supported_schema:
-            self.mh.error(loc, "unknown schema kind %s" % data["schema"])
+            self.mh.error(loc, f"unknown schema kind {data['schema']}")
         if data["version"] not in supported_schema[data["schema"]]:
             self.mh.error(loc,
-                          "version %u for schema %s is not supported" %
-                          (data["version"], data["schema"]))
+                          f"version {data['version']} for schema "
+                          f"{data['schema']} is not supported")
 
     def validate_basic_structure_of_lobster_file(self, data, loc):
         """
@@ -374,6 +373,6 @@ class Report:
                      dict: "an object"}
         for rkey, rvalue in rkey_dict.items():
             if rkey not in data:
-                self.mh.error(loc, "required top-levelkey %s not present" % rkey)
+                self.mh.error(loc, f"required top-level key {rkey} not present")
             if not isinstance(data[rkey], rvalue):
-                self.mh.error(loc, "%s is not %s." % (rkey, type_dict[rvalue]))
+                self.mh.error(loc, f"{rkey} is not {type_dict[rvalue]}.")

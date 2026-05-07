@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_json - Extract JSON tags for LOBSTER
-# Copyright (C) 2023-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -51,12 +51,12 @@ def get_item(root, path, required):
     if isinstance(root, dict):
         if field in root:
             return get_item(root[field], tail, required)
-        elif required:
-            raise Malformed_Input("object does not contain %s" % field,
+        if required:
+            raise Malformed_Input(f"object does not contain {field}",
                                   root)
         return None
 
-    elif required:
+    if required:
         raise Malformed_Input("not an object", root)
     return None
 
@@ -152,22 +152,8 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
 
     @classmethod
     def process(cls, options, file_name) -> Tuple[bool, List[Item]]:
-        try:
-            with open(file_name, "r", encoding="UTF-8") as fd:
-                data = json.load(fd)
-            data = get_item(root     = data,
-                            path     = options.test_list,
-                            required = True)
-        except json.JSONDecodeError:
-            print("%s: Input file contains invalid JSON." % file_name,
-                  file=sys.stderr)
-            return False, []
-        except UnicodeDecodeError as decode_error:
-            print("%s: File is not encoded in utf-8: %s" % (file_name, decode_error))
-            return False, []
-        except Malformed_Input as err:
-            pprint(err.data)
-            print("%s: malformed input: %s" % (file_name, err.msg))
+        ok, data = load_item(file_name, options.test_list)
+        if not ok:
             return False, []
 
         # Ensure we actually have a list now
@@ -179,13 +165,7 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
         ok    = True
         for item_id, item in enumerate(data, 1):
             try:
-                if options.name_attribute:
-                    item_name = get_item(root     = item,
-                                         path     = options.name_attribute,
-                                         required = True)
-                else:
-                    item_name = "%s.%u" % (syn_test_name(PurePath(file_name)),
-                                           item_id)
+                item_name = build_name(item, options.name_attribute, file_name, item_id)
                 if not isinstance(item_name, str):
                     raise Malformed_Input("name is not a string",
                                           item_name)
@@ -224,16 +204,14 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
                 if options.kind == KindTypes.ACT.value:
                     l_item = Activity(
                         tag       = Tracing_Tag(namespace = "json",
-                                                tag       = "%s:%s" %
-                                                (file_name, item_name)),
+                                                tag = f"{file_name}:{item_name}"),
                         location  = File_Reference(file_name),
                         framework = "JSON",
                         kind      = "Test Vector")
                 else:
                     l_item = Item(
                         tag       = Tracing_Tag(namespace = "json",
-                                                tag       = "%s:%s" %
-                                                (file_name, item_name)),
+                                                tag = f"{file_name}:{item_name}"),
                         location  = File_Reference(file_name))
                 for tag in item_tags:
                     l_item.add_tracing_target(
@@ -245,10 +223,44 @@ class LOBSTER_Json(LOBSTER_Per_File_Tool):
                 items.append(l_item)
             except Malformed_Input as err:
                 pprint(err.data)
-                print("%s: malformed input: %s" % (file_name, err.msg))
+                print(f"{file_name}: malformed input: {err.msg}")
                 ok = False
 
         return ok, items
+
+
+def load_item(file_name, options_test_list):
+    try:
+        with open(file_name, encoding="UTF-8") as fd:
+            data = json.load(fd)
+        data = get_item(root     = data,
+                        path     = options_test_list,
+                        required = True)
+        return True, data
+
+    except json.JSONDecodeError:
+        print(f"{file_name}: Input file contains invalid JSON.", file=sys.stderr)
+    except UnicodeDecodeError as decode_error:
+        print(f"{file_name}: File is not encoded in utf-8: {decode_error}",
+              file=sys.stderr)
+    except Malformed_Input as err:
+        pprint(err.data)
+        print(f"{file_name}: malformed input: {err.msg}", file=sys.stderr)
+
+    return False, []
+
+
+def build_name(item, name_attribute, file_name, item_id):
+    if name_attribute:
+        item_name = get_item(root     = item,
+                             path     = name_attribute,
+                             required = True)
+        if not isinstance(item_name, str):
+            raise Malformed_Input("name is not a string",
+                                  item_name)
+    else:
+        item_name = f"{syn_test_name(PurePath(file_name))}.{item_id}"
+    return item_name
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

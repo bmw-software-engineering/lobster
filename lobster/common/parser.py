@@ -46,15 +46,13 @@ class Parser:
     def peek(self, kind, value=None):
         if self.nt is None:
             return kind is None
-        elif kind is None:
+        if kind is None:
             return False
-        elif self.nt.kind == kind:
+        if self.nt.kind == kind:
             if value is None:
                 return True
-            else:
-                return self.nt.value() == value
-        else:
-            return False
+            return self.nt.value() == value
+        return False
 
     def match(self, kind, value=None):
         if self.peek(kind, value):
@@ -62,15 +60,13 @@ class Parser:
         elif self.nt is None:
             self.error(
                 location.File_Reference(filename = self.lexer.file_name),
-                "expected %s, found EOF" % kind)
+                f"expected {kind}, found EOF")
         elif value is None:
             self.error(self.nt.loc,
-                       "expected %s, found %s %s" % (kind,
-                                                     self.nt.kind,
-                                                     self.nt.value()))
+                       f"expected {kind}, found {self.nt.kind} {self.nt.value()}")
         else:
             self.error(self.nt.loc,
-                       "expected %s, found %s" % (value, self.nt.value()))
+                       f"expected {value}, found {self.nt.value()}")
 
     def warning(self, loc, message):
         self.lexer.mh.warning(loc, message)
@@ -87,7 +83,7 @@ class Parser:
             else:
                 self.error(self.nt.loc,
                            "expected: requirements|implementation|activity,"
-                           " found %s instead" % self.nt.value())
+                           f" found {self.nt.value()} instead")
 
         return self.levels
 
@@ -119,7 +115,7 @@ class Parser:
                 }
                 if not os.path.isfile(source_info["file"]):
                     self.error(self.ct.loc,
-                               "cannot find file %s" % source_info["file"])
+                               f"cannot find file {source_info['file']}")
                 item.source.append(source_info)
 
                 if self.peek("KEYWORD", "with"):
@@ -137,7 +133,7 @@ class Parser:
                                "cannot trace to yourself")
                 elif self.ct.value() not in self.levels:
                     self.error(self.ct.loc,
-                               "unknown item %s" % self.ct.value())
+                               f"unknown item {self.ct.value()}")
                 else:
                     self.levels[self.ct.value()].needs_tracing_down = True
                 item.traces.append(self.ct.value())
@@ -165,7 +161,7 @@ class Parser:
 
             else:
                 self.error(self.nt.loc,
-                           "unexpected directive %s" % self.nt.value())
+                           f"unexpected directive {self.nt.value()}")
 
         self.match("C_KET")
 
@@ -182,12 +178,10 @@ def load(mh, file_name):
                 new_chain = []
                 for tok in chain:
                     if tok.value() not in ast:
-                        mh.error(tok.loc, "unknown level %s" % tok.value())
+                        mh.error(tok.loc, f"unknown level {tok.value()}")
                     if item.name not in ast[tok.value()].traces:
                         mh.error(tok.loc,
-                                 "%s cannot trace to %s items" %
-                                 (tok.value(),
-                                  item.name))
+                                 f"{tok.value()} cannot trace to {item.name} items")
                     new_chain.append(tok.value())
                 item.breakdown_requirements.append(new_chain)
         else:

@@ -63,12 +63,12 @@ class ConversionRule:
     def _as_string_list(value: Optional[Union[str, Iterable[str]]]) -> List[str]:
         if value is None:
             return []
-        elif isinstance(value, str):
+        if isinstance(value, str):
             return [value]
-        elif isinstance(value, list):
+        if isinstance(value, list):
             return value
-        else:
-            raise ValueError(f"Expected str or list, got {type(value)}")
+
+        raise ValueError(f"Expected str or list, got {type(value)}")
 
     @staticmethod
     def _as_tag_list(

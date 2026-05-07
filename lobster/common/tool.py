@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2023, 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -179,6 +179,22 @@ class LOBSTER_Tool(MetaDataToolBase, SupportedCommonConfigKeys, metaclass=ABCMet
         self.process_tool_options(options, work_list)
         return work_list
 
+    def _is_excluded_dir(self, dir_name: str) -> bool:
+        return any(pattern.match(dir_name) for pattern in self.exclude_pat)
+
+    def _filter_walk_dirs(self, dirs: List[str]) -> None:
+        dirs[:] = [dir_name for dir_name in dirs
+                   if not self._is_excluded_dir(dir_name)]
+
+    def _collect_files_from_directory(self, directory: str) -> List[str]:
+        work_items = []
+        for path, dirs, files in os.walk(directory):
+            self._filter_walk_dirs(dirs)
+            for file_name in files:
+                if os.path.splitext(file_name)[1] in self.extensions:
+                    work_items.append(os.path.join(path, file_name))
+        return work_items
+
     def process_common_options(
             self,
             options: argparse.Namespace,
@@ -222,19 +238,7 @@ class LOBSTER_Tool(MetaDataToolBase, SupportedCommonConfigKeys, metaclass=ABCMet
                 work_list.append(item)
 
             elif os.path.isdir(item):
-                for path, dirs, files in os.walk(item):
-                    for n, dir_name in reversed(list(enumerate(dirs))):
-                        keep = True
-                        for pattern in self.exclude_pat:
-                            if pattern.match(dir_name):
-                                keep = False
-                                break
-                        if not keep:
-                            del dirs[n]
-
-                    for file_name in files:
-                        if os.path.splitext(file_name)[1] in self.extensions:
-                            work_list.append(os.path.join(path, file_name))
+                work_list.extend(self._collect_files_from_directory(item))
 
             else:
                 self.mh.error(location,

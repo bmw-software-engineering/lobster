@@ -1,0 +1,12 @@
+load("//:requirements.bzl", "requirement")
+
+py_library(
+    name = "sphinx_lobster_builder",
+    srcs = ["sphinx_lobster_builder.py"],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("sphinx"),
+        requirement("docutils"),
+    ],
+)

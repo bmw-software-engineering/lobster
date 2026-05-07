@@ -3,7 +3,30 @@
 ## Changelog
 
 
-### 1.0.3-dev
+### 1.0.4-dev
+
+
+
+### 1.0.3
+
+* `lobster-html-report`:
+  - [Bazel]: Added a parameter to specify the source root of the html report.
+    Make sure that links to source files work correctly.
+
+* `lobster-pkg`:
+  - Introduced API function.
+    Added API function for the tool `lobster-pkg` which takes `PkgToolConfig` as input
+    and extracts tracing values from package files.
+    This is similar to running the tool `lobster-pkg`.
+
+* `lobster-trlc`:
+  - Updated documentation to explain how to use the version flag (`version-field`) parameter
+    in conversion rules and how it affects generated versioned tags.
+
+* `lobster-report`:
+  - Fixed edge-case exception when loading a `*.lobster` file raised an `AssertionError`.
+    The error was not propagated to the error output stream, but another exception was
+    created instead.
 
 * `lobster-json`:
   - Fixed crash when processing empty JSON files. The tool now exits gracefully with
@@ -15,21 +38,21 @@
   prevents unexpected failures when working with nested directory structures.
 
 * `lobster-codebeamer`:
-  - Enabled parallel execution for system tests, improving test suite performance.
   - Improved error messages with detailed troubleshooting information:
     - Connection timeout errors now include the URL and suggest increasing timeout parameter
     - Connection errors provide actionable steps like checking internet connection and increasing retries
     - Network errors include clear failure reasons and suggested actions
     - HTTP response errors now include status code and reason
   - Changed default value of `verify_ssl` to `True`
-
-* `lobster-python`:
-  - Added system test infrastructure and Bazel targets under `tests_system/lobster_python`.
+  - If the configuration file contains an invalid schema value, an exception is raised.
+    Earlier the fallback "activity" was used.
 
 * API documentation
-  - Created comprehensive API documentation using Sphinx for better user experience across all LOBSTER tools
+  - Created comprehensive API documentation using Sphinx for better user experience across all LOBSTER tools.
   - Added detailed examples and configuration parameters for `lobster-codebeamer`,
-  `lobster-cpptest`, `lobster-report`, `lobster-html_report`, and `lobster-online_report` tools
+  `lobster-cpptest`, `lobster-report`, `lobster-html-report`, and `lobster-online-report` tools.
+
+* Included Python 3.13 in the CI test matrix.
 
 * LOBSTER report
   - New YAMY configuration file.

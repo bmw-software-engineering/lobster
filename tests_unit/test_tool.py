@@ -1,3 +1,4 @@
+from typing import Set
 import unittest
 import os
 import argparse
@@ -16,6 +17,9 @@ class ConcreteLOBSTER_Tool(LOBSTER_Tool):
 
     def _run_impl(self, options: argparse.Namespace) -> int:
         return 0
+
+    def get_mandatory_parameters(self) -> Set[str]:
+        raise NotImplementedError("not implemented for testing")
 
 
 class TestLOBSTER_Tool(unittest.TestCase):

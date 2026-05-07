@@ -155,7 +155,7 @@ class Converter:
                 else:
                     texts.append(str(element.to_python_object()))
             return texts
-        elif isinstance(raw_field, ast.Tuple_Aggregate):
+        if isinstance(raw_field, ast.Tuple_Aggregate):
             return [self._tuple_value_as_string(raw_field)]
         return [str(field_value)]
 
