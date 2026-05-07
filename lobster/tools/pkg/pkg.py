@@ -326,6 +326,7 @@ class PkgTool(MultiFileInputTool):
                 - files: list of file or directory paths to process
                 - out: output file path (optional; if not set,
                   output is lobster-pkg.lobster)
+                - kind: "itm" to create Item entries, "act" to create Activity entries
         """
         config = Config(
             inputs=None,
