@@ -78,8 +78,11 @@ The regex used for each test-tag is as follows:
 ## Preparing cpptest YAML config-file
 
 You have to provide a YAML configuration file that defines the settings to be applied by the tool.
-The tool supports three configuration attributes:
-`output_file`, `codebeamer_url` and `files`.
+The tool supports these configuration attributes:
+- `output_file`
+- `codebeamer_url`
+- `files`
+- `kind` (optional)
 
 This file must include the `codebeamer_url`. All other attributes are optional.
 
