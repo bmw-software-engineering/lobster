@@ -1,28 +1,24 @@
 module(
     name = "lobster",
-    compatibility_level = 1,
     version = "0.13.2",
+    compatibility_level = 1,
 )
 
 bazel_dep(
     name = "rules_python",
     version = "1.5.1",
 )
-
 bazel_dep(name = "rules_python_gazelle_plugin", version = "1.5.1")
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
-
-
 python.toolchain(
-    is_default = True,
     configure_coverage_tool = True,
+    is_default = True,
     python_version = "3.9",
 )
 python.toolchain(python_version = "3.10")
 python.toolchain(python_version = "3.11")
 python.toolchain(python_version = "3.12")
-
 use_repo(python, "python_versions")
 
 uv = use_extension("@rules_python//python/uv:uv.bzl", "uv")
@@ -35,16 +31,21 @@ pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 
 [
     pip.parse(
-        hub_name = "lobster_pip_hub_dependencies",
-         envsubst = ["PIP_INDEX_URL"],
+        envsubst = ["PIP_INDEX_URL"],
         # For all .whl artifacts use the Bazel downloader, allowing caching of artifacts.
         # Also, the Bazel download approach is supposed to be faster and on top offers parallel downloading.
         # For sdist packages this will fall back automatically to 'python -m pip --isolated wheel ..', unless we set 'download_only = True'.
         experimental_index_url = "${PIP_INDEX_URL:-https://pypi.org/simple}",
+        hub_name = "lobster_pip_hub_dependencies",
         python_version = "3.{}".format(version),
         requirements_lock = "//:requirements_lock.txt".format(version),
     )
-    for version in ["9", "10", "11", "12"]
+    for version in [
+        "9",
+        "10",
+        "11",
+        "12",
+    ]
 ]
 
 use_repo(pip, "lobster_pip_hub_dependencies")
@@ -52,8 +53,8 @@ use_repo(pip, "lobster_pip_hub_dependencies")
 bazel_dep(name = "gazelle", version = "0.44.0", repo_name = "bazel_gazelle")
 
 git_override(
-    commit = "650b51a47264a4f232b3341f473527710fc32669",
     module_name = "trlc",
+    commit = "6a5f4dc0a57a95807b9d9ceb763e862a7d439634",
     remote = "https://github.com/bmw-software-engineering/trlc.git",
 )
 
