@@ -37,6 +37,7 @@ LOBSTER_TRACE_PREFIX = "# lobster-trace: "
 LOBSTER_JUST_PREFIX = "# lobster-exclude: "
 func_name = []
 
+print("TEST")
 
 def count_occurrence_of_last_function_from_function_name_list(function_names):
     """
