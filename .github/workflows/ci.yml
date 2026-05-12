@@ -145,13 +145,15 @@ jobs:
       - name: Executing unit tests
         run: |
           make unit-tests
+      - name: Unit tests coverage analysis
+        run: |
+          make coverage-unit
       - name: Executing system tests
         run: |
           make system-tests
-      - name: Coverage analysis
+      - name: System tests coverage analysis
         run: |
           make coverage-system
-          make coverage-unit
   integration-tests:
     name: Integration tests
     needs: [changes, lint-code, lint-system-tests, trlc]
