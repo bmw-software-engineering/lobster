@@ -36,6 +36,9 @@ py_library(
         "tool.py",
         "version.py",
     ],
+    data = [
+        "tracing_policy_schema.yamale",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         requirement("pyyaml")

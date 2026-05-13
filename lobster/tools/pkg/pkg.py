@@ -29,7 +29,7 @@ from dataclasses import dataclass
 from lobster.common.multi_file_input_config import Config
 from lobster.common.multi_file_input_tool import create_worklist, MultiFileInputTool
 from lobster.common.exceptions import LOBSTER_Exception
-from lobster.common.items import Activity, Tracing_Tag
+from lobster.common.items import Item, Activity, Tracing_Tag, KindTypes
 from lobster.common.location import File_Reference
 
 NS = {
@@ -43,46 +43,64 @@ TSBLOCK = "TsBlock"
 class PkgToolConfig:
     files: Sequence[Path]
     out: Optional[Path] = None
+    kind: str = KindTypes.ITM.value
 
 
 def create_raw_entry(
-    data: Dict[str, Activity], file_name: str, trace_list: list
+        data: Dict[str, Item],
+        file_name: str,
+        trace_list: list,
+        kind: str = KindTypes.ITM.value,
 ) -> None:
 
-    activity_list = json.loads(trace_list)
+    item_list = json.loads(trace_list)
     # Collect all traces marked as "first"
     traces = []
-    for item in activity_list:
-        if item.get("activity") == "first":
+    for item in item_list:
+        if item.get("item") == "first":
             trace_parts = [s.strip() for s in re.split(r"[:,]", item.get("trace"))]
             traces.extend(trace_parts[1:])  # skip the "lobster-trace" prefix
 
     tag = Tracing_Tag("pkg", f"{file_name}")
     loc = File_Reference(file_name)
-    data[tag.key()] = Activity(
-        tag=tag, location=loc, framework="lobster-pkg", kind="test"
-    )
-    for trace_value in traces:
-        data[tag.key()].add_tracing_target(Tracing_Tag("req", trace_value))
+    if kind == KindTypes.ACT.value:
+        data[tag.key()] = Activity(
+            tag=tag, location=loc, framework="lobster-pkg", kind="test"
+        )
+        for trace_value in traces:
+            data[tag.key()].add_tracing_target(Tracing_Tag("req", trace_value))
+    else:
+        data[tag.key()] = Item(
+            tag=tag, location=loc
+        )
+        for trace_value in traces:
+            data[tag.key()].add_tracing_target(Tracing_Tag("itm", trace_value))
 
     # Handle other activities (if any)
-    for item in activity_list:
-        if item.get("activity") != "first":
+    for item in item_list:
+        if item.get("item") != "first":
             trace2 = [s.strip() for s in re.split(r"[:,]", item.get("trace"))]
             action = item.get("action")
             line = item.get("line")
             tag = Tracing_Tag("pkg", f"{file_name}::{action}::{line}")
             loc = File_Reference(file_name, int(item.get("line")))
-            data[tag.key()] = Activity(
-                tag=tag, location=loc, framework="lobster-pkg", kind="test"
-            )
-            for trace_value in trace2[1:]:
-                data[tag.key()].add_tracing_target(Tracing_Tag("req", trace_value))
+            if kind == KindTypes.ACT.value:
+                data[tag.key()] = Activity(
+                    tag=tag, location=loc, framework="lobster-pkg", kind="test"
+                )
+                for trace_value in trace2[1:]:
+                    data[tag.key()].add_tracing_target(Tracing_Tag("req", trace_value))
+            else:
+                data[tag.key()] = Item(
+                    tag=tag, location=loc
+                )
+                for trace_value in trace2[1:]:
+                    data[tag.key()].add_tracing_target(Tracing_Tag("itm", trace_value))
 
 
-def create_default_activity(file_content, file_name: str,
-                            data: Dict[str, Activity]) -> None:
-    # Only create a default Activity entry for packages with
+def create_default_item(file_content, file_name: str,
+                        data: Dict[str, Item], kind: str = KindTypes.ITM.value) -> None:
+    # Only create a default Item entry for packages with
     # the TESTCASE tag
     # Check for TESTCASE tag in INFORMATION/TAGS
     tree = ET.fromstring(file_content)
@@ -102,16 +120,22 @@ def create_default_activity(file_content, file_name: str,
     if is_testcase:
         tag = Tracing_Tag("pkg", f"{file_name}")
         loc = File_Reference(file_name)
-        data[tag.key()] = Activity(
-            tag=tag,
-            location=loc,
-            framework="lobster-pkg",
-            kind="test",
-        )
+        if kind == KindTypes.ACT.value:
+            data[tag.key()] = Activity(
+                tag=tag,
+                location=loc,
+                framework="lobster-pkg",
+                kind="test",
+            )
+        else:
+            data[tag.key()] = Item(
+                tag=tag,
+                location=loc,
+            )
 
 
 def xml_parser(file_content, filename):
-    activity_list = []
+    item_list = []
     misplaced_lobster_lines = []
     tree = ET.fromstring(file_content)
 
@@ -125,7 +149,7 @@ def xml_parser(file_content, filename):
                     is_testcase = True
                     break
     if not is_testcase:
-        return activity_list
+        return item_list
 
     tag_teststep = f"{{{NS['ecu']}}}TESTSTEP"
     tag_value = f"{{{NS['ecu']}}}VALUE"
@@ -135,7 +159,7 @@ def xml_parser(file_content, filename):
         ".//ecu:TESTSTEPS", NS
     )
     if teststeps_parent is None:
-        return activity_list
+        return item_list
 
     # Find the first relevant TsBlock (first level under TESTSTEPS)
     first_level_tsblocks = [
@@ -144,7 +168,7 @@ def xml_parser(file_content, filename):
         if elem.tag == tag_teststep and elem.attrib.get("name") == TSBLOCK
     ]
     if not first_level_tsblocks:
-        return activity_list
+        return item_list
 
     # The first TsBlock determines the allowed parent level
     allowed_parent = first_level_tsblocks[0]
@@ -184,9 +208,9 @@ def xml_parser(file_content, filename):
         for trace_search in obj_value:
             if "lobster-trace:" in (trace_search.text or ""):
                 if is_allowed:
-                    # Allowed: add to activity_list
-                    activity_obj = {"trace": trace_search.text, "activity": "first"}
-                    activity_list.append(activity_obj)
+                    # Allowed: add to item_list
+                    item_obj = {"trace": trace_search.text, "item": "first"}
+                    item_list.append(item_obj)
                 else:
                     # Misplaced: not at allowed nesting
                     search_string = trace_search.text
@@ -202,7 +226,7 @@ def xml_parser(file_content, filename):
                 f" at line(s): {misplaced_lobster_lines}"
             )
 
-    return activity_list
+    return item_list
 
 
 def extract_lobster_traces_from_trace_analysis(tree, filename):
@@ -244,7 +268,7 @@ def extract_lobster_traces_from_trace_analysis(tree, filename):
                         valid_traces.append(
                             {
                                 "trace": child.text.strip(),
-                                "activity": "first",
+                                "item": "first",
                                 "name": episode.findtext(
                                     "ecu:NAME", default="", namespaces=NS
                                 ),
@@ -274,6 +298,14 @@ class PkgTool(MultiFileInputTool):
             extensions=["pkg", "ta"],
             official=True,
         )
+        self._argument_parser.add_argument(
+            "--kind",
+            required=False,
+            choices=["itm", "act"],
+            default="itm",
+            help="Kind of LOBSTER entries to create: "
+                 "'itm' for Item, 'act' for Activity",
+        )
 
     def _add_config_argument(self):
         # This tool does not use a config file
@@ -294,14 +326,19 @@ class PkgTool(MultiFileInputTool):
                 - files: list of file or directory paths to process
                 - out: output file path (optional; if not set,
                   output is lobster-pkg.lobster)
+                - kind: "itm" to create Item entries, "act" to create Activity entries
         """
         config = Config(
             inputs=None,
             inputs_from_file=None,
             extensions=self._extensions,
             exclude_patterns=None,
-            schema=Activity,
+            schema=Item,
         )
+
+        if pkg_config.kind == KindTypes.ACT.value:
+            config.schema = Activity
+
         file_list = create_worklist(
             config,
             [str(path) for path in pkg_config.files],
@@ -332,9 +369,19 @@ class PkgTool(MultiFileInputTool):
                         print(msg)
 
                     if getvalues:
-                        create_raw_entry(data, file.name, json.dumps(getvalues))
+                        create_raw_entry(
+                            data,
+                            file.name,
+                            json.dumps(getvalues),
+                            kind=pkg_config.kind
+                        )
                     else:
-                        create_default_activity(file_content, filename, data)
+                        create_default_item(
+                            file_content,
+                            filename,
+                            data,
+                            kind=pkg_config.kind
+                        )
 
                 except ET.ParseError as err:
                     print(f"Error parsing XML file '{filename}' : {err}")

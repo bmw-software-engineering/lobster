@@ -7,7 +7,7 @@ py_library(
     name = "cpp",
     srcs = [
         "cpp.py",
-        "implementation_builder.py",
+        "item_builder.py",
     ],
     visibility = [
         "//visibility:public",

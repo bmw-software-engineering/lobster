@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<title>L.O.B.S.T.E.R.</title>
+<style>
+html {
+  scroll-padding-top: 5em;
+}
+body {
+  margin: 0;
+}
+.title {
+  background-color: #009ada;
+  color: white;
+  padding: 0.5em;
+  margin: 0;
+}
+h1 {
+  padding: 0;
+  margin: 0;
+}
+h2 {
+  padding: 0.5em;
+  margin: 0;
+  border-bottom: 0.25em solid #009ada;
+  text-align: right;
+}
+.content {
+  padding: 0.5em;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+#custom-data-banner {
+  position: absolute;
+  top: 1em;
+  right: 2em;
+  font-size: 0.9em;
+  color: white;
+}
+.item-ok, .item-partial, .item-missing, .item-justified {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  margin-top: 0.4em;
+  padding: 0.25em;
+}
+.item-ok:target, .item-partial:target, .item-missing:target, .item-justified:target {
+  border: 3px solid black;
+}
+.subtle-ok, .subtle-partial, .subtle-missing, .subtle-justified {
+  padding-left: 0.2em;
+}
+.item-ok {
+  background-color: #efe;
+}
+.item-partial {
+  background-color: #ffe;
+}
+.item-missing {
+  background-color: #fee;
+}
+.item-justified {
+  background-color: #eee;
+}
+.subtle-ok {
+  border-left: 0.2em solid #8f8;
+}
+.subtle-partial {
+  border-left: 0.2em solid #ff8;
+}
+.subtle-missing {
+  border-left: 0.2em solid #f88;
+}
+.subtle-justified {
+  border-left: 0.2em solid #888;
+}
+.item-name {
+  font-size: 125%;
+  font-weight: bold;
+}
+.attribute {
+  margin-top: 0.5em;
+}
+.columns {
+  display: flex;
+}
+.columns .column {
+  flex: 45%;
+}
+thead tr {
+  font-weight: bold;
+}
+tbody tr.alt {
+  background-color: #eee;
+}
+blockquote {
+  font-style: italic;
+  border-left: 0.2em solid gray;
+  padding-left: 0.4em;
+  margin-left: 0.5em;
+}
+footer {
+  margin-top: 1rem;
+  padding: .2rem;
+  text-align: right;
+  color: #666;
+  font-size: .7rem;
+}
+#navbar {
+  overflow: hidden;
+  background-color: #009ada;
+}
+.navbar-right {
+  float: right;
+}
+#navbar a {
+  float: left;
+  display: block;
+  color: white;
+  padding: 14px;
+  text-decoration: none;
+}
+#navbar a:hover {
+  background-color: white;
+  color: #009ada;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.sticky + .htmlbody {
+  padding-top: 60px;
+}
+#navbar .dropdown {
+  float: left;
+  overflow: hidden;
+}
+.navbar-right .dropdown {
+  float: right;
+  overflow: hidden;
+}
+.dropdown .dropbtn {
+  font-size: inherit;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  background-color: inherit;
+  color: white;
+  font-family: inherit;
+  margin: 0;
+}
+.dropdown:hover .dropbtn {
+  background-color: white;
+  color: #009ada;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #009ada;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.navbar-right .dropdown-content {
+  right: 0;
+}
+.dropdown-content a {
+  float: none;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+.dropdown-content a:hover {
+  color: #009ada;
+  background-color: white;
+}
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+.sticky .dropdown-content {
+  position: fixed;
+}
+.button {
+    background-color: #818589;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 12px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer
+}
+
+.button active:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 15px 0 0;
+    border-color: #333 transparent transparent transparent
+}
+
+.buttonActive.button {
+    text-decoration: none;
+    border: 5px solid #000000
+}
+
+.buttonOK {
+    background-color: #04AA6D;
+    color: white;
+    border: 2px solid #04AA6D;
+    border-radius: 5px
+}
+
+.buttonOK:hover {
+    background-color: #026641;
+    color: white;
+    border: 2px solid #026641
+}
+
+.buttonActive.buttonOK {
+    text-decoration: none;
+    border: 5px solid #026641
+}
+
+.buttonPartial {
+    background-color: #17a2b8;
+    color: white;
+    border: 2px solid #17a2b8;
+    border-radius: 5px
+}
+
+.buttonPartial:hover {
+    background-color: #0e616e;
+    color: white;
+    border: 2px solid #0e616e
+}
+
+.buttonActive.buttonPartial {
+    text-decoration: none;
+    border: 5px solid #0e616e
+}
+
+.buttonMissing {
+    background-color: #f44336;
+    color: white;
+    border: 2px solid #f44336;
+    border-radius: 5px
+}
+
+.buttonMissing:hover {
+    background-color: #a91409;
+    color: white;
+    border: 2px solid #a91409
+}
+
+.buttonActive.buttonMissing {
+    text-decoration: none;
+    border: 5px solid #a91409
+}
+
+.buttonJustified {
+    background-color: #6c757d;
+    color: white;
+    border: 2px solid #6c757d;
+    border-radius: 5px
+}
+
+.buttonJustified:hover {
+    background-color: #41464b;
+    color: white;
+    border: 2px solid #41464b
+}
+
+.buttonActive.buttonJustified {
+    text-decoration: none;
+    border: 5px solid #41464b
+}
+
+.buttonWarning {
+    background-color: #ffbf00;
+    color: white;
+    border: 2px solid #ffbf00;
+    border-radius: 5px
+}
+
+.buttonWarning:hover {
+    background-color: #997300;
+    color: white;
+    border: 2px solid #997300
+}
+
+.buttonActive.buttonWarning {
+    text-decoration: none;
+    border: 5px solid #997300
+}
+
+.buttonBlue {
+    background-color: #0000ff;
+    color: white;
+    border: 2px solid #0000ff;
+    border-radius: 5px
+}
+
+.buttonBlue:hover {
+    background-color: #000099;
+    color: white;
+    border: 2px solid #000099
+}
+
+.buttonActive.buttonBlue {
+    text-decoration: none;
+    border: 5px solid #000099
+}
+
+</style>
+</head>
+<body>
+<div class="title">
+<h1>L.O.B.S.T.E.R.</h1>
+<div class="subtitle">Lightweight Open BMW Software Traceability Evidence Report</div>
+</div>
+<div id="navbar">
+<a href="#sec-overview" id="menu-item-overview">Overview</a>
+<a href="#sec-issues" id="menu-item-issues">Issues</a>
+<div class="dropdown">
+<button class="dropbtn">Detailed report<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
+<div class="dropdown-content">
+<a href="#sec-419cfc02b324dc7d8faefa90ed608fb0" id="menu-item-system-requirements">System Requirements</a>
+<a href="#sec-9d273bd32c1fceb91b7d6a4d40e98bdd" id="menu-item-software-requirements">Software Requirements</a>
+<a href="#sec-ca0dbad92a874b2f69b549293387925e" id="menu-item-code">Code</a>
+<a href="#sec-89ee055e759171b6b87a317d46004553" id="menu-item-component-tests">Component Tests</a>
+<a href="#sec-d6a712b8912b88fc5654b52032b40f5b" id="menu-item-unit-tests">Unit Tests</a>
+</div>
+</div>
+<div class="navbar-right">
+<div class="dropdown">
+<button class="dropbtn">LOBSTER<svg class="icon"><use href="#svg-chevron-down"></use></svg></button>
+<div class="dropdown-content">
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/README.md" id="menu-item-documentation"><svg class="icon"><use href="#svg-external-link"></use></svg> Documentation</a>
+<a href="https://github.com/bmw-software-engineering/lobster/blob/main/LICENSE.md" id="menu-item-license"><svg class="icon"><use href="#svg-external-link"></use></svg> License</a>
+<a href="https://github.com/bmw-software-engineering/lobster" id="menu-item-source"><svg class="icon"><use href="#svg-external-link"></use></svg> Source</a>
+</div>
+</div>
+</div>
+</div>
+<div class="htmlbody">
+<svg style="display: none;">
+<defs>
+<symbol id="svg-check-square" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 456 461" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-825 -84)"><path d="M839 310.5C839 193.139 934.811 98 1053 98 1171.19 98 1267 193.139 1267 310.5 1267 427.86 1171.19 523 1053 523 934.811 523 839 427.86 839 310.5Z" stroke="#008000" stroke-width="27.5" stroke-miterlimit="8" fill="#4EA72E" fill-rule="evenodd"/><text font-family="Segoe UI Symbol,Segoe UI Symbol_MSFontService,sans-serif" font-weight="400" font-size="202" transform="matrix(1 0 0 1 972.144 378)">✔</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-alert-triangle" viewBox="0 0 24 24">
+<svg width="24" height="24" viewBox="0 0 520 516" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g transform="translate(-137 -85)"><path d="M162 506 397 113 632 506Z" stroke="#000000" stroke-width="27.5" stroke-miterlimit="8" fill="#FF9900" fill-rule="evenodd"/><text font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="700" font-size="202" transform="matrix(1 0 0 1 367.145 423)">!</text></g></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-external-link" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+</symbol>
+</defs>
+</svg>
+<svg style="display: none;">
+<defs>
+<symbol id="svg-chevron-down" viewBox="0 0 24 24">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</symbol>
+</defs>
+</svg>
+<h2 id="sec-overview" class="heading-overview">Overview</h2>
+<div class="content">
+<div class="columns">
+<div class="column">
+<h3 id="heading-coverage">Coverage</h3>
+<table>
+<thead><tr>
+<td>Category</td>
+<td>Ratio</td>
+<td>Coverage</td>
+<td>OK Items</td>
+<td>Total Items</td>
+</tr><thead>
+<tbody>
+</tbody>
+<tr class="coverage-table-system-requirements">
+<td><a href="#sec-419cfc02b324dc7d8faefa90ed608fb0">System Requirements</a></td>
+<td>100.0%</td>
+<td>
+<progress value="8" max="8">
+100.00%
+</progress>
+</td>
+<td align="right">8</td>
+<td align="right">8</td>
+</tr>
+<tr class="coverage-table-software-requirements">
+<td><a href="#sec-9d273bd32c1fceb91b7d6a4d40e98bdd">Software Requirements</a></td>
+<td>100.0%</td>
+<td>
+<progress value="8" max="8">
+100.00%
+</progress>
+</td>
+<td align="right">8</td>
+<td align="right">8</td>
+</tr>
+<tr class="coverage-table-code">
+<td><a href="#sec-ca0dbad92a874b2f69b549293387925e">Code</a></td>
+<td>100.0%</td>
+<td>
+<progress value="13" max="13">
+100.00%
+</progress>
+</td>
+<td align="right">13</td>
+<td align="right">13</td>
+</tr>
+<tr class="coverage-table-component-tests">
+<td><a href="#sec-89ee055e759171b6b87a317d46004553">Component Tests</a></td>
+<td>100.0%</td>
+<td>
+<progress value="7" max="7">
+100.00%
+</progress>
+</td>
+<td align="right">7</td>
+<td align="right">7</td>
+</tr>
+<tr class="coverage-table-unit-tests">
+<td><a href="#sec-d6a712b8912b88fc5654b52032b40f5b">Unit Tests</a></td>
+<td>100.0%</td>
+<td>
+<progress value="8" max="8">
+100.00%
+</progress>
+</td>
+<td align="right">8</td>
+<td align="right">8</td>
+</tr>
+</table>
+</div>
+<div class="column">
+<h3>Tracing policy</h3>
+<svg width="444pt" height="116pt"
+ viewBox="0.00 0.00 443.61 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
+<title>LOBSTER Tracing Policy</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-112 439.61,-112 439.61,4 -4,4"/>
+<!-- n_419cfc02b324dc7d8faefa90ed608fb0 -->
+<g id="node1" class="node">
+<title>n_419cfc02b324dc7d8faefa90ed608fb0</title>
+<g id="a_node1"><a xlink:href="#sec-419cfc02b324dc7d8faefa90ed608fb0" xlink:title="System Requirements">
+<path fill="none" stroke="black" d="M180.57,-108C180.57,-108 29.57,-108 29.57,-108 23.57,-108 17.57,-102 17.57,-96 17.57,-96 17.57,-84 17.57,-84 17.57,-78 23.57,-72 29.57,-72 29.57,-72 180.57,-72 180.57,-72 186.57,-72 192.57,-78 192.57,-84 192.57,-84 192.57,-96 192.57,-96 192.57,-102 186.57,-108 180.57,-108"/>
+<text text-anchor="middle" x="105.07" y="-86.3" font-family="Times,serif" font-size="14.00">System Requirements</text>
+</a>
+</g>
+</g>
+<!-- n_ca0dbad92a874b2f69b549293387925e -->
+<g id="node3" class="node">
+<title>n_ca0dbad92a874b2f69b549293387925e</title>
+<g id="a_node3"><a xlink:href="#sec-ca0dbad92a874b2f69b549293387925e" xlink:title="Code">
+<polygon fill="none" stroke="black" points="282.07,-36 228.07,-36 228.07,0 282.07,0 282.07,-36"/>
+<text text-anchor="middle" x="255.07" y="-14.3" font-family="Times,serif" font-size="14.00">Code</text>
+</a>
+</g>
+</g>
+<!-- n_419cfc02b324dc7d8faefa90ed608fb0&#45;&gt;n_ca0dbad92a874b2f69b549293387925e -->
+<g id="edge1" class="edge">
+<title>n_419cfc02b324dc7d8faefa90ed608fb0&#45;&gt;n_ca0dbad92a874b2f69b549293387925e</title>
+<path fill="none" stroke="black" d="M141.8,-71.99C162.15,-62.55 188.1,-50.49 218.74,-36.14"/>
+<polygon fill="black" stroke="black" points="220.38,-39.24 227.95,-31.83 217.41,-32.9 220.38,-39.24"/>
+</g>
+<!-- n_89ee055e759171b6b87a317d46004553 -->
+<g id="node4" class="node">
+<title>n_89ee055e759171b6b87a317d46004553</title>
+<g id="a_node4"><a xlink:href="#sec-89ee055e759171b6b87a317d46004553" xlink:title="Component Tests">
+<polygon fill="none" stroke="black" points="210.21,-18 157.64,-36 52.5,-36 -0.07,-18 52.5,0 157.64,0 210.21,-18"/>
+<text text-anchor="middle" x="105.07" y="-14.3" font-family="Times,serif" font-size="14.00">Component Tests</text>
+</a>
+</g>
+</g>
+<!-- n_419cfc02b324dc7d8faefa90ed608fb0&#45;&gt;n_89ee055e759171b6b87a317d46004553 -->
+<g id="edge3" class="edge">
+<title>n_419cfc02b324dc7d8faefa90ed608fb0&#45;&gt;n_89ee055e759171b6b87a317d46004553</title>
+<path fill="none" stroke="black" d="M105.07,-71.7C105.07,-63.98 105.07,-54.71 105.07,-46.11"/>
+<polygon fill="black" stroke="black" points="108.57,-46.1 105.07,-36.1 101.57,-46.1 108.57,-46.1"/>
+</g>
+<!-- n_9d273bd32c1fceb91b7d6a4d40e98bdd -->
+<g id="node2" class="node">
+<title>n_9d273bd32c1fceb91b7d6a4d40e98bdd</title>
+<g id="a_node2"><a xlink:href="#sec-9d273bd32c1fceb91b7d6a4d40e98bdd" xlink:title="Software Requirements">
+<path fill="none" stroke="black" d="M385.07,-108C385.07,-108 223.07,-108 223.07,-108 217.07,-108 211.07,-102 211.07,-96 211.07,-96 211.07,-84 211.07,-84 211.07,-78 217.07,-72 223.07,-72 223.07,-72 385.07,-72 385.07,-72 391.07,-72 397.07,-78 397.07,-84 397.07,-84 397.07,-96 397.07,-96 397.07,-102 391.07,-108 385.07,-108"/>
+<text text-anchor="middle" x="304.07" y="-86.3" font-family="Times,serif" font-size="14.00">Software Requirements</text>
+</a>
+</g>
+</g>
+<!-- n_9d273bd32c1fceb91b7d6a4d40e98bdd&#45;&gt;n_ca0dbad92a874b2f69b549293387925e -->
+<g id="edge2" class="edge">
+<title>n_9d273bd32c1fceb91b7d6a4d40e98bdd&#45;&gt;n_ca0dbad92a874b2f69b549293387925e</title>
+<path fill="none" stroke="black" d="M291.96,-71.7C286.2,-63.47 279.21,-53.48 272.86,-44.42"/>
+<polygon fill="black" stroke="black" points="275.64,-42.29 267.04,-36.1 269.91,-46.3 275.64,-42.29"/>
+</g>
+<!-- n_9d273bd32c1fceb91b7d6a4d40e98bdd&#45;&gt;n_89ee055e759171b6b87a317d46004553 -->
+<g id="edge4" class="edge">
+<title>n_9d273bd32c1fceb91b7d6a4d40e98bdd&#45;&gt;n_89ee055e759171b6b87a317d46004553</title>
+<path fill="none" stroke="black" d="M255.64,-71.97C227.84,-62.19 192.73,-49.84 163.41,-39.52"/>
+<polygon fill="black" stroke="black" points="164.31,-36.13 153.71,-36.11 161.98,-42.73 164.31,-36.13"/>
+</g>
+<!-- n_d6a712b8912b88fc5654b52032b40f5b -->
+<g id="node5" class="node">
+<title>n_d6a712b8912b88fc5654b52032b40f5b</title>
+<g id="a_node5"><a xlink:href="#sec-d6a712b8912b88fc5654b52032b40f5b" xlink:title="Unit Tests">
+<polygon fill="none" stroke="black" points="435.66,-18 401.86,-36 334.27,-36 300.48,-18 334.27,0 401.86,0 435.66,-18"/>
+<text text-anchor="middle" x="368.07" y="-14.3" font-family="Times,serif" font-size="14.00">Unit Tests</text>
+</a>
+</g>
+</g>
+<!-- n_9d273bd32c1fceb91b7d6a4d40e98bdd&#45;&gt;n_d6a712b8912b88fc5654b52032b40f5b -->
+<g id="edge5" class="edge">
+<title>n_9d273bd32c1fceb91b7d6a4d40e98bdd&#45;&gt;n_d6a712b8912b88fc5654b52032b40f5b</title>
+<path fill="none" stroke="black" d="M319.89,-71.7C327.64,-63.22 337.11,-52.86 345.59,-43.58"/>
+<polygon fill="black" stroke="black" points="348.27,-45.85 352.43,-36.1 343.1,-41.12 348.27,-45.85"/>
+</g>
+</g>
+</svg>
+</div>
+</div>
+</div>
+<h2 id="sec-filtering-options" class="heading-filtering">Filtering</h2>
+<div class="content">
+<h3 id="heading-item-filters">Item Filters</h3>
+<div id = "btnFilterItem">
+<button class="button buttonAll buttonActive" onclick="buttonFilter('all')"> Show All </button>
+<button class ="button buttonOK" onclick="buttonFilter('ok')" > OK </button>
+<button class ="button buttonMissing" onclick="buttonFilter('missing')" > Missing </button>
+<button class ="button buttonPartial" onclick="buttonFilter('partial')" > Partial </button>
+<button class ="button buttonJustified" onclick="buttonFilter('justified')" > Justified </button>
+<button class ="button buttonWarning" onclick="buttonFilter('warning')" > Warning </button>
+</div>
+<h3 id="heading-show-issues">Show Issues</h3>
+<div id = "ContainerBtnToggleIssue">
+<button class ="button buttonBlue" id="BtnToggleIssue" onclick="ToggleIssues()"> Show Issues </button>
+</div>
+<h3 id="sec-filter" class="heading-filter">Filter</h3>
+<input type="text" id="search" placeholder="Filter..." onkeyup="searchItem()">
+<div id="search-sec-id"
+</div>
+<h2 id="sec-issues" class="heading-issues">Issues</h2>
+<div class="content">
+<div id="issues-section" style="display:none">
+<div>No traceability issues found.</div>
+</div>
+</div>
+<h2 id="sec-detailed-report" class="heading-detailed-report">Detailed report</h2>
+<div class="content">
+<div class="detailed-report-requirements-and-specification">
+<h3 id="heading-requirements-and-specification">Requirements and Specification</h3>
+<div id="section-system-requirements">
+<h4 id="sec-419cfc02b324dc7d8faefa90ed608fb0" class="heading-system-requirements">System Requirements</h4>
+<h5>pizza_system_requirements.trlc</h5>
+<!-- begin item req pizza_example.oven -->
+<div class="item-ok" id="item-34ce8207e099c745b54dfdded903a0eaba3d2c04">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement pizza_example.oven</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall heat pizzas to perfect crispy goodness</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-a4fdc956823486ee87c209137515151833bc050a'>pizza_implementation.OvenController.start_cooking</a></li>
+<li>Python Method <a href='#item-df2addc1e40227781a1189fd1a22652582df11bc'>pizza_implementation.OvenController.check_cooking_status</a></li>
+<li>PyUnit Test <a href='#item-e48751f81efda74579ba7ed5307c2040a60a6827'>test_pizza_components.TestCookingComponent.test_recipe_to_cooking_workflow:62</a></li>
+<li>PyUnit Test <a href='#item-c3f74dbc48f7e7e041d3cbdda929145473abcfba'>test_pizza_components.TestQualityControlComponent.test_quality_validation_workflow:173</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.delivery -->
+<div class="item-ok" id="item-661b12d6275271ac496f51462b12dcf0cc9d294e">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement pizza_example.delivery</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall transport pizzas while they are still hot</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-5422725f8ec1aaa9368c8de2959213c11fef921b'>pizza_implementation.RouteOptimizer.calculate_route</a></li>
+<li>PyUnit Test <a href='#item-e4fc395672f06e1a65a9ac2134357c6117f5200a'>test_pizza_components.TestDeliveryComponent.test_delivery_tracking_workflow:102</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.ordering -->
+<div class="item-ok" id="item-464be7f99a46495de13066dfbed6ba7a08ba997c">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement pizza_example.ordering</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall accept pizza orders from hungry customers</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-817dcbc977ff123b9801066e05d5b316144f257a'>pizza_implementation.OrderProcessor.create_customer</a></li>
+<li>Python Method <a href='#item-19590c4c38393831b4498ee1eb6f272506967270'>pizza_implementation.OrderProcessor.place_order</a></li>
+<li>PyUnit Test <a href='#item-f3fdeaa418db9883767e5e50759eca924f90689d'>test_pizza_components.TestOrderProcessingComponent.test_complete_order_creation_workflow:26</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+<li>PyUnit Test <a href='#item-dee328b88dca4ac7df7340fe0a7baebc09c6bc3a'>test_pizza_components.TestErrorHandlingComponent.test_payment_failure_workflow:278</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.payment -->
+<div class="item-ok" id="item-e297c6e38fa05525b5e835414831b09022e34632">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement pizza_example.payment</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall process money without stealing tips</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-6d891d8713ad2a916767b530a4f4677ec0b3465d'>pizza_implementation.PaymentGateway.process_payment</a></li>
+<li>PyUnit Test <a href='#item-f3fdeaa418db9883767e5e50759eca924f90689d'>test_pizza_components.TestOrderProcessingComponent.test_complete_order_creation_workflow:26</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+<li>PyUnit Test <a href='#item-dee328b88dca4ac7df7340fe0a7baebc09c6bc3a'>test_pizza_components.TestErrorHandlingComponent.test_payment_failure_workflow:278</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.tracking -->
+<div class="item-ok" id="item-60b164d1ebe4997ea5fb79958fcc04d33d697fb3">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement pizza_example.tracking</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall show where the pizza is on its journey</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-2f5b1ff161e1e3160d7e9fcd0da43f893609d59c'>pizza_implementation.DeliveryTracker.start_delivery</a></li>
+<li>PyUnit Test <a href='#item-e4fc395672f06e1a65a9ac2134357c6117f5200a'>test_pizza_components.TestDeliveryComponent.test_delivery_tracking_workflow:102</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.inventory -->
+<div class="item-ok" id="item-555f5b6bf9d5ae69122763f419405cd33c2ecc6a">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement pizza_example.inventory</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall keep track of cheese and pepperoni supplies</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-c41f167ccc451740334f90bd5c477b40a086993c'>pizza_implementation.InventoryManager.use_ingredients</a></li>
+<li>Python Method <a href='#item-531630c3cbd4f0943e74ab2f1eae3ff007670f6e'>pizza_implementation.InventoryManager.check_for_alerts</a></li>
+<li>PyUnit Test <a href='#item-e48751f81efda74579ba7ed5307c2040a60a6827'>test_pizza_components.TestCookingComponent.test_recipe_to_cooking_workflow:62</a></li>
+<li>PyUnit Test <a href='#item-45fa8daa414085b1f9b270d8682a0ed1111893bb'>test_pizza_components.TestInventoryAlertComponent.test_low_stock_alert_workflow:142</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.communication -->
+<div class="item-ok" id="item-a4c8cef80fae240605e1b799c622cefec0ff80dd">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement pizza_example.communication</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall notify customers when pizza arrives</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-50f24c6e532a696421c537fb735e8d4b8b508aba'>pizza_implementation.NotificationSystem.send_sms</a></li>
+<li>Python Method <a href='#item-d5c618d49d0d2a3297a5f2b1dd06f1eb2cc70190'>pizza_implementation.NotificationSystem.notify_order_status</a></li>
+<li>PyUnit Test <a href='#item-e4fc395672f06e1a65a9ac2134357c6117f5200a'>test_pizza_components.TestDeliveryComponent.test_delivery_tracking_workflow:102</a></li>
+<li>PyUnit Test <a href='#item-45fa8daa414085b1f9b270d8682a0ed1111893bb'>test_pizza_components.TestInventoryAlertComponent.test_low_stock_alert_workflow:142</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.quality -->
+<div class="item-ok" id="item-78d4128b6a724bb19903991050b345f0beaa4d27">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC System_requirement pizza_example.quality</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_system_requirements.trlc" target="_blank">pizza_system_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The system shall ensure pizzas taste better than cardboard</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-80dac6fa572ba65edbab9a79cc903ea00391fcf4'>pizza_implementation.RecipeDatabase.get_recipe</a></li>
+<li>Python Method <a href='#item-ce9c1829b95a22b75116322593550411bd3ac220'>pizza_implementation.RecipeDatabase.validate_quality</a></li>
+<li>PyUnit Test <a href='#item-e48751f81efda74579ba7ed5307c2040a60a6827'>test_pizza_components.TestCookingComponent.test_recipe_to_cooking_workflow:62</a></li>
+<li>PyUnit Test <a href='#item-c3f74dbc48f7e7e041d3cbdda929145473abcfba'>test_pizza_components.TestQualityControlComponent.test_quality_validation_workflow:173</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-software-requirements">
+<h4 id="sec-9d273bd32c1fceb91b7d6a4d40e98bdd" class="heading-software-requirements">Software Requirements</h4>
+<h5>pizza_software_requirements.trlc</h5>
+<!-- begin item req pizza_example.oven_controller -->
+<div class="item-ok" id="item-8252c7d6cf693ad663582a4ad00cff4a5ae06c35">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement pizza_example.oven_controller</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall control oven temperature and cooking timer</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-a4fdc956823486ee87c209137515151833bc050a'>pizza_implementation.OvenController.start_cooking</a></li>
+<li>Python Method <a href='#item-df2addc1e40227781a1189fd1a22652582df11bc'>pizza_implementation.OvenController.check_cooking_status</a></li>
+<li>PyUnit Test <a href='#item-e48751f81efda74579ba7ed5307c2040a60a6827'>test_pizza_components.TestCookingComponent.test_recipe_to_cooking_workflow:62</a></li>
+<li>PyUnit Test <a href='#item-c3f74dbc48f7e7e041d3cbdda929145473abcfba'>test_pizza_components.TestQualityControlComponent.test_quality_validation_workflow:173</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+<li>PyUnit Test <a href='#item-04bc5b71b0cd65e226440f83048c2a10e1eb02d5'>test_pizza_implementation.TestOvenController.test_start_cooking:18</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.route_planner -->
+<div class="item-ok" id="item-5d114e6b0c7f814706c6c07ef9a14193882cb01f">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement pizza_example.route_planner</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall calculate fastest delivery routes</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-5422725f8ec1aaa9368c8de2959213c11fef921b'>pizza_implementation.RouteOptimizer.calculate_route</a></li>
+<li>PyUnit Test <a href='#item-e4fc395672f06e1a65a9ac2134357c6117f5200a'>test_pizza_components.TestDeliveryComponent.test_delivery_tracking_workflow:102</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+<li>PyUnit Test <a href='#item-bb67db2954c6aa42de2ea7e868385b9bfcce0d84'>test_pizza_implementation.TestRouteOptimizer.test_calculate_route_empty:114</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.order_processor -->
+<div class="item-ok" id="item-c8524fbec06a506932672cacb9a85aad57a1b8bf">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement pizza_example.order_processor</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall manage pizza orders and customer details</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-817dcbc977ff123b9801066e05d5b316144f257a'>pizza_implementation.OrderProcessor.create_customer</a></li>
+<li>Python Method <a href='#item-19590c4c38393831b4498ee1eb6f272506967270'>pizza_implementation.OrderProcessor.place_order</a></li>
+<li>PyUnit Test <a href='#item-f3fdeaa418db9883767e5e50759eca924f90689d'>test_pizza_components.TestOrderProcessingComponent.test_complete_order_creation_workflow:26</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+<li>PyUnit Test <a href='#item-dee328b88dca4ac7df7340fe0a7baebc09c6bc3a'>test_pizza_components.TestErrorHandlingComponent.test_payment_failure_workflow:278</a></li>
+<li>PyUnit Test <a href='#item-2497b1099716a52e42b4405e532fc874482b711e'>test_pizza_implementation.TestOrderProcessor.test_create_customer:33</a></li>
+<li>PyUnit Test <a href='#item-99bb67575e8b8949ec01b268082716e2fbed9e13'>test_pizza_implementation.TestOrderProcessor.test_place_order:43</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.payment_gateway -->
+<div class="item-ok" id="item-3fe45e26a2e6c94cc9bb5f055b3fcbc253124638">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement pizza_example.payment_gateway</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall handle credit card transactions securely</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-6d891d8713ad2a916767b530a4f4677ec0b3465d'>pizza_implementation.PaymentGateway.process_payment</a></li>
+<li>PyUnit Test <a href='#item-f3fdeaa418db9883767e5e50759eca924f90689d'>test_pizza_components.TestOrderProcessingComponent.test_complete_order_creation_workflow:26</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+<li>PyUnit Test <a href='#item-dee328b88dca4ac7df7340fe0a7baebc09c6bc3a'>test_pizza_components.TestErrorHandlingComponent.test_payment_failure_workflow:278</a></li>
+<li>PyUnit Test <a href='#item-0e12aa68adc7abf467252b3a61c370d4153d5431'>test_pizza_implementation.TestPaymentGateway.test_process_payment_valid:57</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.gps_tracker -->
+<div class="item-ok" id="item-9433e5750bdc82301dfff8ab9d4f11e18263814a">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement pizza_example.gps_tracker</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall provide real-time delivery location updates</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-2f5b1ff161e1e3160d7e9fcd0da43f893609d59c'>pizza_implementation.DeliveryTracker.start_delivery</a></li>
+<li>PyUnit Test <a href='#item-e4fc395672f06e1a65a9ac2134357c6117f5200a'>test_pizza_components.TestDeliveryComponent.test_delivery_tracking_workflow:102</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.stock_manager -->
+<div class="item-ok" id="item-05ef0a7a74e450d02bf2cf8575f56b7a5c013d4e">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement pizza_example.stock_manager</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall monitor ingredient levels and send alerts</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-c41f167ccc451740334f90bd5c477b40a086993c'>pizza_implementation.InventoryManager.use_ingredients</a></li>
+<li>Python Method <a href='#item-531630c3cbd4f0943e74ab2f1eae3ff007670f6e'>pizza_implementation.InventoryManager.check_for_alerts</a></li>
+<li>PyUnit Test <a href='#item-e48751f81efda74579ba7ed5307c2040a60a6827'>test_pizza_components.TestCookingComponent.test_recipe_to_cooking_workflow:62</a></li>
+<li>PyUnit Test <a href='#item-45fa8daa414085b1f9b270d8682a0ed1111893bb'>test_pizza_components.TestInventoryAlertComponent.test_low_stock_alert_workflow:142</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+<li>PyUnit Test <a href='#item-0432a2a61ca1e8d1793892902849632b31e44140'>test_pizza_implementation.TestInventoryManager.test_use_ingredients:71</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.notification_system -->
+<div class="item-ok" id="item-c698bb5b5f4fff03292655c7c7aae371fd8f01f2">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement pizza_example.notification_system</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall send SMS and email updates to customers</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-50f24c6e532a696421c537fb735e8d4b8b508aba'>pizza_implementation.NotificationSystem.send_sms</a></li>
+<li>Python Method <a href='#item-d5c618d49d0d2a3297a5f2b1dd06f1eb2cc70190'>pizza_implementation.NotificationSystem.notify_order_status</a></li>
+<li>PyUnit Test <a href='#item-e4fc395672f06e1a65a9ac2134357c6117f5200a'>test_pizza_components.TestDeliveryComponent.test_delivery_tracking_workflow:102</a></li>
+<li>PyUnit Test <a href='#item-45fa8daa414085b1f9b270d8682a0ed1111893bb'>test_pizza_components.TestInventoryAlertComponent.test_low_stock_alert_workflow:142</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+<li>PyUnit Test <a href='#item-50ec87a929389b390cc1344287b3760497016a17'>test_pizza_implementation.TestNotificationSystem.test_send_sms:86</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item req pizza_example.recipe_database -->
+<div class="item-ok" id="item-7f9899d04e2cf31d6cb965fa9c54f12bbf6acd58">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> TRLC Software_requirement pizza_example.recipe_database</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_software_requirements.trlc" target="_blank">pizza_software_requirements.trlc</a>
+</div>
+<div class="attribute">
+<blockquote>The software shall store pizza recipes and quality standards</blockquote>
+</div>
+<div class="attribute">
+<div>Traces to:
+<ul>
+<li>Python Method <a href='#item-80dac6fa572ba65edbab9a79cc903ea00391fcf4'>pizza_implementation.RecipeDatabase.get_recipe</a></li>
+<li>Python Method <a href='#item-ce9c1829b95a22b75116322593550411bd3ac220'>pizza_implementation.RecipeDatabase.validate_quality</a></li>
+<li>PyUnit Test <a href='#item-e48751f81efda74579ba7ed5307c2040a60a6827'>test_pizza_components.TestCookingComponent.test_recipe_to_cooking_workflow:62</a></li>
+<li>PyUnit Test <a href='#item-c3f74dbc48f7e7e041d3cbdda929145473abcfba'>test_pizza_components.TestQualityControlComponent.test_quality_validation_workflow:173</a></li>
+<li>PyUnit Test <a href='#item-31d3c37e0ce620bdc7303481c54653da1b5597e4'>test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</a></li>
+<li>PyUnit Test <a href='#item-e6d1eb56ef004f5212354cf2261eabac8ad7da19'>test_pizza_implementation.TestRecipeDatabase.test_get_recipe:100</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+</div>
+<div class="detailed-report-implementation">
+<h3 id="heading-implementation">Implementation</h3>
+<div id="section-code">
+<h4 id="sec-ca0dbad92a874b2f69b549293387925e" class="heading-code">Code</h4>
+<h5>pizza_implementation.py</h5>
+<!-- begin item python pizza_implementation.OvenController.start_cooking -->
+<div class="item-ok" id="item-a4fdc956823486ee87c209137515151833bc050a">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.OvenController.start_cooking</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-34ce8207e099c745b54dfdded903a0eaba3d2c04'>pizza_example.oven</a></li>
+<li>TRLC Software_requirement <a href='#item-8252c7d6cf693ad663582a4ad00cff4a5ae06c35'>pizza_example.oven_controller</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.OvenController.check_cooking_status -->
+<div class="item-ok" id="item-df2addc1e40227781a1189fd1a22652582df11bc">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.OvenController.check_cooking_status</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-34ce8207e099c745b54dfdded903a0eaba3d2c04'>pizza_example.oven</a></li>
+<li>TRLC Software_requirement <a href='#item-8252c7d6cf693ad663582a4ad00cff4a5ae06c35'>pizza_example.oven_controller</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.RouteOptimizer.calculate_route -->
+<div class="item-ok" id="item-5422725f8ec1aaa9368c8de2959213c11fef921b">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.RouteOptimizer.calculate_route</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-661b12d6275271ac496f51462b12dcf0cc9d294e'>pizza_example.delivery</a></li>
+<li>TRLC Software_requirement <a href='#item-5d114e6b0c7f814706c6c07ef9a14193882cb01f'>pizza_example.route_planner</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.OrderProcessor.create_customer -->
+<div class="item-ok" id="item-817dcbc977ff123b9801066e05d5b316144f257a">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.OrderProcessor.create_customer</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-464be7f99a46495de13066dfbed6ba7a08ba997c'>pizza_example.ordering</a></li>
+<li>TRLC Software_requirement <a href='#item-c8524fbec06a506932672cacb9a85aad57a1b8bf'>pizza_example.order_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.OrderProcessor.place_order -->
+<div class="item-ok" id="item-19590c4c38393831b4498ee1eb6f272506967270">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.OrderProcessor.place_order</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-464be7f99a46495de13066dfbed6ba7a08ba997c'>pizza_example.ordering</a></li>
+<li>TRLC Software_requirement <a href='#item-c8524fbec06a506932672cacb9a85aad57a1b8bf'>pizza_example.order_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.PaymentGateway.process_payment -->
+<div class="item-ok" id="item-6d891d8713ad2a916767b530a4f4677ec0b3465d">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.PaymentGateway.process_payment</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-e297c6e38fa05525b5e835414831b09022e34632'>pizza_example.payment</a></li>
+<li>TRLC Software_requirement <a href='#item-3fe45e26a2e6c94cc9bb5f055b3fcbc253124638'>pizza_example.payment_gateway</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.DeliveryTracker.start_delivery -->
+<div class="item-ok" id="item-2f5b1ff161e1e3160d7e9fcd0da43f893609d59c">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.DeliveryTracker.start_delivery</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-60b164d1ebe4997ea5fb79958fcc04d33d697fb3'>pizza_example.tracking</a></li>
+<li>TRLC Software_requirement <a href='#item-9433e5750bdc82301dfff8ab9d4f11e18263814a'>pizza_example.gps_tracker</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.InventoryManager.use_ingredients -->
+<div class="item-ok" id="item-c41f167ccc451740334f90bd5c477b40a086993c">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.InventoryManager.use_ingredients</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-555f5b6bf9d5ae69122763f419405cd33c2ecc6a'>pizza_example.inventory</a></li>
+<li>TRLC Software_requirement <a href='#item-05ef0a7a74e450d02bf2cf8575f56b7a5c013d4e'>pizza_example.stock_manager</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.InventoryManager.check_for_alerts -->
+<div class="item-ok" id="item-531630c3cbd4f0943e74ab2f1eae3ff007670f6e">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.InventoryManager.check_for_alerts</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-555f5b6bf9d5ae69122763f419405cd33c2ecc6a'>pizza_example.inventory</a></li>
+<li>TRLC Software_requirement <a href='#item-05ef0a7a74e450d02bf2cf8575f56b7a5c013d4e'>pizza_example.stock_manager</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.NotificationSystem.send_sms -->
+<div class="item-ok" id="item-50f24c6e532a696421c537fb735e8d4b8b508aba">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.NotificationSystem.send_sms</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-a4c8cef80fae240605e1b799c622cefec0ff80dd'>pizza_example.communication</a></li>
+<li>TRLC Software_requirement <a href='#item-c698bb5b5f4fff03292655c7c7aae371fd8f01f2'>pizza_example.notification_system</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.NotificationSystem.notify_order_status -->
+<div class="item-ok" id="item-d5c618d49d0d2a3297a5f2b1dd06f1eb2cc70190">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.NotificationSystem.notify_order_status</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-a4c8cef80fae240605e1b799c622cefec0ff80dd'>pizza_example.communication</a></li>
+<li>TRLC Software_requirement <a href='#item-c698bb5b5f4fff03292655c7c7aae371fd8f01f2'>pizza_example.notification_system</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.RecipeDatabase.get_recipe -->
+<div class="item-ok" id="item-80dac6fa572ba65edbab9a79cc903ea00391fcf4">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.RecipeDatabase.get_recipe</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-78d4128b6a724bb19903991050b345f0beaa4d27'>pizza_example.quality</a></li>
+<li>TRLC Software_requirement <a href='#item-7f9899d04e2cf31d6cb965fa9c54f12bbf6acd58'>pizza_example.recipe_database</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item python pizza_implementation.RecipeDatabase.validate_quality -->
+<div class="item-ok" id="item-ce9c1829b95a22b75116322593550411bd3ac220">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> Python Method pizza_implementation.RecipeDatabase.validate_quality</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="pizza_implementation.py" target="_blank">pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-78d4128b6a724bb19903991050b345f0beaa4d27'>pizza_example.quality</a></li>
+<li>TRLC Software_requirement <a href='#item-7f9899d04e2cf31d6cb965fa9c54f12bbf6acd58'>pizza_example.recipe_database</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+</div>
+<div class="detailed-report-verification-and-validation">
+<h3 id="heading-verification-and-validation">Verification and Validation</h3>
+<div id="section-component-tests">
+<h4 id="sec-89ee055e759171b6b87a317d46004553" class="heading-component-tests">Component Tests</h4>
+<h5>test_pizza_components.py</h5>
+<!-- begin item pyunit test_pizza_components.TestOrderProcessingComponent.test_complete_order_creation_workflow:26 -->
+<div class="item-ok" id="item-f3fdeaa418db9883767e5e50759eca924f90689d">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_components.TestOrderProcessingComponent.test_complete_order_creation_workflow:26</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_components.py" target="_blank">test_pizza_components.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-e297c6e38fa05525b5e835414831b09022e34632'>pizza_example.payment</a></li>
+<li>TRLC System_requirement <a href='#item-464be7f99a46495de13066dfbed6ba7a08ba997c'>pizza_example.ordering</a></li>
+<li>TRLC Software_requirement <a href='#item-3fe45e26a2e6c94cc9bb5f055b3fcbc253124638'>pizza_example.payment_gateway</a></li>
+<li>TRLC Software_requirement <a href='#item-c8524fbec06a506932672cacb9a85aad57a1b8bf'>pizza_example.order_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_components.TestCookingComponent.test_recipe_to_cooking_workflow:62 -->
+<div class="item-ok" id="item-e48751f81efda74579ba7ed5307c2040a60a6827">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_components.TestCookingComponent.test_recipe_to_cooking_workflow:62</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_components.py" target="_blank">test_pizza_components.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-555f5b6bf9d5ae69122763f419405cd33c2ecc6a'>pizza_example.inventory</a></li>
+<li>TRLC System_requirement <a href='#item-34ce8207e099c745b54dfdded903a0eaba3d2c04'>pizza_example.oven</a></li>
+<li>TRLC System_requirement <a href='#item-78d4128b6a724bb19903991050b345f0beaa4d27'>pizza_example.quality</a></li>
+<li>TRLC Software_requirement <a href='#item-05ef0a7a74e450d02bf2cf8575f56b7a5c013d4e'>pizza_example.stock_manager</a></li>
+<li>TRLC Software_requirement <a href='#item-8252c7d6cf693ad663582a4ad00cff4a5ae06c35'>pizza_example.oven_controller</a></li>
+<li>TRLC Software_requirement <a href='#item-7f9899d04e2cf31d6cb965fa9c54f12bbf6acd58'>pizza_example.recipe_database</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_components.TestDeliveryComponent.test_delivery_tracking_workflow:102 -->
+<div class="item-ok" id="item-e4fc395672f06e1a65a9ac2134357c6117f5200a">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_components.TestDeliveryComponent.test_delivery_tracking_workflow:102</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_components.py" target="_blank">test_pizza_components.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-a4c8cef80fae240605e1b799c622cefec0ff80dd'>pizza_example.communication</a></li>
+<li>TRLC System_requirement <a href='#item-661b12d6275271ac496f51462b12dcf0cc9d294e'>pizza_example.delivery</a></li>
+<li>TRLC System_requirement <a href='#item-60b164d1ebe4997ea5fb79958fcc04d33d697fb3'>pizza_example.tracking</a></li>
+<li>TRLC Software_requirement <a href='#item-c698bb5b5f4fff03292655c7c7aae371fd8f01f2'>pizza_example.notification_system</a></li>
+<li>TRLC Software_requirement <a href='#item-5d114e6b0c7f814706c6c07ef9a14193882cb01f'>pizza_example.route_planner</a></li>
+<li>TRLC Software_requirement <a href='#item-9433e5750bdc82301dfff8ab9d4f11e18263814a'>pizza_example.gps_tracker</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_components.TestInventoryAlertComponent.test_low_stock_alert_workflow:142 -->
+<div class="item-ok" id="item-45fa8daa414085b1f9b270d8682a0ed1111893bb">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_components.TestInventoryAlertComponent.test_low_stock_alert_workflow:142</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_components.py" target="_blank">test_pizza_components.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-a4c8cef80fae240605e1b799c622cefec0ff80dd'>pizza_example.communication</a></li>
+<li>TRLC System_requirement <a href='#item-555f5b6bf9d5ae69122763f419405cd33c2ecc6a'>pizza_example.inventory</a></li>
+<li>TRLC Software_requirement <a href='#item-c698bb5b5f4fff03292655c7c7aae371fd8f01f2'>pizza_example.notification_system</a></li>
+<li>TRLC Software_requirement <a href='#item-05ef0a7a74e450d02bf2cf8575f56b7a5c013d4e'>pizza_example.stock_manager</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_components.TestQualityControlComponent.test_quality_validation_workflow:173 -->
+<div class="item-ok" id="item-c3f74dbc48f7e7e041d3cbdda929145473abcfba">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_components.TestQualityControlComponent.test_quality_validation_workflow:173</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_components.py" target="_blank">test_pizza_components.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-34ce8207e099c745b54dfdded903a0eaba3d2c04'>pizza_example.oven</a></li>
+<li>TRLC System_requirement <a href='#item-78d4128b6a724bb19903991050b345f0beaa4d27'>pizza_example.quality</a></li>
+<li>TRLC Software_requirement <a href='#item-8252c7d6cf693ad663582a4ad00cff4a5ae06c35'>pizza_example.oven_controller</a></li>
+<li>TRLC Software_requirement <a href='#item-7f9899d04e2cf31d6cb965fa9c54f12bbf6acd58'>pizza_example.recipe_database</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205 -->
+<div class="item-ok" id="item-31d3c37e0ce620bdc7303481c54653da1b5597e4">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_components.TestEndToEndOrderComponent.test_complete_pizza_order_system:205</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_components.py" target="_blank">test_pizza_components.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-661b12d6275271ac496f51462b12dcf0cc9d294e'>pizza_example.delivery</a></li>
+<li>TRLC System_requirement <a href='#item-60b164d1ebe4997ea5fb79958fcc04d33d697fb3'>pizza_example.tracking</a></li>
+<li>TRLC System_requirement <a href='#item-a4c8cef80fae240605e1b799c622cefec0ff80dd'>pizza_example.communication</a></li>
+<li>TRLC System_requirement <a href='#item-34ce8207e099c745b54dfdded903a0eaba3d2c04'>pizza_example.oven</a></li>
+<li>TRLC System_requirement <a href='#item-78d4128b6a724bb19903991050b345f0beaa4d27'>pizza_example.quality</a></li>
+<li>TRLC System_requirement <a href='#item-555f5b6bf9d5ae69122763f419405cd33c2ecc6a'>pizza_example.inventory</a></li>
+<li>TRLC System_requirement <a href='#item-e297c6e38fa05525b5e835414831b09022e34632'>pizza_example.payment</a></li>
+<li>TRLC System_requirement <a href='#item-464be7f99a46495de13066dfbed6ba7a08ba997c'>pizza_example.ordering</a></li>
+<li>TRLC Software_requirement <a href='#item-5d114e6b0c7f814706c6c07ef9a14193882cb01f'>pizza_example.route_planner</a></li>
+<li>TRLC Software_requirement <a href='#item-9433e5750bdc82301dfff8ab9d4f11e18263814a'>pizza_example.gps_tracker</a></li>
+<li>TRLC Software_requirement <a href='#item-c698bb5b5f4fff03292655c7c7aae371fd8f01f2'>pizza_example.notification_system</a></li>
+<li>TRLC Software_requirement <a href='#item-8252c7d6cf693ad663582a4ad00cff4a5ae06c35'>pizza_example.oven_controller</a></li>
+<li>TRLC Software_requirement <a href='#item-7f9899d04e2cf31d6cb965fa9c54f12bbf6acd58'>pizza_example.recipe_database</a></li>
+<li>TRLC Software_requirement <a href='#item-05ef0a7a74e450d02bf2cf8575f56b7a5c013d4e'>pizza_example.stock_manager</a></li>
+<li>TRLC Software_requirement <a href='#item-3fe45e26a2e6c94cc9bb5f055b3fcbc253124638'>pizza_example.payment_gateway</a></li>
+<li>TRLC Software_requirement <a href='#item-c8524fbec06a506932672cacb9a85aad57a1b8bf'>pizza_example.order_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_components.TestErrorHandlingComponent.test_payment_failure_workflow:278 -->
+<div class="item-ok" id="item-dee328b88dca4ac7df7340fe0a7baebc09c6bc3a">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_components.TestErrorHandlingComponent.test_payment_failure_workflow:278</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_components.py" target="_blank">test_pizza_components.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC System_requirement <a href='#item-e297c6e38fa05525b5e835414831b09022e34632'>pizza_example.payment</a></li>
+<li>TRLC System_requirement <a href='#item-464be7f99a46495de13066dfbed6ba7a08ba997c'>pizza_example.ordering</a></li>
+<li>TRLC Software_requirement <a href='#item-3fe45e26a2e6c94cc9bb5f055b3fcbc253124638'>pizza_example.payment_gateway</a></li>
+<li>TRLC Software_requirement <a href='#item-c8524fbec06a506932672cacb9a85aad57a1b8bf'>pizza_example.order_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+<div id="section-unit-tests">
+<h4 id="sec-d6a712b8912b88fc5654b52032b40f5b" class="heading-unit-tests">Unit Tests</h4>
+<h5>test_pizza_implementation.py</h5>
+<!-- begin item pyunit test_pizza_implementation.TestOvenController.test_start_cooking:18 -->
+<div class="item-ok" id="item-04bc5b71b0cd65e226440f83048c2a10e1eb02d5">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_implementation.TestOvenController.test_start_cooking:18</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_implementation.py" target="_blank">test_pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Software_requirement <a href='#item-8252c7d6cf693ad663582a4ad00cff4a5ae06c35'>pizza_example.oven_controller</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_implementation.TestOrderProcessor.test_create_customer:33 -->
+<div class="item-ok" id="item-2497b1099716a52e42b4405e532fc874482b711e">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_implementation.TestOrderProcessor.test_create_customer:33</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_implementation.py" target="_blank">test_pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Software_requirement <a href='#item-c8524fbec06a506932672cacb9a85aad57a1b8bf'>pizza_example.order_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_implementation.TestOrderProcessor.test_place_order:43 -->
+<div class="item-ok" id="item-99bb67575e8b8949ec01b268082716e2fbed9e13">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_implementation.TestOrderProcessor.test_place_order:43</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_implementation.py" target="_blank">test_pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Software_requirement <a href='#item-c8524fbec06a506932672cacb9a85aad57a1b8bf'>pizza_example.order_processor</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_implementation.TestPaymentGateway.test_process_payment_valid:57 -->
+<div class="item-ok" id="item-0e12aa68adc7abf467252b3a61c370d4153d5431">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_implementation.TestPaymentGateway.test_process_payment_valid:57</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_implementation.py" target="_blank">test_pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Software_requirement <a href='#item-3fe45e26a2e6c94cc9bb5f055b3fcbc253124638'>pizza_example.payment_gateway</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_implementation.TestInventoryManager.test_use_ingredients:71 -->
+<div class="item-ok" id="item-0432a2a61ca1e8d1793892902849632b31e44140">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_implementation.TestInventoryManager.test_use_ingredients:71</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_implementation.py" target="_blank">test_pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Software_requirement <a href='#item-05ef0a7a74e450d02bf2cf8575f56b7a5c013d4e'>pizza_example.stock_manager</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_implementation.TestNotificationSystem.test_send_sms:86 -->
+<div class="item-ok" id="item-50ec87a929389b390cc1344287b3760497016a17">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_implementation.TestNotificationSystem.test_send_sms:86</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_implementation.py" target="_blank">test_pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Software_requirement <a href='#item-c698bb5b5f4fff03292655c7c7aae371fd8f01f2'>pizza_example.notification_system</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_implementation.TestRecipeDatabase.test_get_recipe:100 -->
+<div class="item-ok" id="item-e6d1eb56ef004f5212354cf2261eabac8ad7da19">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_implementation.TestRecipeDatabase.test_get_recipe:100</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_implementation.py" target="_blank">test_pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Software_requirement <a href='#item-7f9899d04e2cf31d6cb965fa9c54f12bbf6acd58'>pizza_example.recipe_database</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+<!-- begin item pyunit test_pizza_implementation.TestRouteOptimizer.test_calculate_route_empty:114 -->
+<div class="item-ok" id="item-bb67db2954c6aa42de2ea7e868385b9bfcce0d84">
+<div class="item-name"><svg class="icon"><use href="#svg-check-square"></use></svg> PyUnit Test test_pizza_implementation.TestRouteOptimizer.test_calculate_route_empty:114</div>
+<div class="attribute">Source: 
+<svg class="icon"><use href="#svg-external-link"></use></svg>
+<a href="test_pizza_implementation.py" target="_blank">test_pizza_implementation.py</a>
+</div>
+<div class="attribute">
+<div>Derived from:
+<ul>
+<li>TRLC Software_requirement <a href='#item-5d114e6b0c7f814706c6c07ef9a14193882cb01f'>pizza_example.route_planner</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- end item -->
+</div>
+</div>
+</div>
+<footer>
+<p>LOBSTER Version: 1.0.3-dev</p>
+</footer>
+</div>
+</div>
+<script>
+function buttonFilter(filter) {
+    var elms = document.getElementsByTagName("div");
+    var issue_elms = document.getElementsByClassName("issue");
+    for (i = 0; i < elms.length; i++) {
+        if (elms[i].id.startsWith("item-")) {
+            console.log("elms[i].className ", elms[i].className)
+            if (filter == "all") {
+                elms[i].style.display = "block";
+            } else if (elms[i].className == "item-" + filter) {
+                elms[i].style.display = "block";
+            } else {
+                elms[i].style.display = "none";
+            }
+        }
+    }
+    // filter the issues list based on the issue filter button clicked
+    for (i = 0; i < issue_elms.length; i++) {
+        console.log("log ", issue_elms[i].className)
+        if (filter == "all") {
+            issue_elms[i].style.display = "list-item";
+        } else if (issue_elms[i].className.includes("issue issue-" + filter)) {
+            issue_elms[i].style.display = "list-item";
+        } else {
+            issue_elms[i].style.display = "none";
+        }
+    }
+    activeButton(filter);
+    //call the search filering which could have been overwritten by the current filtering
+    searchItem();
+}
+
+
+function activeButton(filter) {
+    var elms = document.getElementsByTagName("button");
+    console.log("the click buitton is " + filter);
+    for (i = 0; i < elms.length; i++) {
+        if (elms[i].className.includes("buttonActive")) {
+            console.log("elem active found : " + elms[i].className);
+            elms[i].className = elms[i].className.replace("buttonActive", "");
+        } else if (elms[i].className.toLowerCase().includes("button" + filter.toLowerCase())) {
+            console.log("elem to be activated found : " + elms[i].className);
+            elms[i].className = elms[i].className + " buttonActive";
+        }
+    }
+}
+
+
+function ToggleIssues() {
+    var div_issue = document.getElementById("issues-section");
+    if (div_issue.style.display == "block" || div_issue.style.display == "") {
+        div_issue.style.display = "none";
+        document.getElementById("BtnToggleIssue").innerHTML = "Show Issues";
+        document.getElementById("BtnToggleIssue").className = document.getElementById("BtnToggleIssue").className + " buttonActive";
+    } else {
+        div_issue.style = 'display: block; flex-direction: column; height: 200px;' +
+            'overflow:auto;';
+        document.getElementById("BtnToggleIssue").innerHTML = "Hide Issues";
+        document.getElementById("BtnToggleIssue").className = document.getElementById("BtnToggleIssue").className.replace("buttonActive", "");
+    }
+}
+
+
+function searchItem() {
+    var input = document.getElementById('search').value
+    input = input.toLowerCase();
+
+    var divs = document.getElementsByClassName('item-name');
+    for (i = 0; i < divs.length; i++) {
+        var title = divs[i].parentNode.getAttribute("title");
+        // get requirement name: 2nd part when we cut the long string with /svg
+        var reqname = divs[i].innerHTML.toLowerCase().split("</svg>").pop();
+        reqname = reqname.split(" ").pop();
+        if (reqname.includes(input)) {
+            // the search pattern has been found, if this elem has the title "hidden-not-matching", put it back to diplayed
+            if (title) {
+                if (title.startsWith("hidden-not-matching")) {
+                    divs[i].parentNode.style.display = "block";
+                }
+            }
+            divs[i].parentNode.setAttribute("title", "matching-" + input)
+        } else {
+            // not maching, we hide
+            divs[i].parentNode.setAttribute("title", "hidden-not-matching")
+            divs[i].parentNode.style.display = "none";
+        }
+    }
+}
+</script>
+<script>
+
+window.onscroll = function() {stickyNavbar()};
+
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+function stickyNavbar() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+</body>
+</html>

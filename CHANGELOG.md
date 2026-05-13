@@ -54,6 +54,11 @@
 
 * Included Python 3.13 in the CI test matrix.
 
+* LOBSTER report
+  - New YAMY configuration file.
+  - Without need to specify level types like requirement, implementation or activity.
+  - All LOBSTER tools will create .lobster files without schema, all elements are items.
+
 ### 1.0.2
  
 * `lobster-trlc`:

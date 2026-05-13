@@ -25,7 +25,7 @@ lobster_raw(
 
 lobster_test(
     name = "traceability",
-    config = "lobster-bazel.conf",
+    config = "lobster-bazel.yaml",
     inputs = [
         ":software-requirements",
         ":system-requirements",

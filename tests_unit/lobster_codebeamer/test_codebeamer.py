@@ -217,6 +217,7 @@ class ParseYamlTests(unittest.TestCase):
             }
         )
         self.assertEqual(config.base, "https://example.com/api/v3")
+        self.assertEqual(config.schema, "Requirement")
 
 if __name__ == '__main__':
     unittest.main()

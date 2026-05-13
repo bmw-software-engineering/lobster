@@ -1,0 +1,15 @@
+Requirements: !LevelDefinition
+  name: Requirements
+  source:
+  - file: trlc_zero_items_no_schema.lobster
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Code
+
+Code: !LevelDefinition
+  name: Code
+  source:
+  - file: python_zero_items_no_schema.lobster
+  needs_tracing_up: true
+  traces:
+  - Requirements

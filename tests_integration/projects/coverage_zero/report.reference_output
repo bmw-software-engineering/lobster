@@ -5,10 +5,9 @@
   "levels": [
     {
       "name": "System Requirements",
-      "kind": "requirements",
       "items": [
         {
-          "tag": "req coverage_zero.requirement_4a",
+          "tag": "itm coverage_zero.requirement_4a",
           "location": {
             "kind": "file",
             "file": "sysreq_example.trlc",
@@ -22,21 +21,16 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "System_Requirement",
-          "text": "Requirement 4a",
-          "status": null
+          "tracing_status": "MISSING"
         }
       ],
       "coverage": 0.0
     },
     {
       "name": "Software Requirements",
-      "kind": "requirements",
       "items": [
         {
-          "tag": "req coverage_zero.requirement_3a",
+          "tag": "itm coverage_zero.requirement_3a",
           "location": {
             "kind": "file",
             "file": "softreq_example.trlc",
@@ -50,14 +44,10 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "Software_Requirement",
-          "text": "Requirement 3a",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req coverage_zero.requirement_3b",
+          "tag": "itm coverage_zero.requirement_3b",
           "location": {
             "kind": "file",
             "file": "softreq_example.trlc",
@@ -71,11 +61,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "Software_Requirement",
-          "text": "Requirement 3b",
-          "status": null
+          "tracing_status": "MISSING"
         }
       ],
       "coverage": 0.0
@@ -84,7 +70,6 @@
   "policy": {
     "System Requirements": {
       "name": "System Requirements",
-      "kind": "requirements",
       "traces": [],
       "source": [
         {
@@ -101,7 +86,6 @@
     },
     "Software Requirements": {
       "name": "Software Requirements",
-      "kind": "requirements",
       "traces": [
         "System Requirements"
       ],
