@@ -103,6 +103,7 @@ The individual PyPI packages that `bmw-lobster` depends on are:
 
 ### For LOBSTER developers
 
+* [Release Process](documentation/release.md)
 * [System Test Coverage Report](https://bmw-software-engineering.github.io/lobster/htmlcov-system/index.html)
 * [Unit Test Coverage Report](https://bmw-software-engineering.github.io/lobster/htmlcov-unit/index.html)
 * [LOBSTER API Documentation](https://bmw-software-engineering.github.io/lobster/api_documentation/)
