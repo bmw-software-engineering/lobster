@@ -155,17 +155,12 @@ class Python_Traceable_Node:
 
     def warn_ignored(self, reason):
         for tag in self.tags:
-            print("%s: warning: ignored tag %s because "
-                  "%s already has annotations" %
-                  (self.location.to_string(),
-                   tag,
-                   reason))
+            print(f"{self.location.to_string()}: warning: ignored tag {tag}"
+                  f" because {reason} already has annotations")
         for just in self.just:
-            print("%s: warning: ignored justification '%s' because "
-                  "%s already has annotations" %
-                  (self.location.to_string(),
-                   just,
-                   reason))
+            print(f"{self.location.to_string()}: warning: "
+                  f"ignored justification '{just}' "
+                  f"because {reason} already has annotations")
 
 
 class Python_Module(Python_Traceable_Node):

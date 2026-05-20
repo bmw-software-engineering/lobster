@@ -83,7 +83,7 @@ class Parser:
             else:
                 self.error(self.nt.loc,
                            "expected: requirements|implementation|activity,"
-                           " found %s instead" % self.nt.value())
+                           f" found {self.nt.value()} instead")
 
         return self.levels
 

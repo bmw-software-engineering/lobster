@@ -129,9 +129,11 @@ class Dropdown_Menu(Menu_Item):
         }
 
         rv = ['<div class="dropdown">']
-        rv.append('<button class="dropbtn">%s%s</button>' %
-                  (html.escape(self.name),
-                   '<svg class="icon"><use href="#svg-chevron-down"></use></svg>'))
+        rv.append(
+            f'<button class="dropbtn">{html.escape(self.name)}'
+            '<svg class="icon"><use href="#svg-chevron-down"></use></svg>'
+            '</button>'
+        )
         rv.append('<div class="dropdown-content">')
         for item in self.items:
             rv += item.generate(doc)
