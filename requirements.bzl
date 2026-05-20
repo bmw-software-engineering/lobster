@@ -15,6 +15,9 @@ _mapping = {
     "requests": "@requests//:lib",
     "selenium": "@selenium//:lib",
     "setuptools": "@setuptools//:lib",
+    # Fallback for environments where the pip hub is unavailable.
+    # In standard builds pip_requirement("trlc") from requirements_lock.txt
+    # takes precedence and this entry is never reached.
     "trlc": "@trlc//:lib",
     "urllib3": "@urllib3//:lib",
     "webdriver-manager": "@webdriver_manager//:lib",

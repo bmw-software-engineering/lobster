@@ -39,6 +39,7 @@ def _gtest_report_subrule_impl(ctx, name, executable, inputs):
 
     args = ctx.actions.args()
     args.add("--gtest_output=xml:{}".format(xml.path))
+    args.add("--gtest_brief=1")
 
     ctx.actions.run(
         outputs = [xml],
