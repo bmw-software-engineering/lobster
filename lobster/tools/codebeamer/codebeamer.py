@@ -232,8 +232,6 @@ def get_query(cb_config: Config, query: Union[int, str]):
                         query,
                         page_id,
                         cb_config.page_size))
-            if cb_config.baseline_id is not None:
-                url += f"&baselineId={cb_config.baseline_id}"
         elif isinstance(query, str):
             url = ("%s/items/query?page=%u&pageSize=%u&queryString=%s" %
                     (cb_config.base,
