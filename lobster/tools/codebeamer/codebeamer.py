@@ -230,15 +230,10 @@ def get_query(cb_config: Config, query: Union[int, str]):
             url = (f"{cb_config.base}/reports/{query}/items"
                    f"?page={page_id}&pageSize={cb_config.page_size}")
         elif isinstance(query, str):
-            url = ("%s/items/query?page=%u&pageSize=%u&queryString=%s" %
-                    (cb_config.base,
-                        page_id,
-                        cb_config.page_size,
-                        query))
-            if cb_config.baseline_id is not None:
-                url += f"&baselineId={cb_config.baseline_id}"
             url = (f"{cb_config.base}/items/query?page={page_id}"
                    f"&pageSize={cb_config.page_size}&queryString={query}")
+            if cb_config.baseline_id is not None:
+                url += f"&baselineId={cb_config.baseline_id}"
         data = query_cb_single(cb_config, url)
         if len(data) != 4:
             raise MismatchException(
