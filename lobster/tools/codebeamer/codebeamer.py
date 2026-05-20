@@ -72,6 +72,7 @@ class SupportedConfigKeys(Enum):
     RETRY_ERROR_CODES = "retry_error_codes"
     IMPORT_TAGGED = "import_tagged"
     IMPORT_QUERY  = "import_query"
+    BASELINE_ID   = "baseline_id"
     VERIFY_SSL    = "verify_ssl"
     PAGE_SIZE     = "page_size"
     REFS          = "refs"
@@ -231,12 +232,16 @@ def get_query(cb_config: Config, query: Union[int, str]):
                         query,
                         page_id,
                         cb_config.page_size))
+            if cb_config.baseline_id is not None:
+                url += f"&baselineId={cb_config.baseline_id}"
         elif isinstance(query, str):
             url = ("%s/items/query?page=%u&pageSize=%u&queryString=%s" %
                     (cb_config.base,
                         page_id,
                         cb_config.page_size,
                         query))
+            if cb_config.baseline_id is not None:
+                url += f"&baselineId={cb_config.baseline_id}"
         data = query_cb_single(cb_config, url)
         if len(data) != 4:
             raise MismatchException(
@@ -511,6 +516,7 @@ def parse_config_data(data: dict) -> Config:
         references=ensure_list(data.get(SupportedConfigKeys.REFS.value, [])),
         import_tagged=data.get(SupportedConfigKeys.IMPORT_TAGGED.value),
         import_query=data.get(SupportedConfigKeys.IMPORT_QUERY.value),
+        baseline_id=data.get(SupportedConfigKeys.BASELINE_ID.value),
         verify_ssl=data.get(SupportedConfigKeys.VERIFY_SSL.value, True),
         page_size=data.get(SupportedConfigKeys.PAGE_SIZE.value, 100),
         schema=data.get(SupportedConfigKeys.SCHEMA.value, "Requirement"),
@@ -537,6 +543,18 @@ def parse_config_data(data: dict) -> Config:
     if not config.cb_auth_conf.root.startswith("https://"):
         raise KeyError(f"{SupportedConfigKeys.CB_ROOT.value} must start with https://, "
                        f"but value is {config.cb_auth_conf.root}.")
+
+    if config.baseline_id is not None:
+        try:
+            config.baseline_id = int(config.baseline_id)
+        except (TypeError, ValueError) as exc:
+            raise KeyError(
+                f"{SupportedConfigKeys.BASELINE_ID.value} must be a positive integer."
+            ) from exc
+        if config.baseline_id <= 0:
+            raise KeyError(
+                f"{SupportedConfigKeys.BASELINE_ID.value} must be a positive integer."
+            )
 
     return config
 
