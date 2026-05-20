@@ -1,0 +1,32 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_library(
+    name = "lobster_rst_report",
+    srcs = [
+        "lobster_rst_report_system_test_case_base.py",
+        "lobster_rst_report_test_runner.py",
+    ],
+    data = [
+        "//tests_system/lobster_rst_report/data:rst_report_data_system",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//lobster/tools/core/rst_report",
+        "//tests_system",
+    ],
+)
+
+py_test(
+    name = "test_rst_report_input_file",
+    srcs = ["test_rst_report_input_file.py"],
+    deps = [
+        ":lobster_rst_report",
+        "//lobster/tools/core/rst_report",
+        "//tests_system",
+    ],
+)

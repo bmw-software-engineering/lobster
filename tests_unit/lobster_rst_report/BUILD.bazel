@@ -1,0 +1,20 @@
+load("@rules_python//python:defs.bzl", "py_test")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_test(
+    name = "test_rst_report_helpers",
+    srcs = ["test_rst_report_helpers.py"],
+    deps = [
+        "//lobster/tools/core/rst_report",
+    ],
+)
+
+py_test(
+    name = "test_rst_report_renderers",
+    srcs = ["test_rst_report_renderers.py"],
+    deps = [
+        "//lobster/tools/core/rst_report",
+    ],
+)

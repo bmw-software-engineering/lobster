@@ -1,0 +1,90 @@
+package UseCases
+import req
+
+req.TestSpecification RST_File_generation {
+    description = '''
+      The test shall verify that the RST report file is generated when
+      a valid .lobster input file is provided.
+    '''
+    verifies = [RST_Report_not_Generated]
+}
+
+req.TestSpecification RST_Covered_Requirement_list {
+    description = '''
+      The test shall verify that requirements covered by software tests
+      are correctly listed in the RST report.
+    '''
+    verifies = [RST_Requirements_not_listed_correctly]
+}
+
+req.TestSpecification RST_Not_covered_Requirement_list {
+    description = '''
+      The test shall verify that requirements not covered by software tests
+      are correctly listed in the RST report.
+    '''
+    verifies = [RST_Requirements_not_listed_correctly]
+}
+
+req.TestSpecification RST_List_of_tests_covering_requirements {
+    description = '''
+      The test shall verify that software tests covering requirements
+      are correctly listed in the RST report.
+    '''
+    verifies = [RST_Software_tests_not_listed_correctly]
+}
+
+req.TestSpecification RST_List_of_tests_not_covering_requirements {
+    description = '''
+      The test shall verify that software tests not covering any requirement
+      are correctly listed in the RST report.
+    '''
+    verifies = [RST_Software_tests_not_listed_correctly]
+}
+
+req.TestSpecification RST_Coverage_in_output {
+    description = '''
+      The test shall verify correct coverage value in the RST report.
+    '''
+    verifies = [RST_Incorrect_Coverage]
+}
+
+req.TestSpecification RST_Missing_tracing_policy_violation_in_output {
+    description = '''
+      The test shall verify that items where the tracing policy is violated
+      are listed correctly in the RST report.
+    '''
+    verifies = [RST_Too_few_findings]
+}
+
+req.TestSpecification RST_Source_location_in_output {
+    description = '''
+      The test shall verify that correct source locations of the inputs (URLs)
+      are mentioned in the RST report.
+    '''
+    verifies = [RST_Input_file_location_missing, RST_Wrong_Input_location]
+}
+
+req.TestSpecification RST_Correct_Item_Data {
+    description = '''
+      The test shall verify that correct item data (name, description, tracing
+      status) is displayed in the RST report and is not mixed between items.
+    '''
+    verifies = [RST_Incorrect_Item_Data]
+}
+
+req.TestSpecification RST_Valid_Sphinx_Build {
+    description = '''
+      The test shall verify that the generated RST output can be
+      successfully built by Sphinx without warnings or errors.
+    '''
+    verifies = [RST_Incorrect_RST_Syntax]
+}
+
+req.TestSpecification RST_Codebeamer_Links_In_Output {
+    description = '''
+      The test shall verify that codebeamer items in the input LOBSTER
+      report are rendered as clickable hyperlinks in the RST output,
+      including correct URL construction and item name display.
+    '''
+    verifies = [RST_Input_file_location_missing, RST_Wrong_Input_location]
+}

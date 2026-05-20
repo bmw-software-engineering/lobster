@@ -1,0 +1,49 @@
+package rst_req
+import req
+
+req.System_Requirement RST_Report_Tracing_Policy_Diagram {
+    description = '''
+      The generated RST report SHALL include a Graphviz diagram
+      that visualises the tracing policy used to produce the report.
+    '''
+}
+
+req.System_Requirement RST_Report_Coverage_Table {
+    description = '''
+      The generated RST report SHALL include a coverage summary table
+      that shows for each tracing level the number of items
+      and the percentage of items that fulfill the tracing policy.
+    '''
+}
+
+req.System_Requirement RST_Report_Issues_List {
+    description = '''
+      The generated RST report SHALL include an issues section
+      that lists all items where the tracing policy is violated.
+    '''
+}
+
+req.System_Requirement RST_Report_Item_Details {
+    description = '''
+      The generated RST report SHALL include a detail section for every item
+      in the report, showing the item tag, description, status, and its
+      incoming and outgoing references.
+    '''
+}
+
+req.System_Requirement RST_Report_Single_Page {
+    description = '''
+      IF the user invokes the tool with the --out option,
+      THEN the tool SHALL write the complete traceability report
+      as a single RST file to the path specified by --out.
+    '''
+}
+
+req.System_Requirement RST_Report_Multi_Page {
+    description = '''
+      IF the user invokes the tool with the --out-dir option,
+      THEN the tool SHALL write the traceability report as a set of RST files
+      to the directory specified by --out-dir.
+      The set SHALL consist of an index.rst file and one RST file per tracing level.
+    '''
+}

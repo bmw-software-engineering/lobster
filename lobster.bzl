@@ -2,7 +2,7 @@ load("//bazel:providers.bzl", _LobsterProvider = "LobsterProvider")
 load("//bazel/private:gtest_report.bzl", _gtest_report = "gtest_report", _subrule_gtest_report = "subrule_gtest_report")
 load("//bazel/private:lobster_gtest.bzl", _lobster_gtest = "lobster_gtest", _subrule_lobster_gtest = "subrule_lobster_gtest")
 load("//bazel/private:lobster_raw.bzl", _lobster_raw = "lobster_raw")
-load("//bazel/private:lobster_test.bzl", _lobster_test = "lobster_test", _subrule_lobster_html_report = "subrule_lobster_html_report", _subrule_lobster_report = "subrule_lobster_report")
+load("//bazel/private:lobster_test.bzl", _lobster_test = "lobster_test", _subrule_lobster_html_report = "subrule_lobster_html_report", _subrule_lobster_report = "subrule_lobster_report", _subrule_lobster_rst_report = "subrule_lobster_rst_report")
 load("//bazel/private:lobster_trlc.bzl", _lobster_trlc = "lobster_trlc", _subrule_lobster_trlc = "subrule_lobster_trlc")
 
 # Re-export LobsterProvider so it can be loaded from this file
@@ -26,5 +26,6 @@ def lobster_gtest(**kwargs):
 subrule_lobster_trlc = _subrule_lobster_trlc
 subrule_lobster_gtest = _subrule_lobster_gtest
 subrule_lobster_html_report = _subrule_lobster_html_report
+subrule_lobster_rst_report = _subrule_lobster_rst_report
 subrule_lobster_report = _subrule_lobster_report
 subrule_gtest_report = _subrule_gtest_report
