@@ -85,22 +85,20 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
             'total': 1,
             'items': [
                 {
-                    'item': {
+                    'id': 5,
+                    'name': 'Requirement 5: Dynamic name',
+                    'description': 'Dynamic description',
+                    'status': {
                         'id': 5,
-                        'name': 'Requirement 5: Dynamic name',
-                        'description': 'Dynamic description',
-                        'status': {
-                            'id': 5,
-                            'name': 'Status 5',
-                            'type': 'ChoiceOptionReference'
-                        },
-                        'tracker': {
-                            'id': 5,
-                            'name': 'Tracker_Name_5',
-                            'type': 'TrackerReference',
-                        },
-                        'version': 1,
-                    }
+                        'name': 'Status 5',
+                        'type': 'ChoiceOptionReference'
+                    },
+                    'tracker': {
+                        'id': 5,
+                        'name': 'Tracker_Name_5',
+                        'type': 'TrackerReference',
+                    },
+                    'version': 1,
                 }
             ]
         }
