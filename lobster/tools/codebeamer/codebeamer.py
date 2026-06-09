@@ -537,14 +537,26 @@ def parse_config_data(data: dict) -> Config:
                        f"but value is {config.cb_auth_conf.root}.")
 
     if config.baseline_id is not None:
+        if config.import_tagged:
+            raise KeyError(
+                f"The keys {SupportedConfigKeys.BASELINE_ID.value} and "
+                f"{SupportedConfigKeys.IMPORT_TAGGED.value} are both present "
+                f"in the configuration, but they are mutually exclusive!"
+            )
+        if config.import_query and not isinstance(config.import_query, str):
+            raise KeyError(
+                f"The key {SupportedConfigKeys.BASELINE_ID.value} is only "
+                f"allowed if {SupportedConfigKeys.IMPORT_QUERY.value} is a "
+                f"cbQL query string, not a numeric report ID!"
+            )
         try:
             config.baseline_id = int(config.baseline_id)
         except (TypeError, ValueError) as exc:
-            raise KeyError(
+            raise ValueError(
                 f"{SupportedConfigKeys.BASELINE_ID.value} must be a positive integer."
             ) from exc
         if config.baseline_id <= 0:
-            raise KeyError(
+            raise ValueError(
                 f"{SupportedConfigKeys.BASELINE_ID.value} must be a positive integer."
             )
 
@@ -587,6 +599,8 @@ class CodebeamerTool(MetaDataToolBase):
             )
         except ValueError as value_error:
             self._print_error(value_error)
+        except KeyError as key_error:
+            self._print_error(key_error)
         except LOBSTER_Error as lobster_error:
             self._print_error(lobster_error)
 

@@ -134,8 +134,10 @@ baseline_id: 407126303
 ```
 
 > **Important:** `baseline_id` is only applied when `import_query` is a **cbQL query
-> string**. When `import_query` is a numeric report ID, the parameter is silently
-> ignored and the current HEAD state is returned instead.
+> string**. When `import_query` is a numeric report ID or `import_tagged` (a path to
+> an existing LOBSTER artifact for tag-based import, see
+> [Importing only tagged requirements](#importing-only-tagged-requirements)) is set,
+> `lobster-codebeamer` exits with an error (exit code 1).
 
 ### Importing only tagged requirements
 

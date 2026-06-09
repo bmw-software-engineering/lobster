@@ -5,6 +5,13 @@
 
 ### 1.0.4-dev
 
+* `lobster-codebeamer`:
+  - Added `baseline_id` support for cbQL queries. When set, the tool queries
+    items at the specified Codebeamer baseline revision.
+  - `baseline_id` combined with `import_tagged` or a numeric `import_query`
+    now raises an error instead of being silently ignored (ISO 26262 TCL3
+    qualification support).
+
 
 
 ### 1.0.3
