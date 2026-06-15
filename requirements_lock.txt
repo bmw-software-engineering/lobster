@@ -792,8 +792,8 @@ trio-websocket==0.12.2 \
     --hash=sha256:22c72c436f3d1e264d0910a3951934798dcc5b00ae56fc4ee079d46c7cf20fae \
     --hash=sha256:df605665f1db533f4a386c94525870851096a223adcb97f72a07e8b4beba45b6
     # via selenium
-trlc==2.0.3 \
-    --hash=sha256:86b4c8690239f7b993259b316b8d6079633e32dff8f8ddbae5ad61503ac9362d
+trlc==2.0.5 \
+    --hash=sha256:fc4e4e3a21980711e85426d840f4f7f2e6ebb29ce94d55004f7d8e5e4532426c
     # via -r requirements.txt
 typing-extensions==4.15.0 \
     --hash=sha256:0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466 \
