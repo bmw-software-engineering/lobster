@@ -7,6 +7,8 @@
 
 * `trlc bazel dep`: update to trlc==2.0.5
 
+* Fixed wrong links in [README](README.md).
+
 ### 1.0.3
 
 * `lobster-html-report`:

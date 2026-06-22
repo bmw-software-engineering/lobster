@@ -39,13 +39,16 @@ Alternatively, use `pipx`:
 $ pipx install bmw-lobster --include-deps
 ```
 
-For the HTML Report `graphviz` is also used to generate the tracing policy diagram. More on that in the user [manual](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/user-manual.md).
+For the HTML Report `graphviz` is also used to generate the tracing policy diagram.
+More on tracing policies can be found in the user manual on
+[configuration files](documentation/config_files.md).
 
 ```
 $ sudo apt-get install -y graphviz
 ```
 
-The `lobster-cpp` converter tool needs a specific version of `clang-tidy`. Please see [here](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/user-manual.md#clang-tidy-file-generation) to create it.
+The `lobster-cpp` converter tool needs a specific version of `clang-tidy`.
+Please see [here](documentation/user-manual.md#clang-tidy-file-generation) to create it.
 
 ## Supported inputs
 
@@ -76,6 +79,7 @@ The following verification and miscellaneous frameworks are supported:
 
 ## Documentation
 
+* [User Manual](documentation/user-manual.md)
 * Writing [configuration files](documentation/config_files.md) for LOBSTER.
 * It is easy to expand the languages and activities supported by
   LOBSTER by adding new tracing tools, as long as they create data in
@@ -140,7 +144,8 @@ You can consider lobster as a set of
 3. the report creation tool and
 4. a renderer for the tracing report.
 
-For a more detailed description please read our [user guide](https://github.com/bmw-software-engineering/lobster/blob/main/documentation/config_files.md).
+For a more detailed description please read our user manual on
+[configuration files](documentation/config_files.md).
 
 These steps are in the following diagram and go from left to right side:
 
