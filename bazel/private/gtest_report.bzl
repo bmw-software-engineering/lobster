@@ -5,7 +5,6 @@ The tests are run as part of the build, and the generated XML report is made ava
 ATTENTION:
 This rule will not rerun tests unless this rule was modified or the test executable was modified.
 E.g. Bazel arguments like "--runs_per_test" do not have an effect on this rule.
-"""
 
 _RULE_ATTRS = {
     # In order for args expansion to work in bazel for an executable rule
@@ -27,7 +26,7 @@ _RULE_ATTRS = {
     ),
 }
 
-def _gtest_report_subrule_impl(ctx, name, executable, inputs):
+def _gtest_report_subrule_impl(ctx, name, executable, inputs, suppress_stdout = False):
     link = ctx.actions.declare_file(name + "_runner")
     xml = ctx.actions.declare_file("{}_test.xml".format(name))
 
@@ -41,12 +40,20 @@ def _gtest_report_subrule_impl(ctx, name, executable, inputs):
     args.add("--gtest_output=xml:{}".format(xml.path))
     args.add("--gtest_brief=1")
 
-    ctx.actions.run(
-        outputs = [xml],
-        inputs = depset([executable], transitive = [inputs]),
-        arguments = [args],
-        executable = link,
-    )
+    if suppress_stdout:
+        ctx.actions.run_shell(
+            outputs = [xml],
+            inputs = depset([link, executable], transitive = [inputs]),
+            arguments = [args],
+            command = '"{}" "$@" >/dev/null'.format(link.path),
+        )
+    else:
+        ctx.actions.run(
+            outputs = [xml],
+            inputs = depset([executable], transitive = [inputs]),
+            arguments = [args],
+            executable = link,
+        )
 
     return xml
 

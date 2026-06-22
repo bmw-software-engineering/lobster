@@ -1,19 +1,28 @@
 load("//bazel:providers.bzl", "LobsterProvider")
 
-def _lobster_report_subrule_impl(ctx, inputs, lobster_config, _lobster_report):
+def _lobster_report_subrule_impl(ctx, inputs, lobster_config, suppress_stdout = False, _lobster_report = None):
     lobster_report = ctx.actions.declare_file(ctx.label.name + "_report.json")
 
     args = ctx.actions.args()
     args.add_all(["--lobster-config", lobster_config.path])
     args.add_all(["--out", lobster_report.path])
 
-    ctx.actions.run(
-        executable = _lobster_report,
-        inputs = depset(inputs + [lobster_config]),
-        outputs = [lobster_report],
-        arguments = [args],
-        progress_message = "lobster-report {}".format(lobster_report.path),
-    )
+    if suppress_stdout:
+        ctx.actions.run_shell(
+            inputs = depset(inputs + [lobster_config]),
+            outputs = [lobster_report],
+            arguments = [args],
+            command = '"{executable}" "$@" >/dev/null'.format(executable = _lobster_report.path),
+            progress_message = "lobster-report {}".format(lobster_report.path),
+        )
+    else:
+        ctx.actions.run(
+            executable = _lobster_report,
+            inputs = depset(inputs + [lobster_config]),
+            outputs = [lobster_report],
+            arguments = [args],
+            progress_message = "lobster-report {}".format(lobster_report.path),
+        )
 
     return lobster_report
 
@@ -28,7 +37,7 @@ subrule_lobster_report = subrule(
     },
 )
 
-def _lobster_html_report_subrule_impl(ctx, lobster_report, _lobster_html_report):
+def _lobster_html_report_subrule_impl(ctx, lobster_report, suppress_stdout = False, _lobster_html_report = None):
     lobster_html_report = ctx.actions.declare_file("{}_report.html".format(ctx.label.name))
 
     # Compute relative path from the HTML output back to the workspace root so
@@ -43,13 +52,22 @@ def _lobster_html_report_subrule_impl(ctx, lobster_report, _lobster_html_report)
     args.add_all(["--out", lobster_html_report.path])
     args.add_all(["--source-root", source_root])
 
-    ctx.actions.run(
-        executable = _lobster_html_report,
-        inputs = [lobster_report],
-        outputs = [lobster_html_report],
-        arguments = [args],
-        progress_message = "lobster-html-report {}".format(lobster_html_report.path),
-    )
+    if suppress_stdout:
+        ctx.actions.run_shell(
+            inputs = [lobster_report],
+            outputs = [lobster_html_report],
+            arguments = [args],
+            command = '"{executable}" "$@" >/dev/null'.format(executable = _lobster_html_report.path),
+            progress_message = "lobster-html-report {}".format(lobster_html_report.path),
+        )
+    else:
+        ctx.actions.run(
+            executable = _lobster_html_report,
+            inputs = [lobster_report],
+            outputs = [lobster_html_report],
+            arguments = [args],
+            progress_message = "lobster-html-report {}".format(lobster_html_report.path),
+        )
 
     return lobster_html_report
 
