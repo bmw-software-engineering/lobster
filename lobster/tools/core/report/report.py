@@ -30,13 +30,13 @@ class ReportTool(MetaDataToolBase):
     def __init__(self):
         super().__init__(
             name="report",
-            description="Generate a LOBSTER report from a lobster.conf file",
+            description="Generate a LOBSTER report from a lobster.yaml file",
             official=True,
         )
         self._argument_parser.add_argument(
             "--lobster-config",
             metavar="FILE",
-            default="lobster.conf",
+            default="lobster.yaml",
         )
         self._argument_parser.add_argument(
             "--out",

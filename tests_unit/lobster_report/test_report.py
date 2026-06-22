@@ -49,11 +49,14 @@ class ReportTests(TestCase):
                     )
 
 
-    def test_generate_report_file(self):
+    def test_generate_report_file_conf(self):
         apple_config = "apple.conf"
         banana_output = "banana.lobster"
 
-        with patch.object(Report, 'parse_config') as mock_parse_config, \
+        with patch.object(Report, 'validate_config_from_yaml_file') as mock_validate_config_from_yaml_file, \
+             patch.object(Report, 'load_config_from_yaml_file') as mock_load_config_from_yaml_file, \
+             patch.object(Report, 'print_deprecated_warning') as mock_print_deprecated_warning, \
+             patch.object(Report, 'load_config_from_conf_file') as mock_load_config_from_conf_file, \
              patch.object(Report, 'write_report') as mock_write_report:
 
             lobster_report(
@@ -62,5 +65,32 @@ class ReportTests(TestCase):
             )
 
             # Verify custom parameters were used
-            mock_parse_config.assert_called_once_with(apple_config)
+            mock_print_deprecated_warning.assert_called_once_with(apple_config)
+            mock_load_config_from_conf_file.assert_called_once_with(apple_config)
             mock_write_report.assert_called_once_with(banana_output)
+
+            mock_validate_config_from_yaml_file.assert_not_called()
+            mock_load_config_from_yaml_file.assert_not_called()
+
+    def test_generate_report_file_yaml(self):
+        apple_config = "apple.yaml"
+        banana_output = "banana.lobster"
+
+        with patch.object(Report, 'validate_config_from_yaml_file') as mock_validate_config_from_yaml_file, \
+             patch.object(Report, 'load_config_from_yaml_file') as mock_load_config_from_yaml_file, \
+             patch.object(Report, 'print_deprecated_warning') as mock_print_deprecated_warning, \
+             patch.object(Report, 'load_config_from_conf_file') as mock_load_config_from_conf_file, \
+             patch.object(Report, 'write_report') as mock_write_report:
+
+            lobster_report(
+                lobster_config_file=apple_config,
+                output_file=banana_output
+            )
+
+            # Verify custom parameters were used
+            mock_validate_config_from_yaml_file.assert_called_once_with(apple_config)
+            mock_load_config_from_yaml_file.assert_called_once_with(apple_config)
+            mock_write_report.assert_called_once_with(banana_output)
+
+            mock_print_deprecated_warning.assert_not_called()
+            mock_load_config_from_conf_file.assert_not_called()

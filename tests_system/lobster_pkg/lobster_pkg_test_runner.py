@@ -9,6 +9,7 @@ from lobster.tools.pkg.pkg import main
 class CmdArgs:
     files: List[str] = field(default_factory=list)
     out: Optional[str] = None
+    kind: Optional[str] = None
 
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list"""
@@ -17,6 +18,8 @@ class CmdArgs:
         cmd_args.extend(self.files)
         if self.out:
             cmd_args.extend(["--out", self.out])
+        if self.kind:
+            cmd_args.extend(["--kind", self.kind])
         return cmd_args
 
 

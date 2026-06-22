@@ -34,6 +34,24 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         empty_dir_path = self._data_directory / empty_dir_name
         self._test_runner.config_file_data.inputs.append(str(empty_dir_path))
         self._test_runner.config_file_data.tag_attribute = "directory_test"
+        self._test_runner.cmd_args.kind = "act"
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFileDeprecated(0, OUT_FILE, "lobster-act-trace", 3)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_empty_directory_no_schema(self):
+        OUT_FILE = "empty_directory_no_schema.lobster"
+        self._test_runner.cmd_args.out = OUT_FILE
+        self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
+
+        empty_dir_name = "empty_directory"
+        empty_dir_path = self._data_directory / empty_dir_name
+        self._test_runner.config_file_data.inputs.append(str(empty_dir_path))
+        self._test_runner.config_file_data.tag_attribute = "directory_test"
 
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
@@ -45,6 +63,28 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
     def test_consumes_files_in_specified_directory(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
         OUT_FILE = "valid_directory.lobster"
+        self._test_runner.cmd_args.out = OUT_FILE
+        self._test_runner.config_file_data.tag_attribute = "tags"
+        self._test_runner.config_file_data.name_attribute = "name"
+        self._test_runner.config_file_data.inputs.append("valid_directory")
+        self._test_runner.cmd_args.kind = "act"
+
+        source_dir = self._data_directory / "valid_directory"
+        dest_dir = self._test_runner.working_dir / "valid_directory"
+        shutil.copytree(source_dir, dest_dir)
+
+        self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFileDeprecated(6, OUT_FILE, "lobster-act-trace", 3)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_consumes_files_in_specified_directory_no_schema(self):
+        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
+        OUT_FILE = "valid_directory_no_schema.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.config_file_data.tag_attribute = "tags"
         self._test_runner.config_file_data.name_attribute = "name"
@@ -66,6 +106,28 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
     def test_mix_inputs_from_directory(self):
         # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
         OUT_FILE = "mix_inputs.lobster"
+        self._test_runner.cmd_args.out = OUT_FILE
+        self._test_runner.config_file_data.tag_attribute = "tags"
+        self._test_runner.config_file_data.name_attribute = "name"
+        self._test_runner.config_file_data.inputs.append("input_dir_mix")
+        self._test_runner.cmd_args.kind = "act"
+
+        source_dir = self._data_directory / "input_dir_mix"
+        dest_dir = self._test_runner.working_dir / "input_dir_mix"
+        shutil.copytree(source_dir, dest_dir)
+
+        self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFileDeprecated(3, OUT_FILE, "lobster-act-trace", 3)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_mix_inputs_from_directory_no_schema(self):
+        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
+        OUT_FILE = "mix_inputs_no_schema.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.config_file_data.tag_attribute = "tags"
         self._test_runner.config_file_data.name_attribute = "name"

@@ -5,10 +5,9 @@
   "levels": [
     {
       "name": "System Requirements",
-      "kind": "requirements",
       "items": [
         {
-          "tag": "req 12345@42",
+          "tag": "itm 12345@42",
           "location": {
             "kind": "codebeamer",
             "cb_root": "https://potato.kitten",
@@ -24,25 +23,20 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req example.req_implication@10",
-            "req example.req_xor",
-            "req example.req_nand@30"
+            "itm example.req_implication@10",
+            "itm example.req_xor",
+            "itm example.req_nand@30"
           ],
-          "tracing_status": "OK",
-          "framework": "codebeamer",
-          "kind": "functional requirement",
-          "text": "Provide a nice demonstration of LOBSTER through four examples",
-          "status": "Potato"
+          "tracing_status": "OK"
         }
       ],
       "coverage": 100.0
     },
     {
       "name": "Software Requirements",
-      "kind": "requirements",
       "items": [
         {
-          "tag": "req example.req_implication@10",
+          "tag": "itm example.req_implication@10",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -56,21 +50,17 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req 12345"
+            "itm 12345"
           ],
           "ref_down": [
-            "req example.req_important",
+            "itm example.req_important",
             "cpp foo.cpp:1:implication:3",
             "gtest ImplicationTest:BasicTest"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "Tagged_Requirement",
-          "text": "text: provide a utility function for logical implication",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req example.req_xor",
+          "tag": "itm example.req_xor",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -80,27 +70,23 @@
           },
           "name": "example.req_xor",
           "messages": [
-            "tracing destination req 12345 has version 42 (expected 5)"
+            "tracing destination itm 12345 has version 42 (expected 5)"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req 12345@5"
+            "itm 12345@5"
           ],
           "ref_down": [
             "simulink exclusive_or/My_Exclusive_Or",
             "json example.json:XOR Test 1",
             "json example.json:XOR Test 2"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "Tagged_Requirement",
-          "text": "text: provide a utility function for logical exclusive or",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req example.req_nand@30",
+          "tag": "itm example.req_nand@30",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -114,21 +100,17 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req 12345@42"
+            "itm 12345@42"
           ],
           "ref_down": [
-            "req example.req_important",
+            "itm example.req_important",
             "matlab nand",
             "matlab nand_test::test_1"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "Tagged_Requirement",
-          "text": "text: provide a utility function for logical negated and\n\nextra_text: potato",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req example.req_nor@40",
+          "tag": "itm example.req_nor@40",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -146,18 +128,14 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req example.req_important",
-            "python nor.Example.helper_function",
-            "python nor.Example.nor"
+            "itm example.req_important",
+            "itm nor.Example.helper_function",
+            "itm nor.Example.nor"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "Requirement",
-          "text": "provide a utility function for logical negated or",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req example.req_implies",
+          "tag": "itm example.req_implies",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -174,14 +152,10 @@
             "also not needed"
           ],
           "just_global": [],
-          "tracing_status": "JUSTIFIED",
-          "framework": "TRLC",
-          "kind": "Requirement",
-          "text": "provide a utility function for logical implication",
-          "status": null
+          "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "req example.req_important",
+          "tag": "itm example.req_important",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -191,7 +165,7 @@
           },
           "name": "example.req_important",
           "messages": [
-            "tracing destination req example.req_nand has version 30 (expected 31)",
+            "tracing destination itm example.req_nand has version 30 (expected 31)",
             "missing reference to Code",
             "missing reference to Verification Test"
           ],
@@ -199,23 +173,18 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nand@31",
-            "req example.req_nor@40",
-            "req example.req_implication"
+            "itm example.req_nand@31",
+            "itm example.req_nor@40",
+            "itm example.req_implication"
           ],
           "ref_down": [],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "Linked_Requirement",
-          "text": "this is important",
-          "status": null
+          "tracing_status": "MISSING"
         }
       ],
       "coverage": 50.0
     },
     {
       "name": "Code",
-      "kind": "implementation",
       "items": [
         {
           "tag": "cpp foo.cpp:1:implication:3",
@@ -226,18 +195,16 @@
             "file": "tests_integration/projects/basic/foo.cpp",
             "line": 3
           },
-          "name": "implication",
+          "name": "foo.cpp:1:implication:3",
           "messages": [],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_implication"
+            "itm example.req_implication"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp foo.cpp:1:exclusive_or:9",
@@ -248,16 +215,14 @@
             "file": "tests_integration/projects/basic/foo.cpp",
             "line": 9
           },
-          "name": "exclusive_or",
+          "name": "foo.cpp:1:exclusive_or:9",
           "messages": [
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp foo.cpp:1:potato:14",
@@ -268,17 +233,15 @@
             "file": "tests_integration/projects/basic/foo.cpp",
             "line": 14
           },
-          "name": "potato",
+          "name": "foo.cpp:1:potato:14",
           "messages": [
-            "unknown tracing target req example.doesnt_exist",
+            "unknown tracing target itm example.doesnt_exist",
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "matlab nand",
@@ -295,12 +258,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nand"
+            "itm example.req_nand"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "MATLAB",
-          "kind": "Function"
+          "tracing_status": "OK"
         },
         {
           "tag": "matlab exclusive_or/MATLAB Function",
@@ -318,9 +279,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "MATLAB",
-          "kind": "Function"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "simulink exclusive_or",
@@ -338,9 +297,7 @@
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "Simulink",
-          "kind": "Block"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "simulink exclusive_or/My_Exclusive_Or",
@@ -357,15 +314,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_xor"
+            "itm example.req_xor"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "Simulink",
-          "kind": "Block"
+          "tracing_status": "OK"
         },
         {
-          "tag": "python nor.trlc_reference",
+          "tag": "itm nor.trlc_reference",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -380,12 +335,10 @@
           ],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "JUSTIFIED",
-          "language": "Python",
-          "kind": "Function"
+          "tracing_status": "JUSTIFIED"
         },
         {
-          "tag": "python nor.Example.helper_function",
+          "tag": "itm nor.Example.helper_function",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -399,15 +352,13 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nor"
+            "itm example.req_nor"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "Python",
-          "kind": "Method"
+          "tracing_status": "OK"
         },
         {
-          "tag": "python nor.Example.nor",
+          "tag": "itm nor.Example.nor",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -421,19 +372,16 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nor"
+            "itm example.req_nor"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "Python",
-          "kind": "Method"
+          "tracing_status": "OK"
         }
       ],
       "coverage": 60.0
     },
     {
       "name": "Verification Test",
-      "kind": "activity",
       "items": [
         {
           "tag": "gtest ImplicationTest:BasicTest",
@@ -450,13 +398,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_implication"
+            "itm example.req_implication"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "GoogleTest",
-          "kind": "test",
-          "status": "ok"
+          "tracing_status": "OK"
         },
         {
           "tag": "matlab nand_test::test_1",
@@ -473,13 +418,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_nand"
+            "itm example.req_nand"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "MATLAB",
-          "kind": "Test",
-          "status": null
+          "tracing_status": "OK"
         },
         {
           "tag": "json example.json:XOR Test 1",
@@ -496,13 +438,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_xor"
+            "itm example.req_xor"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "JSON",
-          "kind": "Test Vector",
-          "status": null
+          "tracing_status": "OK"
         },
         {
           "tag": "json example.json:XOR Test 2",
@@ -519,13 +458,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req example.req_xor"
+            "itm example.req_xor"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "JSON",
-          "kind": "Test Vector",
-          "status": null
+          "tracing_status": "OK"
         },
         {
           "tag": "json example.json:Potato Test 1",
@@ -543,10 +479,7 @@
           ],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "JUSTIFIED",
-          "framework": "JSON",
-          "kind": "Test Vector",
-          "status": null
+          "tracing_status": "JUSTIFIED"
         }
       ],
       "coverage": 100.0
@@ -555,7 +488,6 @@
   "policy": {
     "System Requirements": {
       "name": "System Requirements",
-      "kind": "requirements",
       "traces": [],
       "source": [
         {
@@ -572,7 +504,6 @@
     },
     "Software Requirements": {
       "name": "Software Requirements",
-      "kind": "requirements",
       "traces": [
         "System Requirements"
       ],
@@ -594,7 +525,6 @@
     },
     "Code": {
       "name": "Code",
-      "kind": "implementation",
       "traces": [
         "Software Requirements"
       ],
@@ -615,7 +545,6 @@
     },
     "Verification Test": {
       "name": "Verification Test",
-      "kind": "activity",
       "traces": [
         "Software Requirements"
       ],

@@ -6,6 +6,6 @@ inputs :
 conversion-rules:
   - package: coverage_zero
     record-type: System_Requirement
-    namespace: req
+    namespace: itm
     description-fields:
       - text

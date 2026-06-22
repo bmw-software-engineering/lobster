@@ -28,6 +28,8 @@ class LobsterCodebeamerAsserter(Asserter):
             page_size: int,
             out_file: str = "codebeamer.lobster",
             import_query: Optional[int] = None,
+            schema: Optional[str] = None,
+            version: Optional[int] = None,
             port: Optional[int] = None,
     ):
         if port is None:
@@ -45,7 +47,6 @@ class LobsterCodebeamerAsserter(Asserter):
                     f"You can try to access 'https://localhost:{port}/api/v3/reports"
                     f"/{import_query}/items?page=1&pageSize={page_size}' manually to "
                     f"check.\n"
-                    f"Written 0 requirements to {out_file}\n"
                 )
             else:
                 message = (
@@ -56,13 +57,23 @@ class LobsterCodebeamerAsserter(Asserter):
                     f"You can try to access 'https://localhost:{port}/api/v3/items"
                     f"/query?page=1&pageSize={page_size}&queryString={import_query}' "
                     f"manually to check.\n"
-                    f"Written 0 requirements to {out_file}\n"
                 )
+            if schema and version:
+                message += (
+                    f"Lobster file version {version} containing 'schema' = '{schema}' "
+                    f"is deprecated, please migrate to version 5\n"
+                )
+            message += f"Written 0 requirements to {out_file}\n"
         else:
             total_pages = math.ceil(num_items / page_size)
             fetch_messages = ''.join(
                 f"Fetching page {i} of query...\n" for i in range(1, total_pages + 1)
             )
+            if schema and version:
+                fetch_messages += (
+                    f"Lobster file version {version} containing 'schema' = '{schema}' "
+                    f"is deprecated, please migrate to version 5\n"
+                )
             message = (
                 fetch_messages +
                 f"Written {num_items} requirements "

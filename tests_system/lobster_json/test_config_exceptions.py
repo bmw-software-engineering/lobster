@@ -17,7 +17,8 @@ class ConfigParserExceptionsLobsterJsonTest(LobsterJsonSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = LobsterJsonAsserter(self, completed_process, self._test_runner)
         asserter.assertStdErrText(
-            'usage: lobster-json [-h] [-v] [--out OUT] --config CONFIG\n'
+            'usage: lobster-json [-h] [-v] [--out OUT] --config CONFIG'
+            ' [--kind {itm,act}]\n'
             'lobster-json: error: the following arguments are required: --config\n'
         )
         asserter.assertExitCode(2)

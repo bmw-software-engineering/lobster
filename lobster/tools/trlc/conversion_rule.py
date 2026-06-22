@@ -13,7 +13,7 @@ class ConversionRule:
             self,
             package: str,
             record_type: str,
-            namespace: str,
+            namespace: Optional[str] = "itm",
             version_field: Optional[str] = None,
             description_fields: Optional[Union[str, Iterable[str]]] = None,
             justification_up_fields: Optional[Union[str, Iterable[str]]] = None,
@@ -24,7 +24,8 @@ class ConversionRule:
     ):
         self._record_type_name = record_type
         self._package_name = package
-        self._lobster_namespace = namespace
+        if namespace:
+            self._lobster_namespace = namespace
         self._version = version_field
         self._description_fields = self._as_string_list(description_fields)
         self._justification_up_fields = self._as_string_list(justification_up_fields)
@@ -32,7 +33,7 @@ class ConversionRule:
             justification_down_fields)
         self._justification_global_fields = self._as_string_list(
             justification_global_fields)
-        self._tags = self._as_tag_list(tags)
+        self._tags = self._as_tag_list(tags, self._lobster_namespace)
         self._applies_to_derived_types = applies_to_derived_types
 
     def __hash__(self) -> int:
@@ -72,12 +73,14 @@ class ConversionRule:
     @staticmethod
     def _as_tag_list(
         tags: Optional[Iterable[Union[str, Dict[str, str]]]],
+        lobster_namespace: str,
+
     ) -> List[TagEntry]:
         result = []
         if tags is not None:
             for tag in tags:
                 if isinstance(tag, str):
-                    result.append(TagEntry(field=tag))
+                    result.append(TagEntry(field=tag, namespace=lobster_namespace))
                 elif isinstance(tag, dict):
                     result.append(TagEntry(**tag))
                 else:

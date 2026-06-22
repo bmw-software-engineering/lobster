@@ -1,8 +1,7 @@
 {
     "data": [
         {
-            "tag"  : "req 12345@42",
-            "kind" : "functional requirement",
+            "tag"  : "itm 12345@42",
             "name" : "LOBSTER demo",
             "text" : "Provide a nice demonstration of LOBSTER through four examples",
             "framework" : "codebeamer",
@@ -19,6 +18,5 @@
         }
     ],
     "generator": "hand crafted",
-    "schema": "lobster-req-trace",
-    "version": 4
+    "version": 5
 }

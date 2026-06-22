@@ -23,11 +23,10 @@ import os
 from copy import copy
 from dataclasses import dataclass, field
 from typing import List, Optional, Sequence, Union
-from enum import Enum
 import yaml
 from lobster.common.errors import LOBSTER_Error
 from lobster.common.exceptions import LOBSTER_Exception
-from lobster.common.items import Tracing_Tag, Activity
+from lobster.common.items import Tracing_Tag, Activity, Item, KindTypes
 from lobster.common.location import File_Reference
 from lobster.common.io import lobster_write, ensure_output_directory
 from lobster.common.file_tag_generator import FileTagGenerator
@@ -50,12 +49,6 @@ MISSING = "Missing"
 ORPHAN_TESTS = "OrphanTests"
 
 TOOL_NAME = "lobster-cpptest"
-
-
-class KindTypes(str, Enum):
-    REQ = "req"
-    ACT = "act"
-    IMP = "imp"
 
 
 @dataclass
@@ -107,7 +100,7 @@ def parse_config_file(file_name: str) -> Config:
                          f'Missing attribute {CODEBEAMER_URL}')
 
     codebeamer_url = config_dict.get(CODEBEAMER_URL)
-    kind = config_dict.get(KIND, KindTypes.REQ.value)
+    kind = config_dict.get(KIND, KindTypes.ITM.value)
     files = config_dict.get(FILES, ["."])
     output_file = config_dict.get(OUTPUT_FILE, "report.lobster")
 
@@ -241,19 +234,26 @@ def create_lobster_items_output_dict_from_test_cases(
         tag = Tracing_Tag(NAMESPACE_CPP, function_uid)
         loc = File_Reference(file_name, line_nr)
         key = tag.key()
+        item_kind = config.kind
 
-        activity = \
-            Activity(
+        item = \
+            Item(
                 tag=tag,
-                location=loc,
-                framework=FRAMEWORK_CPP_TEST,
-                kind=KIND_FUNCTION
+                location=loc
             )
+
+        if item_kind != KindTypes.ITM.value:
+            item = \
+                Activity(
+                    tag=tag,
+                    location=loc,
+                    framework=FRAMEWORK_CPP_TEST,
+                    kind=KIND_FUNCTION
+                )
 
         contains_no_tracing_target = True
 
         tracing_target_list = []
-        tracing_target_kind = config.kind
         for test_case_marker_value in getattr(
                 test_case,
                 REQUIREMENTS
@@ -262,14 +262,14 @@ def create_lobster_items_output_dict_from_test_cases(
                 test_case_marker_value = (
                     test_case_marker_value.replace(CB_PREFIX, ""))
                 tracing_target = Tracing_Tag(
-                    tracing_target_kind,
+                    item_kind,
                     test_case_marker_value
                 )
                 tracing_target_list.append(tracing_target)
 
         if len(tracing_target_list) >= 1:
             contains_no_tracing_target = False
-            lobster_item = copy(activity)
+            lobster_item = copy(item)
             for tracing_target in tracing_target_list:
                 lobster_item.add_tracing_target(tracing_target)
 
@@ -278,12 +278,14 @@ def create_lobster_items_output_dict_from_test_cases(
 
         if contains_no_tracing_target:
             lobster_items_output_dict.get(ORPHAN_TESTS)[key] = (
-                activity)
+                item)
 
     return lobster_items_output_dict
 
 
-def write_lobster_items_output_dict(lobster_items_output_dict: dict):
+def write_lobster_items_output_dict(
+        lobster_items_output_dict: dict,
+        config: Config) -> None:
     """
     Write the lobster items to the output.
     If the output file name is empty everything is written to stdout.
@@ -302,12 +304,16 @@ def write_lobster_items_output_dict(lobster_items_output_dict: dict):
         lobster_items_dict: dict = copy(lobster_items)
         lobster_items_dict.update(orphan_test_items)
         item_count = len(lobster_items_dict)
+        kind = config.kind
+        lobster_kind = Item
+        if kind != KindTypes.ITM.value:
+            lobster_kind = Activity
 
         ensure_output_directory(output_file_name)
         with open(output_file_name, "w", encoding="UTF-8") as output_file:
             lobster_write(
                 output_file,
-                Activity,
+                lobster_kind,
                 lobster_generator,
                 lobster_items_dict.values()
             )
@@ -345,7 +351,8 @@ def run_lobster_cpptest(config: Config):
         )
 
     write_lobster_items_output_dict(
-        lobster_items_output_dict=lobster_items_output_dict
+        lobster_items_output_dict=lobster_items_output_dict,
+        config=config
     )
 
 

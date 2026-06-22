@@ -13,7 +13,7 @@ REFERENCE_OUTPUT_CI:='ci_report.reference_output.log'
 PYTHON = python3
 UPDATE_GIT_HASHES_SCRIPT:='../../../tests_system/tests_utils/update_online_json_with_hashes.py'
 
-html_report.html: cppcode.lobster gtests.lobster software-requirements.lobster lobster.conf
+html_report.html: cppcode.lobster gtests.lobster software-requirements.lobster lobster.yaml
 	@bash -c "lobster-report && echo '$(THIS_TEST) ✅ lobster-report succeeded!' || { echo '$(THIS_TEST) ❌ ERROR: lobster-report failed!'; exit 1; }"
 	@bash -c "lobster-online-report && echo '$(THIS_TEST) ✅ lobster-online-report succeeded!' || { echo '$(THIS_TEST) ❌ ERROR: lobster-online-report failed!'; exit 1; }"
 	@if diff online_report.lobster $(REFERENCE_OUTPUT); then echo '✅ Files are identical!'; else { echo '❌ ERROR: Files are different!'; exit 1; }; fi

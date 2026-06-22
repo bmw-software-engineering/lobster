@@ -5,10 +5,9 @@
   "levels": [
     {
       "name": "Software Requirements",
-      "kind": "requirements",
       "items": [
         {
-          "tag": "req fruits.Buy_Banana1",
+          "tag": "itm fruits.Buy_Banana1",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -27,14 +26,10 @@
           "ref_down": [
             "cpp fruit.cpp:1:buyBanana:90"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Add one banana to the basket!",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Buy_Banana2",
+          "tag": "itm fruits.Buy_Banana2",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -53,14 +48,10 @@
           "ref_down": [
             "cpp fruit.cpp:1:buyBanana:90"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Add one banana to the basket quickly!",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Sell_Banana1",
+          "tag": "itm fruits.Sell_Banana1",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -79,14 +70,10 @@
           "ref_down": [
             "cpp fruit.cpp:1:sellBanana:96"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Sell one banana from the basket!",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Sell_Banana2",
+          "tag": "itm fruits.Sell_Banana2",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -105,14 +92,10 @@
           "ref_down": [
             "cpp fruit.cpp:1:sellBanana:96"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Sell one banana from the basket quickly!",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Clear_Basket",
+          "tag": "itm fruits.Clear_Basket",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -131,14 +114,10 @@
             "gtest FruitTest:BasicProperties",
             "gtest CitrusTest:Sweetness"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Clear the basket upon request.",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req fruits.Check_Basket",
+          "tag": "itm fruits.Check_Basket",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -157,14 +136,10 @@
           "ref_down": [
             "cpp fruit.cpp:1:checkBasket:121"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Only go shopping if the basket is empty.",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Throw_Banana",
+          "tag": "itm fruits.Throw_Banana",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -183,14 +158,10 @@
           "ref_down": [
             "cpp fruit.cpp:1:throwBanana:132"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "Throw the banana away!",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Sweet_Banana",
+          "tag": "itm fruits.Sweet_Banana",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -209,14 +180,10 @@
           "ref_down": [
             "gtest BasketTest:ClearBasket"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "The banana shall contain at least 12 grams of natural sugar\nper 100 grams of fruit.",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Fruit_Less_Than_Operator",
+          "tag": "itm fruits.Fruit_Less_Than_Operator",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -234,14 +201,10 @@
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator<:33",
             "gtest BasketTest:FindInBasketTemplate"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "The operator < shall compare the weight of two fruits.",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req fruits.Fruit_Copy_Constructor",
+          "tag": "itm fruits.Fruit_Copy_Constructor",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -260,14 +223,10 @@
           "ref_down": [
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "The operator = shall copy the name and weight of the fruit.",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.Magic",
+          "tag": "itm fruits.Magic",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -285,14 +244,10 @@
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator<:33",
             "gtest BasketTest:AddAndShowContents"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "The one who eats the fruit shall be happy!",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req fruits.SameLine1",
+          "tag": "itm fruits.SameLine1",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -310,14 +265,10 @@
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14",
             "gtest CitrusTest:Sweetness"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "lobster-cpp shall support comma-separated lists of tags in one line.",
-          "status": null
+          "tracing_status": "OK"
         },
         {
-          "tag": "req fruits.SameLine2",
+          "tag": "itm fruits.SameLine2",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -336,14 +287,10 @@
           "ref_down": [
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "see SameLine1",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.SameLine3",
+          "tag": "itm fruits.SameLine3",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -362,14 +309,10 @@
           "ref_down": [
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "see SameLine1",
-          "status": null
+          "tracing_status": "MISSING"
         },
         {
-          "tag": "req fruits.SameLine4",
+          "tag": "itm fruits.SameLine4",
           "location": {
             "kind": "github",
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
@@ -388,18 +331,13 @@
           "ref_down": [
             "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14"
           ],
-          "tracing_status": "MISSING",
-          "framework": "TRLC",
-          "kind": "FruityRequirement",
-          "text": "see SameLine1",
-          "status": null
+          "tracing_status": "MISSING"
         }
       ],
       "coverage": 26.666666666666668
     },
     {
       "name": "Code",
-      "kind": "implementation",
       "items": [
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator=:14",
@@ -410,22 +348,20 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 14
           },
-          "name": "orchard::Fruit<double>::operator=",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator=:14",
           "messages": [],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.SameLine4",
-            "req fruits.SameLine3",
-            "req fruits.SameLine2",
-            "req fruits.SameLine1",
-            "req fruits.Fruit_Copy_Constructor"
+            "itm fruits.SameLine4",
+            "itm fruits.SameLine3",
+            "itm fruits.SameLine2",
+            "itm fruits.SameLine1",
+            "itm fruits.Fruit_Copy_Constructor"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator*:26",
@@ -436,21 +372,19 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 26
           },
-          "name": "orchard::Fruit<double>::operator*",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator*:26",
           "messages": [
-            "unknown tracing target req cd-456",
-            "unknown tracing target req ab-123",
-            "unknown tracing target req 89",
-            "unknown tracing target req 456",
-            "unknown tracing target req 123",
+            "unknown tracing target itm cd-456",
+            "unknown tracing target itm ab-123",
+            "unknown tracing target itm 89",
+            "unknown tracing target itm 456",
+            "unknown tracing target itm 123",
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator<:33",
@@ -461,19 +395,17 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 33
           },
-          "name": "orchard::Fruit<double>::operator<",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator<:33",
           "messages": [],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Magic",
-            "req fruits.Fruit_Less_Than_Operator"
+            "itm fruits.Magic",
+            "itm fruits.Fruit_Less_Than_Operator"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator>:39",
@@ -484,16 +416,14 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 39
           },
-          "name": "orchard::Fruit<double>::operator>",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator>:39",
           "messages": [
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator&:44",
@@ -504,16 +434,14 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 44
           },
-          "name": "orchard::Fruit<double>::operator&",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator&:44",
           "messages": [
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator|:49",
@@ -524,16 +452,14 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 49
           },
-          "name": "orchard::Fruit<double>::operator|",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator|:49",
           "messages": [
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator/:54",
@@ -544,16 +470,14 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 54
           },
-          "name": "orchard::Fruit<double>::operator/",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator/:54",
           "messages": [
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator[]:59",
@@ -564,16 +488,14 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 59
           },
-          "name": "orchard::Fruit<double>::operator[]",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator[]:59",
           "messages": [
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::operator~:64",
@@ -584,16 +506,14 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 64
           },
-          "name": "orchard::Fruit<double>::operator~",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::operator~:64",
           "messages": [
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::complicatedFunc:79",
@@ -604,16 +524,14 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 79
           },
-          "name": "orchard::Fruit<double>::complicatedFunc",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::complicatedFunc:79",
           "messages": [
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::refAndPtrFunc:83",
@@ -624,16 +542,14 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 83
           },
-          "name": "orchard::Fruit<double>::refAndPtrFunc",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::refAndPtrFunc:83",
           "messages": [
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:orchard::Fruit<double>::crazySignature:87",
@@ -644,16 +560,14 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 87
           },
-          "name": "orchard::Fruit<double>::crazySignature",
+          "name": "fruit.cpp:1:orchard::Fruit<double>::crazySignature:87",
           "messages": [
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "method"
+          "tracing_status": "MISSING"
         },
         {
           "tag": "cpp fruit.cpp:1:buyBanana:90",
@@ -664,19 +578,17 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 90
           },
-          "name": "buyBanana",
+          "name": "fruit.cpp:1:buyBanana:90",
           "messages": [],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Buy_Banana2",
-            "req fruits.Buy_Banana1"
+            "itm fruits.Buy_Banana2",
+            "itm fruits.Buy_Banana1"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:sellBanana:96",
@@ -687,19 +599,17 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 96
           },
-          "name": "sellBanana",
+          "name": "fruit.cpp:1:sellBanana:96",
           "messages": [],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Sell_Banana2",
-            "req fruits.Sell_Banana1"
+            "itm fruits.Sell_Banana2",
+            "itm fruits.Sell_Banana1"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:clearBasket:113",
@@ -710,18 +620,16 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 113
           },
-          "name": "clearBasket",
+          "name": "fruit.cpp:1:clearBasket:113",
           "messages": [],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Clear_Basket"
+            "itm fruits.Clear_Basket"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:checkBasket:121",
@@ -732,18 +640,16 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 121
           },
-          "name": "checkBasket",
+          "name": "fruit.cpp:1:checkBasket:121",
           "messages": [],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Check_Basket"
+            "itm fruits.Check_Basket"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:throwBanana:132",
@@ -754,18 +660,16 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 132
           },
-          "name": "throwBanana",
+          "name": "fruit.cpp:1:throwBanana:132",
           "messages": [],
           "just_up": [],
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Throw_Banana"
+            "itm fruits.Throw_Banana"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "language": "C/C++",
-          "kind": "function"
+          "tracing_status": "OK"
         },
         {
           "tag": "cpp fruit.cpp:1:main:148",
@@ -776,23 +680,20 @@
             "file": "tests_integration/projects/cpp_focus/fruit.cpp",
             "line": 148
           },
-          "name": "main",
+          "name": "fruit.cpp:1:main:148",
           "messages": [
             "missing up reference"
           ],
           "just_up": [],
           "just_down": [],
           "just_global": [],
-          "tracing_status": "MISSING",
-          "language": "C/C++",
-          "kind": "main function"
+          "tracing_status": "MISSING"
         }
       ],
       "coverage": 38.888888888888886
     },
     {
       "name": "Verification Test",
-      "kind": "activity",
       "items": [
         {
           "tag": "gtest FruitTest:BasicProperties",
@@ -809,13 +710,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Clear_Basket"
+            "itm fruits.Clear_Basket"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "GoogleTest",
-          "kind": "test",
-          "status": "ok"
+          "tracing_status": "OK"
         },
         {
           "tag": "gtest CitrusTest:Sweetness",
@@ -832,14 +730,11 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.SameLine1",
-            "req fruits.Clear_Basket"
+            "itm fruits.SameLine1",
+            "itm fruits.Clear_Basket"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "GoogleTest",
-          "kind": "test",
-          "status": "ok"
+          "tracing_status": "OK"
         },
         {
           "tag": "gtest BasketTest:AddAndShowContents",
@@ -856,13 +751,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Magic"
+            "itm fruits.Magic"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "GoogleTest",
-          "kind": "test",
-          "status": "ok"
+          "tracing_status": "OK"
         },
         {
           "tag": "gtest BasketTest:ClearBasket",
@@ -879,13 +771,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Sweet_Banana"
+            "itm fruits.Sweet_Banana"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "GoogleTest",
-          "kind": "test",
-          "status": "fail"
+          "tracing_status": "OK"
         },
         {
           "tag": "gtest BasketTest:FindInBasketTemplate",
@@ -902,13 +791,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req fruits.Fruit_Less_Than_Operator"
+            "itm fruits.Fruit_Less_Than_Operator"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "GoogleTest",
-          "kind": "test",
-          "status": "ok"
+          "tracing_status": "OK"
         }
       ],
       "coverage": 100.0
@@ -917,7 +803,6 @@
   "policy": {
     "Software Requirements": {
       "name": "Software Requirements",
-      "kind": "requirements",
       "traces": [],
       "source": [
         {
@@ -937,7 +822,6 @@
     },
     "Code": {
       "name": "Code",
-      "kind": "implementation",
       "traces": [
         "Software Requirements"
       ],
@@ -952,7 +836,6 @@
     },
     "Verification Test": {
       "name": "Verification Test",
-      "kind": "activity",
       "traces": [
         "Software Requirements"
       ],

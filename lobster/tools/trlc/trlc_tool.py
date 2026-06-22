@@ -28,7 +28,7 @@ from trlc.errors import Message_Handler, TRLC_Error
 from trlc.trlc import Source_Manager
 
 from lobster.common.errors import PathError
-from lobster.common.items import Requirement
+from lobster.common.items import Requirement, Item, KindTypes
 from lobster.common.multi_file_input_tool import create_worklist, MultiFileInputTool
 
 from lobster.tools.trlc.converter import Converter
@@ -130,8 +130,17 @@ class LOBSTER_Trlc(MultiFileInputTool):
             if item:
                 items.append(item)
 
+        lobster_kind = Item
+        only_contains_req_namespaces = True
+        for conversion_rule in config.conversion_rules:
+            if conversion_rule.lobster_namespace != KindTypes.REQ.value:
+                only_contains_req_namespaces = False
+
+        if only_contains_req_namespaces:
+            lobster_kind = Requirement
+
         # lobster-trace: trlc_req.Output_File
-        self._write_output(Requirement, options.out, items)
+        self._write_output(lobster_kind, options.out, items)
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:

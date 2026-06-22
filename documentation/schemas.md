@@ -16,7 +16,7 @@ Each LOBSTER JSON file shares the following common structure:
 
 * _data_ is the main content
 * _generator_ is the name of the program that created the artefact
-* _schema_ is one of the following:
+* _schema_ is one of the following (only within version 1-4):
   * lobster-req-trace for requirements traces
   * lobster-imp-trace for implementation traces
   * lobster-act-trace for activity traces
@@ -41,6 +41,7 @@ Each LOBSTER JSON file shares the following common structure:
 
 Some schemas may add additional top-level items, but these four are
 always present.
+With version 5 schema is deprecated. The data will contain only Item elements.
 
 ### Source References
 
@@ -132,6 +133,9 @@ location or link, for whatever reason.
 All items (requirements, implementation, and activities) share a few
 basic properties.
 
+With version 5 requirements, implementation, and activities are deprecated. The data will contain only Item elements.
+
+
 ### Version 1-2
 
 Deprecated.
@@ -184,6 +188,8 @@ lobster this item should trace *up* to.
 
 ## Requirements
 
+With version 5 Requirements elements are deprecated. The data will contain only Item elements.
+
 ### Version 1-2
 
 Deprecated.
@@ -223,6 +229,8 @@ As above, but adds one new field:
 
 ## Implementation
 
+With version 5 Implementation elements are deprecated. The data will contain only Item elements.
+
 ### Version 1-2
 
 Deprecated.
@@ -245,6 +253,8 @@ Implementation are items, with the following additional fields:
   "function", "method", "named number", "class".
 
 ## Activity
+
+With version 5 Activity elements are deprecated. The data will contain only Item elements.
 
 ### Version 1-2
 

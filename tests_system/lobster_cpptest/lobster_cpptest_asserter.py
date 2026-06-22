@@ -12,3 +12,16 @@ class LobsterCppTestAsserter(Asserter):
         self.assertStdOutText(
             f"Written {num_items} lobster items to \"{out_file}\".\n"
         )
+
+    def assertStdOutNumAndFileDeprecated(
+            self,
+            num_items: int,
+            out_file: str,
+            schema: str,
+            version: int):
+        self.assertStdOutText(
+            f"Lobster file version {version} "
+            f"containing 'schema' = '{schema}' is deprecated, "
+            f"please migrate to version 5\n"
+            f"Written {num_items} lobster items to \"{out_file}\".\n"
+        )

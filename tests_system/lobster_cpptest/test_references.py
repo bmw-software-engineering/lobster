@@ -39,6 +39,34 @@ class ReferencesCpptestTest(LobsterCpptestSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFileDeprecated(6, OUT_FILE, "lobster-act-trace", 3)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_no_references_cpptest_file_no_schema(self):
+        """
+        This test checks that the file with no requirement references
+        is handled correctly by the lobster-cpptest tool.
+        """
+        # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
+        OUT_FILE = "no_references_no_schema.lobster"
+        self._test_runner.declare_input_file(self._data_directory / "no_references.cpp")
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "no_references_config_no_kind.yaml")
+
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / OUT_FILE))
+        self._test_runner.declare_output_file(self.output_dir /
+                                              OUT_FILE)
+
+        update_cpptest_output_file(
+            self.output_dir / OUT_FILE,
+            self._test_runner.working_dir
+        )
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFile(6, OUT_FILE)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
@@ -53,6 +81,34 @@ class ReferencesCpptestTest(LobsterCpptestSystemTestCaseBase):
         self._test_runner.declare_input_file(self._data_directory / "1_reference.cpp")
         self._test_runner.cmd_args.config = str(
             self._data_directory / "1_reference_config.yaml")
+
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / OUT_FILE))
+        self._test_runner.declare_output_file(self.output_dir /
+                                              OUT_FILE)
+
+        update_cpptest_output_file(
+            self.output_dir / OUT_FILE,
+            self._test_runner.working_dir
+        )
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFileDeprecated(7, OUT_FILE, "lobster-act-trace", 3)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_one_reference_in_cpptest_file_no_schema(self):
+        """
+        This test checks that the file with a single requirement reference
+        is handled correctly by the lobster-cpptest tool.
+        """
+        # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
+        OUT_FILE = "1_reference_no_schema.lobster"
+        self._test_runner.declare_input_file(self._data_directory / "1_reference.cpp")
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "1_reference_config_no_kind.yaml")
 
         self.output_dir = self.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / OUT_FILE))
@@ -83,6 +139,34 @@ class ReferencesCpptestTest(LobsterCpptestSystemTestCaseBase):
         self._test_runner.cmd_args.config = str(
             self._data_directory / "many_references_config.yaml")
 
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / OUT_FILE))
+        self._test_runner.declare_output_file(self.output_dir /
+                                              OUT_FILE)
+
+        update_cpptest_output_file(
+            self.output_dir / OUT_FILE,
+            self._test_runner.working_dir
+        )
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFileDeprecated(13, OUT_FILE, "lobster-act-trace", 3)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_many_references_in_cpptest_file_no_schema(self):
+        """
+        This test checks that the file with multiple requirement references
+        is handled correctly by the lobster-cpptest tool.
+        """
+        # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
+        OUT_FILE = "many_references_no_schema.lobster"
+        self._test_runner.declare_input_file(
+            self._data_directory / "many_references.cpp")
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "many_references_config_no_kind.yaml")
         self.output_dir = self.create_output_directory_and_copy_expected(
             self.output_dir, Path(self._data_directory / OUT_FILE))
         self._test_runner.declare_output_file(self.output_dir /

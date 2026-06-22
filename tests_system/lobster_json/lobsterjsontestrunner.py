@@ -42,6 +42,7 @@ class ConfigFileData:
 class CmdArgs:
     out: Optional[str] = None
     config: Optional[str] = None
+    kind: Optional[str] = "itm"
 
     def as_list(self) -> List[str]:
         """Returns the command line arguments as a list"""
@@ -53,6 +54,7 @@ class CmdArgs:
 
         append_if_string("--out", self.out)
         append_if_string("--config", self.config)
+        append_if_string("--kind", self.kind)
         return cmd_args
 
 

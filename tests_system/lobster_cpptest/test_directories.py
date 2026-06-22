@@ -52,6 +52,46 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFileDeprecated(101, OUT_FILE, "lobster-act-trace", 3)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_all_files_from_current_directory_consumed_no_schema(self):
+        """
+        Tests that all C++ files in the current directory are consumed.
+        It also picks files from nested directories.
+        """
+        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
+        OUT_FILE = "nested_directories_no_schema.lobster"
+
+        self._test_runner.declare_input_file(self._data_directory / "no_references.cpp")
+        self._test_runner.declare_input_file(
+            self._data_directory / "many_references.cpp")
+        self._test_runner.declare_input_file(self._data_directory / "1_reference.cpp")
+        self._test_runner.declare_input_file(self._data_directory / "test_case.cpp")
+
+        # Copy the "cpp_test_files" directory into the working directory
+        source_dir = Path(self._data_directory / "cpp_test_files")
+        dest_dir = Path(self._test_runner.working_dir / "cpp_test_files")
+        shutil.copytree(source_dir, dest_dir)
+
+        self.output_dir = Path(Path(__file__).parents[0])
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / OUT_FILE))
+
+        self._test_runner.declare_output_file(self.output_dir /
+                                              OUT_FILE)
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "nested_directories_no_kind.yaml")
+
+        update_cpptest_output_file(
+            self.output_dir / OUT_FILE,
+            self._test_runner.working_dir
+        )
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFile(101, OUT_FILE)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
@@ -76,6 +116,39 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
                                               OUT_FILE)
         self._test_runner.cmd_args.config = str(
             self._data_directory / "specific_directory_config.yaml")
+
+        update_cpptest_output_file(
+            self.output_dir / OUT_FILE,
+            self._test_runner.working_dir
+        )
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFileDeprecated(30, OUT_FILE, "lobster-act-trace", 3)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_files_from_specified_directory_consumed_no_schema(self):
+        """
+        Test for processing files from a specific directory.
+        """
+        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
+        OUT_FILE = "specific_directory_no_schema.lobster"
+
+        # Copy the "cpp_test_files" directory into the working directory
+        source_dir = Path(self._data_directory / "cpp_test_files")
+        dest_dir = Path(self._test_runner.working_dir / "cpp_test_files")
+        shutil.copytree(source_dir, dest_dir)
+
+        self.output_dir = Path(Path(__file__).parents[0])
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / OUT_FILE))
+
+        self._test_runner.declare_output_file(self.output_dir /
+                                              OUT_FILE)
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "specific_directory_config_no_kind.yaml")
 
         update_cpptest_output_file(
             self.output_dir / OUT_FILE,
@@ -122,6 +195,43 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFileDeprecated(43, OUT_FILE, "lobster-act-trace", 3)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_specified_directory_and_files_consumed_no_schema(self):
+        """
+        Test for processing files from a specific directory
+        as well as files provided as input.
+        """
+        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
+        OUT_FILE = "directory_files_no_schema.lobster"
+
+        self._test_runner.declare_input_file(self._data_directory / "no_references.cpp")
+        self._test_runner.declare_input_file(self._data_directory / "1_reference.cpp")
+
+        # Copy the "cpp_test_files" directory into the working directory
+        source_dir = Path(self._data_directory / "cpp_test_files")
+        dest_dir = Path(self._test_runner.working_dir / "cpp_test_files")
+        shutil.copytree(source_dir, dest_dir)
+
+        self.output_dir = Path(Path(__file__).parents[0])
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / OUT_FILE))
+
+        self._test_runner.declare_output_file(self.output_dir /
+                                              OUT_FILE)
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "directory_files_config_no_kind.yaml")
+
+        update_cpptest_output_file(
+            self.output_dir / OUT_FILE,
+            self._test_runner.working_dir
+        )
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
         asserter.assertStdOutNumAndFile(43, OUT_FILE)
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
@@ -136,6 +246,23 @@ class DirectoriesCpptestTest(LobsterCpptestSystemTestCaseBase):
         self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
         self._test_runner.cmd_args.config = str(
             self._data_directory / "cpptest-config.yaml")
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertStdErrText(
+            'lobster-cpptest: "[\'.\']" does not contain any test file.\n')
+        asserter.assertExitCode(1)
+
+    def test_no_cpptest_file_no_schema(self):
+        """
+        Test case for handling the scenario where no .cpp test files are found.
+        No input file provided in YAML config file or in working directory.
+        """
+        OUT_FILE = "no_cpptest_file_no_schema.lobster"
+
+        self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
+        self._test_runner.cmd_args.config = str(
+            self._data_directory / "cpptest-config_no_kind.yaml")
 
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)

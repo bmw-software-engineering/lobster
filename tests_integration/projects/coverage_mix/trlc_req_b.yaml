@@ -7,5 +7,5 @@ inputs :
 conversion-rules:
   - package: coverage_mix
     record-type: Requirement_B
-    namespace: req
+    namespace: itm
     description-fields: text

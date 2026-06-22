@@ -5,7 +5,7 @@ from tests_system.lobster_python.lobster_python_system_test_case_base import (
     LobsterPythonSystemTestCaseBase,
 )
 from tests_system.lobster_python.\
-    lobster_python_asserter import LobsterPythonTestAsserter as Asserter
+    lobster_python_asserter import LobsterPythonAsserter as Asserter
 
 
 class MultipleIdenticalFunctionNamesPython(LobsterPythonSystemTestCaseBase):
@@ -15,6 +15,26 @@ class MultipleIdenticalFunctionNamesPython(LobsterPythonSystemTestCaseBase):
 
     def test_multiple_identical_function_names(self):
         OUT_FILE = "multiple_identical_function_names.lobster"
+        self._test_runner.declare_input_file(
+            self._data_directory / "multiple_identical_function_names.py"
+        )
+
+        self._test_runner.cmd_args.files = ["multiple_identical_function_names.py"]
+        self._test_runner.cmd_args.single = True
+        self._test_runner.cmd_args.out = OUT_FILE
+        self._test_runner.cmd_args.kind = "imp"
+
+        self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutNumAndFileDeprecated(6, OUT_FILE, "lobster-imp-trace", 3)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    def test_multiple_identical_function_names_no_schema(self):
+        OUT_FILE = "multiple_identical_function_names_no_schema.lobster"
         self._test_runner.declare_input_file(
             self._data_directory / "multiple_identical_function_names.py"
         )

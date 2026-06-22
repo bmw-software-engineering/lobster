@@ -1,0 +1,26 @@
+Anforderungen: !LevelDefinition
+  name: Anforderungen
+  traces: []
+  source:
+  - file: trlc_ok.lobster
+  needs_tracing_up: false
+  needs_tracing_down: true
+  breakdown_requirements:
+  - - Implementierung
+  raw_trace_requirements: []
+  serialize_needs_tracing_up: true
+  serialize_needs_tracing_down: true
+  serialize_breakdown_requirements: true
+Implementierung: !LevelDefinition
+  name: Implementierung
+  traces:
+  - Anforderungen
+  source:
+  - file: python_ok.lobster
+  needs_tracing_up: true
+  needs_tracing_down: false
+  breakdown_requirements: []
+  raw_trace_requirements: []
+  serialize_needs_tracing_up: true
+  serialize_needs_tracing_down: true
+  serialize_breakdown_requirements: true

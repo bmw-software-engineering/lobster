@@ -6,7 +6,7 @@ inputs:
 conversion-rules:
   - package: coverage_example
     record-type: Software_Requirement
-    namespace: req
+    namespace: itm
     description-fields: text
     tags:
     - derived_from

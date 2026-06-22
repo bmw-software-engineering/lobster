@@ -7,6 +7,13 @@ The generated `.lobster` file can be used with the LOBSTER traceability framewor
 
 For more details on `ecu.test` see https://www.tracetronic.com/products/ecu-test/.
 
+Per default lobster-pkg will generate a .lobster file with version 5 without schema `lobster-act-trace`.
+To generate a version 3 with schema `lobster-act-trace` add the command line argument `kind`,
+for example:
+```bash
+> lobster-pkg --kind="act" ...
+```
+
 ## Features
 
 - Parses `.pkg` and `.ta` files (or directories containing them) to extract traceability information.

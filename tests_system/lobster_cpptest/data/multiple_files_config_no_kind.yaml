@@ -1,0 +1,6 @@
+output_file: "multiple_files_no_schema.lobster"
+files:
+  - 'multi1.cpp'
+  - 'multi2.cpp'
+
+codebeamer_url: "https://codebeamer.com"

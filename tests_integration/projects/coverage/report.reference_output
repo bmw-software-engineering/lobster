@@ -5,10 +5,9 @@
   "levels": [
     {
       "name": "System Requirements",
-      "kind": "requirements",
       "items": [
         {
-          "tag": "req sysreq_coverage_example.requirement_1",
+          "tag": "itm sysreq_coverage_example.requirement_1",
           "location": {
             "kind": "file",
             "file": "sysreq_example.trlc",
@@ -22,23 +21,18 @@
           "just_global": [],
           "ref_up": [],
           "ref_down": [
-            "req softreq_coverage_example.requirement_2"
+            "itm softreq_coverage_example.requirement_2"
           ],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "System_Requirement",
-          "text": "Requirement 1",
-          "status": null
+          "tracing_status": "OK"
         }
       ],
       "coverage": 100.0
     },
     {
       "name": "Software Requirements",
-      "kind": "requirements",
       "items": [
         {
-          "tag": "req softreq_coverage_example.requirement_2",
+          "tag": "itm softreq_coverage_example.requirement_2",
           "location": {
             "kind": "file",
             "file": "softreq_example.trlc",
@@ -51,14 +45,10 @@
           "just_down": [],
           "just_global": [],
           "ref_up": [
-            "req sysreq_coverage_example.requirement_1"
+            "itm sysreq_coverage_example.requirement_1"
           ],
           "ref_down": [],
-          "tracing_status": "OK",
-          "framework": "TRLC",
-          "kind": "Software_Requirement",
-          "text": "Requirement 2",
-          "status": null
+          "tracing_status": "OK"
         }
       ],
       "coverage": 100.0
@@ -67,7 +57,6 @@
   "policy": {
     "System Requirements": {
       "name": "System Requirements",
-      "kind": "requirements",
       "traces": [],
       "source": [
         {
@@ -84,7 +73,6 @@
     },
     "Software Requirements": {
       "name": "Software Requirements",
-      "kind": "requirements",
       "traces": [
         "System Requirements"
       ],

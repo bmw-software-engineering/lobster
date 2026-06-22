@@ -6,5 +6,5 @@ inputs:
 conversion-rules:
   - package: coverage_half
     record-type: System_Requirement
-    namespace: req
+    namespace: itm
     description-fields: text
