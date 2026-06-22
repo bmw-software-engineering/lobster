@@ -222,3 +222,8 @@ The following inputs are planned but not implemented yet:
 The copyright holder of LOBSTER is the Bayerische Motoren Werke
 Aktiengesellschaft (BMW AG), and LOBSTER is published under the [GNU
 Affero General Public License, Version 3](LICENSE.md).
+
+## Acknowledgements
+
+Special thanks to [Florian Schanda](https://github.com/florianschanda)
+for his many valuable contributions to this repository.
