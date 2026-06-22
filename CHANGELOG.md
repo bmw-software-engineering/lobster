@@ -5,7 +5,9 @@
 
 ### 1.0.4-dev
 
+* `trlc bazel dep`: update to trlc==2.0.5
 
+* Fixed wrong links in [README](README.md).
 
 ### 1.0.3
 
@@ -60,7 +62,7 @@
   - All LOBSTER tools will create .lobster files without schema, all elements are items.
 
 ### 1.0.2
- 
+
 * `lobster-trlc`:
   - Added system tests for `lobster-trlc` tool qualification.
 
@@ -70,7 +72,7 @@ Fixed Bazel execution of system tests.
 
 ### 1.0.0
 
-This release has got many system tests, which may help to 
+This release has got many system tests, which may help to
 qualify tools according to use cases in the context of
 ISO 26262.
 Please refer to [QUALIFICATION.md](QUALIFICATION.md) for more details.
@@ -249,7 +251,7 @@ Add Bazel targets
 
 * `lobster-codebeamer`
   - The retry logic uses exponential backoff feature instead of retrying successively
-    without any time gap. The exponential backoff factor is set to 1 so the 
+    without any time gap. The exponential backoff factor is set to 1 so the
     interval of calls will be 1s, 2s, 4s, 8s and so on.
 
 * `lobster-cpp`:
@@ -417,7 +419,7 @@ Add Bazel targets
 ### 0.12.2
 
 * `lobster-online-report`
-  - Fix for git hash generation for submodules when the tool is executed from 
+  - Fix for git hash generation for submodules when the tool is executed from
     outside a git repository where the submodule is specified as a relative path.
 
 * `lobster-cpptest`
@@ -440,8 +442,8 @@ Add Bazel targets
 ### 0.12.1
 
 * `lobster-html-report`
-  - Fix for timestamp generation of git hashes for git submodules. 
- 
+  - Fix for timestamp generation of git hashes for git submodules.
+
 * `lobster-codebeamer`
   - Added configurable retry logic for HTTPS requests. Introduced support for two new YAML configuration parameters:
     - `retry_error_codes`: A list of HTTP status codes (e.g., `[429, 503, 504]`) that should trigger a retry.
@@ -449,18 +451,18 @@ Add Bazel targets
   - Fix for `.netrc`-based authentication handling in the `lobster-codebeamer` tool when
   fetching the machine name (domain name).
 
-* `lobster-cpptest` 
+* `lobster-cpptest`
   - The tool now writes orphan tests into all output files.
   - It now displays a test-name instead of a fixture-name
   in the lobster-report and lobster-html-report.
 
 * `lobster-online-report`
-  - Fix for git hash generation when the tool is executed from 
+  - Fix for git hash generation when the tool is executed from
   outside a git repository where the .git folder is not available.
   - Reformulate the summary message so that it becomes clear whether the input file has been modified, or whether a new output file has been created.
 
-* `lobster-cpp` 
-  - The uses the relative file path of a c++ file to generate 
+* `lobster-cpp`
+  - The uses the relative file path of a c++ file to generate
   the unique identifier of a function in that file. This way files with identical
   names (but in different folders) are supported, and they can even have
   C++ functions with identical names without running into a
@@ -473,10 +475,10 @@ Add Bazel targets
 ### 0.12.0
 
 * `lobster-trlc` and `lobster-json`
-  - All command-line arguments except  `--config` and `--out` are 
+  - All command-line arguments except  `--config` and `--out` are
   moved to Yaml based config file. `--config` and `--out` command-line arguments are still supported.
 
-* `lobster-python` 
+* `lobster-python`
   - Add a note to [lobster-python](packages/lobster-tool-python/README.md)
   that it can be used for [Bazel](https://bazel.build/) files, too.
   - When running `lobster-python --activity` the tool assumes that Python methods with the following name pattern are tests:
@@ -492,7 +494,7 @@ Add Bazel targets
 
 * `lobster-codebeamer`
   - Change the behavior of `lobster-codebeamer` such that an output file is always created, even if the codebeamer server has returned zero items.
-  - The tool used to append `/cb` to the `root` parameter in config file 
+  - The tool used to append `/cb` to the `root` parameter in config file
   and now the user explicitly needs to add it while specifying the `root`.
 
 * `lobster-trlc`
@@ -501,9 +503,9 @@ Add Bazel targets
   [Detecting duplicated components](https://github.com/bmw-software-engineering/trlc/pull/121),
   including an essential improvement in the
   [Language Reference Manual](https://bmw-software-engineering.github.io/trlc/lrm.html).
-  
+
     Without the TRLC bug fix `lobster-trlc` will not detect all traces if TRLC authors exploit the bug.
-    
+
     Imagine the following TRLC snippet:
     ```
     Requirement Windscreen_Wiper {
@@ -511,29 +513,29 @@ Add Bazel targets
       derived_from = [Boring_Requirement]
     }
     ```
-    Here the trace from `Windscreen_Wiper` to `Safety_Critical_Requirement` will not 
+    Here the trace from `Windscreen_Wiper` to `Safety_Critical_Requirement` will not
     be detected by `lobster-trlc` if the version of `trlc` is less than 2.0.1.
 
 * `lobster-online-report`
-  - The `--commit` command line argument in the tool is now 
-  removed and no longer available. It was redundant and is already replaced by the 
-  automated git hash feature that doesn't require user intervention and is handled 
+  - The `--commit` command line argument in the tool is now
+  removed and no longer available. It was redundant and is already replaced by the
+  automated git hash feature that doesn't require user intervention and is handled
   by the code. See changelog `0.10.0` for more information.
 
 * `lobster-cpptest`
   - Removed limitation from `lobster-cpptest` which skipped output files that had less than two LOBSTER items.
 
-* `lobster-json` 
+* `lobster-json`
   - Minor fix of handling multithreading.
   - Introduced YAML-based configuration for `lobster-json`, replacing individual command-line arguments.
   - Added a `--config` argument to specify a YAML configuration file.
     - Eliminated the command-line arguments `--single`, `--inputs`, and `--inputs-from-file`,
-    unifying user interaction across all lobster tools. Values can now be specified 
+    unifying user interaction across all lobster tools. Values can now be specified
     using the YAML configuration file.
     - The argument `--out` is still supported as command line argument, and takes precedence over any value given in the YAML configuration file.
 
 * `lobster-html-report`
-  - The title and placeholder for search box is renamed to `Filter` in 
+  - The title and placeholder for search box is renamed to `Filter` in
   tool.
   - The tool gives consistent error message if the input file does not exist, even if the user specified no value. In that case the tool tries to open the file called `lobster.report` in the current working directory as input, and it gives the same error message if that file does not exist.
 
@@ -549,14 +551,14 @@ Add Bazel targets
 
 * `lobster-online-report` now contains the actual git commit hashes when the user executes the tool.
 
-* The configuration management for the following tools has been migrated from 
+* The configuration management for the following tools has been migrated from
   command-line arguments to YAML configuration files.
   * `lobster-cpptest`
   * `lobster-codebeamer`
 
 ### 0.9.21
 
-* `lobster-codebeamer` now supports query string along with query ID, query string (cbQL) can be passed 
+* `lobster-codebeamer` now supports query string along with query ID, query string (cbQL) can be passed
   as a command line argument to `--import-query` for the tool `lobster-codebeamer`.
 
 * `lobster-html-report` has the following updates.
@@ -627,7 +629,7 @@ Add Bazel targets
   from C++ unit tests using various regex patterns.
   The references must be provided in a format similar to Doxygen comments.
 
-* The `lobster-codebeamer` tool now uses an authentication token. 
+* The `lobster-codebeamer` tool now uses an authentication token.
   Token can be added either in the config file or as an argument.
 
 * The `lobster-python` tool adds the counter logic to the function
@@ -635,7 +637,7 @@ Add Bazel targets
   the same name. Line numbers are no longer used in the identifier.
 
 * The `lobster-codebeamer` tool now supports `refs` as an upstream reference
-  
+
 * The `lobster-online-report` tool now works with config files located in
   main- and submodules of a repository. This feature needs `git 1.7.8` or higher.
 
@@ -664,7 +666,7 @@ Add Bazel targets
 * The `lobster-html-report` tool now supports argument `--dot` to specify
   the path to the graphviz dot utility instead of expecting it in PATH
 
-* The `lobster-online-report` tool now supports argument `--out` to specify 
+* The `lobster-online-report` tool now supports argument `--out` to specify
   the output file instead of editing the input report
 
 * Adds `with kind` and `with prefix` functionality in lobster.conf files

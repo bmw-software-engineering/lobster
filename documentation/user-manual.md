@@ -1,4 +1,4 @@
-# LOBSTER User's Guide
+# LOBSTER User Manual
 
 ## Introduction and overview
 
