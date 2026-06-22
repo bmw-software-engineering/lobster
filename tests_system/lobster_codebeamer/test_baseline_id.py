@@ -32,7 +32,11 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertExitCode(1)
-        self.assertIn("mutually exclusive", completed_process.stderr)
+        asserter.assertStdErrText(
+            "lobster-codebeamer: 'The keys baseline_id and import_tagged "
+            "are both present in the configuration, but they are mutually "
+            "exclusive!'\n"
+        )
 
     def test_baseline_id_with_numeric_import_query_raises_error(self):
         """Ensure baseline_id combined with a numeric import_query exits
@@ -45,7 +49,10 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertExitCode(1)
-        self.assertIn("cbQL query string", completed_process.stderr)
+        asserter.assertStdErrText(
+            "lobster-codebeamer: 'The key baseline_id is only allowed if "
+            "import_query is a cbQL query string, not a numeric report ID!'\n"
+        )
 
     def test_baseline_id_negative_raises_error(self):
         """Ensure a negative baseline_id exits with error."""
@@ -57,7 +64,9 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertExitCode(1)
-        self.assertIn("must be a positive integer", completed_process.stderr)
+        asserter.assertStdErrText(
+            "lobster-codebeamer: baseline_id must be a positive integer.\n"
+        )
 
     def test_baseline_id_zero_raises_error(self):
         """Ensure baseline_id of 0 exits with error."""
@@ -69,7 +78,9 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertExitCode(1)
-        self.assertIn("must be a positive integer", completed_process.stderr)
+        asserter.assertStdErrText(
+            "lobster-codebeamer: baseline_id must be a positive integer.\n"
+        )
 
     def test_baseline_id_with_cbql_query_succeeds(self):
         """Ensure baseline_id with a cbQL string query works and appends
