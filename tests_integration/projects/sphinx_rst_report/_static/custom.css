@@ -1,0 +1,15 @@
+/* LOBSTER item dropdown: more visible gray border */
+.sd-dropdown {
+    border: 2px solid #6c757d;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* LOBSTER issue-card: light pink background with a prominent red border */
+.lobster-issue-card .sd-card-body {
+    background-color: #f8d7da;
+}
+
+.lobster-issue-card {
+    border: 2px solid #dc3545;
+    box-shadow: 0 0 0 1px #dc3545 inset, 0 2px 4px rgba(220, 53, 69, 0.3);
+}
