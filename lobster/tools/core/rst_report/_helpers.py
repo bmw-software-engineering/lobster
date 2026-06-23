@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_rst_report - Visualise LOBSTER report as reStructuredText for Sphinx
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -180,7 +180,8 @@ class ItemNaming:
         # lobster-trace: UseCases.Item_GitHub_Source
         # lobster-trace: rst_req.RST_Source_Root_Prefix
         if isinstance(location, File_Reference):
-            href = source_root + location.filename if source_root else location.filename
+            href = (source_root.rstrip("/") + "/" + location.filename
+                    if source_root else location.filename)
             return f"`{e(location.to_string())} <{href}>`__"
 
         # lobster-trace: UseCases.Item_GitHub_Source
@@ -341,8 +342,12 @@ class PolicyDiagramBuilder:
         return text.replace("\\", "\\\\").replace('"', '\\"')
 
     @classmethod
-    def build(cls, report: Report, indent: int = 0) -> list:
+    def build(cls, report: Report, indent: int = 0,
+              dot_available: bool = True) -> list:
         """Return RST lines for a ``.. graphviz::`` tracing-policy diagram.
+
+        When *dot_available* is ``False`` (e.g. Graphviz is not installed), a
+        ``.. note::`` block is emitted instead so the HTML page remains valid.
 
         Args:
             report: The loaded LOBSTER report whose ``config`` provides level
@@ -350,12 +355,24 @@ class PolicyDiagramBuilder:
             indent: Number of leading spaces to prepend to each line.  Use
                 a non-zero value when embedding inside nested RST directives
                 such as ``.. grid-item::``.
+            dot_available: Whether the Graphviz ``dot`` executable is
+                available.  Pass the return value of
+                :func:`~lobster.common.graphviz_utils.is_dot_available`.
 
         Returns:
             A list of RST lines ending with a blank string.
         """
-        # lobster-trace: rst_req.RST_Report_Tracing_Policy_Diagram
         indent_str = " " * indent
+        if not dot_available:
+            # lobster-trace: rst_req.RST_Report_Tracing_Policy_Diagram_Fallback
+            return [
+                f"{indent_str}.. note::",
+                "",
+                f"{indent_str}   Tracing policy diagram omitted —"
+                f" Graphviz (dot) is not installed.",
+                "",
+            ]
+        # lobster-trace: rst_req.RST_Report_Tracing_Policy_Diagram
         nested_indent = indent_str + "   "
         out = []
         out.append(f"{indent_str}.. graphviz::")

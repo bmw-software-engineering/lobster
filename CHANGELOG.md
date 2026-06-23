@@ -17,7 +17,9 @@
   - Bazel integration via `subrule_lobster_rst_report` (opt-in).
 
 * Refactored `is_dot_available()` into `lobster.common.graphviz_utils`
-  (shared between `lobster-html-report` and `lobster-rst-report`).* `trlc bazel dep`: update to trlc==2.0.5
+  (shared between `lobster-html-report` and `lobster-rst-report`).
+
+  * `trlc bazel dep`: update to trlc==2.0.5
 
 * Fixed wrong links in [README](README.md).
 

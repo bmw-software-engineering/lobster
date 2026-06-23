@@ -2,6 +2,7 @@ filegroup(
     name = "rst_report_data_system",
     srcs = glob([
         "*.lobster",
+        "*.rst",
     ]),
     visibility = ["//visibility:public"],
 )

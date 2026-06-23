@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_rst_report - Visualise LOBSTER report as reStructuredText for Sphinx
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -356,13 +356,15 @@ class CoverageGridBuilder:
         """
         self._report = report
 
-    def build(self, ref_fn) -> list:
+    def build(self, ref_fn, dot_available: bool = True) -> list:
         """Return RST lines for the coverage grid.
 
         Args:
             ref_fn: A callable ``(level_name: str) -> str`` returning an RST
                 cross-reference for the given level.  Use ``:ref:`` links for
                 single-page output and ``:doc:`` links for multi-page output.
+            dot_available: Whether the Graphviz ``dot`` executable is
+                available.  Forwarded to :class:`PolicyDiagramBuilder`.
 
         Returns:
             A list of RST lines ending with a blank string.
@@ -392,7 +394,9 @@ class CoverageGridBuilder:
             lines.append(f"           - {data.items}")
         lines.append("")
         lines += ["   .. grid-item::", "      :columns: 12 12 5 5", ""]
-        lines += PolicyDiagramBuilder.build(self._report, indent=6)
+        lines += PolicyDiagramBuilder.build(
+            self._report, indent=6, dot_available=dot_available
+        )
         return lines
 
 

@@ -45,6 +45,44 @@ lobster-rst-report [LOBSTER_REPORT] [--out FILE | --out-dir DIR] [--source-root 
 
 `--out` and `--out-dir` are mutually exclusive.
 
+### Choosing `--source-root`
+
+File references in a `.lobster` report are relative to the workspace root
+(e.g. `src/module/foo.cpp`).  `--source-root` turns those paths into
+clickable URLs by prepending a prefix.  A trailing `/` is optional — if it is
+missing, one is added automatically (so both `../../` and `../..` work).
+
+**Example 1 — GitHub permalink** (links point to a specific branch/commit
+on GitHub):
+
+```bash
+lobster-rst-report report.lobster \
+    --out-dir docs/traceability/ \
+    --source-root "https://github.com/org/repo/blob/main/"
+# src/module/foo.cpp  →  https://github.com/org/repo/blob/main/src/module/foo.cpp
+```
+
+**Example 2 — Relative local link** (links point to source files served
+alongside the HTML documentation):
+
+```
+project/
+  src/module/foo.cpp      ← file reference: "src/module/foo.cpp"
+  docs/
+    conf.py
+    traceability/         ← --out-dir target, two levels below project root
+```
+
+```bash
+lobster-rst-report report.lobster \
+    --out-dir docs/traceability/ \
+    --source-root "../../"
+# src/module/foo.cpp  →  ../../src/module/foo.cpp  (relative to the RST file)
+```
+
+If `--source-root` is omitted, file references appear as plain text paths
+without hyperlinks.
+
 ### Example
 
 ```bash
@@ -62,6 +100,11 @@ Your Sphinx `conf.py` must load the required extensions:
 ```python
 extensions = ["sphinx_design", "sphinx.ext.graphviz"]
 ```
+
+> **Note:** `project`, `author`, and `copyright` are standard Sphinx
+> settings that you configure for your own documentation project.
+> `lobster-rst-report` generates RST content only — it does not create or
+> modify `conf.py`.  Each project sets these values independently.
 
 For multi-page mode, include the generated `index.rst` via a `toctree`
 in your main documentation:

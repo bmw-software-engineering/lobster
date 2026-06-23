@@ -28,5 +28,6 @@ py_test(
         ":lobster_rst_report",
         "//lobster/tools/core/rst_report",
         "//tests_system",
+        "//tests_system/tests_utils",
     ],
 )

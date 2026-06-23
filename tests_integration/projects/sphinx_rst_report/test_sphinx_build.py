@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -60,7 +60,7 @@ class SphinxRstReportBuildTest(unittest.TestCase):
         else:
             self._project_dir = Path(__file__).parent
             self._lobster_file = (
-                Path(__file__).parents[2]
+                Path(__file__).parents[3]
                 / "tests_system"
                 / "lobster_rst_report"
                 / "data"

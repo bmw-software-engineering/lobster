@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # lobster_rst_report - Visualise LOBSTER report as reStructuredText for Sphinx
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -36,7 +36,7 @@ Public API
 
 import os
 import argparse
-from datetime import datetime, timezone
+import subprocess
 from typing import Dict, Optional, Sequence
 
 from lobster.common.version import LOBSTER_VERSION
@@ -55,6 +55,29 @@ from ._renderers import (
     CoverageGridBuilder,
     IssuesListBuilder,
 )
+
+
+def _get_git_commit() -> str:
+    """Return the HEAD commit hash of the current repository, or ``'(unknown)'``.
+
+    Falls back gracefully when git is not installed or the current directory is
+    not inside a git repository, so that the tool remains usable outside of
+    version-controlled environments.
+    """
+    # lobster-trace: rst_req.RST_Report_Header
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding="UTF-8",
+            check=True,
+            timeout=5,
+        )
+        return result.stdout.strip()
+    except (FileNotFoundError, subprocess.TimeoutExpired,
+            subprocess.CalledProcessError, OSError):
+        return "(unknown)"
 
 
 # ---------------------------------------------------------------------------
@@ -84,13 +107,22 @@ def write_rst(report: Report, source_root: str = "") -> str:
     Returns:
         The complete RST document as a string (ending with a newline).
     """
+    dot_available = is_dot_available()
+    if not dot_available:
+        print(
+            "warning: dot utility not found, report will not include "
+            "the tracing policy visualisation"
+        )
+        print("> please install Graphviz (https://graphviz.org)")
+    commit = _get_git_commit()
+
     lines = []
 
     title = "L.O.B.S.T.E.R. Traceability Report"
     lines += RstUtils.heading(title, "#", overline=True)
     lines.append("")
-    now = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    lines.append(f"| Generated: {now}")
+    # lobster-trace: rst_req.RST_Report_Header
+    lines.append(f"| Analyzed commit: {commit}")
     lines.append(f"| LOBSTER Version: {LOBSTER_VERSION}")
     lines.append("")
 
@@ -101,7 +133,7 @@ def write_rst(report: Report, source_root: str = "") -> str:
     def ref_fn(n):
         return f":ref:`{RstUtils.escape(n)} <{ItemNaming.level_label(n)}>`"
 
-    lines += CoverageGridBuilder(report).build(ref_fn)
+    lines += CoverageGridBuilder(report).build(ref_fn, dot_available=dot_available)
 
     # Issues summary (rubric = not a TOC entry)
     lines.append(".. rubric:: Issues")
@@ -218,12 +250,21 @@ def write_rst_pages(report: Report, source_root: str = "") -> Dict[str, str]:
         pages[f"{stem}.rst"] = "\n".join(lines) + "\n"
 
     # -- Index page --
+    dot_available = is_dot_available()
+    if not dot_available:
+        print(
+            "warning: dot utility not found, report will not include "
+            "the tracing policy visualisation"
+        )
+        print("> please install Graphviz (https://graphviz.org)")
+    commit = _get_git_commit()
+
     lines = []
     title = "L.O.B.S.T.E.R. Traceability Report"
     lines += RstUtils.heading(title, "#", overline=True)
     lines.append("")
-    now = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    lines.append(f"| Generated: {now}")
+    # lobster-trace: rst_req.RST_Report_Header
+    lines.append(f"| Analyzed commit: {commit}")
     lines.append(f"| LOBSTER Version: {LOBSTER_VERSION}")
     lines.append("")
 
@@ -234,7 +275,7 @@ def write_rst_pages(report: Report, source_root: str = "") -> Dict[str, str]:
     def ref_fn(n):
         return f":doc:`{RstUtils.escape(n)} <{page_map[n]}>`"
 
-    lines += CoverageGridBuilder(report).build(ref_fn)
+    lines += CoverageGridBuilder(report).build(ref_fn, dot_available=dot_available)
 
     # Issues list (rubric = not a TOC entry)
     lines.append(".. rubric:: Issues")
@@ -323,7 +364,8 @@ class RstReportTool(MetaDataToolBase):
             "--source-root",
             default="",
             help="prefix prepended to file reference URLs, e.g. a relative "
-            "path from the RST output location back to the workspace root",
+            "path from the RST output location back to the workspace root; "
+            "a trailing '/' is optional and will be added automatically",
         )
 
     def _run_impl(self, options: argparse.Namespace) -> int:
@@ -349,13 +391,6 @@ class RstReportTool(MetaDataToolBase):
         except LOBSTER_Exception as err:
             err.dump()
             return 1
-
-        if not is_dot_available():
-            print(
-                "warning: dot utility not found, report will not include "
-                "the tracing policy visualisation"
-            )
-            print("> please install Graphviz (https://graphviz.org)")
 
         # lobster-trace: UseCases.RST_Output
         # lobster-trace: rst_req.RST_Report_Multi_Page

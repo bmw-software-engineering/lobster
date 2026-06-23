@@ -1,9 +1,21 @@
+import shutil
+import subprocess
 import unittest
+import unittest.mock
 
+from lobster.common.graphviz_utils import is_dot_available
+from lobster.common.location import File_Reference
+from lobster.tools.core.rst_report._helpers import ItemNaming
+from lobster.tools.core.rst_report.rst_report import _get_git_commit
 from tests_system.asserter import Asserter
 from tests_system.lobster_rst_report.lobster_rst_report_system_test_case_base import (
     LobsterRstReportSystemTestCaseBase,
 )
+from tests_system.tests_utils.update_version_in_rst_file import (
+    update_version_in_rst_file,
+)
+
+_FIXED_COMMIT = "aaaa1111bbbb2222cccc3333dddd4444eeee5555"
 
 
 class RstReportInputFileTest(LobsterRstReportSystemTestCaseBase):
@@ -130,10 +142,16 @@ class RstReportInputFileTest(LobsterRstReportSystemTestCaseBase):
 
     def test_tracing_policy_diagram_in_output(self):
         # lobster-trace: rst_req.RST_Report_Tracing_Policy_Diagram
+        # lobster-trace: rst_req.RST_Report_Tracing_Policy_Diagram_Fallback
         content = self._get_single_page_content()
-        # The policy diagram is always emitted as a Graphviz RST directive.
-        self.assertIn(".. graphviz::", content)
-        self.assertIn("digraph tracing_policy", content)
+        if is_dot_available(dot=None):
+            # dot is installed — the diagram is rendered as a Graphviz directive
+            self.assertIn(".. graphviz::", content)
+            self.assertIn("digraph tracing_policy", content)
+        else:
+            # dot is not installed — a fallback note is emitted instead
+            self.assertIn(".. note::", content)
+            self.assertIn("Tracing policy diagram omitted", content)
 
     def test_covered_requirements_listed(self):
         # lobster-trace: UseCases.RST_Covered_Requirement_list
@@ -195,6 +213,8 @@ class RstReportInputFileTest(LobsterRstReportSystemTestCaseBase):
         self.assertIn("potato.kitten/issue/666", content)
         # GitHub URL for software requirements
         self.assertIn("github.com/bmw-software-engineering/lobster", content)
+        # Links must be RST anonymous hyperlinks (not plain text)
+        self.assertIn("`__", content)
 
     # ------------------------------------------------------------------
     # Multi-page content verification
@@ -261,6 +281,128 @@ class RstReportInputFileTest(LobsterRstReportSystemTestCaseBase):
         content = self._get_single_page_content()
         # The codebeamer item in the test data has name "LOBSTER demo"
         self.assertIn("LOBSTER demo", content)
+
+
+class RstReportGoldenOutputTest(LobsterRstReportSystemTestCaseBase):
+    """Golden-file comparison tests for lobster-rst-report single-page output.
+
+    Pattern mirrors tests_system/lobster_html_report/test_html_content.py:
+    * Real ``is_dot_available(dot=None)`` call — no mocking of dot.
+    * Two golden files, one per dot-availability state.
+    * ``_get_git_commit`` is patched to a fixed hash so output is deterministic.
+    * ``update_version_in_rst_file`` updates the LOBSTER version in the golden
+      file copy before ``assertOutputFiles()`` compares it to the actual output.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self._test_runner = self.create_test_runner()
+
+    def test_golden_single_page_output(self):
+        # lobster-trace: UseCases.RST_File_generation
+        # lobster-trace: rst_req.RST_Report_Single_Page
+        # lobster-trace: rst_req.RST_Report_Header
+        # lobster-trace: rst_req.RST_Report_Coverage_Table
+        # lobster-trace: rst_req.RST_Report_Tracing_Policy_Diagram
+        # lobster-trace: rst_req.RST_Report_Tracing_Policy_Diagram_Fallback
+        """Full single-page RST output matches the checked-in golden file."""
+        if is_dot_available(dot=None):
+            golden_name = "expected_single_page.rst"
+            expected_stdout_suffix = "LOBSTER RST report written to report.rst\n"
+        else:
+            golden_name = "expected_single_page_no_dot.rst"
+            expected_stdout_suffix = (
+                "warning: dot utility not found, report will not include "
+                "the tracing policy visualisation\n"
+                "> please install Graphviz (https://graphviz.org)\n"
+                "LOBSTER RST report written to report.rst\n"
+            )
+
+        golden_src = self._data_directory / golden_name
+        golden_copy = self._test_runner.working_dir / golden_name
+
+        # Copy + update version so the golden file reflects the installed release
+        shutil.copy2(golden_src, golden_copy)
+        update_version_in_rst_file(golden_copy)
+
+        self._test_runner.declare_input_file(
+            self._data_directory / "basic_report.lobster"
+        )
+        self._test_runner.declare_output_file(golden_copy)
+        self._test_runner.cmd_args.lobster_report = "basic_report.lobster"
+        self._test_runner.cmd_args.out = "report.rst"
+
+        patch_target = (
+            "lobster.tools.core.rst_report.rst_report._get_git_commit"
+        )
+        with unittest.mock.patch(patch_target, return_value=_FIXED_COMMIT):
+            completed_process = self._test_runner.run_tool_test()
+
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertExitCode(0)
+        asserter.assertStdOutText(expected_stdout_suffix)
+        asserter.assertOutputFiles()
+
+
+class GitCommitHelperTest(unittest.TestCase):
+    """Unit tests for the ``_get_git_commit()`` report-header helper."""
+
+    _RUN_TARGET = "lobster.tools.core.rst_report.rst_report.subprocess.run"
+
+    def test_returns_stripped_commit_hash(self):
+        # lobster-trace: rst_req.RST_Report_Header
+        completed = subprocess.CompletedProcess(
+            args=["git", "rev-parse", "HEAD"],
+            returncode=0,
+            stdout=f"{_FIXED_COMMIT}\n",
+            stderr="",
+        )
+        with unittest.mock.patch(self._RUN_TARGET, return_value=completed):
+            self.assertEqual(_get_git_commit(), _FIXED_COMMIT)
+
+    def test_returns_unknown_when_git_not_installed(self):
+        # lobster-trace: rst_req.RST_Report_Header
+        with unittest.mock.patch(self._RUN_TARGET, side_effect=FileNotFoundError):
+            self.assertEqual(_get_git_commit(), "(unknown)")
+
+    def test_returns_unknown_outside_git_repository(self):
+        # lobster-trace: rst_req.RST_Report_Header
+        error = subprocess.CalledProcessError(128, ["git", "rev-parse", "HEAD"])
+        with unittest.mock.patch(self._RUN_TARGET, side_effect=error):
+            self.assertEqual(_get_git_commit(), "(unknown)")
+
+    def test_returns_unknown_on_timeout(self):
+        # lobster-trace: rst_req.RST_Report_Header
+        error = subprocess.TimeoutExpired(["git", "rev-parse", "HEAD"], 5)
+        with unittest.mock.patch(self._RUN_TARGET, side_effect=error):
+            self.assertEqual(_get_git_commit(), "(unknown)")
+
+
+class SourceRootNormalizationTest(unittest.TestCase):
+    """Unit tests for ``--source-root`` trailing-slash normalization in links."""
+
+    def test_source_root_without_trailing_slash_gets_one(self):
+        # lobster-trace: rst_req.RST_Source_Root_Prefix
+        link = ItemNaming.location_link(
+            File_Reference("src/module/foo.cpp"), source_root="../.."
+        )
+        self.assertIn("<../../src/module/foo.cpp>", link)
+        self.assertNotIn("..//", link)
+
+    def test_source_root_with_trailing_slash_not_duplicated(self):
+        # lobster-trace: rst_req.RST_Source_Root_Prefix
+        link = ItemNaming.location_link(
+            File_Reference("src/module/foo.cpp"), source_root="../../"
+        )
+        self.assertIn("<../../src/module/foo.cpp>", link)
+        self.assertNotIn("..//", link)
+
+    def test_no_source_root_uses_plain_filename(self):
+        # lobster-trace: rst_req.RST_Source_Root_Prefix
+        link = ItemNaming.location_link(
+            File_Reference("src/module/foo.cpp"), source_root=""
+        )
+        self.assertIn("<src/module/foo.cpp>", link)
 
 
 if __name__ == "__main__":

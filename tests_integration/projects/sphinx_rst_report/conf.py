@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 project = "LOBSTER Traceability Report"
-author = "BMW Software Engineering"
+author = "Bayerische Motoren Werke Aktiengesellschaft (BMW AG)"
 copyright = f"{datetime.now().year}, {author}"
 
 # No special extensions needed; :ref: is a built-in Sphinx role.

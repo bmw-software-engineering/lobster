@@ -3,8 +3,29 @@ import req
 
 req.System_Requirement RST_Report_Tracing_Policy_Diagram {
     description = '''
-      The generated RST report SHALL include a Graphviz diagram
+      IF the Graphviz "dot" executable is available,
+      THEN the generated RST report SHALL include a Graphviz diagram
       that visualises the tracing policy used to produce the report.
+    '''
+}
+
+req.System_Requirement RST_Report_Tracing_Policy_Diagram_Fallback {
+    description = '''
+      IF the Graphviz "dot" executable is not available,
+      THEN the generated RST report SHALL omit the tracing policy diagram
+      and instead include a note stating that the diagram was omitted
+      because Graphviz is not installed.
+    '''
+}
+
+req.System_Requirement RST_Report_Header {
+    description = '''
+      The generated RST report SHALL begin with a header that states
+      the analyzed git commit hash and the LOBSTER version used to produce
+      the report.
+      IF the analyzed commit cannot be determined (e.g. git is not installed
+      or the working directory is not a git repository),
+      THEN the header SHALL display "(unknown)" in place of the commit hash.
     '''
 }
 
