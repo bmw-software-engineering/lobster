@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest import TestCase
 from lobster.common.multi_file_input_tool import (
@@ -130,3 +131,67 @@ class MultiFileInputToolTest(TestCase):
                 # the items in any specific order, so we should not test for it either.
                 # Hence compare only sets:
                 self.assertSetEqual(set(result), set(expected))
+
+    def test_create_worklist_with_directory_input(self):
+        with TemporaryDirectory() as tmp_dir:
+            sub_dir = os.path.join(tmp_dir, "mydir")
+            os.mkdir(sub_dir)
+
+            file_inside = os.path.join(sub_dir, "file.txt")
+            with open(file_inside, "w", encoding="UTF-8"):
+                pass
+
+            config = Config(
+                inputs=None,
+                inputs_from_file=None,
+                extensions=[".txt"],
+                exclude_patterns=None,
+                schema=None,
+            )
+
+            result = create_worklist(config, [sub_dir])
+
+            self.assertIn(Path(file_inside), [Path(p) for p in result])
+
+    def test_create_worklist_invalid_path(self):
+        config = Config(
+            inputs=None,
+            inputs_from_file=None,
+            extensions=None,
+            exclude_patterns=None,
+            schema=None,
+        )
+
+        with self.assertRaises(ValueError):
+            create_worklist(config, ["non_existent_path"])
+
+    def test_create_worklist_mixed_inputs(self):
+
+        with TemporaryDirectory() as tmp_dir:
+            # file
+            file_path = os.path.join(tmp_dir, "file.txt")
+            with open(file_path, "w", encoding="UTF-8"):
+                pass
+
+            # directory
+            sub_dir = os.path.join(tmp_dir, "dir")
+            os.mkdir(sub_dir)
+
+            inside_file = os.path.join(sub_dir, "inner.txt")
+            with open(inside_file, "w", encoding="UTF-8"):
+                pass
+
+            config = Config(
+                inputs=None,
+                inputs_from_file=None,
+                extensions=[".txt"],
+                exclude_patterns=None,
+                schema=None,
+            )
+
+            result = create_worklist(config, [file_path, sub_dir])
+
+            result_paths = [Path(p) for p in result]
+
+            self.assertIn(Path(file_path), result_paths)
+            self.assertIn(Path(inside_file), result_paths)

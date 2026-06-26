@@ -23,3 +23,18 @@ class FileTagGeneratorTest(TestCase):
         file = "document.abc"
         tag1 = self.generator.get_tag(file)
         self.assertEqual(tag1, f"{file}:1")
+
+    def test_pathlib_integration(self):
+        gen = FileTagGenerator()
+
+        tag1 = gen.get_tag("/tmp/file.txt")
+        tag2 = gen.get_tag("/another/path/file.txt")
+
+        self.assertEqual(tag1, "file.txt:1")
+        self.assertEqual(tag2, "file.txt:2")
+
+    def test_tag_with_plain_filename(self):
+        gen = FileTagGenerator()
+
+        tag = gen.get_tag("file.txt")
+        self.assertEqual(tag, "file.txt:1")
