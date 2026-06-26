@@ -17,6 +17,7 @@ class Config:
     references: dict
     import_tagged: str
     import_query: Union[str, int]
+    baseline_id: Optional[int]
     verify_ssl: bool
     page_size: int
     schema: str

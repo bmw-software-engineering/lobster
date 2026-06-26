@@ -28,6 +28,7 @@ class QueryCodebeamerTest(unittest.TestCase):
             references=None,
             import_tagged=None,
             import_query=None,
+            baseline_id=None,
             verify_ssl=None,
             page_size=10,
             schema="Requirement",
@@ -117,6 +118,36 @@ class QueryCodebeamerTest(unittest.TestCase):
         self.assertEqual(result[0].location.item, item_data[0]["id"])
         self.assertEqual(result[0].location.tracker, item_data[0]["tracker"]["id"])
         self.assertEqual(result[0].location.version, item_data[0]["version"])
+
+    @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
+    def test_get_query_with_query_and_baseline_id(self, mock_query_cb_single):
+        """baseline_id is appended to the URL when import_query is a cbQL string."""
+        self._mock_cb_config.baseline_id = 407126303
+        mock_query = "tracker.id IN (29782591)"
+        mock_query_cb_single.return_value = {
+            "page": 1, "pageSize": 10, "total": 0, "items": []
+        }
+        get_query(self._mock_cb_config, mock_query)
+        called_url = mock_query_cb_single.call_args[0][1]
+        self.assertIn("baselineId=407126303", called_url)
+
+    @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
+    def test_get_query_with_ID_and_baseline_id(self, mock_query_cb_single):
+        """baseline_id is NOT appended to the URL when import_query is a report ID."""
+        self._mock_cb_config.baseline_id = 407126303
+        mock_query = 171619121
+        item_data = [{"item": {
+            "id": 1, "name": "x", "version": 1,
+            "tracker": {"id": 1},
+            "categories": [{"name": "Requirement"}],
+            "status": {"name": "Draft"},
+        }}]
+        mock_query_cb_single.return_value = {
+            "page": 1, "pageSize": 10, "total": 1, "items": item_data
+        }
+        get_query(self._mock_cb_config, mock_query)
+        called_url = mock_query_cb_single.call_args[0][1]
+        self.assertNotIn("baselineId", called_url)
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_invalid_data(self, mock_query_cb_single):

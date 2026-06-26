@@ -122,6 +122,23 @@ Then invoke the `lobster-codebeamer` tool like so:
 ```bash
 $ lobster-codebeamer --import-query 4776335 --out system-requirements.lobster
 ```
+
+### Querying at a Baseline
+
+To restrict results to the state of a specific Codebeamer baseline, add `baseline_id`
+to the YAML config file:
+
+```yaml
+import_query: "tracker.id IN (29782591) AND status IN ('Approved')"
+baseline_id: 407126303
+```
+
+> **Important:** `baseline_id` is only applied when `import_query` is a **cbQL query
+> string**. When `import_query` is a numeric report ID or `import_tagged` (a path to
+> an existing LOBSTER artifact for tag-based import, see
+> [Importing only tagged requirements](#importing-only-tagged-requirements)) is set,
+> `lobster-codebeamer` exits with an error (exit code 1).
+
 ### Importing only tagged requirements
 
 If you are not interested in a completeness check, or your
