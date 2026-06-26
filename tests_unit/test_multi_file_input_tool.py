@@ -138,7 +138,7 @@ class MultiFileInputToolTest(TestCase):
             os.mkdir(sub_dir)
 
             file_inside = os.path.join(sub_dir, "file.txt")
-            with open(file_inside, "w"):
+            with open(file_inside, "w", encoding="UTF-8"):
                 pass
 
             config = Config(
@@ -170,7 +170,7 @@ class MultiFileInputToolTest(TestCase):
         with TemporaryDirectory() as tmp_dir:
             # file
             file_path = os.path.join(tmp_dir, "file.txt")
-            with open(file_path, "w"):
+            with open(file_path, "w", encoding="UTF-8"):
                 pass
 
             # directory
@@ -178,7 +178,7 @@ class MultiFileInputToolTest(TestCase):
             os.mkdir(sub_dir)
 
             inside_file = os.path.join(sub_dir, "inner.txt")
-            with open(inside_file, "w"):
+            with open(inside_file, "w", encoding="UTF-8"):
                 pass
 
             config = Config(
