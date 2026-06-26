@@ -1,7 +1,9 @@
 import unittest
+import hashlib
 import subprocess
 from datetime import datetime, timezone
-from lobster.tools.core.html_report.html_report import get_commit_timestamp_utc
+from unittest.mock import patch
+from lobster.tools.core.html_report.html_report import get_commit_timestamp_utc, name_hash
 
 
 class LobsterHtmlReportTests(unittest.TestCase):
@@ -24,6 +26,31 @@ class LobsterHtmlReportTests(unittest.TestCase):
         invalid_commit = "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
         returned = get_commit_timestamp_utc(invalid_commit)
         self.assertEqual(returned, "Unknown")
+
+    def test_timestamp_found_in_submodule(self):
+        """Test when commit is found only in submodule"""
+        with patch("lobster.tools.core.html_report.html_report.run_git_show") as mock_run:
+            # First call (main repo) returns None, second call (submodule) returns timestamp
+            mock_run.side_effect = [None, "2026-06-25T12:00:00Z"]
+            returned = get_commit_timestamp_utc("abc123", submodule_path="submodule/path")
+            self.assertEqual(returned, "2026-06-25T12:00:00Z (from submodule at submodule/path)")
+
+    def test_various_inputs(self):
+        """Ensure name_hash matches hashlib.md5 for multiple inputs"""
+        test_cases = [
+            ("", hashlib.md5("".encode("UTF-8")).hexdigest()),          # empty string
+            ("Unit", hashlib.md5("Unit".encode("UTF-8")).hexdigest()),  # ASCII
+            ("Straße", hashlib.md5("Straße".encode("UTF-8")).hexdigest()),  # German
+            ("Test", hashlib.md5("Test".encode("UTF-8")).hexdigest()),  # consistency check
+        ]
+
+        for input_str, expected in test_cases:
+            with self.subTest(name=input_str):
+                self.assertEqual(name_hash(input_str), expected)
+
+    def test_different_inputs(self):
+        """Different inputs should yield different hashes"""
+        self.assertNotEqual(name_hash("Unit"), name_hash("Test"))
 
 
 if __name__ == "__main__":
