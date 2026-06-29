@@ -1,4 +1,3 @@
-import shutil
 import subprocess
 import unittest
 import unittest.mock
@@ -308,21 +307,28 @@ class RstReportGoldenOutputTest(LobsterRstReportSystemTestCaseBase):
         """Full single-page RST output matches the checked-in golden file."""
         if is_dot_available(dot=None):
             golden_name = "expected_single_page.rst"
-            expected_stdout_suffix = "LOBSTER RST report written to report.rst\n"
         else:
             golden_name = "expected_single_page_no_dot.rst"
-            expected_stdout_suffix = (
+
+        expected_stdout_suffix = (
+            (
                 "warning: dot utility not found, report will not include "
                 "the tracing policy visualisation\n"
                 "> please install Graphviz (https://graphviz.org)\n"
-                "LOBSTER RST report written to report.rst\n"
             )
+            if not is_dot_available(dot=None)
+            else ""
+        ) + f"LOBSTER RST report written to {golden_name}\n"
 
         golden_src = self._data_directory / golden_name
-        golden_copy = self._test_runner.working_dir / golden_name
 
-        # Copy + update version so the golden file reflects the installed release
-        shutil.copy2(golden_src, golden_copy)
+        # Copy the golden file into a separate temp dir so assertOutputFiles()
+        # can compare it against the tool's actual output in working_dir.
+        # (Both must share the same basename; they must be in different dirs.)
+        output_dir = self.create_output_directory_and_copy_expected(
+            self._data_directory.parent, golden_src
+        )
+        golden_copy = output_dir / golden_name
         update_version_in_rst_file(golden_copy)
 
         self._test_runner.declare_input_file(
@@ -330,7 +336,7 @@ class RstReportGoldenOutputTest(LobsterRstReportSystemTestCaseBase):
         )
         self._test_runner.declare_output_file(golden_copy)
         self._test_runner.cmd_args.lobster_report = "basic_report.lobster"
-        self._test_runner.cmd_args.out = "report.rst"
+        self._test_runner.cmd_args.out = golden_name
 
         patch_target = (
             "lobster.tools.core.rst_report.rst_report._get_git_commit"
