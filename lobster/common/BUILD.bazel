@@ -23,6 +23,7 @@ py_library(
         "exceptions.py",
         "file_collector.py",
         "file_tag_generator.py",
+        "graphviz_utils.py",
         "io.py",
         "items.py",
         "level_definition.py",

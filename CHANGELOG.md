@@ -5,7 +5,21 @@
 
 ### 1.0.4-dev
 
-* `trlc bazel dep`: update to trlc==2.0.5
+* `lobster-rst-report`:
+  - New tool: Generate reStructuredText traceability reports for inclusion
+    in Sphinx documentation projects.
+  - Supports single-page (`--out`) and multi-page (`--out-dir`) output modes.
+  - Requires the `sphinx-design` Sphinx extension for dropdown and grid
+    rendering, and `sphinx.ext.graphviz` for the tracing policy diagram.
+  - Includes coverage summary table, tracing policy diagram (Graphviz),
+    issues list, and detailed item cards with cross-references.
+  - Codebeamer items are rendered as clickable hyperlinks.
+  - Bazel integration via `subrule_lobster_rst_report` (opt-in).
+
+* Refactored `is_dot_available()` into `lobster.common.graphviz_utils`
+  (shared between `lobster-html-report` and `lobster-rst-report`).
+
+  * `trlc bazel dep`: update to trlc==2.0.5
 
 * Fixed wrong links in [README](README.md).
 
