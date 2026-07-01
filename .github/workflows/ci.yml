@@ -198,6 +198,16 @@ jobs:
           repository-cache: true
       - uses: actions/checkout@v4
       - run: bazel test //tests_system/... //tests_unit/...
+  system-test-build-mapping:
+    name: System Test Build Mapping
+    needs: changes
+    if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect system tests missing in BUILD.bazel
+        run: |
+          python3 tests_system/check_tests_and_build_mapping.py          
   failure:
     name: Check all jobs
     needs:
@@ -207,6 +217,7 @@ jobs:
       - test
       - integration-tests
       - bazel-integration
+      - system-test-build-mapping
     if: ${{ failure() || cancelled() }}
     runs-on: ubuntu-24.04
     steps:
