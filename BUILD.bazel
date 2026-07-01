@@ -207,3 +207,13 @@ py_binary(
     ],
     deps = ["//lobster/tools/trlc"],
 )
+
+py_binary(
+    name = "trlc-cli",
+    main = "util/trlc_cli.py",
+    srcs = ["util/trlc_cli.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [requirement("trlc")],
+)
