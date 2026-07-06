@@ -51,7 +51,8 @@ setuptools.setup(
               "lobster.tools.core.html_report",
               "lobster.tools.core.online_report",
               "lobster.tools.core.online_report_nogit",
-              "lobster.tools.core.report"],
+              "lobster.tools.core.report",
+              "lobster.tools.core.rst_report"],
     install_requires=[
         "Markdown~=3.7",
         "PyYAML>=6.0",
@@ -73,7 +74,8 @@ setuptools.setup(
             "lobster-html-report=lobster.tools.core.html_report.html_report:main",
             "lobster-online-report=lobster.tools.core.online_report.online_report:main",
             "lobster-online-report-nogit=lobster.tools.core.online_report_nogit.online_report_nogit:main",
-            "lobster-ci-report=lobster.tools.core.ci_report.ci_report:main"
+            "lobster-ci-report=lobster.tools.core.ci_report.ci_report:main",
+            "lobster-rst-report=lobster.tools.core.rst_report.rst_report:main"
         ]
     },
 )

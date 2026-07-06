@@ -70,10 +70,11 @@ enum Tools {
   // tools that consume the output of other LOBSTER tools
   lobster_online_report
   lobster_html_report
+  lobster_rst_report
 }
 
 type UseCase {
-  description ''' 
+  description '''
     The text of the use case.
     The format shall be : As a < role > I want < description of the UseCase >
     A use case shall describe the goal that the user wants to achieve by using LOBSTER.
@@ -86,7 +87,7 @@ type UseCase {
 
 enum Impact_Type {
   Safety
-    ''' 
+    '''
     The potential error has a safety impact.
     '''
   Financial
@@ -102,7 +103,7 @@ type PotentialError {
     This shall be a description of a potential error that may occur in a tool.
   ''' String
   impacts String [1..*]
-  affects 
+  affects
     '''List of use cases which the potential error could affect'''
       UseCase[1..*]
   impact_type Impact_Type

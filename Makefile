@@ -34,6 +34,7 @@ lint-system-tests: style
 		tests_system/lobster_online_report_nogit \
 		tests_system/lobster_pkg \
 		tests_system/lobster_report \
+		tests_system/lobster_rst_report \
 		tests_system/lobster_trlc \
 		tests_system/system_test_case_base.py
 
@@ -90,7 +91,8 @@ packages: clean-packages
 		lobster-json --version && \
 		lobster-python --version && \
 		lobster-trlc --version && \
-		lobster-pkg --version
+		lobster-pkg --version && \
+		lobster-rst-report --version
 
 clang-tidy:
 	cd .. && \

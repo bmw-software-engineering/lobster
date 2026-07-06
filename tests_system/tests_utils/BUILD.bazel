@@ -32,6 +32,7 @@ py_library(
         "update_html_expected_output.py",
         "update_online_json_with_hashes.py",
         "update_version_in_html.py",
+        "update_version_in_rst_file.py",
     ],
     visibility = ["//visibility:public"],
 )

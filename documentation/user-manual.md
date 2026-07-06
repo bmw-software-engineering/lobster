@@ -12,7 +12,7 @@ simplify this. The basic setup is as follows:
 2. Annotate traces onto your code, your tests and/or your requirements. Please notice each one of the supported languages has their own way to annotate the tracing tags.
 3. Extract the requirement traces with the corresponding lobster conversion tools (e.g. `lobster-cpp`). This converts those traces into a *.lobster file (into a "common unified interchange format").
 4. Build report by calling `lobster-report`
-5. Render your report by calling the core losbter tools. Usually a local HTML report is desired via `lobster-html-report` or even `lobster-ci-report` for your CI.
+5. Render your report by calling the core lobster tools. Usually a local HTML report is desired via `lobster-html-report`, an RST report for Sphinx documentation via `lobster-rst-report`, or even `lobster-ci-report` for your CI.
 
 The basic idea is that you have a number of artefacts that you wish to
 relate to each other; stored in different "databases". Sometimes this

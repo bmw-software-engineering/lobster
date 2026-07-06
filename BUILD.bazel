@@ -65,6 +65,7 @@ py_library(
         "lobster-online-report-nogit.py",
         "lobster-python.py",
         "lobster-report.py",
+        "lobster-rst-report.py",
         "lobster-trlc.py",
     ],
     visibility = [
@@ -78,6 +79,7 @@ py_library(
         "//lobster/tools/core/online_report",
         "//lobster/tools/core/online_report_nogit",
         "//lobster/tools/core/report",
+        "//lobster/tools/core/rst_report",
         "//lobster/tools/cpp",
         "//lobster/tools/cpptest",
         "//lobster/tools/gtest",
@@ -141,6 +143,15 @@ py_binary(
         "//visibility:public",
     ],
     deps = ["//lobster/tools/core/html_report"],
+)
+
+py_binary(
+    name = "lobster-rst-report",
+    srcs = ["lobster-rst-report.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/rst_report"],
 )
 
 py_binary(
