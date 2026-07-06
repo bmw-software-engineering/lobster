@@ -44,6 +44,7 @@ Config
          references=[],
          import_tagged=None,
          import_query=1234,  # report ID or cbQL query string
+         baseline_id=None,
          verify_ssl=True,
          page_size=100,
          schema="requirement",  # or "implementation" / "activity"
@@ -57,6 +58,7 @@ Config
 - ``references`` (List[str]): Names of Codebeamer fields whose referenced items should be traced (converted to ``req`` tags).
 - ``import_tagged`` (str | None): Path to an existing LOBSTER artifact whose unresolved ``req`` references define item IDs to import.
 - ``import_query`` (int | str | None): Report ID (int) or cbQL query string used to fetch items directly.
+- ``baseline_id`` (int | None): Codebeamer baseline ID to query against. **Only allowed when** ``import_query`` **is a cbQL query string**. Raises an error if combined with ``import_tagged`` or a numeric ``import_query``.
 - ``verify_ssl`` (bool): Whether to verify TLS certificates; set ``True`` in production for security.
 - ``page_size`` (int): Pagination size for REST queries; a trade-off between round trips and response size (default typically 100).
 - ``schema`` (str): Target schema type (``requirement``, ``implementation``, ``activity``) controlling class/namespace mapping.
@@ -122,3 +124,6 @@ Error Conditions
 - Absent both ``import_query`` & ``import_tagged`` → ``KeyError``.
 - ``num_request_retry <= 0`` → ``ValueError``.
 - Unrecognised ``schema`` → ``KeyError``.
+- ``baseline_id`` is not a positive integer → ``ValueError``.
+- ``baseline_id`` combined with ``import_tagged`` → ``KeyError``.
+- ``baseline_id`` combined with numeric ``import_query`` → ``KeyError``.
