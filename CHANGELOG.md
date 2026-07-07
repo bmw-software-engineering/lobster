@@ -4,6 +4,8 @@
 
 
 ### 1.0.4-dev
+* `lobster-gtest`:
+  - Export all record properties for report generation: Enable GWT Pattern
 
 * `lobster-codebeamer`:
   - Added `baseline_id` support for cbQL queries. When set, the tool queries
