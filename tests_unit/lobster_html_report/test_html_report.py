@@ -35,12 +35,12 @@ class LobsterHtmlReportTests(unittest.TestCase):
             returned = get_commit_timestamp_utc("abc123", submodule_path="submodule/path")
             self.assertEqual(returned, "2026-06-25T12:00:00Z (from submodule at submodule/path)")
 
-    def test_various_inputs(self):
+    def test_name_hash_returns_expected_md5_hash(self):
         """Ensure name_hash matches hashlib.md5 for multiple inputs"""
         test_cases = [
             ("", hashlib.md5("".encode("UTF-8")).hexdigest()),          # empty string
             ("Unit", hashlib.md5("Unit".encode("UTF-8")).hexdigest()),  # ASCII
-            ("Straße", hashlib.md5("Straße".encode("UTF-8")).hexdigest()),  # German
+            ("Straße", hashlib.md5("Straße".encode("UTF-8")).hexdigest()),  # Special Character
             ("Test", hashlib.md5("Test".encode("UTF-8")).hexdigest()),  # consistency check
         ]
 
@@ -48,7 +48,7 @@ class LobsterHtmlReportTests(unittest.TestCase):
             with self.subTest(name=input_str):
                 self.assertEqual(name_hash(input_str), expected)
 
-    def test_different_inputs(self):
+    def test_name_hash_returns_different_hashes_for_different_inputs(self):
         """Different inputs should yield different hashes"""
         self.assertNotEqual(name_hash("Unit"), name_hash("Test"))
 
