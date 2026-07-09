@@ -98,6 +98,7 @@ class GtestTool(MetaDataToolBase):
         source_line = int(testcase.attrib["line"]) \
             if "line" in testcase.attrib \
             else None
+        extra = {}
 
         for props in testcase:
             if props.tag == "failure":
@@ -107,16 +108,20 @@ class GtestTool(MetaDataToolBase):
                 continue
             for prop in props:
                 assert prop.tag == "property"
-                if prop.attrib["name"] == "lobster-tracing":
+                name  = prop.attrib["name"]
+                value = prop.attrib["value"]
+                if name == "lobster-tracing":
                     test_tags += [
                         x.strip()
-                        for x in prop.attrib["value"].split(",")]
-                elif prop.attrib["name"] == "lobster-tracing-file":
-                    source_file = prop.attrib["value"]
-                elif prop.attrib["name"] == "lobster-tracing-line":
-                    source_line = int(prop.attrib["value"])
+                        for x in value.split(",")]
+                elif name == "lobster-tracing-file":
+                    source_file = value
+                elif name == "lobster-tracing-line":
+                    source_line = int(value)
+                else:
+                    extra[name] = value
 
-        return test_ok, test_tags, source_file, source_line
+        return test_ok, test_tags, source_file, source_line, extra
 
     @staticmethod
     def _resolve_test_source(c_files_rel, source_file, source_line):
@@ -156,7 +161,7 @@ class GtestTool(MetaDataToolBase):
                         continue
                     test_name     = testcase.attrib["name"]
                     test_executed = testcase.attrib["status"] == "run"
-                    test_ok, test_tags, source_file, source_line = \
+                    test_ok, test_tags, source_file, source_line, extra = \
                         self._parse_testcase_properties(testcase)
 
                     test_source = self._resolve_test_source(
@@ -165,11 +170,16 @@ class GtestTool(MetaDataToolBase):
                     uid = f"{suite_name}:{test_name}"
                     status = self._resolve_test_status(test_executed, test_ok)
 
+                    parts = [f":{k.capitalize()}: {v}"
+                             for k, v in extra.items()]
+                    text = "\n".join(parts) if parts else None
+
                     tag  = Tracing_Tag("gtest", uid)
                     item = Activity(tag       = tag,
                                     location  = test_source,
                                     framework = "GoogleTest",
                                     kind      = "test",
+                                    text      = text,
                                     status    = status)
                     for ref in test_tags:
                         item.add_tracing_target(Tracing_Tag("req", ref))
