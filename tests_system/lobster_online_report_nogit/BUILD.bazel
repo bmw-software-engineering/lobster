@@ -21,11 +21,12 @@ py_library(
     ],
 )
 
-py_test(
-    name = "test_nogit",
-    srcs = ["test_nogit.py"],
-    deps = [
-        ":lobster_online_report_nogit",
-        "//tests_system",
-    ],
+test_suite(
+    name = "lobster_online_report_nogit_tests",
 )
+
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [":lobster_online_report_nogit"],
+) for src in glob(["test_*.py"])]

@@ -21,21 +21,21 @@ py_library(
     ],
 )
 
-py_test(
-    name = "test_config_exceptions",
-    srcs = ["test_config_exceptions.py"],
-    deps = [
-        ":lobster_online_report",
-        "//tests_system",
-    ],
+test_suite(
+    name = "lobster_online_report_tests",
 )
+
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [":lobster_online_report"],
+) for src in glob(["test_*.py"], exclude = ["test_valid_cases.py"])]
 
 py_test(
     name = "test_valid_cases",
     srcs = ["test_valid_cases.py"],
     deps = [
         ":lobster_online_report",
-        "//tests_system",
         "//lobster/common:common"
     ],
 )

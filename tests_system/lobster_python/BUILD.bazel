@@ -22,20 +22,12 @@ py_library(
     ],
 )
 
-py_test(
-    name = "test_multiple_identical_function_names",
-    srcs = ["test_multiple_identical_function_names.py"],
-    deps = [
-        ":lobster_python",
-        "//tests_system",
-    ],
+test_suite(
+    name = "lobster_python_tests",
 )
 
-py_test(
-    name = "test_valid_cases",
-    srcs = ["test_valid_cases.py"],
-    deps = [
-        ":lobster_python",
-        "//tests_system",
-    ],
-)
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [":lobster_python"],
+) for src in glob(["test_*.py"])]

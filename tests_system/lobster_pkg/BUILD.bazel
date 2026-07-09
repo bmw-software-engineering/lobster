@@ -22,20 +22,15 @@ py_library(
     ],
 )
 
-py_test(
-    name = "test_invalid_scenario",
-    srcs = ["test_invalid_scenario.py"],
-    deps = [
-        ":lobster_pkg",
-        "//lobster/tools/pkg",
-    ],
+test_suite(
+    name = "lobster_pkg_tests",
 )
 
-py_test(
-    name = "test_valid_scenario",
-    srcs = ["test_valid_scenario.py"],
+[py_test(
+    name = src[:-3],
+    srcs = [src],
     deps = [
         ":lobster_pkg",
         "//lobster/tools/pkg",
     ],
-)
+) for src in glob(["test_*.py"])]
