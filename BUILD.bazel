@@ -45,11 +45,21 @@ load("//:requirements.bzl", "requirement")
 #     pip_repository_name = "pip",
 #     requirements = "requirements_lock_3_9.txt",
 # )
-lock(
-    name = "python_dependencies",
-    srcs = ["requirements_dev.txt", "requirements.txt"],
-    out = "requirements_lock.txt",
-)
+
+# Run: bazel run //:python_dependencies_3_XX.update --@rules_python//python/config_settings:python_version=3.XX
+[
+  lock(
+      name = "python_dependencies_3_{}".format(version),
+      srcs = ["requirements_dev.txt", "requirements.txt"],
+      out = "requirements_lock_3_{}.txt".format(version),
+  )
+  for version in [
+      "9",
+      "10",
+      "11",
+      "12",
+  ]
+]
 
 py_library(
     name = "lobster",
