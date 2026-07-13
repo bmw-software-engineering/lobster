@@ -3,6 +3,8 @@ export LOBSTER_ROOT=$(PWD)
 export PYTHONPATH=$(LOBSTER_ROOT)
 export PATH:=$(LOBSTER_ROOT):$(PATH)
 
+BAZEL_BIN := $(shell command -v bazelisk 2>/dev/null || command -v bazel-8.5.1 2>/dev/null || command -v bazel 2>/dev/null)
+
 TOOL_FOLDERS := $(shell \
 	(find ./lobster/tools -mindepth 1 -maxdepth 1 -type d \
 		| grep -v -E '__pycache__|parser|core$$' \
@@ -103,10 +105,11 @@ clang-tidy:
 
 integration-tests: packages
 	(cd tests_integration/projects/basic; make)
-	(cd tests_integration/projects/coverage; make)
-	(cd tests_integration/projects/coverage_half; make)
-	(cd tests_integration/projects/coverage_mix; make)
-	(cd tests_integration/projects/coverage_zero; make)
+	$(BAZEL_BIN) test \
+		//tests_integration/projects/coverage:traceability \
+		//tests_integration/projects/coverage_half:traceability \
+		//tests_integration/projects/coverage_mix:traceability \
+		//tests_integration/projects/coverage_zero:traceability
 	(cd tests_integration/projects/cpp_focus; make)
 
 codebeamer-pem:
