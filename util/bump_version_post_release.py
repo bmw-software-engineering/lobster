@@ -45,11 +45,11 @@ with open(VERSION_FILE, "w", encoding="UTF-8") as fd:
 
 LOBSTER_VERSION = f"{major}.{minor}.{release}-dev"
 
-# Update changelog and docs, adding a new entry
+# Update changelog, adding a new entry
 
 util.changelog.add_new_section(LOBSTER_VERSION)
 
 # Assemble commit
 
-os.system("git add CHANGELOG.md lobster/version.py ")
+os.system(f"git add CHANGELOG.md {VERSION_FILE}")
 os.system(f'git commit -m "Bump version to {LOBSTER_VERSION} after release"')
