@@ -134,24 +134,6 @@ unit-tests:
 			--source=lobster \
 			-m unittest discover -s tests_unit -v
 
-remove-dev:
-	python3 -m util.release
-
-bump:
-	python3 -m util.bump_version_post_release
-
-
-# steps for a release:
-# - create new branch
-# - make remove-dev
-# - review CHANGELOG.md (is it complete, or is something missing?)
-# - git push + create pull request
-#
-# - create new branch
-# - make bump
-# - git push + create pull request
-
-
 # --- Coverage Execution Targets ---
 coverage-unit:
 	@echo "📊 Generating coverage report for unit tests..."

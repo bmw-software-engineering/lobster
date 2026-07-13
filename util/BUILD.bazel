@@ -1,0 +1,42 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+
+# Release workflow
+#
+# Pre-release:
+# - create new branch
+# - bazel run //util:release
+# - review CHANGELOG.md (is it complete, or is something missing?)
+# - git push + create pull request
+#
+# Post-release:
+# - create new branch
+# - bazel run //util:bump
+# - git push + create pull request
+
+py_binary(
+    name = "release",
+    srcs = ["release.py"],
+    visibility = ["//visibility:public"],
+    data = ["//:changelog_md"],
+    deps = [
+        ":changelog",
+        "//lobster/common:common",
+    ],
+)
+
+py_binary(
+    name = "bump",
+    srcs = ["bump_version_post_release.py"],
+    visibility = ["//visibility:public"],
+    data = ["//:changelog_md"],
+    deps = [
+        ":changelog",
+        "//lobster/common:common",
+    ],
+)
+
+py_library(
+    name = "changelog",
+    srcs = ["changelog.py"],
+    visibility = ["//visibility:public"],
+)
