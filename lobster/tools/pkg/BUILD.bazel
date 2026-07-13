@@ -3,6 +3,12 @@ load("@rules_python//python:defs.bzl", "py_library")
 # BUILD.bazel
 # gazelle:exclude __init__.py
 
+filegroup(
+    name = "trlc_sources",
+    srcs = glob(["**/*.trlc"]),
+    visibility = ["//visibility:public"],
+)
+
 py_library(
     name = "pkg",
     srcs = [

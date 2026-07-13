@@ -44,9 +44,6 @@ lint-unit-tests: style
 		--reports=no \
 		tests_unit
 
-trlc:
-	trlc lobster --error-on-warnings --verify
-
 style:
 	@python3 -m pycodestyle lobster tests_system \
 		--exclude=assets.py,html_report_js.py
