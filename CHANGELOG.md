@@ -3,9 +3,11 @@
 ## Changelog
 
 
-### 1.0.4-dev
+### 1.0.4
+
 * `lobster-gtest`:
   - Export all record properties for report generation: Enable GWT Pattern
+  - Minimize Bazel Gtest output to stdout during bazel build
 
 * `lobster-codebeamer`:
   - Added `baseline_id` support for cbQL queries. When set, the tool queries
@@ -14,7 +16,7 @@
     now raises an error instead of being silently ignored (ISO 26262 TCL3
     qualification support).
 
-* `trlc bazel dep`: update to trlc==2.0.5
+* `trlc bazel dep`: update to trlc==3.0.0
 
 * `lobster-rst-report`:
   - New tool: Generate reStructuredText traceability reports for inclusion
