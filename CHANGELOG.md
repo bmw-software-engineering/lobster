@@ -5,6 +5,9 @@
 
 ### 1.0.5-dev
 
+* Added stable Python APIs and API documentation pages for the tools `lobster-python` and `lobster-trlc`.
+  - `lobster_python(config: PythonToolConfig)`
+  - `lobster_trlc(config: TrlcToolConfig)`
 
 
 ### 1.0.4
