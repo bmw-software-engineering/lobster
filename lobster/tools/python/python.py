@@ -23,7 +23,8 @@ import os.path
 import multiprocessing
 import functools
 import re
-from typing import Optional, Sequence
+from dataclasses import dataclass
+from typing import List, Optional, Sequence, Tuple
 
 from libcst.metadata import PositionProvider
 import libcst as cst
@@ -36,6 +37,17 @@ from lobster.common.meta_data_tool_base import MetaDataToolBase
 LOBSTER_TRACE_PREFIX = "# lobster-trace: "
 LOBSTER_JUST_PREFIX = "# lobster-exclude: "
 func_name = []
+
+
+@dataclass
+class PythonToolConfig:
+    files: List[str]
+    activity: bool = False
+    out: Optional[str] = None
+    single: bool = False
+    only_tagged_functions: bool = False
+    parse_decorator: Optional[Tuple[str, str]] = None
+    parse_versioned_decorator: Optional[Tuple[str, str, str]] = None
 
 
 def count_occurrence_of_last_function_from_function_name_list(function_names):
@@ -477,70 +489,113 @@ class PythonTool(MetaDataToolBase):
                          default=(None, None, None))
 
     def _run_impl(self, options: Namespace) -> int:
-        file_list = []
-        for item in options.files:
-            if os.path.isfile(item):
-                file_list.append(item)
-            elif os.path.isdir(item):
-                for path, _, files in os.walk(item):
-                    for filename in files:
-                        _, ext = os.path.splitext(filename)
-                        if ext == ".py":
-                            file_list.append(os.path.join(path, filename))
-            else:
-                self._argument_parser.error(f"{item} is not a file or directory")
-
-        context = {
-            "activity"         : options.activity,
-            "decorator"        : None,
-            "dec_arg_name"     : None,
-            "dec_arg_version"  : None,
-            "exclude_untagged" : options.only_tagged_functions,
-            "namespace"        : "req",
-        }
-
-        if options.parse_decorator[0] is not None:
-            context["decorator"]    = options.parse_decorator[0]
-            context["dec_arg_name"] = options.parse_decorator[1]
-        elif options.parse_versioned_decorator[0] is not None:
-            context["decorator"]       = options.parse_versioned_decorator[0]
-            context["dec_arg_name"]    = options.parse_versioned_decorator[1]
-            context["dec_arg_version"] = options.parse_versioned_decorator[2]
-
-        pfun = functools.partial(process_file, options=context)
-        items = []
-        ok    = True
-
-        if options.single:
-            for file_name in file_list:
-                new_ok, new_items = pfun(file_name)
-                ok    &= new_ok
-                items += new_items
-        else:
-            with multiprocessing.Pool() as pool:
-                for new_ok, new_items in pool.imap_unordered(pfun, file_list):
-                    ok    &= new_ok
-                    items += new_items
-
-        if options.activity:
-            schema = Activity
-        else:
-            schema = Implementation
-
-        if options.out:
-            ensure_output_directory(options.out)
-            with open(options.out, "w", encoding="UTF-8") as fd:
-                lobster_write(fd, schema, "lobster_python", items)
-            print(f"Written output for {len(items)} items to {options.out}")
-        else:
-            lobster_write(sys.stdout, schema, "lobster_python", items)
-            print()
-
-        if ok:
-            return 0
-
+        parse_decorator = (
+            options.parse_decorator
+            if options.parse_decorator[0] is not None
+            else None
+        )
+        parse_versioned_decorator = (
+            options.parse_versioned_decorator
+            if options.parse_versioned_decorator[0] is not None
+            else None
+        )
+        config = PythonToolConfig(
+            files=options.files,
+            activity=options.activity,
+            out=options.out,
+            single=options.single,
+            only_tagged_functions=options.only_tagged_functions,
+            parse_decorator=parse_decorator,
+            parse_versioned_decorator=parse_versioned_decorator,
+        )
+        try:
+            if run_lobster_python(config):
+                return 0
+        except ValueError as exc:
+            self._argument_parser.error(str(exc))
+            return 1
         print("Note: Earlier parse errors make actual output unreliable")
         return 1
+
+
+def collect_python_files(files: List[str]) -> List[str]:
+    file_list = []
+    for item in files:
+        if os.path.isfile(item):
+            file_list.append(item)
+        elif os.path.isdir(item):
+            for path, _, candidates in os.walk(item):
+                for filename in candidates:
+                    _, ext = os.path.splitext(filename)
+                    if ext == ".py":
+                        file_list.append(os.path.join(path, filename))
+        else:
+            raise ValueError(f"{item} is not a file or directory")
+    return file_list
+
+
+def build_context(config: PythonToolConfig) -> dict:
+    context = {
+        "activity"         : config.activity,
+        "decorator"        : None,
+        "dec_arg_name"     : None,
+        "dec_arg_version"  : None,
+        "exclude_untagged" : config.only_tagged_functions,
+        "namespace"        : "req",
+    }
+
+    if config.parse_decorator and config.parse_versioned_decorator:
+        raise ValueError(
+            "Only one of parse_decorator or parse_versioned_decorator can be set"
+        )
+
+    if config.parse_decorator:
+        context["decorator"] = config.parse_decorator[0]
+        context["dec_arg_name"] = config.parse_decorator[1]
+    elif config.parse_versioned_decorator:
+        context["decorator"] = config.parse_versioned_decorator[0]
+        context["dec_arg_name"] = config.parse_versioned_decorator[1]
+        context["dec_arg_version"] = config.parse_versioned_decorator[2]
+
+    return context
+
+
+def run_lobster_python(config: PythonToolConfig) -> bool:
+    file_list = collect_python_files(config.files)
+    context = build_context(config)
+
+    pfun = functools.partial(process_file, options=context)
+    items = []
+    ok = True
+
+    if config.single:
+        for file_name in file_list:
+            new_ok, new_items = pfun(file_name)
+            ok &= new_ok
+            items += new_items
+    else:
+        with multiprocessing.Pool() as pool:
+            for new_ok, new_items in pool.imap_unordered(pfun, file_list):
+                ok &= new_ok
+                items += new_items
+
+    schema = Activity if config.activity else Implementation
+
+    if config.out:
+        ensure_output_directory(config.out)
+        with open(config.out, "w", encoding="UTF-8") as fd:
+            lobster_write(fd, schema, "lobster_python", items)
+        print(f"Written output for {len(items)} items to {config.out}")
+    else:
+        lobster_write(sys.stdout, schema, "lobster_python", items)
+        print()
+
+    return ok
+
+
+def lobster_python(config: PythonToolConfig) -> None:
+    """This is an API function."""
+    run_lobster_python(config)
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:
