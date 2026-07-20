@@ -27,6 +27,7 @@ py_binary(
 py_binary(
     name = "bump",
     srcs = ["bump_version_post_release.py"],
+    main = "bump_version_post_release.py",
     visibility = ["//visibility:public"],
     data = ["//:changelog_md"],
     deps = [
