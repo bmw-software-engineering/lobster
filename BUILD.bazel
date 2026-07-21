@@ -61,6 +61,12 @@ load("//:requirements.bzl", "requirement")
   ]
 ]
 
+filegroup(
+    name = "changelog_md",
+    srcs = ["CHANGELOG.md"],
+    visibility = ["//visibility:public"],
+)
+
 py_library(
     name = "lobster",
     srcs = [
