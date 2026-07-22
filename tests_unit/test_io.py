@@ -1,10 +1,12 @@
 import unittest
 import io
 import json
+import tempfile
+from pathlib import Path
 from unittest.mock import patch, create_autospec, mock_open
 from lobster.common.errors import Message_Handler, LOBSTER_Error
 from lobster.common.items import Tracing_Tag, Requirement, Implementation, Activity
-from lobster.common.io import lobster_write, lobster_read
+from lobster.common.io import lobster_write, lobster_read, ensure_output_directory
 from lobster.common.location import Location
 
 class LobsterWriteReadTests(unittest.TestCase):
@@ -268,3 +270,37 @@ class LobsterWriteReadTests(unittest.TestCase):
     def test_lobster_read_file_not_found(self, mock_isfile):
         with self.assertRaises(FileNotFoundError):
             lobster_read(self.mh, self.filename, self.level, self.items, self.source_info)
+
+    def test_ensure_output_directory_creates_dirs(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_path = Path(tmpdir)
+
+            file_path = tmp_path / "a" / "b" / "output.txt"
+
+            ensure_output_directory(str(file_path))
+
+            self.assertTrue((tmp_path / "a").exists())
+            self.assertTrue((tmp_path / "a" / "b").exists())
+
+    def test_ensure_output_directory_existing(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_path = Path(tmpdir)
+
+            dir_path = tmp_path / "existing"
+            dir_path.mkdir()
+
+            file_path = dir_path / "file.txt"
+
+            ensure_output_directory(str(file_path))
+
+            self.assertTrue(dir_path.exists())
+
+    def test_ensure_output_directory_no_parent(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_path = Path(tmpdir)
+
+            file_path = tmp_path / "file.txt"
+
+            ensure_output_directory(str(file_path))
+
+            self.assertTrue(tmp_path.exists())
