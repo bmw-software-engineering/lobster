@@ -18,7 +18,8 @@ req.UseCase List_Requirements_to_Tests {
 
         // shall generate reports:
         req.Tools.lobster_report,
-        req.Tools.lobster_html_report
+        req.Tools.lobster_html_report,
+        req.Tools.lobster_rst_report
     ]
 }
 
@@ -39,7 +40,8 @@ req.UseCase List_Requirements_without_Tests {
 
         // shall generate reports:
         req.Tools.lobster_report,
-        req.Tools.lobster_html_report
+        req.Tools.lobster_html_report,
+        req.Tools.lobster_rst_report
     ]
 }
 
@@ -60,7 +62,8 @@ req.UseCase List_Tests_to_Requirements {
 
         // shall generate reports:
         req.Tools.lobster_report,
-        req.Tools.lobster_html_report
+        req.Tools.lobster_html_report,
+        req.Tools.lobster_rst_report
     ]
 }
 
@@ -81,7 +84,8 @@ req.UseCase List_Tests_without_Requirements {
 
         // shall generate reports:
         req.Tools.lobster_report,
-        req.Tools.lobster_html_report
+        req.Tools.lobster_html_report,
+        req.Tools.lobster_rst_report
     ]
 }
 
@@ -110,7 +114,8 @@ req.UseCase Item_Coverage {
 
         // shall generate reports:
         req.Tools.lobster_report,
-        req.Tools.lobster_html_report
+        req.Tools.lobster_html_report,
+        req.Tools.lobster_rst_report
     ]
 }
 
@@ -121,6 +126,8 @@ req.UseCase Show_Tracing_Policy {
     '''
     affected_tools = [
         req.Tools.lobster_report,
+        req.Tools.lobster_html_report,
+        req.Tools.lobster_rst_report
     ]
 }
 
@@ -137,7 +144,8 @@ req.UseCase Show_codebeamer_links {
         req.Tools.lobster_report,
 
         // shall render the source URL
-        req.Tools.lobster_html_report
+        req.Tools.lobster_html_report,
+        req.Tools.lobster_rst_report
     ]
 }
 
@@ -168,7 +176,8 @@ req.UseCase Item_GitHub_Source {
         req.Tools.lobster_online_report,
 
         // shall render the references
-        req.Tools.lobster_html_report
+        req.Tools.lobster_html_report,
+        req.Tools.lobster_rst_report
     ]
 }
 
@@ -182,13 +191,28 @@ req.UseCase HTML_Output {
     ]
 }
 
+req.UseCase RST_Output {
+    description = '''
+        As a requirements manager I want the traceability report to be generated as
+        reStructuredText (RST) for inclusion in a Sphinx documentation project,
+        with the option to produce either a single combined document or a set of
+        individual pages, one per tracing level.
+    '''
+    affected_tools = [
+        req.Tools.lobster_rst_report
+    ]
+}
+
 req.UseCase List_Findings {
     description = '''
         As a requirements manager I want the traceability report
         to show a list with all findings
         where the tracing policy is violated.
     '''
-    affected_tools = [req.Tools.lobster_html_report]
+    affected_tools = [
+        req.Tools.lobster_html_report,
+        req.Tools.lobster_rst_report
+    ]
 }
 
 section "Nice to have" {
@@ -203,7 +227,8 @@ section "Nice to have" {
             to highlight the missing traces and detected traces in different color.
         '''
         affected_tools = [
-            req.Tools.lobster_html_report
+            req.Tools.lobster_html_report,
+            req.Tools.lobster_rst_report
         ]
     }
 
@@ -213,7 +238,8 @@ section "Nice to have" {
             to be generated in English language.
         '''
         affected_tools = [
-            req.Tools.lobster_html_report
+            req.Tools.lobster_html_report,
+            req.Tools.lobster_rst_report
         ]
     }
 

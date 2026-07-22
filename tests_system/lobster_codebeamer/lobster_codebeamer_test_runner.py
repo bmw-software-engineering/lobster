@@ -9,6 +9,8 @@ from lobster.tools.codebeamer.codebeamer import main
 @dataclass
 class ConfigFileData:
     import_query: Optional[Union[int, str]] = None
+    import_tagged: Optional[str] = None
+    baseline_id: Optional[int] = None
     root: Optional[str] = None
     token: Optional[str] = None
     out: Optional[str] = None
@@ -31,6 +33,8 @@ class ConfigFileData:
                 data[key] = value
 
         append_if_not_none("import_query", self.import_query)
+        append_if_not_none("import_tagged", self.import_tagged)
+        append_if_not_none("baseline_id", self.baseline_id)
         append_if_not_none("root", self.root)
         append_if_not_none("token", self.token)
         append_if_not_none("out", self.out)

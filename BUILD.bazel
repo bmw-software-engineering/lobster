@@ -45,10 +45,26 @@ load("//:requirements.bzl", "requirement")
 #     pip_repository_name = "pip",
 #     requirements = "requirements_lock_3_9.txt",
 # )
-lock(
-    name = "python_dependencies",
-    srcs = ["requirements_dev.txt", "requirements.txt"],
-    out = "requirements_lock.txt",
+
+# Run: bazel run //:python_dependencies_3_XX.update --@rules_python//python/config_settings:python_version=3.XX
+[
+  lock(
+      name = "python_dependencies_3_{}".format(version),
+      srcs = ["requirements_dev.txt", "requirements.txt"],
+      out = "requirements_lock_3_{}.txt".format(version),
+  )
+  for version in [
+      "9",
+      "10",
+      "11",
+      "12",
+  ]
+]
+
+filegroup(
+    name = "changelog_md",
+    srcs = ["CHANGELOG.md"],
+    visibility = ["//visibility:public"],
 )
 
 py_library(
@@ -65,6 +81,7 @@ py_library(
         "lobster-online-report-nogit.py",
         "lobster-python.py",
         "lobster-report.py",
+        "lobster-rst-report.py",
         "lobster-trlc.py",
     ],
     visibility = [
@@ -78,6 +95,7 @@ py_library(
         "//lobster/tools/core/online_report",
         "//lobster/tools/core/online_report_nogit",
         "//lobster/tools/core/report",
+        "//lobster/tools/core/rst_report",
         "//lobster/tools/cpp",
         "//lobster/tools/cpptest",
         "//lobster/tools/gtest",
@@ -141,6 +159,15 @@ py_binary(
         "//visibility:public",
     ],
     deps = ["//lobster/tools/core/html_report"],
+)
+
+py_binary(
+    name = "lobster-rst-report",
+    srcs = ["lobster-rst-report.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/core/rst_report"],
 )
 
 py_binary(

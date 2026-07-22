@@ -3,9 +3,38 @@
 ## Changelog
 
 
-### 1.0.4-dev
+### 1.0.5-dev
 
-* `trlc bazel dep`: update to trlc==2.0.5
+
+
+### 1.0.4
+
+* `lobster-gtest`:
+  - Export all record properties for report generation: Enable GWT Pattern
+  - Minimize Bazel Gtest output to stdout during bazel build
+
+* `lobster-codebeamer`:
+  - Added `baseline_id` support for cbQL queries. When set, the tool queries
+    items at the specified Codebeamer baseline revision.
+  - `baseline_id` combined with `import_tagged` or a numeric `import_query`
+    now raises an error instead of being silently ignored (ISO 26262 TCL3
+    qualification support).
+
+* `trlc bazel dep`: update to trlc==3.0.0
+
+* `lobster-rst-report`:
+  - New tool: Generate reStructuredText traceability reports for inclusion
+    in Sphinx documentation projects.
+  - Supports single-page (`--out`) and multi-page (`--out-dir`) output modes.
+  - Requires the `sphinx-design` Sphinx extension for dropdown and grid
+    rendering, and `sphinx.ext.graphviz` for the tracing policy diagram.
+  - Includes coverage summary table, tracing policy diagram (Graphviz),
+    issues list, and detailed item cards with cross-references.
+  - Codebeamer items are rendered as clickable hyperlinks.
+  - Bazel integration via `subrule_lobster_rst_report` (opt-in).
+
+* Refactored `is_dot_available()` into `lobster.common.graphviz_utils`
+  (shared between `lobster-html-report` and `lobster-rst-report`).
 
 * Fixed wrong links in [README](README.md).
 
@@ -33,6 +62,8 @@
 * `lobster-json`:
   - Fixed crash when processing empty JSON files. The tool now exits gracefully with
     return code 1 and prints a proper error message to stderr: "Input file contains invalid JSON."
+
+* Fixed python infrastructure to support more python versions than 3.9
 
 * All tools now automatically create output directories if they don't exist.
   Previously, tools would crash with an exception if the specified output

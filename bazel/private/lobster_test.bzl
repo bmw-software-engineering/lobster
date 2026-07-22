@@ -64,6 +64,41 @@ subrule_lobster_html_report = subrule(
     },
 )
 
+def _lobster_rst_report_subrule_impl(ctx, lobster_report, _lobster_rst_report):
+    lobster_rst_report = ctx.actions.declare_file("{}_report.rst".format(ctx.label.name))
+
+    # Compute relative path from the RST output back to the workspace root so
+    # that file references in the report resolve correctly when included in Sphinx.
+    package = ctx.label.package
+    package_depth = len(package.split("/")) if package else 0
+    source_root = "/".join([".." for _ in range(package_depth + 1)]) + "/"
+
+    args = ctx.actions.args()
+    args.add(lobster_report.path)
+    args.add_all(["--out", lobster_rst_report.path])
+    args.add_all(["--source-root", source_root])
+
+    ctx.actions.run(
+        executable = _lobster_rst_report,
+        inputs = [lobster_report],
+        outputs = [lobster_rst_report],
+        arguments = [args],
+        progress_message = "lobster-rst-report {}".format(lobster_rst_report.path),
+    )
+
+    return lobster_rst_report
+
+subrule_lobster_rst_report = subrule(
+    implementation = _lobster_rst_report_subrule_impl,
+    attrs = {
+        "_lobster_rst_report": attr.label(
+            default = "//:lobster-rst-report",
+            executable = True,
+            cfg = "exec",
+        ),
+    },
+)
+
 def _lobster_test_impl(ctx):
     lobster_config_substitutions = {}
     for input_config in ctx.attr.inputs:

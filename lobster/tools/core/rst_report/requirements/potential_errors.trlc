@@ -1,0 +1,170 @@
+package UseCases
+import req
+
+req.PotentialError RST_Report_not_Generated {
+    summary = "LOBSTER fails to generate the RST report"
+    description = '''
+      The RST report is not generated when it should have been.
+    '''
+    impacts = [
+      '''If the RST report is not generated then the user will not be able to
+          verify the traceability results between requirements and software tests
+          in their Sphinx documentation.'''
+    ]
+
+    affects = [
+        RST_Output,
+        Colored_Findings,
+        English_Language,
+    ]
+    impact_type = req.Impact_Type.Financial
+}
+
+req.PotentialError RST_Requirements_not_listed_correctly {
+    summary = "LOBSTER does not list the requirements correctly in the RST report"
+    description = '''
+      Some requirements are not listed correctly in the RST report.
+      For example:
+      - Some requirements which are not covered are not listed.
+      - Some requirements which are covered are not listed.
+    '''
+    impacts = [
+      '''If requirements not covered by tests are missing from the RST report
+          then the user might think that all requirements are covered by tests
+          when in fact they are not.''',
+
+      '''If requirements covered by tests are missing from the RST report
+          then the user might think that no requirements are covered
+          when in fact they are.'''
+    ]
+
+    affects = [List_Requirements_to_Tests, List_Requirements_without_Tests]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError RST_Software_tests_not_listed_correctly {
+    summary = "LOBSTER does not list the software tests correctly in the RST report"
+    description = '''
+      Some software tests are not listed correctly in the RST report.
+      For example:
+      - Some software tests not covering any requirement are listed.
+      - Some software tests covering a requirement are not listed.
+    '''
+    impacts = [
+      '''If software tests not covering any requirement are missing from the RST report
+          then the user might think that all requirements are covered
+          when in fact they are not.''',
+
+      '''If software tests covering requirements are missing from the RST report
+          then the user might think no tests cover requirements
+          when in fact they do.'''
+    ]
+
+    affects = [List_Tests_to_Requirements, List_Tests_without_Requirements]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError RST_Incorrect_Coverage {
+    summary = "LOBSTER RST report shows a wrong coverage value."
+    description = '''
+      The tool writes a coverage value into the output file
+      that is not equal to the coverage value from the input file.
+    '''
+    impacts = [
+      '''If the displayed coverage value is higher than the actual value,
+          the quality manager may release software which should not be released.'''
+    ]
+
+    affects = [Item_Coverage]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError RST_Too_few_findings {
+    summary = "LOBSTER RST report lists too few findings"
+    description = '''
+      Not all tracing policy violations are listed in the RST report.
+      For example, a missing requirement reference in a software test is not detected.
+    '''
+    impacts = [
+      '''If all tracing policy violations are not listed in the RST report
+          then the user might think that the traceability policy is followed
+          in all test cases when in fact it is not.'''
+    ]
+
+    affects = [RST_Output, List_Findings]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError RST_Input_file_location_missing {
+    summary = "LOBSTER RST report fails to show the location of the input files"
+    description = '''
+      Source location of the input file is missing in the RST report.
+      For example, the URL for a git repo of a software test is not shown.
+    '''
+    impacts = [
+      '''If the URL for the git repo is missing in the RST report
+          then the user will not be able to navigate to the corresponding
+          location in the repository.''',
+
+      '''If the link to a requirement item is missing
+          then the user will not be able to access the codebeamer item.'''
+    ]
+
+    affects = [Item_GitHub_Source, Show_codebeamer_links]
+    impact_type = req.Impact_Type.Financial
+}
+
+req.PotentialError RST_Wrong_Input_location {
+    summary = "LOBSTER RST report shows the wrong location of the input source"
+    description = '''
+      The source location rendered in the RST report is incorrect.
+      For example, the GitHub URL points to the wrong file or line number,
+      or the Codebeamer link leads to the wrong item.
+    '''
+    impacts = [
+      '''If the GitHub URL is incorrect in the RST report
+          then the user will be navigated to the wrong location in the
+          repository.''',
+
+      '''If the Codebeamer link is incorrect
+          then the user will be navigated to the wrong requirement item.'''
+    ]
+
+    affects = [Item_GitHub_Source, Show_codebeamer_links]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError RST_Incorrect_Item_Data {
+    summary = "LOBSTER RST report shows wrong data for an item"
+    description = '''
+      The tool writes wrong information for an item into the RST output.
+      For example, the item name, description, or tracing status shown in
+      the report does not match the data from the input file.
+    '''
+    impacts = [
+      '''If the rendered item data shows a higher quality than the actual
+          item data, the quality manager may decide to release software
+          that should not be released.'''
+    ]
+
+    affects = [Item_Coverage]
+    impact_type = req.Impact_Type.Safety
+}
+
+req.PotentialError RST_Incorrect_RST_Syntax {
+    summary = "LOBSTER generates RST output with incorrect syntax"
+    description = '''
+      The generated RST contains syntax errors or constructs that cause
+      Sphinx to emit warnings or fail during the build.
+      For example, broken cross-references, malformed directives, or
+      unescaped special characters.
+    '''
+    impacts = [
+      '''If the RST output contains syntax errors then the Sphinx build
+          may fail or produce a report with missing or garbled content,
+          preventing the user from reviewing the traceability results.'''
+    ]
+
+    affects = [RST_Output]
+    impact_type = req.Impact_Type.Financial
+}
