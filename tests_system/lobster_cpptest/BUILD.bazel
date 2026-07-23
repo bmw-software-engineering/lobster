@@ -21,58 +21,16 @@ py_library(
     ],
 )
 
-py_test(
-    name = "test_config_exceptions",
-    srcs = ["test_config_exceptions.py"],
+test_suite(
+    name = "lobster_cpptest_tests",
+)
+
+[py_test(
+    name = src[:-3],
+    srcs = [src],
     deps = [
         ":lobster_cpptest",
         "//lobster/tools/cpptest",
-        "//tests_system",
-    ],
-)
-
-py_test(
-    name = "test_directories",
-    srcs = ["test_directories.py"],
-    deps = [
-        ":lobster_cpptest",
         "//tests_system/tests_utils",
     ],
-)
-
-py_test(
-    name = "test_extension",
-    srcs = ["test_extension.py"],
-    deps = [
-        ":lobster_cpptest",
-        "//tests_system/tests_utils",
-    ],
-)
-
-py_test(
-    name = "test_multiple_files",
-    srcs = ["test_multiple_files.py"],
-    deps = [
-        ":lobster_cpptest",
-        "//tests_system/tests_utils",
-    ],
-)
-
-py_test(
-    name = "test_references",
-    srcs = ["test_references.py"],
-    deps = [
-        ":lobster_cpptest",
-        "//tests_system/tests_utils",
-    ],
-)
-
-py_test(
-    name = "test_valid_scenario",
-    srcs = ["test_valid_scenario.py"],
-    deps = [
-        ":lobster_cpptest",
-        "//tests_system",
-        "//tests_system/tests_utils",
-    ],
-)
+) for src in glob(["test_*.py"])]

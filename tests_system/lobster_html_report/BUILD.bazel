@@ -27,6 +27,20 @@ py_library(
     ],
 )
 
+test_suite(
+    name = "lobster_html_report_tests",
+)
+
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [
+        ":lobster_html_report",
+        "//lobster/tools/core/html_report",
+        "//tests_system/tests_utils",
+    ],
+) for src in glob(["test_*.py"], exclude = ["test_html_report.py"])]
+
 py_test(
     name = "test_html_report",
     srcs = ["test_html_report.py"],
@@ -37,40 +51,6 @@ py_test(
     deps = [
         ":lobster_html_report",
         "//lobster/tools/core/html_report",
-        "//tests_system",
         requirement("selenium"),
-    ],
-)
-
-py_test(
-    name = "test_input_file",
-    srcs = ["test_input_file.py"],
-    deps = [
-        ":lobster_html_report",
-        "//lobster/tools/core/html_report",
-        "//tests_system",
-        "//tests_system/tests_utils",
-    ],
-)
-
-py_test(
-    name = "test_html_content",
-    srcs = ["test_html_content.py"],
-    deps = [
-        ":lobster_html_report",
-        "//lobster/tools/core/html_report",
-        "//tests_system",
-        "//tests_system/tests_utils",
-    ],
-)
-
-py_test(
-    name = "test_online_report_input",
-    srcs = ["test_online_report_input.py"],
-    deps = [
-        ":lobster_html_report",
-        "//lobster/tools/core/html_report",
-        "//tests_system",
-        "//tests_system/tests_utils",
     ],
 )
