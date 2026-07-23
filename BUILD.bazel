@@ -48,20 +48,17 @@ load("//:requirements.bzl", "requirement")
 
 # Run: bazel run //:python_dependencies_3_XX.update --@rules_python//python/config_settings:python_version=3.XX
 [
-    lock(
-        name = "python_dependencies_3_{}".format(version),
-        srcs = [
-            "requirements.txt",
-            "requirements_dev.txt",
-        ],
-        out = "requirements_lock_3_{}.txt".format(version),
-    )
-    for version in [
-        "9",
-        "10",
-        "11",
-        "12",
-    ]
+  lock(
+      name = "python_dependencies_3_{}".format(version),
+      srcs = ["requirements_dev.txt", "requirements.txt"],
+      out = "requirements_lock_3_{}.txt".format(version),
+  )
+  for version in [
+      "9",
+      "10",
+      "11",
+      "12",
+  ]
 ]
 
 filegroup(
