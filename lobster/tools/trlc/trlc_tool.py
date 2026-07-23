@@ -20,6 +20,7 @@
 import argparse
 import os
 import sys
+from dataclasses import dataclass
 from typing import Iterable, Optional, Sequence
 
 from yamale import YamaleError
@@ -42,6 +43,13 @@ from lobster.tools.trlc.errors import (
 from lobster.tools.trlc.lobster_trlc_config import LobsterTrlcConfig
 
 
+@dataclass
+class TrlcToolConfig:
+    config: str
+    dir_or_files: Sequence[str] = ()
+    out: str = "lobster-trlc.lobster"
+
+
 class LOBSTER_Trlc(MultiFileInputTool):
     def __init__(self):
         super().__init__(
@@ -53,7 +61,11 @@ class LOBSTER_Trlc(MultiFileInputTool):
 
     def _run_impl(self, options: argparse.Namespace):
         try:
-            self._execute(options)
+            self.run_lobster_trlc(
+                config=LobsterTrlcConfig.from_file(options.config),
+                dir_or_files=options.dir_or_files,
+                out_file=options.out,
+            )
             return 0
         except YamaleError as e:
             print(
@@ -97,7 +109,7 @@ class LOBSTER_Trlc(MultiFileInputTool):
         return 1
 
     @staticmethod
-    def _register_trlc_files(sm: Source_Manager, work_list: Iterable[str]):
+    def _register_trlc_files(sm: Source_Manager, work_list: Iterable[str]) -> None:
         for item in work_list:
             ok = True
             if os.path.isfile(item):
@@ -109,9 +121,13 @@ class LOBSTER_Trlc(MultiFileInputTool):
             if not ok:
                 raise PathError(f"Failed to register file or directory '{item}'")
 
-    def _execute(self, options: argparse.Namespace) -> None:
-        config = LobsterTrlcConfig.from_file(options.config)
-        work_list = create_worklist(config, options.dir_or_files)
+    def run_lobster_trlc(
+        self,
+        config: LobsterTrlcConfig,
+        dir_or_files: Sequence[str],
+        out_file: str,
+    ) -> None:
+        work_list = create_worklist(config, list(dir_or_files))
         trlc_mh = Message_Handler()
         sm = Source_Manager(trlc_mh)
         self._register_trlc_files(sm, work_list)
@@ -131,7 +147,19 @@ class LOBSTER_Trlc(MultiFileInputTool):
                 items.append(item)
 
         # lobster-trace: trlc_req.Output_File
-        self._write_output(Requirement, options.out, items)
+        self._write_output(Requirement, out_file, items)
+
+
+def lobster_trlc(config: TrlcToolConfig) -> None:
+    """This is an API function."""
+    if not config.config:
+        raise ValueError("config must not be empty")
+
+    LOBSTER_Trlc().run_lobster_trlc(
+        config=LobsterTrlcConfig.from_file(config.config),
+        dir_or_files=config.dir_or_files,
+        out_file=config.out,
+    )
 
 
 def main(args: Optional[Sequence[str]] = None) -> int:
