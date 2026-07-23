@@ -1,4 +1,5 @@
 SYSTEM_PYTHONPATH:=$(PYTHONPATH)
+BAZEL:=$(or $(shell which bazel),bazel)
 export LOBSTER_ROOT=$(PWD)
 export PYTHONPATH=$(LOBSTER_ROOT)
 export PATH:=$(LOBSTER_ROOT):$(PATH)
@@ -12,7 +13,7 @@ TOOL_FOLDERS := $(shell \
 		| sed 's|^./lobster/tools/core/|core-|') \
 	| sort)
 
-.PHONY: packages docs tracing
+.PHONY: packages docs clean-docs tracing
 
 lint: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
@@ -166,7 +167,19 @@ docs:
 	@sphinx-build -c sphinx -b html . docs/api_documentation
 
 clean-docs:
-	rm -rf docs
+	$(BAZEL) run //util:clean-docs
+#bazel build //util:clean-docs
+#mkdir -p docs/api_documentation
+#touch docs/api_documentation/smoke.txt
+#bazel run //util:clean-docs
+#test ! -d docs
+
+#make equivalent
+#mkdir -p docs/api_documentation
+#touch docs/api_documentation/smoke.txt
+#make clean-docs
+#test ! -d docs
+
 
 tracing:
 	@mkdir -p docs

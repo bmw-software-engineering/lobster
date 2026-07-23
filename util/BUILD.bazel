@@ -41,3 +41,10 @@ py_library(
     srcs = ["changelog.py"],
     visibility = ["//visibility:public"],
 )
+
+py_binary(
+    name = "clean-docs",
+    srcs = ["clean_docs.py"],
+    main = "clean_docs.py",
+    visibility = ["//visibility:public"],
+)
