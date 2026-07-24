@@ -100,7 +100,7 @@ These settings copy the arguments from the `Makefile`.
 The argument `-t .` is needed to help `unittest` to resolve import statements.
 The argument `-s system-test` tells `unittest` to start discovery in this directory.
 
-Make sure to instruct VSCode to use the Pyton interpreter from your virtual environment,
+Make sure to instruct VSCode to use the Python interpreter from your virtual environment,
 and install `requirements_dev.txt`:
 ```
 > pip install -r requirements_dev.txt

@@ -106,6 +106,7 @@ integration-tests: packages
 	(cd tests_integration/projects/coverage_zero; make)
 	(cd tests_integration/projects/cpp_focus; make)
 
+# Bazel equivalent: bazel build //tests_system/lobster_codebeamer/data:codebeamer_pem
 codebeamer-pem:
 	@echo "🔐 Generating cert.pem and key.pem for codebeamer system tests..."
 	@mkdir -p tests_system/lobster_codebeamer/data/ssl
