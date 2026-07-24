@@ -39,23 +39,12 @@ from lobster.common.items import (Tracing_Status, Item,
                                   Requirement, Implementation,
                                   Activity)
 from lobster.common.meta_data_tool_base import MetaDataToolBase
+from lobster.common.graphviz_utils import is_dot_available
 from lobster.tools.core.html_report.html_report_css import CSS
 from lobster.tools.core.html_report.html_report_js import JAVA_SCRIPT
 
 
 LOBSTER_GH = "https://github.com/bmw-software-engineering/lobster"
-
-
-def is_dot_available(dot):
-    try:
-        subprocess.run([dot if dot else "dot", "-V"],
-                       stdout=subprocess.PIPE,
-                       stderr=subprocess.PIPE,
-                       encoding="UTF-8",
-                       check=True)
-        return True
-    except FileNotFoundError:
-        return False
 
 
 def name_hash(name):

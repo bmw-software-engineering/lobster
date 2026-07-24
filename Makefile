@@ -34,6 +34,7 @@ lint-system-tests: style
 		tests_system/lobster_online_report_nogit \
 		tests_system/lobster_pkg \
 		tests_system/lobster_report \
+		tests_system/lobster_rst_report \
 		tests_system/lobster_trlc \
 		tests_system/system_test_case_base.py
 
@@ -42,9 +43,6 @@ lint-unit-tests: style
 	python3 -m pylint --rcfile=tests_unit/pylint3.cfg \
 		--reports=no \
 		tests_unit
-
-trlc:
-	trlc lobster --error-on-warnings --verify
 
 style:
 	@python3 -m pycodestyle lobster tests_system \
@@ -90,7 +88,8 @@ packages: clean-packages
 		lobster-json --version && \
 		lobster-python --version && \
 		lobster-trlc --version && \
-		lobster-pkg --version
+		lobster-pkg --version && \
+		lobster-rst-report --version
 
 clang-tidy:
 	cd .. && \
@@ -131,24 +130,6 @@ unit-tests:
 			--data-file .coverage.unit \
 			--source=lobster \
 			-m unittest discover -s tests_unit -v
-
-remove-dev:
-	python3 -m util.release
-
-bump:
-	python3 -m util.bump_version_post_release
-
-
-# steps for a release:
-# - create new branch
-# - make remove-dev
-# - review CHANGELOG.md (is it complete, or is something missing?)
-# - git push + create pull request
-#
-# - create new branch
-# - make bump
-# - git push + create pull request
-
 
 # --- Coverage Execution Targets ---
 coverage-unit:

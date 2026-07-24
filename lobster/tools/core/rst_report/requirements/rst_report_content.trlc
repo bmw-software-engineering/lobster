@@ -1,0 +1,29 @@
+package rst_req
+import req
+
+req.System_Requirement RST_Clickable_Codebeamer_Item {
+    description = '''
+      IF the input LOBSTER report file contains codebeamer items,
+      THEN the generated RST report SHALL represent these as hyperlinks
+      to the item on the codebeamer server,
+      where the codebeamer server URL is taken from the cb_root configuration.
+    '''
+}
+
+req.System_Requirement RST_Codebeamer_Item_Name {
+    description = '''
+      IF the input LOBSTER report file contains codebeamer items with a name,
+      THEN the generated RST report SHALL display the item using its
+      codebeamer item name in the hyperlink text.
+    '''
+}
+
+req.System_Requirement RST_Source_Root_Prefix {
+    description = '''
+      IF the --source-root option is provided,
+      THEN the generated RST report SHALL prepend the given prefix
+      to all file reference URLs so that links resolve correctly
+      when the RST output is included in a Sphinx project at a different
+      directory level.
+    '''
+}

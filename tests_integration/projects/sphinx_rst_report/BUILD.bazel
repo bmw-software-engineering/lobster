@@ -1,0 +1,18 @@
+load("@rules_python//python:defs.bzl", "py_test")
+load("//:requirements.bzl", "requirement")
+
+py_test(
+    name = "test_sphinx_build",
+    srcs = ["test_sphinx_build.py"],
+    data = [
+        "conf.py",
+        "index.rst",
+        "_static/custom.css",
+        "//tests_system/lobster_rst_report/data:rst_report_data_system",
+    ],
+    deps = [
+        "//lobster/tools/core/rst_report",
+        requirement("sphinx"),
+        requirement("sphinx-design"),
+    ],
+)
