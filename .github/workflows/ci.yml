@@ -108,15 +108,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Setup bazel
-        uses: bazel-contrib/setup-bazel@0.15.0
-        with:
-          bazelisk-cache: true
-          disk-cache: ${{ github.workflow }}
-          repository-cache: true
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
       - name: Run TRLC
         run: |
-          bazel test //lobster:trlc
+          make trlc
   test:
     name: TestSuite
     needs: [changes, lint-code, lint-system-tests, trlc]
