@@ -13,7 +13,7 @@ TOOL_FOLDERS := $(shell \
 		| sed 's|^./lobster/tools/core/|core-|') \
 	| sort)
 
-.PHONY: packages docs clean-docs tracing
+.PHONY: packages docs tracing
 
 lint: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
@@ -165,20 +165,6 @@ docs:
 	@-make tracing-stf
 	@-./tracing/tracing.sh
 	@sphinx-build -c sphinx -b html . docs/api_documentation
-
-clean-docs:
-	$(BAZEL) run //util:clean-docs
-#bazel build //util:clean-docs
-#mkdir -p docs/api_documentation
-#touch docs/api_documentation/smoke.txt
-#bazel run //util:clean-docs
-#test ! -d docs
-
-#make equivalent
-#mkdir -p docs/api_documentation
-#touch docs/api_documentation/smoke.txt
-#make clean-docs
-#test ! -d docs
 
 
 tracing:
