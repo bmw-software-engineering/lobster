@@ -41,3 +41,11 @@ py_library(
     srcs = ["changelog.py"],
     visibility = ["//visibility:public"],
 )
+
+#Bazel target to clean up the docs folder when building the docs.
+py_binary(
+    name = "clean-docs",
+    srcs = ["clean_docs.py"],
+    main = "clean_docs.py",
+    visibility = ["//visibility:public"],
+)
