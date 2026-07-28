@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 1.0.5-dev
+### 1.0.5
 
 * Added stable Python APIs and API documentation pages for the tools `lobster-python` and `lobster-trlc`.
 
