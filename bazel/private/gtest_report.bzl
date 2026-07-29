@@ -28,14 +28,7 @@ _RULE_ATTRS = {
 }
 
 def _gtest_report_subrule_impl(ctx, name, executable, inputs):
-    link = ctx.actions.declare_file(name + "_runner")
     xml = ctx.actions.declare_file("{}_test.xml".format(name))
-
-    ctx.actions.symlink(
-        output = link,
-        target_file = executable,
-        is_executable = True,
-    )
 
     args = ctx.actions.args()
     args.add("--gtest_output=xml:{}".format(xml.path))
@@ -45,7 +38,7 @@ def _gtest_report_subrule_impl(ctx, name, executable, inputs):
         outputs = [xml],
         inputs = depset([executable], transitive = [inputs]),
         arguments = [args],
-        executable = link,
+        executable = executable,
     )
 
     return xml
