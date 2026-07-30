@@ -53,16 +53,7 @@ clean-packages:
 	git clean -xdf packages test_install test_install_monolithic test_install_monolithic_venv
 
 packages: clean-packages
-	make -C packages/lobster-core
-	make -C packages/lobster-tool-trlc
-	make -C packages/lobster-tool-codebeamer
-	make -C packages/lobster-tool-cpp
-	make -C packages/lobster-tool-cpptest
-	make -C packages/lobster-tool-gtest
-	make -C packages/lobster-tool-json
-	make -C packages/lobster-tool-python
-	make -C packages/lobster-metapackage
-	make -C packages/lobster-monolithic
+	$(BAZEL) run //packages:package_all
 	PYTHONPATH= \
 		pip3 install --prefix test_install \
 		packages/*/dist/*.whl
