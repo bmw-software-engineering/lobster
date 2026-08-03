@@ -20,13 +20,17 @@ def main() -> int:
     dist_dir = package_dir / "dist"
     meta_dist_dir = package_dir / "meta_dist"
 
+    # make: rm -rf lobster dist meta_dist
     for path in (staged_lobster, dist_dir, meta_dist_dir):
         if path.exists():
             shutil.rmtree(path)
 
+    # make: cp -Rv $(LOBSTER_ROOT)/lobster lobster
     shutil.copytree(root / "lobster", staged_lobster)
 
+    # make: @python3 -m build --wheel
     subprocess.check_call([sys.executable, "-m", "build", "--wheel"], cwd=package_dir)
+    # make: mv dist meta_dist
     dist_dir.rename(meta_dist_dir)
     return 0
 

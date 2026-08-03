@@ -19,15 +19,21 @@ def main() -> int:
     staged_lobster = package_dir / "lobster"
     staged_tools = staged_lobster / "tools"
 
+    # make: rm -rf lobster
     if staged_lobster.exists():
         shutil.rmtree(staged_lobster)
 
+    # make: mkdir -p lobster/tools
     staged_tools.mkdir(parents=True, exist_ok=True)
 
+    # make: cp $(LOBSTER_ROOT)/lobster/__init__.py lobster
     shutil.copy2(root / "lobster" / "__init__.py", staged_lobster)
+    # make: cp -Rv $(LOBSTER_ROOT)/lobster/common lobster
     shutil.copytree(root / "lobster" / "common", staged_lobster / "common")
+    # make: cp -Rv $(LOBSTER_ROOT)/lobster/tools/python lobster/tools
     shutil.copytree(root / "lobster" / "tools" / "python", staged_tools / "python")
 
+    # make: @python3 -m build --wheel
     subprocess.check_call([sys.executable, "-m", "build", "--wheel"], cwd=package_dir)
     return 0
 
