@@ -1,73 +1,43 @@
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//:requirements.bzl", "requirement")
+load("//packages:package_targets.bzl", "lobster_package_targets")
+
+exports_files([
+    "package_builder.py",
+    "package_config.py",
+])
 
 py_binary(
     name = "package_all",
-    srcs = ["package_all.py"],
+    srcs = [
+        "package_all.py",
+        "package_config.py",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         requirement("build"),
+        "//packages:package_builder",
     ],
 )
 
-alias(
-    name = "package_core",
-    actual = "//packages/lobster-core:package_core",
+py_binary(
+    name = "package_builder",
+    srcs = [
+        "package_builder.py",
+        "package_config.py",
+    ],
+    visibility = ["//visibility:public"],
 )
 
-alias(
-    name = "package_trlc",
-    actual = "//packages/lobster-tool-trlc:package_trlc",
-)
-
-alias(
-    name = "package_codebeamer",
-    actual = "//packages/lobster-tool-codebeamer:package_codebeamer",
-)
-
-alias(
-    name = "package_cpp",
-    actual = "//packages/lobster-tool-cpp:package_cpp",
-)
-
-alias(
-    name = "package_cpp_test",
-    actual = "//packages/lobster-tool-cpptest:package_cpp_test",
-)
-
-alias(
-    name = "package_gtest",
-    actual = "//packages/lobster-tool-gtest:package_gtest",
-)
-
-alias(
-    name = "package_json",
-    actual = "//packages/lobster-tool-json:package_json",
-)
-
-alias(
-    name = "package_python",
-    actual = "//packages/lobster-tool-python:package_python",
-)
-
-alias(
-    name = "package_metapackage",
-    actual = "//packages/lobster-metapackage:package_metapackage",
-)
-
-alias(
-    name = "package_monolithic",
-    actual = "//packages/lobster-monolithic:package_monolithic",
-)
-
-#bazel run //packages:package_all
-#bazel run //packages:package_core
-#bazel run //packages:package_trlc
-#bazel run //packages:package_codebeamer
-#bazel run //packages:package_cpp
-#bazel run //packages:package_cpp_test
-#bazel run //packages:package_gtest
-#bazel run //packages:package_json
-#bazel run //packages:package_python
-#bazel run //packages:package_metapackage
-#bazel run //packages:package_monolithic
+lobster_package_targets([
+    "package_core",
+    "package_trlc",
+    "package_codebeamer",
+    "package_cpp",
+    "package_cpp_test",
+    "package_gtest",
+    "package_json",
+    "package_python",
+    "package_metapackage",
+    "package_monolithic",
+])

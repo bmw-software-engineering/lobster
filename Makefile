@@ -53,7 +53,17 @@ clean-packages:
 	git clean -xdf packages test_install test_install_monolithic test_install_monolithic_venv
 
 packages: clean-packages
-	$(BAZEL) run //packages:package_all
+	$(BAZEL) run //packages:package_core
+	$(BAZEL) run //packages:package_trlc
+	$(BAZEL) run //packages:package_codebeamer
+	$(BAZEL) run //packages:package_cpp
+	$(BAZEL) run //packages:package_cpp_test
+	$(BAZEL) run //packages:package_gtest
+	$(BAZEL) run //packages:package_json
+	$(BAZEL) run //packages:package_python
+	$(BAZEL) run //packages:package_metapackage
+	$(BAZEL) run //packages:package_monolithic
+	#bazel run //packages:package_all
 	PYTHONPATH= \
 		pip3 install --prefix test_install \
 		packages/*/dist/*.whl

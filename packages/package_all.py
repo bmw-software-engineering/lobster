@@ -6,20 +6,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-
-PACKAGE_ORDER = [
-    ("lobster-core", "package_core.py"),
-    ("lobster-tool-trlc", "package_trlc.py"),
-    ("lobster-tool-codebeamer", "package_codebeamer.py"),
-    ("lobster-tool-cpp", "package_cpp.py"),
-    ("lobster-tool-cpptest", "package_cpp_test.py"),
-    ("lobster-tool-gtest", "package_gtest.py"),
-    ("lobster-tool-json", "package_json.py"),
-    ("lobster-tool-python", "package_python.py"),
-    ("lobster-metapackage", "package_metapackage.py"),
-    ("lobster-monolithic", "package_monolithic.py"),
-]
-
+from package_config import PACKAGE_ORDER
 
 def main() -> int:
     workspace = os.environ.get("BUILD_WORKSPACE_DIRECTORY")
@@ -31,10 +18,10 @@ def main() -> int:
     env = os.environ.copy()
     env["BUILD_WORKSPACE_DIRECTORY"] = str(root)
 
-    for package, script_name in PACKAGE_ORDER:
-        package_script = root / "packages" / package / script_name
-        print(f"Building {package}...")
-        subprocess.check_call([sys.executable, str(package_script)], env=env)
+    package_script = root / "packages" / "package_builder.py"
+    for package_target in PACKAGE_ORDER:
+        print(f"Building {package_target}...")
+        subprocess.check_call([sys.executable, str(package_script), package_target], env=env)
 
     print("All package wheels built successfully.")
     return 0
