@@ -55,6 +55,15 @@ py_test(
 )
 
 py_test(
+    name = "test_invalid_json",
+    srcs = ["test_invalid_json.py"],
+    deps = [
+        ":lobster_json",
+        "//tests_system",
+    ],
+)
+
+py_test(
     name = "test_justification_attribute",
     srcs = ["test_justification_attribute.py"],
     deps = [":lobster_json"],
