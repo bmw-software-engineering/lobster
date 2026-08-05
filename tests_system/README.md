@@ -65,6 +65,171 @@ During teardown the `SystemTestCase` class deletes every temporary folder.
 Any files that the tool under test has created outside of this folder will not be
 deleted and must be cleaned up separately.
 
+# Bazel Test Organization and Test Suites
+
+## Overview
+System tests are organized using Bazel's build system. Each tool has a dedicated subdirectory under `tests_system/`
+with its own `BUILD.bazel` file that defines how tests are built and grouped into test suites.
+
+## Test Structure
+Each `BUILD.bazel` file follows a consistent pattern:
+
+### 1. **Shared Library Definition**
+A `py_library` target containing shared test infrastructure:
+- Helper modules (asserters, test case bases, test runners)
+- Test data files and dependencies
+- Common utilities used across multiple test files
+
+Example:
+```python
+py_library(
+    name = "lobster_json",
+    srcs = [
+        "lobsterjsonasserter.py",
+        "lobsterjsonsystemtestcasebase.py",
+        "lobsterjsontestrunner.py",
+    ],
+    data = [
+        "//tests_system/lobster_json/data:json_data_system",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:lobster",
+        "//tests_system",
+        requirement("pyyaml"),
+    ],
+)
+```
+
+### 2. **Test Suite Definition**
+A `test_suite` target that groups related tests together:
+```python
+test_suite(
+    name = "lobster_json_tests",
+)
+```
+
+This allows running all tests for a particular tool at once using:
+```bash
+bazel test //tests_system/lobster_json:lobster_json_tests
+```
+
+### 3. **Individual Test Targets**
+Each `test_*.py` file is automatically converted into a `py_test` target using Bazel's glob pattern:
+```python
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [":lobster_json"],
+) for src in glob(["test_*.py"])]
+```
+
+This pattern creates individual test targets that can be run independently:
+```bash
+bazel test //tests_system/lobster_json:test_valid_input
+bazel test //tests_system/lobster_json:test_multiple_files
+```
+
+## Running Tests with Bazel
+
+### Run All System Tests
+```bash
+bazel test //tests_system/...
+```
+
+### Run Tests for a Specific Tool
+```bash
+bazel test //tests_system/lobster_json:lobster_json_tests
+```
+
+### Run a Single Test File
+```bash
+bazel test //tests_system/lobster_json:test_valid_input
+```
+
+## Special Scenarios: Test Exclusions and Custom Dependencies
+
+### Excluding Tests from Test Suite
+Some tests may be excluded from automatic discovery if they have special requirements or are still in development.
+This is done using an `EXCLUDED_FROM_SUITE` list.
+
+Example for `lobster_codebeamer/BUILD.bazel`:
+```python
+ALL_TEST_SRCS = glob(["test_*.py"])
+
+# Exclude the files which are not part of tool qualification yet
+EXCLUDED_FROM_SUITE = ["test_baseline_id.py"]
+
+test_suite(
+    name = "lobster_codebeamer_tests",
+    tests = [
+        ":" + src[:-3]
+        for src in ALL_TEST_SRCS
+        if src not in EXCLUDED_FROM_SUITE
+    ],
+)
+
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [
+        ":lobster_codebeamer",
+        requirement("flask"),
+    ],
+) for src in ALL_TEST_SRCS if src not in EXCLUDED_FROM_SUITE]
+```
+
+In this case:
+- The test target `test_baseline_id` is not created at all
+- It will not be discovered when running `bazel test //tests_system/...`
+- This allows marking tests as "not yet qualified" and preventing them from being run automatically
+- If needed, you can create a separate `py_test` target with tags like `["manual"]` to allow explicit execution
+
+### Custom Dependencies per Test
+Some tests may require additional dependencies beyond the shared library. These can be specified individually:
+
+Example from `lobster_online_report/BUILD.bazel`:
+```python
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [":lobster_online_report"],
+) for src in glob(["test_*.py"], exclude = ["test_valid_cases.py"])]
+
+py_test(
+    name = "test_valid_cases",
+    srcs = ["test_valid_cases.py"],
+    deps = [
+        ":lobster_online_report",
+        "//lobster/common:common"  # Additional dependency
+    ],
+)
+```
+
+### Manual Tests
+Tests can be marked as "manual" if they require special setup or external resources that aren't available in the standard build environment.
+
+Example from `lobster_html_report/BUILD.bazel`:
+```python
+py_test(
+    name = "test_html_report",
+    srcs = ["test_html_report.py"],
+    # TODO: This test is manual because Selenium tests require a Chrome driver
+    # from googlechromelabs.github.io, which needs to be provided first.
+    tags = ["manual"],
+    deps = [
+        ":lobster_html_report",
+        "//lobster/tools/core/html_report",
+        requirement("selenium"),
+    ],
+)
+```
+
+Manual tests are not run by default with `bazel test` but can be run explicitly:
+```bash
+bazel test //tests_system/lobster_html_report:test_html_report
+```
+
 # Traceability
 The traces from system test cases to requirements can be collected by running `lobster-python`.
 The target `system-tests.lobster-%` in the [Makefile](../Makefile) executes
@@ -98,7 +263,6 @@ configuration in your `.vscode/settings.json` file:
 ```
 These settings copy the arguments from the `Makefile`.
 The argument `-t .` is needed to help `unittest` to resolve import statements.
-The argument `-s system-test` tells `unittest` to start discovery in this directory.
 
 Make sure to instruct VSCode to use the Python interpreter from your virtual environment,
 and install `requirements_dev.txt`:

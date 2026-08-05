@@ -21,13 +21,16 @@ py_library(
     ],
 )
 
-py_test(
-    name = "test_rst_report_input_file",
-    srcs = ["test_rst_report_input_file.py"],
+test_suite(
+    name = "lobster_rst_report_tests",
+)
+
+[py_test(
+    name = src[:-3],
+    srcs = [src],
     deps = [
         ":lobster_rst_report",
         "//lobster/tools/core/rst_report",
-        "//tests_system",
         "//tests_system/tests_utils",
     ],
-)
+) for src in glob(["test_*.py"])]

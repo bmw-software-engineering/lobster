@@ -1,4 +1,5 @@
 SYSTEM_PYTHONPATH:=$(PYTHONPATH)
+BAZEL:=$(or $(shell which bazel),bazel)
 export LOBSTER_ROOT=$(PWD)
 export PYTHONPATH=$(LOBSTER_ROOT)
 export PATH:=$(LOBSTER_ROOT):$(PATH)
@@ -166,8 +167,6 @@ docs:
 	@-./tracing/tracing.sh
 	@sphinx-build -c sphinx -b html . docs/api_documentation
 
-clean-docs:
-	rm -rf docs
 
 tracing:
 	@mkdir -p docs
