@@ -74,29 +74,39 @@ Notes:
 
 ## Generating SSL Certificates
 
-To test with HTTPS using a mock server, you will need to generate a self-signed certificate (`cert.pem`) and private key (`key.pem`).
+To test with HTTPS using a mock server, you will need to generate a self-signed
+certificate (`cert.pem`) and private key (`key.pem`) under:
 
-You can generate them using OpenSSL with the following command:
+```
+tests_system/lobster_codebeamer/data/ssl/
+```
+
+### Using Make or Bazel (recommended)
+
+```bash
+# Using Make
+make codebeamer-pem
+
+# Using Bazel
+bazel build //tests_system/lobster_codebeamer/data:codebeamer_pem
+```
+
+### Manually using OpenSSL
+
+Alternatively, you can generate the files directly with OpenSSL:
 
 ```bash
 openssl req -x509 -newkey rsa:2048 -nodes -keyout key.pem -out cert.pem -days 365
 ```
-When prompted, you can enter values or simply press Enter to skip. This will create:
 
-- cert.pem – the self-signed certificate
-- key.pem – the private key
+When prompted, you can enter values or simply press Enter to skip. Then place the
+generated files under `tests_system/lobster_codebeamer/data/ssl/`.
 
-Once generated, place these files under:
+All approaches produce the same two files used by the Flask-based mock server during
+testing:
 
-- tests_system/lobster_codebeamer/data/ssl/
-
-So that the paths are:
-
-tests_system/lobster_codebeamer/data/ssl/cert.pem
-
-tests_system/lobster_codebeamer/data/ssl/key.pem
-
-These are used by the Flask-based mock server during testing.
+- `tests_system/lobster_codebeamer/data/ssl/cert.pem` – the self-signed certificate
+- `tests_system/lobster_codebeamer/data/ssl/key.pem` – the private key
 
 ## Use-cases
 

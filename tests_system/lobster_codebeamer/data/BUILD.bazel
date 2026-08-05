@@ -1,11 +1,15 @@
 load("@rules_python//python:defs.bzl", "py_library")
+load("//bazel/private:generate_certs.bzl", "generate_certs")
+
+# Bazel equivalent of: make codebeamer-pem
+# Generates self-signed SSL certificates for codebeamer system tests
+generate_certs(
+    name = "codebeamer_pem",
+)
 
 filegroup(
     name = "codebeamer_data_system",
-    srcs = glob([
-        "ssl/*.pem",
-        "*.lobster",
-    ]),
+    srcs = glob(["*.lobster"]) + [":codebeamer_pem"],
     visibility = ["//visibility:public"],
 )
 
