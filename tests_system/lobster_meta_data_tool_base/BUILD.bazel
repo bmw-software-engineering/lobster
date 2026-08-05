@@ -18,11 +18,12 @@ py_library(
     ],
 )
 
-py_test(
-    name = "test_meta_data_tool_base",
-    srcs = ["test_meta_data_tool_base.py"],
-    deps = [
-        ":lobster_meta_data_tool_base",
-        "//tests_system",
-    ],
+test_suite(
+    name = "lobster_meta_data_tool_base_tests",
 )
+
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [":lobster_meta_data_tool_base"],
+) for src in glob(["test_*.py"])]
