@@ -1,0 +1,58 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+load("//:requirements.bzl", "requirement")
+load("//packages:package_targets.bzl", "lobster_package_targets")
+
+exports_files([
+    "package_builder.py",
+    "package_config.py",
+])
+
+py_binary(
+    name = "package_builder",
+    srcs = [
+        "package_builder.py",
+        "package_config.py",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "package_install_diff",
+    srcs = [
+        "package_install_diff.py",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "package_smoke_test",
+    srcs = [
+        "package_smoke_test.py",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "package_pipeline",
+    srcs = [
+        "package_config.py",
+        "package_pipeline.py",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("build"),
+    ],
+)
+
+lobster_package_targets([
+    "package_core",
+    "package_trlc",
+    "package_codebeamer",
+    "package_cpp",
+    "package_cpp_test",
+    "package_gtest",
+    "package_json",
+    "package_python",
+    "package_metapackage",
+    "package_monolithic",
+])
