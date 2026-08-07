@@ -29,6 +29,34 @@ py_binary(
     visibility = ["//visibility:public"],
 )
 
+py_binary(
+    name = "package_install_diff",
+    srcs = [
+        "package_install_diff.py",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "package_smoke_test",
+    srcs = [
+        "package_smoke_test.py",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "package_pipeline",
+    srcs = [
+        "package_config.py",
+        "package_pipeline.py",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("build"),
+    ],
+)
+
 lobster_package_targets([
     "package_core",
     "package_trlc",

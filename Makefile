@@ -53,45 +53,8 @@ clean-packages:
 	git clean -xdf packages test_install test_install_monolithic test_install_monolithic_venv
 
 packages: clean-packages
-	$(BAZEL) run //packages:package_core
-	$(BAZEL) run //packages:package_trlc
-	$(BAZEL) run //packages:package_codebeamer
-	$(BAZEL) run //packages:package_cpp
-	$(BAZEL) run //packages:package_cpp_test
-	$(BAZEL) run //packages:package_gtest
-	$(BAZEL) run //packages:package_json
-	$(BAZEL) run //packages:package_python
-	$(BAZEL) run //packages:package_metapackage
-	$(BAZEL) run //packages:package_monolithic
-	#bazel run //packages:package_all
-	PYTHONPATH= \
-		pip3 install --prefix test_install \
-		packages/*/dist/*.whl
-	PYTHONPATH= \
-		pip3 install --prefix test_install_monolithic \
-		packages/lobster-monolithic/meta_dist/*.whl
-	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc" -x "*pkg*" -x "pkg/*"
-	diff -Naur test_install/bin test_install_monolithic/bin -x "*pkg*" -x "pkg/*"
-
-	# Very basic smoke test to ensure the tools are packaged properly
-	python3 -m venv test_install_monolithic_venv
-	. test_install_monolithic_venv/bin/activate && \
-		pip install --upgrade pip && \
-		pip install packages/lobster-monolithic/meta_dist/*.whl && \
-		lobster-report --version && \
-		lobster-ci-report --version && \
-		lobster-html-report --version && \
-		lobster-online-report --version && \
-		lobster-online-report-nogit --version && \
-		lobster-cpp --version && \
-		lobster-cpptest --version && \
-		lobster-codebeamer --version && \
-		lobster-gtest --version && \
-		lobster-json --version && \
-		lobster-python --version && \
-		lobster-trlc --version && \
-		lobster-pkg --version && \
-		lobster-rst-report --version
+    #bazel run //packages:package_all
+	$(BAZEL) run //packages:package_pipeline
 
 clang-tidy:
 	cd .. && \
