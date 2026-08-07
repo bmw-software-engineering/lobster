@@ -8,19 +8,6 @@ exports_files([
 ])
 
 py_binary(
-    name = "package_all",
-    srcs = [
-        "package_all.py",
-        "package_config.py",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        requirement("build"),
-        "//packages:package_builder",
-    ],
-)
-
-py_binary(
     name = "package_builder",
     srcs = [
         "package_builder.py",

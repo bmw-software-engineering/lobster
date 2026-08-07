@@ -53,7 +53,6 @@ clean-packages:
 	git clean -xdf packages test_install test_install_monolithic test_install_monolithic_venv
 
 packages: clean-packages
-    #bazel run //packages:package_all
 	$(BAZEL) run //packages:package_pipeline
 
 clang-tidy:
