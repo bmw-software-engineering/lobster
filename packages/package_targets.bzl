@@ -385,9 +385,9 @@ def lobster_package_target(name):
         package_target = name,
     )
 
-def lobster_package_targets(names):
-    for name in names:
-        lobster_package_target(name)
+def lobster_package_targets(name, names):
+    for package_name in names:
+        lobster_package_target(name = package_name)
 
 def lobster_package_pipeline(name = "package_pipeline"):
     lobster_script(

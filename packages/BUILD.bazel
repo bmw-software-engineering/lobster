@@ -1,22 +1,25 @@
 load("//packages:package_targets.bzl", "lobster_package_builder", "lobster_package_install_diff", "lobster_package_pipeline", "lobster_package_smoke_test", "lobster_package_targets")
 
-lobster_package_builder()
+lobster_package_builder(name = "package_builder")
 
-lobster_package_install_diff()
+lobster_package_install_diff(name = "package_install_diff")
 
-lobster_package_smoke_test()
+lobster_package_smoke_test(name = "package_smoke_test")
 
-lobster_package_pipeline()
+lobster_package_pipeline(name = "package_pipeline")
 
-lobster_package_targets([
-    "package_core",
-    "package_trlc",
-    "package_codebeamer",
-    "package_cpp",
-    "package_cpp_test",
-    "package_gtest",
-    "package_json",
-    "package_python",
-    "package_metapackage",
-    "package_monolithic",
-])
+lobster_package_targets(
+    name = "package_targets",
+    names = [
+        "package_core",
+        "package_trlc",
+        "package_codebeamer",
+        "package_cpp",
+        "package_cpp_test",
+        "package_gtest",
+        "package_json",
+        "package_python",
+        "package_metapackage",
+        "package_monolithic",
+    ],
+)
