@@ -18,10 +18,17 @@
 # <https://www.gnu.org/licenses/>.
 
 import os
+import subprocess
 
 import util.changelog
 
 from lobster.common.version import VERSION_TUPLE
+
+# Under `bazel run`, use the real workspace root so relative paths
+# target repository files instead of Bazel runfiles/symlinks.
+workspace_root = os.environ.get("BUILD_WORKSPACE_DIRECTORY")
+if workspace_root:
+    os.chdir(workspace_root)
 
 major, minor, release = VERSION_TUPLE
 release += 1
@@ -51,5 +58,8 @@ util.changelog.add_new_section(LOBSTER_VERSION)
 
 # Assemble commit
 
-os.system(f"git add CHANGELOG.md {VERSION_FILE}")
-os.system(f'git commit -m "Bump version to {LOBSTER_VERSION} after release"')
+subprocess.run(["git", "add", "CHANGELOG.md", VERSION_FILE], check=True)
+subprocess.run(
+    ["git", "commit", "-m", f"Bump version to {LOBSTER_VERSION} after release"],
+    check=True,
+)

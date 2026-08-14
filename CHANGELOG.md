@@ -3,6 +3,10 @@
 ## Changelog
 
 
+### 1.0.7-dev
+
+
+
 ### 1.0.6
 
 * Call Lobster Report via bazel directly instead of using a symlink
