@@ -5,6 +5,12 @@
 
 ### 1.0.7-dev
 
+* `lobster-codebeamer`:
+  Added the API-only `item_to_text` parameter to the configuration object of the
+  `lobster_codebeamer` API for populating the LOBSTER item's text property.
+  For example, the API user may provide a function that returns a `String` for the
+  LOBSTER item based on the Codebeamer item's data.
+
 * Removed wrong statement from `schemas.md` regarding "status" field.
 
 ### 1.0.6

@@ -1,0 +1,26 @@
+package codebeamer_req
+import req
+
+req.Software_Requirement Item_To_Text_Delegate {
+  description = '''
+    The "to_lobster" function shall call the optional "item_to_text" delegate
+    with each raw Codebeamer item and shall assign its returned string to the
+    text field for Requirement and Activity items.
+
+    Note: This implies the delegate is not called for Implementation items.
+  '''
+}
+
+req.Software_Requirement Item_To_Text_Delegate_Error_Propagation {
+  description = '''
+    The "lobster_codebeamer" function shall propagate an exception raised by
+    the "item_to_text" delegate without catching it.
+  '''
+}
+
+req.Software_Requirement Get_Query_Passes_Config_To_To_Lobster {
+  description = '''
+    The "get_query" function shall pass its "Config" object unchanged to
+    each invocation of the "to_lobster" function.
+  '''
+}

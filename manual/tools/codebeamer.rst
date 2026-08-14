@@ -53,6 +53,7 @@ Config
          num_request_retry=5,
          retry_error_codes=[500, 502, 503, 504],
          cb_auth_conf=auth,
+         item_to_text=None,
    )
 
 - ``references`` (List[str]): Names of Codebeamer fields whose referenced items should be traced (converted to ``req`` tags).
@@ -68,14 +69,31 @@ Config
 - ``retry_error_codes`` (List[int]): HTTP status codes that trigger retry logic (e.g. [500, 502, 503, 504]).
 - ``cb_auth_conf`` (AuthenticationConfig): Authentication + root endpoint.
 
+.. _codebeamer-item-to-text:
+
+- ``item_to_text`` (Callable[[dict], str | None] | None): Optional
+   delegate called once for each raw Codebeamer item. Its return value is
+   stored in the LOBSTER ``text`` field for requirements and activities;
+   returning ``None`` leaves the field empty. Exceptions propagate and abort
+   the ``lobster_codebeamer`` run.
+   Note that this is a pure API feature and cannot be configured through YAML.
+
 Stable API Function
 -------------------
 
 ``lobster_codebeamer(config: Config, out_file: str) -> None``
   Loads items (via query or tagged import) and writes them to a LOBSTER interchange file.
 
-Example (Using Query with Custom Settings)
--------------------------------------------
+Example (Using the ``Config.item_to_text`` API Interface)
+--------------------------------------------------
+
+This example shows how to use the ``item_to_text`` interface to combine a
+standard Codebeamer field and a custom field in the LOBSTER item's ``text``
+property.
+It assumes you have a Codebeamer instance with a custom field named
+"Upstream Requirements" that contains references to other items.
+The example extracts the "name" of each referenced item and appends them to the
+description of the item.
 
 ::
 
@@ -86,18 +104,30 @@ Example (Using Query with Custom Settings)
       root="https://codebeamer.example.com"
    )
 
+   def custom_item_to_text(item):
+      derived_from_field = next(
+         (field for field in item.get("customFields", [])
+          if field.get("name") == "Upstream Requirements"),
+         {},
+      )
+      derived_from = ", ".join(
+         value["name"] for value in derived_from_field.get("values", [])
+      )
+      return f"{item.get('description', '')}\nDerived from: {derived_from}"
+
    conf = Config(
       references=["Depends On", "Related To"],
       import_tagged=None,
       import_query=5678,
       verify_ssl=True,
       page_size=200,
-      schema="implementation",
+      schema="requirement",
       timeout=60,
       out=None,
       num_request_retry=3,
       retry_error_codes=[500, 502, 503, 504],
       cb_auth_conf=auth,
+      item_to_text=custom_item_to_text,
    )
 
    lobster_codebeamer(conf, "codebeamer_items.lobster")

@@ -20,6 +20,12 @@ py_test(
 )
 
 py_test(
+    name = "test_text_delegate",
+    srcs = ["test_text_delegate.py"],
+    deps = ["//lobster/tools/codebeamer"],
+)
+
+py_test(
     name = "test_codebeamer_schema",
     srcs = ["test_codebeamer_schema.py"],
     data = ["test.netrc"],

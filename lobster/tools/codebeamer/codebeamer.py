@@ -343,7 +343,11 @@ def to_lobster(cb_config: Config, cb_item: dict):
         cb_config.cb_auth_conf.root, item_name, kind)
     item = _create_lobster_item(
         schema_config["class"],
-        common_params, item_name, status)
+        common_params, item_name, status,
+        cb_config.item_to_text(cb_item)
+        if cb_config.item_to_text is not None and
+        schema_config["class"] in (Requirement, Activity)
+        else None)
 
     if cb_config.references:
         for displayed_name in cb_config.references:
@@ -394,7 +398,8 @@ def _create_common_params(namespace: str, cb_item: dict, cb_root: str,
     }
 
 
-def _create_lobster_item(schema_class, common_params, item_name, status):
+def _create_lobster_item(schema_class, common_params, item_name, status,
+                         text: Optional[str]):
     """
     Creates and returns a Lobster item based on the schema class.
     Args:
@@ -402,6 +407,8 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
     common_params (dict): Common parameters for the item.
     item_name (str): Name of the item.
     status (str): Status of the item.
+    text (str): Optional text generated from the Codebeamer item.
+      Is ignored for Implementation schema.
     Returns:
     Object: An instance of the schema class with the appropriate parameters.
     """
@@ -409,7 +416,7 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
         return Requirement(
             **common_params,
             framework="codebeamer",
-            text=None,
+            text=text,
             status=status,
             name= item_name
         )
@@ -425,6 +432,7 @@ def _create_lobster_item(schema_class, common_params, item_name, status):
         return Activity(
             **common_params,
             framework="codebeamer",
+            text=text,
             status=status
         )
 
