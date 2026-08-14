@@ -120,10 +120,11 @@ There are two ways you can use this tool:
 
        This command will extract activity traces (lobster-act-trace) with specified references.
 
-## Limitations
+## Getting more Item Data
 
-The key limitation is item text, which is currently not
-imported. However, we do plan to also import item text eventually.
+The Python API offers a way to populate the LOBSTER `text` property from
+arbitrary Codebeamer fields. See the [Codebeamer API documentation](https://bmw-software-engineering.github.io/lobster/api_documentation/manual/tools/codebeamer.html#codebeamer-item-to-text)
+for details about the `item_to_text` delegate and an example.
 
 ## Copyright & License information
 
