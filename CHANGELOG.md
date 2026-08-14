@@ -5,7 +5,7 @@
 
 ### 1.0.7-dev
 
-
+* Removed wrong statement from `schemas.md` regarding "status" field.
 
 ### 1.0.6
 

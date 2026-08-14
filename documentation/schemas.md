@@ -204,7 +204,7 @@ Requirements are items, with the following additional fields:
 * *framework* is the data source, for example "codebeamer" or "TRLC".
 * *kind* is a free text string describing what kind of requirement
   this is. For example "functional requirement".
-* *text* is an optional copy or a summary of the requirement text.
+* *text* is an optional text, for example a copy or a summary of the requirement text.
 
 ### Version 4
 
@@ -218,8 +218,7 @@ As above, but adds one new field:
 ```
 
 * *status* indicates the state of a requirement. This is used by some
-  proprietary tools; and lobster can check that the status is one of
-  the permitted ones.
+  proprietary tools.
 
 ## Implementation
 
