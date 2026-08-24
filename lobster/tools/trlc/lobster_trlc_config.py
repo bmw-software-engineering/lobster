@@ -34,7 +34,7 @@ class LobsterTrlcConfig(Config):
                              for rules in data.get("to-string-rules", [])],
             inputs=data.get("inputs", ""),
             inputs_from_file=data.get("inputs-from-file", ""),
-            extensions=(".rsl", ".trlc"),
+            extensions=(".rsl", ".trlc", ".trlc.md"),
             exclude_patterns=data.get("exclude-patterns", []),
             schema=Requirement,
         )

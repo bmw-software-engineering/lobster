@@ -150,7 +150,7 @@ coverage-system:
 	@echo "📊 Generating coverage report for system tests..."
 	coverage combine -q .coverage.system*
 	coverage html --directory=htmlcov-system --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=74
+	coverage report --rcfile=coverage.cfg --fail-under=80
 
 # --- Clean Coverage ---
 clean-coverage:
