@@ -30,7 +30,7 @@ bazel_dep(name = "googletest", version = "1.13.0")
 # (see bazel/private/lobster_trlc.bzl: TrlcProviderInfo, trlc.bzl).
 # The lobster-trlc Python tool itself uses the pip-installed trlc wheel
 # at runtime (pinned in requirements_lock.txt), NOT this Bazel module.
-bazel_dep(name = "trlc", version = "3.0.0")
+bazel_dep(name = "trlc", version = "3.0.1")
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 

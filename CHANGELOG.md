@@ -3,8 +3,29 @@
 ## Changelog
 
 
-### 1.0.5-dev
+### 1.0.7-dev
 
+* `lobster-trlc`:
+  - Added support for experimental feature TRLC Markdown which takes
+  `.trlc.md` as a valid input file extension.
+
+* `trlc bazel dep`: update to trlc==3.0.1
+
+* `lobster-codebeamer`:
+  Added the API-only `item_to_text` parameter to the configuration object of the
+  `lobster_codebeamer` API for populating the LOBSTER item's text property.
+  For example, the API user may provide a function that returns a `String` for the
+  LOBSTER item based on the Codebeamer item's data.
+
+* Removed wrong statement from `schemas.md` regarding "status" field.
+
+### 1.0.6
+
+* Call Lobster Report via bazel directly instead of using a symlink
+
+### 1.0.5
+
+* Added stable Python APIs and API documentation pages for the tools `lobster-python` and `lobster-trlc`.
 
 
 ### 1.0.4

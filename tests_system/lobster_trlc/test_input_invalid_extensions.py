@@ -23,7 +23,7 @@ class TrlcInvalidExtensionsTest(LobsterTrlcSystemTestCaseBase):
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertStdErrText(
             "lobster-trlc: File rsl_invalid_extension.slr does not have a valid "
-            "extension. Expected one of .rsl, .trlc.\n"
+            "extension. Expected one of .rsl, .trlc, .trlc.md.\n"
         )
         asserter.assertExitCode(1)
 
@@ -37,7 +37,7 @@ class TrlcInvalidExtensionsTest(LobsterTrlcSystemTestCaseBase):
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertStdErrText(
             "lobster-trlc: File rsl_invalid_extension.slr does not have a valid "
-            "extension. Expected one of .rsl, .trlc.\n"
+            "extension. Expected one of .rsl, .trlc, .trlc.md.\n"
         )
         asserter.assertExitCode(1)
 

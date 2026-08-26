@@ -23,92 +23,12 @@ py_library(
     ],
 )
 
-py_test(
-    name = "test_input_invalid_extensions",
-    srcs = ["test_input_invalid_extensions.py"],
-    deps = [
-        ":lobster_trlc",
-        "//tests_system",
-    ],
+test_suite(
+    name = "lobster_trlc_tests",
 )
 
-py_test(
-    name = "test_input_list_of_files",
-    srcs = ["test_input_list_of_files.py"],
-    deps = [
-        ":lobster_trlc",
-        "//tests_system",
-    ],
-)
-
-py_test(
-    name = "test_inputs_and_inputs_from_file",
-    srcs = ["test_inputs_and_inputs_from_file.py"],
-    deps = [
-        ":lobster_trlc",
-        "//tests_system",
-    ],
-)
-
-py_test(
-    name = "test_inputs_from_file",
-    srcs = ["test_inputs_from_file.py"],
-    deps = [
-        ":lobster_trlc",
-        "//tests_system",
-    ],
-)
-
-py_test(
-    name = "test_conversion",
-    srcs = ["test_conversion.py"],
-    deps = [
-        ":lobster_trlc",
-        "//tests_system",
-    ],
-)
-
-py_test(
-    name = "test_conversion_errors",
-    srcs = ["test_conversion_errors.py"],
-    deps = [
-        ":lobster_trlc",
-        "//tests_system",
-    ],
-)
-
-py_test(
-    name = "test_inputs_from_directory",
-    srcs = ["test_inputs_from_directory.py"],
-    deps = [
-        ":lobster_trlc",
-        "//tests_system",
-    ],
-)
-
-py_test(
-    name = "test_inputs_zero",
-    srcs = ["test_inputs_zero.py"],
-    deps = [
-        ":lobster_trlc",
-        "//tests_system",
-    ],
-)
-
-py_test(
-    name = "test_invalid_config",
-    srcs = ["test_invalid_config.py"],
-    deps = [
-        ":lobster_trlc",
-        "//tests_system",
-    ],
-)
-
-py_test(
-    name = "test_output_correctness",
-    srcs = ["test_output_correctness.py"],
-    deps = [
-        ":lobster_trlc",
-        "//tests_system",
-    ],
-)
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [":lobster_trlc"],
+) for src in glob(["test_*.py"])]

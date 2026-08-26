@@ -15,6 +15,8 @@ Browse the sections below to find the APIs and examples you need.
   :caption: Tool Modules
 
   manual/tools/codebeamer
+  manual/tools/python
+  manual/tools/trlc
   manual/tools/cpptest
   manual/tools/pkg
   manual/tools/report

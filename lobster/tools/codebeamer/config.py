@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, List, Union
+from typing import Callable, Optional, List, Union
 
 
 @dataclass
@@ -24,6 +24,7 @@ class Config:
     timeout: int
     out: str
     cb_auth_conf: AuthenticationConfig
+    item_to_text: Optional[Callable[[dict], Optional[str]]] = None
 
     @property
     def base(self) -> str:

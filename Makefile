@@ -1,7 +1,10 @@
 SYSTEM_PYTHONPATH:=$(PYTHONPATH)
+BAZEL:=$(or $(shell which bazel),bazel)
 export LOBSTER_ROOT=$(PWD)
 export PYTHONPATH=$(LOBSTER_ROOT)
 export PATH:=$(LOBSTER_ROOT):$(PATH)
+
+BAZEL_BIN := $(shell command -v bazelisk 2>/dev/null || command -v bazel-8.5.1 2>/dev/null || command -v bazel 2>/dev/null)
 
 TOOL_FOLDERS := $(shell \
 	(find ./lobster/tools -mindepth 1 -maxdepth 1 -type d \
@@ -100,10 +103,15 @@ clang-tidy:
 
 integration-tests: packages
 	(cd tests_integration/projects/basic; make)
-	(cd tests_integration/projects/coverage; make)
-	(cd tests_integration/projects/coverage_half; make)
-	(cd tests_integration/projects/coverage_mix; make)
-	(cd tests_integration/projects/coverage_zero; make)
+	$(BAZEL_BIN) test \
+		//tests_integration/projects/coverage:traceability \
+		//tests_integration/projects/coverage_half:traceability \
+		//tests_integration/projects/coverage_mix:traceability \
+		//tests_integration/projects/coverage_zero:traceability \
+		--keep_going \
+		--test_output=all \
+		--verbose_failures \
+		--verbose_test_summary
 	(cd tests_integration/projects/cpp_focus; make)
 
 # Bazel equivalent: bazel build //tests_system/lobster_codebeamer/data:codebeamer_pem
@@ -143,7 +151,7 @@ coverage-system:
 	@echo "📊 Generating coverage report for system tests..."
 	coverage combine -q .coverage.system*
 	coverage html --directory=htmlcov-system --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=74
+	coverage report --rcfile=coverage.cfg --fail-under=80
 
 # --- Clean Coverage ---
 clean-coverage:
@@ -166,8 +174,6 @@ docs:
 	@-./tracing/tracing.sh
 	@sphinx-build -c sphinx -b html . docs/api_documentation
 
-clean-docs:
-	rm -rf docs
 
 tracing:
 	@mkdir -p docs
