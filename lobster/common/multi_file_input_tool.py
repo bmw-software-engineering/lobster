@@ -15,7 +15,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-import os
+from pathlib import Path
 
 from abc import ABCMeta
 from typing import Iterable, List, Optional, Type, Union
@@ -76,9 +76,9 @@ def create_worklist(
     inputs = combine_all_inputs(config, dir_or_files)
     file_collector = FileCollector(config.extensions, config.exclude_patterns)
     for item in inputs:
-        if os.path.isfile(item):
+        if Path(item).is_file():
             file_collector.add_file(item, throw_on_mismatch=True)
-        elif os.path.isdir(item):
+        elif Path(item).is_dir():
             file_collector.add_dir_recursively(item)
         else:
             raise ValueError(f"{item} is not a file or directory")
