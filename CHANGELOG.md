@@ -5,6 +5,12 @@
 
 ### 1.0.7-dev
 
+* `lobster-trlc`:
+  - Added support for experimental feature TRLC Markdown which takes
+  `.trlc.md` as a valid input file extension.
+
+* `trlc bazel dep`: update to trlc==3.0.1
+
 * `lobster-codebeamer`:
   Added the API-only `item_to_text` parameter to the configuration object of the
   `lobster_codebeamer` API for populating the LOBSTER item's text property.

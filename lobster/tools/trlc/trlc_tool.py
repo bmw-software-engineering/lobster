@@ -55,7 +55,7 @@ class LOBSTER_Trlc(MultiFileInputTool):
         super().__init__(
             name        = "trlc",
             description = "Extract tracing data from TRLC files.",
-            extensions  = ["rsl", "trlc"],
+            extensions  = ["rsl", "trlc", "trlc.md"],
             official    = True,
         )
 

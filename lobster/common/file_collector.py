@@ -36,8 +36,10 @@ class FileCollector:
             )
 
     def _is_file_of_interest(self, file: str) -> bool:
-        return (not self._extensions) or \
-            (Path(file).suffix.lower() in self._extensions)
+        if not self._extensions:
+            return True
+        name = Path(file).name.lower()
+        return any(name.endswith(ext.lower()) for ext in self._extensions)
 
     def _is_dir_of_interest(self, dir_name: str) -> bool:
         return not any(pattern.match(dir_name)
