@@ -43,7 +43,7 @@ load("//:requirements.bzl", "requirement")
 #     # This is what we called our `pip_parse` rule, where third-party
 #     # python libraries are loaded in BUILD files.
 #     pip_repository_name = "pip",
-#     requirements = "requirements_lock_3_9.txt",
+#     requirements = "requirements_lock_3_10.txt",
 # )
 
 # Run: bazel run //:python_dependencies_3_XX.update --@rules_python//python/config_settings:python_version=3.XX
@@ -54,7 +54,6 @@ load("//:requirements.bzl", "requirement")
       out = "requirements_lock_3_{}.txt".format(version),
   )
   for version in [
-      "9",
       "10",
       "11",
       "12",

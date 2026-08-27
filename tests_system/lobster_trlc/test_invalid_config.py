@@ -44,18 +44,8 @@ class MissingConfigTest(LobsterTrlcSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
 
-        # assertInStdErr is being used instead of assertStdErrText because the output is
-        # truncated when Python version is 3.9 and above.
-        # But for Python version 3.8 the full output is shown.
-
-        # Incase of Python >-3.9 the error message is:
-        # 'usage: lobster-trlc [-h] [-v] [--out OUT] --config CONFIG [DIR|FILE ...]\n'
-        # 'lobster-trlc: error: the following arguments are required: --config\n'
-
-        # For Python 3.8 the full error message is:
-        # 'usage: lobster-trlc [-h] [-v] [--out OUT] --config CONFIG
-        # [DIR|FILE [DIR|FILE ...]]\n'
-        # 'lobster-trlc: error: the following arguments are required: --config\n'
+        # assertInStdErr is used because argparse usage text may be wrapped or
+        # truncated depending on the interpreter version.
         asserter.assertInStdErr("usage: lobster-trlc [-h] [-v] [--out OUT] "
                                 "--config CONFIG")
         asserter.assertInStdErr("lobster-trlc: error: the following arguments "
