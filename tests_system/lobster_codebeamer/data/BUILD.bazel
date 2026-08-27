@@ -1,11 +1,22 @@
 load("@rules_python//python:defs.bzl", "py_library")
 
+# Bazel equivalent of: make codebeamer-pem
+genrule(
+    name = "codebeamer_pem",
+    outs = [
+        "cert.pem",
+        "key.pem",
+    ],
+    cmd = "openssl req -x509 -newkey rsa:2048 -nodes " +
+          "-keyout $(RULEDIR)/key.pem " +
+          "-out $(RULEDIR)/cert.pem " +
+          "-days 3650 " +
+          "-subj '/CN=localhost' > /dev/null 2>&1",
+)
+
 filegroup(
     name = "codebeamer_data_system",
-    srcs = glob([
-        "ssl/*.pem",
-        "*.lobster",
-    ]),
+    srcs = glob(["*.lobster"]) + [":codebeamer_pem"],
     visibility = ["//visibility:public"],
 )
 

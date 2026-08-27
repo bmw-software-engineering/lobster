@@ -1,5 +1,6 @@
 import json
 import socket
+from pathlib import Path
 from time import sleep
 from typing import List
 from flask import Flask, Response, request
@@ -12,9 +13,18 @@ import requests
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-# Config
-CERT_PATH = 'tests_system/lobster_codebeamer/data/ssl/cert.pem'
-KEY_PATH = 'tests_system/lobster_codebeamer/data/ssl/key.pem'
+# SSL cert/key lookup differs by test runner:
+# - Bazel runfiles expose cert.pem/key.pem directly under data/
+# - Make writes cert.pem/key.pem under data/ssl/ via make codebeamer-pem
+# TODO: Remove the Make fallback after make system-tests is retired.
+_DATA_DIR = Path(__file__).parent / "data"
+_BAZEL_CERT = _DATA_DIR / "cert.pem"
+_BAZEL_KEY = _DATA_DIR / "key.pem"
+_MAKE_CERT = _DATA_DIR / "ssl" / "cert.pem"
+_MAKE_KEY = _DATA_DIR / "ssl" / "key.pem"
+_USE_BAZEL_LAYOUT = _BAZEL_CERT.exists()
+CERT_PATH = str(_BAZEL_CERT if _USE_BAZEL_LAYOUT else _MAKE_CERT)
+KEY_PATH = str(_BAZEL_KEY if _USE_BAZEL_LAYOUT else _MAKE_KEY)
 MOCK_ROUTE_QUERY_ID = '/api/v3/reports/<int:report_id>/items'
 MOCK_ROUTE_QUERY_STRING = '/api/v3/items/query'
 ARE_YOU_RUNNING_ROUTE = '/are-you-running'
