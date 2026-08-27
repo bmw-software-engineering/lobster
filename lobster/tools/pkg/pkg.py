@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
-# lobster_pkg - Extract tracing values from xml file for LOBSTER
-# Copyright (C) 2024-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# lobster_pkg - Extract tracing values from ECU Test files for LOBSTER
+# Copyright (C) 2024-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -270,7 +270,7 @@ class PkgTool(MultiFileInputTool):
     def __init__(self):
         super().__init__(
             name="pkg",
-            description="Extract tracing tags from pkg files for LOBSTER",
+            description="Extract tracing tags from ECU-Test files for LOBSTER",
             extensions=["pkg", "ta"],
             official=True,
         )
@@ -281,7 +281,7 @@ class PkgTool(MultiFileInputTool):
 
     def run_from_config(self, pkg_config: PkgToolConfig) -> None:
         """
-        The main function to parse tracing information from .pkg files for LOBSTER.
+        The main function to parse tracing information from ECU-Test files for LOBSTER.
 
         This function processes the input files or directories specified in
         ``pkg_config.files``, extracts tracing tags and activities from XML
