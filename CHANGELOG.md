@@ -5,6 +5,9 @@
 
 ### 1.0.7-dev
 
+* `Python support`: Drop support for Python versions below 3.10. LOBSTER now requires
+  Python 3.10 through 3.14.
+
 * `lobster-trlc`:
   - Added support for experimental feature TRLC Markdown which takes
   `.trlc.md` as a valid input file extension.

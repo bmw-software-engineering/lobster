@@ -8,11 +8,11 @@ class TempContentFile:
        This class creates a temporary file with the given content, and deletes it
        when the context is exited.
 
-       This is a wrapper around tempfile.NamedTemporaryFile which works for all
-       Python versions.
+       This is a wrapper around tempfile.NamedTemporaryFile which works across
+       the supported Python versions.
 
        With Python 3.12+ we could simply set the parameters delete_on_close=False and
-       delete=True, but we want to support Python 3.8+
+       delete=True, but we still support Python 3.10 and 3.11.
     """
 
     def __init__(self, content: str):

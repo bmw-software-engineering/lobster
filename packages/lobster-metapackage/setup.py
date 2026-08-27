@@ -54,7 +54,7 @@ setuptools.setup(
     license="GNU Affero General Public License v3",
     packages=[],
     install_requires=packages,
-    python_requires=">=3.7, <4",
+    python_requires=">=3.10, <4",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
