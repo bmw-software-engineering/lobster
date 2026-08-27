@@ -91,13 +91,13 @@ class ToolBaseTest(LobsterMetaDataToolBaseSystemTestCaseBase):
         """
         # lobster-trace: req.Args_From_File
 
-        # with NamedTemporaryFile and Python 3.12+ we could simply use
-        # delete_on_close=False and delete=True, but we want to support Python 3.8+
+        # With Python 3.12+ we could simply use delete_on_close=False and
+        # delete=True, but we still support Python 3.10 and 3.11.
 
         with NamedTemporaryFile(
             mode="w",
             encoding="UTF-8",
-            delete=False,  # Use delete=False for compatibility with Python 3.8+
+            delete=False,
         ) as tmp_file:
             tmp_file.write("--version\n")
             tmp_file.flush()

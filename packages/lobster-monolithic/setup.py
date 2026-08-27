@@ -59,7 +59,7 @@ setuptools.setup(
         "yamale>=6.0.0",
         "GitPython>=3.1.30",
     ],
-    python_requires=">=3.7, <4",
+    python_requires=">=3.10, <4",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",

@@ -1,6 +1,5 @@
 trlc>=2.0.1
 requests>=2.31.0
-urllib3<2.7; python_version < "3.10"
 libcst>=1.1.0
 PyYAML>=6.0
 Markdown~=3.7
