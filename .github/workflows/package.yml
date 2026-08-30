@@ -15,6 +15,12 @@ jobs:
     if: github.event.release.target_commitish == 'main'
     steps:
       - uses: actions/checkout@v4
+      - name: Setup bazel
+        uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
       - name: Set up Python 3.9
         uses: actions/setup-python@v5
         with:
