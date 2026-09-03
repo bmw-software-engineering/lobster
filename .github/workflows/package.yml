@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-24.04
     if: github.event.release.target_commitish == 'main'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up Python 3.9
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.9"
       - name: Install dependencies
@@ -27,7 +27,7 @@ jobs:
         run: |
           make packages
       - name: Archive wheel files
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: wheels
           path: |
@@ -44,7 +44,7 @@ jobs:
       id-token: write
     steps:
       - name: Download wheel files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: wheels
           path: dist_download

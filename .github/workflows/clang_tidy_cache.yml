@@ -7,7 +7,7 @@ jobs:
   build-clang-tidy-cache:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install dependencies
         run: |
@@ -16,7 +16,7 @@ jobs:
 
       - name: Cache clang-tidy
         id: cache-clang-tidy
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/work/lobster/llvm-project/build/bin/clang-tidy
           key: cache-clang-tidy

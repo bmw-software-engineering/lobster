@@ -25,9 +25,9 @@ jobs:
       trlc_modified: ${{ steps.changed-trlc-files.outputs.any_modified }}
       only_docu_modified: ${{ steps.changed-docu-files.outputs.only_modified }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - id: changed-py-files
-      uses: tj-actions/changed-files@823fcebdb31bb35fdf2229d9f769b400309430d0 #v46.0.3
+      uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 #v47.0.6
       with:
         output_renamed_files_as_deleted_and_added: true
         files: |
@@ -36,7 +36,7 @@ jobs:
           *.cfg
           **/*.cfg
     - id: changed-docu-files
-      uses: tj-actions/changed-files@823fcebdb31bb35fdf2229d9f769b400309430d0 #v46.0.3
+      uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 #v47.0.6
       with:
         output_renamed_files_as_deleted_and_added: true
         files: |
@@ -45,7 +45,7 @@ jobs:
           .github/CODEOWNERS
           documentation/**
     - id: changed-trlc-files
-      uses: tj-actions/changed-files@823fcebdb31bb35fdf2229d9f769b400309430d0 #v46.0.3
+      uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 #v47.0.6
       with:
         output_renamed_files_as_deleted_and_added: true
         files: |
@@ -65,7 +65,7 @@ jobs:
     if: ${{ needs.changes.outputs.py_modified == 'true' }}
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
@@ -79,7 +79,7 @@ jobs:
     if: ${{ needs.changes.outputs.py_modified == 'true' }}
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
@@ -93,7 +93,7 @@ jobs:
     if: ${{ needs.changes.outputs.py_modified == 'true' }}
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
@@ -107,7 +107,7 @@ jobs:
     if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Verify unittest main guards in system tests
         run: python3 .github/verify_system_test_entrypoints.py
   trlc:
@@ -116,9 +116,9 @@ jobs:
     if: ${{ needs.changes.outputs.trlc_modified == 'true' }}
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup bazel
-        uses: bazel-contrib/setup-bazel@0.15.0
+        uses: bazel-contrib/setup-bazel@0.19.0
         with:
           bazelisk-cache: true
           disk-cache: ${{ github.workflow }}
@@ -139,9 +139,9 @@ jobs:
             brew: "/opt/homebrew"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install python version
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.py-version }}
       - name: Install dependencies
@@ -171,17 +171,17 @@ jobs:
     if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Restore clang-tidy cache
         id: restore-clang-tidy
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ~/work/lobster/llvm-project/build/bin/clang-tidy
           key: cache-clang-tidy
           fail-on-cache-miss: true
 
       - name: Install python version
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - name: Install dependencies
@@ -190,7 +190,7 @@ jobs:
           python3 -m pip install -r requirements_dev.txt
           sudo apt install cmake ninja-build graphviz
       - name: Setup bazel (for lobster-gtest)
-        uses: bazel-contrib/setup-bazel@0.15.0
+        uses: bazel-contrib/setup-bazel@0.19.0
         with:
           bazelisk-cache: true
           disk-cache: ${{ github.workflow }}
@@ -202,12 +202,12 @@ jobs:
     name: Bazel Integration
     runs-on: ubuntu-24.04
     steps:
-      - uses: bazel-contrib/setup-bazel@0.15.0
+      - uses: bazel-contrib/setup-bazel@0.19.0
         with:
           bazelisk-cache: true
           disk-cache: ${{ github.workflow }}
           repository-cache: true
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: bazel test //tests_system/... //tests_unit/...
   failure:
     name: Check all jobs
