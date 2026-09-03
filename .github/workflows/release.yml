@@ -26,7 +26,7 @@ permissions:
 
 jobs:
   release:
-    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@v7.6.0
+    uses: bazel-contrib/.github/.github/workflows/release_ruleset.yaml@e5ab8fc4c23cb13783fad499e8bd865fd9f6d669 # v7.6.0
     with:
       release_files: archives/*.*
       prerelease: false
