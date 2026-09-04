@@ -19,6 +19,7 @@ jobs:
   changes:
     runs-on: ubuntu-24.04
     permissions:
+      contents: read
       pull-requests: read
     outputs:
       py_modified: ${{ steps.changed-py-files.outputs.any_modified }}
@@ -211,6 +212,7 @@ jobs:
       - run: bazel test //tests_system/... //tests_unit/...
   failure:
     name: Check all jobs
+    permissions: {}
     needs:
       - lint-code
       - lint-system-tests
