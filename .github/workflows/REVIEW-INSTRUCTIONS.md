@@ -1,4 +1,3 @@
-
 # Review instructions
 
 Here are instructions how to review a pull request that changes the commit SHA of a
