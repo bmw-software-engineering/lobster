@@ -2,12 +2,26 @@ name: Build and Cache clang-tidy
 
 on:
   workflow_dispatch:
+    inputs:
+      source_ref:
+        description: >-
+          Branch or commit to check out and build. Uses the Workflow branch as the
+          default if not specified.
+          Note that the resulting cache will be specific to the Workflow branch, not
+          specific to the branch or commit given here.
+          Use this setting if you deliberately want to build the cache from a branch
+          different to the Workflow branch.
+          Use with care, especially when running the Workflow from the main branch.
+        required: false
+        type: string
 
 jobs:
   build-clang-tidy-cache:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.source_ref || github.ref }}
 
       - name: Install dependencies
         run: |
