@@ -1,6 +1,7 @@
 *~
 *.pyc
 .clwb/
+.venv
 .vscode
 .envrc
 bazel-*
