@@ -1,5 +1,51 @@
 package req
 
+enum Tools {
+  // tools that consume source files provided by the user
+  lobster_codebeamer
+  lobster_cpptest
+  lobster_report
+  lobster_trlc
+  lobster_json
+  lobster_pkg
+
+  // tools that consume the output of other LOBSTER tools
+  lobster_online_report
+  lobster_html_report
+  lobster_rst_report
+}
+
+type UseCase {
+  description '''
+    The text of the use case.
+    The format shall be : As a < role > I want < description of the UseCase >
+    A use case shall describe the goal that the user wants to achieve by using LOBSTER.
+    The use case shall not describe the implementation of the tools.
+  ''' String
+  affected_tools
+    '''List of tools that contribute features to fulfill the use case'''
+      Tools[1..*]
+}
+
+type System_Requirement {
+  description
+    '''
+    The content of the requirement.
+    A tool requirement describes the behavior of a LOBSTER tool from the point of view of
+    the user.
+    It does not describe implementation details.
+    '''
+      String
+
+  derived_from
+    '''
+    List of use cases that resulted into this system requirement.
+    The field is optional, but it is strongly recommended that system requirements be
+    derived from use cases whenever applicable, to support traceability.
+    '''
+      optional UseCase[1..*]
+}
+
 enum Reason {
   Initial_Condition
    '''
@@ -9,17 +55,9 @@ enum Reason {
    '''
 }
 
-type System_Requirement {
-  description
-    '''
-    The content of the requirement.
-    A tool requirement describes the behavior of a lobster tool from the point of view of the user.
-    It does not describe implementation details.
-    '''
-      String
-}
-
 type System_Requirement_Aspect extends System_Requirement {
+  /* DEPRECATED - DO NOT USE */
+
   /* This type describes an aspect of a system requirement.
      The aspect itself is not testable. It is only testable in the context of a requirement.
      For example, an aspect may give details about a certain input, but it does not describe
@@ -58,33 +96,6 @@ type Definition {
   ''' String
 }
 
-enum Tools {
-  // tools that consume source files provided by the user
-  lobster_codebeamer
-  lobster_cpptest
-  lobster_report
-  lobster_trlc
-  lobster_json
-  lobster_pkg
-
-  // tools that consume the output of other LOBSTER tools
-  lobster_online_report
-  lobster_html_report
-  lobster_rst_report
-}
-
-type UseCase {
-  description '''
-    The text of the use case.
-    The format shall be : As a < role > I want < description of the UseCase >
-    A use case shall describe the goal that the user wants to achieve by using LOBSTER.
-    The use case shall not describe the implementation of the tools.
-  ''' String
-  affected_tools
-    '''List of tools that contribute features to fulfill the use case'''
-      Tools[1..*]
-}
-
 enum Impact_Type {
   Safety
     '''
@@ -92,7 +103,7 @@ enum Impact_Type {
     '''
   Financial
     '''
-    The potential error has a security impact.
+    The potential error has a financial impact.
     '''
 }
 
