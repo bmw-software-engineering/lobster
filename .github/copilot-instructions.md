@@ -40,7 +40,20 @@ This repo's own requirements/tests are tracked in TRLC and traced with LOBSTER i
   any other `type` that references it.
 - Model one requirement per distinct observable behavior; consolidate near-duplicate cases
   (e.g. the same failure reached via different input paths) into a single requirement rather
-  than one-per-test-case.
+  than one-per-test-case. If two requirements would describe the same observable fact, keep it
+  in the most specific/atomic one and remove it from broader "umbrella" requirements instead of
+  restating it in both.
+- System requirement text must be black-box: describe exact, user-observable output text, exit codes,
+  and file content, never internal implementation details (class names, method names, exception
+  types).
+- Derive requirement wording from reading the actual implementation, not by transcribing
+  existing test scenarios or trusting inherited requirement text — verify non-obvious claims
+  (exact error text, load/iteration order, which conditions produce which status) by running the
+  tool against a small crafted fixture before writing the requirement.
+- A tool's requirement set needs genuine happy-path requirements, not only error-handling ones.
+  If the tool produces a status/enum field, check that every value it can actually take (grep
+  existing golden-file fixtures, don't just trust which tests currently pass) is named by at
+  least one requirement.
 - A `System_Requirement` is expected to show "PARTIAL" coverage (not fully OK) until it has
   incoming refs from both a `Software_Requirement` and a system test — this is by design, not
   a bug; check `ref_up`/`ref_down` on the individual item instead of only the top-level %.

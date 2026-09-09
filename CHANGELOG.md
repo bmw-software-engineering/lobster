@@ -5,6 +5,9 @@
 
 ### 1.0.7-dev
 
+* Reworked the requirements and the way use cases are traced.
+  This could impact your tool qualification strategy.
+
 * `lobster-trlc`:
   - Added support for experimental feature TRLC Markdown which takes
   `.trlc.md` as a valid input file extension.

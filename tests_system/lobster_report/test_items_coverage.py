@@ -10,8 +10,8 @@ class ReportItemsCoverageTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_zero_items_coverage(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Coverage_calculation_in_Output
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Level_Coverage_Percentage_From_Item_Status
         # lobster-trace: core_report_req.Zero_Items_Coverage
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_zero_items.conf")
@@ -35,9 +35,9 @@ class ReportItemsCoverageTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_items_message_trace_coverage(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Coverage_calculation_in_Output
-        # lobster-trace: core_report_req.Message_Trace_Coverage
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Level_Coverage_Percentage_From_Item_Status
+        # lobster-trace: core_report_req.Item_Status_Downgraded_By_Preexisting_Item_Messages
         self._test_runner.declare_input_file(self._data_directory /
                                              "message_trace_coverage.conf")
         self._test_runner.declare_input_file(self._data_directory /

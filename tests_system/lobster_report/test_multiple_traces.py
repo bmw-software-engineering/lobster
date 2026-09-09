@@ -11,10 +11,9 @@ class ReportMultipleTracesTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_multiple_traces_justification(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
-        # lobster-trace: core_report_req.Multiple_Traces_Support
-        # lobster-trace: core_report_req.Status_Justified_Up
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Tracing_Status_Computed_From_Configured_Graph_Independent_Of_Item_Kind
+        # lobster-trace: core_report_req.Item_Status_Justified_By_Global_Or_Directional_Justification
         """
         This test checks that the lobster report tool can handle multiple lobster traces
          with justifications in code as well as tests

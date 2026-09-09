@@ -11,9 +11,9 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_extra_input_files_are_ignored_by_policy(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
-        # lobster-trace: core_report_req.Input_Files_Policy_Based_Processing
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Tracing_Status_Computed_From_Configured_Graph_Independent_Of_Item_Kind
+        # lobster-trace: core_report_req.Report_Loads_Only_Configured_Source_Files_Per_Level
         """
         This test checks that the lobster report tool can handle multiple input files.
         The tool should actually fetch input files provided in the tracing policy
@@ -79,10 +79,9 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(1)
 
     def test_multiple_source_files(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
-        # lobster-trace: core_report_req.Multi_Level_Source_Files
-        # lobster-trace: core_report_req.Item_Data_Isolation
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Tracing_Status_Computed_From_Configured_Graph_Independent_Of_Item_Kind
+        # lobster-trace: core_report_req.Report_Loads_Only_Configured_Source_Files_Per_Level
         """
         This test checks that the lobster report tool can handle multiple source files
         given at different levels of tracing policy.

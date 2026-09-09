@@ -13,8 +13,9 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
     # Tests for the report generation with different statuses
     # Status Ok
     def test_status_ok(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: core_report_req.Status_Ok
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Item_Status_Ok_When_Required_References_Present
+        # lobster-trace: core_report_req.Report_Generation_Succeeds_For_Valid_Configuration_And_Inputs
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_ok.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -37,8 +38,8 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
 
     # Status Missing
     def test_status_missing(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: core_report_req.Status_Missing
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Item_Status_Missing_When_Required_Reference_Absent
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_missing.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -60,8 +61,8 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_status_missing_mixed(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: core_report_req.Status_Missing
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Item_Status_Missing_When_Required_Reference_Absent
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_mixed.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -84,8 +85,8 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
 
     # Status Justified
     def test_status_justified(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: core_report_req.Status_Justified_Global
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Item_Status_Justified_By_Global_Or_Directional_Justification
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_justified.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -95,6 +96,35 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
 
         conf_file = "lobster_justified.conf"
         out_file = "report_justified.lobster"
+        self._test_runner.cmd_args.lobster_config = conf_file
+        self._test_runner.cmd_args.out = out_file
+        self._test_runner.declare_output_file(self._data_directory / out_file)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertNoStdOutText()
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
+    # Status Partial
+    def test_status_partial(self):
+        # lobster-trace: core_report_req.Item_Status_Partial_When_Only_One_Required_Direction_Satisfied
+        """
+        This test isolates the case where a middle-level item (requiring both an up
+        and a down reference) only satisfies one of the two directions.
+        """
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "partial_status.conf")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "partial_status_requirements.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "partial_status_midreqs.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "partial_status_code.lobster")
+
+        conf_file = "partial_status.conf"
+        out_file = "report_partial_status.lobster"
         self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)

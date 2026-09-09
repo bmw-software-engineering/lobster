@@ -41,7 +41,7 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(1)
 
     def test_lobster_exception_dump(self):
-        # lobster-trace: core_report_req.Lobster_Exception_Dump_Invalid_Input
+        # lobster-trace: core_report_req.Malformed_Location_Data_Error_Dump
         self._test_runner.declare_input_file(self._data_directory /
                                              "invalid_input.conf")
         self._test_runner.declare_input_file(self._data_directory /
