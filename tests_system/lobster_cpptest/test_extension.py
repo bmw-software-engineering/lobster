@@ -19,8 +19,8 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         """
         Test checks that the C++ files with valid extensions are processed correctly.
         """
-        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
-        # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
+        # lobster-trace: cpptest_req.All_Recognized_Tests_Extracted
+        # lobster-trace: cpptest_req.Requirement_References_Extracted_As_Tags
         self._test_runner.cmd_args.config = str(
             self._data_directory / "valid_extension_config.yaml")
         self._test_runner.declare_input_file(
@@ -50,7 +50,7 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         Test processing of C++ files with invalid extensions but valid data.
         Hence, the tool should still be able to process the files correctly.
         """
-        # lobster-trace: UseCases.Incorrect_Number_of_Cpp_Tests_in_Output
+        # lobster-trace: cpptest_req.Explicit_File_Ignores_Extension
         self._test_runner.cmd_args.config = str(
             self._data_directory / "invalid_extension_config.yaml")
         self._test_runner.declare_input_file(
@@ -80,6 +80,7 @@ class ExtensionCpptestTest(LobsterCpptestSystemTestCaseBase):
         Test processing of C++ files with no input files.
         Input file provided in YAML config file does not exist.
         """
+        # lobster-trace: cpptest_req.Input_Not_File_Not_Directory
         self._test_runner.cmd_args.config = str(
             self._data_directory / "no_input_file_config.yaml")
 

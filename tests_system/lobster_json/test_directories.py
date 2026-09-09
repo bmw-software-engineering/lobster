@@ -12,6 +12,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_missing_directory(self):
+        # lobster-trace: json_req.Input_Not_File_Not_Directory
         dir_does_not_exist = "directory_does_not_exist"
         self._test_runner.config_file_data.inputs.append(dir_does_not_exist)
         self._test_runner.config_file_data.tag_attribute = "directory_test"
@@ -26,6 +27,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         asserter.assertExitCode(1)
 
     def test_empty_directory(self):
+        # lobster-trace: json_req.Input_Directory_Traversal
         OUT_FILE = "empty_directory.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
@@ -43,7 +45,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_consumes_files_in_specified_directory(self):
-        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
+        # lobster-trace: json_req.Input_Directory_Traversal
         OUT_FILE = "valid_directory.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.config_file_data.tag_attribute = "tags"
@@ -64,7 +66,7 @@ class InputDirectoryJsonTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_mix_inputs_from_directory(self):
-        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
+        # lobster-trace: json_req.Input_Directory_Traversal
         OUT_FILE = "mix_inputs.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.config_file_data.tag_attribute = "tags"

@@ -1,5 +1,6 @@
 package trlc_req
 import req
+import UseCases
 
 req.System_Requirement Tag_Version_From_Record_Field {
     description = '''
@@ -7,6 +8,13 @@ req.System_Requirement Tag_Version_From_Record_Field {
       and the record object has a field named "xxx",
       then the tool shall set the tag version to the value of that field.
     '''
+    derived_from = [
+      UseCases.List_Requirements_to_Tests,
+      UseCases.List_Requirements_without_Tests,
+      UseCases.List_Tests_to_Requirements,
+      UseCases.List_Tests_without_Requirements,
+      UseCases.Item_Coverage
+    ]
 }
 
 req.System_Requirement Tag_Version_None_If_Field_Missing {
@@ -15,6 +23,13 @@ req.System_Requirement Tag_Version_None_If_Field_Missing {
       but the record object does not have a field named "xxx",
       then the tool shall set the tag version to None.
     '''
+    derived_from = [
+      UseCases.List_Requirements_to_Tests,
+      UseCases.List_Requirements_without_Tests,
+      UseCases.List_Tests_to_Requirements,
+      UseCases.List_Tests_without_Requirements,
+      UseCases.Item_Coverage
+    ]
 }
 
 req.System_Requirement Tag_Version_None_If_Not_Configured {
@@ -22,4 +37,11 @@ req.System_Requirement Tag_Version_None_If_Not_Configured {
       If the conversion rule configuration does not contain any "version-field: xxx" entry,
       then the tool shall set the tag version to None, regardless of the record object.
     '''
+    derived_from = [
+      UseCases.List_Requirements_to_Tests,
+      UseCases.List_Requirements_without_Tests,
+      UseCases.List_Tests_to_Requirements,
+      UseCases.List_Tests_without_Requirements,
+      UseCases.Item_Coverage
+    ]
 }

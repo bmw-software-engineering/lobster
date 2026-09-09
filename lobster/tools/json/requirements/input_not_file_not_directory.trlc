@@ -1,11 +1,21 @@
 package json_req
 import req
+import UseCases
 
 req.System_Requirement Input_Not_File_Not_Directory {
     description = '''
       IF a list element given through the configuration file under "inputs" is not a file nor a directory,
-      THEN the tool shall exit with a non-zero return code.
+      THEN the tool shall print an error message identifying the offending element to STDOUT,
+      SHALL NOT write any output,
+      AND SHALL exit with a non-zero return code.
 
       Note: This could happen if a path does not exist.
     '''
+    derived_from = [
+      UseCases.List_Requirements_to_Tests,
+      UseCases.List_Requirements_without_Tests,
+      UseCases.List_Tests_to_Requirements,
+      UseCases.List_Tests_without_Requirements,
+      UseCases.Item_Coverage
+    ]
 }

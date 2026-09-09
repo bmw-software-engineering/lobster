@@ -21,3 +21,6 @@ test_install_monolithic_venv
 *.lobster
 *.html
 .idea
+
+# Tracing script output path
+tracing_out

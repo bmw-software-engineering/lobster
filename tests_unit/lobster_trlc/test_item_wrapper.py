@@ -5,6 +5,7 @@ from tests_unit.lobster_trlc.test_to_string_rules import TrlcToStringDataTestCas
 
 class ItemWrapperTest(TrlcToStringDataTestCase):
     def test_get_field_existing(self):
+        # lobster-trace: trlc_req.Item_Wrapper_Reads_Existing_Fields
 
         def assertFieldIsNotNone(item_wrapper: ItemWrapper, field_name: str):
             self.assertTrue(item_wrapper.get_field(field_name))
@@ -24,6 +25,7 @@ class ItemWrapperTest(TrlcToStringDataTestCase):
                 assertFieldIsNotNone(item_wrapper, "berthed_ships")
 
     def test_get_field_non_existing(self):
+        # lobster-trace: trlc_req.Item_Wrapper_Missing_Field_Behavior
         for record_object in self._trlc_data_provider.get_record_objects():
             item_wrapper = ItemWrapper(record_object)
             with self.assertRaises(RecordObjectComponentError):

@@ -1,0 +1,38 @@
+package codebeamer_req
+import req
+
+req.Software_Requirement Load_Config_Missing_File_Raises {
+  description = '''
+    The function "load_config" SHALL raise FileNotFoundError,
+    IF the given config file path does not exist.
+  '''
+  derived_from = [Empty_Query_String_Parameter]
+}
+
+req.Software_Requirement Load_Config_Directory_Raises {
+  description = '''
+    The function "load_config" SHALL raise IsADirectoryError (or PermissionError,
+    depending on the operating system),
+    IF the given path is a directory instead of a file.
+  '''
+  derived_from = [Empty_Query_String_Parameter]
+}
+
+req.Software_Requirement Parse_Config_Data_Rejects_Unsupported_Keys {
+  description = '''
+    The function "parse_config_data" SHALL raise KeyError, identifying the
+    unsupported key(s),
+    IF the config data contains any key that is not listed in
+    "SupportedConfigKeys".
+  '''
+  derived_from = [Empty_Query_String_Parameter]
+}
+
+req.Software_Requirement Parse_Config_Data_Requires_Import_Tagged_Or_Import_Query {
+  description = '''
+    The function "parse_config_data" SHALL raise KeyError,
+    IF neither "import_tagged" nor "import_query" is provided,
+    OR "import_query" is provided as an empty string.
+  '''
+  derived_from = [Empty_Query_String_Parameter]
+}

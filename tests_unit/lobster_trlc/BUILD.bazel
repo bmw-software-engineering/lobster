@@ -105,6 +105,30 @@ py_test(
 )
 
 py_test(
+    name = "test_lobster_trlc_config",
+    srcs = ["test_lobster_trlc_config.py"],
+    deps = [
+        "//lobster/tools/trlc",
+        requirement("yamale"),
+    ],
+)
+
+py_test(
+    name = "test_create_worklist",
+    srcs = ["test_create_worklist.py"],
+    deps = ["//lobster/common"],
+)
+
+py_test(
+    name = "test_run_lobster_trlc",
+    srcs = ["test_run_lobster_trlc.py"],
+    deps = [
+        "//lobster/tools/trlc",
+        requirement("yamale"),
+    ],
+)
+
+py_test(
     name = "test_parse_instructions",
     srcs = ["test_parse_instructions.py"],
     deps = ["//lobster/tools/trlc"],

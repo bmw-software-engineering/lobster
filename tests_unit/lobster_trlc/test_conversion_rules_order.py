@@ -36,6 +36,7 @@ class RuleOrderTest(TestCase):
            Note: This happens if the wrong TRLC api function is used to get the
            record types, which returns them in alphabetical order.
         """
+        # lobster-trace: trlc_req.Record_Types_Extracted_In_File_Order
         top_rule = ConversionRule(
             record_type="ZZ_Type",
             package="order_test",
@@ -99,6 +100,7 @@ class RuleOrderTest(TestCase):
 
     def test_get_record_types(self):
         """Test that the TRLC record types are extracted in the order given in the *.rsl"""
+        # lobster-trace: trlc_req.Record_Types_Extracted_In_File_Order
         expected_order = [
             "ZZ_Type",
             "Some_Unused_Type",

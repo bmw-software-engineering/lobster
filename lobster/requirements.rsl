@@ -13,6 +13,7 @@ enum Tools {
   lobster_online_report
   lobster_html_report
   lobster_rst_report
+  lobster_ci_report
 }
 
 type UseCase {

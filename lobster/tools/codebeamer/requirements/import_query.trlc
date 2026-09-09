@@ -1,5 +1,6 @@
 package codebeamer_req
 import req
+import UseCases
 
 req.System_Requirement Query_Id_Parameter {
   description = '''
@@ -8,6 +9,13 @@ req.System_Requirement Query_Id_Parameter {
     THEN the tool shall request items from the codebeamer server with the given query id
     AND write the obtained codebeamer items in the LOBSTER interchange format to the file given in the "out" parameter
   '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
 }
 
 req.System_Requirement Query_String_Parameter {
@@ -16,4 +24,43 @@ req.System_Requirement Query_String_Parameter {
     THEN the tool shall request items from the codebeamer server with the given query string
     AND write the obtained codebeamer items in the LOBSTER interchange format to the file given in the "out" parameter
   '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Invalid_Import_Query_String_Format {
+  description = '''
+    IF the yaml config file option "import_query" is a string that starts with "-",
+    THEN the tool shall print an error message to STDERR
+    ("import_query must be a positive integer" IF the remaining characters are all
+    digits, OTHERWISE "import_query must be a valid cbQL query")
+    AND shall exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Numeric_Import_Query_String_Treated_As_Id {
+  description = '''
+    IF the yaml config file option "import_query" is a string containing only digits,
+    THEN the tool shall convert it to an integer
+    AND treat it identically to specifying that integer directly as a query id.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
 }

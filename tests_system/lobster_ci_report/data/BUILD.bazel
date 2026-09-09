@@ -1,0 +1,5 @@
+filegroup(
+    name = "ci_report_data_system",
+    srcs = glob(["*.lobster"]),
+    visibility = ["//visibility:public"],
+)

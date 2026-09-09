@@ -14,7 +14,7 @@ class ZeroInputTest(LobsterTrlcSystemTestCaseBase):
 
     def test_rsl_input_only(self):
         """Test that output is empty if no *.trlc inputs are provided, only *.rsl."""
-        # lobster-trace: UseCases.Default_Path_Warning_Test
+        # lobster-trace: trlc_req.No_Inputs_Produces_Zero_Items
         self._test_runner.config_file_data.conversion_rules = [
             self.BERRY_CONVERSION_RULE,
         ]
@@ -39,9 +39,7 @@ class ZeroInputTest(LobsterTrlcSystemTestCaseBase):
                  those to TRLC record types, and will fail if no such types
                  are found (because the input is empty).
         """
-        # lobster-trace: trlc_req.No_Inputs_At_All
-        # lobster-trace: UseCases.Default_Path_Warning_Test
-        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
+        # lobster-trace: trlc_req.No_Inputs_Produces_Zero_Items
         self._test_runner.config_file_data.conversion_rules = []
         OUT_FILE = "zero_items.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
@@ -57,8 +55,7 @@ class ZeroInputTest(LobsterTrlcSystemTestCaseBase):
         Test that when conversion rules are not provided
         then the tool shall raise an error
         """
-        # lobster-trace: trlc_req.No_Inputs_At_All
-        # lobster-trace: UseCases.TRLC_Config_File_Key_Error
+        # lobster-trace: trlc_req.Orphan_Conversion_Rule_Error
         self._test_runner.config_file_data.conversion_rules = [
             self.BERRY_CONVERSION_RULE,
             self.NAMASTE_CONVERSION_RULE,
