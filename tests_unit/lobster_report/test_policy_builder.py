@@ -146,7 +146,7 @@ class PolicyBuilderTests(unittest.TestCase):
                           "Apple cannot trace to Banana items")
 
     def test_breakdown_requirements_auto_derived_when_absent(self):
-        # lobster-trace: core_report_req.Policy_Builder_Level_Order_Independent
+        # lobster-trace: core_report_req.Policy_Builder_Preserves_Level_Declaration_Order
         # lobster-trace: core_report_req.Policy_Builder_Derives_Breakdown_Requirements
         # lobster-trace: core_report_req.Policy_Builder_Derives_Tracing_Direction_Flags
 
@@ -163,6 +163,12 @@ class PolicyBuilderTests(unittest.TestCase):
 
                 # WHEN the function is called
                 levels = build_tracing_policy(raw_policy)
+
+                # THEN levels retain their declaration order, names, and kinds
+                self.assertEqual(
+                    [(level.name, level.kind) for level in levels.values()],
+                    [(level.name, level.kind) for level in raw_levels],
+                )
 
                 # THEN the breakdown requirements are one OR-group
                 self.assertEqual(

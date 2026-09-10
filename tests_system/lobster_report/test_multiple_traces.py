@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -28,13 +28,11 @@ class ReportMultipleTracesTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_multiple_traces_justification(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
-        # lobster-trace: core_report_req.Multiple_Traces_Support
-        # lobster-trace: core_report_req.Status_Justified_Up
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Item_Status_Justified_By_Justification
         """
         This test checks that the lobster report tool can handle multiple lobster traces
-         with justifications in code as well as tests
+        with justifications
         """
         self._test_runner.declare_input_file(self._data_directory /
                                              "multiple_traces_just.conf")

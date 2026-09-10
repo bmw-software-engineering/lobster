@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -27,7 +27,7 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_unknown_tracing_target(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Unknown_Tracing_Target
         self._test_runner.declare_input_file(self._data_directory /
                                              "unknown_tracing_target.conf")
@@ -47,7 +47,7 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_tracing_destination_unversioned(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Tracing_Destination_Unversioned
         self._test_runner.declare_input_file(self._data_directory /
                                              "unversioned_trace.conf")
@@ -67,7 +67,7 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_tracing_destination_version_mismatch(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Tracing_Destination_Version_Mismatch
         self._test_runner.declare_input_file(self._data_directory /
                                              "version_mismatch_trace.conf")

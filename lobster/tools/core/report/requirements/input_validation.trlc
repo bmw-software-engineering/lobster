@@ -59,44 +59,16 @@ req.System_Requirement Missing_Version_Key {
 }
 
 req.System_Requirement Malformed_Location_Data_Error_Dump {
-  // TODO: This requirement does not describe the error message in detail, because
+  // This requirement does not describe the error message in detail, because
   // the current implementation just dumps the location data as a raw Python dict repr,
   // which is a debug artifact rather than a designed user-facing message.
-  // TODO: consider replacing it with a friendlier message in the future.
+  // TODO: Consider adding a friendlier message to the requirement.
 
   description = '''
     IF an item's location data is not an object, is missing the required "kind"
     field, or specifies an unrecognized "kind",
     THEN the tool shall print at least "LOBSTER Error"
     AND shall exit with a non-zero return code.
-  '''
-  derived_from = [UseCases.Failure_On_Invalid_Input]
-}
-
-req.System_Requirement Unknown_Tracing_Target {
-  description = '''
-    IF a reference in a lobster file points to a tag that does not exist in the set of
-    loaded items,
-    THEN the tool shall report "unknown tracing target <tag>" and exit with non-zero
-    return code.
-  '''
-  derived_from = [UseCases.Failure_On_Invalid_Input]
-}
-
-req.System_Requirement Tracing_Destination_Unversioned {
-  description = '''
-    IF a reference specifies a version but the destination tag is unversioned,
-    THEN the tool shall report "tracing destination <tag> is unversioned" and exit with
-    non-zero return code.
-  '''
-  derived_from = [UseCases.Failure_On_Invalid_Input]
-}
-
-req.System_Requirement Tracing_Destination_Version_Mismatch {
-  description = '''
-    IF a reference specifies a version and the destination tag has a different version,
-    THEN the tool shall report "tracing destination <tag> has version <x> (expected
-    <y>)" and exit with non-zero return code.
   '''
   derived_from = [UseCases.Failure_On_Invalid_Input]
 }

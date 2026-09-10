@@ -116,3 +116,42 @@ req.System_Requirement Zero_Items_Coverage {
   '''
   derived_from = [UseCases.Item_Coverage]
 }
+
+req.System_Requirement Unknown_Tracing_Target {
+  description = '''
+    IF a reference in a lobster file points to a tag that does not exist in the set of
+    loaded items,
+    THEN the tool shall set the message of that [[Item]] to "unknown tracing target <tag>"
+    AND its tracing status to MISSING.
+  '''
+  derived_from = [
+    UseCases.List_Not_Ok_Items,
+    UseCases.Item_Coverage,
+  ]
+}
+
+req.System_Requirement Tracing_Destination_Unversioned {
+  description = '''
+    IF a reference specifies a version but the destination tag is unversioned,
+    THEN the tool shall set the message of that [[Item]] to
+    "tracing destination <tag> is unversioned"
+    AND its tracing status to MISSING.
+  '''
+  derived_from = [
+    UseCases.List_Not_Ok_Items,
+    UseCases.Item_Coverage,
+  ]
+}
+
+req.System_Requirement Tracing_Destination_Version_Mismatch {
+  description = '''
+    IF a reference specifies a version and the destination tag has a different version,
+    THEN the tool shall set the message of that [[Item]] to "tracing destination <tag>
+    has version <x> (expected <y>)"
+    AND its tracing status to MISSING.
+  '''
+  derived_from = [
+    UseCases.List_Not_Ok_Items,
+    UseCases.Item_Coverage,
+  ]
+}

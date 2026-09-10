@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -28,8 +28,10 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_linear_policy(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: core_report_req.Linear_Policy_Support
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Report_Generation_For_Valid_Config_And_Inputs
+        # lobster-trace: core_report_req.Item_Status_Ok_When_Required_References_Present
+        # lobster-trace: core_report_req.Level_Coverage_Percentage_From_Item_Status
         """
         This test checks that the lobster report tool can handle a linear policy
         """
@@ -56,10 +58,10 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_pizza_policy(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Requirement_to_software_Test_Mapping_in_Output
-        # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
-        # lobster-trace: core_report_req.Complex_Multi_Level_Policy_Support
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Report_Generation_For_Valid_Config_And_Inputs
+        # lobster-trace: core_report_req.Item_Status_Ok_When_Required_References_Present
+        # lobster-trace: core_report_req.Level_Coverage_Percentage_From_Item_Status
         """
         This test checks that the lobster report tool can handle a pizza policy
         which consists of 5 levels: system requirements, software requirements,
@@ -92,7 +94,10 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_codebeamer_links(self):
-        # lobster-trace: UseCases.Correct_Item_Data_in_Output_File
+        # lobster-trace: core_report_req.Codebeamer_Reference_Propagated_To_Output
+        # lobster-trace: core_report_req.Report_Generation_For_Valid_Config_And_Inputs
+        # lobster-trace: core_report_req.Item_Status_Ok_When_Required_References_Present
+        # lobster-trace: core_report_req.Level_Coverage_Percentage_From_Item_Status
         """
         This test checks that the report contains
         the Codebeamer items present in the input file.

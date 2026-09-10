@@ -25,7 +25,6 @@ req.Software_Requirement Policy_Builder_Rejects_Self_Trace {
     THEN the "build_tracing_policy" function SHALL raise a fatal LOBSTER_Error
     with the message "cannot trace to yourself".
   '''
-  derived_from = [Invalid_Trace_To]
 }
 
 req.Software_Requirement Policy_Builder_Rejects_Unknown_Trace_To_Target {
@@ -65,28 +64,25 @@ req.Software_Requirement Policy_Builder_Derives_Breakdown_Requirements {
     "breakdown_requirements" as one single-candidate OR-group per other level
     that declares a "trace to" entry pointing at it.
     OTHERWISE, the function SHALL translate each declared "requires" entry
-    into one OR-group of the candidate levels named in that entry.
+    into one OR-group containing the candidate levels named in that entry, in
+    their declared order.
   '''
-  derived_from = [Linear_Policy_Support, Complex_Multi_Level_Policy_Support]
 }
 
 req.Software_Requirement Policy_Builder_Derives_Tracing_Direction_Flags {
   description = '''
-    IF a level declares a "trace to" entry pointing at another level,
-    THEN the "build_tracing_policy" function SHALL set "needs_tracing_up" to
-    true on the declaring level
-    AND SHALL set "needs_tracing_down" to true on the targeted level.
+    FOR each valid "trace to" entry from a level to another level, the
+    "build_tracing_policy" function SHALL append the target name to the declaring
+    level's "traces" list, set "needs_tracing_up" to true on the declaring level,
+    AND set "needs_tracing_down" to true on the targeted level.
   '''
-  derived_from = [Status_Missing, Status_Ok]
 }
 
-req.Software_Requirement Policy_Builder_Level_Order_Independent {
+req.Software_Requirement Policy_Builder_Preserves_Level_Declaration_Order {
   description = '''
-    IF two raw tracing policies contain the same levels with the same
-    "trace to" and "requires" entries, differing only in the order in which
-    the levels are declared,
-    THEN the "build_tracing_policy" function SHALL produce the same result
-    for both.
+    IF a raw tracing policy contains uniquely named levels,
+    THEN the "build_tracing_policy" function SHALL return one level definition
+    for each raw level, in the same order as the raw levels, with each definition
+    retaining the raw level's name and kind.
   '''
-  derived_from = [Linear_Policy_Support, Complex_Multi_Level_Policy_Support]
 }
