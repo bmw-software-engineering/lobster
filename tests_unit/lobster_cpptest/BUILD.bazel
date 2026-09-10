@@ -3,7 +3,10 @@ load("@rules_python//python:defs.bzl", "py_test")
 
 py_test(
     name = "test_cpptest",
-    srcs = ["test_cpptest.py"],
+    srcs = [
+        "test_cpptest.py",
+        "//tests_unit:temp_content_file.py",
+    ],
     data = [
         "//tests_unit/lobster_cpptest/data:cpptest_data_unit",
     ],
