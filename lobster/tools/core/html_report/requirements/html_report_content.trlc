@@ -1,5 +1,6 @@
 package html_req
 import req
+import UseCases
 
 req.System_Requirement Meta_Tag_In_Html_Report {
     description = '''
@@ -7,6 +8,7 @@ req.System_Requirement Meta_Tag_In_Html_Report {
       THEN the file should contain meta tag,
       HAVING attributes "http-equiv" and "content".
     '''
+    derived_from = [UseCases.HTML_Output]
 }
 
 req.System_Requirement Item_Data_Unique {
@@ -15,6 +17,7 @@ req.System_Requirement Item_Data_Unique {
       THEN the tool shall ensure that data is not mixed between items,
       AND each item shall be processed correctly with its unique data.
     '''
+    derived_from = [UseCases.HTML_Output]
 }
 
 req.System_Requirement Tracing_Policy_Image {
@@ -22,14 +25,15 @@ req.System_Requirement Tracing_Policy_Image {
       IF the tool "dot" is available, 
       THEN the tool shall include a visualization of the tracing policy.
     '''
+    derived_from = [UseCases.Show_Tracing_Policy]
 }
 
 req.System_Requirement Only_Given_Input_File_Consumed {
     description = '''
-      IF multiple files are present in the working directory and a specific input file is provided,
-      THEN the tool shall process only the provided input file,
-      AND shall ignore all other files in the working directory.
+      IF the tool is invoked with an explicit input .lobster file
+      THEN the tool shall generate the HTML report from that file.
     '''
+    derived_from = [UseCases.HTML_Output]
 }
 
 req.System_Requirement Processing_Data_With_Justifications {
@@ -38,4 +42,41 @@ req.System_Requirement Processing_Data_With_Justifications {
       THEN the tool shall process the justifications correctly,
       AND shall display the content according to the justifications in the HTML report.
     '''
+    derived_from = [UseCases.List_Findings]
+}
+
+req.System_Requirement HTML_Report_Lists_Lobster_Items {
+    description = '''
+      IF a LOBSTER report contains items,
+      THEN the generated HTML file shall display those items and their associated
+      traceability information.
+    '''
+    derived_from = [
+      UseCases.List_Requirements_to_Tests,
+      UseCases.List_Requirements_without_Tests,
+      UseCases.List_Tests_to_Requirements,
+      UseCases.List_Tests_without_Requirements
+    ]
+}
+
+req.System_Requirement HTML_Report_Uses_Valid_HTML_Syntax {
+    description = '''
+      The tool shall generate an HTML report that adheres to valid HTML syntax.
+    '''
+    derived_from = [UseCases.HTML_Output]
+}
+
+req.System_Requirement HTML_Report_Displays_Findings_Per_Item {
+    description = '''
+      IF an item in the LOBSTER report has one or more findings or tracing messages,
+      THEN the generated HTML file shall display those findings for that item.
+    '''
+    derived_from = [UseCases.List_Findings]
+}
+
+req.System_Requirement HTML_Report_Displays_Coverage_Value {
+    description = '''
+      The generated HTML file shall display the coverage value for each level.
+    '''
+    derived_from = [UseCases.Item_Coverage]
 }

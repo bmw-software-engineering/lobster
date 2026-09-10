@@ -30,6 +30,8 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
             self._data_directory / "report.html")
 
     def test_show_issue_button(self):
+        # lobster-trace: html_req.HTML_Report_Displays_Findings_Per_Item
+        # lobster-trace: html_req.HTML_Report_Lists_Lobster_Items
         """Test the toggle functionality of the Show Issue button."""
         self._test_runner.run_tool_test()
         self.driver.get(self.input_file)
@@ -71,6 +73,8 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
                                      expected_display)
 
     def test_status_buttons(self):
+        # lobster-trace: html_req.HTML_Report_Lists_Lobster_Items
+        # lobster-trace: html_req.HTML_Report_Displays_Coverage_Value
         """Test the status buttons in the HTML report."""
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
@@ -112,6 +116,8 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
                 self.check_hidden_elements(item_classes, status)
 
     def test_git_hash_timestamp(self):
+        # lobster-trace: html_req.HTML_Report_Lists_Lobster_Items
+        # lobster-trace: html_req.Item_Data_Unique
         """Verify git commit timestamps in the report output."""
         self._test_runner.run_tool_test()
         self.driver.get(self.input_file)
@@ -142,6 +148,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
                         self.assertIn(str(expected_time), text)
 
     def test_meta_tag(self):
+        # lobster-trace: html_req.Meta_Tag_In_Html_Report
         """Test to check the presence of meta tag in the HTML report."""
         # lobster-trace: html_req.Meta_Tag_In_Html_Report
         self._test_runner.run_tool_test()
