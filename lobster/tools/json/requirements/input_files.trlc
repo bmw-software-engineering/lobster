@@ -1,55 +1,116 @@
 package json_req
 import req
+import UseCases
 
-req.System_Requirement_Aspect Input_File {
-    description = '''
-      IF a list element given through the command line option "FILE_OR_DIR" is a file
-
-      (Note: Symbolic links shall be resolved.
-             The tool shall not differentiate between symbolic links and true paths.)
-    '''
-    not_tested_reason = req.Reason.Initial_Condition
+req.System_Requirement Default_Input_Is_Current_Directory {
+  description = '''
+    IF neither the config option "inputs" NOR "inputs_from_file" is given,
+    THEN the tool SHALL use the current working directory as the sole input,
+    and SHALL recursively search it for files with the ".json" extension.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
 }
 
-req.System_Requirement_Aspect Input_File_Valid_JSON {
+req.System_Requirement Input_List_Of_Files {
   description = '''
-    AND IF the file content is invalid JSON,
-    THEN the tool shall exit with a non-zero return code.
+    IF the config option "inputs" is given,
+    THEN the tool SHALL process exactly the files and directories listed by that option,
+    and SHALL NOT process any other file that may be present in the current working
+    directory.
   '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
 }
 
-req.System_Requirement_Aspect Input_File_Input_Items {
+req.System_Requirement Input_Directory_Traversal {
   description = '''
-    OTHERWISE the input data
-    SHALL be written in the LOBSTER interchange format
+    IF a list element given through the config option "inputs"
+    (or a line in the file given through the config option "inputs_from_file") is a directory,
+    THEN the tool SHALL recursively search that directory
+    AND SHALL treat every file found with the ".json" extension as an additional input file.
   '''
-  // TODO: This requirement needs more details.
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
 }
 
-req.System_Requirement_Aspect Input_File_To_File {
+req.System_Requirement Inputs_From_File {
   description = '''
-    to the file given in the command line option "out",
-    IF that option is given AND is not an empty string;
+    IF the config option "inputs_from_file" is given,
+    THEN the tool SHALL treat every non-empty, non-comment line of that file as an
+    additional input file or directory, applying the same rules as for elements
+    given through the config option "inputs".
+
+    Note: a comment is any part of a line starting with "#".
   '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
 }
 
-req.System_Requirement_Aspect Input_File_To_Stdout {
+req.System_Requirement Inputs_And_Inputs_From_File_Combined {
   description = '''
-    OTHERWISE to STDOUT.
+    IF both config options "inputs" AND "inputs_from_file" are given,
+    THEN the tool SHALL process the union of the files and directories listed by both options,
+    including files that are listed by both options.
   '''
-}
-
-req.System_Requirement_Aspect Input_File_Output_Error {
-  description = '''
-    IF the operating system fails to fully serialize the output to a file,
-    THEN the tool shall print an error message to STDERR and exit with a non-zero return code.
-  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
 }
 
 req.System_Requirement Input_File_JSON_Extension {
   description = '''
-    IF [[Input_File]]
-    AND IF the file extension is not "json" (case-insensitive),
-    THEN the tool shall print a warning.
+    IF a list element given through the config option "inputs" is a file,
+    AND the file extension is not ".json" (case-insensitive),
+    THEN the tool SHALL print a warning
+    AND SHALL nevertheless process the file as if it were a JSON file.
   '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
 }
+
+req.System_Requirement Invalid_JSON_Content {
+  description = '''
+    IF an input file is empty OR its content cannot be parsed as JSON,
+    THEN the tool SHALL print an error message stating that the file contains invalid JSON to STDERR,
+    SHALL exit with a non-zero return code,
+    AND SHALL NOT write any output.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+

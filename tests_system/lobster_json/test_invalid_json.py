@@ -18,7 +18,7 @@ class InvalidJsonTest(LobsterJsonSystemTestCaseBase):
         Test that lobster-json handles empty JSON files gracefully.
         Expected: tool exits with return code 1 and prints proper error to stderr.
         """
-        # lobster-trace: json_req.Empty_JSON_File_Handling
+        # lobster-trace: json_req.Invalid_JSON_Content
         out_file = "empty_json.lobster"
         input_file = "empty_file.json"
         self._test_runner.cmd_args.out = out_file
@@ -37,6 +37,7 @@ class InvalidJsonTest(LobsterJsonSystemTestCaseBase):
         Test that lobster-json handles invalid JSON content gracefully.
         The tool should exit with code 1 and print error to stderr.
         """
+        # lobster-trace: json_req.Invalid_JSON_Content
         out_file = "invalid_content.lobster"
         input_file = "valid_extension_invalid_json.json"
         self._test_runner.cmd_args.out = out_file
