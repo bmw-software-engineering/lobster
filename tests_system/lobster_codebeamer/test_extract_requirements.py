@@ -84,9 +84,9 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
 
     def test_extract_requirements_query_id_scenarios(self):
         """Validate Codebeamer report generation with mock data using subtests."""
-        # lobster-trace: UseCases.Codebeamer_Summary_in_Output
-        # lobster-trace: UseCases.Wrong_Codebeamer_IDs_in_Output
-        # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_Items_in_Output
+        # lobster-trace: codebeamer_req.Query_Id_Parameter
+        # lobster-trace: codebeamer_req.Paginated_Query_Extraction_Correctness
+        # lobster-trace: codebeamer_req.Empty_Query_Message
 
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out(self.codebeamer_flask.port)
@@ -102,9 +102,9 @@ class LobsterCodebeamerExtractRequirementsTest(LobsterCodebeamerSystemTestCaseBa
 
     def test_extract_requirements_query_string_scenarios(self):
         """Validate Codebeamer report generation with mock data using subtests."""
-        # lobster-trace: UseCases.Codebeamer_Summary_in_Output
-        # lobster-trace: UseCases.Wrong_Codebeamer_IDs_in_Output
-        # lobster-trace: UseCases.Incorrect_Number_of_Codebeamer_Items_in_Output
+        # lobster-trace: codebeamer_req.Query_String_Parameter
+        # lobster-trace: codebeamer_req.Paginated_Query_Extraction_Correctness
+        # lobster-trace: codebeamer_req.Empty_Query_Message
 
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out(self.codebeamer_flask.port)
