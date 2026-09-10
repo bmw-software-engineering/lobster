@@ -29,6 +29,17 @@
     Here `Tests` traces to `Requirements`, which is only declared afterwards. This
     used to be rejected with `unknown item Requirements`; it is now accepted.
 
+* `lobster-ci-report`:
+  - Added `--show-coverage` command line flag which additionally prints the per-level
+    coverage summary after the
+    list of problematic items. Default behavior without the flag is unchanged.
+  - Bazel integration supported:
+    A relative report file path is now resolved against the `BUILD_WORKING_DIRECTORY`
+    environment variable, if set (this variable is set by `bazel run`), so that a path
+    typed relative to the repository root works as expected even though `bazel run`
+    executes the tool from a different working directory. If the variable is not set,
+    the path is resolved relative to the current working directory as before.
+
 * `lobster-codebeamer`:
   Added the API-only `item_to_text` parameter to the configuration object of the
   `lobster_codebeamer` API for populating the LOBSTER item's text property.
