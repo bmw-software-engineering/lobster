@@ -1,0 +1,112 @@
+package core_report_req
+import req
+import UseCases
+
+/* NOTE:
+ * We use the term "set the tracing status" to mean that the tool shall assign a specific
+ * tracing status to an [[Item]] in the output file.
+ * The measureable outcome of setting the tracing status is reflected in the output file.
+ */
+
+req.System_Requirement Item_Status_Ok_When_Required_References_Present {
+  description = '''
+    IF the level of an [[Item]] has a [[Required_Up_Reference]], one or more
+    [[Required_Down_Reference_Group]]s, or both,
+    AND the [[Item]] satisfies its [[Required_Up_Reference]] (if any) and every one
+    of its [[Required_Down_Reference_Group]]s (if any) with an actual reference each,
+    THEN the tool shall set the tracing status of that [[Item]] to "OK".
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Item_Status_Justified_By_Justification {
+  description = '''
+    IF the level of an [[Item]] has a [[Required_Up_Reference]], one or more
+    [[Required_Down_Reference_Group]]s, or both,
+    AND at least one of those is not satisfied by an actual reference,
+    AND the [[Item]]'s unsatisfied references are covered by a justification each (a
+    global justification, or a justification specific to the direction it covers),
+    THEN the tool shall set the tracing status of that [[Item]] to "JUSTIFIED".
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Item_Status_Partial_One_Direction_Satisfied {
+  description = '''
+    IF the level of an [[Item]] has both a [[Required_Up_Reference]] and one or more
+    [[Required_Down_Reference_Group]]s,
+    AND, of the up direction and the down direction, exactly one is fully satisfied
+    (by one or more actual references or a justification) while the other is not
+    satisfied at all,
+    THEN the tool shall set the tracing status of that [[Item]] to "PARTIAL".
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Item_Status_Missing_When_Reference_Absent {
+  description = '''
+    IF the level of an [[Item]] has a [[Required_Up_Reference]], one or more
+    [[Required_Down_Reference_Group]]s, or both,
+    AND neither the up direction (if required) nor the down direction (if required)
+    is satisfied by an actual reference or a justification,
+    THEN the tool shall set the tracing status of that [[Item]] to "MISSING"
+    AND shall record, in the message section of that [[Item]] according to the
+    schema, which required reference is missing.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Item_Status_Downgraded_By_Item_Messages {
+  description = '''
+    IF an [[Item]] carries at least one message that was already present when it was
+    loaded from its source file (for example, a message recorded by the tool that
+    extracted the item),
+    THEN the tool shall set the tracing status of that [[Item]] to "PARTIAL", even
+    when every reference required for its level is present.
+  '''
+  derived_from = [UseCases.Item_Coverage]
+}
+
+req.System_Requirement Level_Coverage_Percentage_From_Item_Status {
+  description = '''
+    IF a level defined in the tracing policy has at least one item,
+    THEN the tool shall set the coverage of that level, in the generated report file,
+    to the number of items in that level with tracing status "OK" or "JUSTIFIED",
+    divided by the total number of items in that level, expressed as a percentage.
+  '''
+  derived_from = [UseCases.Item_Coverage]
+}
+
+req.System_Requirement Zero_Items_Coverage {
+  description = '''
+    IF a level defined in the tracing policy has zero items in the corresponding input
+    file,
+    THEN the tool shall set the coverage for that level to 0.0 in the generated report
+    file.
+  '''
+  derived_from = [UseCases.Item_Coverage]
+}

@@ -28,8 +28,8 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_linear_policy(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: core_report_req.Linear_Policy_Support
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Tracing_Status_From_Configured_Graph
         """
         This test checks that the lobster report tool can handle a linear policy
         """
@@ -56,10 +56,8 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_pizza_policy(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Requirement_to_software_Test_Mapping_in_Output
-        # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
-        # lobster-trace: core_report_req.Complex_Multi_Level_Policy_Support
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Tracing_Status_From_Configured_Graph
         """
         This test checks that the lobster report tool can handle a pizza policy
         which consists of 5 levels: system requirements, software requirements,
@@ -92,7 +90,7 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_codebeamer_links(self):
-        # lobster-trace: UseCases.Correct_Item_Data_in_Output_File
+        # lobster-trace: core_report_req.Codebeamer_Reference_Propagated_To_Output
         """
         This test checks that the report contains
         the Codebeamer items present in the input file.
