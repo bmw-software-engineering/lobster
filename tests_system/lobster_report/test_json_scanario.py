@@ -29,7 +29,7 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
 
     def test_missing_input_file(self):
         # lobster-trace: core_report_req.File_Not_Found
-        missing_file = "non_existent_input.lobster"
+        missing_file = "non_existent_input.conf"
         self._test_runner.cmd_args.lobster_config = missing_file
 
         result = self._test_runner.run_tool_test()
@@ -41,7 +41,7 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(1)
 
     def test_lobster_exception_dump(self):
-        # lobster-trace: core_report_req.Lobster_Exception_Dump_Invalid_Input
+        # lobster-trace: core_report_req.Malformed_Location_Data_Error_Dump
         self._test_runner.declare_input_file(self._data_directory /
                                              "invalid_input.conf")
         self._test_runner.declare_input_file(self._data_directory /

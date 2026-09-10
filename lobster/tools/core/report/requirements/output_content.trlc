@@ -1,0 +1,37 @@
+package core_report_req
+import req
+import UseCases
+
+req.System_Requirement Report_Generation_For_Valid_Config_And_Inputs {
+  description = '''
+    IF the lobster configuration file and every source file it declares are valid,
+    THEN the tool shall exit with return code 0
+    AND shall write one report file containing every level declared in the
+    configuration, with its items and its coverage.
+  '''
+  derived_from = [
+    UseCases.Show_Tracing_Policy,
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Tracing_Policy_Written_To_Output_File {
+  description = '''
+    IF the tool generates a report,
+    THEN the "policy" section of the generated report file shall equal the tracing
+    policy read from the input configuration file.
+  '''
+  derived_from = [UseCases.Show_Tracing_Policy]
+}
+
+req.System_Requirement Codebeamer_Reference_Propagated_To_Output {
+  description = '''
+    IF an input item carries a codebeamer source reference,
+    THEN the generated report shall preserve that reference unchanged for that item.
+  '''
+  derived_from = [UseCases.Show_codebeamer_links]
+}
