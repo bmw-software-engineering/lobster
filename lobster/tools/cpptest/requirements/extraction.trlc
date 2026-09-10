@@ -1,0 +1,49 @@
+package cpptest_req
+import req
+import UseCases
+
+req.System_Requirement All_Recognized_Tests_Extracted {
+  description = '''
+    The tool SHALL generate exactly one LOBSTER item per recognized test case found
+    in the consumed input files, and SHALL exclude any test case whose documentation
+    contains a "NOTRACING" annotation.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Requirement_References_Extracted_As_Tags {
+  description = '''
+    IF a test case's documentation contains one or more "@requirement" tags,
+    given either in the "CB-#nnn" format or as a codebeamer HTTP URL,
+    THEN the tool SHALL add a tracing target for each referenced requirement to the
+    corresponding LOBSTER item.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Test_Without_References_Marked_Orphan {
+  description = '''
+    OTHERWISE (a test case's documentation contains no "@requirement" tag)
+    the tool SHALL still generate a LOBSTER item for that test case, without
+    any tracing target.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
