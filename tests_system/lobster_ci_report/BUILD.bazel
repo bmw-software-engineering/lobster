@@ -1,0 +1,32 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+# BUILD.bazel
+# gazelle:exclude __init__.py
+
+py_library(
+    name = "lobster_ci_report",
+    srcs = [
+        "lobster_ci_report_system_test_case_base.py",
+        "lobster_ci_report_test_runner.py",
+    ],
+    data = [
+        "//tests_system/lobster_ci_report/data:ci_report_data_system",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//lobster/tools/core/ci_report",
+        "//tests_system",
+    ],
+)
+
+test_suite(
+    name = "lobster_ci_report_tests",
+)
+
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [":lobster_ci_report"],
+) for src in glob(["test_*.py"])]
