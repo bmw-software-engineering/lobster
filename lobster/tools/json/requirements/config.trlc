@@ -1,0 +1,78 @@
+package json_req
+import req
+import UseCases
+
+req.System_Requirement Config_Option_Mandatory {
+  description = '''
+    IF the command line option "--config" is not given,
+    THEN the tool SHALL print a usage error to STDERR
+    AND SHALL exit with return code 2.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Config_File_Not_Found {
+  description = '''
+    IF the file given through the command line option "--config" does not exist,
+    THEN the tool SHALL print an error message stating that the config file was not found
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Config_File_Invalid_YAML {
+  description = '''
+    IF the file given through the command line option "--config" contains invalid YAML syntax,
+    THEN the tool SHALL terminate with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Config_File_Mandatory_Parameter_Missing {
+  description = '''
+    IF the config file does not contain the mandatory parameter "tag_attribute",
+    THEN the tool SHALL print an error message naming the missing parameter
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Config_File_Unsupported_Key {
+  description = '''
+    IF the config file contains a key that is not a supported configuration parameter of
+    the tool,
+    THEN the tool SHALL terminate with a non-zero return code
+    AND SHALL NOT produce output.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
