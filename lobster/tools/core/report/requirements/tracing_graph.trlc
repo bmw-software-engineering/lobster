@@ -1,0 +1,38 @@
+package core_report_req
+import req
+import UseCases
+
+req.System_Requirement Tracing_Status_From_Configured_Graph {
+  description = '''
+    IF the tracing policy configuration declares any number of levels, connected by
+    "trace to" and "requires" declarations, forming any graph of up and down tracing
+    relationships between those levels,
+    THEN the tool shall compute the tracing status of every item, and the coverage of
+    every level, using only that configured graph.
+    
+    Note: This holds regardless of the kind (requirements, implementation, or
+    activity) of any level.
+  '''
+  derived_from = [
+    UseCases.Show_Tracing_Policy,
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Report_Loads_Configured_Sources_Per_Level {
+  description = '''
+    IF the tracing policy configuration declares one or more source files for a level,
+    THEN the tool shall load, for that level, exactly the items contained in those
+    declared source files
+    AND shall merge their items into one set of items for that level, each retaining
+    exactly the data declared for it in its own source file.
+
+    Note: The testable behavior of this requirement is that the generated LOBSTER output
+    file will contain exactly the items from the configured source files for each level.
+  '''
+  derived_from = [UseCases.Show_Tracing_Policy]
+}
