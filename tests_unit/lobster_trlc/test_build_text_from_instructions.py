@@ -38,6 +38,7 @@ class TextBuildingTest(TestCase):
         self._tuple_aggregate_mock.typ.name = "flute"
 
     def test_build_text_from_instructions(self):
+        # lobster-trace: trlc_req.Build_Text_Concatenates_Instructions
         instructions = [
             ConstantInstruction("piano"),
             ConstantInstruction("guitar"),
@@ -56,6 +57,7 @@ class TextBuildingTest(TestCase):
         self.assertEqual(result, "pianoguitarviolin45.5")
 
     def test_build_text_with_missing_field(self):
+        # lobster-trace: trlc_req.Build_Text_Failure_Modes_Raise_Errors
         instruction = FieldInstruction("music")
         self._tuple_aggregate_mock.to_python_object.return_value = {"noise": "loud"}
         with self.assertRaises(TupleComponentError) as e:
@@ -67,6 +69,7 @@ class TextBuildingTest(TestCase):
         self.assertIs(e.exception.tuple_aggregate, self._tuple_aggregate_mock)
 
     def test_build_text_with_empty_instructions(self):
+        # lobster-trace: trlc_req.Build_Text_Failure_Modes_Raise_Errors
         instructions = []
         self._tuple_aggregate_mock.to_python_object.return_value = {"hi": "there"}
         with self.assertRaises(ValueError):
@@ -74,6 +77,7 @@ class TextBuildingTest(TestCase):
 
     def test_invalid_instruction_type(self):
         """Test that an invalid instruction type raises a ValueError."""
+        # lobster-trace: trlc_req.Build_Text_Failure_Modes_Raise_Errors
         instruction = Instruction(typ="Electric", value="Engine")
         with self.assertRaises(ValueError) as ctx:
             build_text_from_instructions([instruction], self._tuple_aggregate_mock)
@@ -84,6 +88,7 @@ class TextBuildingTest(TestCase):
 
     def test_empty_tuple_data(self):
         """Test that an invalid instruction type raises a ValueError."""
+        # lobster-trace: trlc_req.Build_Text_Failure_Modes_Raise_Errors
         instruction = ConstantInstruction(value="Otto")
         self._tuple_aggregate_mock.to_python_object.return_value = {}
         with self.assertRaises(ValueError) as ctx:
