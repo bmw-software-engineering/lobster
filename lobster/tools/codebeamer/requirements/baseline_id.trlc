@@ -1,0 +1,68 @@
+package codebeamer_req
+import req
+import UseCases
+
+req.System_Requirement Baseline_Id_Mutually_Exclusive_With_Import_Tagged {
+  description = '''
+    IF the yaml config file options "baseline_id" and "import_tagged" are both
+    present,
+    THEN the tool shall print an error message identifying the conflict to STDERR
+    AND shall exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Baseline_Id_Requires_Cbql_Query_String {
+  description = '''
+    IF the yaml config file option "baseline_id" is present,
+    AND the option "import_query" is not a cbQL query string (for example, it is a
+    numeric report id),
+    THEN the tool shall print an error message identifying the conflict to STDERR
+    AND shall exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Baseline_Id_Must_Be_Positive {
+  description = '''
+    IF the yaml config file option "baseline_id" is present,
+    AND its value is not a positive integer (for example, it is zero or negative),
+    THEN the tool shall print an error message to STDERR
+    AND shall exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Baseline_Id_Appended_To_Query_String_Request {
+  description = '''
+    IF the yaml config file option "baseline_id" is present,
+    AND the option "import_query" is a cbQL query string,
+    THEN the tool shall append the "baselineId" parameter, with the configured
+    value, to every request sent to the codebeamer server for that query.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
