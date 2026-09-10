@@ -27,7 +27,6 @@ class InputFromFilesAndInputsTest(LobsterTrlcSystemTestCaseBase):
         Test that inputs from files and inputs list can be processed together.
         """
         # lobster-trace: trlc_req.Input_list_Of_File_And_Inputs_From_File
-        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
         OUT_FILE = "input_from_files_and_inputs.lobster"
         for extra_file in (False, True):
             with self.subTest(f"{extra_file=}"):
@@ -53,7 +52,8 @@ class InputFromFilesAndInputsTest(LobsterTrlcSystemTestCaseBase):
         """
         Test that duplicates in inputs from files and inputs list cause an error
         """
-        # lobster-trace: trlc_req.Duplicate_Input_list_Of_File_And_Inputs_From_File
+        # lobster-trace: trlc_req.Duplicate_Definition_Aborts_Processing
+        # lobster-trace: trlc_req.Input_list_Of_File_And_Inputs_From_File
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "input_from_files_and_inputs_duplicate_contents.txt",
             self._data_directory)

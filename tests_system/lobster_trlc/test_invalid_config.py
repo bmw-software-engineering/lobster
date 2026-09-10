@@ -13,8 +13,7 @@ class InvalidConfigTest(LobsterTrlcSystemTestCaseBase):
 
     def test_nonconformant_yaml(self):
         """Test that non-conformant YAML file results in error."""
-        # lobster-trace: UseCases.TRLC_Config_File_Syntax_Error
-        # lobster-trace: UseCases.TRLC_Config_File_Key_Error
+        # lobster-trace: trlc_req.Config_File_Invalid_Schema
         self._test_runner.cmd_args.out = "will-not-be-generated.lobster"
         self.assertFalse(
             self._test_runner.config_file_data.conversion_rules,
@@ -36,7 +35,7 @@ class MissingConfigTest(LobsterTrlcSystemTestCaseBase):
         self._test_runner = self.create_test_runner_without_config_file_data()
 
     def test_missing_config_parameter(self):
-        # lobster-trace: UseCases.TRLC_Config_File_Missing
+        # lobster-trace: trlc_req.Config_Option_Mandatory
         out_file = "missing_config_file.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
@@ -63,7 +62,7 @@ class MissingConfigTest(LobsterTrlcSystemTestCaseBase):
         asserter.assertExitCode(2)
 
     def test_missing_config_file(self):
-        # lobster-trace: UseCases.TRLC_Config_File_Missing
+        # lobster-trace: trlc_req.Config_File_Not_Found
         out_file = "missing_config_file.lobster"
         self._test_runner.cmd_args.out = out_file
         self._test_runner.cmd_args.config = str(

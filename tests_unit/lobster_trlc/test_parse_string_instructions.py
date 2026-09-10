@@ -8,6 +8,7 @@ from lobster.tools.trlc.text_generation import (
 
 class InstructionParsingTest(TestCase):
     def test_parse_text_generator(self):
+        # lobster-trace: trlc_req.Parse_Instructions_Extracts_Field_Placeholders
         text = "Hello $(name), your age is $(age) and ID is " \
                "$(user_id_part1)$(user_id_part2)!"
         expected = [
@@ -24,12 +25,14 @@ class InstructionParsingTest(TestCase):
         self.assertListEqual(result, expected)
 
     def test_parse_text_generator_with_no_fields(self):
+        # lobster-trace: trlc_req.Parse_Instructions_Extracts_Field_Placeholders
         text = "Just a constant text without fields."
         expected = [ConstantInstruction(text)]
         result = parse_instructions(text)
         self.assertListEqual(result, expected)
 
     def test_parse_text_generator_only_fields(self):
+        # lobster-trace: trlc_req.Parse_Instructions_Extracts_Field_Placeholders
         text = "$(a)$(bcd)$(e123)$(FG_HI)"
         expected = [
             FieldInstruction("a"),
