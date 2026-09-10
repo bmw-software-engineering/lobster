@@ -24,25 +24,34 @@ from tests_unit.lobster_trlc.test_to_string_rules import TrlcToStringDataTestCas
 
 class ItemWrapperTest(TrlcToStringDataTestCase):
     def test_get_field_existing(self):
+        # lobster-trace: trlc_req.Item_Wrapper_Reads_Existing_Fields
 
-        def assertFieldIsNotNone(item_wrapper: ItemWrapper, field_name: str):
-            self.assertTrue(item_wrapper.get_field(field_name))
-            self.assertTrue(item_wrapper.get_field_raw(field_name))
-            self.assertTrue(item_wrapper.get_field_value_or_none(field_name))
+        def assert_field_matches_record(item_wrapper, record_object, field_name):
+            raw_field = record_object.field[field_name]
+            self.assertEqual(
+                item_wrapper.get_field(field_name),
+                record_object.to_python_dict()[field_name],
+            )
+            self.assertIs(item_wrapper.get_field_raw(field_name), raw_field)
+            self.assertEqual(
+                item_wrapper.get_field_value_or_none(field_name),
+                raw_field.to_python_object(),
+            )
 
         for record_object in self._trlc_data_provider.get_record_objects():
             item_wrapper = ItemWrapper(record_object)
-            for field_name in ("fast_boat", "fast_boat"):
-                assertFieldIsNotNone(item_wrapper, field_name)
+            for field_name in ("fast_boat", "large_boat"):
+                assert_field_matches_record(item_wrapper, record_object, field_name)
             if record_object.name == "TONY":
                 self.assertIsNone(item_wrapper.get_field("berthed_ships"))
                 self.assertIsNone(item_wrapper.get_field_value_or_none("berthed_ships"))
                 # the raw field should still exist, even if the value is None
                 self.assertIsNotNone(item_wrapper.get_field_raw("berthed_ships"))
             else:
-                assertFieldIsNotNone(item_wrapper, "berthed_ships")
+                assert_field_matches_record(item_wrapper, record_object, "berthed_ships")
 
     def test_get_field_non_existing(self):
+        # lobster-trace: trlc_req.Item_Wrapper_Missing_Field_Behavior
         for record_object in self._trlc_data_provider.get_record_objects():
             item_wrapper = ItemWrapper(record_object)
             with self.assertRaises(RecordObjectComponentError):
