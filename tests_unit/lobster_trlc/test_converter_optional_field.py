@@ -9,6 +9,7 @@ class OptionalFieldTest(TrlcOptionalFieldTestCase):
 
     def test_optional_field_to_string(self):
         """Tests that an optional field is ignored if not set."""
+        # lobster-trace: trlc_req.Optional_Field_Omitted_When_Not_Set
 
         fields = ["field1", "field2", "field3", "field4"]
 

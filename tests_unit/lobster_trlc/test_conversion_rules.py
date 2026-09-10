@@ -39,6 +39,7 @@ class ConversionRulesTest(TestCase):
 
     def test_empty_conversion_rule_lookup(self):
         """Tests that an empty list of conversion rules results in an empty lookup."""
+        # lobster-trace: trlc_req.Conversion_Rule_Lookup_Empty_When_No_Rules
         result = build_record_type_to_conversion_rule_lookup(
             conversion_rules=[],
             children_lookup=build_children_lookup(self._trlc_data_provider.symbol_table),
@@ -52,6 +53,7 @@ class ConversionRulesTest(TestCase):
 
     def test_one_conversion_rule_for_all(self):
         """Tests that a single conversion rule is applied to all record types"""
+        # lobster-trace: trlc_req.Conversion_Rule_Lookup_Propagates_To_All_Derived_Types
         extraction_rule = ConversionRule(
             record_type="Level1",
             package="hierarchy_tree_test",
@@ -79,6 +81,7 @@ class ConversionRulesTest(TestCase):
         """Tests that the correct conversion rule is applied to each record type in a
            scenario where one TRLC record type is derived from another.
         """
+        # lobster-trace: trlc_req.Conversion_Rule_Lookup_More_Specific_Rule_Wins
         top_rule = ConversionRule(
             record_type="Level1",
             package="hierarchy_tree_test",
@@ -144,6 +147,7 @@ class ConversionRulesTest(TestCase):
         """Tests that a conversion rule is not propagated to derived types if
            'applies_to_derived_types' is set to False.
         """
+        # lobster-trace: trlc_req.Conversion_Rule_Lookup_No_Propagation_When_Disabled
         extraction_rule = ConversionRule(
             record_type="Level1",
             package="hierarchy_tree_test",
@@ -165,6 +169,7 @@ class ConversionRulesTest(TestCase):
 
     def test_record_type_child_lookup(self):
         """Tests that the parent-child lookup of TRLC record types is built correctly."""
+        # lobster-trace: trlc_req.Children_Lookup_Built_From_Type_Hierarchy
         children_lookup = build_children_lookup(self._trlc_data_provider.symbol_table)
         for n_typ in self._trlc_data_provider.get_record_types():
             children_names = {

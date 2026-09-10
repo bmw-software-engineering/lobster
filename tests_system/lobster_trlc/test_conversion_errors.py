@@ -7,7 +7,7 @@ from tests_system.lobster_trlc.lobster_system_test_case_base import \
 class ConversionRuleErrorTest(LobsterTrlcSystemTestCaseBase):
     def test_field_does_not_exist(self):
         """Test that an error is raised when field does not exist in the record type."""
-        # lobster-trace: UseCases.TRLC_Config_File_Key_Error
+        # lobster-trace: trlc_req.Missing_Description_Field_Error
         test_runner = self.create_test_runner()
         test_runner.cmd_args.out = "will-not-be-generated.lobster"
         rules = {
@@ -35,7 +35,7 @@ class ConversionRuleErrorTest(LobsterTrlcSystemTestCaseBase):
 
     def test_to_string_missing(self):
         """Test that a missing to-string rule causes an error"""
-        # lobster-trace: UseCases.TRLC_Config_File_Key_Error
+        # lobster-trace: trlc_req.Missing_To_String_Rule_Error
         test_runner = self.create_test_runner()
         test_runner.cmd_args.out = "will-not-be-generated.lobster"
         test_runner.config_file_data.conversion_rules = [
@@ -70,7 +70,7 @@ class ConversionRuleErrorTest(LobsterTrlcSystemTestCaseBase):
 
     def test_tuple_member_does_not_exist(self):
         """Test that a to_string rule causes error if a tuple member does not exist."""
-        # lobster-trace: UseCases.TRLC_Config_File_Key_Error
+        # lobster-trace: trlc_req.To_String_Rule_All_Attempts_Failed_Error
         test_runner = self.create_test_runner()
         test_runner.cmd_args.out = "will-not-be-generated.lobster"
         test_runner.config_file_data.conversion_rules = [
@@ -108,7 +108,7 @@ class ConversionRuleErrorTest(LobsterTrlcSystemTestCaseBase):
 
     def test_too_many_conversion_rules(self):
         """Test that orphan conversion rules are detected."""
-        # lobster-trace: UseCases.TRLC_Config_File_non_existent_conversion_rules
+        # lobster-trace: trlc_req.Orphan_Conversion_Rule_Error
         test_runner = self.create_test_runner()
         test_runner.cmd_args.out = "will-not-be-generated.lobster"
         test_runner.config_file_data.conversion_rules = [
