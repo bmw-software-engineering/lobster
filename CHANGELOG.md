@@ -7,6 +7,10 @@
 
 * `Python support`: Drop support for Python versions below 3.10.
 
+* Reworked the requirements and the way use cases are traced.
+  This could impact your tool qualification strategy for ISO 26262.
+  Please check carefully.
+
 * `lobster-trlc`:
   - Added support for experimental feature TRLC Markdown which takes
   `.trlc.md` as a valid input file extension.
