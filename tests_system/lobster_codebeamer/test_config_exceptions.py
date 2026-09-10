@@ -2,6 +2,7 @@ import unittest
 from tests_system.lobster_codebeamer.lobster_codebeamer_system_test_case_base import (
     LobsterCodebeamerSystemTestCaseBase)
 from tests_system.asserter import Asserter
+from tests_system.testrunner import TestRunner
 from tests_system.lobster_codebeamer.mock_server_setup import get_mock_app
 
 
@@ -18,6 +19,82 @@ class LobsterCodebeamerConfigExceptionsTest(LobsterCodebeamerSystemTestCaseBase)
         self.codebeamer_flask.reset()
         self._test_runner = self.create_test_runner()
         self._test_runner.config_file_data.verify_ssl = False
+
+    def test_missing_default_config_file_raises_error(self):
+        # lobster-trace: codebeamer_req.Default_Config_File_Used
+        # GIVEN no config path is specified and the default config file does not exist
+        self._test_runner.cmd_args.config = None
+
+        # WHEN the tool is run
+        # (base class call, because the derived runner would create the file)
+        completed_process = TestRunner.run_tool_test(self._test_runner)
+        asserter = Asserter(self, completed_process, self._test_runner)
+
+        # THEN the tool reports the default config file and exits with a non-zero code
+        expected_file_name = str(
+            self._test_runner.working_dir / 'codebeamer-config.yaml')
+        asserter.assertStdErrText(
+            f"lobster-codebeamer: File '{expected_file_name}' "
+            "not found.\n"
+        )
+        asserter.assertExitCode(1)
+
+    def test_missing_specified_config_file_raises_error(self):
+        # lobster-trace: codebeamer_req.Config_File_Path_Error
+        # GIVEN the specified config file does not exist
+        self._test_runner.cmd_args.config = "does-not-exist.yaml"
+
+        # WHEN the tool is run
+        # (base class call, because the derived runner would create the file)
+        completed_process = TestRunner.run_tool_test(self._test_runner)
+        asserter = Asserter(self, completed_process, self._test_runner)
+
+        # THEN the tool prints an error message and exits with a non-zero code
+        asserter.assertStdErrText(
+            f"lobster-codebeamer: File '{self._test_runner.cmd_args.config}' "
+            "not found.\n"
+        )
+        asserter.assertExitCode(1)
+
+    def test_config_file_is_directory_raises_error(self):
+        # lobster-trace: codebeamer_req.Config_File_Path_Error
+        # GIVEN the config file argument is a directory
+        self._test_runner.cmd_args.config = str(self._test_runner.working_dir)
+
+        # WHEN the tool is run
+        # (base class call, because the derived runner would create the file)
+        completed_process = TestRunner.run_tool_test(self._test_runner)
+        asserter = Asserter(self, completed_process, self._test_runner)
+
+        # THEN the tool prints an error message and exits with a non-zero code
+        # Note: The error message depends on the operating system.
+        message_1 = f"lobster-codebeamer: Path '{self._test_runner.cmd_args.config}' " \
+                    "is a directory, but a file was expected.\n"
+        message_2 = f"lobster-codebeamer: File '{self._test_runner.cmd_args.config}' " \
+                    "not found.\n"
+        if (completed_process.stderr != message_1) \
+                and (completed_process.stderr != message_2):
+            self.fail(f"Unexpected STDERR: {completed_process.stderr}")
+        asserter.assertExitCode(1)
+
+    def test_unsupported_config_key_raises_error(self):
+        # lobster-trace: codebeamer_req.Unsupported_Config_Keys_Rejected
+        # lobster-trace: codebeamer_req.Default_Config_File_Used
+        # GIVEN the config file contains an unsupported key
+        self._test_runner.cmd_args.config = None
+        config_path = self._test_runner.working_dir / "codebeamer-config.yaml"
+        config_path.write_text(
+            "unsupported_key: value-of-unsupported-key\n",
+            encoding="UTF-8",
+        )
+
+        # WHEN the tool is run
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+
+        # THEN the tool identifies the unsupported key and exits with a non-zero code
+        asserter.assertInStdErr("Unsupported config keys: unsupported_key.")
+        asserter.assertExitCode(1)
 
     def test_empty_import_query_raises_error(self):
         # lobster-trace: codebeamer_req.No_Source_Parameter

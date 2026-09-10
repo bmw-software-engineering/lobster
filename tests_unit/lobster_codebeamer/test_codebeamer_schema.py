@@ -38,6 +38,7 @@ class CbConfigTest(unittest.TestCase):
         """
         Tests that FileNotFoundError is raised if config file is missing.
         """
+        # lobster-trace: codebeamer_req.Load_Config_Missing_File_Raises
         missing_config_path = "missing-config.yaml"
         self.assertFalse(
             isfile(missing_config_path),
@@ -51,16 +52,17 @@ class CbConfigTest(unittest.TestCase):
         """
         Tests that FileNotFoundError is raised if path is a directory instead of a file.
         """
+        # lobster-trace: codebeamer_req.Load_Config_Directory_Raises
         real_path = str(Path(__file__).parent)
         self.assertTrue(
             isdir(real_path),
             "Invalid test setup: path shall be a real directory!",
         )
-        # Note: PermissionError is raised on Windows, IsADirectoryError on other OS
-        with self.assertRaises((IsADirectoryError, PermissionError)):
+        with self.assertRaises(OSError):
             load_config(real_path)
 
     def test_missing_config_field(self):
+        # lobster-trace: codebeamer_req.Parse_Config_Data_Requires_Import_Tagged_Or_Import_Query
         with self.assertRaises(KeyError) as context:
             parse_config_data(
                 {
@@ -73,7 +75,23 @@ class CbConfigTest(unittest.TestCase):
             str(context.exception),
         )
 
+    def test_empty_import_query_treated_as_missing(self):
+        # lobster-trace: codebeamer_req.Parse_Config_Data_Requires_Import_Tagged_Or_Import_Query
+        with self.assertRaises(KeyError) as context:
+            parse_config_data(
+                {
+                    'root': 'https://example.com',
+                    'schema': 'Requirement',
+                    'import_query': '',
+                }
+            )
+        self.assertIn(
+            "Either import_tagged or import_query must be provided!",
+            str(context.exception),
+        )
+
     def test_unsupported_config_keys(self):
+        # lobster-trace: codebeamer_req.Parse_Config_Data_Rejects_Unsupported_Keys
         with self.assertRaises(KeyError) as context:
             parse_config_data(
                 {
@@ -85,6 +103,7 @@ class CbConfigTest(unittest.TestCase):
         self.assertIn("Unsupported config keys", str(context.exception))
 
     def test_cb_config_without_credentials_no_netrc(self):
+        # lobster-trace: codebeamer_req.Update_Authentication_Parameters_Requires_Some_Credentials
         for user in (None, "some-user"):
             with self.subTest(user=user):
                 auth_config = AuthenticationConfig(
@@ -109,6 +128,7 @@ class CbConfigTest(unittest.TestCase):
         # Both subtests verify that the authentication data is not modified.
         # The second subtest uses a netrc file that does really exist, but since a token
         # is given the netrc file shall be ignored.
+        # lobster-trace: codebeamer_req.Update_Authentication_Parameters_Explicit_Credentials_Skip_Netrc
         for netrc_path in ("file-does-not-exist.netrc", self._real_netrc_file):
             with self.subTest(netrc_path=netrc_path):
                 auth_config = AuthenticationConfig(
@@ -123,6 +143,7 @@ class CbConfigTest(unittest.TestCase):
                 self.assertIsNone(auth_config.password)
 
     def test_cb_config_with_user_pass(self):
+        # lobster-trace: codebeamer_req.Update_Authentication_Parameters_Explicit_Credentials_Skip_Netrc
         for netrc_path in ("file-does-not-exist.netrc", self._real_netrc_file):
             with self.subTest(netrc_path=netrc_path):
                 auth_config = AuthenticationConfig(
@@ -137,6 +158,7 @@ class CbConfigTest(unittest.TestCase):
                 self.assertEqual(auth_config.password, "secret")
 
     def test_cb_config_with_netrc(self):
+        # lobster-trace: codebeamer_req.Update_Authentication_Parameters_Falls_Back_To_Netrc
         auth_config = AuthenticationConfig(
             token=None,
             user=None,
@@ -149,6 +171,7 @@ class CbConfigTest(unittest.TestCase):
         self.assertIsNone(auth_config.token)
 
     def test_cb_config_with_netrc_and_sub_root(self):
+        # lobster-trace: codebeamer_req.Update_Authentication_Parameters_Falls_Back_To_Netrc
         auth_config = AuthenticationConfig(
             token=None,
             user=None,
@@ -161,6 +184,7 @@ class CbConfigTest(unittest.TestCase):
         self.assertIsNone(auth_config.token)
 
     def test_cb_config_netrc_missing_machine_entry(self):
+        # lobster-trace: codebeamer_req.Update_Authentication_Parameters_Netrc_Missing_Machine_Raises
         auth_config = AuthenticationConfig(
             token=None,
             user=None,
