@@ -1,0 +1,17 @@
+package html_req
+import req
+import UseCases
+
+req.System_Requirement HTML_Report_Displays_Git_Commit_Information {
+    description = '''
+      When an item in the input report has a Git commit identifier whose metadata
+      is available, the generated HTML report shall display that identifier as
+      the build reference and display the commit's committer timestamp queried
+      from Git, converted to UTC.
+
+      Note: The committer timestamp records when this commit object was created
+      and may differ from the author timestamp, which records when the changes
+      were originally authored.
+    '''
+    derived_from = [UseCases.Item_GitHub_Source]
+}

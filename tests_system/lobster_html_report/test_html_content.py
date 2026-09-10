@@ -35,14 +35,9 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
 
     def test_item_unique_data(self):
         # lobster-trace: html_req.Item_Data_Unique
-        # lobster-trace: UseCases.Correct_Item_Data
-        # lobster-trace: UseCases.Coverage_in_output
-        # lobster-trace: UseCases.HTML_file_generation
-        # lobster-trace: UseCases.Covered_Requirement_list_in_HTML_file
-        # lobster-trace: UseCases.List_of_tests_Not_covering_requirements_in_HTML_file
-        # lobster-trace: UseCases.List_of_tests_covering_requirements_in_HTML_file
-        # lobster-trace: UseCases.Source_location_in_output
-        # lobster-trace: UseCases.Missing_tracing_policy_violation_in_output
+        # lobster-trace: html_req.HTML_Report_Lists_Lobster_Items
+        # lobster-trace: html_req.HTML_Report_Displays_Coverage_Value
+        # lobster-trace: html_req.HTML_Report_Displays_Findings_Per_Item
         """
         This test checks that the data is not mixed
         and unique data in each item processed correctly
@@ -79,12 +74,9 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_complex_tracing_policy_data(self):
-        # lobster-trace: UseCases.Correct_Item_Data
-        # lobster-trace: UseCases.Coverage_in_output
-        # lobster-trace: UseCases.HTML_file_generation
-        # lobster-trace: UseCases.List_of_tests_covering_requirements_in_HTML_file
-        # lobster-trace: UseCases.Covered_Requirement_list_in_HTML_file
-        # lobster-trace: UseCases.Source_location_in_output
+        # lobster-trace: html_req.Item_Data_Unique
+        # lobster-trace: html_req.HTML_Report_Lists_Lobster_Items
+        # lobster-trace: html_req.HTML_Report_Displays_Coverage_Value
         """
         This test checks that the data created using complex tracing
         policy is processed correctly.
@@ -122,12 +114,9 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
 
     def test_multiple_input_files_in_working_directory(self):
         # lobster-trace: html_req.Only_Given_Input_File_Consumed
-        # lobster-trace: UseCases.Coverage_in_output
-        # lobster-trace: UseCases.HTML_file_generation
-        # lobster-trace: UseCases.Covered_Requirement_list_in_HTML_file
-        # lobster-trace: UseCases.Correct_Item_Data
-        # lobster-trace: UseCases.List_of_tests_covering_requirements_in_HTML_file
-        # lobster-trace: UseCases.Source_location_in_output
+        # lobster-trace: html_req.Item_Data_Unique
+        # lobster-trace: html_req.HTML_Report_Lists_Lobster_Items
+        # lobster-trace: html_req.HTML_Report_Displays_Coverage_Value
         """
         This test checks that the tool shall process only the provided input file
         and ignore all other files in the working directory.
@@ -168,12 +157,10 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
 
     def test_html_content_with_multiple_status(self):
         # lobster-trace: html_req.Processing_Data_With_Justifications
-        # lobster-trace: UseCases.Correct_Item_Data
-        # lobster-trace: UseCases.Coverage_in_output
-        # lobster-trace: UseCases.Source_location_in_output
-        # lobster-trace: UseCases.HTML_file_generation
-        # lobster-trace: UseCases.Not_covered_Requirement_list_in_Output
-        # lobster-trace: UseCases.Missing_tracing_policy_violation_in_output
+        # lobster-trace: html_req.HTML_Report_Displays_Findings_Per_Item
+        # lobster-trace: html_req.Item_Data_Unique
+        # lobster-trace: html_req.HTML_Report_Lists_Lobster_Items
+        # lobster-trace: html_req.HTML_Report_Displays_Coverage_Value
         """
         This test checks that the tool processes data containing the items
         with multiple status like ok, missing, partial, justified
@@ -211,15 +198,12 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_codebeamer_links(self):
-        # lobster-trace: UseCases.Source_location_in_output
-        # lobster-trace: UseCases.Correct_Item_Data
-        # lobster-trace: UseCases.Coverage_in_output
-        # lobster-trace: UseCases.HTML_file_generation
-        # lobster-trace: UseCases.Covered_Requirement_list_in_HTML_file
+        # lobster-trace: core_html_report_req.Clickable_Codebeamer_Item
+        # lobster-trace: core_html_report_req.Codebeamer_Item_Name
         """
-        This test checks that the HTML report has codebeamer links
+        This test checks that the HTML report has codebeamer links.
         It also covers that the correct codebeamer links i.e codebeamer source location
-        is included in output
+        is included in output.
         """
         output_filename = "codebeamer_links.html"
         inputfile = self._data_directory / "codebeamer_links.lobster"
@@ -253,14 +237,10 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_message_in_item(self):
-        # lobster-trace: UseCases.Correct_Item_Data
-        # lobster-trace: UseCases.Coverage_in_output
-        # lobster-trace: UseCases.HTML_file_generation
-        # lobster-trace: UseCases.Covered_Requirement_list_in_HTML_file
-        # lobster-trace: UseCases.List_of_tests_Not_covering_requirements_in_HTML_file
-        # lobster-trace: UseCases.List_of_tests_covering_requirements_in_HTML_file
-        # lobster-trace: UseCases.Source_location_in_output
-        # lobster-trace: UseCases.Missing_tracing_policy_violation_in_output
+        # lobster-trace: html_req.Item_Data_Unique
+        # lobster-trace: html_req.HTML_Report_Displays_Findings_Per_Item
+        # lobster-trace: html_req.HTML_Report_Lists_Lobster_Items
+        # lobster-trace: html_req.HTML_Report_Displays_Coverage_Value
         """
         This test checks the input .lobster file has a content in message attributes
         and HTML tool correctly processes it and write correct output file.
@@ -297,13 +277,11 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_text_in_html_report(self):
-        # lobster-trace: UseCases.Correct_Item_Data
-        # lobster-trace: UseCases.HTML_file_generation
-        """Checks that html report contains text field.
-        NOTE: This test data is not generated by lobster tools, but this
-        feature is used by external tools/scripts. This test uses dummy data
-        with a text field.
-        """
+        """Checks that HTML report displays the text field"""
+        # lobster-trace: html_req.Item_Data_Unique
+
+        # GIVEN an input file with LOBSTER items that have got a value for their "text"
+        # property
         output_filename = "text_pizza.html"
         inputfile = self._data_directory / "report_text_pizza.lobster"
 
@@ -317,6 +295,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         self.test_runner.cmd_args.out = output_filename
         self.test_runner.cmd_args.lobster_report = str(inputfile)
 
+        # WHEN the tool is run with the input file
         completed_process = self.test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self.test_runner)
 
@@ -329,6 +308,7 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
 
         asserter.assertStdOutText(expected_stdout)
         asserter.assertExitCode(0)
+        # THEN the HTML output file shall show the text field of the LOBSTER items.
         asserter.assertOutputFiles()
 
 
