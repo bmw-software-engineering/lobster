@@ -15,6 +15,7 @@ class BuildMapTest(TrlcHierarchyDataTestCase):
 
     def test_build_map(self):
         """Tests that the mapping from tuple types to ToStringRules entities is built correctly."""
+        # lobster-trace: trlc_req.To_String_Rules_Map_Built_From_Symbol_Table
         to_string_rule_sets=[
             ToStringRules(
                 tuple_type_name="TwoValues",

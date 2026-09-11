@@ -1,0 +1,51 @@
+package trlc_req
+import req
+import UseCases
+
+req.System_Requirement Config_Option_Mandatory {
+  description = '''
+    IF the command line option "--config" is not given,
+    THEN the tool SHALL print a usage error to STDERR
+    AND SHALL exit with return code 2.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Config_File_Not_Found {
+  description = '''
+    IF the file given through the command line option "--config" does not exist,
+    THEN the tool SHALL print an error message stating that the file was not found
+    to STDERR
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Config_File_Invalid_Schema {
+  description = '''
+    IF the file given through the command line option "--config" does not conform to
+    the expected schema (for example, the mandatory "conversion-rules" key is missing),
+    THEN the tool SHALL print an error message identifying the schema violation to
+    STDERR
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}

@@ -1,0 +1,122 @@
+package trlc_req
+import req
+import UseCases
+
+req.System_Requirement Orphan_Conversion_Rule_Error {
+  description = '''
+    IF a configured conversion rule's package and record-type does not match any TRLC
+    record type found in the consumed input,
+    THEN the tool SHALL print an error message listing the unmatched rule(s) to STDERR
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Missing_Description_Field_Error {
+  description = '''
+    IF a conversion rule references a field (for example, in "description-fields" or
+    "tags") that does not exist on the matched TRLC record object,
+    THEN the tool SHALL print an error message identifying the missing field and the
+    record object to STDERR
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Missing_To_String_Rule_Error {
+  description = '''
+    IF a conversion rule references a tuple-typed field,
+    AND no "to-string-rules" entry is configured for that tuple type,
+    THEN the tool SHALL print an error message identifying the tuple type, its value,
+    and the location where it is used, to STDERR
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement To_String_Rule_All_Attempts_Failed_Error {
+  description = '''
+    IF a tuple type has one or more configured "to-string-rules" entries,
+    AND every configured rule fails to apply (for example because it references a
+    field that does not exist on the tuple),
+    THEN the tool SHALL print an error message identifying the tuple type and value to
+    STDERR
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement To_String_Rule_Applied {
+  description = '''
+    IF a tuple type has one or more configured "to-string-rules" entries,
+    AND at least one of them can be applied to a given tuple value (trying the
+    configured rules in order),
+    THEN the tool SHALL use the text produced by the first applicable rule as the
+    string representation of that value.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Conversion_Rule_Applies_To_Derived_Types {
+  description = '''
+    IF a conversion rule is configured for a TRLC record type,
+    AND the rule's "applies-to-derived-types" option is true (the default),
+    THEN the tool SHALL also apply that rule to every record type that directly or
+    indirectly extends the configured type, UNLESS a more specific rule is configured
+    for the derived type.
+    OTHERWISE (the option is false),
+    THEN the rule SHALL only apply to the exact configured type.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Output_Data_Matches_Input {
+  description = '''
+    The tool SHALL populate each generated LOBSTER item's tag, location, and
+    description fields using only data from the single corresponding TRLC record
+    object, without mixing data from other record objects.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}

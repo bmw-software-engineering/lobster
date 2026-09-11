@@ -20,6 +20,7 @@ class ErrorTest(TrlcHierarchyDataTestCase):
         self.assertIs(error.tuple_aggregate, tuple_aggregate)
 
     def test_error_constructors(self):
+        # lobster-trace: trlc_req.Error_Classes_Format_Detailed_Messages
         for record_object in self._get_level4b_record_objects():
             tuple_aggregate = record_object.field["tuple_field1"]
 
