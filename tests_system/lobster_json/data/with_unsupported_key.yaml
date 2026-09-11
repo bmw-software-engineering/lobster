@@ -1,0 +1,2 @@
+tag_attribute: "tags"
+invalid_key: "This key is not supported by lobster-json"
