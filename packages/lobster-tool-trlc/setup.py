@@ -51,7 +51,7 @@ setuptools.setup(
         "trlc>=2.0.1",
         f"bmw-lobster-core>={version.LOBSTER_VERSION}",
     ],
-    python_requires=">=3.7, <4",
+    python_requires=">=3.10, <4",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
