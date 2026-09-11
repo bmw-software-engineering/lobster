@@ -20,7 +20,7 @@ class ReferencesCpptestTest(LobsterCpptestSystemTestCaseBase):
         This test checks that the file with no requirement references
         is handled correctly by the lobster-cpptest tool.
         """
-        # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
+        # lobster-trace: cpptest_req.Test_Without_References_Marked_Orphan
         OUT_FILE = "no_references.lobster"
         self._test_runner.declare_input_file(self._data_directory / "no_references.cpp")
         self._test_runner.cmd_args.config = str(
@@ -48,7 +48,7 @@ class ReferencesCpptestTest(LobsterCpptestSystemTestCaseBase):
         This test checks that the file with a single requirement reference
         is handled correctly by the lobster-cpptest tool.
         """
-        # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
+        # lobster-trace: cpptest_req.Requirement_References_Extracted_As_Tags
         OUT_FILE = "1_reference.lobster"
         self._test_runner.declare_input_file(self._data_directory / "1_reference.cpp")
         self._test_runner.cmd_args.config = str(
@@ -76,7 +76,7 @@ class ReferencesCpptestTest(LobsterCpptestSystemTestCaseBase):
         This test checks that the file with multiple requirement references
         is handled correctly by the lobster-cpptest tool.
         """
-        # lobster-trace: UseCases.Incorrect_number_of_requirement_references_in_Output
+        # lobster-trace: cpptest_req.Requirement_References_Extracted_As_Tags
         OUT_FILE = "many_references.lobster"
         self._test_runner.declare_input_file(
             self._data_directory / "many_references.cpp")

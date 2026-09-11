@@ -1,24 +1,87 @@
 package cpptest_req
 import req
+import UseCases
 
-req.System_Requirement Input_File {
-    description = '''
-      IF a list element given through the yaml config file option "files" is a file
-    '''
-}
-
-req.System_Requirement_Aspect Input_File_Valid_Cpp_Test_File {
+req.System_Requirement Default_Files_Is_Current_Directory {
   description = '''
-    AND IF the file content is valid,
-    THEN the tool shall write the output in the LOBSTER interchange format to the file given in the out parameter
-    AND exit with a zero return code.
+    IF the config option "files" is not given,
+    THEN the tool SHALL use the current working directory as the sole input,
+    applying the same directory-search rule as for an explicitly configured
+    directory.
   '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
 }
 
-req.System_Requirement_Aspect Input_File_Invalid_Cpp_Test_File {
+req.System_Requirement Input_Directory_Traversal {
   description = '''
-    OTHERWISE IF the file content is invalid,
-    THEN the tool shall write an error message to stderr
-    AND exit with a non-zero return code.
+    IF a list element given through the config option "files" is a directory,
+    THEN the tool SHALL recursively search that directory
+    AND SHALL treat every file found with one of the extensions ".cpp", ".cc",
+    ".c", ".h" as an additional input file, ignoring any other file found there.
   '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
 }
+
+req.System_Requirement Explicit_File_Ignores_Extension {
+  description = '''
+    IF a list element given through the config option "files" is a file,
+    THEN the tool SHALL process it as an input file, regardless of its file
+    extension.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Input_Not_File_Not_Directory {
+  description = '''
+    IF a list element given through the config option "files" is neither a file
+    nor a directory,
+    THEN the tool SHALL print an error message identifying the offending element
+    to STDERR
+    AND SHALL exit with a non-zero return code.
+
+    Note: This could happen if a path does not exist.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement No_Test_Files_Found {
+  description = '''
+    IF the resolved set of input files (after applying [[Input_Directory_Traversal]]
+    and [[Explicit_File_Ignores_Extension]]) is empty,
+    THEN the tool SHALL print an error message identifying the configured "files"
+    option to STDERR
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
