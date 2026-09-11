@@ -1,0 +1,61 @@
+package core_ci_report_req
+import req
+
+req.Software_Requirement Resolve_Report_Path_Uses_Build_Working_Directory {
+    description = '''
+        IF the given report path is relative AND the environment variable
+        "BUILD_WORKING_DIRECTORY" is set,
+        THEN the function SHALL return the path joined onto the directory named
+        by that environment variable,
+        OTHERWISE it SHALL return the path unchanged.
+    '''
+    derived_from = [Ci_Report_Relative_Path_Resolution]
+}
+
+req.Software_Requirement Report_Errors_For_Untraced_Items {
+    description = '''
+        The function "report_errors_for_untraced_items" SHALL emit an error (via
+        report.mh.error) for each message of every item in the given report whose
+        tracing status is neither OK nor JUSTIFIED,
+        AND SHALL emit no error for an item whose tracing status is OK or JUSTIFIED.
+
+        Note: This is what causes "report.mh.errors" to be non-zero IF AND ONLY IF
+        at least one item is not fully traced, including the case of a report with
+        zero items (zero errors emitted).
+    '''
+    derived_from = [
+        Ci_Report_Prints_Compiler_Style_Errors,
+        Ci_Report_Exits_Zero_When_Fully_Traced
+    ]
+}
+
+req.Software_Requirement Default_Report_File_Argument {
+    description = '''
+        The command line argument "lobster_report" of "CiReportTool" SHALL have the
+        default value "report.lobster", so that it is used IF no report file is
+        given on the command line.
+    '''
+    derived_from = [Ci_Report_Default_Report_File]
+}
+
+req.Software_Requirement Ensure_Report_File_Exists_Raises_On_Missing_File {
+    description = '''
+        The function "ensure_report_file_exists" SHALL raise an argument parser
+        error (leading to program exit) with a message naming the given report file,
+        IF that file does not exist AND was given explicitly (i.e. is not the
+        unmodified default value "report.lobster"),
+        OTHERWISE (file does not exist AND is still the default value) it SHALL
+        raise an argument parser error stating that a report file must be specified.
+    '''
+    derived_from = [Ci_Report_Missing_Report_File]
+}
+
+req.Software_Requirement Format_Coverage_Lines {
+    description = '''
+        The function "format_coverage_lines" SHALL return one formatted string per
+        report level, in the format
+        "coverage: <level>: <percentage>% (<covered> of <total> items)",
+        reflecting the coverage value already stored in the given report.
+    '''
+    derived_from = [Ci_Report_Show_Coverage_Flag]
+}

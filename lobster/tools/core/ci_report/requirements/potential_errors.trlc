@@ -1,0 +1,4 @@
+package UseCases
+
+// No potential errors were ever defined for lobster-ci-report; this file exists
+// only as a compatibility input for the tracing tool chain (see tracing/tracing.sh).
