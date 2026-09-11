@@ -1,40 +1,5 @@
 package UseCases
-import req
 
-req.TestSpecification Coverage_calculation_in_Output{
-    description = '''
-    The test shall verify the output file contains correct coverage calculation
-    based on total number of requirements and number of covered requirements.
-    '''
-    verifies = [Incorrect_Coverage_Calculation]
-}
-
-req.TestSpecification Requirement_to_software_Test_Mapping_in_Output{
-    description = '''
-    The test shall verify output file contains correct mapping of requirement to software tests
-    based on requirement reference mentioned in software tests.
-    '''
-    verifies = [Wrong_Mapping_of_Requirement_to_Software_Test]
-}
-
-req.TestSpecification Software_Test_to_Requirement_Mapping_in_output{
-    description = '''
-    The test shall verify output file contains correct mapping of software tests to requirement
-    based on requirement reference mentioned in software tests.
-    '''
-    verifies = [Wrong_Mapping_of_Software_Test_to_Requirement]
-}
-
-req.TestSpecification Tracing_Policy_Output_File{
-    description = '''
-    The test shall verify that the ouput file contains the tracing policy.
-    '''
-    verifies = [Wrong_Policy_in_Output_File]
-}
-
-req.TestSpecification Correct_Item_Data_in_Output_File{
-        description = '''
-            The test shall verify that the item data in the output file matches the item data in the input file.
-        '''
-        verifies = [Wrong_Item_Data_in_Output]
-}
+// Content migrated to System_Requirement entries in lobster/tools/core/report/requirements/.
+// This file is intentionally left as an empty compatibility input for the tracing
+// tool chain (see tracing/tracing.sh).

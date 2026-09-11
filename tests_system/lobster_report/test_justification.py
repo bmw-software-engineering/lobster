@@ -11,11 +11,12 @@ class ReportJustificationTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_justification_and_coverage(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Coverage_calculation_in_Output
-        # lobster-trace: core_report_req.Status_Justified_Global
-        # lobster-trace: core_report_req.Status_Justified_Up
-        # lobster-trace: core_report_req.Status_Justified_Down
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Level_Coverage_Percentage_From_Item_Status
+        # lobster-trace: core_report_req.Item_Status_Ok_When_Required_References_Present
+        # lobster-trace: core_report_req.Item_Status_Justified_By_Justification
+        # lobster-trace: core_report_req.Item_Status_Partial_One_Direction_Satisfied
+        # lobster-trace: core_report_req.Item_Status_Missing_When_Reference_Absent
         """
         This test checks that the lobster report tool can handle justifications
         and coverage changes according to justifications and generate lobster report.

@@ -1,0 +1,171 @@
+package core_report_req
+import req
+import UseCases
+
+req.System_Requirement Invalid_JSON_File {
+  description = '''
+    IF an input file given in the configuration is not valid JSON,
+    THEN the tool shall raise an error of type LOBSTER_Error
+    AND shall exit with a non-zero return code
+    AND shall report the name of that input file, together with the line and column
+    at which the JSON syntax error was found.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Invalid_JSON_Not_Dict {
+  // TODO: This requirement describes the current behavior.
+  // In the future the tool shall not raise an exception for this case, but handle it
+  //more gracefully.
+
+  description = '''
+    IF a JSON input file does not contain a dictionary at the top level,
+    THEN the tool shall raise a Exception,
+    AND the tool shall exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Invalid_Schema {
+  description = '''
+    IF a lobster input file declares a schema other than "lobster-req-trace",
+    "lobster-imp-trace", or "lobster-act-trace",
+    THEN the tool shall report "unknown schema kind <schema>"
+    AND shall exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Invalid_Schema_Version {
+  description = '''
+    IF a lobster input file declares "lobster-req-trace" with a version other than 3
+    or 4, or declares "lobster-imp-trace" or "lobster-act-trace" with a version other
+    than 3,
+    THEN the tool shall report "version <X> for schema <Y> is not supported"
+    AND shall exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Missing_Schema_Key {
+  description = '''
+    IF the input .lobster file is missing a schema key,
+    THEN the tool shall raise a LOBSTER_Exception,
+    AND the tool shall exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Missing_Version_Key {
+  description = '''
+    IF the input .lobster file is missing a version key,
+    THEN the tool shall raise a LOBSTER_Exception,
+    AND the tool shall exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Malformed_Location_Data_Error_Dump {
+  // TODO: This requirement describes the current behavior. The dumped location data
+  // is a raw Python dict repr, which is a debug artifact rather than a designed
+  // user-facing message; consider replacing it with a friendlier message in the
+  // future.
+
+  description = '''
+    IF an item's location data is not an object, is missing the required "kind"
+    field, or specifies an unrecognized "kind",
+    THEN the tool shall print "LOBSTER Error: <message>", describing the problem, to
+    standard output, followed by a line of dashes, the offending location data, and
+    another line of dashes,
+    AND shall exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Unknown_Tracing_Target {
+  description = '''
+    IF a reference in a lobster file points to a tag that does not exist in the set of
+    loaded items,
+    THEN the tool shall report "unknown tracing target <tag>" and exit with non-zero
+    return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Tracing_Destination_Unversioned {
+  description = '''
+    IF a reference specifies a version but the destination tag is unversioned,
+    THEN the tool shall report "tracing destination <tag> is unversioned" and exit with
+    non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Tracing_Destination_Version_Mismatch {
+  description = '''
+    IF a reference specifies a version and the destination tag has a different version,
+    THEN the tool shall report "tracing destination <tag> has version <x> (expected
+    <y>)" and exit with non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
