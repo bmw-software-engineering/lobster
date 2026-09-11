@@ -1,11 +1,12 @@
+# Requirements
 This document describes how requirements shall be written and interpreted for all `lobster` tools.
 It is a mandatoy guideline and is also a style guide.
 
-# Requirement Levels
+## Requirement Levels
 
 There are the following levels:
 
-1. use cases (not yet written)
+1. use cases
 2. system requirements
 3. software requirements
 
@@ -23,10 +24,13 @@ The software requirements of that tool are derived from the system requirements 
 Each system requirement must be broken down into software requirements.
 Each software requirement must be derived from system requirements.
 
-LOBSTER itself is used to generate traceability reports to measure the above constraints.
+LOBSTER itself is used to generate traceability reports to measure the above rules.
 
-# Requirement Aspects
-## Introduction
+## Requirement Aspects (DEPRECATED)
+
+The usage of `System_Requirement_Aspect` is deprecated. Do not use!
+
+### Introduction
 Requirements may have several input conditions.
 For example, `lobster-json` has got a configuration parameter called `FILE_OR_DIR`, where the user can specify a list of files combined with a list of directories.
 
@@ -51,7 +55,7 @@ Therefore,
 to reduce the complexity of mapping tests to requirements,
 requirements for all LOBSTER tools shall be split into single aspects in TRLC.
 
-## Semantics
+### Semantics
 The order of TRLC objects is given through their order in the `*.trlc` file.
 TRLC objects from different `*.trlc` files have no ordering relative to each other.
 
