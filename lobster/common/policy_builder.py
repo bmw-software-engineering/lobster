@@ -70,16 +70,17 @@ def build_tracing_policy(mh, raw_policy: RawPolicy):
         item = levels[raw_level.name]
         item.breakdown_requirements = []
         if raw_level.requires:
-            for chain in raw_level.requires:
-                new_chain = []
-                for alt in chain:
-                    if alt.name not in levels:
-                        mh.error(alt.loc, f"unknown level {alt.name}")
-                    if item.name not in levels[alt.name].traces:
-                        mh.error(alt.loc,
-                                 f"{alt.name} cannot trace to {item.name} items")
-                    new_chain.append(alt.name)
-                item.breakdown_requirements.append(new_chain)
+            for or_group in raw_level.requires:
+                new_or_group = []
+                for candidate in or_group:
+                    if candidate.name not in levels:
+                        mh.error(candidate.loc, f"unknown level {candidate.name}")
+                    if item.name not in levels[candidate.name].traces:
+                        mh.error(candidate.loc,
+                                 f"{candidate.name} cannot trace to {item.name} "
+                                 "items")
+                    new_or_group.append(candidate.name)
+                item.breakdown_requirements.append(new_or_group)
         else:
             for src in levels.values():
                 if item.name in src.traces:

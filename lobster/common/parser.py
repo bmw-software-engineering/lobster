@@ -24,7 +24,7 @@ from lobster.common import lexer
 from lobster.common import errors
 from lobster.common import location
 from lobster.common.raw_policy import (
-    RawLevel, RawPolicy, RawRequiresAlternative, RawSource, RawTraceTo,
+    RawLevel, RawPolicy, RawRequiresCandidate, RawSource, RawTraceTo,
 )
 from lobster.common.policy_builder import build_tracing_policy
 
@@ -129,13 +129,13 @@ class Parser:
 
                 self.match("STRING")
                 req_list.append(
-                    RawRequiresAlternative(name=self.ct.value(), loc=self.ct.loc))
+                    RawRequiresCandidate(name=self.ct.value(), loc=self.ct.loc))
 
                 while self.peek("KEYWORD", "or"):
                     self.match("KEYWORD", "or")
                     self.match("STRING")
                     req_list.append(
-                        RawRequiresAlternative(name=self.ct.value(), loc=self.ct.loc))
+                        RawRequiresCandidate(name=self.ct.value(), loc=self.ct.loc))
 
                 self.match("SEMI")
 

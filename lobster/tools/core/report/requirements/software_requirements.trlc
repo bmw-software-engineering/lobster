@@ -1,0 +1,91 @@
+package core_report_req
+import req
+
+req.Software_Requirement Policy_Builder_Rejects_Duplicate_Level_Names {
+  description = '''
+    IF a raw tracing policy contains two or more levels declared with the same name,
+    THEN the "build_tracing_policy" function SHALL raise a fatal LOBSTER_Error
+    with the message "duplicate declaration" at the location of the repeated declaration.
+  '''
+}
+
+req.Software_Requirement Policy_Builder_Rejects_Missing_Source_File {
+  description = '''
+    IF a level's source file entry names a file that does not exist on disk,
+    THEN the "build_tracing_policy" function SHALL raise a fatal LOBSTER_Error
+    with the message "cannot find file <path>", where <path> is the file path
+    given in the source entry.
+  '''
+  derived_from = [Missing_Required_Files_Error]
+}
+
+req.Software_Requirement Policy_Builder_Rejects_Self_Trace {
+  description = '''
+    IF a level's "trace to" list contains the level's own name,
+    THEN the "build_tracing_policy" function SHALL raise a fatal LOBSTER_Error
+    with the message "cannot trace to yourself".
+  '''
+  derived_from = [Invalid_Trace_To]
+}
+
+req.Software_Requirement Policy_Builder_Rejects_Unknown_Trace_To_Target {
+  description = '''
+    IF a level's "trace to" list references a level name that is not declared
+    anywhere in the raw tracing policy,
+    THEN the "build_tracing_policy" function SHALL raise a fatal LOBSTER_Error
+    with the message "unknown item <target>", where <target> is the undeclared
+    level name.
+  '''
+  derived_from = [Invalid_Trace_To]
+}
+
+req.Software_Requirement Policy_Builder_Rejects_Unknown_Requires_Level {
+  description = '''
+    IF a level's "requires" entry names a candidate level that is not declared
+    anywhere in the raw tracing policy,
+    THEN the "build_tracing_policy" function SHALL raise a fatal LOBSTER_Error
+    with the message "unknown level <name>", where <name> is the undeclared
+    level name.
+  '''
+}
+
+req.Software_Requirement Policy_Builder_Rejects_Untraced_Requires {
+  description = '''
+    IF a level's "requires" entry names a candidate level that does not have
+    a "trace to" entry pointing at the requiring level,
+    THEN the "build_tracing_policy" function SHALL raise a fatal LOBSTER_Error
+    with the message "<candidate> cannot trace to <level> items".
+  '''
+}
+
+req.Software_Requirement Policy_Builder_Derives_Breakdown_Requirements {
+  description = '''
+    IF a level does not declare any "requires" entry,
+    THEN the "build_tracing_policy" function SHALL derive its
+    "breakdown_requirements" as one single-candidate OR-group per other level
+    that declares a "trace to" entry pointing at it.
+    OTHERWISE, the function SHALL translate each declared "requires" entry
+    into one OR-group of the candidate levels named in that entry.
+  '''
+  derived_from = [Linear_Policy_Support, Complex_Multi_Level_Policy_Support]
+}
+
+req.Software_Requirement Policy_Builder_Derives_Tracing_Direction_Flags {
+  description = '''
+    IF a level declares a "trace to" entry pointing at another level,
+    THEN the "build_tracing_policy" function SHALL set "needs_tracing_up" to
+    true on the declaring level
+    AND SHALL set "needs_tracing_down" to true on the targeted level.
+  '''
+  derived_from = [Status_Missing, Status_Ok]
+}
+
+req.Software_Requirement Policy_Builder_Level_Order_Independent {
+  description = '''
+    IF a level's "trace to" or "requires" entry references another level that
+    is declared later in the same raw tracing policy,
+    THEN the "build_tracing_policy" function SHALL resolve the reference
+    successfully instead of rejecting it as unknown.
+  '''
+  derived_from = [Linear_Policy_Support, Complex_Multi_Level_Policy_Support]
+}
