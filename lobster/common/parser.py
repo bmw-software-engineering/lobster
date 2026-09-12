@@ -19,12 +19,14 @@
 
 import sys
 import os.path
-import collections
 
 from lobster.common import lexer
-from lobster.common.level_definition import LevelDefinition
 from lobster.common import errors
 from lobster.common import location
+from lobster.common.raw_policy import (
+    RawLevel, RawPolicy, RawRequiresAlternative, RawSource, RawTraceTo,
+)
+from lobster.common.policy_builder import build_tracing_policy
 
 
 class Parser:
@@ -36,8 +38,6 @@ class Parser:
 
         self.ct = None
         self.nt = self.lexer.token()
-
-        self.levels = collections.OrderedDict()
 
     def advance(self):
         self.ct = self.nt
@@ -75,17 +75,19 @@ class Parser:
         self.lexer.mh.error(loc, message)
 
     def parse(self):
+        levels = []
+
         while self.nt:
             if self.peek("KEYWORD", "requirements") or \
                self.peek("KEYWORD", "implementation") or \
                self.peek("KEYWORD", "activity"):
-                self.parse_level_declaration()
+                levels.append(self.parse_level_declaration())
             else:
                 self.error(self.nt.loc,
                            "expected: requirements|implementation|activity,"
                            f" found {self.nt.value()} instead")
 
-        return self.levels
+        return RawPolicy(levels=levels)
 
     def parse_level_declaration(self):
         self.match("KEYWORD")
@@ -93,15 +95,7 @@ class Parser:
 
         self.match("STRING")
         level_name = self.ct.value()
-        if level_name in self.levels:
-            self.error(self.ct.loc,
-                       "duplicate declaration")
-
-        item = LevelDefinition(
-            name=level_name,
-            kind=level_kind,
-        )
-        self.levels[level_name] = item
+        level = RawLevel(name=level_name, name_loc=self.ct.loc, kind=level_kind)
 
         self.match("C_BRA")
 
@@ -110,13 +104,7 @@ class Parser:
                 self.advance()
                 self.match("COLON")
                 self.match("STRING")
-                source_info = {
-                    "file"    : self.ct.value(),
-                }
-                if not os.path.isfile(source_info["file"]):
-                    self.error(self.ct.loc,
-                               f"cannot find file {source_info['file']}")
-                item.source.append(source_info)
+                level.source.append(RawSource(file=self.ct.value(), loc=self.ct.loc))
 
                 if self.peek("KEYWORD", "with"):
                     self.match("KEYWORD", "with")
@@ -128,16 +116,8 @@ class Parser:
                 self.match("KEYWORD", "to")
                 self.match("COLON")
                 self.match("STRING")
-                if self.ct.value() == level_name:
-                    self.error(self.ct.loc,
-                               "cannot trace to yourself")
-                elif self.ct.value() not in self.levels:
-                    self.error(self.ct.loc,
-                               f"unknown item {self.ct.value()}")
-                else:
-                    self.levels[self.ct.value()].needs_tracing_down = True
-                item.traces.append(self.ct.value())
-                item.needs_tracing_up = True
+                level.trace_to.append(
+                    RawTraceTo(target=self.ct.value(), loc=self.ct.loc))
 
                 self.match("SEMI")
 
@@ -148,16 +128,18 @@ class Parser:
                 req_list = []
 
                 self.match("STRING")
-                req_list.append(self.ct)
+                req_list.append(
+                    RawRequiresAlternative(name=self.ct.value(), loc=self.ct.loc))
 
                 while self.peek("KEYWORD", "or"):
                     self.match("KEYWORD", "or")
                     self.match("STRING")
-                    req_list.append(self.ct)
+                    req_list.append(
+                        RawRequiresAlternative(name=self.ct.value(), loc=self.ct.loc))
 
                 self.match("SEMI")
 
-                item.raw_trace_requirements.append(req_list)
+                level.requires.append(req_list)
 
             else:
                 self.error(self.nt.loc,
@@ -165,32 +147,13 @@ class Parser:
 
         self.match("C_KET")
 
+        return level
+
 
 def load(mh, file_name):
     parser = Parser(mh, file_name)
-    ast = parser.parse()
-
-    # Resolve requires links now
-    for item in ast.values():
-        item.breakdown_requirements = []
-        if item.raw_trace_requirements:
-            for chain in item.raw_trace_requirements:
-                new_chain = []
-                for tok in chain:
-                    if tok.value() not in ast:
-                        mh.error(tok.loc, f"unknown level {tok.value()}")
-                    if item.name not in ast[tok.value()].traces:
-                        mh.error(tok.loc,
-                                 f"{tok.value()} cannot trace to {item.name} items")
-                    new_chain.append(tok.value())
-                item.breakdown_requirements.append(new_chain)
-        else:
-            for src in ast.values():
-                if item.name in src.traces:
-                    item.breakdown_requirements.append([src.name])
-        item.raw_trace_requirements.clear()
-
-    return ast
+    raw_policy = parser.parse()
+    return build_tracing_policy(mh, raw_policy)
 
 
 def sanity_test():

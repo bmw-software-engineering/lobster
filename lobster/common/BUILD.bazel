@@ -33,6 +33,8 @@ py_library(
         "multi_file_input_config.py",
         "multi_file_input_tool.py",
         "parser.py",
+        "policy_builder.py",
+        "raw_policy.py",
         "report.py",
         "tool.py",
         "version.py",
