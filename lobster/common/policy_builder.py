@@ -75,9 +75,9 @@ def build_tracing_policy(
         item = levels[raw_level.name]
         item.breakdown_requirements = []
         if raw_level.requires:
-            for chain in raw_level.requires:
-                new_chain = []
-                for alt in chain:
+            for or_group in raw_level.requires:
+                new_or_group = []
+                for alt in or_group:
                     if alt.name not in levels:
                         raise LOBSTER_Error(alt.loc, f"unknown level {alt.name}")
                     if item.name not in levels[alt.name].traces:
@@ -85,8 +85,8 @@ def build_tracing_policy(
                             alt.loc,
                             f"{alt.name} cannot trace to {item.name} items",
                         )
-                    new_chain.append(alt.name)
-                item.breakdown_requirements.append(new_chain)
+                    new_or_group.append(alt.name)
+                item.breakdown_requirements.append(new_or_group)
         else:
             for src in levels.values():
                 if item.name in src.traces:

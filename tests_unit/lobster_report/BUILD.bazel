@@ -11,3 +11,11 @@ py_test(
         "//lobster/tools/core/report",
     ],
 )
+
+py_test(
+    name = "test_policy_builder",
+    srcs = ["test_policy_builder.py"],
+    deps = [
+        "//lobster/common",
+    ],
+)
