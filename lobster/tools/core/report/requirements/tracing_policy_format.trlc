@@ -1,0 +1,27 @@
+package core_report_req
+import req
+import UseCases
+
+req.System_Requirement Coverage_Computed_From_Yaml_Tracing_Policy {
+  description = '''
+    IF the user provides a tracing policy configuration file with a ".yaml" or ".yml"
+    file extension,
+    THEN the tool shall process the source files specified for each level in that policy,
+    determine the tracing status of each loaded item according to the policy.
+  '''
+  derived_from = [UseCases.Write_Tracing_Policy_In_Yaml, UseCases.Item_Coverage]
+}
+
+req.System_Requirement Legacy_Tracing_Policy_Deprecation_Warning {
+  description = '''
+    IF the tracing policy configuration file given to the tool does not have a ".yaml"
+    or ".yml" file extension,
+    THEN the tool shall print a warning to standard output stating that the
+    LOBSTER tracing-policy format is deprecated and will be removed in a future release,
+    AND shall recommend using a ".yaml" file instead,
+    AND shall process the file and generate a LOBSTER report file with content
+    identical to what would have been generated if the tracing policy were provided in
+    YAML format with semantically equivalent content.
+  '''
+  derived_from = [UseCases.Write_Tracing_Policy_In_Yaml]
+}

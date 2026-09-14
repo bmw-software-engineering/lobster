@@ -150,21 +150,12 @@ class Parser:
         return level
 
 
-def load(mh, file_name):
-    # Note: "Parser" uses a legacy interface that still requires a Message_Handler
-    # instance instead of raising exceptions.
-    parser = Parser(mh, file_name)
-    raw_policy = parser.parse()
-
-    # Note: build_tracing_policy raises exceptions instead of using the Message_Handler.
-    return build_tracing_policy(raw_policy)
-
-
 def sanity_test():
     mh = errors.Message_Handler()
 
     try:
-        config = load(mh, sys.argv[1])
+        raw_policy = Parser(mh, sys.argv[1]).parse()
+        config = build_tracing_policy(raw_policy)
         print(config)
     except errors.LOBSTER_Error:
         return 1
