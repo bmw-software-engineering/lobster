@@ -84,17 +84,8 @@ This repo's own requirements/tests are tracked in TRLC and traced with LOBSTER i
 
 ## Conventions
 
-- Tests must assert against requirement-derived expected behavior, never against whatever the
-  implementation currently happens to do. The one exception is pure fixture plumbing (see below).
+- Follow the coding guideline in `CODING_GUIDELINE.md`.
 - When a tool's implementation needs refactoring to make its logic unit-testable, prefer
   extracting small, directly-callable functions from an orchestration method over writing a
   test that just re-runs the whole CLI path and asserts on stdout — verify no behavior change
   by re-running existing system tests before/after the refactor.
-- The one exception to the rule above is pure fixture plumbing: if you hand-write a
-  `*.lobster` JSON file as test *input data* (instead of generating it by running a real
-  LOBSTER tool), check it against [documentation/schemas.md](../documentation/schemas.md) first.
-  That doc covers the common envelope and the req-trace/imp-trace/act-trace schemas, but
-  explicitly calls the `lobster-report` schema "internal" (undocumented) — for report fixtures
-  specifically, also run the real tool against the file once and confirm it's accepted without
-  errors. Either way, this only guards against a malformed fixture causing a false pass/fail;
-  it must not be used to decide what the test should assert.
