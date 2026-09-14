@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 1.0.7-dev
+### 1.1.0-dev
 
 * `lobster-trlc`:
   - Added support for experimental feature TRLC Markdown which takes
