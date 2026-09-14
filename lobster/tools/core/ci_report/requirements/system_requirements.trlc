@@ -1,0 +1,65 @@
+package core_ci_report_req
+import req
+import UseCases
+
+req.System_Requirement Ci_Report_Prints_Compiler_Style_Errors {
+    description = '''
+        IF the given LOBSTER report contains at least one item whose tracing status
+        is neither OK nor JUSTIFIED,
+        THEN the tool SHALL print one line per associated message to STDOUT in the
+        format "<file>:<line>:<column>: lobster error: <message>"
+        AND SHALL exit with a non-zero return code.
+    '''
+    derived_from = [UseCases.CI_Build_Gate]
+}
+
+req.System_Requirement Ci_Report_Exits_Zero_When_Fully_Traced {
+    description = '''
+        IF every item in the given LOBSTER report has tracing status OK or JUSTIFIED
+        (including the case of zero items),
+        THEN the tool SHALL print nothing to STDOUT
+        AND SHALL exit with return code 0.
+    '''
+    derived_from = [UseCases.CI_Build_Gate]
+}
+
+req.System_Requirement Ci_Report_Default_Report_File {
+    description = '''
+        IF no report file is given on the command line,
+        THEN the tool SHALL use "report.lobster" in the current working directory
+        as the report file.
+    '''
+    derived_from = [UseCases.CI_Build_Gate]
+}
+
+req.System_Requirement Ci_Report_Missing_Report_File {
+    description = '''
+        IF the report file, whether given explicitly or defaulted (see
+        [[Ci_Report_Default_Report_File]]), does not exist,
+        THEN the tool SHALL print an error message to STDERR identifying whether no
+        file was specified or which file was not found,
+        AND SHALL exit with a non-zero return code.
+    '''
+    derived_from = [UseCases.CI_Build_Gate]
+}
+
+req.System_Requirement Ci_Report_Show_Coverage_Flag {
+    description = '''
+        IF the command line flag "--show-coverage" is given,
+        THEN the tool SHALL additionally print one line per report level to STDOUT
+        in the format "coverage: <level>: <percentage>% (<covered> of <total> items)",
+        reflecting the coverage value already stored in the given LOBSTER report file.
+    '''
+    derived_from = [UseCases.CI_Report_Coverage_Summary]
+}
+
+req.System_Requirement Ci_Report_Relative_Path_Resolution {
+    description = '''
+        IF a relative report file path is given AND the environment variable
+        "BUILD_WORKING_DIRECTORY" is set,
+        THEN the tool SHALL resolve that path relative to the directory named by
+        "BUILD_WORKING_DIRECTORY" instead of the current working directory.
+    '''
+    derived_from = [UseCases.Bazel_Wrapped_Tool_Execution]
+}
+
