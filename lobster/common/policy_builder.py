@@ -27,11 +27,15 @@
 import os.path
 import collections
 
+from lobster.common.errors import Message_Handler
 from lobster.common.level_definition import LevelDefinition
 from lobster.common.raw_policy import RawPolicy
 
 
-def build_tracing_policy(mh, raw_policy: RawPolicy):
+def build_tracing_policy(
+    mh: Message_Handler,
+    raw_policy: RawPolicy,
+) -> collections.OrderedDict[str, LevelDefinition]:
     levels = collections.OrderedDict()
 
     # First pass: create every level up front, so later passes can refer to

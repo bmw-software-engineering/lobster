@@ -23,31 +23,33 @@
 # lobster/common/policy_builder.py.
 
 from dataclasses import dataclass, field
-from typing import Any, List
+from typing import List
+
+from lobster.common.location import Location
 
 
 @dataclass
 class RawSource:
     file: str
-    loc: Any
+    loc: Location
 
 
 @dataclass
 class RawTraceTo:
     target: str
-    loc: Any
+    loc: Location
 
 
 @dataclass
 class RawRequiresAlternative:
     name: str
-    loc: Any
+    loc: Location
 
 
 @dataclass
 class RawLevel:
     name: str
-    name_loc: Any
+    name_loc: Location
     kind: str
     source: List[RawSource] = field(default_factory=list)
     trace_to: List[RawTraceTo] = field(default_factory=list)
