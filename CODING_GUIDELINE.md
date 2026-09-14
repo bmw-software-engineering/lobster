@@ -206,3 +206,18 @@ and club related code and move them to new functions. Breaking the code into sma
 Constants are generally defined at module level and in capital letters. For separation underscores are used.
 
 Example : `SCHEMA`, `ERROR_SEVERITY`
+
+## Exception boundary and user-facing reporting
+
+- Lower-level validation and construction helpers shall raise exceptions for semantic or input
+  errors instead of calling the message handler directly. This keeps the logic pure and makes it
+  easy to test without coupling the algorithm to CLI/reporting concerns.
+- Error presentation shall happen at the caller that owns user-facing reporting. In practice, that
+  means the outer layer (for example, the report/config entry point or CLI wrapper) catches
+  `LOBSTER_Error`/`LOBSTER_Exception` and converts it to `mh.error(...)`, printed output, or an
+  exit code.
+- Public API functions shall always raise exceptions and never report errors with `print`.
+- The code base is not fully consistent today; some older code mixes validation and reporting in the
+  same function. Any new implementation shall follow the exception-boundary pattern above: raise in
+  the callee, handle in the caller. This avoids inconsistent return paths and keeps linting and
+  error handling predictable.
