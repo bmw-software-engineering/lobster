@@ -3,13 +3,31 @@
 ## Changelog
 
 
-### 1.0.7-dev
+### 1.1.0-dev
 
 * `lobster-trlc`:
   - Added support for experimental feature TRLC Markdown which takes
   `.trlc.md` as a valid input file extension.
 
 * `trlc bazel dep`: update to trlc==3.0.1
+
+* `lobster-report`:
+  - Lifted the restriction that levels in the tracing policy must be defined in order.
+    Example:
+
+    ```
+    implementation "Tests" {
+      source: "tests.lobster";
+      trace to: "Requirements";
+    }
+
+    requirements "Requirements" {
+      source: "requirements.lobster";
+    }
+    ```
+
+    Here `Tests` traces to `Requirements`, which is only declared afterwards. This
+    used to be rejected with `unknown item Requirements`; it is now accepted.
 
 * `lobster-codebeamer`:
   Added the API-only `item_to_text` parameter to the configuration object of the
