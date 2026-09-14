@@ -41,7 +41,7 @@ class RawTraceTo:
 
 
 @dataclass
-class RawRequiresAlternative:
+class RawRequiresCandidate:
     name: str
     loc: Location
 
@@ -53,9 +53,9 @@ class RawLevel:
     kind: str
     source: List[RawSource] = field(default_factory=list)
     trace_to: List[RawTraceTo] = field(default_factory=list)
-    # One entry per "requires" directive; each entry is the OR-list of
-    # alternatives (one "requires: A or B;" line == one entry).
-    requires: List[List[RawRequiresAlternative]] = field(default_factory=list)
+    # One entry per "requires" directive; each entry is the OR-group of
+    # candidates (one "requires: A or B;" line == one entry).
+    requires: List[List[RawRequiresCandidate]] = field(default_factory=list)
 
 
 @dataclass
