@@ -19,11 +19,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List
 
-import yamale
 import yaml
 
 from lobster.common.items import Requirement
 from lobster.common.multi_file_input_config import Config
+from lobster.common.yaml_validation import validate_yaml_file
 from lobster.tools.trlc.conversion_rule import ConversionRule
 from lobster.tools.trlc.to_string_rules import ToStringRules
 
@@ -56,18 +56,12 @@ class LobsterTrlcConfig(Config):
             schema=Requirement,
         )
 
-    @staticmethod
-    def _validate_config(filename: str):
-        schema_file = Path(__file__).parent / "schema.yamale"
-        schema = yamale.make_schema(schema_file)
-        # Note: using 'resolve()' only for the purpose that yamale prints the full path
-        # in its exception in case of validation errors.
-        data = yamale.make_data(Path(filename).resolve())
-        yamale.validate(schema, data)
-
     @classmethod
     def from_file(cls, filename: str) -> "LobsterTrlcConfig":
-        cls._validate_config(filename)
+        validate_yaml_file(
+            schema_file=Path(__file__).parent / "schema.yamale",
+            filename=filename,
+        )
 
         with open(filename, "r", encoding="UTF-8") as f:
             config_data = yaml.safe_load(f)

@@ -28,6 +28,7 @@ class ReportConfigAndDuplicateErrorsTest(LobsterReportSystemTestCaseBase):
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutText(
+            f"{self.legacy_policy_deprecation_warning('duplicate_definition.conf')}"
             "dup_req_b.trlc:7:13: lobster error: duplicate definition of "
             "req example.duplicate, previously defined at dup_req_a.trlc:3:13\n\n"
             "lobster-report: aborting due to earlier errors.\n"
@@ -52,6 +53,7 @@ class ReportConfigAndDuplicateErrorsTest(LobsterReportSystemTestCaseBase):
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutText(
+            f"{self.legacy_policy_deprecation_warning('invalid_trace_to.conf')}"
             "invalid_trace_to.conf:3: lobster error: unknown item Nonexistent\n\n"
             "lobster-report: aborting due to earlier errors.\n"
         )

@@ -32,6 +32,7 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         # lobster-trace: core_report_req.Report_Generation_For_Valid_Config_And_Inputs
         # lobster-trace: core_report_req.Item_Status_Ok_When_Required_References_Present
         # lobster-trace: core_report_req.Level_Coverage_Percentage_From_Item_Status
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         """
         This test checks that the lobster report tool can handle a linear policy
         """
@@ -53,7 +54,7 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(self.legacy_policy_deprecation_warning(conf_file))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -62,13 +63,15 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         # lobster-trace: core_report_req.Report_Generation_For_Valid_Config_And_Inputs
         # lobster-trace: core_report_req.Item_Status_Ok_When_Required_References_Present
         # lobster-trace: core_report_req.Level_Coverage_Percentage_From_Item_Status
+        # lobster-trace: core_report_req.Coverage_Computed_From_Yaml_Tracing_Policy
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         """
         This test checks that the lobster report tool can handle a pizza policy
         which consists of 5 levels: system requirements, software requirements,
-        code, unit tests, and component tests.
+        code, unit tests, and component tests. It runs once with the policy
+        declared in the legacy format and once in the YAML format, both
+        producing identical output.
         """
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "pizza_policy.conf")
         self._test_runner.declare_input_file(self._data_directory /
                                              "pizza_system_requirements.lobster")
         self._test_runner.declare_input_file(self._data_directory /
@@ -80,24 +83,33 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         self._test_runner.declare_input_file(self._data_directory /
                                              "pizza_unit_tests.lobster")
 
-        conf_file = "pizza_policy.conf"
         out_file = "report_pizza.lobster"
-        self._test_runner.cmd_args.lobster_config = conf_file
-        self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
 
-        completed_process = self._test_runner.run_tool_test()
-        asserter = Asserter(self, completed_process, self._test_runner)
-        asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
-        asserter.assertExitCode(0)
-        asserter.assertOutputFiles()
+        for conf_file, expected_stdout in (
+            ("pizza_policy.conf",
+             self.legacy_policy_deprecation_warning("pizza_policy.conf")),
+            ("pizza_policy.yaml", ""),
+        ):
+            with self.subTest(conf_file=conf_file):
+                self._test_runner.declare_input_file(self._data_directory /
+                                                     conf_file)
+                self._test_runner.cmd_args.lobster_config = conf_file
+                self._test_runner.cmd_args.out = out_file
+
+                completed_process = self._test_runner.run_tool_test()
+                asserter = Asserter(self, completed_process, self._test_runner)
+                asserter.assertNoStdErrText()
+                asserter.assertStdOutText(expected_stdout)
+                asserter.assertExitCode(0)
+                asserter.assertOutputFiles()
 
     def test_codebeamer_links(self):
         # lobster-trace: core_report_req.Codebeamer_Reference_Propagated_To_Output
         # lobster-trace: core_report_req.Report_Generation_For_Valid_Config_And_Inputs
         # lobster-trace: core_report_req.Item_Status_Ok_When_Required_References_Present
         # lobster-trace: core_report_req.Level_Coverage_Percentage_From_Item_Status
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         """
         This test checks that the report contains
         the Codebeamer items present in the input file.
@@ -118,7 +130,7 @@ class ReportTracingPoliciesTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(self.legacy_policy_deprecation_warning(conf_file))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

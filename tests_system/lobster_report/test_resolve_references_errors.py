@@ -29,12 +29,14 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
     def test_unknown_tracing_target(self):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Unknown_Tracing_Target
-        self._test_runner.declare_input_file(self._data_directory /
-                                             "unknown_tracing_target.conf")
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
+        UNKNOWN_TRACING_TARGET_CONF = "unknown_tracing_target.conf"
+        self._test_runner.declare_input_file(
+            self._data_directory / UNKNOWN_TRACING_TARGET_CONF)
         self._test_runner.declare_input_file(self._data_directory /
                                              "python_unknown_tracing_target.lobster")
 
-        self._test_runner.cmd_args.lobster_config = "unknown_tracing_target.conf"
+        self._test_runner.cmd_args.lobster_config = UNKNOWN_TRACING_TARGET_CONF
         self._test_runner.cmd_args.out = "report_unknown_tracing_target.lobster"
         self._test_runner.declare_output_file(self._data_directory /
                                               "report_unknown_tracing_target.lobster")
@@ -42,13 +44,15 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(
+            self.legacy_policy_deprecation_warning(UNKNOWN_TRACING_TARGET_CONF))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
     def test_tracing_destination_unversioned(self):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Tracing_Destination_Unversioned
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "unversioned_trace.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -62,13 +66,15 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(
+            self.legacy_policy_deprecation_warning("unversioned_trace.conf"))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
     def test_tracing_destination_version_mismatch(self):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Tracing_Destination_Version_Mismatch
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "version_mismatch_trace.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -82,7 +88,8 @@ class ReportResolveReferencesErrorsTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(
+            self.legacy_policy_deprecation_warning("version_mismatch_trace.conf"))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
