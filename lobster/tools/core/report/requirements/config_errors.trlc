@@ -1,0 +1,70 @@
+package core_report_req
+import req
+import UseCases
+
+req.System_Requirement Report_Input_Duplicate_Definition {
+  description = '''
+    IF the same tag is defined more than once among the items loaded from all of the
+    tracing policy's source files, whether the duplicate definitions appear in the
+    same source file or in different source files,
+    THEN the tool shall report, for every definition after the first, the location of
+    that duplicate definition and the location of the first definition of the same
+    tag, where "first" is determined solely by the order in which the tracing policy
+    configuration declares its levels and each level's source files (never by
+    filesystem or operating-system enumeration order),
+    AND shall exit with code 1.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Invalid_Trace_To {
+  description = '''
+    IF "trace to" is an invalid entry given in the configuration file according to the
+    schema,
+    THEN the tool shall exit with a non-zero return code and with an error message
+    "lobster error: unknown item".
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement File_Not_Found {
+  description = '''
+    IF a required input file for the tool does not exist or cannot be accessed,
+    THEN the tool shall report "file not found <file_path>" and exit with a non-zero
+    return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Missing_Required_Files_Error {
+  description = '''
+    IF the tracing policy configuration references input files that cannot be found,
+    THEN the tool shall report an error
+    AND shall exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
