@@ -151,9 +151,13 @@ class Parser:
 
 
 def load(mh, file_name):
+    # Note: "Parser" uses a legacy interface that still requires a Message_Handler
+    # instance instead of raising exceptions.
     parser = Parser(mh, file_name)
     raw_policy = parser.parse()
-    return build_tracing_policy(mh, raw_policy)
+
+    # Note: build_tracing_policy raises exceptions instead of using the Message_Handler.
+    return build_tracing_policy(raw_policy)
 
 
 def sanity_test():

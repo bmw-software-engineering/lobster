@@ -26,16 +26,16 @@
 
 import os.path
 import collections
+from typing import OrderedDict
 
-from lobster.common.errors import Message_Handler
+from lobster.common.errors import LOBSTER_Error
 from lobster.common.level_definition import LevelDefinition
 from lobster.common.raw_policy import RawPolicy
 
 
 def build_tracing_policy(
-    mh: Message_Handler,
     raw_policy: RawPolicy,
-) -> collections.OrderedDict[str, LevelDefinition]:
+) -> OrderedDict[str, LevelDefinition]:
     levels = collections.OrderedDict()
 
     # First pass: create every level up front, so later passes can refer to
@@ -43,7 +43,7 @@ def build_tracing_policy(
     # level referencing it.
     for raw_level in raw_policy.levels:
         if raw_level.name in levels:
-            mh.error(raw_level.name_loc, "duplicate declaration")
+            raise LOBSTER_Error(raw_level.name_loc, "duplicate declaration")
         levels[raw_level.name] = LevelDefinition(
             name=raw_level.name,
             kind=raw_level.kind,
@@ -55,16 +55,17 @@ def build_tracing_policy(
 
         for raw_source in raw_level.source:
             if not os.path.isfile(raw_source.file):
-                mh.error(raw_source.loc, f"cannot find file {raw_source.file}")
+                raise LOBSTER_Error(raw_source.loc,
+                                    f"cannot find file {raw_source.file}")
             item.source.append({"file": raw_source.file})
 
         for raw_trace in raw_level.trace_to:
             if raw_trace.target == raw_level.name:
-                mh.error(raw_trace.loc, "cannot trace to yourself")
-            elif raw_trace.target not in levels:
-                mh.error(raw_trace.loc, f"unknown item {raw_trace.target}")
-            else:
-                levels[raw_trace.target].needs_tracing_down = True
+                raise LOBSTER_Error(raw_trace.loc, "cannot trace to yourself")
+            if raw_trace.target not in levels:
+                raise LOBSTER_Error(raw_trace.loc,
+                                    f"unknown item {raw_trace.target}")
+            levels[raw_trace.target].needs_tracing_down = True
             item.traces.append(raw_trace.target)
             item.needs_tracing_up = True
 
@@ -78,10 +79,12 @@ def build_tracing_policy(
                 new_chain = []
                 for alt in chain:
                     if alt.name not in levels:
-                        mh.error(alt.loc, f"unknown level {alt.name}")
+                        raise LOBSTER_Error(alt.loc, f"unknown level {alt.name}")
                     if item.name not in levels[alt.name].traces:
-                        mh.error(alt.loc,
-                                 f"{alt.name} cannot trace to {item.name} items")
+                        raise LOBSTER_Error(
+                            alt.loc,
+                            f"{alt.name} cannot trace to {item.name} items",
+                        )
                     new_chain.append(alt.name)
                 item.breakdown_requirements.append(new_chain)
         else:
