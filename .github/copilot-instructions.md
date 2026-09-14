@@ -84,7 +84,7 @@ This repo's own requirements/tests are tracked in TRLC and traced with LOBSTER i
 
 ## Conventions
 
-- Follow the coding guideline in `CODING_GUIDELINE.md`.
+- Follow the coding guideline in `CODING_GUIDELINE.md`, including `CODING_GUIDELINE_COPYRIGHT.md`.
 - When a tool's implementation needs refactoring to make its logic unit-testable, prefer
   extracting small, directly-callable functions from an orchestration method over writing a
   test that just re-runs the whole CLI path and asserts on stdout — verify no behavior change
