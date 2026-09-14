@@ -37,10 +37,17 @@ py_library(
         "raw_policy.py",
         "report.py",
         "tool.py",
+        "tracing_policy_loader.py",
         "version.py",
+        "yaml_policy_reader.py",
+        "yaml_validation.py",
+    ],
+    data = [
+        "tracing_policy.yamale",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        requirement("pyyaml")
+        requirement("pyyaml"),
+        requirement("yamale"),
     ],
 )
