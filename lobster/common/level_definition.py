@@ -11,7 +11,6 @@ class LevelDefinition:
     needs_tracing_up: bool = False
     needs_tracing_down: bool = False
     breakdown_requirements: List[Any] = field(default_factory=list)
-    raw_trace_requirements: List[Any] = field(default_factory=list)
 
     # Flags for serialization - they are a workaround due to the fact that the system
     # tests do a text comparison of a generated LOBSTER file against a reference file.

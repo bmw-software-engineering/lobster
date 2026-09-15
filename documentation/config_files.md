@@ -26,6 +26,9 @@ two data sources (a C++ extract and a MATLAB extract). This code is
 supposed to contain tracing tags that link it to items from the
 `Requirements` level.
 
+Declaration order does not matter: a level may be referenced by
+`trace-to`/`requires` even if it is declared later in the file.
+
 ### Level attributes
 
 #### source
