@@ -34,12 +34,6 @@ py_test(
 )
 
 py_test(
-    name = "test_json",
-    srcs = ["test_json.py"],
-    deps = ["//lobster/tools/json"],
-)
-
-py_test(
     name = "test_location",
     srcs = ["test_location.py"],
     deps = ["//lobster/common"],

@@ -1,0 +1,11 @@
+load("@rules_python//python:defs.bzl", "py_test")
+load("//:requirements.bzl", "requirement")
+
+py_test(
+    name = "test_json",
+    srcs = ["test_json.py"],
+    deps = [
+        "//lobster/tools/json",
+        requirement("pyyaml"),
+    ],
+)

@@ -10,6 +10,7 @@ class JsonTagAttributeTest(LobsterJsonSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_tag_attribute_given(self):
+        # lobster-trace: json_req.Tag_Attribute_Given
         self._test_runner.declare_input_file(
             self._data_directory / "tag_attribute_given.json")
         self._test_runner.config_file_data.tag_attribute = "Requirements"
@@ -25,6 +26,7 @@ class JsonTagAttributeTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_tag_attribute_given_but_key_missing(self):
+        # lobster-trace: json_req.Tag_Attribute_Given_Key_Missing
         self._test_runner.declare_input_file(
             self._data_directory / "tag_attribute_given_key_missing.json")
         self._test_runner.config_file_data.tag_attribute = "missingkey"
@@ -40,6 +42,7 @@ class JsonTagAttributeTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_tag_attribute_missing(self):
+        # lobster-trace: json_req.Config_File_Mandatory_Parameter_Missing
         self._test_runner.declare_input_file(self._data_directory / "basic.json")
         # Intentionally not setting tag_attribute (it's mandatory)
 

@@ -12,6 +12,7 @@ class JsonJustificationAttributeTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.config_file_data.name_attribute = "Name"
 
     def test_justification_attribute_given(self):
+        # lobster-trace: json_req.Justification_Attribute
         self._test_runner.declare_input_file(
             self._data_directory / "justification_attribute_given.json")
 
@@ -28,6 +29,7 @@ class JsonJustificationAttributeTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_justification_attribute_given_but_key_missing(self):
+        # lobster-trace: json_req.Justification_Attribute
         self._test_runner.declare_input_file(
             self._data_directory / "justification_attribute_given.json")
 
@@ -45,6 +47,7 @@ class JsonJustificationAttributeTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_justification_attribute_not_given(self):
+        # lobster-trace: json_req.Justification_Attribute
         self._test_runner.declare_input_file(
             self._data_directory / "justification_attribute_given.json")
 

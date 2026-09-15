@@ -1,0 +1,122 @@
+package json_req
+import req
+import UseCases
+
+req.System_Requirement Name_Attribute_Given {
+  description = '''
+    IF the config option "name_attribute" is given and not an empty string,
+    AND the input item contains that key,
+    THEN the tool SHALL use the value of that key as tag in the serialized LOBSTER item.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Name_Attribute_Given_Key_Missing {
+  description = '''
+    IF the config option "name_attribute" is given and not an empty string,
+    AND the input item does not contain that key,
+    THEN the tool SHALL print an error message identifying the missing key to STDOUT,
+    SHALL NOT write any output,
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Name_Attribute_Missing {
+  description = '''
+    OTHERWISE (the config option "name_attribute" is not given or is an empty string),
+    THEN the tool SHALL create a synthetic tag name based on the path of the JSON input file
+    and an item counter.
+
+    Notes:
+    - "Synthetic" means that, the name does not need to be related to the data.
+    - The item counter does not need to be unique across input files,
+      but it shall be unique at least for each input file separately.
+    - No further specification is made about how to combine the path and the item counter.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Tag_Attribute_Given {
+  description = '''
+    The config option "tag_attribute" is mandatory.
+    IF the input item contains the key given by "tag_attribute",
+    THEN the tool SHALL use the value(s) of that key as the requirement reference(s)
+    of the serialized LOBSTER item.
+    The value SHALL be accepted whether it is a single string or a list of strings.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Tag_Attribute_Given_Key_Missing {
+  description = '''
+    OTHERWISE (the input item does not contain the key given by "tag_attribute"),
+    THEN the tool SHALL generate the LOBSTER item without any requirement reference,
+    and SHALL NOT treat this as an error.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Justification_Attribute {
+  description = '''
+    IF the config option "justification_attribute" is given,
+    AND the input item contains the key given by that option,
+    THEN the tool SHALL use the value(s) of that key as justification(s)
+    for a missing requirement reference of the serialized LOBSTER item.
+    OTHERWISE (the option is not given, or the input item does not contain that key),
+    THEN the tool SHALL generate the LOBSTER item without any justification.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Test_List_Attribute {
+  description = '''
+    IF the config option "test_list" is given,
+    THEN the tool SHALL navigate to the key path given by that option within each input file's
+    JSON content, and SHALL treat the value found there as the list of test items to extract,
+    instead of the top-level JSON content of the file.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
