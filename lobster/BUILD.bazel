@@ -1,5 +1,3 @@
-# BUILD.bazel
-# gazelle:exclude __init__.py
 
 load("@rules_python//python:defs.bzl", "py_test")
 load("//:requirements.bzl", "requirement")
