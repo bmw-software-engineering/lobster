@@ -238,3 +238,8 @@ Example : `SCHEMA`, `ERROR_SEVERITY`
   same function. Any new implementation shall follow the exception-boundary pattern above: raise in
   the callee, handle in the caller. This avoids inconsistent return paths and keeps linting and
   error handling predictable.
+
+
+## Copyright
+
+Refer to [CODING_GUIDELINE_COPYRIGHT.md](CODING_GUIDELINE_COPYRIGHT.md) for copyright header requirements and examples.
