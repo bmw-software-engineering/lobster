@@ -1,0 +1,100 @@
+package codebeamer_req
+import req
+
+req.Software_Requirement Get_Query_Wraps_Report_Items {
+  description = '''
+    The function "get_query", IF given an integer query id,
+    SHALL request items from the "reports/<id>/items" endpoint
+    AND SHALL unwrap each result item from its surrounding "item" object before
+    converting it to a LOBSTER item.
+  '''
+  derived_from = [Query_Id_Parameter]
+}
+
+req.Software_Requirement Get_Query_Wraps_Cbql_Items {
+  description = '''
+    The function "get_query", IF given a cbQL query string,
+    SHALL request items from the "items/query" endpoint
+    AND SHALL convert each result item directly to a LOBSTER item, without
+    unwrapping.
+  '''
+  derived_from = [Query_String_Parameter]
+}
+
+req.Software_Requirement Get_Query_Appends_Baseline_Id_Only_For_Cbql_String {
+  description = '''
+    The function "get_query" SHALL append the "baselineId" parameter to the
+    request URL, IF a baseline id is configured AND the query is a cbQL string,
+    AND SHALL NOT append it, IF the query is an integer query id.
+  '''
+  derived_from = [Baseline_Id_Appended_To_Query_String_Request]
+}
+
+req.Software_Requirement Get_Query_Rejects_Item_Count_Mismatch {
+  description = '''
+    The function "get_query" SHALL raise MismatchException,
+    IF the codebeamer server reports a "total" item count that does not match the
+    number of items actually returned across all fetched pages.
+  '''
+  derived_from = [Paginated_Query_Extraction_Correctness]
+}
+
+req.Software_Requirement Get_Single_Item_Validates_Item_Id {
+  description = '''
+    The function "get_single_item" SHALL raise ValueError,
+    IF the given item id is not a positive integer.
+  '''
+  derived_from = [Query_Id_Parameter]
+}
+
+req.Software_Requirement Get_Single_Item_Requests_By_Id {
+  description = '''
+    The function "get_single_item" SHALL request the single item with the given id
+    from the "items/<id>" endpoint.
+  '''
+  derived_from = [Query_Id_Parameter]
+}
+
+req.Software_Requirement Get_Many_Items_Requests_By_Id_List {
+  description = '''
+    The function "get_many_items" SHALL request, across as many pages as needed,
+    all items whose id is contained in the given collection of item ids.
+  '''
+  derived_from = [Paginated_Query_Extraction_Correctness]
+}
+
+req.Software_Requirement Import_Tagged_Converts_Items_To_Lobster {
+  description = '''
+    The function "import_tagged" SHALL fetch the given codebeamer items
+    AND SHALL convert each of them to a LOBSTER item.
+  '''
+  derived_from = [Paginated_Query_Extraction_Correctness]
+}
+
+req.Software_Requirement Config_Base_Property_Appends_Api_Path {
+  description = '''
+    The "base" property of "Config" SHALL return the configured root URL with
+    "/api/v3" appended.
+  '''
+  derived_from = [Query_Id_Parameter, Query_String_Parameter]
+}
+
+req.Software_Requirement To_Lobster_Populates_Location_From_Item {
+  description = '''
+    The function "to_lobster" SHALL populate the generated LOBSTER item's location
+    with the configured codebeamer root, and the tracker id, item id, and version
+    taken from the codebeamer item.
+  '''
+  derived_from = [Codebeamer_Reference_In_Output]
+}
+
+req.Software_Requirement To_Lobster_Extracts_References_From_Fields_Or_Custom_Fields {
+  description = '''
+    The function "to_lobster", for each field name configured via "refs",
+    SHALL add a reference to the generated LOBSTER item for every value found at a
+    same-named top-level field of the codebeamer item,
+    OR, IF that field is absent or empty, for every value found in a "customFields"
+    entry with a matching name.
+  '''
+  derived_from = [References_Field_Support]
+}

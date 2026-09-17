@@ -1,0 +1,19 @@
+package codebeamer_req
+import req
+import UseCases
+
+req.System_Requirement Paginated_Query_Extraction_Correctness {
+  description = '''
+    IF a query (given by id or by cbQL string) is executed,
+    THEN the tool shall fetch every page of results reported by the codebeamer server
+    AND shall write to the output file exactly the items reported across all pages,
+    each with the id, name, and version as received from the server.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
