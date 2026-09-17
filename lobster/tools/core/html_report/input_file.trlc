@@ -1,5 +1,6 @@
 package html_req
 import req
+import UseCases
 
 req.System_Requirement Missing_Lobster_File {
     description = '''
@@ -7,37 +8,35 @@ req.System_Requirement Missing_Lobster_File {
       THEN the tool shall exit with a non-zero return code (2)
       AND shall print an error message to STDERR indicating that the specified file is not a valid file.
     '''
+    derived_from = [UseCases.Failure_On_Invalid_Input]
 }
 
 req.System_Requirement Valid_Lobster_File {
     description = '''
-      IF a valid .lobster file is provided as input,
+      IF a valid .lobster file is provided as input
+      AND the command line argument "--render-md" is not provided,
       THEN the tool shall execute successfully with a zero return code (0)
       AND shall write a valid HTML report to the specified output file.
     '''
+    derived_from = [UseCases.HTML_Output]
 }
 
 req.System_Requirement Valid_Lobster_File_With_Md_Content {
     description = '''
-      IF a valid .lobster file with MD content is provided as input,
+      IF a valid .lobster file with MD content is provided as input
+      AND the command line argument "--render-md" is provided,
       THEN the tool shall execute successfully with a zero return code (0)
-      AND shall write a valid HTML report to the specified output file with the rendered MD content.
+      AND shall write a valid HTML report to the specified output file with the MD
+      content rendered as HTML.
     '''
-}
-
-req.System_Requirement HTML_Report_with_20k_records {
-    description = '''
-      IF a valid .lobster file containing approximate 20 thousand items is provided as input,
-      THEN the tool shall execute successfully with a zero return code (0)
-      AND shall write a valid HTML report to the specified output file.
-    '''
+    derived_from = [UseCases.HTML_Output]
 }
 
 req.System_Requirement HTML_Report_Displays_Custom_data {
     description = '''
-      IF a valid .lobster file containing a "custom_data" field with keys such as "component", "branch", and "ci_run" is provided as input,
+      IF a valid .lobster file containing a "custom_data" field 
       THEN the tool shall extract these values from the file
-      AND shall render them in the top-right corner of the generated HTML report
-      AND shall exit successfully with a zero return code (0).
+      AND shall render them in the top-right corner of the generated HTML report.
     '''
+    derived_from = [UseCases.HTML_Output]
 }
