@@ -1,9 +1,11 @@
 import os
 import json
+import tempfile
 import unittest
 from os.path import dirname
 from pathlib import Path
 
+from lobster.common.exceptions import LOBSTER_Exception
 from lobster.tools.cpptest.cpptest import (
     OUTPUT_FILE,
     CODEBEAMER_URL,
@@ -49,6 +51,7 @@ class LobsterCpptestTests(unittest.TestCase):
                                   self.component_test_lobster_file]
 
     def test_collect_test_cases_from_test_files(self):
+        # lobster-trace: cpptest_req.Collect_Test_Cases_Parses_Requirement_Tags
         test_case_list = \
             collect_test_cases_from_test_files(
                 test_file_list=[self.test_case_file],
@@ -63,6 +66,7 @@ class LobsterCpptestTests(unittest.TestCase):
         self.assertEqual(expected_requirements, test_case_list[-1].requirements)
 
     def test_parse_config_file(self):
+        # lobster-trace: cpptest_req.Parse_Config_File_Returns_Config_Fields
         config = parse_config_file(self.test_config_2)
         self.assertIsNotNone(config)
         self.assertIsInstance(config, Config)
@@ -73,6 +77,7 @@ class LobsterCpptestTests(unittest.TestCase):
 )
 
     def test_get_test_file_list(self):
+        # lobster-trace: cpptest_req.Get_Test_File_List_Searches_Directories
         file_dir_list = [self.test_data_dir]
         extension_list = [".cpp", ".cc", ".c", ".h"]
 
@@ -88,6 +93,7 @@ class LobsterCpptestTests(unittest.TestCase):
         self.assertTrue(self.test_case_file in test_file_list)
 
     def test_get_test_file_list_no_file_with_matching_extension(self):
+        # lobster-trace: cpptest_req.Get_Test_File_List_Raises_When_No_Match
         file_dir_list = [self.test_data_dir]
         extension_list = [".xyz"]
 
@@ -104,6 +110,7 @@ class LobsterCpptestTests(unittest.TestCase):
         self.assertEqual(f'"{file_dir_list}" does not contain any test file.', exception_string)
 
     def test_get_test_file_list_not_existing_file_dir(self):
+        # lobster-trace: cpptest_req.Get_Test_File_List_Raises_On_Invalid_Path
         file_dir_list = [self.test_fake_dir]
         extension_list = [".cpp", ".cc", ".c", ".h"]
 
@@ -120,6 +127,7 @@ class LobsterCpptestTests(unittest.TestCase):
         self.assertEqual(f'"{self.test_fake_dir}" is not a file or directory.', exception_string)
 
     def test_single_file(self):
+        # lobster-trace: cpptest_req.Run_Lobster_Cpptest_Processes_Single_File
 
         if os.path.exists(self.output_file_name):
             os.remove(self.output_file_name)
@@ -151,6 +159,7 @@ class LobsterCpptestTests(unittest.TestCase):
                 self.assertTrue(os.path.isabs(file_name))
 
     def test_single_directory(self):
+        # lobster-trace: cpptest_req.Run_Lobster_Cpptest_Processes_Single_Directory
 
         if os.path.exists(self.output_data_file_name):
             os.remove(self.output_data_file_name)
@@ -173,6 +182,7 @@ class LobsterCpptestTests(unittest.TestCase):
         self.assertTrue(file_exists)
 
     def test_not_existing_file_dir(self):
+        # lobster-trace: cpptest_req.Run_Lobster_Cpptest_Raises_On_Invalid_Path
 
         if os.path.exists(self.output_fake_file_name):
             os.remove(self.output_fake_file_name)
@@ -199,6 +209,7 @@ class LobsterCpptestTests(unittest.TestCase):
         self.assertFalse(file_exists)
 
     def test_separate_output_config(self):
+        # lobster-trace: cpptest_req.Run_Lobster_Cpptest_Separates_Referenced_And_Orphan_Items
         config: Config = parse_config_file(self.test_config_2)
         config.files = [self.test_case_file]
 
@@ -258,6 +269,12 @@ class LobsterCpptestTests(unittest.TestCase):
         The whole TestCase class is tested as one since the test_file contains all possible
         variant of an allowed test case implementation
         """
+        # lobster-trace: cpptest_req.TestCase_Recognizes_Supported_Macros_And_Definition_Range
+        # lobster-trace: cpptest_req.TestCase_Parses_Requirement_Tags
+        # lobster-trace: cpptest_req.TestCase_Parses_Required_By_Tags
+        # lobster-trace: cpptest_req.TestCase_Parses_Test_And_Brief_Tags
+        # lobster-trace: cpptest_req.TestCase_Parses_Testmethods_Tag_Filters_Invalid
+        # lobster-trace: cpptest_req.TestCase_Parses_Version_Tag_Pads_To_Requirement_Count
         codebeamer_url = "https://codebeamer.com"
         expect = [
             # Verify that test macros, test suite, test name and documentation comments are correctly parsed
@@ -431,6 +448,57 @@ class LobsterCpptestTests(unittest.TestCase):
         for output_file in self.output_file_names:
             if os.path.exists(output_file):
                 os.remove(output_file)
+
+
+class ParseConfigFileErrorTests(unittest.TestCase):
+    def _write_config(self, content: str) -> str:
+        with tempfile.NamedTemporaryFile(
+                "w", suffix=".yaml", delete=False) as fd:
+            fd.write(content)
+            return fd.name
+
+    def test_missing_file_raises(self):
+        # lobster-trace: cpptest_req.Parse_Config_File_Raises_When_File_Missing
+        with self.assertRaises(FileNotFoundError):
+            parse_config_file("/no/such/config.yaml")
+
+    def test_invalid_yaml_raises(self):
+        # lobster-trace: cpptest_req.Parse_Config_File_Raises_On_Invalid_YAML
+        file_name = self._write_config("codebeamer_url: : bad\n")
+        with self.assertRaises(LOBSTER_Exception):
+            parse_config_file(file_name)
+
+    def test_missing_codebeamer_url_raises(self):
+        # lobster-trace: cpptest_req.Parse_Config_File_Validates_Mandatory_And_Optional_Keys
+        file_name = self._write_config("kind: req\n")
+        with self.assertRaises(KeyError):
+            parse_config_file(file_name)
+
+    def test_invalid_kind_value_raises(self):
+        # lobster-trace: cpptest_req.Parse_Config_File_Validates_Mandatory_And_Optional_Keys
+        file_name = self._write_config(
+            'codebeamer_url: "https://codebeamer.com"\nkind: "bogus"\n')
+        with self.assertRaises(ValueError):
+            parse_config_file(file_name)
+
+
+class ConfigDefaultsTest(unittest.TestCase):
+    def test_files_defaults_to_current_directory(self):
+        # lobster-trace: cpptest_req.Config_Files_Defaults_To_Current_Directory
+        config = Config(codebeamer_url="https://codebeamer.com")
+        self.assertEqual(config.files, ["."])
+
+
+class GetTestFileListExplicitExtensionTest(unittest.TestCase):
+    def test_explicit_file_ignores_extension(self):
+        # lobster-trace: cpptest_req.Get_Test_File_List_Explicit_File_Ignores_Extension
+        with tempfile.NamedTemporaryFile(
+                "w", suffix=".xyz", delete=False) as fd:
+            fd.write("// not a recognized extension\n")
+            file_name = fd.name
+
+        result = get_test_file_list([file_name], [".cpp", ".cc", ".c", ".h"])
+        self.assertEqual(result, [file_name])
 
 
 if __name__ == '__main__':

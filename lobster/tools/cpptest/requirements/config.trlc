@@ -1,0 +1,70 @@
+package cpptest_req
+import req
+import UseCases
+
+req.System_Requirement Config_File_Not_Found {
+  description = '''
+    IF the file given through the command line option "--config" does not exist,
+    THEN the tool SHALL print an error message stating that the file is not an
+    existing file to STDERR
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Config_File_Invalid_YAML {
+  description = '''
+    IF the file given through the command line option "--config" contains invalid
+    YAML syntax,
+    THEN the tool SHALL terminate with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Config_File_Invalid_Content {
+    // TODO: split into individual requirements
+  description = '''
+    IF the config file does not contain the mandatory key "codebeamer_url",
+    OR the optional key "output_file" is present but is not a string,
+    OR the optional key "kind" is present but is not a string,
+    OR "kind" is a string but is not one of "req", "act", "imp",
+    THEN the tool SHALL print an error message identifying the violation to STDERR
+    AND SHALL exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
+
+req.System_Requirement Output_File_Config_Option {
+    // TODO: remove default behavior "report.lobster"
+  description = '''
+    IF the config option "output_file" is given,
+    THEN the tool SHALL write the generated LOBSTER items, in the LOBSTER
+    interchange format, to that file.
+    OTHERWISE the tool SHALL write them to "report.lobster".
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}

@@ -19,7 +19,7 @@ class InputFileCpptestTest(LobsterCpptestSystemTestCaseBase):
         This test checks that the valid C++ test file is processed correctly
         by the lobster-cpptest tool.
         """
-        # lobster-trace: cpptest_req.Input_File_Valid_Cpp_Test_File
+        # lobster-trace: cpptest_req.Output_File_Config_Option
         OUT_FILE = "report.lobster"
         self._test_runner.declare_input_file(self._data_directory / "1_reference.cpp")
         self._test_runner.cmd_args.config = str(

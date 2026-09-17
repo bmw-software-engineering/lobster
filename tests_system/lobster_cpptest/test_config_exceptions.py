@@ -18,7 +18,7 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
         """
         Tests that the yaml config file is missing and tool gives an error
         """
-        # lobster-trace: UseCases.Config_File_Missing
+        # lobster-trace: cpptest_req.Config_File_Not_Found
         self._test_runner.cmd_args.config = str(
             self._data_directory / "non-existing.yaml")
 
@@ -35,8 +35,7 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
         """
         Tests various yaml config file errors.
         """
-        # lobster-trace: cpptest_req.Input_File_Invalid_Cpp_Test_File
-        # lobster-trace: UseCases.Config_File_Key_Error
+        # lobster-trace: cpptest_req.Config_File_Invalid_Content
         test_cases = [
             {
                 "config_file": "with_key_error.yaml",
@@ -82,8 +81,7 @@ class ConfigParserExceptionsCpptestTest(LobsterCpptestSystemTestCaseBase):
         """
         Tests yaml config file syntax errors.
         """
-        # lobster-trace: cpptest_req.Input_File_Invalid_Cpp_Test_File
-        # lobster-trace: UseCases.Config_File_Syntax_Error
+        # lobster-trace: cpptest_req.Config_File_Invalid_YAML
         self._test_runner.cmd_args.config = str(
             self._data_directory / "with_syntax_error.yaml"
         )
