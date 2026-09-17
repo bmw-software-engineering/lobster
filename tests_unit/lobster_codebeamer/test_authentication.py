@@ -13,6 +13,7 @@ class AuthenticationTest(unittest.TestCase):
     def test_get_bearer_auth(self):
         # This test verifies that the bearer authentication always takes precedence over
         # basic authentication.
+        # lobster-trace: codebeamer_req.Get_Authentication_Prefers_Bearer_Token
 
         for password in self._PASSWORDS:
             for user in self._USERS:
@@ -29,6 +30,7 @@ class AuthenticationTest(unittest.TestCase):
     def test_get_basic_auth(self):
         # This test verifies that the basic authentication is returned,
         # even if the user name and/or password are missing.
+        # lobster-trace: codebeamer_req.Get_Authentication_Falls_Back_To_Basic_Auth
 
         for password in self._PASSWORDS:
             for user in self._USERS:
