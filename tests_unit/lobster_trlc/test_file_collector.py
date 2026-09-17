@@ -6,6 +6,7 @@ from lobster.common.file_collector import FileCollector
 
 class FileCollectorTest(TestCase):
     def test_extension_validation(self):
+        # lobster-trace: trlc_req.File_Collector_Rejects_Extension_Without_Dot
         with self.assertRaises(ValueError) as context:
             FileCollector(extensions=[".screw", "hammer", "wire cutter"], directory_exclude_patterns=[])
         self.assertEqual(
@@ -13,6 +14,7 @@ class FileCollectorTest(TestCase):
         )
 
     def test_add_files(self):
+        # lobster-trace: trlc_req.File_Collector_Accepts_Or_Rejects_By_Extension
         collector = FileCollector(extensions=[".drill", ".saw"], directory_exclude_patterns=[])
 
         # Test adding files with valid extensions
@@ -35,6 +37,7 @@ class FileCollectorTest(TestCase):
         )
 
     def test_add_files_with_compound_extension(self):
+        # lobster-trace: trlc_req.File_Collector_Compound_Extension_Matching
         collector = FileCollector(
             extensions=[".rsl", ".trlc", ".trlc.md"], directory_exclude_patterns=[]
         )
@@ -53,6 +56,7 @@ class FileCollectorTest(TestCase):
         )
 
     def test_add_files_extension_matching_is_case_insensitive(self):
+        # lobster-trace: trlc_req.File_Collector_Extension_Matching_Case_Insensitive
         collector = FileCollector(
             extensions=[".RSL", ".TRLC"], directory_exclude_patterns=[]
         )
@@ -62,6 +66,7 @@ class FileCollectorTest(TestCase):
         self.assertEqual(collector.files, ["test.rsl", "test.trlc"])
 
     def test_add_files_with_no_extensions_accepts_any_file(self):
+        # lobster-trace: trlc_req.File_Collector_No_Extensions_Accepts_Any_File
         collector = FileCollector(extensions=[], directory_exclude_patterns=[])
 
         collector.add_file("test.anything", throw_on_mismatch=True)

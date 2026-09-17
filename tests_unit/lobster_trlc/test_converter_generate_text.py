@@ -25,6 +25,7 @@ class GenerateTextEmptyRulesTest(TrlcHierarchyDataTestCase):
 
     def test_generate_text_from_string_array_field(self):
         """Test that a string array field can be converted to text."""
+        # lobster-trace: trlc_req.Generate_Text_Converts_Scalar_And_Array_Fields
         for record_object in self._trlc_data_provider.get_record_objects():
             item_wrapper = ItemWrapper(record_object)
             text = self._converter._generate_text(item_wrapper, "string_array_field1")
@@ -56,6 +57,7 @@ class GenerateTextEmptyRulesTest(TrlcHierarchyDataTestCase):
 
     def test_generate_text_from_string_field(self):
         """Test that a string field can be converted to text."""
+        # lobster-trace: trlc_req.Generate_Text_Converts_Scalar_And_Array_Fields
         for record_object in self._trlc_data_provider.get_record_objects():
             item_wrapper = ItemWrapper(record_object)
             for field_name in ("field1", "field2"):
@@ -71,6 +73,7 @@ class GenerateTextEmptyRulesTest(TrlcHierarchyDataTestCase):
 
     def test_generate_text_from_empty_tuple_field(self):
         """Test that a tuple field with no values results in an empty list ."""
+        # lobster-trace: trlc_req.Generate_Text_Empty_Tuple_Field_Yields_Empty_List
         # iterate over all record objects except those of type Level4B
         # Level4B instances do have tuple values, all others do not
         for record_object in self._trlc_data_provider.get_filtered_record_objects(
@@ -86,6 +89,7 @@ class GenerateTextEmptyRulesTest(TrlcHierarchyDataTestCase):
 
     def test_generate_text_from_tuple_field_missing_tostring(self):
         """Test that a tuple field with no 'to_string' instructions raises an error."""
+        # lobster-trace: trlc_req.Generate_Text_Tuple_Field_Missing_To_String_Raises
         for record_object in self._trlc_data_provider.get_filtered_record_objects(
             self.LEVEL4B_TYPE_NAME,
             operator.eq,
@@ -134,6 +138,7 @@ class GenerateTextGivenRulesTest(TrlcHierarchyDataTestCase):
     def test_generate_text_from_tuple_field(self):
         """Test that tuple field is converted to text by adhering to the instructions."""
 
+        # lobster-trace: trlc_req.Generate_Text_Tuple_Field_Applies_To_String_Rule
         for record_object in self._trlc_data_provider.get_filtered_record_objects(
             self.LEVEL4B_TYPE_NAME,
             operator.eq,

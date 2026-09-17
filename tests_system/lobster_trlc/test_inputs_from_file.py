@@ -14,7 +14,6 @@ class InputFromFilesTest(LobsterTrlcSystemTestCaseBase):
 
     def test_input_from_files(self):
         # lobster-trace: trlc_req.Inputs_From_File
-        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
         OUT_FILE = "input_from_files.lobster"
         self._test_runner.cmd_args.out = OUT_FILE
         self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
@@ -31,7 +30,8 @@ class InputFromFilesTest(LobsterTrlcSystemTestCaseBase):
 
     def test_input_from_files_duplicate_contents(self):
         """Test that duplicated TRLC record types/objects cause an error"""
-        # lobster-trace: trlc_req.Duplicate_Inputs_From_File
+        # lobster-trace: trlc_req.Duplicate_Definition_Aborts_Processing
+        # lobster-trace: trlc_req.Inputs_From_File
         self._test_runner.declare_inputs_from_file(
             self._data_directory / "input_from_file_duplicate_data.txt",
             self._data_directory)

@@ -13,6 +13,7 @@ class ToStringRulesTest(TrlcToStringDataTestCase):
 
     def test_field_is_tuple_type(self):
         """Tests that a tuple field is properly converted to a string."""
+        # lobster-trace: trlc_req.To_String_Rules_Convert_Tuple_Field
         to_string_rule_sets=[
             ToStringRules(
                 tuple_type_name="ship",
@@ -92,6 +93,7 @@ class ToStringRulesTest(TrlcToStringDataTestCase):
 
     def test_field_is_tuple_array_type(self):
         """Tests that a tuple array field is properly converted to a string."""
+        # lobster-trace: trlc_req.To_String_Rules_Convert_Tuple_Array_Field
         to_string_rule_sets=[
             ToStringRules(
                 tuple_type_name="ship",

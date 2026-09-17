@@ -13,7 +13,6 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
 
     def test_input_files_list(self):
         # lobster-trace: trlc_req.Input_List_Of_Files
-        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
         self._test_runner.config_file_data.conversion_rules = [
             self.NAMASTE_CONVERSION_RULE,
         ]
@@ -29,7 +28,8 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_duplicate_input_files_list(self):
-        # lobster-trace: trlc_req.Duplicate_Input_List_Of_Files
+        # lobster-trace: trlc_req.Duplicate_Definition_Aborts_Processing
+        # lobster-trace: trlc_req.Input_List_Of_Files
         self._test_runner.config_file_data.conversion_rules = []
         self._test_runner.declare_input_file(self._data_directory /
                                              "default_file_copy.rsl")
@@ -54,7 +54,7 @@ class InputListOfFilesTest(LobsterTrlcSystemTestCaseBase):
 
 class CmdArgsInputTest(LobsterTrlcSystemTestCaseBase):
     def test_input_files_list(self):
-        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
+        # lobster-trace: trlc_req.Command_Line_Positional_Inputs
         """Test that input files can be specified as command line arguments"""
         test_runner = self.create_test_runner()
 
