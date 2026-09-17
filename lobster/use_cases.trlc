@@ -183,8 +183,11 @@ req.UseCase Item_GitHub_Source {
 
 req.UseCase HTML_Output {
     description = '''
-        As a requirements manager I want the traceability report to be generated as html
-        file.
+        As a requirements manager I want to have the traceability report as a single
+        stand-alone HTML file.
+
+        Note: This simplifies any archiving process, because no additional CSS files or
+        alike are required.
     '''
     affected_tools = [
         req.Tools.lobster_html_report
