@@ -36,6 +36,7 @@ lint-system-tests: style
 		tests_system/lobster_online_report \
 		tests_system/lobster_online_report_nogit \
 		tests_system/lobster_pkg \
+		tests_system/lobster_ci_report \
 		tests_system/lobster_report \
 		tests_system/lobster_rst_report \
 		tests_system/lobster_trlc \
@@ -180,7 +181,7 @@ tracing:
 	@for tool in $(TOOL_FOLDERS); do \
 	echo "Processing tool: $$tool"; \
 		case $$tool in \
-			codebeamer|cpptest|trlc|json|pkg|core-report|core-html_report|core-online-report) \
+			codebeamer|cpptest|trlc|json|pkg|core-report|core-html_report|core-online_report|core-ci_report) \
 				echo "Skipping tool: $$tool (handled by tracing.sh script)"; \
 				;; \
 			*) \

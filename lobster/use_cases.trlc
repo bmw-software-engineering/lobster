@@ -215,6 +215,32 @@ req.UseCase List_Findings {
     ]
 }
 
+req.UseCase CI_Build_Gate {
+    description = '''
+        As a CI administrator I want a tool that inspects a generated traceability
+        report and fails the build (non-zero return code) whenever at least one item
+        is not fully traced, printing each problem in a compiler-message style
+        ("<file>:<line>: lobster error: <message>") to STDOUT, so that broken
+        traceability is caught automatically in continuous integration.
+    '''
+    affected_tools = [
+        req.Tools.lobster_ci_report
+    ]
+}
+
+req.UseCase Bazel_Wrapped_Tool_Execution {
+    description = '''
+        As a CI administrator I want to invoke LOBSTER tools through Bazel commands
+        (e.g. "bazel run //:lobster-ci-report -- <FILE>") instead of calling the
+        underlying Python scripts directly, and I want a relative path typed on the
+        command line to be resolved against the directory from which I invoked Bazel,
+        even though Bazel itself executes the tool from a different working directory.
+    '''
+    affected_tools = [
+        req.Tools.lobster_ci_report
+    ]
+}
+
 section "Nice to have" {
     /* Use cases in this section are nice to have, but are probably not relevant for a tool qualification in the sense of ISO 26262.
        As always, it is important to qualify a tool in the context of the project and company which uses the tool.
@@ -251,6 +277,17 @@ section "Nice to have" {
         '''
         affected_tools = [
             req.Tools.lobster_pkg,
+        ]
+    }
+
+    req.UseCase CI_Report_Coverage_Summary {
+        description = '''
+            As a requirements manager I want to see the per-level traceability
+            coverage percentage printed directly to the console when checking a
+            LOBSTER report, without having to generate or open an HTML report.
+        '''
+        affected_tools = [
+            req.Tools.lobster_ci_report,
         ]
     }
 }
