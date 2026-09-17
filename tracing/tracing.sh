@@ -12,7 +12,7 @@ trap 'printf "❌ ERROR: tool %s failed during phase: %s\n" "$CURRENT_TOOL" "$CU
 rm -rf tracing_out
 mkdir -p tracing_out docs
 
-TOOLS=("codebeamer" "cpptest" "trlc" "json" "pkg" "report" "html_report" "online_report")
+TOOLS=("codebeamer" "cpptest" "trlc" "json" "pkg" "report" "html_report" "online_report" "ci_report")
 
 for tool in "${TOOLS[@]}"; do
     # delete all top-level files in tracing_out, but keep nested files
