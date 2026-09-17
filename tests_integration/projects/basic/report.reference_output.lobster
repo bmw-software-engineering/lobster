@@ -371,7 +371,7 @@
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "c550086fafeab2b3b490a57286f2a1cb219a74a1",
             "file": "tests_integration/projects/basic/nor.py",
-            "line": 5
+            "line": 4
           },
           "name": "nor.trlc_reference",
           "messages": [],
@@ -391,7 +391,7 @@
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "c550086fafeab2b3b490a57286f2a1cb219a74a1",
             "file": "tests_integration/projects/basic/nor.py",
-            "line": 13
+            "line": 12
           },
           "name": "nor.Example.helper_function",
           "messages": [],
@@ -413,7 +413,7 @@
             "gh_root": "https://github.com/bmw-software-engineering/lobster",
             "commit": "c550086fafeab2b3b490a57286f2a1cb219a74a1",
             "file": "tests_integration/projects/basic/nor.py",
-            "line": 17
+            "line": 16
           },
           "name": "nor.Example.nor",
           "messages": [],
