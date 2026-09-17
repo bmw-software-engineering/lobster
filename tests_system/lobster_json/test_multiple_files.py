@@ -13,7 +13,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.config_file_data.name_attribute = "name"
 
     def test_multiple_input_files_specified_in_config(self):
-        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
+        # lobster-trace: json_req.Input_List_Of_Files
         """
         Tests the processing of input files specified in a configuration file
         using the 'inputs' parameter.
@@ -44,6 +44,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_directory_with_empty_invalid_file(self):
+        # lobster-trace: json_req.Input_Directory_Traversal
         """
         Tests the processing of a directory containing an empty invalid file.
         """
@@ -64,7 +65,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_inputs_from_file_specified_in_config(self):
-        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
+        # lobster-trace: json_req.Inputs_From_File
         """
         Tests the processing of input files specified in a configuration file
         using the 'inputs_from_file' parameter.
@@ -93,7 +94,7 @@ class JsonMultipleFilesTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_inputs_and_inputs_from_file_With_extra_valid_files(self):
-        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
+        # lobster-trace: json_req.Inputs_And_Inputs_From_File_Combined
         """
         Tests the processing of both 'inputs' and 'inputs_from_file' parameters
         in the configuration file, including additional valid files.
