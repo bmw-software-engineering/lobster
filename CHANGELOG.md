@@ -48,6 +48,8 @@
 
 * Removed wrong statement from `schemas.md` regarding "status" field.
 
+* Included Python 3.13 and 3.14 in the CI test matrix.
+
 ### 1.0.6
 
 * Call Lobster Report via bazel directly instead of using a symlink
