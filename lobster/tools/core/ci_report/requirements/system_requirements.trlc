@@ -40,7 +40,7 @@ req.System_Requirement Ci_Report_Missing_Report_File {
         file was specified or which file was not found,
         AND SHALL exit with a non-zero return code.
     '''
-    derived_from = [UseCases.CI_Build_Gate]
+    derived_from = [UseCases.Failure_On_Invalid_Input]
 }
 
 req.System_Requirement Ci_Report_Show_Coverage_Flag {
