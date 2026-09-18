@@ -1,7 +1,156 @@
+/* LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
+ * Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <https://www.gnu.org/licenses/>.
+ */
 package UseCases
 import req
 
+/**
+ * The role "traceability manager" is meant to be a placeholder role for a requirements
+ * manager, test manager or quality manager. LOBSTER is a generic traceability tool, so
+ * it can be used in many different contexts.
+ *
+ * The role "user" refers to any individual who interacts with any LOBSTER tool,
+ * like a CI administrator who integrates LOBSTER into their continuous integration
+ * pipeline, or a reader of the HTML report.
+ */
+
+section "Generic" {
+    /**
+     * This section contains use cases which are agnostic of the type of the actually
+     * traced data. They do not know if the user wants to measure the coverage of
+     * requirements, tests, source code functions, bug issues, architecture elements,
+     * or any other type of traceable artifact.
+     */
+
+    req.UseCase List_Ok_Items {
+        description = '''
+            As a traceability manager I want the traceability report to list items that
+            fulfill the tracing policy, and how they do so,
+            so that I can decide whether to release my product.
+
+            Example:
+            If the tracing policy is: Tests --(trace to)--> Requirements,
+            then the report shall list all tests that link to at least one requirement,
+            and the report shall list all linked requirements per test.
+
+            The use case applies to the reverse direction as well.
+        '''
+        affected_tools = [
+            // extractor tools
+            req.Tools.lobster_codebeamer,
+            req.Tools.lobster_trlc,
+            req.Tools.lobster_json,
+            req.Tools.lobster_cpptest,
+            req.Tools.lobster_pkg,
+
+            // generator/rendering tools:
+            req.Tools.lobster_report,
+            req.Tools.lobster_ci_report,
+            req.Tools.lobster_html_report,
+            req.Tools.lobster_rst_report,
+        ]
+    }
+
+    req.UseCase List_Not_Ok_Items {
+        description = '''
+            As a traceability manager I want the traceability report to list items that
+            are not covered by other items, where coverage rules are specified by the
+            tracing policy,
+            so that I can identify gaps in the coverage.
+
+            Example:
+            If the tracing policy is: Tests --(trace to)--> Requirements,
+            then the report shall list all tests that do not link to any requirement.
+
+            The use case applies to the reverse direction as well.
+        '''
+        affected_tools = [
+            // extractor tools
+            req.Tools.lobster_codebeamer,
+            req.Tools.lobster_trlc,
+            req.Tools.lobster_json,
+            req.Tools.lobster_cpptest,
+            req.Tools.lobster_pkg,
+
+            // generator/rendering tools:
+            req.Tools.lobster_report,
+            req.Tools.lobster_ci_report,
+            req.Tools.lobster_html_report,
+            req.Tools.lobster_rst_report,
+        ]
+    }
+
+    req.UseCase Item_Coverage {
+        description = '''
+            As a traceability manager I want the traceability report to show the fraction
+            of the number of items in one level (of the tracing policy)
+            which fulfill the tracing policy,
+            divided by the total number of items in that level (of the tracing policy).
+            The fraction shall be shown as percentage.
+
+            Example:
+            If the tracing policy is: Tests --(trace to)--> Requirements,
+            then the report shall show the fraction of requirements which are covered by at
+            least one test, divided by the total number of requirements.
+        '''
+        affected_tools = [
+            // extractor tools
+            req.Tools.lobster_codebeamer,
+            req.Tools.lobster_trlc,
+            req.Tools.lobster_json,
+            req.Tools.lobster_cpptest,
+            req.Tools.lobster_pkg,
+
+            // generator/rendering tools:
+            req.Tools.lobster_report,
+            req.Tools.lobster_ci_report,
+            req.Tools.lobster_html_report,
+            req.Tools.lobster_rst_report,
+        ]
+    }
+
+    req.UseCase Tool_Usability {
+        description = '''
+            As a user of LOBSTER I want to have a good usability and standard
+            command-line ergonomics, like built-in help or automatic creation of output
+            destinations,
+            so that using the tools is intuitive and seamless in scripts and interactive
+            use.
+        '''
+        affected_tools = [
+            // extractor tools
+            req.Tools.lobster_codebeamer,
+            req.Tools.lobster_trlc,
+            req.Tools.lobster_json,
+            req.Tools.lobster_cpptest,
+            req.Tools.lobster_pkg,
+
+            // generator/rendering tools:
+            req.Tools.lobster_report,
+            req.Tools.lobster_ci_report,
+            req.Tools.lobster_html_report,
+            req.Tools.lobster_rst_report,
+            req.Tools.lobster_online_report,
+        ]
+    }
+}
+
 req.UseCase List_Requirements_to_Tests {
+    deprecated_by = List_Ok_Items
     description = '''
         As a requirements manager I want the traceability report to show the list of
         requirements which are covered by tests.
@@ -24,6 +173,7 @@ req.UseCase List_Requirements_to_Tests {
 }
 
 req.UseCase List_Requirements_without_Tests {
+    deprecated_by = List_Not_Ok_Items
     description = '''
         As a requirements manager I want the traceability report to show the list of
         requirements which are not covered by tests.
@@ -46,6 +196,7 @@ req.UseCase List_Requirements_without_Tests {
 }
 
 req.UseCase List_Tests_to_Requirements {
+    deprecated_by = List_Ok_Items
     description = '''
         As a requirements manager I want the traceability report to show the list of
         tests covering requirements.
@@ -68,39 +219,10 @@ req.UseCase List_Tests_to_Requirements {
 }
 
 req.UseCase List_Tests_without_Requirements {
+    deprecated_by = List_Not_Ok_Items
     description = '''
         As a requirements manager I want the traceability report to show the list of
         tests which are not covering any requirement.
-    '''
-    affected_tools = [
-        // shall extract requirements:
-        req.Tools.lobster_codebeamer,
-        req.Tools.lobster_trlc,
-
-        // shall extract test cases:
-        req.Tools.lobster_json,
-        req.Tools.lobster_cpptest,
-        req.Tools.lobster_pkg,
-
-        // shall generate reports:
-        req.Tools.lobster_report,
-        req.Tools.lobster_html_report,
-        req.Tools.lobster_rst_report
-    ]
-}
-
-req.UseCase Item_Coverage {
-    description = '''
-        As a requirements manager I want the traceability report to show the fraction of
-        the number of items in one level (of the tracing policy)
-        which fulfill the tracing policy,
-        divided by the total number of items in that level (of the tracing policy).
-        The fraction shall be shown as percentage.
-
-        Example:
-        If the tracing policy is: Tests --(trace to)--> Requirements,
-        then the report shall show the fraction of requirements which are covered by at
-        least one test, divided by the total number of requirements.
     '''
     affected_tools = [
         // shall extract requirements:
@@ -218,13 +340,34 @@ req.UseCase List_Findings {
 req.UseCase CI_Build_Gate {
     description = '''
         As a CI administrator I want a tool that inspects a generated traceability
-        report and fails the build (non-zero return code) whenever at least one item
-        is not fully traced, printing each problem in a compiler-message style
-        ("<file>:<line>: lobster error: <message>") to STDOUT, so that broken
-        traceability is caught automatically in continuous integration.
+        report and exits with a non-zero return code whenever at least one item
+        is not fully traced,
+        AND printing each problem in a compiler-message style,
+        CI pipeline can catch broken traceability automatically.
     '''
     affected_tools = [
         req.Tools.lobster_ci_report
+    ]
+}
+
+req.UseCase Failure_On_Invalid_Input {
+    description = '''
+        As a CI administrator
+        I want that the tool exits with a non-zero return code whenever it encounters
+        invalid input
+        so that the CI pipeline can catch invalid input automatically.
+    '''
+    affected_tools = [
+        req.Tools.lobster_codebeamer,
+        req.Tools.lobster_cpptest,
+        req.Tools.lobster_report,
+        req.Tools.lobster_trlc,
+        req.Tools.lobster_json,
+        req.Tools.lobster_pkg,
+        req.Tools.lobster_online_report,
+        req.Tools.lobster_html_report,
+        req.Tools.lobster_rst_report,
+        req.Tools.lobster_ci_report,
     ]
 }
 
@@ -238,6 +381,17 @@ req.UseCase Bazel_Wrapped_Tool_Execution {
     '''
     affected_tools = [
         req.Tools.lobster_ci_report
+    ]
+}
+
+req.UseCase CI_Report_Coverage_Summary {
+    description = '''
+        As a requirements manager I want to see the per-level traceability
+        coverage percentage printed directly to the console when checking a
+        LOBSTER report, without having to generate or open an HTML report.
+    '''
+    affected_tools = [
+        req.Tools.lobster_ci_report,
     ]
 }
 
@@ -277,17 +431,6 @@ section "Nice to have" {
         '''
         affected_tools = [
             req.Tools.lobster_pkg,
-        ]
-    }
-
-    req.UseCase CI_Report_Coverage_Summary {
-        description = '''
-            As a requirements manager I want to see the per-level traceability
-            coverage percentage printed directly to the console when checking a
-            LOBSTER report, without having to generate or open an HTML report.
-        '''
-        affected_tools = [
-            req.Tools.lobster_ci_report,
         ]
     }
 }

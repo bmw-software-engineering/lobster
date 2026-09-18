@@ -1,3 +1,20 @@
+/* LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
+ * Copyright (C) 2024-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <https://www.gnu.org/licenses/>.
+ */
 package req
 
 enum Tools {
@@ -26,6 +43,13 @@ type UseCase {
   affected_tools
     '''List of tools that contribute features to fulfill the use case'''
       Tools[1..*]
+  deprecated_by
+    '''Indicates the use case that deprecates the current use case'''
+      optional UseCase
+}
+
+checks UseCase {
+  deprecated_by == null, warning "This use case is deprecated!"
 }
 
 type System_Requirement {
@@ -45,6 +69,12 @@ type System_Requirement {
     derived from use cases whenever applicable, to support traceability.
     '''
       optional UseCase[1..*]
+}
+
+checks System_Requirement {
+  derived_from != null implies
+    (forall use_case in derived_from => use_case.deprecated_by == null),
+    warning "This system requirement is derived from a deprecated use case!", derived_from
 }
 
 enum Reason {
@@ -119,6 +149,11 @@ type PotentialError {
     '''List of use cases which the potential error could affect'''
       UseCase[1..*]
   impact_type Impact_Type
+}
+
+checks PotentialError {
+  (forall use_case in affects => use_case.deprecated_by == null),
+    warning "This potential error references a deprecated use case!", affects
 }
 
 type TestSpecification {
