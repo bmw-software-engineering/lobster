@@ -13,10 +13,9 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_valid_input_pkg_file(self):
-        # lobster-trace: UseCases.PKG_Items_Extraction
-        # lobster-trace: req.Pkg_File_Item
-        # lobster-trace: req.Trace_in_Test_Step_Node
-        # lobster-trace: req.Trace_in_Analysis_Node
+        # lobster-trace: pkg_req.Pkg_File_Item
+        # lobster-trace: pkg_req.Trace_in_Test_Step_Node
+        # lobster-trace: pkg_req.Trace_in_Analysis_Node
         OUT_FILE = "valid_file1.lobster"
         self._test_runner.declare_input_file(self._data_directory / "valid_file1.pkg")
         self._test_runner.cmd_args.files = ["valid_file1.pkg"]
@@ -34,9 +33,8 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_valid_input_ta_file(self):
-        # lobster-trace: UseCases.PKG_Items_Extraction
-        # lobster-trace: req.Pkg_File_Item
-        # lobster-trace: req.Trace_in_Analysis_Node
+        # lobster-trace: pkg_req.Pkg_File_Item
+        # lobster-trace: pkg_req.Trace_in_Analysis_Node
         OUT_FILE = "valid_ta_file.lobster"
         self._test_runner.declare_input_file(self._data_directory / "valid_file.ta")
         self._test_runner.cmd_args.files = ["valid_file.ta"]
@@ -54,10 +52,8 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_valid_ta_file_with_misplaced_traces(self):
-        # lobster-trace: UseCases.PKG_Items_Extraction
-        # lobster-trace: UseCases.Warning_for_Misplaced_Trace
-        # lobster-trace: req.Pkg_File_Item
-        # lobster-trace: req.Misplaced_Traces
+        # lobster-trace: pkg_req.Pkg_File_Item
+        # lobster-trace: pkg_req.Misplaced_Description_Node_Trace_Warning
         OUT_FILE = "with_misplaced_traces.lobster"
         self._test_runner.cmd_args.files = [
             str(self._data_directory / "with_misplaced_traces.ta")
@@ -81,10 +77,8 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertExitCode(0)
 
     def test_valid_pkg_file_with_misplaced_traces(self):
-        # lobster-trace: UseCases.PKG_Items_Extraction
-        # lobster-trace: UseCases.Warning_for_Misplaced_Trace
-        # lobster-trace: req.Pkg_File_Item
-        # lobster-trace: req.Misplaced_Traces
+        # lobster-trace: pkg_req.Pkg_File_Item
+        # lobster-trace: pkg_req.Misplaced_Description_Node_Trace_Warning
         OUT_FILE = "valid_file1.lobster"
         self._test_runner.cmd_args.files = [
             str(self._data_directory / "with_misplaced_traces.pkg")
@@ -108,10 +102,9 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertExitCode(0)
 
     def test_valid_input_pkg_files(self):
-        # lobster-trace: UseCases.PKG_Items_Extraction
-        # lobster-trace: req.Pkg_File_Item
-        # lobster-trace: req.Trace_in_Test_Step_Node
-        # lobster-trace: req.Trace_in_Analysis_Node
+        # lobster-trace: pkg_req.Pkg_File_Item
+        # lobster-trace: pkg_req.Trace_in_Test_Step_Node
+        # lobster-trace: pkg_req.Trace_in_Analysis_Node
         OUT_FILE = "valid_file1_and_valid_file2.lobster"
         for file in ("valid_file1.pkg", "valid_file2.pkg"):
             self._test_runner.declare_input_file(self._data_directory / file)
@@ -132,10 +125,9 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
 
     def test_valid_input_file_and_extra_file(self):
         """Test that an extra file in the working directory is ignored."""
-        # lobster-trace: UseCases.PKG_Items_Extraction
-        # lobster-trace: req.Pkg_File_Item
-        # lobster-trace: req.Trace_in_Test_Step_Node
-        # lobster-trace: req.Trace_in_Analysis_Node
+        # lobster-trace: pkg_req.Pkg_File_Item
+        # lobster-trace: pkg_req.Trace_in_Test_Step_Node
+        # lobster-trace: pkg_req.Trace_in_Analysis_Node
         OUT_FILE = "valid_file1.lobster"
         IN_FILES = ("valid_file1.pkg", "valid_file2.pkg")
         for f in IN_FILES:
@@ -155,10 +147,9 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_valid_input_pkg_folder(self):
-        # lobster-trace: UseCases.PKG_Items_Extraction
-        # lobster-trace: req.Pkg_File_Item
-        # lobster-trace: req.Trace_in_Test_Step_Node
-        # lobster-trace: req.Trace_in_Analysis_Node
+        # lobster-trace: pkg_req.Pkg_File_Item
+        # lobster-trace: pkg_req.Trace_in_Test_Step_Node
+        # lobster-trace: pkg_req.Trace_in_Analysis_Node
         OUT_FILE = "valid_file1_folder.lobster"
 
         pkg_files_dir = Path(self._test_runner.working_dir) / "pkg_files"
@@ -183,8 +174,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_valid_file_without_lobster_trace(self):
-        # lobster-trace: req.Pkg_File_Item
-        # lobster-trace: UseCases.PKG_Items_Extraction
+        # lobster-trace: pkg_req.Pkg_File_Item
         OUT_FILE = "without_lobster_trace.lobster"
         self._test_runner.declare_input_file(self._data_directory /
                                              "without_lobster_trace.pkg")
@@ -203,8 +193,7 @@ class InputFilePkgTest(LobsterPKGSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_valid_file_without_testcase_tag(self):
-        # lobster-trace: req.Pkg_File_Item
-        # lobster-trace: UseCases.PKG_Items_Extraction
+        # lobster-trace: pkg_req.Pkg_File_Item
         OUT_FILE = "without_testcase_tag.lobster"
         self._test_runner.declare_input_file(self._data_directory /
                                              "without_testcase_tag.pkg")

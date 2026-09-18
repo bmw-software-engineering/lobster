@@ -33,6 +33,10 @@ class LobsterPkgTests(unittest.TestCase):
         self.output_pkg_file_2 = os.path.join(self.temp_dir.name, "sample2.lobster")
 
     def test_lobster_pkg_functions_with_valid_xml_format(self):
+        # lobster-trace: pkg_req.Xml_Parser_Extracts_Allowed_Value_Traces
+        # lobster-trace: pkg_req.Extract_Trace_Analysis_Extracts_Valid_Traces
+        # lobster-trace: pkg_req.Extract_Trace_Analysis_Collects_Misplaced_Warnings
+        # lobster-trace: pkg_req.Create_Raw_Entry_Builds_Refs_From_First_Activities
         data = {}
         expected_values = ["req banana.reqA", "req banana.reqB", "req valid.req1", "req valid.req2"]
         with open(self.test_pkg_file_1, "r", encoding="UTF-8") as file:
@@ -65,6 +69,7 @@ class LobsterPkgTests(unittest.TestCase):
             self.assertTrue(lobster_item['refs'] == expected_values)
 
     def test_lobster_pkg_functions_with_misplaced_lobster_lines(self):
+        # lobster-trace: pkg_req.Xml_Parser_Raises_On_Misplaced_Value_Trace
         with open(self.test_pkg_file_with_misplaced, "r", encoding="UTF-8") as file:
             filename = Path(self.test_pkg_file_with_misplaced).name
             file_content = file.read()
@@ -77,6 +82,8 @@ class LobsterPkgTests(unittest.TestCase):
             self.assertIn("at line(s): [20]", exception_message)
 
     def test_lobster_pkg_functions_with_invalid_xml_format(self):
+        # lobster-trace: pkg_req.Xml_Parser_Returns_Empty_List_When_Not_Applicable
+        # lobster-trace: pkg_req.Create_Default_Activity_Only_For_Testcase
         data = {}
         with open(self.test_pkg_file_2, "r", encoding="UTF-8") as file:
             filename = Path(self.test_pkg_file_2).name

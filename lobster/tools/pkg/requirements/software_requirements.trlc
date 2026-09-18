@@ -1,0 +1,71 @@
+package pkg_req
+import req
+
+req.Software_Requirement Xml_Parser_Extracts_Allowed_Value_Traces {
+    description = '''
+        The function "xml_parser" SHALL return one activity entry per
+        "lobster-trace:" substring found in a <VALUE> node located in an allowed
+        <TsBlock> (the first <TsBlock> under <TESTSTEPS>, or a <TsBlock> that is a
+        direct child of it), for a file identified as a test case.
+    '''
+    derived_from = [Trace_in_Test_Step_Node]
+}
+
+req.Software_Requirement Xml_Parser_Returns_Empty_List_When_Not_Applicable {
+    description = '''
+        The function "xml_parser" SHALL return an empty list,
+        IF the file is not identified as a test case,
+        OR IF no "lobster-trace:" substring is found in any allowed <VALUE> node.
+    '''
+    derived_from = [Pkg_File_Item]
+}
+
+req.Software_Requirement Xml_Parser_Raises_On_Misplaced_Value_Trace {
+    description = '''
+        The function "xml_parser" SHALL raise a LOBSTER_Exception whose message
+        names the file and the line number(s),
+        IF a "lobster-trace:" substring is found in a <VALUE> node that is not
+        located in an allowed <TsBlock>.
+    '''
+    derived_from = [Misplaced_Value_Node_Trace_Error]
+}
+
+req.Software_Requirement Extract_Trace_Analysis_Extracts_Valid_Traces {
+    description = '''
+        The function "extract_lobster_traces_from_trace_analysis" SHALL return one
+        valid-trace entry for each <DESCRIPTION> node that is a direct child of an
+        <ANALYSISITEM> node of type "episode", which is itself a direct child of a
+        <TRACE-ANALYSIS> node, and that contains a "lobster-trace:" substring.
+    '''
+    derived_from = [Trace_in_Analysis_Node]
+}
+
+req.Software_Requirement Extract_Trace_Analysis_Collects_Misplaced_Warnings {
+    description = '''
+        The function "extract_lobster_traces_from_trace_analysis" SHALL return one
+        misplaced-trace warning message for each <DESCRIPTION> node under a
+        <TRACE-ANALYSIS> node that contains a "lobster-trace:" substring but does
+        not satisfy the direct-child conditions of [[Trace_in_Analysis_Node]].
+    '''
+    derived_from = [Misplaced_Description_Node_Trace_Warning]
+}
+
+req.Software_Requirement Create_Raw_Entry_Builds_Refs_From_First_Activities {
+    description = '''
+        The function "create_raw_entry" SHALL create one Activity for the given
+        file with framework "lobster-pkg" and kind "test",
+        AND SHALL add a tracing target for each requirement id parsed out of every
+        trace_list entry marked with activity "first".
+    '''
+    derived_from = [Pkg_File_Item]
+}
+
+req.Software_Requirement Create_Default_Activity_Only_For_Testcase {
+    description = '''
+        The function "create_default_activity" SHALL create an Activity with
+        framework "lobster-pkg" and kind "test" for the given file,
+        IF the file is identified as a test case,
+        AND SHALL NOT create any entry otherwise.
+    '''
+    derived_from = [Pkg_File_Item]
+}
