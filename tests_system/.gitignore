@@ -6,4 +6,5 @@
 !lobster_html_report/data/*.lobster
 !lobster_cpptest/data/*.lobster
 !lobster_python/data/*.lobster
+!lobster_ci_report/data/*.lobster
 !lobster_html_report/data/*.html
