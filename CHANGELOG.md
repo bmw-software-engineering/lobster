@@ -39,6 +39,7 @@
     typed relative to the repository root works as expected even though `bazel run`
     executes the tool from a different working directory. If the variable is not set,
     the path is resolved relative to the current working directory as before.
+  - Improved help message when using the `--help` command line argument.
 
 * `lobster-codebeamer`:
   Added the API-only `item_to_text` parameter to the configuration object of the
