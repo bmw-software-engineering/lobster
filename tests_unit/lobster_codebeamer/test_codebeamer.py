@@ -1,3 +1,5 @@
+import io
+import contextlib
 import unittest
 from unittest.mock import Mock, patch
 
@@ -51,6 +53,8 @@ class QueryCodebeamerTest(unittest.TestCase):
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_ID(self, mock_query_cb_single):
+        # lobster-trace: codebeamer_req.Get_Query_Wraps_Report_Items
+        # lobster-trace: codebeamer_req.To_Lobster_Populates_Location_From_Item
         mock_query = 171619121
         item_data = [
             {
@@ -87,6 +91,7 @@ class QueryCodebeamerTest(unittest.TestCase):
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_query(self, mock_query_cb_single):
+        # lobster-trace: codebeamer_req.Get_Query_Wraps_Cbql_Items
         mock_query = ("TeamID IN (10833708) AND workItemStatus IN ('InProgress') "
                       "AND summary LIKE 'Vulnerable Road User'")
         item_data = [
@@ -122,6 +127,7 @@ class QueryCodebeamerTest(unittest.TestCase):
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_query_and_baseline_id(self, mock_query_cb_single):
         """baseline_id is appended to the URL when import_query is a cbQL string."""
+        # lobster-trace: codebeamer_req.Get_Query_Appends_Baseline_Id_Only_For_Cbql_String
         self._mock_cb_config.baseline_id = 407126303
         mock_query = "tracker.id IN (29782591)"
         mock_query_cb_single.return_value = {
@@ -134,6 +140,7 @@ class QueryCodebeamerTest(unittest.TestCase):
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_ID_and_baseline_id(self, mock_query_cb_single):
         """baseline_id is NOT appended to the URL when import_query is a report ID."""
+        # lobster-trace: codebeamer_req.Get_Query_Appends_Baseline_Id_Only_For_Cbql_String
         self._mock_cb_config.baseline_id = 407126303
         mock_query = 171619121
         item_data = [{"item": {
@@ -151,6 +158,7 @@ class QueryCodebeamerTest(unittest.TestCase):
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_query_with_invalid_data(self, mock_query_cb_single):
+        # lobster-trace: codebeamer_req.Get_Query_Rejects_Item_Count_Mismatch
         query_id = 789
         mock_query_cb_single.return_value = {
                 "page": 1,
@@ -163,6 +171,7 @@ class QueryCodebeamerTest(unittest.TestCase):
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_single_item(self, mock_query_cb_single):
+        # lobster-trace: codebeamer_req.Get_Single_Item_Requests_By_Id
         item_id = 11693324
         mock_response = Mock()
         mock_response.return_value = {
@@ -178,6 +187,7 @@ class QueryCodebeamerTest(unittest.TestCase):
         self.assertEqual(query_result, mock_response)
 
     def test_get_single_item_invalid_id(self):
+        # lobster-trace: codebeamer_req.Get_Single_Item_Validates_Item_Id
         for item_id in (None, 0, -1, "house", 123.456, "456"):
             with self.subTest(item_id=item_id):
                 with self.assertRaises(ValueError):
@@ -185,6 +195,7 @@ class QueryCodebeamerTest(unittest.TestCase):
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_many_items(self, mock_query_cb_single):
+        # lobster-trace: codebeamer_req.Get_Many_Items_Requests_By_Id_List
         item_ids = {24406947, 21747817}
         response_items = [
                 {'id': 24406947, 'name': 'Test name 1'},
@@ -204,6 +215,7 @@ class QueryCodebeamerTest(unittest.TestCase):
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_import_tagged(self, mock_query_cb_single):
+        # lobster-trace: codebeamer_req.Import_Tagged_Converts_Items_To_Lobster
         item_ids = (24406947, 21747817)
         response_items = [
             {
@@ -237,9 +249,47 @@ class QueryCodebeamerTest(unittest.TestCase):
 
         self._assertListEqualByAttributes(import_tagged_result, expected_result)
 
+    @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
+    def test_get_query_zero_items_message(self, mock_query_cb_single):
+        # lobster-trace: codebeamer_req.Get_Query_Zero_Items_Message
+        mock_query_cb_single.return_value = {
+            "page": 1, "pageSize": 100, "total": 0, "items": []
+        }
+
+        captured = io.StringIO()
+        with contextlib.redirect_stdout(captured):
+            result = get_query(self._mock_cb_config, "some query string")
+
+        self.assertEqual(result, [])
+        self.assertIn(
+            "This query doesn't generate items. Please check:",
+            captured.getvalue(),
+        )
+
+    def test_to_lobster_references_from_direct_field_and_custom_fields(self):
+        # lobster-trace: codebeamer_req.To_Lobster_Extracts_References_From_Fields_Or_Custom_Fields
+        self._mock_cb_config.references = ["Direct", "Fallback"]
+        cb_item = {
+            "id": 1,
+            "name": "item with refs",
+            "version": 1,
+            "tracker": {"id": 1},
+            "status": {"name": "Draft"},
+            "Direct": {"id": 555},
+            "customFields": [
+                {"name": "Fallback", "values": [{"id": 777}]},
+            ],
+        }
+
+        item = to_lobster(self._mock_cb_config, cb_item)
+
+        referenced_tags = {ref.tag for ref in item.unresolved_references}
+        self.assertEqual(referenced_tags, {"555", "777"})
+
 
 class ParseYamlTests(unittest.TestCase):
     def test_codebeamer_base(self):
+        # lobster-trace: codebeamer_req.Config_Base_Property_Appends_Api_Path
         config = parse_config_data(
             {
                 'root': 'https://example.com',

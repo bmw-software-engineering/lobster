@@ -1,0 +1,15 @@
+package codebeamer_req
+import req
+import UseCases
+
+req.System_Requirement Codebeamer_Reference_In_Output {
+  description = '''
+    The tool shall include, in the location of each generated LOBSTER item,
+    a reference to the originating codebeamer item consisting of the codebeamer
+    root URL, tracker id, item id, and item version.
+
+    Note: Then, a user can navigate from the traceability report back to the source
+    item in codebeamer.
+  '''
+  derived_from = [UseCases.Show_codebeamer_links]
+}

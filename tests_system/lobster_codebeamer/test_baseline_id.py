@@ -24,6 +24,7 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
 
     def test_baseline_id_with_import_tagged_raises_error(self):
         """Ensure baseline_id combined with import_tagged exits with error."""
+        # lobster-trace: codebeamer_req.Baseline_Id_Mutually_Exclusive_With_Import_Tagged
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_tagged = "some_file.lobster"
@@ -41,6 +42,7 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
     def test_baseline_id_with_numeric_import_query_raises_error(self):
         """Ensure baseline_id combined with a numeric import_query exits
         with error."""
+        # lobster-trace: codebeamer_req.Baseline_Id_Requires_Cbql_Query_String
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = 9999
@@ -56,6 +58,7 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
 
     def test_baseline_id_negative_raises_error(self):
         """Ensure a negative baseline_id exits with error."""
+        # lobster-trace: codebeamer_req.Baseline_Id_Must_Be_Positive
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = "tracker.id IN (123)"
@@ -70,6 +73,7 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
 
     def test_baseline_id_zero_raises_error(self):
         """Ensure baseline_id of 0 exits with error."""
+        # lobster-trace: codebeamer_req.Baseline_Id_Must_Be_Positive
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = "tracker.id IN (123)"
@@ -85,6 +89,7 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
     def test_baseline_id_with_cbql_query_succeeds(self):
         """Ensure baseline_id with a cbQL string query works and appends
         baselineId to the URL."""
+        # lobster-trace: codebeamer_req.Baseline_Id_Appended_To_Query_String_Request
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = "tracker.id IN (123)"
