@@ -1,0 +1,57 @@
+load("//packages:package_targets.bzl", "package_build", "package_clean", "package_pipeline")
+
+package(default_visibility = ["//visibility:public"])
+
+package_build(
+    name = "package_core",
+    package_name = "lobster-core",
+)
+
+package_build(
+    name = "package_tool_trlc",
+    package_name = "lobster-tool-trlc",
+)
+
+package_build(
+    name = "package_tool_codebeamer",
+    package_name = "lobster-tool-codebeamer",
+)
+
+package_build(
+    name = "package_tool_cpp",
+    package_name = "lobster-tool-cpp",
+)
+
+package_build(
+    name = "package_tool_cpptest",
+    package_name = "lobster-tool-cpptest",
+)
+
+package_build(
+    name = "package_tool_gtest",
+    package_name = "lobster-tool-gtest",
+)
+
+package_build(
+    name = "package_tool_json",
+    package_name = "lobster-tool-json",
+)
+
+package_build(
+    name = "package_tool_python",
+    package_name = "lobster-tool-python",
+)
+
+package_build(
+    name = "package_metapackage",
+    package_name = "lobster-metapackage",
+)
+
+package_build(
+    name = "package_monolithic",
+    package_name = "lobster-monolithic",
+)
+
+package_clean(name = "package_clean")
+
+package_pipeline(name = "package_pipeline")
