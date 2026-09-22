@@ -29,7 +29,7 @@ req.System_Requirement Ci_Report_Default_Report_File {
         THEN the tool SHALL use "report.lobster" in the current working directory
         as the report file.
     '''
-    derived_from = [UseCases.CI_Build_Gate]
+    derived_from = [UseCases.Tool_Usability]
 }
 
 req.System_Requirement Ci_Report_Missing_Report_File {
