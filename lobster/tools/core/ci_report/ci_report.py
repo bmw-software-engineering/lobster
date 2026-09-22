@@ -85,12 +85,12 @@ class CiReportTool(MetaDataToolBase):
             metavar="file",
             nargs="?",
             default="report.lobster",
-            help="Path to the LOBSTER report file (default: report.lobster)",
+            help="path to the LOBSTER report file (default: report.lobster)",
         )
         self._argument_parser.add_argument(
             "--show-coverage",
             action="store_true",
-            help="Print the per-level coverage summary of the report.",
+            help="print the per-level coverage summary of the report.",
         )
 
     def _run_impl(self, options: Namespace) -> int:
