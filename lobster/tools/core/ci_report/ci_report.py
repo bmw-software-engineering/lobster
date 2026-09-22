@@ -82,8 +82,10 @@ class CiReportTool(MetaDataToolBase):
 
         self._argument_parser.add_argument(
             "lobster_report",
+            metavar="file",
             nargs="?",
             default="report.lobster",
+            help="Path to the LOBSTER report file (default: report.lobster)",
         )
         self._argument_parser.add_argument(
             "--show-coverage",
