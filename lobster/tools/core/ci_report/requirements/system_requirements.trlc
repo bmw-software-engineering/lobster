@@ -53,7 +53,7 @@ req.System_Requirement Ci_Report_Show_Coverage_Flag {
     derived_from = [UseCases.CI_Report_Coverage_Summary]
 }
 
-req.System_Requirement Ci_Report_Relative_Path_Resolution {
+req.System_Requirement Relative_Bazel_Path_Resolution {
     description = '''
         IF a relative report file path is given AND the environment variable
         "BUILD_WORKING_DIRECTORY" is set,
