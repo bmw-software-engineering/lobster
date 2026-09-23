@@ -1,9 +1,2 @@
-!lobster_online_report/data/*.lobster
-!lobster_online_report_nogit/data/*.lobster
-!lobster_report/data/*.lobster
-!lobster_trlc/data/*.lobster
-!lobster_codebeamer/data/*.lobster
-!lobster_html_report/data/*.lobster
-!lobster_cpptest/data/*.lobster
-!lobster_python/data/*.lobster
+!*/data/*.lobster
 !lobster_html_report/data/*.html
