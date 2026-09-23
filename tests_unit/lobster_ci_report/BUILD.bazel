@@ -1,0 +1,11 @@
+load("@rules_python//python:defs.bzl", "py_test")
+
+
+py_test(
+    name = "test_ci_report",
+    srcs = ["test_ci_report.py"],
+    deps = [
+        "//lobster/common",
+        "//lobster/tools/core/ci_report",
+    ],
+)

@@ -5,11 +5,6 @@ exports_files(["temp_content_file.py"])
 
 
 py_test(
-    name = "test_ci_report",
-    srcs = ["lobster_ci_report/test_ci_report.py"],
-)
-
-py_test(
     name = "test_file_tag_generator",
     srcs = ["test_file_tag_generator.py"],
     deps = ["//lobster/common"],
