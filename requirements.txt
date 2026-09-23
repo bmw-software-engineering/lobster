@@ -1,7 +1,7 @@
-trlc>=2.0.1
-requests>=2.31.0
-libcst>=1.1.0
-PyYAML>=6.0
-Markdown~=3.7
-yamale>=6.0.0
-GitPython>=3.1.58
+trlc>=3.0.1
+requests>=2.34.2
+libcst>=1.9.0
+PyYAML>=6.0.3
+Markdown~=3.10
+yamale>=6.1.0
+GitPython>=3.1.62
