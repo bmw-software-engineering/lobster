@@ -287,6 +287,17 @@ req.UseCase Tool_Usability {
     ]
 }
 
+req.UseCase Codebeamer_Baseline_Query {
+        description = '''
+        As a user of lobster-codebeamer
+        I want to fetch items from a codebeamer baseline
+        so that I can create a traceability report for a baseline.
+    '''
+    affected_tools = [
+        req.Tools.lobster_codebeamer,
+    ]
+}
+
 section "Nice to have" {
     /* Use cases in this section are nice to have, but are probably not relevant for a tool qualification in the sense of ISO 26262.
        As always, it is important to qualify a tool in the context of the project and company which uses the tool.
