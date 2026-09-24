@@ -148,6 +148,8 @@ req.System_Requirement Misplaced_Description_Node_Trace_Warning {
         THEN the tool SHALL print a warning message to STDOUT identifying the file and
         the misplaced tag
         AND SHALL continue processing the remaining input.
+
+        Note: This requirement does not influence the tool return code.
     '''
     derived_from = [
         UseCases.PKG_Misplaced_Trace_Warning,
