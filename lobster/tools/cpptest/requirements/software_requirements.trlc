@@ -1,0 +1,184 @@
+package cpptest_req
+import req
+
+req.Software_Requirement Get_Test_File_List_Searches_Directories {
+  description = '''
+    The function get_test_file_list SHALL, for every directory entry, recursively
+    collect the files matching the given extension list.
+  '''
+  derived_from = [Input_Directory_Traversal]
+}
+
+req.Software_Requirement Get_Test_File_List_Raises_When_No_Match {
+  description = '''
+    The function get_test_file_list SHALL raise ValueError, identifying the
+    configured file/directory list,
+    IF the resulting list of test files is empty.
+  '''
+  derived_from = [No_Test_Files_Found]
+}
+
+req.Software_Requirement Get_Test_File_List_Raises_On_Invalid_Path {
+  description = '''
+    The function get_test_file_list SHALL raise FileNotFoundError, identifying the
+    offending entry,
+    IF a file/directory list entry is neither an existing file nor an existing
+    directory.
+  '''
+  derived_from = [Input_Not_File_Not_Directory]
+}
+
+req.Software_Requirement Parse_Config_File_Returns_Config_Fields {
+  description = '''
+    The function parse_config_file SHALL return a Config object with the fields
+    codebeamer_url, kind, files, and output_file, populated from the config file
+    or their default values.
+  '''
+  derived_from = [Output_File_Config_Option]
+}
+
+req.Software_Requirement Parse_Config_File_Raises_When_File_Missing {
+  description = '''
+    The function parse_config_file SHALL raise FileNotFoundError,
+    IF the given config file path does not exist.
+  '''
+  derived_from = [Config_File_Not_Found]
+}
+
+req.Software_Requirement Parse_Config_File_Raises_On_Invalid_YAML {
+  description = '''
+    The function parse_config_file SHALL raise LOBSTER_Exception,
+    IF the config file contains invalid YAML syntax.
+  '''
+  derived_from = [Config_File_Invalid_YAML]
+}
+
+req.Software_Requirement Parse_Config_File_Validates_Mandatory_And_Optional_Keys {
+  description = '''
+    The function parse_config_file SHALL raise KeyError,
+    IF the config file does not contain the mandatory key "codebeamer_url".
+    OTHERWISE, IF the optional key "output_file" or "kind" has an invalid type, or
+    "kind" is not one of "req", "act", "imp",
+    THEN the function SHALL raise ValueError.
+  '''
+  derived_from = [Config_File_Invalid_Content]
+}
+
+req.Software_Requirement Config_Files_Defaults_To_Current_Directory {
+  description = '''
+    The dataclass Config SHALL default its "files" field to a list containing only
+    the current directory (".") when not explicitly given.
+  '''
+  derived_from = [Default_Files_Is_Current_Directory]
+}
+
+req.Software_Requirement Get_Test_File_List_Explicit_File_Ignores_Extension {
+  description = '''
+    The function get_test_file_list SHALL add a list entry that is a file directly
+    to the returned list, without checking it against the given extension list.
+  '''
+  derived_from = [Explicit_File_Ignores_Extension]
+}
+
+req.Software_Requirement Run_Lobster_Cpptest_Processes_Single_File {
+  description = '''
+    The function run_lobster_cpptest, IF config.files names a single existing file,
+    SHALL write a LOBSTER item for every recognized test case found in that file,
+    using absolute file paths in the generated item locations.
+  '''
+  derived_from = [All_Recognized_Tests_Extracted]
+}
+
+req.Software_Requirement Run_Lobster_Cpptest_Processes_Single_Directory {
+  description = '''
+    The function run_lobster_cpptest, IF config.files names a single directory,
+    SHALL write a LOBSTER item for every recognized test case found in that
+    directory.
+  '''
+  derived_from = [Input_Directory_Traversal]
+}
+
+req.Software_Requirement Run_Lobster_Cpptest_Raises_On_Invalid_Path {
+  description = '''
+    The function run_lobster_cpptest SHALL raise FileNotFoundError and SHALL NOT
+    create an output file,
+    IF a config.files entry is neither an existing file nor an existing directory.
+  '''
+  derived_from = [Input_Not_File_Not_Directory]
+}
+
+req.Software_Requirement Run_Lobster_Cpptest_Separates_Referenced_And_Orphan_Items {
+  description = '''
+    The function run_lobster_cpptest SHALL write, for every recognized test case, a
+    LOBSTER item that carries a tracing reference for every resolved requirement
+    tag, OR, IF none could be resolved, a LOBSTER item without any tracing
+    reference.
+  '''
+  derived_from = [Requirement_References_Extracted_As_Tags, Test_Without_References_Marked_Orphan]
+}
+
+req.Software_Requirement Collect_Test_Cases_Parses_Requirement_Tags {
+  description = '''
+    The function collect_test_cases_from_test_files SHALL return one TestCase per
+    recognized test case, with its "requirements" list populated from the
+    "@requirement" tags found in that test case's documentation.
+  '''
+  derived_from = [Requirement_References_Extracted_As_Tags]
+}
+
+req.Software_Requirement TestCase_Recognizes_Supported_Macros_And_Definition_Range {
+  description = '''
+    The class TestCase SHALL recognize a test case at any line matching one of the
+    supported test macros (TEST, TEST_P, TEST_F, TYPED_TEST, TYPED_TEST_P,
+    TYPED_TEST_SUITE, TEST_P_INSTANCE, TEST_F_INSTANCE), SHALL extract its suite and
+    test name, and SHALL determine the line range of its documentation comment and
+    of its definition (up to the matching closing brace).
+  '''
+  derived_from = [All_Recognized_Tests_Extracted]
+}
+
+req.Software_Requirement TestCase_Parses_Requirement_Tags {
+  description = '''
+    The class TestCase SHALL parse every "@requirement" tag in a test case's
+    documentation, in either the "CB-#nnn" format or as a codebeamer HTTP URL, and
+    SHALL accept multiple tags separated by commas, spaces, or newlines.
+  '''
+  derived_from = [Requirement_References_Extracted_As_Tags]
+}
+
+req.Software_Requirement TestCase_Parses_Required_By_Tags {
+  description = '''
+    The class TestCase SHALL parse every "@requiredby" tag in a test case's
+    documentation, matching the "scope::name" syntax, and SHALL accept multiple
+    tags separated by commas or newlines.
+  '''
+  derived_from = [All_Recognized_Tests_Extracted]
+}
+
+req.Software_Requirement TestCase_Parses_Test_And_Brief_Tags {
+  description = '''
+    The class TestCase SHALL parse the "@test" and "@brief" tags of a test case's
+    documentation, normalizing multi-line values into a single string.
+  '''
+  derived_from = [All_Recognized_Tests_Extracted]
+}
+
+req.Software_Requirement TestCase_Parses_Testmethods_Tag_Filters_Invalid {
+  description = '''
+    The class TestCase SHALL parse the "@testmethods" tag of a test case's
+    documentation, and SHALL silently drop any value that is not one of the
+    supported test methods (TM_EQUIVALENCE, TM_PAIRWISE, TM_GUESSING, TM_BOUNDARY,
+    TM_CONDITION, TM_REQUIREMENT, TM_TABLE).
+  '''
+  derived_from = [All_Recognized_Tests_Extracted]
+}
+
+req.Software_Requirement TestCase_Parses_Version_Tag_Pads_To_Requirement_Count {
+  description = '''
+    The class TestCase SHALL parse the "@version" tag of a test case's
+    documentation, and, IF fewer version values than requirement tags are given,
+    SHALL pad the version list by repeating its last value, so that every
+    requirement tag has a corresponding version value.
+  '''
+  derived_from = [Requirement_References_Extracted_As_Tags]
+}
