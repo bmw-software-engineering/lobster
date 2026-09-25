@@ -1,0 +1,442 @@
+package trlc_req
+import req
+
+req.Software_Requirement Lobster_Trlc_Config_From_File_Missing_Raises {
+  description = '''
+    The method LobsterTrlcConfig.from_file SHALL raise FileNotFoundError,
+    IF the given config file path does not exist.
+  '''
+  derived_from = [Config_File_Not_Found]
+}
+
+req.Software_Requirement Lobster_Trlc_Config_From_File_Invalid_Schema_Raises {
+  description = '''
+    The method LobsterTrlcConfig.from_file SHALL raise YamaleError, identifying the
+    schema violation,
+    IF the config file does not conform to the expected YAML schema.
+  '''
+  derived_from = [Config_File_Invalid_Schema]
+}
+
+req.Software_Requirement Lobster_Trlc_Config_From_File_Parses_Conversion_Rules {
+  description = '''
+    The method LobsterTrlcConfig.from_file SHALL parse each entry of the config
+    file's "conversion-rules" list into a ConversionRule object, converting every
+    hyphenated YAML key (for example "version-field") to its underscored Python
+    equivalent, and each entry of "to-string-rules" into a ToStringRules object.
+  '''
+  derived_from = [Output_Data_Matches_Input]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Skips_Unmapped_Types {
+  description = '''
+    The method Converter.generate_lobster_object SHALL return None for a TRLC record
+    object whose type has no matching conversion rule.
+  '''
+  derived_from = [Output_Data_Matches_Input]
+}
+
+req.Software_Requirement Converter_Rejects_Orphan_Conversion_Rules {
+  description = '''
+    The constructor of the class Converter SHALL raise InvalidConversionRuleError,
+    identifying the offending rule(s),
+    IF a configured conversion rule's package and record-type does not match any
+    TRLC record type found in the given symbol table.
+  '''
+  derived_from = [Orphan_Conversion_Rule_Error]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Populates_Basic_Item_Fields {
+  description = '''
+    The method Converter.generate_lobster_object SHALL populate the generated item's
+    tag, location, framework, kind, and name from the matched TRLC record object.
+  '''
+  derived_from = [Output_Data_Matches_Input]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Missing_Field_Raises {
+  description = '''
+    The method Converter.generate_lobster_object SHALL raise
+    RecordObjectComponentError, identifying the field name,
+    IF a conversion rule references a description, tag, or justification field that
+    does not exist on the matched TRLC record object.
+  '''
+  derived_from = [Missing_Description_Field_Error]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Multiple_Description_Fields_Formatted {
+  description = '''
+    The method Converter.generate_lobster_object SHALL format multiple configured
+    description fields as "field_name: text" pairs, separated by an empty line.
+  '''
+  derived_from = [Output_Data_Matches_Input]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Reference_Tags_Extracted {
+  description = '''
+    The method Converter.generate_lobster_object SHALL add one unresolved reference
+    per value found at a configured tag field (a string field, a text field, or an
+    empty/absent field yielding zero references) to the generated item.
+  '''
+  derived_from = [Output_Data_Matches_Input]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Tuple_Tag_Uses_To_String_Rule {
+  description = '''
+    The method Converter.generate_lobster_object SHALL use the text produced by the
+    first applicable configured to-string rule as the value of an unresolved
+    reference, IF a tag field is tuple-typed.
+  '''
+  derived_from = [To_String_Rule_Applied]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Tuple_Tag_Missing_To_String_Raises {
+  description = '''
+    The method Converter.generate_lobster_object SHALL raise TupleToStringMissingError
+    IF a tag field is tuple-typed and no to-string rule is configured for that tuple
+    type.
+  '''
+  derived_from = [Missing_To_String_Rule_Error]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Tuple_Tag_All_Rules_Fail_Raises {
+  description = '''
+    The method Converter.generate_lobster_object SHALL raise TupleToStringFailedError
+    IF a tag field is tuple-typed and every configured to-string rule for that tuple
+    type fails to apply.
+  '''
+  derived_from = [To_String_Rule_All_Attempts_Failed_Error]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Justification_Fields_Populated {
+  description = '''
+    The method Converter.generate_lobster_object SHALL populate the generated item's
+    just_up, just_down, and just_global lists from the configured justification
+    fields, applying the same field-to-text conversion rules as for tags.
+  '''
+  derived_from = [Output_Data_Matches_Input]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Tag_Version_From_Field {
+  description = '''
+    The method Converter.generate_lobster_object SHALL set the generated item's tag
+    version to the value of the configured version field,
+    IF a version field is configured and present on the matched TRLC record object.
+  '''
+  derived_from = [Tag_Version_From_Record_Field]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Tag_Version_None_When_Field_Missing {
+  description = '''
+    The method Converter.generate_lobster_object SHALL set the generated item's tag
+    version to None,
+    IF a version field is configured but not present on the matched TRLC record
+    object.
+  '''
+  derived_from = [Tag_Version_None_If_Field_Missing]
+}
+
+req.Software_Requirement Generate_Lobster_Object_Tag_Version_None_When_Not_Configured {
+  description = '''
+    The method Converter.generate_lobster_object SHALL set the generated item's tag
+    version to None,
+    IF no version field is configured, regardless of the matched TRLC record object.
+  '''
+  derived_from = [Tag_Version_None_If_Not_Configured]
+}
+
+req.Software_Requirement Generate_Text_Converts_Scalar_And_Array_Fields {
+  description = '''
+    The method Converter._generate_text SHALL return a list containing the string
+    representation of a scalar field's value, OR the string representation of every
+    element, IF the field is an array.
+  '''
+  derived_from = [Output_Data_Matches_Input]
+}
+
+req.Software_Requirement Generate_Text_Empty_Tuple_Field_Yields_Empty_List {
+  description = '''
+    The method Converter._generate_text SHALL return an empty list,
+    IF a tuple-typed field has no value on the given record object.
+  '''
+  derived_from = [Output_Data_Matches_Input]
+}
+
+req.Software_Requirement Generate_Text_Tuple_Field_Missing_To_String_Raises {
+  description = '''
+    The method Converter._generate_text SHALL raise TupleToStringMissingError,
+    IF a tuple-typed field has a value, but no to-string rule is configured for
+    that tuple type.
+  '''
+  derived_from = [Missing_To_String_Rule_Error]
+}
+
+req.Software_Requirement Generate_Text_Tuple_Field_Applies_To_String_Rule {
+  description = '''
+    The method Converter._generate_text SHALL convert a tuple-typed field's value to
+    text by applying the configured to-string instructions for that tuple type.
+  '''
+  derived_from = [To_String_Rule_Applied]
+}
+
+req.Software_Requirement Optional_Field_Omitted_When_Not_Set {
+  description = '''
+    The method Converter.generate_lobster_object SHALL omit a configured field from
+    the generated item's description, tags, and justifications,
+    IF that field is optional in the TRLC schema and not set on the record object.
+  '''
+  derived_from = [Output_Data_Matches_Input]
+}
+
+req.Software_Requirement Conversion_Rule_Lookup_Empty_When_No_Rules {
+  description = '''
+    The function build_record_type_to_conversion_rule_lookup SHALL return an empty
+    lookup, IF an empty list of conversion rules is given.
+  '''
+  derived_from = [Conversion_Rule_Applies_To_Derived_Types]
+}
+
+req.Software_Requirement Conversion_Rule_Lookup_Propagates_To_All_Derived_Types {
+  description = '''
+    The function build_record_type_to_conversion_rule_lookup SHALL map every TRLC
+    record type, direct or indirect, extending a configured type to that type's
+    conversion rule, IF the rule's applies_to_derived_types option is true.
+  '''
+  derived_from = [Conversion_Rule_Applies_To_Derived_Types]
+}
+
+req.Software_Requirement Conversion_Rule_Lookup_More_Specific_Rule_Wins {
+  description = '''
+    The function build_record_type_to_conversion_rule_lookup SHALL map a TRLC record
+    type to the conversion rule configured for that exact type,
+    IF such a rule exists, even though an ancestor type also has a propagating rule
+    configured. The result SHALL NOT depend on the order of the given conversion
+    rules.
+  '''
+  derived_from = [Conversion_Rule_Applies_To_Derived_Types]
+}
+
+req.Software_Requirement Conversion_Rule_Lookup_No_Propagation_When_Disabled {
+  description = '''
+    The function build_record_type_to_conversion_rule_lookup SHALL map only the
+    exact configured TRLC record type to its conversion rule, and SHALL NOT map any
+    derived type to it,
+    IF the rule's applies_to_derived_types option is false.
+  '''
+  derived_from = [Conversion_Rule_Applies_To_Derived_Types]
+}
+
+req.Software_Requirement Children_Lookup_Built_From_Type_Hierarchy {
+  description = '''
+    The function build_children_lookup SHALL map each TRLC record type to the set of
+    record types that directly extend it.
+  '''
+  derived_from = [Conversion_Rule_Applies_To_Derived_Types]
+}
+
+req.Software_Requirement Record_Types_Extracted_In_File_Order {
+  description = '''
+    The function get_record_types SHALL return the TRLC record types in the order
+    they are declared across the input ".rsl" files, and NOT in alphabetical order.
+  '''
+  derived_from = [Conversion_Rule_Applies_To_Derived_Types]
+}
+
+req.Software_Requirement Parse_Instructions_Extracts_Field_Placeholders {
+  description = '''
+    The function parse_instructions SHALL split a to-string instruction text into an
+    alternating sequence of constant-text and field instructions,
+    identifying every "$(field_name)" placeholder as a field instruction.
+  '''
+  derived_from = [To_String_Rule_Applied]
+}
+
+req.Software_Requirement Build_Text_Concatenates_Instructions {
+  description = '''
+    The function build_text_from_instructions SHALL concatenate the constant text of
+    every constant instruction with the string representation of the tuple field
+    value of every field instruction, in the given order.
+  '''
+  derived_from = [To_String_Rule_Applied]
+}
+
+req.Software_Requirement Build_Text_Failure_Modes_Raise_Errors {
+  description = '''
+    The function build_text_from_instructions SHALL raise TupleComponentError,
+    IF a field instruction references a field that is not present in the tuple data.
+    OTHERWISE, IF the list of instructions is empty, OR the tuple data is empty,
+    OR an instruction has an unknown type,
+    THEN the function SHALL raise ValueError.
+  '''
+  derived_from = [To_String_Rule_All_Attempts_Failed_Error]
+}
+
+req.Software_Requirement Error_Classes_Format_Detailed_Messages {
+  description = '''
+    The error classes TupleToStringFailedError, TupleToStringMissingError, and
+    TupleComponentError SHALL format an error message containing the tuple type
+    name, the tuple's value, and the source locations of both the tuple's usage and
+    its type definition.
+  '''
+  derived_from = [Missing_To_String_Rule_Error, To_String_Rule_All_Attempts_Failed_Error]
+}
+
+req.Software_Requirement Item_Wrapper_Reads_Existing_Fields {
+  description = '''
+    The class ItemWrapper SHALL return the Python value, the raw TRLC AST value, and
+    the Python value (or None) of an existing field, through get_field,
+    get_field_raw, and get_field_value_or_none respectively.
+  '''
+  derived_from = [Output_Data_Matches_Input]
+}
+
+req.Software_Requirement Item_Wrapper_Missing_Field_Behavior {
+  description = '''
+    The class ItemWrapper SHALL raise RecordObjectComponentError from get_field and
+    get_field_raw,
+    AND SHALL return None from get_field_value_or_none,
+    IF the requested field does not exist on the wrapped TRLC record object.
+  '''
+  derived_from = [Missing_Description_Field_Error]
+}
+
+req.Software_Requirement To_String_Rules_Convert_Tuple_Field {
+  description = '''
+    The configured to-string instructions of a ToStringRules entry SHALL be applied
+    to convert a single tuple-typed field's value to its string representation.
+  '''
+  derived_from = [To_String_Rule_Applied]
+}
+
+req.Software_Requirement To_String_Rules_Convert_Tuple_Array_Field {
+  description = '''
+    The configured to-string instructions of a ToStringRules entry SHALL be applied
+    to every element of a tuple-array-typed field, and the resulting strings SHALL
+    be presented in the same order as they occur in the input.
+  '''
+  derived_from = [To_String_Rule_Applied]
+}
+
+req.Software_Requirement To_String_Rules_Map_Built_From_Symbol_Table {
+  description = '''
+    The function build_tuple_type_to_ruleset_map SHALL map every TRLC tuple type
+    found in the symbol table that has a matching configured ToStringRules entry
+    (by package and tuple-type name) to that entry.
+  '''
+  derived_from = [To_String_Rule_Applied]
+}
+
+req.Software_Requirement File_Collector_Rejects_Extension_Without_Dot {
+  description = '''
+    The class FileCollector SHALL raise ValueError upon construction,
+    IF a configured extension does not start with a dot (".").
+  '''
+  derived_from = [Invalid_File_Extension]
+}
+
+req.Software_Requirement File_Collector_Accepts_Or_Rejects_By_Extension {
+  description = '''
+    The method FileCollector.add_file SHALL add a file to its "files" list,
+    IF the file's extension is one of the configured extensions.
+    OTHERWISE, THEN the method SHALL silently ignore the file,
+    UNLESS "throw_on_mismatch" is true, in which case it SHALL raise PathError,
+    identifying the file and the expected extensions.
+  '''
+  derived_from = [Invalid_File_Extension]
+}
+
+req.Software_Requirement File_Collector_Compound_Extension_Matching {
+  description = '''
+    The method FileCollector.add_file SHALL treat a multi-part configured extension
+    (for example ".trlc.md") as matching only files whose full compound suffix is
+    equal to it, and NOT as matching by the last suffix alone.
+  '''
+  derived_from = [Invalid_File_Extension]
+}
+
+req.Software_Requirement File_Collector_Extension_Matching_Case_Insensitive {
+  description = '''
+    The method FileCollector.add_file SHALL match a file's extension against the
+    configured extensions case-insensitively.
+  '''
+  derived_from = [Invalid_File_Extension]
+}
+
+req.Software_Requirement File_Collector_No_Extensions_Accepts_Any_File {
+  description = '''
+    The method FileCollector.add_file SHALL accept any file, regardless of its
+    extension, IF the FileCollector was configured with an empty list of extensions.
+  '''
+  derived_from = [Input_List_Of_Files]
+}
+
+req.Software_Requirement Create_Worklist_Rejects_Invalid_Path {
+  description = '''
+    The function create_worklist SHALL raise ValueError, identifying the offending
+    element, IF an input element is neither an existing file nor an existing
+    directory.
+  '''
+  derived_from = [Input_Not_File_Not_Directory]
+}
+
+req.Software_Requirement Combine_All_Inputs_Includes_Positional_Arguments {
+  description = '''
+    The function combine_all_inputs SHALL include the given positional
+    "dir_or_files" arguments in its returned list of inputs, in addition to the
+    config's "inputs" and "inputs_from_file" entries.
+  '''
+  derived_from = [Command_Line_Positional_Inputs]
+}
+
+req.Software_Requirement Combine_All_Inputs_Reads_Inputs_From_File {
+  description = '''
+    The function combine_all_inputs SHALL include every non-empty, non-comment
+    line of the file named by config.inputs_from_file in its returned list of
+    inputs.
+  '''
+  derived_from = [Inputs_From_File]
+}
+
+req.Software_Requirement Combine_All_Inputs_Merges_Inputs_And_Inputs_From_File {
+  description = '''
+    The function combine_all_inputs SHALL include both config.inputs and the
+    contents of config.inputs_from_file in its returned list of inputs, IF both
+    are given.
+  '''
+  derived_from = [Input_list_Of_File_And_Inputs_From_File]
+}
+
+req.Software_Requirement Create_Worklist_Searches_Directories_Recursively {
+  description = '''
+    The function create_worklist SHALL recursively search a directory input for
+    files matching the tool's configured extensions, and SHALL ignore any other
+    file found there.
+  '''
+  derived_from = [Input_Directory_Traversal]
+}
+
+req.Software_Requirement Config_Argparse_Requires_Config_Option {
+  description = '''
+    The tool SHALL register the command line option "--config" as a required
+    argument of its argument parser, so that parsing the command line without it
+    SHALL fail.
+  '''
+  derived_from = [Config_Option_Mandatory]
+}
+
+req.Software_Requirement Run_Lobster_Trlc_Empty_Symbol_Table_Writes_Zero_Items {
+  description = '''
+    The method LOBSTER_Trlc.run_lobster_trlc SHALL write zero items to the output
+    file, IF the consumed input contains zero TRLC record objects.
+  '''
+  derived_from = [No_Inputs_Produces_Zero_Items]
+}
+
+req.Software_Requirement Run_Lobster_Trlc_Duplicate_Definition_Raises {
+  description = '''
+    The method LOBSTER_Trlc.run_lobster_trlc SHALL raise TrlcFailure,
+    IF the TRLC Source_Manager fails to process the consumed input files
+    (for example, because they contain duplicate definitions).
+  '''
+  derived_from = [Duplicate_Definition_Aborts_Processing]
+}

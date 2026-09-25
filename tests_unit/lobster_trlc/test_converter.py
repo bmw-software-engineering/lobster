@@ -23,6 +23,7 @@ from lobster.common.location import Location
 from lobster.tools.trlc.conversion_rule import ConversionRule
 from lobster.tools.trlc.converter import Converter
 from lobster.tools.trlc.errors import (
+    InvalidConversionRuleError,
     RecordObjectComponentError,
     TupleToStringFailedError,
     TupleToStringMissingError,
@@ -44,8 +45,29 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     _NON_EXISTING_FIELD = "field_does_not_exist"
 
+    def test_orphan_conversion_rule_raises(self):
+        """Tests that a rule referencing a non-existent record type is rejected."""
+        # lobster-trace: trlc_req.Converter_Rejects_Orphan_Conversion_Rules
+        conversion_rule = ConversionRule(
+            record_type="Does_Not_Exist",
+            package=self.PACKAGE_NAME,
+            applies_to_derived_types=True,
+            namespace="req",
+        )
+        with self.assertRaises(InvalidConversionRuleError) as ctx:
+            Converter(
+                conversion_rules=[conversion_rule],
+                to_string_rules=[],
+                symbol_table=self._trlc_data_provider.symbol_table,
+            )
+        self.assertIn(
+            f"{self.PACKAGE_NAME}.Does_Not_Exist",
+            str(ctx.exception),
+        )
+
     def test_empty_rules(self):
         """ Tests that no item is generated if no conversion rules are provided."""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Skips_Unmapped_Types
         converter = Converter(
             conversion_rules=[],
             to_string_rules=[],
@@ -57,6 +79,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     def test_one_simple_rule(self):
         """Tests that an item is always generated if a conversion rule is provided."""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Populates_Basic_Item_Fields
         for field_name in ("field1", "field2", None):
             with self.subTest(field_name=field_name):
                 conversion_rule = ConversionRule(
@@ -95,6 +118,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
            This means, the conversion rules tries to access a field that has not been
            defined in the *.rsl file. In that case an exception is expected.
         """
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Missing_Field_Raises
         conversion_rule = ConversionRule(
             record_type="Level1",
             package=self.PACKAGE_NAME,
@@ -117,6 +141,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     def test_optional_field_missing(self):
         """Tests that no error is raised if an optional TRLC field is missing"""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Missing_Field_Raises
         conversion_rule = ConversionRule(
             record_type="Level1",
             package=self.PACKAGE_NAME,
@@ -139,6 +164,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     def test_many_description_fields(self):
         """Tests that multiple description fields are handled correctly"""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Multiple_Description_Fields_Formatted
         conversion_rule = ConversionRule(
             record_type="Level1",
             package=self.PACKAGE_NAME,
@@ -161,6 +187,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     def test_tag_field_missing(self):
         """Tests that an error is raised if a required tag field is missing"""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Missing_Field_Raises
         conversion_rule = ConversionRule(
             record_type="Level1",
             package=self.PACKAGE_NAME,
@@ -183,6 +210,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     def test_empty_reference_tag_field(self):
         """Tests that generation succeeds with zero unresolved references"""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Reference_Tags_Extracted
         conversion_rule = ConversionRule(
             record_type="Level1",
             package=self.PACKAGE_NAME,
@@ -201,6 +229,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     def test_reference_tag_field(self):
         """Tests that one unresolved reference is generated"""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Reference_Tags_Extracted
         conversion_rule = ConversionRule(
             record_type="Level1",
             package=self.PACKAGE_NAME,
@@ -233,6 +262,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     def test_text_tag_field(self):
         """Tests that a text field can be used as tag field"""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Reference_Tags_Extracted
         conversion_rule = ConversionRule(
             record_type="Level1",
             package=self.PACKAGE_NAME,
@@ -264,7 +294,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
         """Tests that a tuple field can be used as tag field"""
 
         # better move this test into test_to_string_rules.py
-
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Tuple_Tag_Uses_To_String_Rule
         conversion_rule = ConversionRule(
             record_type=self.LEVEL4B_TYPE_NAME,
             package=self.PACKAGE_NAME,
@@ -309,6 +339,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     def test_tuple_tag_field_without_to_string(self):
         """Tests that an error is raised if to_string instructions are missing"""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Tuple_Tag_Missing_To_String_Raises
         conversion_rule = ConversionRule(
             record_type=self.LEVEL4B_TYPE_NAME,
             package=self.PACKAGE_NAME,
@@ -364,6 +395,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     def test_tuple_tag_with_failing_instructions(self):
         """Tests that an error is raised if all to_string instructions fail"""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Tuple_Tag_All_Rules_Fail_Raises
         converter = self.setup_with_failing_instructions()
         for record_object in self._trlc_data_provider.get_filtered_record_objects(
             self.LEVEL4B_TYPE_NAME,
@@ -375,6 +407,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     def test_tuple_tag_with_failing_and_succeeding_instructions(self):
         """Tests success if the last to_string instructions succeed"""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Tuple_Tag_Uses_To_String_Rule
         converter = self.setup_with_failing_instructions(
             append_rules=[
                 ConstantInstruction(value="huhu"),
@@ -401,6 +434,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
 
     def test_justification_fields(self):
         """Tests that justification fields are handled correctly"""
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Justification_Fields_Populated
         conversion_rule = ConversionRule(
             record_type="Level1",
             package=self.PACKAGE_NAME,
@@ -446,6 +480,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
             )
 
     def test_tag_version_with_rule_configured_and_object_field(self):
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Tag_Version_From_Field
         conversion_rule = ConversionRule(
             record_type="Level1",
             package=self.PACKAGE_NAME,
@@ -464,6 +499,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
         self.assertEqual(lobster_item.tag.version, 1234)
 
     def test_tag_version_with_rule_configured_but_object_field_missing(self):
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Tag_Version_None_When_Field_Missing
         conversion_rule = ConversionRule(
             record_type="Level1",
             package=self.PACKAGE_NAME,
@@ -482,6 +518,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
         self.assertIsNone(lobster_item.tag.version)
 
     def test_tag_version_without_rule_configured(self):
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Tag_Version_None_When_Not_Configured
         conversion_rule = ConversionRule(
             record_type="Level1",
             package=self.PACKAGE_NAME,

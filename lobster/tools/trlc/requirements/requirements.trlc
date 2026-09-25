@@ -1,11 +1,19 @@
 package trlc_req
 import req
+import UseCases
 
 req.System_Requirement Output_File {
     description = '''
       If a output file is specified as command line argument, then the output must be written into that file.
       Otherwise, the output shall be written to 'trlc.lobster'.
     '''
+    derived_from = [
+      UseCases.List_Requirements_to_Tests,
+      UseCases.List_Requirements_without_Tests,
+      UseCases.List_Tests_to_Requirements,
+      UseCases.List_Tests_without_Requirements,
+      UseCases.Item_Coverage
+    ]
 }
 
 req.Software_Requirement Args_From_File {
@@ -13,4 +21,21 @@ req.Software_Requirement Args_From_File {
       If a command line argument is prefixed with '@', then the contents of that file
       shall be included as arguments to the argument parser.
     '''
+    derived_from = [Command_Line_Args_From_File]
+}
+
+req.System_Requirement Command_Line_Args_From_File {
+    description = '''
+      IF a command line argument is prefixed with "@",
+      THEN the tool SHALL read the contents of the file named by the remainder of
+      that argument, and SHALL include each of its contained arguments as if they
+      had been given directly on the command line.
+    '''
+    derived_from = [
+      UseCases.List_Requirements_to_Tests,
+      UseCases.List_Requirements_without_Tests,
+      UseCases.List_Tests_to_Requirements,
+      UseCases.List_Tests_without_Requirements,
+      UseCases.Item_Coverage
+    ]
 }
