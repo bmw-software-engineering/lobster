@@ -1,5 +1,6 @@
 package core_html_report_req
 import req
+import UseCases
 
 req.System_Requirement Clickable_Codebeamer_Item {
   description = '''
@@ -8,6 +9,7 @@ req.System_Requirement Clickable_Codebeamer_Item {
     SHALL represent these as hyperlinks to the item on the codebeamer server,
     where the codebeamer server URL is taken from the repo_root configuration parameter.
   '''
+  derived_from = [UseCases.Show_codebeamer_links]
 }
 
 req.Software_Requirement Codebeamer_URL {
@@ -33,6 +35,7 @@ req.System_Requirement Codebeamer_Item_Name {
     THEN the generated HTML report
     SHALL represent these by their codebeamer item name, if it is given.
   '''
+  derived_from = [UseCases.Show_codebeamer_links]
 }
 
 req.Software_Requirement Codebeamer_Item_as_String {
