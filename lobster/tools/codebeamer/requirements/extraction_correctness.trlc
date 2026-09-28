@@ -1,0 +1,28 @@
+package codebeamer_req
+import req
+import UseCases
+
+req.System_Requirement Paginated_Query_Extraction_Correctness {
+  /**
+    Note: Strictly speaking this requirement is not a system requirement, because
+    it cannot be triggered directly by the user. The user only triggers it indirectly
+    by executing a query through the tool, which is described in the requirements
+    Query_Id_Parameter and Query_String_Parameter.
+    Here we describe HOW to download items from the codebeamer server, in particular by
+    requesting every page of results until no more pages are available.
+   */
+
+  description = '''
+    IF a query (given by id or by cbQL string) is executed,
+    THEN the tool shall fetch every page of results reported by the codebeamer server
+    AND shall write to the output file exactly the items reported across all pages,
+    each with the id, name, and version as received from the server.
+  '''
+  derived_from = [
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Item_Coverage
+  ]
+}
