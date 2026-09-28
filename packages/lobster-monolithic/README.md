@@ -9,7 +9,8 @@ This package `bmw-lobster-monolithic` is an alternative package that
 installs the same things as the metapackage
 [bmw-lobster](https://pypi.org/project/bmw-lobster) and additionally installs lobster-pkg. This package may
 be interesting for people who wish to integrate into bazel, as
-`py_wheel` cannot deal with overlapping installs.
+`py_wheel` cannot deal with overlapping installs. In this repository,
+build the distributable artifact with `bazel build //packages/lobster-monolithic:wheel.dist`.
 
 ## Copyright & License information
 
