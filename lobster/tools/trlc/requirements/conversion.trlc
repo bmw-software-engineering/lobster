@@ -61,7 +61,6 @@ req.System_Requirement To_String_Rule_Applied {
     configured rules in order),
     THEN the tool SHALL use the text produced by the first applicable rule as the
     string representation of that value.
-
   '''
   derived_from = [
     UseCases.List_Requirements_to_Tests,
