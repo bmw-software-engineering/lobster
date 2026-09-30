@@ -1,4 +1,4 @@
-# For LOBSTER developers
+# Information for LOBSTER Developers
 
 * [Release Process](documentation/release.md)
 * [System Test Coverage Report](https://bmw-software-engineering.github.io/lobster/htmlcov-system/index.html)
