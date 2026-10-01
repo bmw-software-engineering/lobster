@@ -24,7 +24,7 @@ Here are the links to the individual requirement coverage reports:
 * [Requirement Coverage Report Core CI Report](https://bmw-software-engineering.github.io/lobster/tracing-core_ci_report.html)
 * [Requirement Coverage Report Core HTML Report](https://bmw-software-engineering.github.io/lobster/tracing-core_html_report.html)
 * [Requirement Coverage Report Core Online Report](https://bmw-software-engineering.github.io/lobster/tracing-core_online_report.html)
-* Requirement Coverge Report Core Online Report Nogit: not yet available
+* Requirement Coverage Report Core Online Report Nogit: not yet available
 * [Requirement Coverage Report Core Report](https://bmw-software-engineering.github.io/lobster/tracing-core_report.html)
 * [Requirement Coverage Report Codebeamer](https://bmw-software-engineering.github.io/lobster/tracing-codebeamer.html)
 
