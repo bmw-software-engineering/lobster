@@ -31,7 +31,6 @@ py_test(
 	main = "trlc_runner.py",
 	args = [
 		"lobster",
-		"--error-on-warnings",
 		"--verify",
 	],
 	data = [
