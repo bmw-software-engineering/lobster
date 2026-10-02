@@ -186,13 +186,6 @@ def query_cb_single(cb_config: Config, url: str):
     )
 
 
-def get_single_item(cb_config: Config, item_id: int):
-    if not isinstance(item_id, int) or (item_id <= 0):
-        raise ValueError("item_id must be a positive integer")
-    url = f"{cb_config.base}/items/{item_id}"
-    return query_cb_single(cb_config, url)
-
-
 def get_many_items(cb_config: Config, item_ids: Iterable[int]):
     rv = []
 
