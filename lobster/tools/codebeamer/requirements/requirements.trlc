@@ -2,9 +2,10 @@ package codebeamer_req
 import req
 import UseCases
 
-req.System_Requirement Empty_Query_String_Parameter {
+req.System_Requirement No_Source_Parameter {
   description = '''
-    IF the configuration parameter "import_query" is empty,
+    IF the configuration parameter "import_query" and "import_tagged" are both not
+    provided (either missing in the configuration file or set to an empty string),
     THEN the tool shall display an error message and exit with a non-zero return code.
   '''
   derived_from = [
@@ -53,12 +54,13 @@ req.System_Requirement References_Field_Support {
     either from a same-named top-level field on the item or, if that field is absent or empty,
     from a "customFields" entry with a matching name,
     AND add a Tracing_Tag entry to the LOBSTER item for each referenced item ID.
+
+    Note: Here the term "item" refers to a codebeamer JSON item as returned by the server
+    through its API.
   '''
   derived_from = [
-    UseCases.List_Requirements_to_Tests,
-    UseCases.List_Requirements_without_Tests,
-    UseCases.List_Tests_to_Requirements,
-    UseCases.List_Tests_without_Requirements,
-    UseCases.Item_Coverage
+    UseCases.List_Ok_Items,
+    UseCases.List_Not_Ok_Items,
+    UseCases.Item_Coverage,
   ]
 }

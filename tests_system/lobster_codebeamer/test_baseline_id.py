@@ -41,12 +41,18 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
 
     def test_baseline_id_with_import_tagged_raises_error(self):
         """Ensure baseline_id combined with import_tagged exits with error."""
+        # lobster-trace: codebeamer_req.Baseline_Id_Not_With_Import_Tagged
+
+        # GIVEN a configuration where both import_tagged and baseline_id are set
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_tagged = "some_file.lobster"
         cfg.baseline_id = 12345
 
+        # WHEN the tool is executed
         completed_process = self._test_runner.run_tool_test()
+
+        # THEN the tool shall exit with an error
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertExitCode(1)
         asserter.assertStdErrText(
@@ -58,12 +64,20 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
     def test_baseline_id_with_numeric_import_query_raises_error(self):
         """Ensure baseline_id combined with a numeric import_query exits
         with error."""
+        # lobster-trace: codebeamer_req.Baseline_Id_Requires_Cbql_Query_String
+
+        # GIVEN a configuration where both import_query is numeric and baseline_id is
+        # set
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = 9999
         cfg.baseline_id = 12345
 
+        # WHEN the tool is executed
         completed_process = self._test_runner.run_tool_test()
+
+        # THEN the tool shall exit with an error, because a baseline cannot be combined
+        # with a query ID.
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertExitCode(1)
         asserter.assertStdErrText(
@@ -72,36 +86,34 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
         )
 
     def test_baseline_id_negative_raises_error(self):
-        """Ensure a negative baseline_id exits with error."""
+        """Ensure non-positive baseline_id exits with error."""
+        # lobster-trace: codebeamer_req.Baseline_Id_Must_Be_Positive
+
+        # GIVEN a configuration where the baseline_id is zero or negative
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = "tracker.id IN (123)"
-        cfg.baseline_id = -1
 
-        completed_process = self._test_runner.run_tool_test()
-        asserter = Asserter(self, completed_process, self._test_runner)
-        asserter.assertExitCode(1)
-        asserter.assertStdErrText(
-            "lobster-codebeamer: baseline_id must be a positive integer.\n"
-        )
+        for baseline_id in (-1, 0):
+            with self.subTest(baseline_id=baseline_id):
+                cfg.baseline_id = baseline_id
 
-    def test_baseline_id_zero_raises_error(self):
-        """Ensure baseline_id of 0 exits with error."""
-        cfg = self._test_runner.config_file_data
-        cfg.set_default_root_token_out(self.codebeamer_flask.port)
-        cfg.import_query = "tracker.id IN (123)"
-        cfg.baseline_id = 0
+                # WHEN the tool is executed
+                completed_process = self._test_runner.run_tool_test()
 
-        completed_process = self._test_runner.run_tool_test()
-        asserter = Asserter(self, completed_process, self._test_runner)
-        asserter.assertExitCode(1)
-        asserter.assertStdErrText(
-            "lobster-codebeamer: baseline_id must be a positive integer.\n"
-        )
+                # THEN the tool shall exit with an error
+                asserter = Asserter(self, completed_process, self._test_runner)
+                asserter.assertExitCode(1)
+                asserter.assertStdErrText(
+                    "lobster-codebeamer: baseline_id must be a positive integer.\n"
+                )
 
     def test_baseline_id_with_cbql_query_succeeds(self):
         """Ensure baseline_id with a cbQL string query works and appends
         baselineId to the URL."""
+        # lobster-trace: codebeamer_req.Baseline_Id_Appended_To_Query_String_Request
+
+        # GIVEN a configuration with a valid cbQL query and a positive baseline_id
         cfg = self._test_runner.config_file_data
         cfg.set_default_root_token_out(self.codebeamer_flask.port)
         cfg.import_query = "tracker.id IN (123)"
@@ -133,17 +145,19 @@ class LobsterCodebeamerBaselineIdTest(LobsterCodebeamerSystemTestCaseBase):
         self.codebeamer_flask.responses = [
             Response(json.dumps(response_data), status=200),
         ]
-        self._test_runner.declare_output_file(
-            self._data_directory / cfg.out)
+        self._test_runner.declare_output_file(self._data_directory / cfg.out)
 
+        # WHEN the tool is executed
         completed_process = self._test_runner.run_tool_test()
-        asserter = Asserter(self, completed_process, self._test_runner)
-        asserter.assertExitCode(0)
 
-        # Verify the baselineId parameter was included in the request URL
+        # THEN the tool shall append the "baselineId" parameter to the request URL
         self.assertEqual(len(self.codebeamer_flask.received_requests), 1)
         request_url = self.codebeamer_flask.received_requests[0]["url"]
         self.assertIn("baselineId=407126303", request_url)
+
+        # Additionally, assert that the tool exited successfully
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertExitCode(0)
 
 
 if __name__ == "__main__":

@@ -11,26 +11,24 @@ req.System_Requirement Query_Id_Parameter {
     AND write the obtained codebeamer items in the LOBSTER interchange format to the file given in the "out" parameter
   '''
   derived_from = [
-    UseCases.List_Requirements_to_Tests,
-    UseCases.List_Requirements_without_Tests,
-    UseCases.List_Tests_to_Requirements,
-    UseCases.List_Tests_without_Requirements,
+    UseCases.List_Ok_Items,
+    UseCases.List_Not_Ok_Items,
     UseCases.Item_Coverage
   ]
 }
 
 req.System_Requirement Query_String_Parameter {
   description = '''
-    IF an element given through the yaml config file option "import_query" is valid codebeamer query string,
-    THEN the tool shall request items from the codebeamer server with the given query string
-    according to [[Paginated_Query_Extraction_Correctness]]
-    AND write the obtained codebeamer items in the LOBSTER interchange format to the file given in the "out" parameter
+    IF an element given through the yaml config file option "import_query" is valid
+    codebeamer query string,
+    THEN the tool shall request items from the codebeamer server with the given query
+    string according to [[Paginated_Query_Extraction_Correctness]]
+    AND write the obtained codebeamer items in the LOBSTER interchange format to the file
+    given in the "out" parameter.
   '''
   derived_from = [
-    UseCases.List_Requirements_to_Tests,
-    UseCases.List_Requirements_without_Tests,
-    UseCases.List_Tests_to_Requirements,
-    UseCases.List_Tests_without_Requirements,
+    UseCases.List_Ok_Items,
+    UseCases.List_Not_Ok_Items,
     UseCases.Item_Coverage
   ]
 }
@@ -42,13 +40,13 @@ req.System_Requirement Invalid_Import_Query_String_Format {
     ("import_query must be a positive integer" IF the remaining characters are all
     digits, OTHERWISE "import_query must be a valid cbQL query")
     AND shall exit with a non-zero return code.
+
+    Note: A cbQL query cannot start with a hyphen ("-").
   '''
   derived_from = [
-    UseCases.List_Requirements_to_Tests,
-    UseCases.List_Requirements_without_Tests,
-    UseCases.List_Tests_to_Requirements,
-    UseCases.List_Tests_without_Requirements,
-    UseCases.Item_Coverage
+    UseCases.List_Ok_Items,
+    UseCases.List_Not_Ok_Items,
+    UseCases.Item_Coverage,
   ]
 }
 
@@ -59,6 +57,6 @@ req.System_Requirement Numeric_Import_Query_String_Treated_As_Id {
     AND treat it identically to specifying that integer directly as a query id.
   '''
   derived_from = [
-    UseCases.Tool_Usability
+    UseCases.Tool_Usability,
   ]
 }
