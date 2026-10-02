@@ -19,10 +19,8 @@ req.System_Requirement Paginated_Query_Extraction_Correctness {
     each with the id, name, and version as received from the server.
   '''
   derived_from = [
-    UseCases.List_Requirements_to_Tests,
-    UseCases.List_Requirements_without_Tests,
-    UseCases.List_Tests_to_Requirements,
-    UseCases.List_Tests_without_Requirements,
+    UseCases.List_Ok_Items,
+    UseCases.List_Not_Ok_Items,
     UseCases.Item_Coverage
   ]
 }

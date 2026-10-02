@@ -2,7 +2,7 @@ package codebeamer_req
 import req
 import UseCases
 
-req.System_Requirement Baseline_Id_Mutually_Exclusive_With_Import_Tagged {
+req.System_Requirement Baseline_Id_Not_With_Import_Tagged {
   description = '''
     IF the yaml config file options "baseline_id" and "import_tagged" are both
     present,
@@ -44,7 +44,7 @@ req.System_Requirement Baseline_Id_Appended_To_Query_String_Request {
     IF the yaml config file option "baseline_id" is present,
     AND the option "import_query" is a cbQL query string,
     THEN the tool shall append the "baselineId" parameter, with the configured
-    value, to every request sent to the codebeamer server for that query.
+    value, to the payload of every request sent to the codebeamer server for that query.
   '''
   derived_from = [
     UseCases.Codebeamer_Baseline_Query,
