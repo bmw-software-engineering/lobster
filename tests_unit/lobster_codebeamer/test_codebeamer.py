@@ -16,11 +16,11 @@
 # <https://www.gnu.org/licenses/>.
 
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 from lobster.tools.codebeamer.codebeamer import (
     MismatchException,
-    get_query, get_single_item,
+    get_query,
     get_many_items, parse_config_data, to_lobster,
     import_tagged,
 )
@@ -177,28 +177,6 @@ class QueryCodebeamerTest(unittest.TestCase):
             }
         with self.assertRaises(MismatchException):
             get_query(self._mock_cb_config, query_id)
-
-    @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
-    def test_get_single_item(self, mock_query_cb_single):
-        item_id = 11693324
-        mock_response = Mock()
-        mock_response.return_value = {
-            'page': 1,
-            'pageSize': 999,
-            'total': 1,
-            'items': [{'item': {'id': item_id, 'name': 'test name'}}]
-        }
-
-        mock_query_cb_single.return_value = mock_response
-
-        query_result = get_single_item(self._mock_cb_config, item_id)
-        self.assertEqual(query_result, mock_response)
-
-    def test_get_single_item_invalid_id(self):
-        for item_id in (None, 0, -1, "house", 123.456, "456"):
-            with self.subTest(item_id=item_id):
-                with self.assertRaises(ValueError):
-                    get_single_item(self._mock_cb_config, item_id)
 
     @patch('lobster.tools.codebeamer.codebeamer.query_cb_single')
     def test_get_many_items(self, mock_query_cb_single):
