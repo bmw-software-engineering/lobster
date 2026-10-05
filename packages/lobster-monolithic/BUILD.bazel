@@ -1,0 +1,65 @@
+load("@rules_python//python:packaging.bzl", "py_package", "py_wheel")
+
+py_package(
+    name = "package",
+    packages = ["lobster"],
+    deps = [
+        "//:lobster_package",
+        "//lobster:package_root",
+    ],
+)
+
+py_wheel(
+    name = "wheel",
+    author = "Bayerische Motoren Werke Aktiengesellschaft (BMW AG)",
+    author_email = "philipp.wullstein-kammler@bmw.de",
+    classifiers = [
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Console",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+        "Topic :: Documentation",
+        "Topic :: Software Development",
+    ],
+    console_scripts = {
+        "lobster-ci-report": "lobster.tools.core.ci_report.ci_report:main",
+        "lobster-codebeamer": "lobster.tools.codebeamer.codebeamer:main",
+        "lobster-cpp": "lobster.tools.cpp.cpp:main",
+        "lobster-cpptest": "lobster.tools.cpptest.cpptest:main",
+        "lobster-gtest": "lobster.tools.gtest.gtest:main",
+        "lobster-html-report": "lobster.tools.core.html_report.html_report:main",
+        "lobster-json": "lobster.tools.json.json:main",
+        "lobster-online-report": "lobster.tools.core.online_report.online_report:main",
+        "lobster-online-report-nogit": "lobster.tools.core.online_report_nogit.online_report_nogit:main",
+        "lobster-pkg": "lobster.tools.pkg.pkg:main",
+        "lobster-python": "lobster.tools.python.python:main",
+        "lobster-report": "lobster.tools.core.report.report:main",
+        "lobster-rst-report": "lobster.tools.core.rst_report.rst_report:main",
+        "lobster-trlc": "lobster.tools.trlc.trlc_tool:main",
+    },
+    description_file = "README.md",
+    dist_folder = "meta_dist",
+    distribution = "bmw-lobster-monolithic",
+    homepage = "https://github.com/bmw-software-engineering/lobster",
+    license = "GNU Affero General Public License v3",
+    project_urls = {
+        "Bug Tracker": "https://github.com/bmw-software-engineering/lobster/issues",
+        "Documentation": "https://github.com/pages/bmw-software-engineering/lobster/",
+        "Source Code": "https://github.com/bmw-software-engineering/lobster",
+    },
+    python_requires = ">=3.10, <4",
+    python_tag = "py3",
+    requires = [
+        "miss-hit>=0.9.42",
+        "requests>=2.31.0",
+        "libcst>=1.1.0",
+        "trlc>=2.0.1",
+        "Markdown~=3.7",
+        "PyYAML>=6.0",
+        "yamale>=6.0.0",
+        "GitPython>=3.1.30",
+    ],
+    summary = "Monolithic package for all LOBSTER Tools",
+    version = "1.1.0-dev",
+    deps = [":package"],
+)
