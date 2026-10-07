@@ -15,7 +15,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Optional
 import yaml
@@ -25,14 +25,11 @@ from lobster.tools.trlc.trlc_tool import main
 
 @dataclass
 class ConfigFileData:
-    inputs: Optional[List[str]] = None
+    inputs: List[str] = field(default_factory=list)
     inputs_from_file: Optional[str] = None
     traverse_bazel_dirs : Optional[str] = None
     conversion_rules: Optional[List[dict]] = None
     to_string_rules: Optional[List[dict]] = None
-
-    def __post_init__(self):
-        self.inputs = []
 
     def dump(self, filename: str):
         data = {}
