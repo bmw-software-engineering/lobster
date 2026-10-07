@@ -34,7 +34,8 @@ class InputFromDirectory(LobsterTrlcSystemTestCaseBase):
 
     def test_input_from_directory(self):
         """Test that a directory is processed"""
-        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
+        # lobster-trace: trlc_req.Input_Directory_Traversal
+        # lobster-trace: trlc_req.Trlc_Record_Object_To_Lobster_Item
 
         # TODO: the test folder structure is not recursive, but it should be
         OUT_FILE = "input_from_working_directory.lobster"

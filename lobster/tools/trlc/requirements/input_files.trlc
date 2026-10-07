@@ -9,10 +9,8 @@ req.System_Requirement Input_List_Of_Files {
       THEN all files given in "inputs" parameter shall be consumed.
     '''
     derived_from = [
-      UseCases.List_Requirements_to_Tests,
-      UseCases.List_Requirements_without_Tests,
-      UseCases.List_Tests_to_Requirements,
-      UseCases.List_Tests_without_Requirements,
+      UseCases.List_Ok_Items,
+      UseCases.List_Not_Ok_Items,
       UseCases.Item_Coverage,
     ]
 }
@@ -115,10 +113,8 @@ req.System_Requirement No_Inputs_Produces_Zero_Items {
       conversion rule does not match any TRLC record type.
     '''
     derived_from = [
-      UseCases.List_Requirements_to_Tests,
-      UseCases.List_Requirements_without_Tests,
-      UseCases.List_Tests_to_Requirements,
-      UseCases.List_Tests_without_Requirements,
+      UseCases.List_Ok_Items,
+      UseCases.List_Not_Ok_Items,
       UseCases.Item_Coverage
     ]
 }
