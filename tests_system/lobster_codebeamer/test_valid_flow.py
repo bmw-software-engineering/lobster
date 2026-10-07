@@ -180,7 +180,11 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
                      status=200),
         ]
 
-        with patch.dict(os.environ, {"HOME": str(self._test_runner.working_dir)}):
+        wd = str(self._test_runner.working_dir)
+
+        # The tool locates .netrc via os.path.expanduser("~"), which reads HOME on
+        # POSIX but USERPROFILE on Windows.
+        with patch.dict(os.environ, {"HOME": wd, "USERPROFILE": wd}):
             # WHEN the tool sends a request to codebeamer
             completed_process = self._test_runner.run_tool_test()
 
@@ -188,13 +192,13 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
             self, completed_process, self._test_runner, port=self.codebeamer_flask.port)
 
         # THEN the request uses HTTP Basic authentication with the .netrc credentials
+        asserter.assertExitCode(0)
         encoded_credentials = base64.b64encode(
             b"netrc-user:netrc-password").decode("ascii")
         self.assertEqual(
             self.codebeamer_flask.received_requests[0]["headers"]["Authorization"],
             f"Basic {encoded_credentials}",
         )
-        asserter.assertExitCode(0)
 
     def test_request_fails_without_authentication_credentials(self):
         # lobster-trace: codebeamer_req.Request_Requires_Authentication_Credentials

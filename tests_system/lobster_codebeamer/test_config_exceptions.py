@@ -68,12 +68,13 @@ class LobsterCodebeamerConfigExceptionsTest(LobsterCodebeamerSystemTestCaseBase)
 
         # THEN the tool prints an error message and exits with a non-zero code
         # Note: The error message depends on the operating system.
-        message_1 = f"lobster-codebeamer: Path '{self._test_runner.cmd_args.config}' " \
-                    "is a directory, but a file was expected.\n"
-        message_2 = f"lobster-codebeamer: File '{self._test_runner.cmd_args.config}' " \
-                    "not found.\n"
-        if (completed_process.stderr != message_1) \
-                and (completed_process.stderr != message_2):
+        message_posix = "lobster-codebeamer: Path " \
+            f"'{self._test_runner.cmd_args.config}' is a directory, but a file was " \
+            "expected.\n"
+        message_windows = "lobster-codebeamer: Permission denied for " \
+            f"'{self._test_runner.cmd_args.config}'.\n"
+        if (completed_process.stderr != message_posix) \
+                and (completed_process.stderr != message_windows):
             self.fail(f"Unexpected STDERR: {completed_process.stderr}")
         asserter.assertExitCode(1)
 
