@@ -104,6 +104,9 @@ clang-tidy:
 
 integration-tests: packages
 	(cd tests_integration/projects/basic; make)
+	$(BAZEL_BIN) build \
+		//tests_integration/projects/basic:traceability \
+		//tests_integration/projects/cross_package:software-requirements
 	$(BAZEL_BIN) test \
 		//tests_integration/projects/coverage:traceability \
 		//tests_integration/projects/coverage_half:traceability \
