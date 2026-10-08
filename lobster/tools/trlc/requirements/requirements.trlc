@@ -14,10 +14,23 @@ req.System_Requirement Output_File {
       object.
     '''
     derived_from = [
-      UseCases.List_Requirements_to_Tests,
-      UseCases.List_Requirements_without_Tests,
-      UseCases.List_Tests_to_Requirements,
-      UseCases.List_Tests_without_Requirements,
+      UseCases.List_Ok_Items,
+      UseCases.List_Not_Ok_Items,
+      UseCases.Item_Coverage,
+    ]
+}
+
+req.System_Requirement Trlc_Record_Object_To_Lobster_Item {
+    description = '''
+      IF the consumed input contains a TRLC record object whose type matches a
+      configured conversion rule,
+      THEN the tool SHALL generate exactly one LOBSTER item for that record object.
+      The generated item's tag, source location, and description SHALL be derived
+      from that same record object.
+    '''
+    derived_from = [
+      UseCases.List_Ok_Items,
+      UseCases.List_Not_Ok_Items,
       UseCases.Item_Coverage,
     ]
 }

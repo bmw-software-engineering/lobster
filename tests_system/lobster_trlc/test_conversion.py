@@ -36,6 +36,12 @@ class TestSetup:
 class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
     def test_rule_propagation(self):
         """Test that rules are propagated to extended record types."""
+        # lobster-trace: trlc_req.Conversion_Rule_Applies_To_Derived_Types
+        # lobster-trace: trlc_req.Trlc_Record_Object_To_Lobster_Item
+
+        # GIVEN one base type and one extended type, with conversion
+        # rules targeting either type and 'applies-to-derived-types' unset, true, or
+        # false
         test_setups = [
             TestSetup(
                 name="base_and_extended",
@@ -70,7 +76,6 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
 
         for setup in test_setups:
             with self.subTest(setup=setup.name):
-                # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
                 out_file = f"extraction_hierarchy_{setup.name}.out.lobster"
                 test_runner = self.create_test_runner()
                 test_runner.cmd_args.out = out_file
@@ -89,7 +94,11 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
                 test_runner.declare_input_file(self._data_directory /
                                                "extraction_hierarchy.rsl")
 
+                # WHEN the tool is run
                 completed_process = test_runner.run_tool_test()
+
+                # THEN the tool reports the expected item count (depending on the
+                # 'applies-to-derived-types' setting) and writes output
                 asserter = Asserter(self, completed_process, test_runner)
                 asserter.assertNoStdErrText()
                 asserter.assertStdOutText(
@@ -101,7 +110,11 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
 
     def test_to_string_rules(self):
         """Test that to_string rules are applied correctly."""
-        # lobster-trace: UseCases.Incorrect_data_Extraction_from_TRLC
+        # lobster-trace: trlc_req.To_String_Rule_Applied
+        # lobster-trace: trlc_req.Trlc_Record_Object_To_Lobster_Item
+
+        # GIVEN a tuple type and more than one (here: two) to-string rules for it
+        # (the test also covers a tuple type with exactly one to-string rule)
         test_runner = self.create_test_runner()
         out_file = "to_string_rules.out.lobster"
         test_runner.cmd_args.out = out_file
@@ -133,7 +146,11 @@ class ConversionRuleTest(LobsterTrlcSystemTestCaseBase):
         test_runner.declare_input_file(self._data_directory / "to_string_test.trlc")
         test_runner.declare_input_file(self._data_directory / "to_string_test.rsl")
 
+        # WHEN the tool is run
         completed_process = test_runner.run_tool_test()
+
+        # THEN the to-string rules are applied in the correct order until a
+        # conversion succeeds
         asserter = Asserter(self, completed_process, test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutText(
