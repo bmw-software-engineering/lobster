@@ -598,6 +598,11 @@ class CodebeamerTool(MetaDataToolBase):
             self._print_error(
                 f"Path '{isdir_ex.filename}' is a directory, but a file was expected.",
             )
+        except PermissionError as perm_ex:
+            # Windows raises PermissionError instead of IsADirectoryError.
+            self._print_error(
+                f"Permission denied for '{perm_ex.filename}'.",
+            )
         except ValueError as value_error:
             self._print_error(value_error)
         except KeyError as key_error:

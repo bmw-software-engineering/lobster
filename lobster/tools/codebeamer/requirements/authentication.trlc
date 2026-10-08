@@ -1,0 +1,153 @@
+package codebeamer_req
+import req
+import UseCases
+
+req.System_Requirement Request_Uses_Configured_Bearer_Token {
+  description = '''
+    For each request sent to codebeamer, IF a token is configured,
+    THEN the tool shall send the token as Bearer authentication,
+    regardless of whether a user and/or password are also configured.
+
+    Note: "configured" means the data is available in the configuration file.
+  '''
+  derived_from = [
+    UseCases.List_Ok_Items,
+    UseCases.List_Not_Ok_Items,
+    UseCases.Item_Coverage,
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Show_codebeamer_links,
+    UseCases.Tool_Usability,
+    UseCases.Codebeamer_Baseline_Query,
+  ]
+}
+
+req.System_Requirement Request_Uses_Configured_Basic_Authentication {
+  description = '''
+    For each request sent to codebeamer, IF no token is configured,
+    AND a complete user/password pair is configured,
+    THEN the tool shall send those credentials using HTTP Basic authentication.
+  '''
+  derived_from = [
+    UseCases.List_Ok_Items,
+    UseCases.List_Not_Ok_Items,
+    UseCases.Item_Coverage,
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Show_codebeamer_links,
+    UseCases.Tool_Usability,
+    UseCases.Codebeamer_Baseline_Query,
+  ]
+}
+
+req.System_Requirement Request_Uses_Netrc_Credentials {
+  description = '''
+    For each request sent to codebeamer, IF neither a token nor a complete
+    user/password pair is configured,
+    AND the user's .netrc file contains an entry matching the configured
+    codebeamer root's hostname with a login and password,
+    THEN the tool shall send those credentials using HTTP Basic authentication.
+  '''
+  derived_from = [
+    UseCases.List_Ok_Items,
+    UseCases.List_Not_Ok_Items,
+    UseCases.Item_Coverage,
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Show_codebeamer_links,
+    UseCases.Tool_Usability,
+    UseCases.Codebeamer_Baseline_Query,
+  ]
+}
+
+req.System_Requirement Request_Requires_Authentication_Credentials {
+  description = '''
+    IF no usable token or user/password pair is configured,
+    AND the user's .netrc file is absent or has no usable entry matching the
+    codebeamer server hostname,
+    THEN the tool shall print an error message to STDERR
+    AND exit with a non-zero return code.
+  '''
+  derived_from = [
+    UseCases.List_Ok_Items,
+    UseCases.List_Not_Ok_Items,
+    UseCases.Item_Coverage,
+    UseCases.List_Requirements_to_Tests,
+    UseCases.List_Requirements_without_Tests,
+    UseCases.List_Tests_to_Requirements,
+    UseCases.List_Tests_without_Requirements,
+    UseCases.Show_codebeamer_links,
+    UseCases.Tool_Usability,
+    UseCases.Codebeamer_Baseline_Query,
+  ]
+}
+
+req.Software_Requirement Get_Authentication_Prefers_Bearer_Token {
+  description = '''
+    The function "get_authentication" SHALL return a BearerAuth instance built from
+    the configured token, IF a token is configured, regardless of whether a user
+    and/or password are also configured.
+  '''
+  derived_from = [Request_Uses_Configured_Bearer_Token]
+}
+
+req.Software_Requirement Get_Authentication_Falls_Back_To_Basic_Auth {
+  description = '''
+    OTHERWISE (no token is configured), the function "get_authentication" SHALL
+    return an HTTPBasicAuth instance built from the configured user and password,
+    even if either of them is missing.
+  '''
+  derived_from = [
+    Request_Uses_Configured_Basic_Authentication,
+    Request_Uses_Netrc_Credentials,
+  ]
+}
+
+req.Software_Requirement Update_Authentication_Parameters_Requires_Some_Credentials {
+  description = '''
+    The function "update_authentication_parameters" SHALL raise KeyError,
+    IF no token is configured,
+    AND no user/password pair is configured,
+    AND no .netrc entry matching the configured root's hostname is found.
+  '''
+  derived_from = [Request_Requires_Authentication_Credentials]
+}
+
+req.Software_Requirement Update_Authentication_Parameters_Explicit_Credentials_Skip_Netrc {
+  description = '''
+    IF a token is configured, OR a user/password pair is configured,
+    THEN the function "update_authentication_parameters" SHALL leave the
+    configuration unchanged, without consulting a .netrc file, even IF one exists
+    with a matching entry.
+  '''
+  derived_from = [
+    Request_Uses_Configured_Bearer_Token,
+    Request_Uses_Configured_Basic_Authentication,
+  ]
+}
+
+req.Software_Requirement Update_Authentication_Parameters_Falls_Back_To_Netrc {
+  description = '''
+    IF neither a token nor a user/password pair is configured,
+    THEN the function "update_authentication_parameters" SHALL look up the hostname
+    of the configured root (ignoring any sub-path) in the .netrc file,
+    AND SHALL use the matching entry's login and password.
+  '''
+  derived_from = [Request_Uses_Netrc_Credentials]
+}
+
+req.Software_Requirement Update_Authentication_Parameters_Netrc_Missing_Machine_Raises {
+  description = '''
+    IF a .netrc file is consulted but contains no entry matching the configured
+    root's hostname,
+    THEN the function "update_authentication_parameters" SHALL raise KeyError,
+    identifying the expected hostname and the machine names actually found.
+  '''
+  derived_from = [Request_Requires_Authentication_Credentials]
+}

@@ -16,8 +16,11 @@
 # <https://www.gnu.org/licenses/>.
 
 import json
+import base64
+import os
 import unittest
 from flask import Response
+from unittest.mock import patch
 from tests_system.lobster_codebeamer.lobster_codebeamer_system_test_case_base import (
     LobsterCodebeamerSystemTestCaseBase)
 from tests_system.lobster_codebeamer.lobster_codebeamer_asserter import (
@@ -101,6 +104,123 @@ class LobsterCodebeamerTest(LobsterCodebeamerSystemTestCaseBase):
         )
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+    def test_request_uses_bearer_token_when_token_and_password_are_configured(self):
+        # lobster-trace: codebeamer_req.Request_Uses_Configured_Bearer_Token
+        # GIVEN a configuration with a token and a user/password pair
+        cfg = self._test_runner.config_file_data
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
+        cfg.user = "configured-user"
+        cfg.password = "configured-password"
+        cfg.token = "configured-token"
+        cfg.import_query = 123
+        self.codebeamer_flask.responses = [
+            Response(json.dumps({"page": 1, "pageSize": 100, "total": 0, "items": []}),
+                     status=200),
+        ]
+
+        # WHEN the tool sends a request to codebeamer
+        completed_process = self._test_runner.run_tool_test()
+        asserter = LobsterCodebeamerAsserter(
+            self, completed_process, self._test_runner, port=self.codebeamer_flask.port)
+
+        # THEN the request uses Bearer authentication with the configured token
+        asserter.assertExitCode(0)
+        self.assertEqual(
+            self.codebeamer_flask.received_requests[0]["headers"]["Authorization"],
+            "Bearer configured-token",
+        )
+
+    def test_request_uses_basic_auth_without_token(self):
+        # lobster-trace: codebeamer_req.Request_Uses_Configured_Basic_Authentication
+        # GIVEN a configuration without a token and with a user/password pair
+        cfg = self._test_runner.config_file_data
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
+        cfg.token = None
+        cfg.user = "configured-user"
+        cfg.password = "configured-password"
+        cfg.import_query = 123
+        self.codebeamer_flask.responses = [
+            Response(json.dumps({"page": 1, "pageSize": 100, "total": 0, "items": []}),
+                     status=200),
+        ]
+
+        # WHEN the tool sends a request to codebeamer
+        completed_process = self._test_runner.run_tool_test()
+        asserter = LobsterCodebeamerAsserter(
+            self, completed_process, self._test_runner, port=self.codebeamer_flask.port)
+
+        # THEN the request uses HTTP Basic authentication with the configured
+        # credentials
+        asserter.assertExitCode(0)
+        encoded_credentials = base64.b64encode(
+            b"configured-user:configured-password").decode("ascii")
+        self.assertEqual(
+            self.codebeamer_flask.received_requests[0]["headers"]["Authorization"],
+            f"Basic {encoded_credentials}",
+        )
+
+    def test_request_uses_netrc_credentials_without_explicit_credentials(self):
+        # lobster-trace: codebeamer_req.Request_Uses_Netrc_Credentials
+        # GIVEN no configured credentials and a matching .netrc entry
+        cfg = self._test_runner.config_file_data
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
+        cfg.token = None
+        cfg.user = None
+        cfg.password = None
+        cfg.import_query = 123
+        netrc_path = self._test_runner.working_dir / ".netrc"
+        netrc_path.write_text(
+            "machine localhost login netrc-user password netrc-password\n",
+            encoding="UTF-8",
+        )
+        netrc_path.chmod(0o600)
+        self.codebeamer_flask.responses = [
+            Response(json.dumps({"page": 1, "pageSize": 100, "total": 0, "items": []}),
+                     status=200),
+        ]
+
+        wd = str(self._test_runner.working_dir)
+
+        # The tool locates .netrc via os.path.expanduser("~"), which reads HOME on
+        # POSIX but USERPROFILE on Windows.
+        with patch.dict(os.environ, {"HOME": wd, "USERPROFILE": wd}):
+            # WHEN the tool sends a request to codebeamer
+            completed_process = self._test_runner.run_tool_test()
+
+        asserter = LobsterCodebeamerAsserter(
+            self, completed_process, self._test_runner, port=self.codebeamer_flask.port)
+
+        # THEN the request uses HTTP Basic authentication with the .netrc credentials
+        asserter.assertExitCode(0)
+        encoded_credentials = base64.b64encode(
+            b"netrc-user:netrc-password").decode("ascii")
+        self.assertEqual(
+            self.codebeamer_flask.received_requests[0]["headers"]["Authorization"],
+            f"Basic {encoded_credentials}",
+        )
+
+    def test_request_fails_without_authentication_credentials(self):
+        # lobster-trace: codebeamer_req.Request_Requires_Authentication_Credentials
+        # GIVEN no configured credentials and no matching .netrc entry
+        cfg = self._test_runner.config_file_data
+        cfg.set_default_root_token_out(self.codebeamer_flask.port)
+        cfg.token = None
+        cfg.user = None
+        cfg.password = None
+        cfg.import_query = 123
+
+        with patch.dict(os.environ, {"HOME": str(self._test_runner.working_dir)}):
+            # WHEN the tool attempts to send a request to codebeamer
+            completed_process = self._test_runner.run_tool_test()
+
+        asserter = LobsterCodebeamerAsserter(
+            self, completed_process, self._test_runner, port=self.codebeamer_flask.port)
+
+        # THEN the tool reports the missing credentials and sends no request
+        asserter.assertInStdErr("Please add your token to the config file")
+        asserter.assertExitCode(1)
+        self.assertEqual(self.codebeamer_flask.received_requests, [])
 
     def test_references_tracing_tag_added(self):
         # lobster-trace: codebeamer_req.References_Field_Support

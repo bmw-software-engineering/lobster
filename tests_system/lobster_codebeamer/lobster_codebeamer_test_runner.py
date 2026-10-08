@@ -30,6 +30,8 @@ class ConfigFileData:
     baseline_id: Optional[int] = None
     root: Optional[str] = None
     token: Optional[str] = None
+    user: Optional[str] = None
+    password: Optional[str] = None
     out: Optional[str] = None
     refs: Optional[List[str]] = None
     page_size: Optional[int] = None
@@ -54,6 +56,8 @@ class ConfigFileData:
         append_if_not_none("baseline_id", self.baseline_id)
         append_if_not_none("root", self.root)
         append_if_not_none("token", self.token)
+        append_if_not_none("user", self.user)
+        append_if_not_none("pass", self.password)
         append_if_not_none("out", self.out)
         append_if_not_none("refs", self.refs)
         append_if_not_none("page_size", self.page_size)

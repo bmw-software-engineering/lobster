@@ -13,6 +13,40 @@ req.System_Requirement No_Source_Parameter {
   ]
 }
 
+req.System_Requirement Config_File_Path_Error {
+  description = '''
+    IF the configuration file cannot be opened,
+    THEN the tool shall print an error message to STDERR
+    AND exit with return code 1.
+  '''
+  derived_from = [
+    UseCases.Failure_On_Invalid_Input,
+  ]
+}
+
+req.System_Requirement Default_Config_File_Used {
+  description = '''
+    IF no configuration file path is specified with the "--config" command-line
+    parameter,
+    THEN the tool shall use "codebeamer-config.yaml" in the current working directory
+    as the configuration file.
+  '''
+  derived_from = [
+    UseCases.Tool_Usability,
+  ]
+}
+
+req.System_Requirement Unsupported_Config_Keys_Rejected {
+  description = '''
+    IF the configuration file contains an unsupported key,
+    THEN the tool shall print an error message to STDERR identifying the unsupported key
+    AND exit with return code 1.
+  '''
+  derived_from = [
+    UseCases.Failure_On_Invalid_Input,
+  ]
+}
+
 req.System_Requirement Empty_Query_Message {
   description = '''
     IF the codebeamer server returns an empty list as (a result of the query),

@@ -1,0 +1,10 @@
+package codebeamer_req
+import req
+
+req.Software_Requirement Config_Base_Property_Appends_Api_Path {
+  description = '''
+    The "base" property of the "Config" class SHALL return the configured root URL with
+    "/api/v3" appended.
+  '''
+  derived_from = [Query_Id_Parameter, Query_String_Parameter]
+}

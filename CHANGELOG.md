@@ -44,10 +44,12 @@
   - Improved help message when using the `--help` command line argument.
 
 * `lobster-codebeamer`:
-  Added the API-only `item_to_text` parameter to the configuration object of the
-  `lobster_codebeamer` API for populating the LOBSTER item's text property.
-  For example, the API user may provide a function that returns a `String` for the
-  LOBSTER item based on the Codebeamer item's data.
+  - Added the API-only `item_to_text` parameter to the configuration object of the
+    `lobster_codebeamer` API for populating the LOBSTER item's text property.
+    For example, the API user may provide a function that returns a `String` for the
+    LOBSTER item based on the Codebeamer item's data.
+  - Fixed a Windows crash caused by specifying a directory, rather than a file, for
+    the `--config` argument.
 
 * Removed wrong statement from `schemas.md` regarding "status" field.
 
