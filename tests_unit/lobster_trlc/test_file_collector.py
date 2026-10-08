@@ -79,12 +79,6 @@ class FileCollectorTest(TestCase):
         collector.add_file("test.trlc", throw_on_mismatch=True)
         self.assertEqual(collector.files, ["test.rsl", "test.trlc"])
 
-    def test_add_files_with_no_extensions_accepts_any_file(self):
-        collector = FileCollector(extensions=[], directory_exclude_patterns=[])
-
-        collector.add_file("test.anything", throw_on_mismatch=True)
-        self.assertEqual(collector.files, ["test.anything"])
-
 
 if __name__ == "__main__":
     unittest.main()

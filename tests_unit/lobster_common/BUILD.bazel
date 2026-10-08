@@ -1,0 +1,10 @@
+load("@rules_python//python:defs.bzl", "py_test")
+
+
+py_test(
+    name = "test_file_collector",
+    srcs = ["test_file_collector.py"],
+    deps = [
+        "//lobster/common",
+    ],
+)
