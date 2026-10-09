@@ -15,11 +15,10 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-import json
 from pathlib import Path
 from time import sleep
 from typing import List
-from flask import Flask, Response, request
+from flask import Flask, request
 from threading import Lock
 import logging
 
@@ -199,38 +198,3 @@ def create_app(port: int = 0):
         return app.STARTUP_ANSWER
 
     return app
-
-
-if __name__ == '__main__':
-    # NOTE: This is needed for manual testing, if a developer wants to run the server
-    # locally
-    app = create_app()
-    response_data = {
-        'page': 1,
-        'pageSize': 1,
-        'total': 1,
-        'items': [
-            {
-                'item': {
-                    'id': 5,
-                    'name': 'Requirement 5: Dynamic name',
-                    'description': 'Dynamic description for requirement 5.',
-                    'status': {
-                        'id': 5,
-                        'name': 'Status 5',
-                        'type': 'ChoiceOptionReference'
-                    },
-                    'tracker': {
-                        'id': 5,
-                        'name': 'Tracker_Name_5',
-                        'type': 'TrackerReference'
-                    },
-                    'version': 1
-                }
-            }
-        ]
-    }
-    app.responses = [
-        Response(json.dumps(response_data), status=200),
-    ]
-    app.start_server()
