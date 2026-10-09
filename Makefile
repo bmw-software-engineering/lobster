@@ -22,7 +22,7 @@ lint: style
 	python3 -m pylint --rcfile=pylint3.cfg \
 		--reports=no \
 		--ignore=assets.py,html_report_js.py \
-		lobster util
+		lobster util .github/verify_test_entrypoints.py
 
 lint-system-tests: style
 	@PYTHONPATH=$(SYSTEM_PYTHONPATH) \
