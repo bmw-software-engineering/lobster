@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
+
+import unittest
 
 from lobster.tools.trlc.item_wrapper import ItemWrapper
 from lobster.tools.trlc.errors import RecordObjectComponentError
@@ -48,3 +50,7 @@ class ItemWrapperTest(TrlcToStringDataTestCase):
             with self.assertRaises(RecordObjectComponentError):
                 item_wrapper.get_field_raw("non_existing_field")
             self.assertIsNone(item_wrapper.get_field_value_or_none("non_existing_field"))
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -16,7 +16,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-"""Verify that all system tests have a proper unittest main guard."""
+"""Verify that all unit and system tests have a proper unittest main guard."""
 
 import ast
 import pathlib
@@ -82,9 +82,9 @@ def _contains_main_call(node, unittest_names, main_names):
     return False
 
 
-def has_main_guard(path):
+def has_main_guard(test_file):
     try:
-        source = path.read_text(encoding="utf-8")
+        source = test_file.read_text(encoding="utf-8")
         tree = ast.parse(source)
     except (OSError, UnicodeDecodeError, SyntaxError) as exc:
         return False, f"parse error: {exc}"
@@ -102,7 +102,9 @@ def has_main_guard(path):
             if isinstance(stmt, ast.Return):
                 call = stmt.value
 
-            if call is None or not _contains_main_call(call, unittest_names, main_names):
+            if call is None or not _contains_main_call(
+                call, unittest_names, main_names
+            ):
                 return False, "__main__ guard must call unittest.main()"
             return True, ""
 
@@ -110,12 +112,18 @@ def has_main_guard(path):
 
 
 missing = []
-for p in pathlib.Path("tests_system").rglob("test_*.py"):
-    ok, reason = has_main_guard(p)
-    if not ok:
-        missing.append((p, reason))
+for test_dir in ("tests_system", "tests_unit"):
+    for path in pathlib.Path(test_dir).rglob("test_*.py"):
+        ok, reason = has_main_guard(path)
+        if not ok:
+            missing.append((path, reason))
 
 if missing:
-    print("ERROR: one or more system tests are missing unittest main guard.")
-    print("\n".join(f"Missing unittest entrypoint: {p} ({reason})" for p, reason in missing))
+    print("ERROR: one or more tests are missing unittest main guard.")
+    print(
+        "\n".join(
+            f"Missing unittest entrypoint: {path} ({reason})"
+            for path, reason in missing
+        )
+    )
     sys.exit(1)

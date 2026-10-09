@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -15,6 +15,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import unittest
 from unittest import TestCase
 from unittest.mock import Mock
 from trlc import ast
@@ -92,3 +93,7 @@ class TextBuildingTest(TestCase):
             str(ctx.exception),
             "Cannot convert empty TRLC tuple to text!",
         )
+
+
+if __name__ == "__main__":
+    unittest.main()

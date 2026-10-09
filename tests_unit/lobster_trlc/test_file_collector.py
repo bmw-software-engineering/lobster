@@ -16,6 +16,7 @@
 # <https://www.gnu.org/licenses/>.
 
 from os import path
+import unittest
 from unittest import TestCase
 from lobster.common.errors import PathError
 from lobster.common.file_collector import FileCollector
@@ -83,3 +84,7 @@ class FileCollectorTest(TestCase):
 
         collector.add_file("test.anything", throw_on_mismatch=True)
         self.assertEqual(collector.files, ["test.anything"])
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
+
+import unittest
 
 from lobster.tools.trlc.instruction import ConstantInstruction, FieldInstruction
 from lobster.tools.trlc.to_string_rules import ToStringRules
@@ -181,3 +183,7 @@ class ToStringRulesTest(TrlcToStringDataTestCase):
             # so it should also come first in the LOBSTER item text.
             expected_text = ", ".join(expected_to_string_results[lobster_item.name])
             self.assertEqual(lobster_item.text, expected_text)
+
+
+if __name__ == "__main__":
+    unittest.main()

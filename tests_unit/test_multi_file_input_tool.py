@@ -18,6 +18,7 @@
 import os
 from pathlib import Path
 from tempfile import TemporaryDirectory
+import unittest
 from unittest import TestCase
 from lobster.common.multi_file_input_tool import (
     create_worklist,
@@ -212,3 +213,7 @@ class MultiFileInputToolTest(TestCase):
 
             self.assertIn(Path(file_path), result_paths)
             self.assertIn(Path(inside_file), result_paths)
+
+
+if __name__ == "__main__":
+    unittest.main()

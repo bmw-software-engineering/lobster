@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -16,6 +16,7 @@
 # <https://www.gnu.org/licenses/>.
 
 import sys
+import unittest
 from unittest import TestCase
 from lobster.common.location import Codebeamer_Reference
 
@@ -62,3 +63,7 @@ class CodebeamerReferenceTests(TestCase):
         )
         expected_key = (self._CB_ROOT, cb_ref.tracker, cb_ref.item)
         self.assertEqual(expected_key, cb_ref.sorting_key())
+
+
+if __name__ == "__main__":
+    unittest.main()

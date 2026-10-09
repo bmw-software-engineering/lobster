@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
+
+import unittest
 
 from lobster.tools.trlc.instruction import ConstantInstruction
 from lobster.tools.trlc.to_string_rules import (
@@ -62,3 +64,7 @@ class BuildMapTest(TrlcHierarchyDataTestCase):
         # verify mapping between keys and values
         for key, value in result.items():
             self.assertEqual(key.name, value.tuple_type_name)
+
+
+if __name__ == "__main__":
+    unittest.main()

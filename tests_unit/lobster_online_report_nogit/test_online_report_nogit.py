@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -17,6 +17,7 @@
 
 from os import path
 import os
+import unittest
 from pathlib import Path
 from unittest import TestCase
 from urllib.parse import quote
@@ -82,13 +83,16 @@ class LobsterOnlineReportNogitTest(TestCase):
         """Test that a path reference of a truly existing path can be converted
            to GitHub reference
 
-           The test is executed one with a file, and once with a directory.
+           The test is executed once with a file, and once with a directory.
            Each time the parameter 'paths_must_exist' is set to True.
         """
 
+        # Resolve symlinks, because Bazel runfiles are symlinks to the sources.
+        this_file = Path(__file__).resolve()
+
         # Run test on a) file and b) directory. For simplicity we use the current
         # file and its parent.
-        for path_to_convert in (Path(__file__), Path(__file__).parent):
+        for path_to_convert in (this_file, this_file.parent):
             with self.subTest(f"{path_to_convert=}"):
                 file_ref = File_Reference(
                     filename=str(path_to_convert),
@@ -148,3 +152,7 @@ class LobsterOnlineReportNogitTest(TestCase):
                 repo_info=repo_info,
                 paths_must_exist=True,
             )
+
+
+if __name__ == "__main__":
+    unittest.main()

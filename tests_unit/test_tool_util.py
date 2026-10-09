@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -15,6 +15,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import unittest
 from unittest import TestCase
 from lobster.common.multi_file_input_tool import select_non_comment_parts
 
@@ -40,3 +41,7 @@ class LobsterToolUtilTest(TestCase):
         ]
         result = select_non_comment_parts(input_text)
         self.assertEqual(result, expected_output)
+
+
+if __name__ == "__main__":
+    unittest.main()

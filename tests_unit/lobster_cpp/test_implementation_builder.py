@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -18,6 +18,7 @@
 from os import getcwd
 from os.path import abspath, join
 import re
+import unittest
 from unittest import TestCase
 from lobster.common.location import File_Reference
 from lobster.tools.cpp.implementation_builder import ImplementationBuilder
@@ -134,3 +135,7 @@ class ImplementationBuilderTest(TestCase):
         # Test that it returns the existing implementation if it already exists
         existing_impl = impl_builder.from_match_if_new(db, match)
         self.assertIs(existing_impl, impl)
+
+
+if __name__ == "__main__":
+    unittest.main()
