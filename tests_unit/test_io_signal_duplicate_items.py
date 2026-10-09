@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -16,6 +16,7 @@
 # <https://www.gnu.org/licenses/>.
 
 from typing import List
+import unittest
 from unittest import TestCase
 from unittest.mock import Mock
 from lobster.common.errors import Message_Handler
@@ -91,3 +92,7 @@ class SignalDuplicateItemsTest(TestCase):
             self._mh.error.call_args_list[-1].kwargs.get("fatal"),
             "Last call did not use fatal=True",
         )
+
+
+if __name__ == "__main__":
+    unittest.main()

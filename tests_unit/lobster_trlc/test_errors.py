@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
+
+import unittest
 
 from tests_unit.lobster_trlc.trlc_hierarchy_data_test_case import \
     TrlcHierarchyDataTestCase
@@ -48,3 +50,7 @@ class ErrorTest(TrlcHierarchyDataTestCase):
 
             error = TupleComponentError("component_name", tuple_aggregate)
             self.assertErrorDetails(error, tuple_aggregate)
+
+
+if __name__ == "__main__":
+    unittest.main()

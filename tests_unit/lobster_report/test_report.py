@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2024-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2024-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -15,6 +15,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import unittest
 from unittest import TestCase
 from unittest.mock import patch
 from lobster.common.report import Coverage, Report
@@ -81,3 +82,7 @@ class ReportTests(TestCase):
             # Verify custom parameters were used
             mock_parse_config.assert_called_once_with(apple_config)
             mock_write_report.assert_called_once_with(banana_output)
+
+
+if __name__ == "__main__":
+    unittest.main()

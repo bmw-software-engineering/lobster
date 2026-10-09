@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2023-2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2023-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -65,3 +65,7 @@ class Test_Json(unittest.TestCase):
 
         with self.assertRaises(SystemExit):
             lobster_json.check_mandatory_config_parameters(config)
+
+
+if __name__ == "__main__":
+    unittest.main()

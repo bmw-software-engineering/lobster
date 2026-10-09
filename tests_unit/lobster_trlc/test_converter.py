@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -16,6 +16,7 @@
 # <https://www.gnu.org/licenses/>.
 
 import operator
+import unittest
 from typing import List, Optional
 
 from lobster.common.items import Requirement, Tracing_Tag
@@ -498,3 +499,7 @@ class GenerateLobsterObjectTest(TrlcHierarchyDataTestCase):
         for record_object in self._trlc_data_provider.get_record_objects():
             lobster_item = converter.generate_lobster_object(record_object)
             self.assertIsNone(lobster_item.tag.version)
+
+
+if __name__ == "__main__":
+    unittest.main()

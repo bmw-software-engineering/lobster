@@ -321,3 +321,7 @@ class LobsterWriteReadTests(unittest.TestCase):
             ensure_output_directory(str(file_path))
 
             self.assertTrue(tmp_path.exists())
+
+
+if __name__ == "__main__":
+    unittest.main()

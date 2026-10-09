@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -16,6 +16,7 @@
 # <https://www.gnu.org/licenses/>.
 
 import itertools
+import unittest
 from pathlib import Path
 from unittest import TestCase
 
@@ -197,3 +198,7 @@ class ConversionRulesTest(TestCase):
                 expectation,
                 f"Children of {n_typ.name} do not match expected values."
             )
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -15,6 +15,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import unittest
 from unittest import TestCase
 from lobster.common.file_tag_generator import FileTagGenerator
 
@@ -55,3 +56,7 @@ class FileTagGeneratorTest(TestCase):
 
         tag = gen.get_tag("file.txt")
         self.assertEqual(tag, "file.txt:1")
+
+
+if __name__ == "__main__":
+    unittest.main()
