@@ -41,11 +41,9 @@ for tool in "${TOOLS[@]}"; do
         --target="$TARGET_NAME" \
         lobster/requirements.rsl \
         lobster/use_cases.trlc \
-        "lobster/tools/$TOOL_PATH/requirements/potential_errors.trlc" \
-        "lobster/tools/$TOOL_PATH/requirements/test_specifications.trlc" \
         --out="tracing_out/use-cases.lobster"
 
-    for artifact in potential-errors test-specifications system-requirements software-requirements; do
+    for artifact in system-requirements software-requirements; do
         CURRENT_PHASE="generate $artifact artifact"
         python lobster-trlc.py \
             --config="tracing/lobster_$tool/$tool.$artifact.lobster-trlc.yaml" \
