@@ -60,8 +60,9 @@ to-string-rules:
       - "$(item)"
 ```
 
-By default none of the objects are traced, but adding a declaration
-like this marks this type (and all its extensions) as things to trace.
+Only record types covered by a `conversion-rules` entry are emitted as LOBSTER items.
+Set `applies-to-derived-types: true` to apply a rule to derived record types as well;
+the default is `false`.
 
 The `description-fields` specify which fields carry the description text that
 can be optionally included in LOBSTER.
@@ -93,10 +94,12 @@ Behavior:
 - **Not configured:** If no `version-field` entry is present in the conversion rule,
   the tool sets the tag version to `None` regardless of the record object.
 
-When `to-string-rules` contain expressions like `$(item)@$(version)`, the version value
-(whether set or `None`) is used to build versioned tags or their fallback alternatives.
+`version-field` sets the version on the generated LOBSTER item tag. Separately,
+expressions such as `$(item)@$(version)` in `to-string-rules` read the `version`
+component from the TRLC tuple being formatted. If that tuple component is unset, that
+rule is skipped and the next rule is attempted.
 
-Complete example (versioned tag preferred, fallback without version):
+Example configuring both the item version and tuple formatting:
 
 ```yaml
 to-string-rules:
@@ -115,9 +118,10 @@ conversion-rules:
       - external_id
 ```
 
-In this example, if `p_version` exists in the TRLC record,
-`$(item)@$(version)` is used. If `p_version` is missing, the first expansion
-cannot be fully applied and the fallback `$(item)` is used.
+Here, `p_version` sets the generated Requirement item's tag version. The
+`to-string-rules` independently format each `external_id` tuple, preferring the
+`item@version` form and falling back to `item` when the tuple's `version` component
+is unset.
 
 Generated output example:
 
@@ -149,45 +153,53 @@ Generated output example:
 }
 ```
 
-If no version is available, the generated tag falls back to `req test_reqs.req_with_version`.
+If `p_version` is unset, the generated item tag has no version suffix:
+`req test_reqs.req_with_version`.
 
-The `tags` field identifies the field carrying tags.
-In LOBSTER all tags are namespaced, and by default the namespace is "req" as that
-is generally what you want to do with TRLC.
-But you can change this by including the namespace, see the example above.
+The `tags` field identifies fields carrying tracing targets. Their namespace defaults
+to `req`; specify a `namespace` for an individual tag entry to override it, as in the
+example above. The generated LOBSTER item tag itself uses the `req` namespace.
 
-Three namespaces are supported:
+LOBSTER trace tags support these namespaces:
 
 - `req` for "requirement"
 - `act` for "activity"
 - `imp` for "implementation"
 
-For tuple types like this one:
+Define tuple types in a TRLC schema (`.rsl` file):
 
-```yaml
-trlc_config: |
-  tuple Codebeamer_Id {
-    item Integer
-    separator @
-    version optional Integer
-  }
+```trlc
+package example
+
+tuple Codebeamer_Id {
+  item Integer
+  separator @
+  version optional Integer
+}
 ```
 
-You need to provide a series of text expansions so that the
-`lobster-trlc` tool can build lobster tags from it.
-You can do this via the `to-string-rules` configuration entry.
+In the YAML configuration, provide text expansions for each tuple type so
+`lobster-trlc` can build LOBSTER tags from its values:
 
-These `to-string` functions are applied in order, and the tool picks the first one that
+```yaml
+to-string-rules:
+  - package: example
+    tuple-type: Codebeamer_Id
+    to-string:
+      - "$(item)@$(version)"
+      - "$(item)"
+```
+
+These `to-string` rules are tried in order, and the tool picks the first one that
 fully manages to apply. If a value is `null` and required for the
-the expansion (as in the first `to-string` function above), the current
+expansion (as in the first `to-string` rule above), the current
 function is skipped, and the next one is attempted. If none of the functions
 can be applied, an error is raised.
 
-If you need to justify requirements not being linked or implemented,
-then you can also define up to three extra fields (using `justification_up`,
-`justification_down`, and `justification_global`) that should carry this
-information.
-See the example above.
+To provide justification text for requirements that are not linked or implemented,
+configure `justification-up-fields`, `justification-down-fields`, and/or
+`justification-global-fields` in a `conversion-rules` entry. Each key accepts either
+a single TRLC field name or a list of field names. See the example above.
 
 The meaning of "up" is along the usual direction of tracing tags. For
 example putting this in a software requirement means it is not linked
