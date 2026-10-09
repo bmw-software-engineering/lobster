@@ -39,8 +39,7 @@ in the relevant `requirements_lock` file, for instance `requirements_lock_3_12.t
 When using a corporate Python package index, run:
 
 ```sh
-bazel run --enable_workspace //:python_dependencies_3_12.run -- \
-  --index-url '<your-index-url>'
+bazel run --enable_workspace //:python_dependencies_3_12.run -- --index-url '<your-index-url>'
 ```
 
 Always update dependencies for all Python versions.
