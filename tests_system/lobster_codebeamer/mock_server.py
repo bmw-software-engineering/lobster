@@ -16,7 +16,6 @@
 # <https://www.gnu.org/licenses/>.
 
 import json
-import socket
 from pathlib import Path
 from time import sleep
 from typing import List
@@ -25,6 +24,7 @@ from threading import Lock
 import logging
 
 import requests
+from werkzeug.serving import make_server
 
 # Suppress Flask development server warning
 log = logging.getLogger('werkzeug')
@@ -57,19 +57,17 @@ class CodebeamerFlask(Flask):
         self._lock = Lock()
         self._responses = []
         self._received_requests = []
-        self._port = port if port != 0 else self._get_free_port()
+        self._server = make_server(
+            self._HOST,
+            port,
+            self,
+            threaded=True,
+            ssl_context=(CERT_PATH, KEY_PATH),
+        )
+        self._port = self._server.server_port
         self._STARTUP_TEST_URL = (
             f"https://{self._HOST}:{self._port}{ARE_YOU_RUNNING_ROUTE}"
         )
-
-    @staticmethod
-    def _get_free_port() -> int:
-        """Get a free port by binding to port 0 and letting the OS assign one."""
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.bind(('', 0))
-            s.listen(1)
-            port = s.getsockname()[1]
-        return port
 
     @property
     def port(self) -> int:
@@ -105,12 +103,7 @@ class CodebeamerFlask(Flask):
             self._responses = value
 
     def start_server(self):
-        self.run(
-            host=self._HOST,
-            port=self._port,
-            ssl_context=(CERT_PATH, KEY_PATH),
-            use_reloader=False
-        )
+        self._server.serve_forever()
 
     def await_startup_finished(self, logger: logging.Logger):
         """Wait for the Flask server to start by sending a request."""

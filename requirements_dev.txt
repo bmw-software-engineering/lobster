@@ -9,3 +9,4 @@ build>=1.2.0
 selenium
 webdriver-manager
 flask
+werkzeug
