@@ -144,15 +144,15 @@ unit-tests:
 # --- Coverage Execution Targets ---
 coverage-unit:
 	@echo "📊 Generating coverage report for unit tests..."
-	coverage combine -q .coverage.unit*
-	coverage html --directory=htmlcov-unit --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=48
+	coverage combine -q --data-file=.coverage.unit .coverage.unit*
+	coverage html --data-file=.coverage.unit --directory=htmlcov-unit --rcfile=coverage.cfg
+	coverage report --data-file=.coverage.unit --rcfile=coverage.cfg --fail-under=48
 
 coverage-system:
 	@echo "📊 Generating coverage report for system tests..."
-	coverage combine -q .coverage.system*
-	coverage html --directory=htmlcov-system --rcfile=coverage.cfg
-	coverage report --rcfile=coverage.cfg --fail-under=80
+	coverage combine -q --data-file=.coverage.system .coverage.system*
+	coverage html --data-file=.coverage.system --directory=htmlcov-system --rcfile=coverage.cfg
+	coverage report --data-file=.coverage.system --rcfile=coverage.cfg --fail-under=80
 
 # --- Clean Coverage ---
 clean-coverage:
