@@ -102,15 +102,15 @@ jobs:
       - name: Executing unit test linter
         run: |
           make lint-unit-tests
-  verify-system-test-entrypoints:
-    name: Verify System Test Entrypoints
+  verify-test-entrypoints:
+    name: Verify Test Entrypoints
     needs: changes
     if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - name: Verify unittest main guards in system tests
-        run: python3 .github/verify_system_test_entrypoints.py
+      - name: Verify unittest main guards in unit and system tests
+        run: python3 .github/verify_test_entrypoints.py
   trlc:
     name: TRLC
     needs: changes
@@ -129,7 +129,7 @@ jobs:
           bazel test //lobster:trlc
   test:
     name: TestSuite
-    needs: [changes, lint-code, lint-system-tests, verify-system-test-entrypoints, trlc]
+    needs: [changes, lint-code, lint-system-tests, verify-test-entrypoints, trlc]
     if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
     strategy:
       matrix:
@@ -168,7 +168,7 @@ jobs:
           make coverage-system
   integration-tests:
     name: Integration tests
-    needs: [changes, lint-code, lint-system-tests, verify-system-test-entrypoints, trlc]
+    needs: [changes, lint-code, lint-system-tests, verify-test-entrypoints, trlc]
     if: ${{ always() && needs.changes.outputs.only_docu_modified == 'false' }}
     runs-on: ubuntu-24.04
     steps:
@@ -216,7 +216,7 @@ jobs:
     needs:
       - lint-code
       - lint-system-tests
-      - verify-system-test-entrypoints
+      - verify-test-entrypoints
       - trlc
       - test
       - integration-tests

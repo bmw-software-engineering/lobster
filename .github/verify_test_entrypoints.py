@@ -16,7 +16,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
-"""Verify that all system tests have a proper unittest main guard."""
+"""Verify that all unit and system tests have a proper unittest main guard."""
 
 import ast
 import pathlib
@@ -110,12 +110,13 @@ def has_main_guard(path):
 
 
 missing = []
-for p in pathlib.Path("tests_system").rglob("test_*.py"):
-    ok, reason = has_main_guard(p)
-    if not ok:
-        missing.append((p, reason))
+for test_dir in ("tests_system", "tests_unit"):
+    for path in pathlib.Path(test_dir).rglob("test_*.py"):
+        ok, reason = has_main_guard(path)
+        if not ok:
+            missing.append((path, reason))
 
 if missing:
-    print("ERROR: one or more system tests are missing unittest main guard.")
-    print("\n".join(f"Missing unittest entrypoint: {p} ({reason})" for p, reason in missing))
+    print("ERROR: one or more tests are missing unittest main guard.")
+    print("\n".join(f"Missing unittest entrypoint: {path} ({reason})" for path, reason in missing))
     sys.exit(1)
