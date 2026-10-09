@@ -1,5 +1,0 @@
-package UseCases
-
-// Content migrated to system tests under tests_system/lobster_html_report/.
-// This file is intentionally left as an empty compatibility input for the tracing
-// tool chain (see tracing/tracing.sh).
