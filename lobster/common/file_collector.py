@@ -28,8 +28,8 @@ class FileCollector:
             extensions: Iterable[str],
             directory_exclude_patterns: Optional[Iterable[Pattern]],
     ) -> None:
-        if extensions is None:
-            raise ValueError("'extensions' must not be None")
+        if not extensions:
+            raise ValueError("'extensions' must not be empty")
         if directory_exclude_patterns is None:
             directory_exclude_patterns = []
         self._extensions = extensions
@@ -53,8 +53,6 @@ class FileCollector:
             )
 
     def _is_file_of_interest(self, file: str) -> bool:
-        if not self._extensions:
-            return True
         name = Path(file).name.lower()
         return any(name.endswith(ext.lower()) for ext in self._extensions)
 
