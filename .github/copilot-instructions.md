@@ -62,6 +62,11 @@ This repo's own requirements/tests are tracked in TRLC and traced with LOBSTER i
 - To cross-check that every requirement has a test and vice versa, don't hand-roll regex; use
   the TRLC Python API (`trlc.trlc.Source_Manager`, `iter_record_objects()`) or
   `trlc <path> --debug-api-dump`.
+- Write requirements in a precise and clear manner.
+- Use consistent terminology and formatting throughout the requirements.
+- Requirements need not be stylistically elegant; repetition is acceptable when it
+  improves clarity and precision.
+- Use separate files for system requirements and unit requirements.
 
 ## Build, test, and tracing commands
 

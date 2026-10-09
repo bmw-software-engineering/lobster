@@ -36,6 +36,10 @@ instead of having one large file for multiple classes.
 
 Tests must assert against requirement-derived expected behavior.
 
+Use a GIVEN-WHEN-THEN structure for system tests and unit tests to clearly specify the
+initial context (GIVEN), the action being performed (WHEN), and the expected outcome (THEN).
+Good examples can be found in the system tests of `lobster-ci-report`.
+
 ### Framework
 
 We are using the `unittest` test framework for unit and system tests.
