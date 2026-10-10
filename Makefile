@@ -53,7 +53,14 @@ style:
 		--exclude=assets.py,html_report_js.py
 
 clean-packages:
-	git clean -xdf packages test_install test_install_monolithic test_install_monolithic_venv
+	find packages -mindepth 2 -maxdepth 2 \( \
+		-name build -o \
+		-name dist -o \
+		-name meta_dist -o \
+		-name lobster -o \
+		-name '*.egg-info' \
+	\) -exec rm -rf {} +
+	rm -rf test_install test_install_monolithic test_install_monolithic_venv
 
 packages: clean-packages
 	make -C packages/lobster-core
@@ -65,15 +72,22 @@ packages: clean-packages
 	make -C packages/lobster-tool-json
 	make -C packages/lobster-tool-python
 	make -C packages/lobster-metapackage
-	make -C packages/lobster-monolithic
+	$(BAZEL_BIN) build //packages/lobster-monolithic:wheel.dist
+	mkdir -p packages/lobster-monolithic/meta_dist
+	cp -f bazel-bin/packages/lobster-monolithic/meta_dist/*.whl \
+		packages/lobster-monolithic/meta_dist/
 	PYTHONPATH= \
-		pip3 install --prefix test_install \
+		pip3 install --ignore-installed --prefix test_install \
 		packages/*/dist/*.whl
 	PYTHONPATH= \
-		pip3 install --prefix test_install_monolithic \
+		pip3 install --ignore-installed --prefix test_install_monolithic \
 		packages/lobster-monolithic/meta_dist/*.whl
-	diff -Naur test_install/lib/python*/site-packages/lobster test_install_monolithic/lib/python*/site-packages/lobster -x "*.pyc" -x "*pkg*" -x "pkg/*"
-	diff -Naur test_install/bin test_install_monolithic/bin -x "*pkg*" -x "pkg/*"
+	@split_pkg_dir=$$(find test_install -type d \( -path '*/site-packages/lobster' -o -path '*/dist-packages/lobster' \) | head -n 1); \
+	mono_pkg_dir=$$(find test_install_monolithic -type d \( -path '*/site-packages/lobster' -o -path '*/dist-packages/lobster' \) | head -n 1); \
+	diff -Naur "$$split_pkg_dir" "$$mono_pkg_dir" -x "*.pyc" -x "*pkg*" -x "pkg/*"
+	@split_bin_dir=$$(find test_install -type d \( -path '*/bin' -o -path '*/local/bin' \) | head -n 1); \
+	mono_bin_dir=$$(find test_install_monolithic -type d \( -path '*/bin' -o -path '*/local/bin' \) | head -n 1); \
+	diff -Naur "$$split_bin_dir" "$$mono_bin_dir" -x "*pkg*" -x "pkg/*"
 
 	# Very basic smoke test to ensure the tools are packaged properly
 	python3 -m venv test_install_monolithic_venv
