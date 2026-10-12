@@ -132,7 +132,6 @@ req.UseCase List_Requirements_to_Tests {
     '''
     affected_tools = [
         // shall extract requirements:
-        req.Tools.lobster_codebeamer,
         req.Tools.lobster_trlc,
 
         // shall extract test cases:
@@ -155,7 +154,6 @@ req.UseCase List_Requirements_without_Tests {
     '''
     affected_tools = [
         // shall extract requirements:
-        req.Tools.lobster_codebeamer,
         req.Tools.lobster_trlc,
 
         // shall extract test cases:
@@ -178,7 +176,6 @@ req.UseCase List_Tests_to_Requirements {
     '''
     affected_tools = [
         // shall extract requirements:
-        req.Tools.lobster_codebeamer,
         req.Tools.lobster_trlc,
 
         // shall extract test cases:
@@ -201,7 +198,6 @@ req.UseCase List_Tests_without_Requirements {
     '''
     affected_tools = [
         // shall extract requirements:
-        req.Tools.lobster_codebeamer,
         req.Tools.lobster_trlc,
 
         // shall extract test cases:
