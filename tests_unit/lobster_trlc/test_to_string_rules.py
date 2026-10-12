@@ -32,6 +32,7 @@ class ToStringRulesTest(TrlcToStringDataTestCase):
 
     def test_field_is_tuple_type(self):
         """Tests that a tuple field is properly converted to a string."""
+        # lobster-trace: trlc_req.To_String_Rules_Convert_Tuple_Field
         to_string_rule_sets=[
             ToStringRules(
                 tuple_type_name="ship",
@@ -111,6 +112,8 @@ class ToStringRulesTest(TrlcToStringDataTestCase):
 
     def test_field_is_tuple_array_type(self):
         """Tests that a tuple array field is properly converted to a string."""
+        # lobster-trace: trlc_req.To_String_Rules_Convert_Tuple_Array_Field
+        # lobster-trace: trlc_req.Generate_Lobster_Object_Reference_Tags_Extracted
         to_string_rule_sets=[
             ToStringRules(
                 tuple_type_name="ship",
@@ -163,10 +166,9 @@ class ToStringRulesTest(TrlcToStringDataTestCase):
             expected_texts = set(expected_to_string_results[lobster_item.name])
 
             # verify string in "tag" of references
-            self.assertSetEqual(
-                set(tracing_tag.tag for tracing_tag in
-                    lobster_item.unresolved_references),
-                expected_texts,
+            self.assertListEqual(
+                [tracing_tag.tag for tracing_tag in lobster_item.unresolved_references],
+                expected_to_string_results[lobster_item.name],
             )
 
             # verify string in simple lists of LOBSTER item

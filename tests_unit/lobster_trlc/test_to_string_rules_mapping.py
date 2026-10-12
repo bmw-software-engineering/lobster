@@ -34,7 +34,13 @@ class BuildMapTest(TrlcHierarchyDataTestCase):
 
     def test_build_map(self):
         """Tests that the mapping from tuple types to ToStringRules entities is built correctly."""
+        # lobster-trace: trlc_req.To_String_Rules_Map_Built_From_Symbol_Table
         to_string_rule_sets=[
+            ToStringRules(
+                tuple_type_name="TwoValues",
+                package_name="wrong_package",
+                rules=[[ConstantInstruction("wrong package")]],
+            ),
             ToStringRules(
                 tuple_type_name="TwoValues",
                 package_name=self.PACKAGE_NAME,
@@ -56,6 +62,11 @@ class BuildMapTest(TrlcHierarchyDataTestCase):
             symbol_table=self._trlc_data_provider.symbol_table,
             to_string_rule_sets=to_string_rule_sets,
         )
+        rules_by_name = {
+            rule_set.tuple_type_name: rule_set
+            for rule_set in to_string_rule_sets
+            if rule_set.package_name == self.PACKAGE_NAME
+        }
 
         # verify that the mapping contains exactly the expected tuple types
         expected_types = set(self._trlc_data_provider.get_tuple_types())
@@ -64,6 +75,7 @@ class BuildMapTest(TrlcHierarchyDataTestCase):
         # verify mapping between keys and values
         for key, value in result.items():
             self.assertEqual(key.name, value.tuple_type_name)
+            self.assertIs(value, rules_by_name[key.name])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,41 @@
+package trlc_req
+import req
+
+req.Software_Requirement Parse_Instructions_Extracts_Field_Placeholders {
+  description = '''
+    The function parse_instructions SHALL split a to-string instruction text into
+    constant-text and field instructions,
+    identifying every "$(field_name)" placeholder as a field instruction
+    and everything else as a constant-text instruction.
+  '''
+  derived_from = [To_String_Rule_Applied]
+}
+
+req.Software_Requirement Build_Text_Rejects_Invalid_Input {
+  description = '''
+    The function build_text_from_instructions SHALL raise ValueError,
+    IF the tuple data is empty, the instruction sequence is empty, or an
+    instruction has a type other than CONSTANT_TEXT or FIELD.
+  '''
+  derived_from = [To_String_Rule_All_Attempts_Failed_Error]
+}
+
+req.Software_Requirement Build_Text_Raises_For_Missing_Tuple_Component {
+  description = '''
+    OTHERWISE (the tuple data and instruction sequence are non-empty), the function
+    SHALL raise TupleComponentError IF a field instruction references a tuple
+    component that has no value in the tuple data.
+  '''
+  derived_from = [
+    To_String_Rule_All_Attempts_Failed_Error,
+  ]
+}
+
+req.Software_Requirement Build_Text_Concatenates_Instructions {
+  description = '''
+    OTHERWISE (tuple data and instructions are valid and non-empty, and referenced
+    tuple components have values), THEN the function build_text_from_instructions
+    SHALL return a string formed by processing instructions in order.
+  '''
+  derived_from = [To_String_Rule_Applied]
+}
