@@ -14,22 +14,23 @@ req.System_Requirement Missing_Lobster_File {
 req.System_Requirement Valid_Lobster_File {
     description = '''
       IF a valid .lobster file is provided as input
-      AND the command line argument "--render-md" is not provided,
-      THEN the tool shall execute successfully with a zero return code (0)
-      AND shall write a valid HTML report to the specified output file.
+      AND the command line argument "--out" is provided,
+      THEN the tool shall write a valid HTML report to the specified output file.
     '''
     derived_from = [UseCases.HTML_Output]
 }
 
 req.System_Requirement Valid_Lobster_File_With_Md_Content {
     description = '''
-      IF a valid .lobster file with MD content is provided as input
+      IF the conditions of [[Valid_Lobster_File]] are given
       AND the command line argument "--render-md" is provided,
-      THEN the tool shall execute successfully with a zero return code (0)
-      AND shall write a valid HTML report to the specified output file with the MD
-      content rendered as HTML.
+      THEN the tool shall interpret the text property of every LOBSTER item as Markdown
+      and render it accordingly as HTML in the generated report.
     '''
-    derived_from = [UseCases.HTML_Output]
+    derived_from = [
+      UseCases.HTML_Output,
+      UseCases.Tool_Usability,
+    ]
 }
 
 req.System_Requirement HTML_Report_Displays_Custom_data {
