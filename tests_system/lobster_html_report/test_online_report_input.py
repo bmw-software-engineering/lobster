@@ -34,12 +34,7 @@ class LobsterOnlineReportInputTest(LobsterUISystemTestCaseBase):
         self.output_dir = Path(Path(__file__).parents[0])
 
     def test_online_report_input(self):
-        # lobster-trace: UseCases.Source_location_in_output
-        # lobster-trace: UseCases.HTML_file_generation
-        # lobster-trace: UseCases.Correct_Item_Data
-        # lobster-trace: UseCases.Coverage_in_output
-        # lobster-trace: UseCases.List_of_tests_covering_requirements_in_HTML_file
-        # lobster-trace: UseCases.Covered_Requirement_list_in_HTML_file
+        # lobster-trace: html_req.HTML_Report_Renders_GitHub_Source_Links
         """
         Tests the input file 'online report' is processed
         and links are generated correctly in the HTML report.

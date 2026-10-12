@@ -1,0 +1,18 @@
+package html_req
+import req
+import UseCases
+
+req.System_Requirement HTML_Report_Renders_GitHub_Source_Links {
+    description = '''
+      For every item in the input report whose source location is a GitHub
+      reference, the generated HTML report shall render the source location as
+      a hyperlink that opens in a new tab.
+
+      The hyperlink destination shall be
+      "{gh_root}/blob/{commit}/{filename}" when no source line is provided,
+      and "{gh_root}/blob/{commit}/{filename}#L{line}" when a source line is
+      provided. The hyperlink text shall be "{filename}" when no source line
+      is provided, and "{filename}:{line}" when a source line is provided.
+    '''
+    derived_from = [UseCases.Item_GitHub_Source]
+}

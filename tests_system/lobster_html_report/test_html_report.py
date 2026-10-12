@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -129,6 +129,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
                 self.check_hidden_elements(item_classes, status)
 
     def test_git_hash_timestamp(self):
+        # lobster-trace: html_req.HTML_Report_Displays_Git_Commit_Information
         """Verify git commit timestamps in the report output."""
         self._test_runner.run_tool_test()
         self.driver.get(self.input_file)
