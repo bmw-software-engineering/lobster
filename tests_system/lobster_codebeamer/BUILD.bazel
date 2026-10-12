@@ -2,8 +2,8 @@ load("@rules_python//python:defs.bzl", "py_binary", "py_library", "py_test")
 load("//:requirements.bzl", "requirement")
 
 
-py_binary(
-    name = "mock_server",
+py_library(
+    name = "mock_server_lib",
     srcs = ["mock_server.py"],
     visibility = [
         "//visibility:public",
@@ -11,6 +11,20 @@ py_binary(
     deps = [
         requirement("flask"),
         requirement("requests"),
+        requirement("werkzeug"),
+    ],
+)
+
+py_binary(
+    name = "mock_server",
+    srcs = ["mock_server_main.py"],
+    main = "mock_server_main.py",
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        ":mock_server_lib",
+        requirement("flask"),
     ],
 )
 
@@ -20,7 +34,6 @@ py_library(
         "lobster_codebeamer_asserter.py",
         "lobster_codebeamer_system_test_case_base.py",
         "lobster_codebeamer_test_runner.py",
-        "mock_server.py",
         "mock_server_setup.py",
     ],
     data = [
@@ -30,11 +43,10 @@ py_library(
         "//visibility:public",
     ],
     deps = [
+        ":mock_server_lib",
         "//:lobster",
         "//tests_system",
-        requirement("flask"),
         requirement("pyyaml"),
-        requirement("requests"),
     ],
 )
 
