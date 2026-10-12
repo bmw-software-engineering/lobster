@@ -1,5 +1,0 @@
-package UseCases
-
-// Content migrated to System_Requirement entries in lobster/tools/pkg/requirements/.
-// This file is intentionally left as an empty compatibility input for the tracing
-// tool chain (see tracing/tracing.sh).
