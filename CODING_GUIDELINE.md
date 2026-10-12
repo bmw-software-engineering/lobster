@@ -40,6 +40,20 @@ Use a GIVEN-WHEN-THEN structure for system tests and unit tests to clearly speci
 initial context (GIVEN), the action being performed (WHEN), and the expected outcome (THEN).
 Good examples can be found in the system tests of `lobster-ci-report`.
 
+Within a test function, use this order:
+
+1. function signature
+2. test docstring
+3. `# lobster-trace:` comments
+
+Example:
+
+```py
+def test_meta_tag(self):
+    """Test to check the presence of meta tag in the HTML report."""
+    # lobster-trace: html_req.Meta_Tag_In_Html_Report
+```
+
 ### Framework
 
 We are using the `unittest` test framework for unit and system tests.
