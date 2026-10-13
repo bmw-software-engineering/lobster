@@ -209,23 +209,40 @@ py_test(
 ### Manual Tests
 Tests can be marked as "manual" if they require special setup or external resources that aren't available in the standard build environment.
 
-Example from `lobster_html_report/BUILD.bazel`:
-```python
-py_test(
-    name = "test_html_report",
-    srcs = ["test_html_report.py"],
-    # TODO: This test is manual because Selenium tests require a Chrome driver
-    # from googlechromelabs.github.io, which needs to be provided first.
-    tags = ["manual"],
-    deps = [
-        ":lobster_html_report",
-        "//lobster/tools/core/html_report",
-        requirement("selenium"),
-    ],
-)
-```
+Set `tags = ["manual"]` on the test target to exclude it from wildcard test runs.
+Manual tests can still be run by specifying their target explicitly.
 
-Manual tests are not run by default with `bazel test` but can be run explicitly:
+### Browser System Tests
+The HTML report UI test uses pinned Chrome for Testing and ChromeDriver binaries
+when run with Bazel: Linux x86_64, Windows x86_64, and macOS x86_64 or arm64 are
+configured. Other platforms use Selenium Manager.
+
+When run outside Bazel, including through `make system-tests`, the test uses
+Selenium Manager to find Chrome and resolve its matching ChromeDriver. It
+ignores ChromeDriver executables already on `PATH`. Network access may be needed
+if the browser or matching driver is not available locally.
+
+#### Windows
+The Bazel target uses pinned Windows x86_64 Chrome and ChromeDriver archives.
+Outside Bazel, Selenium Manager ignores ChromeDriver executables already on
+`PATH` and resolves a driver matching Chrome.
+
+#### macOS
+The Bazel target selects pinned archives for either Intel (x86_64) or Apple
+silicon (arm64). Outside Bazel, Selenium Manager resolves the driver for the
+available Chrome installation.
+
+On all platforms, failures to find or start Chrome or ChromeDriver fail the test;
+the UI tests are not skipped.
+
+On Linux x86_64, the pinned Chrome runs with its browser sandbox enabled. Run
+the test as a non-root user on a runner whose kernel and security policy permit
+Chrome's sandbox, including unprivileged user namespaces. A sandbox startup
+failure must be addressed in the runner configuration, not by adding
+`--no-sandbox` or disabling host security protections. Bazel's test sandbox does
+not replace Chrome's browser sandbox.
+
+Run this browser test explicitly on any supported platform:
 ```bash
 bazel test //tests_system/lobster_html_report:test_html_report
 ```
