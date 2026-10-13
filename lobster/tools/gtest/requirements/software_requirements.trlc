@@ -1,0 +1,85 @@
+package gtest_req
+import req
+
+req.Software_Requirement From_Test_Name_Extracts_Parts {
+  description = '''
+    The function GivenWhenThen.from_test_name SHALL return the given, when and
+    then part of a test name which has the form
+    "[<Prefix>_]Given<Context>[_When<Condition>]_(Expect|Then)<Result>",
+    where <Prefix> is one alphanumeric word and every other placeholder is one
+    CamelCase word which starts with an upper case letter or a digit.
+    The function SHALL return an empty when part IF the name has no When part.
+  '''
+  derived_from = [Spec_Derived_From_Test_Name]
+}
+
+req.Software_Requirement From_Test_Name_Converts_CamelCase_To_Words {
+  description = '''
+    The function GivenWhenThen.from_test_name SHALL return each part as lower
+    case words separated by single spaces, splitting the CamelCase text before
+    every upper case letter which follows a lower case letter or a digit,
+    before every digit which follows a letter,
+    and before the last upper case letter of a run of upper case letters IF a
+    lower case letter follows it.
+  '''
+  derived_from = [Spec_Derived_From_Test_Name]
+}
+
+req.Software_Requirement From_Test_Name_Uses_Last_Matching_Segment {
+  description = '''
+    The function GivenWhenThen.from_test_name SHALL split the test name at "/"
+    and return the parts of the last segment which matches completely.
+  '''
+  derived_from = [Spec_Derived_From_Last_Matching_Name_Segment]
+}
+
+req.Software_Requirement From_Test_Name_Requires_Complete_Match {
+  description = '''
+    The function GivenWhenThen.from_test_name SHALL return a specification
+    without any part IF no segment of the test name matches completely.
+  '''
+  derived_from = [No_Derivation_From_Non_Matching_Name]
+}
+
+req.Software_Requirement Merge_Appends_Parts_In_Order {
+  description = '''
+    The method GivenWhenThen.merge_into SHALL append the non-empty parts to the
+    given properties as "Given", "When" and "Then", in this order, and SHALL NOT
+    change the given list.
+  '''
+  derived_from = [Spec_Derived_From_Test_Name]
+}
+
+req.Software_Requirement Merge_Replaces_Blank_Properties {
+  description = '''
+    The method GivenWhenThen.merge_into SHALL remove every given property of the
+    same name before it appends a non-empty part, and SHALL keep every property
+    for which the specification has no part.
+  '''
+  derived_from = [Blank_Record_Properties_Replaced_By_Test_Name]
+}
+
+req.Software_Requirement Merge_Leaves_Properties_Unchanged_Without_Parts {
+  description = '''
+    The method GivenWhenThen.merge_into SHALL return the given properties
+    unchanged IF the specification has no part.
+  '''
+  derived_from = [
+    No_Derivation_Without_Option,
+    No_Derivation_From_Non_Matching_Name,
+  ]
+}
+
+req.Software_Requirement Conflicts_With_Detects_Non_Blank_Spec_Properties {
+  description = '''
+    The method GivenWhenThen.conflicts_with SHALL return True IF the
+    specification has at least one part
+    AND the given properties contain a property named "Given", "When" or "Then"
+    with a value which is not empty and does not consist solely of whitespace,
+    AND False otherwise.
+  '''
+  derived_from = [
+    Record_Properties_Take_Precedence_Over_Test_Name,
+    Warning_If_Record_Properties_And_Test_Name_Given,
+  ]
+}

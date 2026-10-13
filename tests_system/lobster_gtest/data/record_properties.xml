@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="6" name="AllTests">
+  <testsuite name="Cache" tests="6">
+    <testcase name="GivenA_WhenB_ExpectC" status="run" file="cache.cpp" line="10">
+      <properties>
+        <property name="given" value="explicit given"/>
+        <property name="then" value="explicit then"/>
+      </properties>
+    </testcase>
+    <testcase name="GivenD_ExpectE" status="run" file="cache.cpp" line="20">
+      <properties>
+        <property name="given" value=""/>
+        <property name="when" value="explicit when"/>
+      </properties>
+    </testcase>
+    <testcase name="GivenF_ExpectG" status="run" file="cache.cpp" line="30">
+      <properties>
+        <property name="then" value="   "/>
+      </properties>
+    </testcase>
+    <testcase name="GivenH_ExpectI" status="run" file="cache.cpp" line="40">
+      <properties>
+        <property name="GIVEN" value="upper case name"/>
+      </properties>
+    </testcase>
+    <testcase name="GivenJ_WhenK_ExpectL" status="run" file="cache.cpp" line="50">
+      <properties>
+        <property name="description" value="no given, when, then"/>
+      </properties>
+    </testcase>
+    <testcase name="PlainName" status="run" file="cache.cpp" line="60">
+      <properties>
+        <property name="given" value="plain"/>
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>

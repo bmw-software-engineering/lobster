@@ -398,6 +398,17 @@ req.UseCase Codebeamer_Baseline_Query {
     ]
 }
 
+req.UseCase GTest_Spec_From_Test_Name {
+    description = '''
+        As a test engineer I want lobster-gtest to derive the Given, When and
+        Then specification of a test from its name, so that tests following a
+        naming convention do not need a RecordProperty call for each part.
+    '''
+    affected_tools = [
+        req.Tools.lobster_gtest,
+    ]
+}
+
 req.UseCase CI_Report_Coverage_Summary {
     description = '''
         As a requirements manager I want to see the per-level traceability

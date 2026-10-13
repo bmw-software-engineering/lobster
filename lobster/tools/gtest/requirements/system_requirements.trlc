@@ -1,0 +1,100 @@
+package gtest_req
+import req
+import UseCases
+
+req.System_Requirement No_Derivation_Without_Option {
+  description = '''
+    IF the option "--derive-gwt-from-test-name" is not given,
+    THEN the tool SHALL write the text of each LOBSTER item solely from the
+    properties recorded for the test case, as one line ":<Name>: <value>" per
+    property, with the property name starting with an upper case letter and all
+    other letters in lower case.
+  '''
+  derived_from = [UseCases.GTest_Spec_From_Test_Name]
+}
+
+req.System_Requirement Spec_Derived_From_Test_Name {
+  description = '''
+    IF the option "--derive-gwt-from-test-name" is given
+    AND the name of a test case has the form
+    "Given<Context>_When<Condition>_Expect<Result>",
+    "Given<Context>_When<Condition>_Then<Result>",
+    "Given<Context>_Expect<Result>"
+    or "Given<Context>_Then<Result>",
+    optionally preceded by one prefix "<Prefix>_",
+    where every placeholder is written in CamelCase,
+    AND the test case records no Given, When or Then property with a value which
+    is not empty and does not consist solely of whitespace,
+    THEN the tool SHALL add the lines ":Given: <context>", ":When: <condition>"
+    (only if the name contains a When part) and ":Then: <result>" to the text of
+    the LOBSTER item, in this order, after the lines of the recorded properties,
+    where each CamelCase text is written as lower case words separated by spaces.
+  '''
+  derived_from = [UseCases.GTest_Spec_From_Test_Name]
+}
+
+req.System_Requirement Spec_Derived_From_Last_Matching_Name_Segment {
+  description = '''
+    IF the option "--derive-gwt-from-test-name" is given
+    AND the name of a test case contains several segments separated by "/"
+    (as in the name of a value-parameterized test) which have the form
+    described for the derivation from a test name,
+    THEN the tool SHALL use the last of these segments.
+  '''
+  derived_from = [UseCases.GTest_Spec_From_Test_Name]
+}
+
+req.System_Requirement No_Derivation_From_Non_Matching_Name {
+  description = '''
+    IF the option "--derive-gwt-from-test-name" is given
+    AND no segment of the name of a test case has the form described for the
+    derivation from a test name,
+    THEN the tool SHALL generate the LOBSTER item of that test case exactly as it
+    would without the option.
+  '''
+  derived_from = [UseCases.GTest_Spec_From_Test_Name]
+}
+
+req.System_Requirement Record_Properties_Take_Precedence_Over_Test_Name {
+  description = '''
+    IF the option "--derive-gwt-from-test-name" is given
+    AND a test case records at least one property named "Given", "When" or
+    "Then" (ignoring letter case) with a value which is not empty and does not
+    consist solely of whitespace,
+    THEN the tool SHALL NOT add any line derived from the test name to the text
+    of the LOBSTER item of that test case.
+  '''
+  derived_from = [UseCases.GTest_Spec_From_Test_Name]
+}
+
+req.System_Requirement Blank_Record_Properties_Replaced_By_Test_Name {
+  description = '''
+    IF the option "--derive-gwt-from-test-name" is given
+    AND the name of a test case has the form described for the derivation from a
+    test name
+    AND every property named "Given", "When" or "Then" (ignoring letter case)
+    which the test case records is empty or consists solely of whitespace,
+    THEN the tool SHALL NOT write a line for such a property for which the name
+    provides a part, and SHALL add the lines derived from the name.
+  '''
+  derived_from = [UseCases.GTest_Spec_From_Test_Name]
+}
+
+req.System_Requirement Warning_If_Record_Properties_And_Test_Name_Given {
+  description = '''
+    IF the option "--derive-gwt-from-test-name" is given
+    AND the name of a test case has the form described for the derivation from a
+    test name
+    AND the test case records at least one property named "Given", "When" or
+    "Then" (ignoring letter case) with a value which is not empty and does not
+    consist solely of whitespace,
+    THEN the tool SHALL print the line
+    "<location>: lobster warning: test <suite>:<test> records Given/When/Then
+    properties, ignoring its name" to stderr and SHALL NOT print it to stdout,
+    where <suite> is the name of the test suite, <test> is the name of the test
+    case, and <location> is the file of the test case followed by ":" and the
+    line of the test case, or only the file if the line is unknown, or
+    "<unknown location>" if the file is unknown.
+  '''
+  derived_from = [UseCases.GTest_Spec_From_Test_Name]
+}
