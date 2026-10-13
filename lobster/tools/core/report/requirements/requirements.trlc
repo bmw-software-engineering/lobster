@@ -1,20 +1,6 @@
 package core_report_req
 import req
 
-req.System_Requirement Report_Input_Duplicate_Definition {
-  description = '''
-    If any of the source files given in the lobster configuration file contains a tag
-    more than once, then the tool must exit with code 1.
-  '''
-}
-
-req.System_Requirement_Aspect Invalid_Trace_To {
-  description = '''
-    IF "trace to" is an invalid entry given in the configuration file according to the schema,
-    THEN the tool shall exit with a non-zero return code and with an error message "lobster error: unknown item".
-  '''
-}
-
 req.System_Requirement_Aspect Status_Justified_Global {
   description = '''    
     IF the "just_global" list of the [[item]] contains at least one value,
@@ -73,13 +59,6 @@ req.System_Requirement_Aspect Lobster_Exception_Dump_Invalid_Input {
   '''
 }
 
-req.System_Requirement_Aspect File_Not_Found {
-  description = '''
-    IF a required input file for the tool does not exist or cannot be accessed,
-    THEN the tool shall report "file not found <file_path>" and exit with a non-zero return code.
-  '''
-}
-
 req.System_Requirement_Aspect Multiple_Traces_Support {
   description = '''
     IF the [[Item]] has multiple references across file,
@@ -131,13 +110,5 @@ req.System_Requirement_Aspect Item_Data_Isolation {
     IF the tool processes multiple items with their respective data and information,
     THEN the tool shall ensure that data do not get mixed between different items,
     AND each [[item]] shall maintain its own distinct data,
-  '''
-}
-
-req.System_Requirement_Aspect Missing_Required_Files_Error {
-  description = '''
-    IF the tracing policy configuration references input files that cannot be found in the workspace,
-    THEN the tool shall report error
-    AND shall exit with a non-zero return code.
   '''
 }
