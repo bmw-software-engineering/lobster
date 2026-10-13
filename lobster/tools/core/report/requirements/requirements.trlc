@@ -54,13 +54,6 @@ req.System_Requirement_Aspect Status_Ok {
   '''
 }
 
-req.System_Requirement_Aspect Zero_Items_Coverage {
-  description = '''
-    IF a level defined in the tracing policy has zero items in the corresponding input file,
-    THEN the tool shall set the coverage for that level to 0.0 in the generated report file.
-  '''
-}
-
 req.System_Requirement_Aspect Invalid_Version {
   description = '''
     IF a lobster input file contains a schema with an unsupported version number,
