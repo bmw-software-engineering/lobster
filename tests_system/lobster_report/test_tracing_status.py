@@ -15,6 +15,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import json
 import unittest
 from tests_system.asserter import Asserter
 from tests_system.lobster_report.lobster_report_system_test_case_base import (
@@ -51,6 +52,32 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         asserter.assertNoStdOutText()
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
+
+    def test_status_ok_when_no_references_required(self):
+        # lobster-trace: core_report_req.Item_Status_Ok_When_No_References_Required
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "unconstrained_level.conf")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "unconstrained_level.lobster")
+
+        out_file = "report_unconstrained_level.lobster"
+        self._test_runner.cmd_args.lobster_config = "unconstrained_level.conf"
+        self._test_runner.cmd_args.out = out_file
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertNoStdOutText()
+        asserter.assertExitCode(0)
+
+        with open(
+            self._test_runner.working_dir / out_file,
+            encoding="UTF-8",
+        ) as report_file:
+            report = json.load(report_file)
+        item = report["levels"][0]["items"][0]
+        self.assertEqual("OK", item["tracing_status"])
+        self.assertEqual(100.0, report["levels"][0]["coverage"])
 
     # Status Missing
     def test_status_missing(self):
