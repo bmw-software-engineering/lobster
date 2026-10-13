@@ -23,6 +23,31 @@ uv = use_extension("@rules_python//python/uv:uv.bzl", "uv")
 uv.configure(version = "0.8.24")
 
 bazel_dep(name = "googletest", version = "1.13.0")
+bazel_dep(name = "platforms", version = "0.0.11")
+
+# Pinned Chrome for Testing binaries (linux x86_64) for the Selenium system test.
+# To update: pick a version from
+# https://googlechromelabs.github.io/chrome-for-testing/ and refresh both sha256 values.
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "chrome_linux64",
+    build_file_content = """filegroup(name = "all_files", srcs = glob(["**"]), visibility = ["//visibility:public"])
+exports_files(["chrome"])
+""",
+    sha256 = "55672d1f392fd3e7b7a08621b6e804e6bcb39d40cf155504abb74b3a021ea8ea",
+    strip_prefix = "chrome-linux64",
+    url = "https://storage.googleapis.com/chrome-for-testing-public/155.0.8059.39/linux64/chrome-linux64.zip",
+)
+
+http_archive(
+    name = "chromedriver_linux64",
+    build_file_content = """exports_files(["chromedriver"], visibility = ["//visibility:public"])
+""",
+    sha256 = "a65f025c692e686ec2a21fa6b9639c69fa9813683a47af9cabf1ba0b1f453e42",
+    strip_prefix = "chromedriver-linux64",
+    url = "https://storage.googleapis.com/chrome-for-testing-public/155.0.8059.39/linux64/chromedriver-linux64.zip",
+)
 
 # trlc is used here exclusively for its Bazel rules and providers
 # (see bazel/private/lobster_trlc.bzl: TrlcProviderInfo, trlc.bzl).

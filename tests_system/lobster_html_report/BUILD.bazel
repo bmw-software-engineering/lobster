@@ -16,12 +16,12 @@ py_library(
     ],
     deps = [
         "//tests_system",
+        "@rules_python//python/runfiles",
         requirement("certifi"),
         requirement("packaging"),
         requirement("requests"),
         requirement("selenium"),
         requirement("urllib3"),
-        requirement("webdriver-manager"),
     ],
 )
 
@@ -42,10 +42,20 @@ test_suite(
 py_test(
     name = "test_html_report",
     srcs = ["test_html_report.py"],
-    # TODO: This test is manual because Selenium tests require a Googlechrome driver
-    # from googlechromelabs.github.io, which needs to be provided first.
-    # We need to update Bazel to download it first.
-    tags = ["manual"],
+    data = [
+        "@chrome_linux64//:all_files",
+        "@chrome_linux64//:chrome",
+        "@chromedriver_linux64//:chromedriver",
+    ],
+    env = {
+        "LOBSTER_TEST_CHROME": "$(rlocationpath @chrome_linux64//:chrome)",
+        "LOBSTER_TEST_CHROMEDRIVER": "$(rlocationpath @chromedriver_linux64//:chromedriver)",
+    },
+    # The pinned binaries are linux x86_64 only.
+    target_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
     deps = [
         ":lobster_html_report",
         "//lobster/tools/core/html_report",
