@@ -1,0 +1,34 @@
+package core_report_req
+import req
+
+req.Definition Item {
+  description = '''
+    An item is an entry in the data section according to the schema.
+  '''
+}
+
+/* In graph theory terms: a "level" is a vertex of the tracing policy graph, and a
+ * "trace to" declaration from level A to level B is a directed edge from vertex A to
+ * vertex B. A "reference group" required for a level is one incoming-edge set for
+ * its vertex: by default one set per predecessor vertex, or one merged set of
+ * predecessor vertices where "requires ... or ..." combines them.
+ */
+
+req.Definition Required_Up_Reference {
+  description = '''
+    A level's required up reference is satisfied by an [[Item]] at that level if the
+    [[Item]] has at least one actual reference to any other item.
+  '''
+}
+
+req.Definition Required_Down_Reference_Group {
+  description = '''
+    A level's required down reference groups are the groups of levels from which it
+    must receive a reference: one group per level whose "trace to" points at it, or a
+    single merged group where the tracing policy combines several such levels with a
+    "requires ... or ..." declaration. A required down reference group is satisfied
+    by an [[Item]] at that level if the [[Item]] has at least one actual reference
+    from an item at one of the levels in that group. A level with more than one
+    required down reference group requires every one of its groups to be satisfied.
+  '''
+}
