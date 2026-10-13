@@ -8,12 +8,6 @@ req.System_Requirement Report_Input_Duplicate_Definition {
   '''
 }
 
-req.Definition Item {
-  description = '''
-    An item is an entry in the data section according to the schema.
-  '''
-}
-
 req.System_Requirement_Aspect Invalid_Trace_To {
   description = '''
     IF "trace to" is an invalid entry given in the configuration file according to the schema,
