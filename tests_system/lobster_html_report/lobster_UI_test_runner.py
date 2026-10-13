@@ -15,13 +15,13 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from lobster.tools.core.html_report.html_report import main
 from tests_system.testrunner import TestRunner
 
@@ -76,9 +76,18 @@ class LobsterUITestRunner(TestRunner):
     def get_chrome_driver(self):
         """Set up and return a Selenium WebDriver instance for Chrome."""
         driver_options = self.get_driver_options()
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
-                                  options=driver_options)
-        return driver
+        chrome = os.environ.get("LOBSTER_TEST_CHROME")
+        chromedriver = os.environ.get("LOBSTER_TEST_CHROMEDRIVER")
+        if chrome and chromedriver:
+            # Under Bazel: use the pinned binaries from runfiles.
+            # pylint: disable=import-outside-toplevel,import-error
+            from python.runfiles import runfiles
+            rf = runfiles.Create()
+            driver_options.binary_location = rf.Rlocation(chrome)
+            service = Service(executable_path=rf.Rlocation(chromedriver))
+            return webdriver.Chrome(service=service, options=driver_options)
+        # Outside Bazel: Selenium Manager downloads the driver on demand.
+        return webdriver.Chrome(options=driver_options)
 
     def get_tool_args(self) -> List[str]:
         """Returns the command line arguments that shall be used to start
