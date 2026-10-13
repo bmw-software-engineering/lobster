@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="6" name="AllTests">
+  <testsuite name="Stack" tests="6">
+    <testcase name="GivenEmptyStack_WhenPopCalled_ExpectError" status="run" file="stack.cpp" line="10">
+      <properties>
+        <property name="description" value="Popping fails"/>
+        <property name="lobster-tracing" value="req.one"/>
+      </properties>
+    </testcase>
+    <testcase name="GivenEmptyStack_ThenSizeIsZero" status="run" file="stack.cpp" line="20"/>
+    <testcase name="Push_GivenFullStack_WhenPushCalled_ExpectOverflow" status="run" file="stack.cpp" line="30"/>
+    <testcase name="GivenHTTPServerOnPort80_WhenABCArrives_ThenOkIsSent" status="run" file="stack.cpp" line="40"/>
+    <testcase name="Given3Items_Expect3Results" status="run" file="stack.cpp" line="50"/>
+    <testcase name="GivenInput_ExpectOutput/0" status="run" file="stack.cpp" line="60"/>
+  </testsuite>
+</testsuites>
