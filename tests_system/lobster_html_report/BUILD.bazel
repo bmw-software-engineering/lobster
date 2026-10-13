@@ -119,6 +119,7 @@ py_test(
     deps = [
         ":lobster_html_report",
         "//lobster/tools/core/html_report",
+        "@rules_python//python/runfiles",
         requirement("selenium"),
     ],
 )
