@@ -27,6 +27,7 @@ from lobster.common.items import Tracing_Tag, Activity
 from lobster.common.location import Void_Reference, File_Reference
 from lobster.common.io import lobster_write, ensure_output_directory
 from lobster.common.meta_data_tool_base import MetaDataToolBase
+from lobster.tools.gtest.givenwhenthen import GivenWhenThen
 
 
 class GtestTool(MetaDataToolBase):
@@ -42,6 +43,13 @@ class GtestTool(MetaDataToolBase):
             metavar="FILE|DIR",
         )
         self._argument_parser.add_argument("--out", default=None)
+        self._argument_parser.add_argument(
+            "--derive-gwt-from-test-name",
+            action="store_true",
+            help="derive the Given, When and Then parts of the item text "
+                 "from the test name, unless the test records one of them "
+                 "itself",
+        )
 
     @staticmethod
     def _is_xml_file(filename: str) -> bool:
@@ -170,9 +178,23 @@ class GtestTool(MetaDataToolBase):
                     uid = f"{suite_name}:{test_name}"
                     status = self._resolve_test_status(test_executed, test_ok)
 
-                    parts = [f":{k.capitalize()}: {v}"
-                             for k, v in extra.items()]
-                    text = "\n".join(parts) if parts else None
+                    properties = [(k.capitalize(), v)
+                                  for k, v in extra.items()]
+                    spec = (
+                        GivenWhenThen.from_test_name(test_name)
+                        if options.derive_gwt_from_test_name
+                        else GivenWhenThen()
+                    )
+                    if spec.conflicts_with(properties):
+                        print(f"{test_source.to_string()}: lobster warning: "
+                              f"test {uid} records Given/When/Then "
+                              f"properties, ignoring its name",
+                              file=sys.stderr)
+                    else:
+                        properties = spec.merge_into(properties)
+
+                    text = "\n".join(
+                        f":{k}: {v}" for k, v in properties) or None
 
                     tag  = Tracing_Tag("gtest", uid)
                     item = Activity(tag       = tag,

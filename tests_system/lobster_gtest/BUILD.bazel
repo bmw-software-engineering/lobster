@@ -1,0 +1,33 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_gtest",
+    srcs = [
+        "lobster_gtest_asserter.py",
+        "lobster_gtest_system_test_case_base.py",
+        "lobster_gtest_test_runner.py",
+    ],
+    data = [
+        "//tests_system/lobster_gtest/data:gtest_data_system",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//:lobster",
+        "//tests_system",
+    ],
+)
+
+test_suite(
+    name = "lobster_gtest_tests",
+)
+
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [
+        ":lobster_gtest",
+        "//lobster/tools/gtest",
+    ],
+) for src in glob(["test_*.py"])]

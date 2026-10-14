@@ -1,10 +1,12 @@
 load("//bazel:providers.bzl", "LobsterProvider")
 
-def _lobster_gtest_subrule_impl(ctx, tests, _lobster_gtest):
+def _lobster_gtest_subrule_impl(ctx, tests, _lobster_gtest, *, derive_gwt_from_test_name = False):
     lobster_gtest_trace = ctx.actions.declare_file(ctx.label.name + ".lobster")
 
     args = ctx.actions.args()
     args.add_all(["--out", lobster_gtest_trace.path])
+    if derive_gwt_from_test_name:
+        args.add("--derive-gwt-from-test-name")
     args.add(".")
 
     ctx.actions.run(
@@ -32,7 +34,10 @@ subrule_lobster_gtest = subrule(
 )
 
 def _lobster_gtest(ctx):
-    lobster_gtest_trace, lobster_provider = subrule_lobster_gtest(ctx.files.tests)
+    lobster_gtest_trace, lobster_provider = subrule_lobster_gtest(
+        ctx.files.tests,
+        derive_gwt_from_test_name = ctx.attr.derive_gwt_from_test_name,
+    )
     return [DefaultInfo(files = depset([lobster_gtest_trace])), lobster_provider]
 
 lobster_gtest = rule(
@@ -41,6 +46,11 @@ lobster_gtest = rule(
         "tests": attr.label_list(
             allow_empty = False,
             mandatory = True,
+        ),
+        "derive_gwt_from_test_name": attr.bool(
+            default = False,
+            doc = "Derive the Given, When and Then parts from the test names, " +
+                  "unless a test records one of them itself.",
         ),
     },
     subrules = [subrule_lobster_gtest],
