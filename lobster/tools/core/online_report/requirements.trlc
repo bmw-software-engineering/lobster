@@ -1,17 +1,45 @@
 package core_online_report_req
 import req
+import UseCases
 
 req.System_Requirement Valid_Git_Repository {
   description = '''
     IF the provided repository root directory contains a ".git" directory,
-    THEN the tool shall write the output in the LOBSTER interchange format to the file given in the "out" parameter
-    AND exit with a zero return code.
+    THEN the tool shall write the output in the LOBSTER interchange format to the file
+    given in the "out" parameter.
   '''
+  derived_from = [UseCases.Item_GitHub_Source]
 }
 
-req.System_Requirement_Aspect Invalid_Git_Repository {
+req.System_Requirement Invalid_Git_Repository {
   description = '''
     OTHERWISE the tool shall exit with a non-zero return code and display an error message
     indicating that the repository is not a valid Git repository.
   '''
+  derived_from = [UseCases.Item_GitHub_Source]
+}
+
+req.System_Requirement Commit_Value_For_Item_Outside_Submodule {
+  description = '''
+    IF an item in the input report has a file location
+    AND the file is inside the repository given by "repo_root"
+    AND the file is not inside any Git submodule of that repository,
+    THEN the tool shall write, as the "commit" entry of the location of that item in the
+    output file, exactly the value of the "commit_id" attribute of the configuration
+    file.
+  '''
+  derived_from = [UseCases.Item_GitHub_Source]
+}
+
+req.System_Requirement Commit_Value_For_Item_Inside_Submodule {
+  description = '''
+    IF an item in the input report has a file location
+    AND the file is inside a Git submodule of the repository given by "repo_root",
+    THEN the tool shall write, as the "commit" of the location of that item in the
+    output file, the commit SHA of that submodule as recorded by the repository
+    given by "repo_root"
+    AND shall ignore the value of the "commit_id" attribute of the configuration file
+    for that item.
+  '''
+  derived_from = [UseCases.Item_GitHub_Source]
 }

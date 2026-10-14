@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -53,8 +53,7 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
 
     @patch('lobster.tools.core.online_report.path_to_url_converter.Repo')
     def test_main_repo(self, mock_repo_class):
-        # lobster-trace: UseCases.Incorrect_GitHub_Reference_in_Output_file
-        # lobster-trace: UseCases.Correct_Item_Data_in_Online_Report_Output_File
+        # lobster-trace: core_online_report_req.Commit_Value_For_Item_Outside_Submodule
         OUT_FILE = "main_repo_online_report.lobster"
 
         mock_main_repo = Mock()
@@ -78,8 +77,7 @@ class ConfigParserExceptionsOnlineReport(LobsterOnlineReportSystemTestCaseBase):
 
     @patch('lobster.tools.core.online_report.path_to_url_converter.Repo')
     def test_submodules(self, mock_repo_class):
-        # lobster-trace: UseCases.Incorrect_GitHub_Reference_in_Output_file
-        # lobster-trace: UseCases.Correct_Item_Data_in_Online_Report_Output_File
+        # lobster-trace: core_online_report_req.Commit_Value_For_Item_Inside_Submodule
         OUT_FILE = "submodule_online_report.lobster"
 
         mock_repo = Mock()
