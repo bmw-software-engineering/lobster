@@ -214,9 +214,14 @@ Example from `lobster_html_report/BUILD.bazel`:
 py_test(
     name = "test_html_report",
     srcs = ["test_html_report.py"],
-    # TODO: This test is manual because Selenium tests require a Chrome driver
-    # from googlechromelabs.github.io, which needs to be provided first.
-    tags = ["manual"],
+    data = [
+        "@chrome_linux64//:all_files",
+        "@chromedriver_linux64//:chromedriver",
+    ],
+    env = {
+        "LOBSTER_TEST_CHROME": "$(rlocationpath @chrome_linux64//:chrome)",
+        "LOBSTER_TEST_CHROMEDRIVER": "$(rlocationpath @chromedriver_linux64//:chromedriver)",
+    },
     deps = [
         ":lobster_html_report",
         "//lobster/tools/core/html_report",
