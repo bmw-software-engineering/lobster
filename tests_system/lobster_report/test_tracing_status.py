@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -31,8 +31,9 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
     # Tests for the report generation with different statuses
     # Status Ok
     def test_status_ok(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: core_report_req.Status_Ok
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Item_Status_Ok_When_Required_References_Present
+        # lobster-trace: core_report_req.Report_Generation_For_Valid_Config_And_Inputs
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_ok.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -81,8 +82,8 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
 
     # Status Missing
     def test_status_missing(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: core_report_req.Status_Missing
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Item_Status_Missing_When_Reference_Absent
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_missing.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -104,8 +105,8 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_status_missing_mixed(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: core_report_req.Status_Missing
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Item_Status_Missing_When_Reference_Absent
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_mixed.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -128,8 +129,8 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
 
     # Status Justified
     def test_status_justified(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: core_report_req.Status_Justified_Global
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Item_Status_Justified_By_Justification
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_justified.conf")
         self._test_runner.declare_input_file(self._data_directory /

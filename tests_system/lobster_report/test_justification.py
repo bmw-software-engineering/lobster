@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -27,12 +27,41 @@ class ReportJustificationTest(LobsterReportSystemTestCaseBase):
         super().setUp()
         self._test_runner = self.create_test_runner()
 
+    # Status Partial
+    def test_status_partial(self):
+        # lobster-trace: core_report_req.Item_Status_Partial_One_Direction_Satisfied
+        """
+        This test isolates the case where a middle-level item (requiring both an up
+        and a down reference) only satisfies one of the two directions.
+        """
+        CONF_FILE = "partial_status.conf"
+        OUT_FILE = "report_partial_status.lobster"
+        self._test_runner.declare_input_file(self._data_directory / CONF_FILE)
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "partial_status_requirements.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "partial_status_midreqs.lobster")
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "partial_status_code.lobster")
+
+        self._test_runner.cmd_args.lobster_config = CONF_FILE
+        self._test_runner.cmd_args.out = OUT_FILE
+        self._test_runner.declare_output_file(self._data_directory / OUT_FILE)
+
+        completed_process = self._test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertNoStdOutText()
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
     def test_justification_and_coverage(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Coverage_calculation_in_Output
-        # lobster-trace: core_report_req.Status_Justified_Global
-        # lobster-trace: core_report_req.Status_Justified_Up
-        # lobster-trace: core_report_req.Status_Justified_Down
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Level_Coverage_Percentage_From_Item_Status
+        # lobster-trace: core_report_req.Item_Status_Ok_When_Required_References_Present
+        # lobster-trace: core_report_req.Item_Status_Justified_By_Justification
+        # lobster-trace: core_report_req.Item_Status_Partial_One_Direction_Satisfied
+        # lobster-trace: core_report_req.Item_Status_Missing_When_Reference_Absent
         """
         This test checks that the lobster report tool can handle justifications
         and coverage changes according to justifications and generate lobster report.

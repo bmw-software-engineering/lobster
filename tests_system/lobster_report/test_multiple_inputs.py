@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -28,9 +28,8 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         self._test_runner = self.create_test_runner()
 
     def test_extra_input_files_are_ignored_by_policy(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
-        # lobster-trace: core_report_req.Input_Files_Policy_Based_Processing
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Report_Loads_Configured_Sources_Per_Level
         """
         This test checks that the lobster report tool can handle multiple input files.
         The tool should actually fetch input files provided in the tracing policy
@@ -96,14 +95,12 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         asserter.assertExitCode(1)
 
     def test_multiple_source_files(self):
-        # lobster-trace: UseCases.Tracing_Policy_Output_File
-        # lobster-trace: UseCases.Software_Test_to_Requirement_Mapping_in_output
-        # lobster-trace: core_report_req.Multi_Level_Source_Files
-        # lobster-trace: core_report_req.Item_Data_Isolation
+        # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
+        # lobster-trace: core_report_req.Report_Loads_Configured_Sources_Per_Level
         """
         This test checks that the lobster report tool can handle multiple source files
         given at different levels of tracing policy.
-        The tool should isolate item data of items and do not mix it.
+        The tool shall isolate item data of items and shall not mix it.
         """
         self._test_runner.declare_input_file(self._data_directory /
                                              "octopus_policy.conf")
