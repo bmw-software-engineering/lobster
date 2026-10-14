@@ -57,6 +57,7 @@ class JsonTagAttributeTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_tag_attribute_missing(self):
+        # lobster-trace: json_req.Config_File_Tag_Attribute_Missing
         self._test_runner.declare_input_file(self._data_directory / "basic.json")
         # Intentionally not setting tag_attribute (it's mandatory)
 
