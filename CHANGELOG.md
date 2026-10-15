@@ -5,6 +5,9 @@
 
 ### 1.1.0-dev
 
+* Created the initial LOBSTER Safety Manual as a baseline safety guidance document.
+  It will be updated and refined as needed.
+
 * `Python support`: Drop support for Python versions below 3.10.
 
 * Reworked the requirements and the way use cases are traced.
