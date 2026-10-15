@@ -45,10 +45,10 @@ class ReadYamlPolicyTest(TestCase):
                 encoding="UTF-8",
             )
 
-        # WHEN the policy is read
+            # WHEN the policy is read
             policy = read_yaml_policy(str(filename))
 
-      # THEN all levels, fields, defaults, and source locations are preserved
+        # THEN all levels, fields, defaults, and source locations are preserved
         self.assertIsInstance(policy, RawPolicy)
         self.assertEqual(len(policy.levels), 2)
 
