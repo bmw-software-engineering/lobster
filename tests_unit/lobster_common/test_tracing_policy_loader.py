@@ -17,7 +17,7 @@
 
 import io
 from contextlib import redirect_stdout
-from unittest import TestCase
+from unittest import main, TestCase
 from unittest.mock import MagicMock, patch
 
 from lobster.common.tracing_policy_loader import load_tracing_policy
@@ -73,3 +73,7 @@ class LoadTracingPolicyTest(TestCase):
             # AND a deprecation warning is printed
             self.assertIn("policy.conf: warning:", stdout.getvalue())
             self.assertIn("deprecated", stdout.getvalue())
+
+
+if __name__ == "__main__":
+    main()
