@@ -28,6 +28,7 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
 
     def test_invalid_schema(self):
         # lobster-trace: core_report_req.Invalid_Schema
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "invalid_schema.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -40,15 +41,18 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText("python_invalid_schema.lobster: "
-                                  "lobster error: unknown schema kind "
-                                  "invalid-schema-name\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            self.legacy_policy_deprecation_warning("invalid_schema.conf") +
+            "python_invalid_schema.lobster: "
+            "lobster error: unknown schema kind "
+            "invalid-schema-name\n\n"
+            "lobster-report: aborting due "
+            "to earlier errors.\n")
         asserter.assertExitCode(1)
 
     def test_missing_schema(self):
         # lobster-trace: core_report_req.Missing_Schema_Key
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(
             self._data_directory / "missing_schema.conf")
         self._test_runner.declare_input_file(
@@ -58,15 +62,18 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText("trlc_missing_schema.lobster: "
-                                  "lobster error: required top-level key "
-                                  "schema not present\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            self.legacy_policy_deprecation_warning("missing_schema.conf") +
+            "trlc_missing_schema.lobster: "
+            "lobster error: required top-level key "
+            "schema not present\n\n"
+            "lobster-report: aborting due "
+            "to earlier errors.\n")
         asserter.assertExitCode(1)
 
     def test_invalid_version(self):
         # lobster-trace: core_report_req.Invalid_Schema_Version
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "invalid_version.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -79,15 +86,18 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText("python_invalid_version.lobster: "
-                                  "lobster error: version 99 for schema "
-                                  "lobster-req-trace is not supported\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            self.legacy_policy_deprecation_warning("invalid_version.conf") +
+            "python_invalid_version.lobster: "
+            "lobster error: version 99 for schema "
+            "lobster-req-trace is not supported\n\n"
+            "lobster-report: aborting due "
+            "to earlier errors.\n")
         asserter.assertExitCode(1)
 
     def test_missing_version(self):
         # lobster-trace: core_report_req.Missing_Version_Key
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(
             self._data_directory / "missing_version.conf")
         self._test_runner.declare_input_file(
@@ -97,11 +107,13 @@ class ReportSchemaAndVersionTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText("trlc_missing_version.lobster: "
-                                  "lobster error: required top-level key "
-                                  "version not present\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            self.legacy_policy_deprecation_warning("missing_version.conf") +
+            "trlc_missing_version.lobster: "
+            "lobster error: required top-level key "
+            "version not present\n\n"
+            "lobster-report: aborting due "
+            "to earlier errors.\n")
         asserter.assertExitCode(1)
 
 

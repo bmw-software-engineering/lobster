@@ -18,6 +18,12 @@
 * `trlc bazel dep`: update to trlc==3.0.1
 
 * `lobster-report`:
+  - Tracing policies can now be written in `yaml` files or in the custom LOBSTER file
+    format.
+    A deprecation warning will be shown on `stdout` if the user provides a configuration
+    file in the custom LOBSTER file format.
+    Support for this format will be removed in a future release.
+    All users are encouraged to switch to the `yaml` file format.
   - Lifted the restriction that levels in the tracing policy must be defined in order.
     Example:
 
@@ -76,7 +82,7 @@
 
 * `lobster-gtest`:
   - Export all record properties for report generation: Enable GWT Pattern
-  - Minimize Bazel Gtest output to stdout during bazel build
+  - Minimize Bazel Gtest output to `stdout` during bazel build
 
 * `lobster-codebeamer`:
   - Added `baseline_id` support for cbQL queries. When set, the tool queries

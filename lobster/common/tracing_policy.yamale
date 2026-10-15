@@ -1,0 +1,8 @@
+levels: list(include('level'))
+---
+level:
+  name: str()
+  kind: enum('requirements', 'implementation', 'activity')
+  source: list(str(), required=False)
+  trace-to: list(str(), required=False)
+  requires: list(list(str()), required=False)
