@@ -8,3 +8,11 @@ py_test(
         "//lobster/common",
     ],
 )
+
+py_test(
+    name = "test_yaml_validation",
+    srcs = ["test_yaml_validation.py"],
+    deps = [
+        "//lobster/common",
+    ],
+)
