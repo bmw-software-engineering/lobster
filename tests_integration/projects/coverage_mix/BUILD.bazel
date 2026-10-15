@@ -1,47 +1,18 @@
-load("//:lobster.bzl", "lobster_trlc")
-load("//tests_integration/projects:report_reference_test.bzl", "lobster_reference_test")
-load("@trlc//:trlc.bzl", "trlc_requirements", "trlc_specification")
+load("//tests_integration/projects:lobster_integration_test.bzl", "lobster_integration_test")
 
-trlc_specification(
-    name = "req_spec",
-    srcs = ["example.rsl"],
-)
-
-trlc_requirements(
-    name = "reqs",
+lobster_integration_test(
+    name = "traceability",
     srcs = [
+        "example.rsl",
         "req_a.trlc",
         "req_b.trlc",
         "test_spec.trlc",
     ],
-    spec = [":req_spec"],
-)
-
-lobster_trlc(
-    name = "req_a",
-    config = "trlc_req_a.yaml",
-    requirements = [":reqs"],
-)
-
-lobster_trlc(
-    name = "req_b",
-    config = "trlc_req_b.yaml",
-    requirements = [":reqs"],
-)
-
-lobster_trlc(
-    name = "test_a",
-    config = "trlc_test_spec.yaml",
-    requirements = [":reqs"],
-)
-
-lobster_reference_test(
-    name = "traceability",
     config = "lobster.conf",
-    inputs = [
-        ":req_a",
-        ":req_b",
-        ":test_a",
-    ],
     reference = "report.reference_output",
+    trlc_configs = {
+        "trlc_req_a.yaml": "req_a.lobster",
+        "trlc_req_b.yaml": "req_b.lobster",
+        "trlc_test_spec.yaml": "test_a.lobster",
+    },
 )
