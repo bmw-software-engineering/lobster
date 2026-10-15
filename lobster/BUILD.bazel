@@ -1,41 +1,50 @@
-
-load("@rules_python//python:defs.bzl", "py_test")
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
 load("//:requirements.bzl", "requirement")
 
+py_library(
+    name = "package_root",
+    srcs = [
+        "__init__.py",
+        "trlc_runner.py",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [requirement("trlc")],
+)
+
 filegroup(
-	name = "trlc_inputs",
-	srcs = glob([
-		"*.rsl",
-		"*.trlc",
-	]) + [
-		"//lobster/tools/codebeamer:trlc_sources",
-		"//lobster/tools/core/ci_report:trlc_sources",
-		"//lobster/tools/core/html_report:trlc_sources",
-		"//lobster/tools/core/online_report:trlc_sources",
-		"//lobster/tools/core/report:trlc_sources",
-		"//lobster/tools/core/rst_report:trlc_sources",
-		"//lobster/tools/cpp:trlc_sources",
-		"//lobster/tools/cpptest:trlc_sources",
-		"//lobster/tools/gtest:trlc_sources",
-		"//lobster/tools/json:trlc_sources",
-		"//lobster/tools/pkg:trlc_sources",
-		"//lobster/tools/python:trlc_sources",
-		"//lobster/tools/trlc:trlc_sources",
-	],
-	visibility = ["//visibility:public"],
+    name = "trlc_inputs",
+    srcs = glob([
+        "*.rsl",
+        "*.trlc",
+    ]) + [
+        "//lobster/tools/codebeamer:trlc_sources",
+        "//lobster/tools/core/ci_report:trlc_sources",
+        "//lobster/tools/core/html_report:trlc_sources",
+        "//lobster/tools/core/online_report:trlc_sources",
+        "//lobster/tools/core/report:trlc_sources",
+        "//lobster/tools/core/rst_report:trlc_sources",
+        "//lobster/tools/cpp:trlc_sources",
+        "//lobster/tools/cpptest:trlc_sources",
+        "//lobster/tools/gtest:trlc_sources",
+        "//lobster/tools/json:trlc_sources",
+        "//lobster/tools/pkg:trlc_sources",
+        "//lobster/tools/python:trlc_sources",
+        "//lobster/tools/trlc:trlc_sources",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 py_test(
-	name = "trlc",
-	srcs = ["trlc_runner.py"],
-	main = "trlc_runner.py",
-	args = [
-		"lobster",
-		"--verify",
-	],
-	data = [
-		":trlc_inputs"
-	],
-	deps = [requirement("trlc")],
-	visibility = ["//visibility:public"],
+    name = "trlc",
+    srcs = ["trlc_runner.py"],
+    args = [
+        "lobster",
+        "--verify",
+    ],
+    data = [
+        ":trlc_inputs",
+    ],
+    main = "trlc_runner.py",
+    visibility = ["//visibility:public"],
+    deps = [requirement("trlc")],
 )
