@@ -34,28 +34,26 @@ from lobster.common.yaml_validation import validate_yaml_file
 SCHEMA_FILE = Path(__file__).parent / "tracing_policy.yamale"
 
 
-class YamlPolicyReader:
-    @staticmethod
-    def read(filename: str) -> RawPolicy:
-        validate_yaml_file(schema_file=SCHEMA_FILE, filename=filename)
+def read_yaml_policy(filename: str) -> RawPolicy:
+    validate_yaml_file(schema_file=SCHEMA_FILE, filename=filename)
 
-        with open(filename, "r", encoding="UTF-8") as f:
-            data = yaml.safe_load(f)
+    with open(filename, "r", encoding="UTF-8") as f:
+        data = yaml.safe_load(f)
 
-        loc = File_Reference(filename)
-        levels = []
-        for level_data in data.get("levels", []):
-            level = RawLevel(name=level_data["name"],
-                              name_loc=loc,
-                              kind=level_data["kind"])
-            for source_file in level_data.get("source", []):
-                level.source.append(RawSource(file=source_file, loc=loc))
-            for target in level_data.get("trace-to", []):
-                level.trace_to.append(RawTraceTo(target=target, loc=loc))
-            for or_group in level_data.get("requires", []):
-                level.requires.append(
-                    [RawRequiresCandidate(name=name, loc=loc)
-                     for name in or_group])
-            levels.append(level)
+    loc = File_Reference(filename)
+    levels = []
+    for level_data in data.get("levels", []):
+        level = RawLevel(name=level_data["name"],
+                          name_loc=loc,
+                          kind=level_data["kind"])
+        for source_file in level_data.get("source", []):
+            level.source.append(RawSource(file=source_file, loc=loc))
+        for target in level_data.get("trace-to", []):
+            level.trace_to.append(RawTraceTo(target=target, loc=loc))
+        for or_group in level_data.get("requires", []):
+            level.requires.append(
+                [RawRequiresCandidate(name=name, loc=loc)
+                 for name in or_group])
+        levels.append(level)
 
-        return RawPolicy(levels=levels)
+    return RawPolicy(levels=levels)
