@@ -27,7 +27,7 @@ from typing import OrderedDict
 from lobster.common.level_definition import LevelDefinition
 from lobster.common.parser import Parser
 from lobster.common.policy_builder import build_tracing_policy
-from lobster.common.yaml_policy_reader import YamlPolicyReader
+from lobster.common.yaml_policy_reader import read_yaml_policy
 
 YAML_EXTENSIONS = (".yaml", ".yml")
 
@@ -42,7 +42,7 @@ def load_tracing_policy(
         An ordered mapping from each level's name to its ``LevelDefinition``.
     """
     if Path(filename).suffix.lower() in YAML_EXTENSIONS:
-        raw_policy = YamlPolicyReader.read(filename)
+        raw_policy = read_yaml_policy(filename)
     else:
         print(f"{filename}: warning: the tracing-policy in the LOBSTER configuration "
               "language is deprecated and will be removed in a future "
