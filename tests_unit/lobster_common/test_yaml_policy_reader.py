@@ -17,7 +17,7 @@
 
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from unittest import TestCase
+from unittest import main, TestCase
 
 from lobster.common.raw_policy import RawPolicy
 from lobster.common.yaml_policy_reader import read_yaml_policy
@@ -83,6 +83,4 @@ class ReadYamlPolicyTest(TestCase):
 
 
 if __name__ == "__main__":
-    import unittest
-
-    unittest.main()
+    main()

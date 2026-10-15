@@ -16,7 +16,7 @@
 # <https://www.gnu.org/licenses/>.
 
 from pathlib import Path
-from unittest import TestCase
+from unittest import main, TestCase
 from unittest.mock import patch
 
 from lobster.common.yaml_validation import validate_yaml_file
@@ -45,6 +45,4 @@ class ValidateYamlFileTest(TestCase):
 
 
 if __name__ == "__main__":
-    import unittest
-
-    unittest.main()
+    main()
