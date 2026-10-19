@@ -15,6 +15,7 @@
 # License along with this program. If not, see
 # <https://www.gnu.org/licenses/>.
 
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
@@ -71,13 +72,18 @@ class LobsterUITestRunner(TestRunner):
         options.add_argument("--headless")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
+        # Chrome's own log goes to stderr via chromedriver's output
+        options.add_argument("--enable-logging=stderr")
+        options.add_argument("--v=1")
         return options
 
     def get_chrome_driver(self):
         """Set up and return a Selenium WebDriver instance for Chrome."""
         driver_options = self.get_driver_options()
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
-                                  options=driver_options)
+        service = Service(ChromeDriverManager().install(),
+                          service_args=["--verbose"],
+                          log_output=sys.stderr)
+        driver = webdriver.Chrome(service=service, options=driver_options)
         return driver
 
     def get_tool_args(self) -> List[str]:
