@@ -27,7 +27,20 @@ test_suite(
     name = src[:-3],
     srcs = [src],
     deps = [":lobster_online_report"],
-) for src in glob(["test_*.py"], exclude = ["test_valid_cases.py"])]
+) for src in glob(["test_*.py"], exclude = [
+    "test_valid_cases.py",
+    "test_commit_value.py",
+])]
+
+# Runs the host's git executable, which Bazel does not track as an input.
+# "local" disables sandboxing so that git is found on the host, and it documents that
+# the test is not hermetic.
+py_test(
+    name = "test_commit_value",
+    srcs = ["test_commit_value.py"],
+    tags = ["local"],
+    deps = [":lobster_online_report"],
+)
 
 py_test(
     name = "test_valid_cases",

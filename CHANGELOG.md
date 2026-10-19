@@ -58,6 +58,12 @@
   - Fixed a Windows crash caused by specifying a directory, rather than a file, for
     the `--config` argument.
 
+* `lobster-online-report`:
+  - Fixed a problem where `lobster-online-report` kept the Git repository folder
+    locked after it had finished, because the Git helper processes of the repository
+    were not released. On Windows this prevented deleting or moving the folder
+    (`PermissionError: [WinError 32]`).
+
 * Removed wrong statement from `schemas.md` regarding "status" field.
 
 ### 1.0.6
