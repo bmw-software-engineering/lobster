@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="7" name="AllTests">
+  <testsuite name="Parser" tests="7">
+    <testcase name="PlainName" status="run" file="parser.cpp" line="10"/>
+    <testcase name="GivenA_AndB_ExpectC" status="run" file="parser.cpp" line="20"/>
+    <testcase name="GivenSize_0_ExpectEmpty" status="run" file="parser.cpp" line="30"/>
+    <testcase name="givenA_ExpectB" status="run" file="parser.cpp" line="40"/>
+    <testcase name="GivenA_WhenB" status="run" file="parser.cpp" line="50"/>
+    <testcase name="Too_Many_GivenA_ExpectB" status="run" file="parser.cpp" line="60"/>
+    <testcase name="GivenA_ExpectedFailure" status="run" file="parser.cpp" line="70">
+      <properties>
+        <property name="description" value="Kept as is"/>
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -5,6 +5,17 @@
 
 ### 1.1.0-dev
 
+* `lobster-gtest`:
+  - Added `--derive-gwt-from-test-name` command line option. Test names of the
+    form `[<Prefix>_]Given<X>[_When<Y>]_(Expect|Then)<Z>` (CamelCase parts) add
+    the record properties `Given`, `When` and `Then` to the item text, e.g.
+    `GivenEmptyStack_WhenPopCalled_ExpectError` gives `:Given: empty stack`.
+    If the test sets any of these record properties itself (non-blank), then
+    nothing is derived from its name and a warning is printed to stderr.
+  - The Bazel rule `lobster_gtest` has the new optional attribute
+    `derive_gwt_from_test_name`. The subrule `subrule_lobster_gtest` has the new
+    optional keyword parameter `derive_gwt_from_test_name`.
+
 * `Python support`: Drop support for Python versions below 3.10.
 
 * Reworked the requirements and the way use cases are traced.
