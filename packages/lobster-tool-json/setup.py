@@ -19,12 +19,17 @@
 
 import re
 import sys
+from pathlib import Path
+from urllib.parse import urljoin
+
 import setuptools
 
 from lobster.common import version
 
 gh_root = "https://github.com"
 gh_project = "bmw-software-engineering/lobster"
+package_dir = Path(__file__).resolve().parent
+package_path = package_dir.relative_to(package_dir.parent.parent).as_posix()
 
 with open("README.md", "r") as fd:
     long_description = fd.read()
@@ -34,11 +39,12 @@ with open("README.md", "r") as fd:
 fixes = []
 for match in re.finditer(r"\[(.*)\]\((.*)\)", long_description):
     if not match.group(2).startswith("http"):
+        url = urljoin(
+            f"{gh_root}/{gh_project}/blob/main/{package_path}/",
+            match.group(2),
+        )
         fixes.append((match.span(0)[0], match.span(0)[1],
-                      "[%s](%s/%s/blob/main/%s)" % (match.group(1),
-                                                    gh_root,
-                                                    gh_project,
-                                                    match.group(2))))
+                      "[%s](%s)" % (match.group(1), url)))
 
 for begin, end, text in reversed(fixes):
     long_description = (long_description[:begin] +

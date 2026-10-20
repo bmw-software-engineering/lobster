@@ -5,6 +5,10 @@
 
 ### 1.1.0-dev
 
+* `PyPI packaging`:
+  - Fixed relative README link conversion in all package descriptions,
+    including the `lobster_gtest.h` link.
+
 * `Python support`: Drop support for Python versions below 3.10.
 
 * Reworked the requirements and the way use cases are traced.
