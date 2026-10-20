@@ -209,14 +209,39 @@ py_test(
 ### Manual Tests
 Tests can be marked as "manual" if they require special setup or external resources that aren't available in the standard build environment.
 
+Set `tags = ["manual"]` on the test target to exclude it from wildcard test runs.
+Manual tests can still be run by specifying their target explicitly.
+
+### Platform-Specific Browser Tests
+The HTML report UI test runs automatically on Linux x86_64 using pinned Chrome
+and ChromeDriver binaries. Its platform constraints exclude it from wildcard
+test runs on unsupported platforms.
+
+Chrome runs with its browser sandbox enabled. Run the test as a non-root user
+on a runner whose kernel and security policy permit Chrome's sandbox, including
+unprivileged user namespaces for the pinned Chrome for Testing binary. A sandbox
+startup failure must be addressed in the runner configuration, not by adding
+`--no-sandbox` or disabling host security protections. Bazel's test sandbox does
+not replace Chrome's browser sandbox.
+
 Example from `lobster_html_report/BUILD.bazel`:
 ```python
 py_test(
     name = "test_html_report",
     srcs = ["test_html_report.py"],
-    # TODO: This test is manual because Selenium tests require a Chrome driver
-    # from googlechromelabs.github.io, which needs to be provided first.
-    tags = ["manual"],
+    data = [
+        "@chrome_linux64//:all_files",
+        "@chrome_linux64//:chrome",
+        "@chromedriver_linux64//:chromedriver",
+    ],
+    env = {
+        "LOBSTER_TEST_CHROME": "$(rlocationpath @chrome_linux64//:chrome)",
+        "LOBSTER_TEST_CHROMEDRIVER": "$(rlocationpath @chromedriver_linux64//:chromedriver)",
+    },
+    target_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
     deps = [
         ":lobster_html_report",
         "//lobster/tools/core/html_report",
@@ -225,7 +250,7 @@ py_test(
 )
 ```
 
-Manual tests are not run by default with `bazel test` but can be run explicitly:
+Run this browser test explicitly on Linux x86_64:
 ```bash
 bazel test //tests_system/lobster_html_report:test_html_report
 ```

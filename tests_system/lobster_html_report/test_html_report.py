@@ -40,6 +40,7 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         sys.path.append(self.TESTS_UI_PATH)
         self._test_runner = self.create_test_runner()
         self.driver = self._test_runner.get_chrome_driver()
+        self.addCleanup(self.driver.quit)
         self.OUT_FILE = "test_html_report.html"
         self.input_file = f'file://{self._test_runner.working_dir}/{self.OUT_FILE}'
         self._test_runner.cmd_args.out = self.OUT_FILE
