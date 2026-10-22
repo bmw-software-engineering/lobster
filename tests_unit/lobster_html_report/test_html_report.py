@@ -18,9 +18,19 @@
 import unittest
 import hashlib
 import subprocess
+from collections import OrderedDict
 from datetime import datetime, timezone
+from types import SimpleNamespace
 from unittest.mock import patch
-from lobster.tools.core.html_report.html_report import get_commit_timestamp_utc, name_hash
+
+from lobster.common.items import Tracing_Tag, Implementation, Tracing_Status
+from lobster.common.location import Void_Reference
+from lobster.common.report import Coverage, Report
+from lobster.tools.core.html_report.html_report import (
+    get_commit_timestamp_utc,
+    name_hash,
+    write_html,
+)
 
 
 class LobsterHtmlReportTests(unittest.TestCase):
@@ -68,6 +78,33 @@ class LobsterHtmlReportTests(unittest.TestCase):
     def test_name_hash_returns_different_hashes_for_different_inputs(self):
         """Different inputs should yield different hashes"""
         self.assertNotEqual(name_hash("Unit"), name_hash("Test"))
+
+    def test_html_report_renders_implementation_text(self):
+        """Implementation items should render their text field just like other item types."""
+        report = Report()
+        report.config = OrderedDict()
+        report.config["impl"] = SimpleNamespace(
+            name="impl",
+            kind="implementation",
+            traces=[],
+        )
+        report.coverage["impl"] = Coverage(level="impl", items=1, ok=1, coverage=100.0)
+
+        item = Implementation(
+            tag=Tracing_Tag("test", "impl_item"),
+            location=Void_Reference(),
+            language="python",
+            kind="source",
+            name="impl_item",
+            text="Implementation details",
+        )
+        item.level = "impl"
+        item.tracing_status = Tracing_Status.OK
+        report.items[item.tag.key()] = item
+
+        html = write_html(report, dot=None, high_contrast=False, render_md=False)
+
+        self.assertIn("Implementation details", html)
 
 
 if __name__ == "__main__":

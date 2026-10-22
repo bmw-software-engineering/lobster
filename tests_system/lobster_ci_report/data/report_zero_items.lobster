@@ -6,8 +6,7 @@
     {
       "name": "Atoms",
       "kind": "requirements",
-      "items": [
-      ],
+      "items": [],
       "coverage": 0.0
     }
   ],

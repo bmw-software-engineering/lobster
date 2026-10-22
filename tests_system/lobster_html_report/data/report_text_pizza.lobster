@@ -822,7 +822,7 @@
           "ref_down": [],
           "tracing_status": "OK",
           "framework": "PyUnit",
-          "kind": "Test",          
+          "kind": "Test",
           "status": null
         },
         {
