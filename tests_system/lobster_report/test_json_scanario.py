@@ -28,6 +28,7 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
 
     def test_invalid_json(self):
         # lobster-trace: core_report_req.Invalid_JSON_File
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "invalid_json.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -38,10 +39,12 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText("trlc_invalid_json.lobster:6:2: "
-                                  "lobster error: Extra data\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            f"{self.legacy_policy_deprecation_warning('invalid_json.conf')}"
+            "trlc_invalid_json.lobster:6:2: "
+            "lobster error: Extra data\n\n"
+            "lobster-report: aborting due "
+            "to earlier errors.\n")
         asserter.assertExitCode(1)
 
     def test_missing_input_file(self):
@@ -53,12 +56,14 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutText(
+            f"{self.legacy_policy_deprecation_warning(missing_file)}"
             f"Config file not found: {missing_file}\n"
         )
         asserter.assertExitCode(1)
 
     def test_lobster_exception_dump(self):
         # lobster-trace: core_report_req.Malformed_Location_Data_Error_Dump
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "invalid_input.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -70,6 +75,7 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
         asserter.assertStdOutText(
+            f"{self.legacy_policy_deprecation_warning('invalid_input.conf')}"
             "LOBSTER Error: location data does not contain 'kind'\n"
             "------------------------------------------------------------\n"
             "{'column': None, 'file': '.\\\\software.py', 'line': 1}\n"
@@ -79,6 +85,7 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
 
     def test_invalid_json_not_dict(self):
         # lobster-trace: core_report_req.Invalid_JSON_Not_Dict
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "json_not_dict.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -89,10 +96,12 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
         result = self._test_runner.run_tool_test()
         asserter = Asserter(self, result, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertStdOutText("trlc_json_not_dict.lobster: "
-                                  "lobster error: parsed json is not an object\n\n"
-                                  "lobster-report: aborting due "
-                                  "to earlier errors.\n")
+        asserter.assertStdOutText(
+            f"{self.legacy_policy_deprecation_warning('json_not_dict.conf')}"
+            "trlc_json_not_dict.lobster: "
+            "lobster error: parsed json is not an object\n\n"
+            "lobster-report: aborting due "
+            "to earlier errors.\n")
         asserter.assertExitCode(1)
 
 

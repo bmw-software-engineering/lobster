@@ -40,6 +40,7 @@ $ pipx install bmw-lobster --include-deps
 ```
 
 For the HTML Report `graphviz` is also used to generate the tracing policy diagram.
+
 More on tracing policies can be found in the user manual on
 [configuration files](documentation/config_files.md).
 
