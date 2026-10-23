@@ -276,6 +276,40 @@ class LobsterHtmlReportcontentTest(LobsterUISystemTestCaseBase):
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
+    def test_implementation_item_text_is_visible_in_html_report(self):
+        # lobster-trace: html_req.Item_Data_Unique
+        # lobster-trace: html_req.HTML_Report_Lists_Lobster_Items
+        """Checks that implementation text is shown in the generated HTML."""
+        output_filename = "imp_text_pizza.html"
+        inputfile = self._data_directory / "report_imp_text_pizza.lobster"
+
+        self.output_dir = self.create_output_directory_and_copy_expected(
+            self.output_dir, Path(self._data_directory / output_filename))
+        self.test_runner.declare_output_file(self.output_dir / output_filename)
+
+        update_version_in_html_file(
+            self.output_dir / output_filename,
+        )
+        self.test_runner.cmd_args.out = output_filename
+        self.test_runner.cmd_args.lobster_report = str(inputfile)
+
+        completed_process = self.test_runner.run_tool_test()
+        asserter = Asserter(self, completed_process, self.test_runner)
+
+        if is_dot_available(dot=None):
+            expected_stdout = f"LOBSTER HTML report written to {output_filename}\n"
+        else:
+            expected_stdout = (
+                "warning: dot utility not found, report will not include "
+                "the tracing policy visualisation\n"
+                "> please install Graphviz (https://graphviz.org)\n"
+                f"LOBSTER HTML report written to {output_filename}\n"
+            )
+
+        asserter.assertStdOutText(expected_stdout)
+        asserter.assertExitCode(0)
+        asserter.assertOutputFiles()
+
     def test_text_in_html_report(self):
         """Checks that HTML report displays the text field"""
         # lobster-trace: html_req.Item_Data_Unique

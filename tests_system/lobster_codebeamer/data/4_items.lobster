@@ -17,7 +17,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 1"
     },
     {
@@ -37,7 +36,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 2"
     },
     {
@@ -57,7 +55,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 3"
     },
     {
@@ -77,7 +74,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 4"
     }
   ],

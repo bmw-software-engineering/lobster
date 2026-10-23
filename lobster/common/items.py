@@ -89,14 +89,17 @@ class Tracing_Status(Enum):
 
 
 class Item(metaclass=ABCMeta):
-    def __init__(self, tag: Tracing_Tag, location: Location):
+    def __init__(self, tag: Tracing_Tag, location: Location,
+                 text: Optional[str] = None):
         assert isinstance(tag, Tracing_Tag)
         assert isinstance(location, Location)
+        assert isinstance(text, str) or text is None
 
         self.level     = None
         self.tag       = tag
         self.location  = location
         self.name      = tag.tag
+        self.text      = text
 
         self.ref_up   = []
         self.ref_down = []
@@ -234,7 +237,7 @@ class Requirement(Item):
             text: Optional[str] = None,
             status: Optional[str] = None,
     ):
-        super().__init__(tag, location)
+        super().__init__(tag, location, text=text)
         assert isinstance(framework, str)
         assert isinstance(kind, str)
         assert isinstance(name, str)
@@ -244,14 +247,14 @@ class Requirement(Item):
         self.framework = framework
         self.kind      = kind
         self.name      = name
-        self.text      = text
         self.status    = status
 
     def to_json(self):
         rv = super().to_json()
         rv["framework"] = self.framework
         rv["kind"]      = self.kind
-        rv["text"]      = self.text
+        if self.text is not None:
+            rv["text"] = self.text
         rv["status"]    = self.status
         return rv
 
@@ -284,8 +287,9 @@ class Implementation(Item):
             language: str,
             kind: str,
             name: str,
+            text: Optional[str] = None,
     ):
-        super().__init__(tag, location)
+        super().__init__(tag, location, text=text)
         assert isinstance(language, str)
         assert isinstance(kind, str)
         assert isinstance(name, str)
@@ -298,6 +302,8 @@ class Implementation(Item):
         rv = super().to_json()
         rv["language"] = self.language
         rv["kind"]     = self.kind
+        if self.text is not None:
+            rv["text"] = self.text
         return rv
 
     @classmethod
@@ -310,7 +316,8 @@ class Implementation(Item):
                               location = Location.from_json(data["location"]),
                               language = data["language"],
                               kind     = data["kind"],
-                              name     = data["name"])
+                              name     = data["name"],
+                              text     = data.get("text", None))
         item.additional_data_from_json(level, data, schema_version)
 
         return item
@@ -326,7 +333,7 @@ class Activity(Item):
             text: Optional[str] = None,
             status: Optional[str] = None,
     ):
-        super().__init__(tag, location)
+        super().__init__(tag, location, text=text)
         assert isinstance(framework, str)
         assert isinstance(kind, str)
         assert isinstance(text, str) or text is None
@@ -334,7 +341,6 @@ class Activity(Item):
 
         self.framework = framework
         self.kind      = kind
-        self.text      = text
         self.status    = status
 
     def to_json(self):

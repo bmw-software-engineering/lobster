@@ -21,7 +21,6 @@
       ],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Ready"
     }
   ],
