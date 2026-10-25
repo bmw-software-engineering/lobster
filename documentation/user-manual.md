@@ -177,3 +177,19 @@ the desription nodes of the XML tree.
 `lobster-pkg` can extract these traces and generate `.lobster` files.
 
 For more information on `ecu.test` see [here](https://www.tracetronic.com/products/ecu-test/).
+
+### LOBSTER html report
+
+The report contains item filters categorized as –
+
+- **“OK”**: The item fulfils the configured traceability expectations.
+
+- **“Missing”**: The item does not fulfil the configured traceability expectations and displays a text about the missing reference with the target element.
+
+- **“Partial”**: The item fulfils only a subset of the configured traceability expectations and displays a text about the fulfilled as well as missing reference with the target element.
+
+- **“Justified”**: A traceability expectation is not fulfilled, but a justification has been provided for the missing references.
+
+- **“Warning”**: The item requires attention from the user. Warnings may indicate situations that can affect the interpretation of the analysis results.
+
+Users shall review all item filter entries before interpreting the coverage and traceability results to ensure the analysis remains valid and complete.

@@ -80,6 +80,7 @@ The following verification and miscellaneous frameworks are supported:
 ## Documentation
 
 * [User Manual](documentation/user-manual.md)
+* [LOBSTER Safety Manual](documentation\SAFETY_MANUAL.md)
 * Writing [configuration files](documentation/config_files.md) for LOBSTER.
 * It is easy to expand the languages and activities supported by
   LOBSTER by adding new tracing tools, as long as they create data in
