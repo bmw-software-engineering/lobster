@@ -8,3 +8,27 @@ py_test(
         "//lobster/common",
     ],
 )
+
+py_test(
+    name = "test_yaml_validation",
+    srcs = ["test_yaml_validation.py"],
+    deps = [
+        "//lobster/common",
+    ],
+)
+
+py_test(
+    name = "test_tracing_policy_loader",
+    srcs = ["test_tracing_policy_loader.py"],
+    deps = [
+        "//lobster/common",
+    ],
+)
+
+py_test(
+    name = "test_yaml_policy_reader",
+    srcs = ["test_yaml_policy_reader.py"],
+    deps = [
+        "//lobster/common",
+    ],
+)

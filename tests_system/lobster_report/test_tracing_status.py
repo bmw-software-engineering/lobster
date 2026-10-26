@@ -34,6 +34,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Item_Status_Ok_When_Required_References_Present
         # lobster-trace: core_report_req.Report_Generation_For_Valid_Config_And_Inputs
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_ok.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -50,7 +51,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(self.legacy_policy_deprecation_warning(conf_file))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -68,7 +69,8 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(
+            self.legacy_policy_deprecation_warning("unconstrained_level.conf"))
         asserter.assertExitCode(0)
 
         with open(
@@ -84,6 +86,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
     def test_status_missing(self):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Item_Status_Missing_When_Reference_Absent
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_missing.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -100,13 +103,14 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(self.legacy_policy_deprecation_warning(conf_file))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
     def test_status_missing_mixed(self):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Item_Status_Missing_When_Reference_Absent
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_mixed.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -123,7 +127,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(self.legacy_policy_deprecation_warning(conf_file))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -131,6 +135,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
     def test_status_justified(self):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Item_Status_Justified_By_Justification
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_justified.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -147,7 +152,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(self.legacy_policy_deprecation_warning(conf_file))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

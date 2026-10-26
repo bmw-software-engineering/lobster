@@ -1,0 +1,37 @@
+levels:
+  - name: "System Requirements"
+    kind: requirements
+    source:
+      - "pizza_system_requirements.lobster"
+    requires:
+      - ["Component Tests"]
+
+  - name: "Software Requirements"
+    kind: requirements
+    source:
+      - "pizza_software_requirements.lobster"
+    requires:
+      - ["Component Tests", "Unit Tests"]
+
+  - name: "Code"
+    kind: implementation
+    source:
+      - "pizza_code.lobster"
+    trace-to:
+      - "System Requirements"
+      - "Software Requirements"
+
+  - name: "Component Tests"
+    kind: activity
+    source:
+      - "pizza_component_tests.lobster"
+    trace-to:
+      - "System Requirements"
+      - "Software Requirements"
+
+  - name: "Unit Tests"
+    kind: activity
+    source:
+      - "pizza_unit_tests.lobster"
+    trace-to:
+      - "Software Requirements"
