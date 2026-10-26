@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="3" name="AllTests">
+  <testsuite name="Cache" tests="3">
+    <testcase name="GivenA_ExpectB" status="run" file="cache.cpp" line="10">
+      <properties>
+        <property name="given" value="x"/>
+      </properties>
+    </testcase>
+    <testcase name="GivenC_ExpectD" status="run" file="cache.cpp">
+      <properties>
+        <property name="given" value="x"/>
+      </properties>
+    </testcase>
+    <testcase name="GivenE_ExpectF" status="run">
+      <properties>
+        <property name="given" value="x"/>
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>

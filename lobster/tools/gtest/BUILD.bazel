@@ -9,7 +9,10 @@ filegroup(
 
 py_library(
     name = "gtest",
-    srcs = ["gtest.py"],
+    srcs = [
+        "givenwhenthen.py",
+        "gtest.py",
+    ],
     visibility = [
         "//visibility:public",
     ],

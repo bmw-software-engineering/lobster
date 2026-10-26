@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="2" name="AllTests">
+  <testsuite name="Instance/Queue" tests="2">
+    <testcase name="GivenA_ExpectB/GivenC_WhenD_ExpectE" status="run" file="queue.cpp" line="10"/>
+    <testcase name="GivenFirstCase_ExpectOne/ExpectedFailure" status="run" file="queue.cpp" line="20"/>
+  </testsuite>
+</testsuites>
