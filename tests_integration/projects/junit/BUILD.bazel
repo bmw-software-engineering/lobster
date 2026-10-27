@@ -1,0 +1,47 @@
+load("@rules_python//python:defs.bzl", "py_test")
+load("//:lobster.bzl", "lobster_junit", "test_report")
+
+# Tests of two frameworks: googletest, and a Python test which writes a JUnit
+# XML report itself, like pytest does.
+cc_test(
+    name = "gtest_test",
+    srcs = ["gtest_test.cpp"],
+    deps = ["@googletest//:gtest_main"],
+)
+
+py_test(
+    name = "junit_writing_test",
+    srcs = ["junit_writing_test.py"],
+    data = ["runfile.txt"],
+    env = {"TARGET_ENVIRONMENT": "from target env"},
+)
+
+test_report(
+    name = "gtest_report",
+    testonly = True,
+    test = ":gtest_test",
+)
+
+test_report(
+    name = "python_report",
+    testonly = True,
+    test = ":junit_writing_test",
+)
+
+lobster_junit(
+    name = "tests",
+    testonly = True,
+    derive_gwt_from_test_name = True,
+    tests = [
+        ":gtest_report",
+        ":python_report",
+    ],
+)
+
+py_test(
+    name = "lobster_junit_check",
+    srcs = ["check_tests_lobster.py"],
+    args = ["$(rootpath :tests)"],
+    data = [":tests"],
+    main = "check_tests_lobster.py",
+)

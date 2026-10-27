@@ -112,6 +112,7 @@ integration-tests: packages
 		//tests_integration/projects/coverage_half:traceability \
 		//tests_integration/projects/coverage_mix:traceability \
 		//tests_integration/projects/coverage_zero:traceability \
+		//tests_integration/projects/junit/... \
 		--keep_going \
 		--test_output=all \
 		--verbose_failures \

@@ -54,6 +54,45 @@ $ lobster-junit pytest_report.xml gtest_report.xml --out tests.lobster
 
 XML files which are not test reports are ignored.
 
+## Bazel
+
+Load the rules from `@lobster//:lobster.bzl`:
+
+* `test_report` runs a test target as part of the build and provides its XML
+  report. It works for any test framework: the test gets no command line
+  arguments, but finds the location of the report in the environment variable
+  `XML_OUTPUT_FILE`, as under `bazel test`. googletest reads it by itself, a
+  pytest test passes `--junitxml=$XML_OUTPUT_FILE` to `pytest.main()`. The test
+  runs with its runfiles and the environment of its target (attribute `env`).
+* `lobster_junit` runs `lobster-junit` on the reports.
+
+```starlark
+load("@lobster//:lobster.bzl", "lobster_junit", "test_report")
+
+test_report(
+    name = "cc_report",
+    testonly = True,
+    test = ":my_cc_test",
+)
+
+test_report(
+    name = "py_report",
+    testonly = True,
+    test = ":my_py_test",
+)
+
+lobster_junit(
+    name = "tests",
+    testonly = True,
+    derive_gwt_from_test_name = True,
+    tests = [":cc_report", ":py_report"],
+)
+```
+
+Rules which run tests themselves can use the subrules `subrule_test_report`
+and `subrule_lobster_junit`. A working example is the integration test project
+[tests_integration/projects/junit](../tests_integration/projects/junit/BUILD.bazel).
+
 ## Report dialects
 
 | Dialect | Detected by | Item tag | Framework |

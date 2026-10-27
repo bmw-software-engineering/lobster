@@ -26,6 +26,13 @@
   `lobster-gtest`. It supports `--derive-gwt-from-test-name` like
   `lobster-gtest`; for pytest, the parameters of parametrized tests are ignored.
 
+* Bazel: New rules `test_report` and `lobster_junit`, and subrules
+  `subrule_test_report` and `subrule_lobster_junit`. `test_report` runs a test
+  of any framework with its runfiles and passes the location of its XML report
+  in the environment (`XML_OUTPUT_FILE`, `GTEST_OUTPUT`) instead of as command
+  line arguments, so that e.g. `py_test` targets can be traced. The existing
+  rules `gtest_report` and `lobster_gtest` are unchanged.
+
 * `Python support`: Drop support for Python versions below 3.10.
 
 * Reworked the requirements and the way use cases are traced.
