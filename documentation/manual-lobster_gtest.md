@@ -88,6 +88,14 @@ For example `Stack_GivenEmptyStack_WhenPopCalled_ExpectError` adds
 
 In Bazel set the attribute `derive_gwt_from_test_name = True` of `lobster_gtest`.
 
+## Reports of other test frameworks
+
+`lobster-gtest` reads GoogleTest XML reports only and ignores XML files in
+which no test case has a `status` attribute, such as the JUnit XML reports of
+pytest. To trace tests of other frameworks, or a test suite which mixes
+frameworks, use [lobster-junit](manual-lobster_junit.md), which writes the same
+items for GoogleTest reports.
+
 ## Example
 
 The LOBSTER testsuite contains a working example:

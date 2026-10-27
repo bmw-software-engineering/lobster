@@ -14,6 +14,7 @@ LOBSTER packages as a convenience:
 * [bmw-lobster-tool-cpptest](https://pypi.org/project/bmw-lobster-tool-cpptest)
 * [bmw-lobster-tool-gtest](https://pypi.org/project/bmw-lobster-tool-gtest)
 * [bmw-lobster-tool-json](https://pypi.org/project/bmw-lobster-tool-json)
+* [bmw-lobster-tool-junit](https://pypi.org/project/bmw-lobster-tool-junit)
 * [bmw-lobster-tool-python](https://pypi.org/project/bmw-lobster-tool-python)
 * [bmw-lobster-tool-trlc](https://pypi.org/project/bmw-lobster-tool-trlc)
 * [miss_hit](https://pypi.org/project/miss_hit)

@@ -1,0 +1,22 @@
+load("@rules_python//python:defs.bzl", "py_library")
+
+filegroup(
+    name = "trlc_sources",
+    srcs = glob(["**/*.trlc"]),
+    visibility = ["//visibility:public"],
+)
+
+py_library(
+    name = "junit",
+    srcs = [
+        "__init__.py",
+        "junit.py",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//lobster/common",
+        "//lobster/common/test_report",
+    ],
+)

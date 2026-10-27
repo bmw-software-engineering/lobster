@@ -1,0 +1,115 @@
+package junit_req
+import req
+
+req.Software_Requirement Reader_Selected_Per_Report {
+  description = '''
+    The method TestReportTool._run_impl SHALL read each report with the first
+    reader of the tool, in the order given to its constructor, whose method
+    accepts returns True for the root element of the report, and SHALL skip the
+    report IF no reader accepts it.
+    The tool lobster-junit SHALL use the readers GtestReportReader,
+    PytestReportReader and JunitReportReader, in this order.
+  '''
+  derived_from = [
+    GoogleTest_Report_Items,
+    One_Item_Per_Test_Case,
+    Other_Xml_Files_Ignored,
+  ]
+}
+
+req.Software_Requirement Junit_Accepts_Testsuites_And_Testsuite {
+  description = '''
+    The method JunitReportReader.accepts SHALL return True IF the tag of the
+    root element is "testsuites" or "testsuite", AND False otherwise.
+  '''
+  derived_from = [One_Item_Per_Test_Case, Other_Xml_Files_Ignored]
+}
+
+req.Software_Requirement Junit_Suites_With_Test_Cases {
+  description = '''
+    The method JunitReportReader.suites SHALL return every "testsuite" element of
+    the report, including the root element, which has at least one child element
+    "testcase", in document order.
+  '''
+  derived_from = [One_Item_Per_Test_Case]
+}
+
+req.Software_Requirement Junit_Uid_From_Classname_Or_Suite {
+  description = '''
+    The method JunitReportReader.uid SHALL return "<scope>:<name>", where <name>
+    is the attribute "name" of the test case, and <scope> is its attribute
+    "classname", or the attribute "name" of the test suite IF the attribute
+    "classname" is missing or empty.
+  '''
+  derived_from = [Item_Tag]
+}
+
+req.Software_Requirement Junit_Status_From_Child_Elements {
+  description = '''
+    The method JunitReportReader.is_executed SHALL return False IF the test case
+    has a child element "skipped", AND True otherwise.
+    The method JunitReportReader.has_failed SHALL return True IF the test case has
+    a child element "failure" or "error", AND False otherwise.
+  '''
+  derived_from = [Item_Status]
+}
+
+req.Software_Requirement Junit_References_Split_At_Commas_And_Whitespace {
+  description = '''
+    The method JunitReportReader.references SHALL return one tracing tag in the
+    namespace "req" for each non-empty part of the given value which is separated
+    by commas, whitespace or both, where a suffix "@<version>" of a part is the
+    version of the tag.
+  '''
+  derived_from = [Item_References]
+}
+
+req.Software_Requirement Pytest_Accepts_Pytest_Root {
+  description = '''
+    The method PytestReportReader.accepts SHALL return True IF
+    JunitReportReader.accepts returns True AND the attribute "name" of the root
+    element starts with "pytest", AND False otherwise.
+  '''
+  derived_from = [Item_Framework, Item_Location]
+}
+
+req.Software_Requirement Pytest_Source_Line_Is_One_Based {
+  description = '''
+    The method PytestReportReader.source_line SHALL return the value of the
+    attribute "line" of the test case plus one, or None IF the attribute is
+    missing.
+  '''
+  derived_from = [Item_Location]
+}
+
+req.Software_Requirement Pytest_Spec_Name_Without_Parameters {
+  description = '''
+    The method PytestReportReader.test_name_for_spec SHALL return the attribute
+    "name" of the test case up to, and not including, its first "[".
+  '''
+  derived_from = [Spec_Derived_From_Test_Name]
+}
+
+req.Software_Requirement Read_Keeps_Properties_And_Warns_On_Conflict {
+  description = '''
+    IF the reader derives Given, When and Then from test names
+    AND GivenWhenThen.conflicts_with returns True for the specification derived
+    from the name of a test case and its properties,
+    THEN the method TestReportReader.read SHALL write the text of the item solely
+    from the properties of the test case, AND SHALL print the line
+    "<location>: lobster warning: test <uid> records Given/When/Then properties,
+    ignoring its name" to stderr, where <uid> is the result of the method uid and
+    <location> is the location of the item as string.
+  '''
+  derived_from = [Warning_If_Properties_And_Test_Name_Given]
+}
+
+req.Software_Requirement Read_Properties_Of_Test_Case {
+  description = '''
+    The method TestReportReader.read SHALL use the references of all properties
+    "lobster-tracing" of a test case, the last property "lobster-tracing-file" as
+    file and the last property "lobster-tracing-line" as line of its location,
+    and the last value of every other property name as a line of its text.
+  '''
+  derived_from = [Item_References, Item_Location, Item_Text_From_Properties]
+}
