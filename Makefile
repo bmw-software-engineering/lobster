@@ -32,6 +32,7 @@ lint-system-tests: style
 		tests_system/lobster_gtest \
 		tests_system/lobster_html_report \
 		tests_system/lobster_json \
+		tests_system/lobster_junit \
 		tests_system/lobster_meta_data_tool_base \
 		tests_system/lobster_online_report \
 		tests_system/lobster_online_report_nogit \
@@ -63,6 +64,7 @@ packages: clean-packages
 	make -C packages/lobster-tool-cpptest
 	make -C packages/lobster-tool-gtest
 	make -C packages/lobster-tool-json
+	make -C packages/lobster-tool-junit
 	make -C packages/lobster-tool-python
 	make -C packages/lobster-metapackage
 	make -C packages/lobster-monolithic
@@ -90,6 +92,7 @@ packages: clean-packages
 		lobster-codebeamer --version && \
 		lobster-gtest --version && \
 		lobster-json --version && \
+		lobster-junit --version && \
 		lobster-python --version && \
 		lobster-trlc --version && \
 		lobster-pkg --version && \
@@ -181,7 +184,7 @@ tracing:
 	@for tool in $(TOOL_FOLDERS); do \
 	echo "Processing tool: $$tool"; \
 		case $$tool in \
-			codebeamer|cpptest|gtest|trlc|json|pkg|core-report|core-html_report|core-online_report|core-ci_report) \
+			codebeamer|cpptest|gtest|junit|trlc|json|pkg|core-report|core-html_report|core-online_report|core-ci_report) \
 				echo "Skipping tool: $$tool (handled by tracing.sh script)"; \
 				;; \
 			*) \

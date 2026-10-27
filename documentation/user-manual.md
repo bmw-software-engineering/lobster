@@ -132,6 +132,12 @@ All its final html outputs are to be seen [here](https://github.com/bmw-software
 * [lobster_gtest](manual-lobster_gtest.md): for tracing tags in
   (executed) googletests.
 
+### Tests of any framework
+
+* [lobster_junit](manual-lobster_junit.md): for tracing tags in the JUnit XML
+  reports of (executed) tests of any test framework, e.g. pytest or
+  googletest.
+
 > **Note:** The lobster-cpp tool needs a clang-tidy file. Don't forget to generate it to be able to use this conversion tool.
 
 ####  Clang-tidy File Generation

@@ -22,6 +22,7 @@ enum Tools {
   lobster_codebeamer
   lobster_cpptest
   lobster_gtest
+  lobster_junit
   lobster_report
   lobster_trlc
   lobster_json

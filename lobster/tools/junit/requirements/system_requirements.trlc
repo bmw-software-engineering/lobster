@@ -1,0 +1,155 @@
+package junit_req
+import req
+import UseCases
+
+req.System_Requirement GoogleTest_Report_Items {
+  description = '''
+    IF an input file is an XML file whose root element is "testsuites"
+    AND at least one "testcase" element of the file has an attribute "status",
+    THEN the tool SHALL write for the test cases of this file the same LOBSTER
+    items as lobster-gtest writes for it with the same command line options.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}
+
+req.System_Requirement One_Item_Per_Test_Case {
+  description = '''
+    IF an input file is an XML file whose root element is "testsuites" or
+    "testsuite"
+    AND no "testcase" element of the file has an attribute "status",
+    THEN the tool SHALL write one LOBSTER item for each "testcase" element which
+    is a direct child of a "testsuite" element at any nesting depth, ordered by
+    the position of the start tag of the "testsuite" element in the file, and
+    within a "testsuite" element by the position of the "testcase" element.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}
+
+req.System_Requirement Item_Tag {
+  description = '''
+    The tool SHALL give the LOBSTER item of a test case of a file described in
+    One_Item_Per_Test_Case the tag "junit <scope>:<name>", where <name> is the
+    value of the attribute "name" of the "testcase" element, and <scope> is the
+    value of its attribute "classname", or the value of the attribute "name" of
+    the enclosing "testsuite" element IF the "testcase" element has no attribute
+    "classname" or its value is empty.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}
+
+req.System_Requirement Item_Framework {
+  description = '''
+    The tool SHALL write the framework "pytest" for the LOBSTER items of a file
+    described in One_Item_Per_Test_Case IF the value of the attribute "name" of
+    its root element starts with "pytest", and the framework "JUnit" otherwise.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}
+
+req.System_Requirement Item_Status {
+  description = '''
+    The tool SHALL write for the LOBSTER item of a test case of a file described
+    in One_Item_Per_Test_Case the status
+    "not run" IF the "testcase" element has a child element "skipped",
+    "fail" IF it has no child element "skipped" and a child element "failure" or
+    "error",
+    and "ok" otherwise.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}
+
+req.System_Requirement Item_References {
+  description = '''
+    IF a test case of a file described in One_Item_Per_Test_Case has properties
+    named "lobster-tracing",
+    THEN the tool SHALL add to its LOBSTER item one reference to a requirement for
+    each part of their values which is separated by commas, whitespace or both
+    and is not empty, in the order of the properties and of the parts,
+    where a part "<name>@<version>" refers to version <version> of requirement
+    <name>.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}
+
+req.System_Requirement Item_Location {
+  description = '''
+    The tool SHALL write as the location of the LOBSTER item of a test case of a
+    file described in One_Item_Per_Test_Case
+    the file given by the last property "lobster-tracing-file" of the test case,
+    or by the attribute "file" of the "testcase" element IF there is no such
+    property,
+    and the line given by the last property "lobster-tracing-line", or IF there
+    is no such property, by the attribute "line" of the "testcase" element,
+    plus one IF the value of the attribute "name" of the root element starts with
+    "pytest".
+    IF this file is the name of exactly one file with the extension ".c", ".cc"
+    or ".cpp" found in a directory given as input, THEN the tool SHALL write the
+    path of that file instead.
+    IF neither the property nor the attribute gives a file, THEN the tool SHALL
+    write an unknown location.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}
+
+req.System_Requirement Item_Text_From_Properties {
+  description = '''
+    IF the option "--derive-gwt-from-test-name" is not given,
+    THEN the tool SHALL write the text of the LOBSTER item of a test case of a
+    file described in One_Item_Per_Test_Case solely from the properties of the
+    test case which are not named "lobster-tracing", "lobster-tracing-file" or
+    "lobster-tracing-line", as one line ":<Name>: <value>" per property name with
+    the value of its last property, with the property name starting with an
+    upper case letter and all other letters in lower case.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}
+
+req.System_Requirement Spec_Derived_From_Test_Name {
+  description = '''
+    IF the option "--derive-gwt-from-test-name" is given
+    AND the value of the attribute "name" of a "testcase" element of a file
+    described in One_Item_Per_Test_Case, without a suffix "[<parameters>]" IF the
+    value of the attribute "name" of the root element starts with "pytest", has
+    the form "Given<Context>_When<Condition>_Expect<Result>",
+    "Given<Context>_When<Condition>_Then<Result>", "Given<Context>_Expect<Result>"
+    or "Given<Context>_Then<Result>", optionally preceded by one prefix
+    "<Prefix>_", where every placeholder is written in CamelCase,
+    AND the test case has no property named "Given", "When" or "Then" (ignoring
+    letter case) with a value which is not empty and does not consist solely of
+    whitespace,
+    THEN the tool SHALL add the lines ":Given: <context>", ":When: <condition>"
+    (only if the name contains a When part) and ":Then: <result>" to the text of
+    the LOBSTER item, in this order, after the lines of the properties, where
+    each CamelCase text is written as lower case words separated by spaces.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}
+
+req.System_Requirement Warning_If_Properties_And_Test_Name_Given {
+  description = '''
+    IF the option "--derive-gwt-from-test-name" is given
+    AND the name of a test case of a file described in One_Item_Per_Test_Case has
+    the form described in Spec_Derived_From_Test_Name
+    AND the test case has at least one property named "Given", "When" or "Then"
+    (ignoring letter case) with a value which is not empty and does not consist
+    solely of whitespace,
+    THEN the tool SHALL NOT add any line derived from the name to the text of
+    the LOBSTER item,
+    AND the tool SHALL print the line "<location>: lobster warning: test <uid>
+    records Given/When/Then properties, ignoring its name" to stderr, where <uid>
+    is the tag of the LOBSTER item without "junit ", and <location> is the
+    location of the LOBSTER item as file followed by ":" and line, or only the
+    file if the line is unknown, or "<unknown location>" if the file is unknown.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}
+
+req.System_Requirement Other_Xml_Files_Ignored {
+  description = '''
+    IF an input file is an XML file whose root element is neither "testsuites"
+    nor "testsuite",
+    THEN the tool SHALL NOT write a LOBSTER item for this file, SHALL NOT print
+    a message about it, and SHALL NOT change its exit code because of it.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}

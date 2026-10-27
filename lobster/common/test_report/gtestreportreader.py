@@ -24,8 +24,9 @@ from lobster.common.test_report.testreportreader import TestReportReader
 class GtestReportReader(TestReportReader):
     """Reads GoogleTest XML reports (``--gtest_output=xml``).
 
-    The test cases of a GoogleTest report carry a ``status`` attribute, and the
-    unique name of a test case is ``<suite>:<test>``.
+    The test cases of a GoogleTest report carry a ``status`` attribute, by which
+    a GoogleTest report is told apart from other JUnit XML reports. The unique
+    name of a test case is ``<suite>:<test>``.
     """
 
     namespace = "gtest"
@@ -33,7 +34,9 @@ class GtestReportReader(TestReportReader):
 
     @classmethod
     def accepts(cls, root: ET.Element) -> bool:
-        return root.tag == "testsuites"
+        return root.tag == "testsuites" and any(
+            "status" in testcase.attrib for testcase in root.iter("testcase")
+        )
 
     def suites(self, root: ET.Element) -> Iterator[ET.Element]:
         for suite in root:

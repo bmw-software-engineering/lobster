@@ -6,6 +6,8 @@ py_library(
         "__init__.py",
         "givenwhenthen.py",
         "gtestreportreader.py",
+        "junitreportreader.py",
+        "pytestreportreader.py",
         "testcasedata.py",
         "testreportreader.py",
         "testreporttool.py",

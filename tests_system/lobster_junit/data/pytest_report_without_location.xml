@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="1" skipped="1" tests="8" time="0.020" timestamp="2026-01-01T00:00:00" hostname="build-host"><testcase classname="test_stack" name="test_GivenEmptyStack_WhenPopCalled_ExpectError" time="0.000"><properties><property name="lobster-tracing" value="Pkg.Pop, Pkg.Error Pkg.Stack@2" /></properties></testcase><testcase classname="test_stack" name="test_failing" time="0.000"><properties><property name="lobster-tracing" value="Pkg.Fail" /></properties><failure message="assert False">record_property = &lt;function record_property.&lt;locals&gt;.append_property at 0x739d9449c9a0&gt;
+
+    def test_failing(record_property):
+        record_property("lobster-tracing", "Pkg.Fail")
+&gt;       assert False
+E       assert False
+
+test_stack.py:10: AssertionError</failure></testcase><testcase classname="test_stack" name="test_errored" time="0.000"><error message="failed on setup with &quot;RuntimeError: setup broken&quot;">@pytest.fixture
+    def broken():
+&gt;       raise RuntimeError("setup broken")
+E       RuntimeError: setup broken
+
+test_stack.py:14: RuntimeError</error></testcase><testcase classname="test_stack" name="test_skipped" time="0.000"><skipped type="pytest.skip" message="n/a">test_stack.py:19: n/a</skipped></testcase><testcase classname="test_stack" name="test_GivenValue_ExpectPositive[1]" time="0.000"><properties><property name="lobster-tracing" value="Pkg.Value" /></properties></testcase><testcase classname="test_stack" name="test_GivenValue_ExpectPositive[2]" time="0.000"><properties><property name="lobster-tracing" value="Pkg.Value" /></properties></testcase><testcase classname="test_stack" name="test_GivenRecorded_ExpectWarning" time="0.000"><properties><property name="given" value="a recorded given" /><property name="lobster-tracing" value="Pkg.Warn" /></properties></testcase><testcase classname="test_stack.TestPush" name="test_one" time="0.000"><properties><property name="lobster-tracing" value="Pkg.Push" /></properties></testcase></testsuite></testsuites>

@@ -409,6 +409,19 @@ req.UseCase GTest_Spec_From_Test_Name {
     ]
 }
 
+req.UseCase Trace_Tests_From_JUnit_Reports {
+    description = '''
+        As a test engineer I want to trace the test cases of every test framework
+        that writes JUnit XML reports, for example GoogleTest or pytest, to
+        requirements with one tool, so that a test suite which mixes such
+        frameworks is traced without sorting the reports by framework.
+    '''
+    affected_tools = [
+        req.Tools.lobster_junit,
+        req.Tools.lobster_gtest,
+    ]
+}
+
 req.UseCase CI_Report_Coverage_Summary {
     description = '''
         As a requirements manager I want to see the per-level traceability

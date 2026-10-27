@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="All tests">
+  <testsuite name="com.example.StackTest">
+    <testsuite name="com.example.StackTest$Nested">
+      <testcase classname="com.example.StackTest$Nested" name="pushIncreasesSize" file="src/test/StackTest.java" line="12">
+        <properties>
+          <property name="lobster-tracing" value="Stack.Push"/>
+        </properties>
+      </testcase>
+      <testcase classname="com.example.StackTest$Nested" name="popOfEmptyStack" file="src/test/StackTest.java" line="20">
+        <properties>
+          <property name="lobster-tracing" value="Stack.Pop"/>
+          <property name="lobster-tracing-file" value="src/test/StackPopTest.java"/>
+          <property name="lobster-tracing-line" value="7"/>
+        </properties>
+        <error message="NullPointerException" type="java.lang.NullPointerException"/>
+      </testcase>
+    </testsuite>
+    <testcase classname="" name="GivenEmptyStack_ExpectSizeZero">
+      <properties>
+        <property name="lobster-tracing" value="Stack.Size"/>
+      </properties>
+    </testcase>
+    <testcase classname="com.example.StackTest" name="peekOfFullStack">
+      <properties>
+        <property name="lobster-tracing" value="Stack.Peek"/>
+      </properties>
+      <skipped message="not implemented"/>
+    </testcase>
+  </testsuite>
+</testsuites>

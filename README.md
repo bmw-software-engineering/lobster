@@ -74,6 +74,8 @@ The following verification and miscellaneous frameworks are supported:
 
 * Bazel, see [Python3](packages/lobster-tool-python/README.md)
 * [GoogleTest](packages/lobster-tool-gtest/README.md)
+* [JUnit XML](packages/lobster-tool-junit/README.md) for tests of any
+  framework which writes JUnit XML reports, e.g. pytest
 * [JSON](packages/lobster-tool-json/README.md) useful if your test
   framework is encoded in JSON
 
@@ -101,6 +103,7 @@ The individual PyPI packages that `bmw-lobster` depends on are:
 * `bmw-lobster-tool-cpptest` (for C/C++ code) [Link](https://pypi.org/project/bmw-lobster-tool-cpp)
 * `bmw-lobster-tool-gtest` (for GoogleTest tests) [Link](https://pypi.org/project/bmw-lobster-tool-gtest)
 * `bmw-lobster-tool-json` (for activities in JSON) [Link](https://pypi.org/project/bmw-lobster-tool-json)
+* `bmw-lobster-tool-junit` (for JUnit XML test reports, e.g. pytest) [Link](https://pypi.org/project/bmw-lobster-tool-junit)
 * `bmw-lobster-tool-python` (for Python3 code) [Link](https://pypi.org/project/bmw-lobster-tool-python)
 * `bmw-lobster-tool-trlc` (for TRLC code) [Link](https://pypi.org/project/bmw-lobster-tool-trlc)
 * `miss_hit` (for MATLAB/Octave code or Simulink models) [Link](https://pypi.org/project/miss_hit)

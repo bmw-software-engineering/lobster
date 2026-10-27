@@ -32,6 +32,7 @@ py_library(
         "lobster-gtest.py",
         "lobster-html-report.py",
         "lobster-json.py",
+        "lobster-junit.py",
         "lobster-online-report.py",
         "lobster-online-report-nogit.py",
         "lobster-python.py",
@@ -55,6 +56,7 @@ py_library(
         "//lobster/tools/cpptest",
         "//lobster/tools/gtest",
         "//lobster/tools/json",
+        "//lobster/tools/junit",
         "//lobster/tools/python",
         "//lobster/tools/trlc",
         requirement("requests"),
@@ -123,6 +125,15 @@ py_binary(
         "//visibility:public",
     ],
     deps = ["//lobster/tools/core/rst_report"],
+)
+
+py_binary(
+    name = "lobster-junit",
+    srcs = ["lobster-junit.py"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = ["//lobster/tools/junit"],
 )
 
 py_binary(
