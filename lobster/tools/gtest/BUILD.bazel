@@ -16,5 +16,8 @@ py_library(
     visibility = [
         "//visibility:public",
     ],
-    deps = ["//lobster/common"],
+    deps = [
+        "//lobster/common",
+        "//lobster/common/test_report",
+    ],
 )

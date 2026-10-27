@@ -1,0 +1,15 @@
+load("@rules_python//python:defs.bzl", "py_library")
+
+py_library(
+    name = "test_report",
+    srcs = [
+        "__init__.py",
+        "givenwhenthen.py",
+        "gtestreportreader.py",
+        "testcasedata.py",
+        "testreportreader.py",
+        "testreporttool.py",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["//lobster/common"],
+)
