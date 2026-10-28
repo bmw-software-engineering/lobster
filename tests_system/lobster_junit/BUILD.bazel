@@ -1,0 +1,34 @@
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+py_library(
+    name = "lobster_junit",
+    srcs = [
+        "lobster_junit_asserter.py",
+        "lobster_junit_system_test_case_base.py",
+        "lobster_junit_test_runner.py",
+    ],
+    data = [
+        "//tests_system/lobster_junit/data:junit_data_system",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "//:lobster",
+        "//tests_system",
+    ],
+)
+
+test_suite(
+    name = "lobster_junit_tests",
+)
+
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [
+        ":lobster_junit",
+        "//lobster/tools/gtest",
+        "//lobster/tools/junit",
+    ],
+) for src in glob(["test_*.py"])]

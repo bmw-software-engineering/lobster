@@ -15,6 +15,23 @@
   - The Bazel rule `lobster_gtest` has the new optional attribute
     `derive_gwt_from_test_name`. The subrule `subrule_lobster_gtest` has the new
     optional keyword parameter `derive_gwt_from_test_name`.
+  - XML files in which no test case has a `status` attribute, e.g. JUnit XML
+    reports of pytest, are now ignored instead of aborting the tool with a
+    `KeyError`. The output for GoogleTest reports is unchanged.
+
+* `lobster-junit`: New tool, released in the new package `bmw-lobster-tool-junit`.
+  It extracts tracing tags from JUnit XML test reports of any test framework,
+  for example pytest, and from GoogleTest reports, detecting the dialect of
+  every report. For GoogleTest reports it writes the same items as
+  `lobster-gtest`. It supports `--derive-gwt-from-test-name` like
+  `lobster-gtest`; for pytest, the parameters of parametrized tests are ignored.
+
+* Bazel: New rules `test_report` and `lobster_junit`, and subrules
+  `subrule_test_report` and `subrule_lobster_junit`. `test_report` runs a test
+  of any framework with its runfiles and passes the location of its XML report
+  in the environment (`XML_OUTPUT_FILE`, `GTEST_OUTPUT`) instead of as command
+  line arguments, so that e.g. `py_test` targets can be traced. The existing
+  rules `gtest_report` and `lobster_gtest` are unchanged.
 
 * `Python support`: Drop support for Python versions below 3.10.
 

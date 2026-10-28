@@ -18,6 +18,7 @@ filegroup(
 		"//lobster/tools/cpptest:trlc_sources",
 		"//lobster/tools/gtest:trlc_sources",
 		"//lobster/tools/json:trlc_sources",
+		"//lobster/tools/junit:trlc_sources",
 		"//lobster/tools/pkg:trlc_sources",
 		"//lobster/tools/python:trlc_sources",
 		"//lobster/tools/trlc:trlc_sources",

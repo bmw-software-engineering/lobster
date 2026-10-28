@@ -98,6 +98,7 @@ setuptools.setup(
             "lobster-cpptest = lobster.tools.cpptest.cpptest:main",
             "lobster-gtest = lobster.tools.gtest.gtest:main",
             "lobster-json = lobster.tools.json.json:main",
+            "lobster-junit = lobster.tools.junit.junit:main",
             "lobster-trlc = lobster.tools.trlc.trlc_tool:main",
             "lobster-pkg = lobster.tools.pkg.pkg:main",
             "lobster-rst-report = lobster.tools.core.rst_report.rst_report:main"

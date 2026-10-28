@@ -1,0 +1,10 @@
+load("@rules_python//python:defs.bzl", "py_test")
+
+[py_test(
+    name = src[:-3],
+    srcs = [src],
+    deps = [
+        "//lobster/common/test_report",
+        "//lobster/tools/junit",
+    ],
+) for src in glob(["test_*.py"])]
