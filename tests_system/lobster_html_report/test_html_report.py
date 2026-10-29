@@ -40,8 +40,9 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
         sys.path.append(self.TESTS_UI_PATH)
         self._test_runner = self.create_test_runner()
         self.driver = self._test_runner.get_chrome_driver()
+        self.addCleanup(self.driver.quit)
         self.OUT_FILE = "test_html_report.html"
-        self.input_file = f'file://{self._test_runner.working_dir}/{self.OUT_FILE}'
+        self.input_file = (self._test_runner.working_dir / self.OUT_FILE).as_uri()
         self._test_runner.cmd_args.out = self.OUT_FILE
         self._test_runner.cmd_args.lobster_report = str(
             self._data_directory / "report.html")
@@ -131,6 +132,19 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
     def test_git_hash_timestamp(self):
         # lobster-trace: html_req.HTML_Report_Displays_Git_Commit_Information
         """Verify git commit timestamps in the report output."""
+        working_dir = self._test_runner.working_dir
+        subprocess.run(
+            ["git", "init"], cwd=working_dir, capture_output=True, check=True
+        )
+        subprocess.run(
+            [
+                "git", "-C", str(working_dir), "-c", "user.name=LOBSTER test",
+                "-c", "user.email=lobster@example.com", "commit", "--allow-empty",
+                "-m", "timestamp test",
+            ],
+            capture_output=True,
+            check=True,
+        )
         self._test_runner.run_tool_test()
         self.driver.get(self.input_file)
 
@@ -152,7 +166,10 @@ class LobsterUIReportTests(LobsterUISystemTestCaseBase):
                     text = elem.text.replace("Python Function", "python")
                     if tag in text and commit in text:
                         result = subprocess.run(
-                            ['git', 'show', '-s', '--format=%ct', commit],
+                            [
+                                'git', '-C', str(working_dir), 'show', '-s',
+                                '--format=%ct', commit,
+                            ],
                             capture_output=True, text=True, check=True
                         )
                         expected_time = str(datetime.fromtimestamp(

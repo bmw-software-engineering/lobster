@@ -209,23 +209,23 @@ py_test(
 ### Manual Tests
 Tests can be marked as "manual" if they require special setup or external resources that aren't available in the standard build environment.
 
-Example from `lobster_html_report/BUILD.bazel`:
-```python
-py_test(
-    name = "test_html_report",
-    srcs = ["test_html_report.py"],
-    # TODO: This test is manual because Selenium tests require a Chrome driver
-    # from googlechromelabs.github.io, which needs to be provided first.
-    tags = ["manual"],
-    deps = [
-        ":lobster_html_report",
-        "//lobster/tools/core/html_report",
-        requirement("selenium"),
-    ],
-)
-```
+Set `tags = ["manual"]` on the test target to exclude it from wildcard test runs.
+Manual tests can still be run by specifying their target explicitly.
 
-Manual tests are not run by default with `bazel test` but can be run explicitly:
+### Browser System Tests
+The HTML report UI test runs on all supported platforms. On Linux x86_64 it uses
+pinned Chrome and ChromeDriver binaries. On other platforms it uses Selenium
+Manager, which requires Chrome to be installed and network access to resolve a
+matching ChromeDriver.
+
+On Linux x86_64, the pinned Chrome runs with its browser sandbox enabled. Run
+the test as a non-root user on a runner whose kernel and security policy permit
+Chrome's sandbox, including unprivileged user namespaces. A sandbox startup
+failure must be addressed in the runner configuration, not by adding
+`--no-sandbox` or disabling host security protections. Bazel's test sandbox does
+not replace Chrome's browser sandbox.
+
+Run this browser test explicitly on any supported platform:
 ```bash
 bazel test //tests_system/lobster_html_report:test_html_report
 ```
