@@ -5,9 +5,8 @@
 
 ### 1.1.0-dev
 
-* `PyPI packaging`:
-  - Fixed relative README link conversion in all package descriptions,
-    including the `lobster_gtest.h` link.
+* Created the initial LOBSTER Safety Manual as a baseline safety guidance document.
+  It will be updated and refined as needed.
 
 * `Python support`: Drop support for Python versions below 3.10.
 
