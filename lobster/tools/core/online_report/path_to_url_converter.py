@@ -74,7 +74,8 @@ class PathToUrlConverter:
             except ValueError as value_error:
                 raise NotInsideRepositoryException(
                     f"Path '{path}' is not inside the repository '"
-                    f"{self._repo.working_tree_dir}'!",
+                    f"{self._repo.working_tree_dir}' nor any of its submodules "
+                    "(if any exists)!",
                 ) from value_error
 
             url_start = self._url_base.rstrip("/")
