@@ -1,0 +1,12 @@
+package core_online_report_req
+import req
+
+req.Software_Requirement Main_Repo_Path_Without_Error {
+  description = '''
+    IF PathToUrlConverter.path_to_url receives a path inside the main repository
+    but outside all of its submodules,
+    THEN the method shall return the main-repository URL parts without logging
+    an error about the path not being inside a submodule.
+  '''
+  derived_from = [No_Error_For_Main_Repo_File]
+}

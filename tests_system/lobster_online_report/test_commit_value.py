@@ -158,7 +158,8 @@ class OnlineReportCommitValueTest(LobsterOnlineReportSystemTestCaseBase):
         self._test_runner.cmd_args.config = "config.yaml"
         self._test_runner.cmd_args.out = "out.lobster"
 
-        result = self._test_runner.run_tool_test()
+        with self.assertNoLogs("PathToUrlConverter", level="ERROR"):
+            result = self._test_runner.run_tool_test()
 
         self.assertEqual(result.returncode, 0, result.stderr)
         output = json.loads(
@@ -170,20 +171,32 @@ class OnlineReportCommitValueTest(LobsterOnlineReportSystemTestCaseBase):
         }
 
     def test_repository_without_submodules(self):
+        """Main-repository files convert without false submodule errors."""
         # lobster-trace: core_online_report_req.Commit_Value_For_Item_Outside_Submodule
+        # lobster-trace: core_online_report_req.No_Error_For_Main_Repo_File
+        # GIVEN root and nested files in a repository without submodules.
         _init_repo(self._repo)
         _commit_file(self._repo, "main.py")
+        (self._repo / "nested").mkdir()
+        _commit_file(self._repo, "nested/other.py")
 
-        commits = self._run_tool(["repo/main.py"])
+        # WHEN converting both file locations.
+        commits = self._run_tool(["repo/main.py", "repo/nested/other.py"])
 
-        self.assertEqual({"main.py": COMMIT_ID}, commits)
+        # THEN both locations use the configured main-repository commit.
+        self.assertEqual({"main.py": COMMIT_ID, "nested/other.py": COMMIT_ID}, commits)
 
     def test_file_outside_submodule_of_repository_with_submodule(self):
+        """A main-repository file also converts when submodules exist."""
         # lobster-trace: core_online_report_req.Commit_Value_For_Item_Outside_Submodule
+        # lobster-trace: core_online_report_req.No_Error_For_Main_Repo_File
+        # GIVEN a main-repository file alongside a submodule.
         self._create_repo_with_submodule()
 
+        # WHEN converting the main-repository file.
         commits = self._run_tool(["repo/main.py"])
 
+        # THEN the configured commit is used without a submodule error.
         self.assertEqual({"main.py": COMMIT_ID}, commits)
 
     def test_file_inside_submodule(self):

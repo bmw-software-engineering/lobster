@@ -1,5 +1,5 @@
 # LOBSTER - Lightweight Open BMW Software Traceability Evidence Report
-# Copyright (C) 2025 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+# Copyright (C) 2025-2026 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -60,17 +60,13 @@ class PathToUrlConverter:
         return f"{self._url_base.rstrip('/')}/{submodule_url.lstrip('/')}"
 
     def path_to_url(self, path: Path, commit_id: str) -> UrlParts:
-        """Convert a path to a URL based on the submodule configuration.
-
-           The path must be nested inside a submodule of the repository.
-        """
+        """Convert a path inside the repository or one of its submodules to a URL."""
         path = path.resolve()
         try:
             submodule, relative_path = self._get_submodule_and_relative_path(path)
             url_start = self._get_submodule_full_url(submodule.url)
             commit_hash = submodule.hexsha
-        except KeyError as e:
-            self._logger.error("Path '%s' is not inside a submodule: %s", path, e)
+        except KeyError:
             # Path is not inside a submodule — use main repo
             commit_hash = commit_id
             try:
