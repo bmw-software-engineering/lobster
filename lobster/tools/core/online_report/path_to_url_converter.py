@@ -45,6 +45,11 @@ class PathToUrlConverter:
             self._logger.info("Name: %s, Path: %s, URL: %s",
                               submodule.name, submodule.path, submodule.url)
 
+    def close(self) -> None:
+        """Terminate Git helper processes, which keep the repo directory locked
+        otherwise."""
+        self._repo.close()
+
     @staticmethod
     def _path_to_html_format(path: Path) -> str:
         """Convert a file path to a URL format suitable for HTML links."""

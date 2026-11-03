@@ -140,20 +140,24 @@ def add_github_reference_to_items(
     repo_root = os.path.abspath(os.path.expanduser(repo_root))
     path_to_url_converter = PathToUrlConverter(repo_root, base_url)
 
-    for item in report.items.values():
-        if isinstance(item.location, File_Reference):
-            file_path = Path(item.location.filename).resolve()
-            try:
-                url_parts = path_to_url_converter.path_to_url(file_path, commit_id)
-                item.location = Github_Reference(
-                    gh_root=url_parts.url_start,
-                    filename=url_parts.path_html,
-                    line=item.location.line,
-                    commit=url_parts.commit_hash,
-                )
-            except NotInsideRepositoryException as e:
-                print(f"Error converting path to URL for {file_path}: {e}")
-                continue
+    try:
+        for item in report.items.values():
+            if isinstance(item.location, File_Reference):
+                file_path = Path(item.location.filename).resolve()
+                try:
+                    url_parts = path_to_url_converter.path_to_url(file_path,
+                                                                  commit_id)
+                    item.location = Github_Reference(
+                        gh_root=url_parts.url_start,
+                        filename=url_parts.path_html,
+                        line=item.location.line,
+                        commit=url_parts.commit_hash,
+                    )
+                except NotInsideRepositoryException as e:
+                    print(f"Error converting path to URL for {file_path}: {e}")
+                    continue
+    finally:
+        path_to_url_converter.close()
 
 
 class OnlineReportTool(MetaDataToolBase):

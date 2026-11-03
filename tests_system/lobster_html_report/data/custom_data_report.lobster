@@ -3,9 +3,9 @@
   "version": 2,
   "generator": "lobster_report",
   "custom_data": {
-      "component": "LSS",
-      "branch": "stable-25",
-      "ci_run": "2025-05-21 01:00 UTC"
+    "component": "LSS",
+    "branch": "stable-25",
+    "ci_run": "2025-05-21 01:00 UTC"
   },
   "levels": [
     {

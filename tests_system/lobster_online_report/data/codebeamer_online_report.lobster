@@ -29,7 +29,6 @@
           "tracing_status": "OK",
           "framework": "codebeamer",
           "kind": "codebeamer item",
-          "text": null,
           "status": "Status 1"
         },
         {
@@ -54,7 +53,6 @@
           "tracing_status": "OK",
           "framework": "codebeamer",
           "kind": "codebeamer item",
-          "text": null,
           "status": "Status 2"
         },
         {
@@ -79,7 +77,6 @@
           "tracing_status": "OK",
           "framework": "codebeamer",
           "kind": "codebeamer item",
-          "text": null,
           "status": "Status 3"
         },
         {
@@ -104,7 +101,6 @@
           "tracing_status": "OK",
           "framework": "codebeamer",
           "kind": "codebeamer item",
-          "text": null,
           "status": "Status 4"
         }
       ],

@@ -17,7 +17,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 1"
     },
     {
@@ -37,7 +36,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 2"
     },
     {
@@ -57,7 +55,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 3"
     },
     {
@@ -77,7 +74,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 4"
     },
     {
@@ -97,7 +93,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 5"
     },
     {
@@ -117,7 +112,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 6"
     },
     {
@@ -137,7 +131,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 7"
     },
     {
@@ -157,7 +150,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 8"
     },
     {
@@ -177,7 +169,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 9"
     },
     {
@@ -197,7 +188,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 10"
     },
     {
@@ -217,7 +207,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 11"
     },
     {
@@ -237,7 +226,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 12"
     },
     {
@@ -257,7 +245,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 13"
     },
     {
@@ -277,7 +264,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 14"
     },
     {
@@ -297,7 +283,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 15"
     },
     {
@@ -317,7 +302,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 16"
     },
     {
@@ -337,7 +321,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 17"
     },
     {
@@ -357,7 +340,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 18"
     },
     {
@@ -377,7 +359,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 19"
     },
     {
@@ -397,7 +378,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 20"
     },
     {
@@ -417,7 +397,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 21"
     },
     {
@@ -437,7 +416,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 22"
     },
     {
@@ -457,7 +435,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 23"
     },
     {
@@ -477,7 +454,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 24"
     },
     {
@@ -497,7 +473,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 25"
     },
     {
@@ -517,7 +492,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 26"
     },
     {
@@ -537,7 +511,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 27"
     },
     {
@@ -557,7 +530,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 28"
     },
     {
@@ -577,7 +549,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 29"
     },
     {
@@ -597,7 +568,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 30"
     },
     {
@@ -617,7 +587,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 31"
     },
     {
@@ -637,7 +606,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 32"
     },
     {
@@ -657,7 +625,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 33"
     },
     {
@@ -677,7 +644,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 34"
     },
     {
@@ -697,7 +663,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 35"
     },
     {
@@ -717,7 +682,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 36"
     },
     {
@@ -737,7 +701,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 37"
     },
     {
@@ -757,7 +720,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 38"
     },
     {
@@ -777,7 +739,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 39"
     },
     {
@@ -797,7 +758,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 40"
     },
     {
@@ -817,7 +777,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 41"
     },
     {
@@ -837,7 +796,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 42"
     },
     {
@@ -857,7 +815,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 43"
     },
     {
@@ -877,7 +834,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 44"
     },
     {
@@ -897,7 +853,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 45"
     },
     {
@@ -917,7 +872,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 46"
     },
     {
@@ -937,7 +891,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 47"
     },
     {
@@ -957,7 +910,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 48"
     },
     {
@@ -977,7 +929,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 49"
     },
     {
@@ -997,7 +948,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 50"
     },
     {
@@ -1017,7 +967,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 51"
     },
     {
@@ -1037,7 +986,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 52"
     },
     {
@@ -1057,7 +1005,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 53"
     },
     {
@@ -1077,7 +1024,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 54"
     },
     {
@@ -1097,7 +1043,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 55"
     },
     {
@@ -1117,7 +1062,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 56"
     },
     {
@@ -1137,7 +1081,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 57"
     },
     {
@@ -1157,7 +1100,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 58"
     },
     {
@@ -1177,7 +1119,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 59"
     },
     {
@@ -1197,7 +1138,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 60"
     },
     {
@@ -1217,7 +1157,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 61"
     },
     {
@@ -1237,7 +1176,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 62"
     },
     {
@@ -1257,7 +1195,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 63"
     },
     {
@@ -1277,7 +1214,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 64"
     },
     {
@@ -1297,7 +1233,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 65"
     },
     {
@@ -1317,7 +1252,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 66"
     },
     {
@@ -1337,7 +1271,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 67"
     },
     {
@@ -1357,7 +1290,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 68"
     },
     {
@@ -1377,7 +1309,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 69"
     },
     {
@@ -1397,7 +1328,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 70"
     },
     {
@@ -1417,7 +1347,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 71"
     },
     {
@@ -1437,7 +1366,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 72"
     },
     {
@@ -1457,7 +1385,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 73"
     },
     {
@@ -1477,7 +1404,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 74"
     },
     {
@@ -1497,7 +1423,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 75"
     },
     {
@@ -1517,7 +1442,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 76"
     }
   ],

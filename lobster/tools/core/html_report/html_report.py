@@ -538,7 +538,7 @@ def write_html(report, dot, high_contrast, render_md) -> str:
                         doc.add_line('<div class="attribute">')
                         doc.add_line(f"Status: {html.escape(item.status)}")
                         doc.add_line('</div>')
-                    if (isinstance(item, (Requirement, Activity)) and item.text):
+                    if item.text:
                         if render_md:
                             bq_class = ' class="md_description"'
                             bq_text = markdown.markdown(item.text,

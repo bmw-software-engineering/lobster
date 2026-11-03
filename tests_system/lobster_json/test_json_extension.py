@@ -66,7 +66,8 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_inputs_and_inputs_from_files_with_mixed_extension(self):
-        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
+        # lobster-trace: json_req.Inputs_And_Inputs_From_File_Combined
+        # lobster-trace: json_req.Input_File_JSON_Extension
         """
         Tests the processing of multiple input files with mixed extensions,
         including both valid and invalid JSON files.

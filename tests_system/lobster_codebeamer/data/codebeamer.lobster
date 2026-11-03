@@ -17,7 +17,6 @@
       "just_global": [],
       "framework": "codebeamer",
       "kind": "codebeamer item",
-      "text": null,
       "status": "Status 5"
     }
   ],
