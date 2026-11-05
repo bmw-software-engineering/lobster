@@ -1,6 +1,38 @@
 load("@rules_python//python:defs.bzl", "py_library", "py_test")
 load("//:requirements.bzl", "requirement")
 
+config_setting(
+    name = "linux_x86_64",
+    constraint_values = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+)
+
+config_setting(
+    name = "macos_x64",
+    constraint_values = [
+        "@platforms//os:osx",
+        "@platforms//cpu:x86_64",
+    ],
+)
+
+config_setting(
+    name = "macos_arm64",
+    constraint_values = [
+        "@platforms//os:osx",
+        "@platforms//cpu:arm64",
+    ],
+)
+
+config_setting(
+    name = "windows_x86_64",
+    constraint_values = [
+        "@platforms//os:windows",
+        "@platforms//cpu:x86_64",
+    ],
+)
+
 
 py_library(
     name = "lobster_html_report",
@@ -16,12 +48,12 @@ py_library(
     ],
     deps = [
         "//tests_system",
+        "@rules_python//python/runfiles",
         requirement("certifi"),
         requirement("packaging"),
         requirement("requests"),
         requirement("selenium"),
         requirement("urllib3"),
-        requirement("webdriver-manager"),
     ],
 )
 
@@ -42,10 +74,48 @@ test_suite(
 py_test(
     name = "test_html_report",
     srcs = ["test_html_report.py"],
-    # TODO: This test is manual because Selenium tests require a Googlechrome driver
-    # from googlechromelabs.github.io, which needs to be provided first.
-    # We need to update Bazel to download it first.
-    tags = ["manual"],
+    data = select({
+        ":linux_x86_64": [
+            "@chrome_linux64//:all_files",
+            "@chrome_linux64//:chrome",
+            "@chromedriver_linux64//:chromedriver",
+        ],
+        ":macos_x64": [
+            "@chrome_macos_x64//:all_files",
+            "@chrome_macos_x64//:chrome",
+            "@chromedriver_macos_x64//:chromedriver",
+        ],
+        ":macos_arm64": [
+            "@chrome_macos_arm64//:all_files",
+            "@chrome_macos_arm64//:chrome",
+            "@chromedriver_macos_arm64//:chromedriver",
+        ],
+        ":windows_x86_64": [
+            "@chrome_windows64//:all_files",
+            "@chrome_windows64//:chrome.exe",
+            "@chromedriver_windows64//:chromedriver.exe",
+        ],
+        "//conditions:default": [],
+    }),
+    env = select({
+        ":linux_x86_64": {
+            "LOBSTER_TEST_CHROME": "$(rlocationpath @chrome_linux64//:chrome)",
+            "LOBSTER_TEST_CHROMEDRIVER": "$(rlocationpath @chromedriver_linux64//:chromedriver)",
+        },
+        ":macos_x64": {
+            "LOBSTER_TEST_CHROME": "$(rlocationpath @chrome_macos_x64//:chrome)",
+            "LOBSTER_TEST_CHROMEDRIVER": "$(rlocationpath @chromedriver_macos_x64//:chromedriver)",
+        },
+        ":macos_arm64": {
+            "LOBSTER_TEST_CHROME": "$(rlocationpath @chrome_macos_arm64//:chrome)",
+            "LOBSTER_TEST_CHROMEDRIVER": "$(rlocationpath @chromedriver_macos_arm64//:chromedriver)",
+        },
+        ":windows_x86_64": {
+            "LOBSTER_TEST_CHROME": "$(rlocationpath @chrome_windows64//:chrome.exe)",
+            "LOBSTER_TEST_CHROMEDRIVER": "$(rlocationpath @chromedriver_windows64//:chromedriver.exe)",
+        },
+        "//conditions:default": {},
+    }),
     deps = [
         ":lobster_html_report",
         "//lobster/tools/core/html_report",
