@@ -5,4 +5,4 @@ level:
   kind: enum('requirements', 'implementation', 'activity')
   source: list(str(), required=False)
   trace-to: list(str(), required=False)
-  requires: list(list(str()), required=False)
+  requires: list(list(str(), min=1), required=False)

@@ -25,3 +25,16 @@ req.System_Requirement Legacy_Tracing_Policy_Deprecation_Warning {
   '''
   derived_from = [UseCases.Write_Tracing_Policy_In_Yaml]
 }
+
+req.System_Requirement Invalid_Yaml_Tracing_Policy {
+  description = '''
+    IF the tracing policy configuration file with a ".yaml" or ".yml" file extension
+    is not valid YAML or does not conform to the tracing policy schema,
+    THEN the tool shall print to standard output a message
+    of the form "LOBSTER Error: <file>:<line>: invalid tracing policy: <details>", where <line> is
+    the line in the file at which the first problem was found,
+    AND shall exit with code 1
+    AND shall not generate a LOBSTER report file.
+  '''
+  derived_from = [UseCases.Failure_On_Invalid_Input]
+}

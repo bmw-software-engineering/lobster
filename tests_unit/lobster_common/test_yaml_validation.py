@@ -16,6 +16,7 @@
 # <https://www.gnu.org/licenses/>.
 
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from unittest import main, TestCase
 from unittest.mock import patch
 
@@ -24,24 +25,23 @@ from lobster.common.yaml_validation import validate_yaml_file
 
 class ValidateYamlFileTest(TestCase):
     @patch("lobster.common.yaml_validation.yamale.validate")
-    @patch("lobster.common.yaml_validation.yamale.make_data")
     @patch("lobster.common.yaml_validation.yamale.make_schema")
-    def test_validates_data_against_schema(
-        self, make_schema, make_data, validate
-    ):
-        """Test that the loaded data is validated against the loaded schema."""
+    def test_validates_data_against_schema(self, make_schema, validate):
+        """Test that the UTF-8 file content is validated against the loaded schema."""
+        # lobster-trace: core_report_req.Yaml_Validation_Validates_File_Against_Schema
         schema_file = "schema.yamale"
-        filename = "file.yaml"
-        schema = object()
-        data = object()
-        make_schema.return_value = schema
-        make_data.return_value = data
+        make_schema.return_value = object()
 
-        validate_yaml_file(schema_file, filename)
+        with TemporaryDirectory() as temp_dir:
+            filename = Path(temp_dir) / "file.yaml"
+            filename.write_text("name: Grüße\n", encoding="UTF-8")
+
+            validate_yaml_file(schema_file, str(filename))
+
+            expected = [({"name": "Grüße"}, str(filename.resolve()))]
 
         make_schema.assert_called_once_with(schema_file)
-        make_data.assert_called_once_with(Path(filename).resolve())
-        validate.assert_called_once_with(schema, data)
+        validate.assert_called_once_with(make_schema.return_value, expected)
 
 
 if __name__ == "__main__":

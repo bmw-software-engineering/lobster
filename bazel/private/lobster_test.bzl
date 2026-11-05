@@ -105,7 +105,11 @@ def _lobster_test_impl(ctx):
         lobster_config_substitutions.update(input_config[LobsterProvider].lobster_input)
 
     # We have to adjust the paths from the config, with the paths used by Bazel
-    lobster_config = ctx.actions.declare_file("{}_expanded_lobster.conf".format(ctx.attr.name))
+    # The extension must be kept: lobster-report selects the policy parser by it.
+    config_extension = ctx.file.config.extension
+    lobster_config = ctx.actions.declare_file(
+        "{}_expanded_lobster.{}".format(ctx.attr.name, config_extension or "conf"),
+    )
     ctx.actions.expand_template(
         template = ctx.file.config,
         output = lobster_config,

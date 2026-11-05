@@ -86,3 +86,65 @@ req.Software_Requirement Policy_Builder_Preserves_Level_Declaration_Order {
     retaining the raw level's name and kind.
   '''
 }
+
+req.Software_Requirement Policy_Loader_Reads_Yaml_Policy_By_Extension {
+  description = '''
+    IF the file name given to the "load_tracing_policy" function has the
+    extension ".yaml" or ".yml" (compared case-insensitively),
+    THEN the function SHALL read the file with the YAML policy reader,
+    AND SHALL NOT use the legacy parser,
+    AND SHALL NOT print a deprecation warning,
+    AND SHALL return the level definitions built from the raw policy.
+  '''
+  derived_from = [Coverage_Computed_From_Yaml_Tracing_Policy]
+}
+
+req.Software_Requirement Policy_Loader_Warns_On_Legacy_Policy {
+  description = '''
+    IF the file name given to the "load_tracing_policy" function does not have
+    the extension ".yaml" or ".yml",
+    THEN the function SHALL print a warning to standard output that names the file
+    and states that the tracing-policy in the LOBSTER configuration language is
+    deprecated,
+    AND SHALL parse the file with the legacy parser,
+    AND SHALL return the level definitions built from the raw policy.
+  '''
+  derived_from = [Legacy_Tracing_Policy_Deprecation_Warning]
+}
+
+req.Software_Requirement Yaml_Policy_Reader_Reads_Levels {
+  description = '''
+    IF the file given to the "read_yaml_policy" function is a valid YAML tracing
+    policy,
+    THEN the function SHALL return a raw policy with one raw level per entry of
+    the "levels" list, in the same order,
+    AND each raw level SHALL retain its name, kind, "source" entries,
+    "trace-to" entries and "requires" OR-groups, with omitted optional entries
+    being empty,
+    AND every location stored in the raw policy SHALL be the policy file.
+  '''
+  derived_from = [Coverage_Computed_From_Yaml_Tracing_Policy]
+}
+
+req.Software_Requirement Yaml_Policy_Reader_Reports_Invalid_Policy_With_Line {
+  description = '''
+    IF the file given to the "read_yaml_policy" function is not valid YAML
+    or violates the tracing policy schema,
+    THEN the function SHALL raise a LOBSTER_Exception
+    whose message states "invalid tracing policy"
+    AND begins, for each reported problem, with "<file>:<line>:", where <line> is
+    the 1-based line of the offending element in the file
+    (or of the nearest enclosing element if the offending element is missing).
+  '''
+}
+
+req.Software_Requirement Yaml_Validation_Validates_File_Against_Schema {
+  description = '''
+    The "validate_yaml_file" function SHALL load the given schema file and read the
+    given YAML file as UTF-8, independent of the platform's default encoding,
+    AND SHALL validate the file content against the loaded schema,
+    AND SHALL report the absolute path of the YAML file in validation errors,
+    AND SHALL let validation errors propagate to the caller.
+  '''
+  derived_from = [Coverage_Computed_From_Yaml_Tracing_Policy]
+}
