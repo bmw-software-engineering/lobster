@@ -28,6 +28,7 @@ MODULE = "lobster.common.tracing_policy_loader"
 class LoadTracingPolicyTest(TestCase):
     def test_yaml_extensions_use_yaml_reader(self):
         """Use the YAML reader for .yaml and .yml files, case-insensitively."""
+        # lobster-trace: core_report_req.Policy_Loader_Reads_Yaml_Policy_By_Extension
 
         extensions = (".yaml", ".YAML", ".yAml", ".yml", ".YML", ".yMl")
         for extension in extensions:
@@ -54,6 +55,7 @@ class LoadTracingPolicyTest(TestCase):
 
     def test_other_extensions_use_legacy_parser_with_warning(self):
         """Use the legacy parser and warn for non-YAML files."""
+        # lobster-trace: core_report_req.Policy_Loader_Warns_On_Legacy_Policy
         # GIVEN mocked reader, legacy parser and builder
         with patch(f"{MODULE}.read_yaml_policy") as read_yaml, \
                 patch(f"{MODULE}.Parser") as parser, \

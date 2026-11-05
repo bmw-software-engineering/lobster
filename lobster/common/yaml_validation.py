@@ -27,7 +27,10 @@ import yamale
 def validate_yaml_file(schema_file, filename: str):
     """Validates a YAML file against a yamale schema file."""
     schema = yamale.make_schema(schema_file)
-    # Note: using 'resolve()' only for the purpose that yamale prints the full
-    # path in its exception in case of validation errors.
-    data = yamale.make_data(Path(filename).resolve())
+    # Read as UTF-8 ourselves, since yamale would use the platform's default encoding.
+    # The resolved path is attached so that yamale prints it in validation errors.
+    resolved = str(Path(filename).resolve())
+    with open(filename, "r", encoding="UTF-8") as f:
+        content = f.read()
+    data = [(item, resolved) for item, _ in yamale.make_data(content=content)]
     yamale.validate(schema, data)

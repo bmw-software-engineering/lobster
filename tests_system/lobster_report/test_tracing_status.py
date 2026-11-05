@@ -57,6 +57,7 @@ class ReportTracingStatusTest(LobsterReportSystemTestCaseBase):
 
     def test_status_ok_when_no_references_required(self):
         # lobster-trace: core_report_req.Item_Status_Ok_When_No_References_Required
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "unconstrained_level.conf")
         self._test_runner.declare_input_file(self._data_directory /

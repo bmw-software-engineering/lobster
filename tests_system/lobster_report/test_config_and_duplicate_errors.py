@@ -11,6 +11,7 @@ class ReportConfigAndDuplicateErrorsTest(LobsterReportSystemTestCaseBase):
 
     def test_duplicate_item_definition(self):
         # lobster-trace: core_report_req.Report_Input_Duplicate_Definition
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         """
         This test checks that the lobster report tool aborts with a non-zero exit
         code when the same tag is defined in more than one source file.
@@ -37,6 +38,7 @@ class ReportConfigAndDuplicateErrorsTest(LobsterReportSystemTestCaseBase):
 
     def test_invalid_trace_to_target(self):
         # lobster-trace: core_report_req.Invalid_Trace_To
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         """
         This test checks that the lobster report tool aborts with a non-zero exit
         code when the configuration file's "trace to" entry references a level
@@ -58,6 +60,30 @@ class ReportConfigAndDuplicateErrorsTest(LobsterReportSystemTestCaseBase):
             "lobster-report: aborting due to earlier errors.\n"
         )
         asserter.assertExitCode(1)
+
+    def test_invalid_yaml_policy(self):
+        # lobster-trace: core_report_req.Invalid_Yaml_Tracing_Policy
+        """
+        This test checks that the lobster report tool reports the line of the problem
+        and exits with code 1 when the YAML tracing policy violates the schema.
+        """
+        self._test_runner.declare_input_file(self._data_directory /
+                                             "invalid_policy.yaml")
+
+        out_file = "report_invalid_policy.lobster"
+        self._test_runner.cmd_args.lobster_config = "invalid_policy.yaml"
+        self._test_runner.cmd_args.out = out_file
+
+        result = self._test_runner.run_tool_test()
+        asserter = Asserter(self, result, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutText(
+            "LOBSTER Error: invalid_policy.yaml:5: invalid tracing policy: "
+            "levels.1.kind: 'bogus' not in "
+            "('requirements', 'implementation', 'activity')\n"
+        )
+        asserter.assertExitCode(1)
+        self.assertFalse((self._test_runner.working_dir / out_file).exists())
 
 
 if __name__ == "__main__":

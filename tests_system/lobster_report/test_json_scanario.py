@@ -49,6 +49,7 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
 
     def test_missing_input_file(self):
         # lobster-trace: core_report_req.File_Not_Found
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         missing_file = "non_existent_input.conf"
         self._test_runner.cmd_args.lobster_config = missing_file
 
@@ -59,6 +60,17 @@ class ReportInvalidJsonTest(LobsterReportSystemTestCaseBase):
             f"{self.legacy_policy_deprecation_warning(missing_file)}"
             f"Config file not found: {missing_file}\n"
         )
+        asserter.assertExitCode(1)
+
+    def test_missing_yaml_policy_file(self):
+        # lobster-trace: core_report_req.File_Not_Found
+        missing_file = "non_existent_policy.yaml"
+        self._test_runner.cmd_args.lobster_config = missing_file
+
+        result = self._test_runner.run_tool_test()
+        asserter = Asserter(self, result, self._test_runner)
+        asserter.assertNoStdErrText()
+        asserter.assertStdOutText(f"Config file not found: {missing_file}\n")
         asserter.assertExitCode(1)
 
     def test_lobster_exception_dump(self):
