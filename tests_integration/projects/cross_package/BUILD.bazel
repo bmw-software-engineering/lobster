@@ -1,0 +1,7 @@
+load("//:lobster.bzl", "lobster_trlc")
+
+lobster_trlc(
+    name = "software-requirements",
+    config = "//tests_integration/projects/basic:lobster-trlc.yaml",
+    requirements = ["//tests_integration/projects/basic:req"],
+)

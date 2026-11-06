@@ -1,6 +1,11 @@
 load("//:lobster.bzl", "lobster_raw", "lobster_test", "lobster_trlc")
 load("@trlc//:trlc.bzl", "trlc_requirements", "trlc_specification")
 
+exports_files(
+    ["lobster-trlc.yaml"],
+    visibility = ["//tests_integration/projects:__subpackages__"],
+)
+
 trlc_specification(
     name = "req_spec",
     srcs = ["potato.rsl"],
@@ -10,6 +15,7 @@ trlc_requirements(
     name = "req",
     srcs = ["potato.trlc"],
     spec = [":req_spec"],
+    visibility = ["//tests_integration/projects:__subpackages__"],
 )
 
 lobster_trlc(
