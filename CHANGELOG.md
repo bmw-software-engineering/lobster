@@ -59,6 +59,7 @@
     the `--config` argument.
 
 * `lobster-online-report`:
+  - Stop logging false submodule errors for files in the main repository.
   - Fixed a problem where `lobster-online-report` kept the Git repository folder
     locked after it had finished, because the Git helper processes of the repository
     were not released. On Windows this prevented deleting or moving the folder

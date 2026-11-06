@@ -43,3 +43,13 @@ req.System_Requirement Commit_Value_For_Item_Inside_Submodule {
   '''
   derived_from = [UseCases.Item_GitHub_Source]
 }
+
+req.System_Requirement No_Error_For_Main_Repo_File {
+  description = '''
+    IF an item in the input report has a file location inside the repository
+    given by "repo_root" but outside all of its Git submodules,
+    THEN the tool shall not log an error stating that the file is not inside a
+    submodule.
+  '''
+  derived_from = [UseCases.Item_GitHub_Source]
+}
