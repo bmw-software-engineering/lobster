@@ -1,10 +1,12 @@
 load("@rules_python//python:defs.bzl", "py_test")
 
+ALL_TEST_SRCS = glob(["test_*.py"])
 
-py_test(
-    name = "test_file_collector",
-    srcs = ["test_file_collector.py"],
-    deps = [
-        "//lobster/common",
-    ],
-)
+[
+    py_test(
+        name = src[:-3],
+        srcs = [src],
+        deps = ["//lobster/common"],
+    )
+    for src in ALL_TEST_SRCS
+]

@@ -1,0 +1,5 @@
+levels:
+  - name: "Requirements"
+    kind: requirements
+  - name: "Code"
+    kind: bogus

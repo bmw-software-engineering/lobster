@@ -30,6 +30,7 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
     def test_extra_input_files_are_ignored_by_policy(self):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Report_Loads_Configured_Sources_Per_Level
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         """
         This test checks that the lobster report tool can handle multiple input files.
         The tool should actually fetch input files provided in the tracing policy
@@ -59,12 +60,13 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(self.legacy_policy_deprecation_warning(conf_file))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
     def test_missing_required_files_cause_failure(self):
         # lobster-trace: core_report_req.Missing_Required_Files_Error
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         """
         This test checks that the lobster report tool fails when required input files
         are missing. The tool should report an error and abort processing if any
@@ -87,6 +89,7 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertStdErrText("")
         asserter.assertStdOutText(
+            self.legacy_policy_deprecation_warning(conf_file) +
             "multiple_traces_just.conf:11: lobster error: cannot find file "
             "multiple_traces_test.lobster\n"
             "\n"
@@ -97,6 +100,7 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
     def test_multiple_source_files(self):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Report_Loads_Configured_Sources_Per_Level
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         """
         This test checks that the lobster report tool can handle multiple source files
         given at different levels of tracing policy.
@@ -126,7 +130,7 @@ class ReportMultipleInputTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(self.legacy_policy_deprecation_warning(conf_file))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

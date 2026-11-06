@@ -22,7 +22,7 @@ from dataclasses import dataclass
 
 from lobster.common.level_definition import LevelDefinition
 from lobster.common.items import Tracing_Status, Requirement, Implementation, Activity
-from lobster.common.parser import load as load_config
+from lobster.common.tracing_policy_loader import load_tracing_policy
 from lobster.common.errors import LOBSTER_Error, Message_Handler
 from lobster.common.io import lobster_read, ensure_output_directory
 from lobster.common.location import File_Reference
@@ -58,7 +58,7 @@ class Report:
         """
 
         try:
-            self.config = load_config(self.mh, filename)
+            self.config = load_tracing_policy(self.mh, filename)
         except LOBSTER_Error as exc:
             self.mh.error(exc.location, exc.message)
             # Note: mh.error raises the exception internally, so we do not need to

@@ -76,6 +76,7 @@ setuptools.setup(
               "lobster.tools.core.online_report_nogit",
               "lobster.tools.core.report",
               "lobster.tools.core.rst_report"],
+    package_data={"lobster.common": ["*.yamale"]},
     install_requires=[
         "Markdown~=3.7",
         "PyYAML>=6.0",

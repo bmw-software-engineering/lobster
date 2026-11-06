@@ -29,6 +29,7 @@ class ReportItemsCoverageTest(LobsterReportSystemTestCaseBase):
     def test_zero_items_coverage(self):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Zero_Items_Coverage
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "lobster_zero_items.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -46,7 +47,7 @@ class ReportItemsCoverageTest(LobsterReportSystemTestCaseBase):
 
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(self.legacy_policy_deprecation_warning(conf_file))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
@@ -54,6 +55,7 @@ class ReportItemsCoverageTest(LobsterReportSystemTestCaseBase):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Level_Coverage_Percentage_From_Item_Status
         # lobster-trace: core_report_req.Item_Status_Downgraded_By_Item_Messages
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         self._test_runner.declare_input_file(self._data_directory /
                                              "message_trace_coverage.conf")
         self._test_runner.declare_input_file(self._data_directory /
@@ -61,8 +63,9 @@ class ReportItemsCoverageTest(LobsterReportSystemTestCaseBase):
         self._test_runner.declare_input_file(self._data_directory /
                                              "trlc_message_trace_coverage.lobster")
 
+        conf_file = "message_trace_coverage.conf"
         out_file = "report_message_trace_coverage.lobster"
-        self._test_runner.cmd_args.lobster_config = "message_trace_coverage.conf"
+        self._test_runner.cmd_args.lobster_config = conf_file
         self._test_runner.cmd_args.out = out_file
         self._test_runner.declare_output_file(self._data_directory / out_file)
 
@@ -70,7 +73,7 @@ class ReportItemsCoverageTest(LobsterReportSystemTestCaseBase):
 
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(self.legacy_policy_deprecation_warning(conf_file))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 
