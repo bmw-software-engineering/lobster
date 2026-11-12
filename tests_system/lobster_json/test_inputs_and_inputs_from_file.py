@@ -34,7 +34,7 @@ class InputsAndInputsFromFileParameterTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.config_file_data.name_attribute = "Name"
 
     def test_inputs(self):
-        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
+        # lobster-trace: json_req.Test_List_Attribute
         self._test_runner.declare_input_file(
             self._data_directory / "inputs_safety.json")
         self._test_runner.declare_input_file(

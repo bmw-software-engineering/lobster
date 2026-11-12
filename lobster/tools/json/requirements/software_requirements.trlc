@@ -1,0 +1,221 @@
+package json_req
+import req
+
+req.Software_Requirement Get_Item_Returns_Root_For_Empty_Path {
+  description = '''
+    The function get_item, when given an empty path string,
+    SHALL return the root object unchanged.
+  '''
+  derived_from = [Test_List_Attribute]
+}
+
+req.Software_Requirement Get_Item_Navigates_Dotted_Path {
+  description = '''
+    The function get_item, when given a dotted path such as "a.b",
+    SHALL recursively look up each segment of the path in the corresponding nested
+    dictionaries, and SHALL return the value found at the final segment.
+  '''
+  derived_from = [Test_List_Attribute]
+}
+
+req.Software_Requirement Get_Item_Required_Path_Not_Found_Raises {
+  description = '''
+    IF a segment of the path is not present as a key in the corresponding dictionary,
+    OR the current value is not a dictionary while further navigation is required,
+    AND the "required" parameter is true,
+    THEN get_item SHALL raise Malformed_Input, identifying the problem.
+  '''
+  derived_from = [Test_List_Attribute, Name_Attribute_Given_Key_Missing]
+}
+
+req.Software_Requirement Get_Item_Optional_Path_Not_Found_Returns_None {
+  description = '''
+    IF a segment of the path is not present as a key in the corresponding dictionary,
+    AND the "required" parameter is false,
+    THEN get_item SHALL return None.
+  '''
+  derived_from = [Tag_Attribute_Given_Key_Missing, Justification_Attribute]
+}
+
+req.Software_Requirement Syn_Test_Name_Builds_Dotted_Name {
+  description = '''
+    The function syn_test_name SHALL build a synthetic name from the directory components
+    and file stem of the given path, joined by ".", omitting "." and ".." components,
+    regardless of whether the path is absolute or relative, or uses POSIX or Windows
+    path separators.
+  '''
+  derived_from = [Name_Attribute_Missing]
+}
+
+req.Software_Requirement Build_Name_Uses_Name_Attribute {
+  description = '''
+    The function build_name, IF name_attribute is given,
+    SHALL return the string value found at that path within the item.
+  '''
+  derived_from = [Name_Attribute_Given]
+}
+
+req.Software_Requirement Build_Name_Rejects_Non_String {
+  description = '''
+    IF the value found at the name_attribute path is not a string,
+    THEN build_name SHALL raise Malformed_Input.
+  '''
+  derived_from = [Name_Attribute_Given_Key_Missing]
+}
+
+req.Software_Requirement Build_Name_Falls_Back_To_Synthetic_Name {
+  description = '''
+    IF name_attribute is not given,
+    THEN build_name SHALL return a synthetic name built from the file path
+    (using syn_test_name) and the item counter, separated by ".".
+  '''
+  derived_from = [Name_Attribute_Missing]
+}
+
+req.Software_Requirement Load_Item_Parses_Valid_JSON {
+  description = '''
+    The function load_item SHALL parse the file content as JSON, and,
+    IF options_test_list is given and not an empty string,
+    SHALL navigate to that key path before returning the data.
+  '''
+  derived_from = [Test_List_Attribute]
+}
+
+req.Software_Requirement Load_Item_Rejects_Invalid_JSON {
+  description = '''
+    IF the file content cannot be parsed as JSON,
+    THEN load_item SHALL print an error message to STDERR
+    AND SHALL return a failure indicator with an empty list of items.
+  '''
+  derived_from = [Invalid_JSON_Content]
+}
+
+req.Software_Requirement Process_Extracts_Tags_As_List_Or_String {
+  description = '''
+    The class method process SHALL accept the value found at the tag_attribute path
+    as either a single string or a list of strings, and SHALL normalize it into a list
+    of requirement references of the generated LOBSTER item.
+  '''
+  derived_from = [Tag_Attribute_Given]
+}
+
+req.Software_Requirement Process_Extracts_Justification_As_List_Or_String {
+  description = '''
+    The class method process SHALL accept the value found at the justification_attribute
+    path as either a single string or a list of strings, and SHALL normalize it into a
+    list of justifications of the generated LOBSTER item.
+  '''
+  derived_from = [Justification_Attribute]
+}
+
+req.Software_Requirement Process_Aborts_File_On_Load_Failure {
+  description = '''
+    IF load_item fails for a file,
+    THEN the class method process SHALL return a failure indicator and an empty list of
+    items for that file, without raising an exception.
+  '''
+  derived_from = [Invalid_JSON_Content]
+}
+
+req.Software_Requirement Get_Mandatory_Parameters_Requires_Tag_Attribute {
+  description = '''
+    The method get_mandatory_parameters SHALL return a set containing "tag_attribute",
+    marking it as a mandatory configuration parameter.
+  '''
+  derived_from = [Config_File_Mandatory_Parameter_Missing]
+}
+
+req.Software_Requirement Config_Keys_Validation_Rejects_Unsupported_Keys {
+  description = '''
+    The method validate_yaml_supported_config_parameters SHALL raise KeyError
+    IF the config contains a key that is not one of the tool's supported configuration
+    parameters.
+  '''
+  derived_from = [Config_File_Unsupported_Key]
+}
+
+req.Software_Requirement Config_Argparse_Requires_Config_Option {
+  description = '''
+    The tool SHALL register the command line option "--config" as a required argument
+    of its argument parser, so that parsing the command line without it SHALL fail.
+  '''
+  derived_from = [Config_Option_Mandatory]
+}
+
+req.Software_Requirement Load_Yaml_Config_Exits_When_File_Missing {
+  description = '''
+    The method load_yaml_config SHALL terminate the process with a non-zero return code
+    IF the given config file path does not refer to an existing file.
+  '''
+  derived_from = [Config_File_Not_Found]
+}
+
+req.Software_Requirement Load_Yaml_Config_Propagates_YAML_Syntax_Errors {
+  description = '''
+    The method load_yaml_config SHALL propagate any exception raised while parsing the
+    content of the config file as YAML.
+  '''
+  derived_from = [Config_File_Invalid_YAML]
+}
+
+req.Software_Requirement Process_Common_Options_Defaults_To_Current_Directory {
+  description = '''
+    The method process_common_options, IF neither options.inputs NOR
+    options.inputs_from_file is given,
+    SHALL use the current working directory as the sole input.
+  '''
+  derived_from = [Default_Input_Is_Current_Directory]
+}
+
+req.Software_Requirement Process_Common_Options_Uses_Configured_Inputs {
+  description = '''
+    The method process_common_options, IF options.inputs is given,
+    SHALL build the work list exclusively from the files and directories listed there.
+  '''
+  derived_from = [Input_List_Of_Files]
+}
+
+req.Software_Requirement Process_Common_Options_Reads_Inputs_From_File {
+  description = '''
+    The method process_common_options, IF options.inputs_from_file is given,
+    SHALL read that file line by line, ignoring blank lines and the part of a line
+    following a "#" character, and SHALL add each remaining line as an input.
+  '''
+  derived_from = [Inputs_From_File]
+}
+
+req.Software_Requirement Process_Common_Options_Combines_Inputs_And_Inputs_From_File {
+  description = '''
+    The method process_common_options, IF both options.inputs AND
+    options.inputs_from_file are given,
+    SHALL build the work list from the union of the entries provided by both.
+  '''
+  derived_from = [Inputs_And_Inputs_From_File_Combined]
+}
+
+req.Software_Requirement Process_Common_Options_Errors_On_Invalid_Path {
+  description = '''
+    The method process_common_options SHALL terminate the process with return code 1
+    IF an input entry is neither an existing file NOR an existing directory.
+  '''
+  derived_from = [Input_Not_File_Not_Directory]
+}
+
+req.Software_Requirement Process_Common_Options_Warns_On_Wrong_Extension {
+  description = '''
+    The method process_common_options SHALL emit a warning, but SHALL still include the
+    file in the work list, IF an input file's extension does not match the tool's
+    configured extensions.
+  '''
+  derived_from = [Input_File_JSON_Extension]
+}
+
+req.Software_Requirement Collect_Files_From_Directory_Filters_By_Extension {
+  description = '''
+    The method _collect_files_from_directory SHALL recursively search the given
+    directory and SHALL only include files whose extension matches the tool's
+    configured extensions.
+  '''
+  derived_from = [Input_Directory_Traversal]
+}
+
