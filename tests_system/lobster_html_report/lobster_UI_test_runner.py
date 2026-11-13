@@ -71,6 +71,10 @@ class LobsterUITestRunner(TestRunner):
         options = Options()
         options.add_argument("--headless")
         options.add_argument("--disable-dev-shm-usage")
+        # Chrome's sandbox cannot start on Ubuntu 24.04 CI runners (AppArmor
+        # blocks unprivileged user namespaces) or inside the Bazel sandbox.
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-gpu")
         return options
 
     def get_chrome_driver(self):
