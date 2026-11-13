@@ -30,6 +30,7 @@ class ReportMultipleTracesTest(LobsterReportSystemTestCaseBase):
     def test_multiple_traces_justification(self):
         # lobster-trace: core_report_req.Tracing_Policy_Written_To_Output_File
         # lobster-trace: core_report_req.Item_Status_Justified_By_Justification
+        # lobster-trace: core_report_req.Legacy_Tracing_Policy_Deprecation_Warning
         """
         This test checks that the lobster report tool can handle multiple lobster traces
         with justifications
@@ -52,7 +53,7 @@ class ReportMultipleTracesTest(LobsterReportSystemTestCaseBase):
         completed_process = self._test_runner.run_tool_test()
         asserter = Asserter(self, completed_process, self._test_runner)
         asserter.assertNoStdErrText()
-        asserter.assertNoStdOutText()
+        asserter.assertStdOutText(self.legacy_policy_deprecation_warning(conf_file))
         asserter.assertExitCode(0)
         asserter.assertOutputFiles()
 

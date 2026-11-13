@@ -33,3 +33,11 @@ class LobsterReportSystemTestCaseBase(SystemTestCaseBase):
             self.create_temp_dir(prefix=f"test-{tool_name}-"),
         )
         return test_runner
+
+    @staticmethod
+    def legacy_policy_deprecation_warning(conf_file: str) -> str:
+        """Expected stdout warning for a legacy tracing-policy file."""
+        return (f"{conf_file}: warning: the tracing-policy in the LOBSTER "
+                "configuration "
+                "language is deprecated and will be removed in a future "
+                "release. Use a .yaml file instead\n")
