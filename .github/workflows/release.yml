@@ -35,6 +35,20 @@ jobs:
       contents: write
     secrets: {}
 
+  package:
+    needs: release
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - name: Dispatch PyPI packaging
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG_NAME: ${{ inputs.tag_name || github.ref_name }}
+        run: gh workflow run package.yml --ref "$TAG_NAME" -f tag_name="$TAG_NAME"
+
   publish:
     needs: release
     uses: ./.github/workflows/publish.yml

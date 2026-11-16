@@ -9,7 +9,16 @@ BCR releases are fully automated via GitHub Actions. To trigger a release:
    - Calls `.github/workflows/release_prep.sh` to build a source archive under `archives/` and generate release notes.
    - Creates a GitHub release and uploads the archive as a release asset.
 3. `.github/workflows/publish.yml` opens a pull request to the Bazel Central Registry via `publish-to-bcr`.
-4. `.github/workflows/package.yml` publishes all packages to PyPI.
+4. The release workflow also dispatches `.github/workflows/package.yml` to publish
+  all packages from the release tag to PyPI. The tagged commit must be on `main`.
+  Check the separate PyPI workflow run for the publication result; a successful
+  dispatch does not mean that the upload has completed.
+
+Releases published outside the automated release workflow can also trigger the PyPI
+workflow directly through the GitHub release event. To publish an existing release
+that was missed, manually run the PyPI workflow on `main` with its release tag as
+the `tag_name` input. The workflow verifies that the release is published and the
+tagged commit is on `main` before building.
 
 ### Why a custom archive?
 
