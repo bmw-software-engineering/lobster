@@ -3,7 +3,7 @@
 ## Changelog
 
 
-### 1.1.0-dev
+### 1.1.0
 
 * Created the initial LOBSTER Safety Manual as a baseline safety guidance document.
   It will be updated and refined as needed.
@@ -18,7 +18,7 @@
   - Added support for experimental feature TRLC Markdown which takes
   `.trlc.md` as a valid input file extension.
 
-* `trlc bazel dep`: update to trlc==3.0.1
+* `trlc bazel dep`: update to trlc==3.1.2
 
 * `lobster-report`:
   - Tracing policies can now be written in `yaml` files or in the custom LOBSTER file
@@ -69,6 +69,9 @@
     locked after it had finished, because the Git helper processes of the repository
     were not released. On Windows this prevented deleting or moving the folder
     (`PermissionError: [WinError 32]`).
+
+* `lobster-html-report`:
+  - Implementation items now display their text blocks in the report.
 
 * Removed wrong statement from `schemas.md` regarding "status" field.
 
