@@ -1,8 +1,12 @@
 name: Lobster PyPI Packages
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: Published release tag to package
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -12,9 +16,21 @@ jobs:
   package:
     name: Build
     runs-on: ubuntu-24.04
-    if: github.event.release.target_commitish == 'main'
+    if: inputs.tag_name != '' || github.event.release.target_commitish == 'main'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: refs/tags/${{ inputs.tag_name || github.event.release.tag_name }}
+          fetch-depth: 0
+      - name: Verify release tag is on main
+        if: inputs.tag_name != ''
+        run: git merge-base --is-ancestor HEAD origin/main
+      - name: Verify release is published
+        if: inputs.tag_name != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ inputs.tag_name }}
+        run: test "$(gh release view "$TAG_NAME" --json isDraft --jq .isDraft)" = false
       - name: Set up Python 3.12
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
@@ -38,7 +54,6 @@ jobs:
     name: PyPI Upload
     needs: package
     runs-on: ubuntu-24.04
-    if: github.event.release.target_commitish == 'main'
     environment: release
     permissions:
       id-token: write
