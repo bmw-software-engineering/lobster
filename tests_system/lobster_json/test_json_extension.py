@@ -29,7 +29,6 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         self._test_runner.config_file_data.tag_attribute = "vegtable"
 
     def test_single_non_json_extensions(self):
-        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
         # lobster-trace: json_req.Input_File_JSON_Extension
         self._test_runner.declare_input_file(self._data_directory / "valid-json.txt")
         OUT_FILE = "banana.lobster"
@@ -47,7 +46,6 @@ class JsonExtensionTest(LobsterJsonSystemTestCaseBase):
         asserter.assertOutputFiles()
 
     def test_mixed_extensions(self):
-        # lobster-trace: UseCases.Incorrect_Number_of_JSON_Tests_in_Output
         # lobster-trace: json_req.Input_File_JSON_Extension
         self._test_runner.declare_input_file(self._data_directory / "valid-mini.json")
         self._test_runner.declare_input_file(self._data_directory / "valid-json.txt")
