@@ -1,0 +1,8 @@
+filegroup(
+    name = "gtest_data_system",
+    srcs = glob([
+        "*.xml",
+        "*.lobster",
+    ]),
+    visibility = ["//visibility:public"],
+)
