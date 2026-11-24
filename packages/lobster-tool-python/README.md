@@ -23,7 +23,7 @@ This tool supports:
 and throughout this document we only refer to Python.
 But the tool also works for Bazel files because they are very similar to Python code.
 
-For either code or tests you can embedd tracing tags like this:
+For either code or tests you can embed tracing tags like this:
 
 ```python
    def potato(self):
