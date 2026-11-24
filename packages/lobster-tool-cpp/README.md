@@ -28,7 +28,7 @@ future.
 
 This tool supports C/C++ code.
 
-For this you can embedd tracing tags like this:
+For this you can embed tracing tags like this:
 
 ```cpp
 #include <string>
@@ -48,7 +48,7 @@ You can add justifications as well:
 class Potato {
 public:
     std::string potato() {
-        // lobster-exclude: Reason to justify the exlude
+        // lobster-exclude: Reason to justify the exclude
         return "potato";
     }
 };
