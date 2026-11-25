@@ -2,7 +2,7 @@
 
 ## Changelog
 
-### 1.1.1-dev
+### 1.1.1
 
 * Documentation:
   - Fixed typos in the `lobster-tool-cpp` and `lobster-tool-python` package READMEs.
