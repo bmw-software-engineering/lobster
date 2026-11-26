@@ -98,3 +98,14 @@ req.System_Requirement Warning_If_Record_Properties_And_Test_Name_Given {
   '''
   derived_from = [UseCases.GTest_Spec_From_Test_Name]
 }
+
+req.System_Requirement Reports_Without_Test_Case_Status_Ignored {
+  description = '''
+    IF an input file is an XML file in which no "testcase" element has an
+    attribute "status", as in JUnit XML reports of test frameworks other than
+    GoogleTest,
+    THEN the tool SHALL NOT write a LOBSTER item for this file, SHALL NOT print
+    a message about it, and SHALL NOT change its exit code because of it.
+  '''
+  derived_from = [UseCases.Trace_Tests_From_JUnit_Reports]
+}

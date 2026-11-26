@@ -69,6 +69,7 @@ setuptools.setup(
     license="GNU Affero General Public License v3",
     packages=["lobster",
               "lobster.common",
+              "lobster.common.test_report",
               "lobster.htmldoc",
               "lobster.tools.core.ci_report",
               "lobster.tools.core.html_report",

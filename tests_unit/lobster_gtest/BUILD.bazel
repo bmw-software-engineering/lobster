@@ -5,3 +5,9 @@ py_test(
     srcs = ["test_givenwhenthen.py"],
     deps = ["//lobster/tools/gtest"],
 )
+
+py_test(
+    name = "test_gtestreportreader",
+    srcs = ["test_gtestreportreader.py"],
+    deps = ["//lobster/common/test_report"],
+)

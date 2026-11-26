@@ -83,3 +83,12 @@ req.Software_Requirement Conflicts_With_Detects_Non_Blank_Spec_Properties {
     Warning_If_Record_Properties_And_Test_Name_Given,
   ]
 }
+
+req.Software_Requirement Gtest_Accepts_Reports_With_Test_Case_Status {
+  description = '''
+    The method GtestReportReader.accepts SHALL return True IF the tag of the
+    root element is "testsuites" AND at least one "testcase" element of the
+    report has an attribute "status", AND False otherwise.
+  '''
+  derived_from = [Reports_Without_Test_Case_Status_Ignored]
+}
