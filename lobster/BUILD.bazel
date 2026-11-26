@@ -7,7 +7,7 @@ py_library(
         "__init__.py",
         "trlc_runner.py",
     ],
-    visibility = ["//visibility:public"],
+    visibility = ["//packages/lobster-monolithic:__pkg__"],
     deps = [requirement("trlc")],
 )
 

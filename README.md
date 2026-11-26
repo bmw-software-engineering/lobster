@@ -41,7 +41,9 @@ $ pipx install bmw-lobster --include-deps
 
 For Bazel integration, build the monolithic wheel directly:
 ```
-$ bazel build //packages/lobster-monolithic:wheel.dist
+$ bazel build --stamp \
+    --embed_label=$(python3 -c "from lobster.common.version import LOBSTER_VERSION; print(LOBSTER_VERSION)") \
+    //packages/lobster-monolithic:wheel.dist
 ```
 This produces a single `py_wheel` artifact without the overlapping installs
 caused by the split wheels.

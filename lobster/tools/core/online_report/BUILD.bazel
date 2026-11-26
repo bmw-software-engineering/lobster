@@ -11,6 +11,7 @@ filegroup(
 py_library(
     name = "online_report",
     srcs = [
+        "__init__.py",
         "online_report.py",
         "path_to_url_converter.py",
     ],

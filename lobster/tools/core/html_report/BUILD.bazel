@@ -11,6 +11,7 @@ filegroup(
 py_library(
     name = "html_report",
     srcs = [
+        "__init__.py",
         "html_report.py",
         "html_report_css.py",
         "html_report_js.py",

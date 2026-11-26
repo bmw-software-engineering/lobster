@@ -4,6 +4,7 @@ load("@rules_python//python:defs.bzl", "py_library")
 py_library(
     name = "htmldoc",
     srcs = [
+        "__init__.py",
         "assets.py",
         "htmldoc.py",
     ],

@@ -9,7 +9,10 @@ filegroup(
 
 py_library(
     name = "json",
-    srcs = ["json.py"],
+    srcs = [
+        "__init__.py",
+        "json.py",
+    ],
     visibility = [
         "//visibility:public",
     ],

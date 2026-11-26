@@ -10,6 +10,7 @@ filegroup(
 py_library(
     name = "rst_report",
     srcs = [
+        "__init__.py",
         "_helpers.py",
         "_renderers.py",
         "rst_report.py",

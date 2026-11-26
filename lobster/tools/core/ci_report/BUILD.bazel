@@ -9,7 +9,10 @@ filegroup(
 
 py_library(
     name = "ci_report",
-    srcs = ["ci_report.py"],
+    srcs = [
+        "__init__.py",
+        "ci_report.py",
+    ],
     visibility = [
         "//visibility:public",
     ],

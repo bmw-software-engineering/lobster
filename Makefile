@@ -72,7 +72,9 @@ packages: clean-packages
 	make -C packages/lobster-tool-json
 	make -C packages/lobster-tool-python
 	make -C packages/lobster-metapackage
-	$(BAZEL_BIN) build //packages/lobster-monolithic:wheel.dist
+	$(BAZEL_BIN) build --stamp \
+		--embed_label=$$(python3 -c "from lobster.common.version import LOBSTER_VERSION; print(LOBSTER_VERSION)") \
+		//packages/lobster-monolithic:wheel.dist
 	mkdir -p packages/lobster-monolithic/meta_dist
 	cp -f bazel-bin/packages/lobster-monolithic/meta_dist/*.whl \
 		packages/lobster-monolithic/meta_dist/

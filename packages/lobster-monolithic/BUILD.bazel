@@ -60,6 +60,10 @@ py_wheel(
         "GitPython>=3.1.30",
     ],
     summary = "Monolithic package for all LOBSTER Tools",
-    version = "1.1.0-dev",
+    # Stamped from lobster/common/version.py at build time, see the
+    # `packages` target in the top-level Makefile, which passes
+    # `--stamp --embed_label=<LOBSTER_VERSION>`. Avoids hardcoding or
+    # duplicating the version in this BUILD file.
+    version = "{BUILD_EMBED_LABEL}",
     deps = [":package"],
 )

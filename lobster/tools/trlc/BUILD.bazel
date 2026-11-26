@@ -11,6 +11,7 @@ filegroup(
 py_library(
     name = "trlc",
     srcs = [
+        "__init__.py",
         "conversion_rule.py",
         "conversion_rule_lookup.py",
         "converter.py",

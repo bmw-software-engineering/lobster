@@ -22,7 +22,8 @@ Note there is also a monolithic wheel
 [bmw-lobster-monolithic](https://pypi.org/project/bmw-lobster-monolithic),
 which may be interesting for people who wish to integrate into bazel,
 as `py_wheel` cannot deal with overlapping installs. In this repository,
-you can build it with `bazel build //packages/lobster-monolithic:wheel.dist`.
+you can build it with `bazel build --stamp --embed_label=<version> //packages/lobster-monolithic:wheel.dist`
+(see [packages/lobster-monolithic/README.md](../lobster-monolithic/README.md) for details).
 
 ## Copyright & License information
 

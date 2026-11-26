@@ -68,7 +68,7 @@ py_library(
 py_library(
     name = "lobster_package",
     visibility = [
-        "//visibility:public",
+        "//packages/lobster-monolithic:__pkg__",
     ],
     deps = [
         "//lobster/common",
