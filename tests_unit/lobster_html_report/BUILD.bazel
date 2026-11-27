@@ -1,6 +1,12 @@
 load("@rules_python//python:defs.bzl", "py_test")
 
 
+py_test(
+    name = "test_policy_graph",
+    srcs = ["test_policy_graph.py"],
+    deps = ["//lobster/common"],
+)
+
 # do not add "test_html_report.py" tests as long subprocess.run(git)
 # can't be called within bazel test.
 #

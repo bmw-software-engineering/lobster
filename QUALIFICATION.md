@@ -44,6 +44,10 @@ the use case.
 If a feature is being used in a way which is not foreseen by any of the use cases,
 then the result of the corresponding tool is not qualified.
 
+The tracing policy visualization in the HTML report is not qualified for
+safety-related use. It is provided for information only; do not use it as
+qualified evidence for a safety-related project.
+
 Example:
 Imagine a tool supports a list of files and a list of directories as input.
 Furthermore assume that a use case specifies that a list of files shall be given
