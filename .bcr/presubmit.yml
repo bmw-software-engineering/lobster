@@ -89,3 +89,9 @@ tasks:
       # separators ("/") and LF line endings, so they fail on Windows only.
       - "-@lobster//tests_unit/lobster_online_report/..."
       - "-@lobster//tests_system/lobster_online_report/..."
+      # Windows-only: lobster_integration_test uses a bash script as the test
+      # executable, which Bazel cannot run directly on Windows.
+      - "-@lobster//tests_integration/projects/coverage:traceability"
+      - "-@lobster//tests_integration/projects/coverage_half:traceability"
+      - "-@lobster//tests_integration/projects/coverage_mix:traceability"
+      - "-@lobster//tests_integration/projects/coverage_zero:traceability"
