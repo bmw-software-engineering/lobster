@@ -10,6 +10,7 @@ filegroup(
 py_library(
     name = "pkg",
     srcs = [
+        "__init__.py",
         "pkg.py",
     ],
     visibility = [

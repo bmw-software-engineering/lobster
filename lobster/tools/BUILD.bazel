@@ -1,0 +1,11 @@
+load("@rules_python//python:defs.bzl", "py_library")
+
+# `lobster/tools` is an intermediate package directory with no sources of its
+# own; it still needs its own `__init__.py` packaged explicitly because
+# `--incompatible_default_to_explicit_init_py=true` disables Bazel's automatic
+# generation of empty `__init__.py` files for py_package/py_wheel trees.
+py_library(
+    name = "tools_root",
+    srcs = ["__init__.py"],
+    visibility = ["//visibility:public"],
+)

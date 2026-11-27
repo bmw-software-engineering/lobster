@@ -10,6 +10,7 @@ filegroup(
 py_library(
     name = "cpp",
     srcs = [
+        "__init__.py",
         "cpp.py",
         "implementation_builder.py",
     ],

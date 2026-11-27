@@ -11,6 +11,7 @@ filegroup(
 py_library(
     name = "cpptest",
     srcs = [
+        "__init__.py",
         "constants.py",
         "cpptest.py",
         "requirements_parser.py",

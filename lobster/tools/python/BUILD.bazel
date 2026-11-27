@@ -10,7 +10,10 @@ filegroup(
 
 py_library(
     name = "python",
-    srcs = ["python.py"],
+    srcs = [
+        "__init__.py",
+        "python.py",
+    ],
     visibility = [
         "//visibility:public",
     ],
