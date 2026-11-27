@@ -2,12 +2,14 @@ load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 load("@rules_python//python/uv:lock.bzl", "lock")
 load("//:requirements.bzl", "requirement")
 
-# Run: bazel run //:python_dependencies_3_XX.update --@rules_python//python/config_settings:python_version=3.XX
+# Run: bazel run //:python_dependencies_3_XX.update
 [
   lock(
       name = "python_dependencies_3_{}".format(version),
       srcs = ["requirements_dev.txt", "requirements.txt"],
       out = "requirements_lock_3_{}.txt".format(version),
+      # Without this, uv resolves for the default Python (3.12) and drops 3.10-only deps.
+      python_version = "3.{}".format(version),
   )
   for version in [
       "10",
