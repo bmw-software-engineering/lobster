@@ -17,6 +17,7 @@
 
 import logging
 import os
+import shlex
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
@@ -89,6 +90,9 @@ class LobsterUITestRunner(TestRunner):
             # pylint: disable=import-outside-toplevel,import-error
             from python.runfiles import runfiles
             rf = runfiles.Create()
+            # Bazel quotes paths with spaces, but 'env' is not shell-evaluated.
+            chrome = shlex.split(chrome)[0]
+            chromedriver = shlex.split(chromedriver)[0]
             driver_options.binary_location = rf.Rlocation(chrome)
             service = Service(executable_path=rf.Rlocation(chromedriver))
             return webdriver.Chrome(service=service, options=driver_options)
