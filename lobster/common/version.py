@@ -18,7 +18,7 @@
 # <https://www.gnu.org/licenses/>.
 
 VERSION_TUPLE = (1, 1, 1)
-VERSION_SUFFIX = ""
+VERSION_SUFFIX = "dev"
 
 LOBSTER_VERSION = ".".join(str(x) for x in VERSION_TUPLE) + (
     f"-{VERSION_SUFFIX}" if VERSION_SUFFIX else ""

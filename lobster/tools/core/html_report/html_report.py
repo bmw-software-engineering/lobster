@@ -21,7 +21,6 @@ import argparse
 import html
 import subprocess
 import hashlib
-import tempfile
 from datetime import datetime, timezone
 from typing import Optional, Sequence
 
@@ -39,7 +38,7 @@ from lobster.common.items import (Tracing_Status, Item,
                                   Requirement, Implementation,
                                   Activity)
 from lobster.common.meta_data_tool_base import MetaDataToolBase
-from lobster.common.graphviz_utils import is_dot_available
+from lobster.common.policy_graph import PolicyNode, PolicyEdge, render_svg
 from lobster.tools.core.html_report.html_report_css import CSS
 from lobster.tools.core.html_report.html_report_js import JAVA_SCRIPT
 
@@ -81,44 +80,32 @@ def xref_item(item, link=True, brief=False):
     return rv
 
 
-def create_policy_diagram(doc, report, dot):
+def create_policy_diagram(doc, report):
     assert isinstance(doc, htmldoc.Document)
     assert isinstance(report, Report)
 
-    graph = 'digraph "LOBSTER Tracing Policy" {\n'
+    nodes = []
+    edges = []
     for level in report.config.values():
-        if level.kind == "requirements":
-            style = 'shape=box, style=rounded'
-        elif level.kind == "implementation":
-            style = 'shape=box'
-        else:
-            assert level.kind == "activity"
-            style = 'shape=hexagon'
-        style += f', href="#sec-{name_hash(level.name)}"'
-
-        graph += f'  n_{name_hash(level.name)} [label="{level.name}", {style}];\n'
-
-    for level in report.config.values():
-        source = name_hash(level.name)
+        identifier = name_hash(level.name)
+        data = report.coverage[level.name]
+        nodes.append(PolicyNode(identifier=identifier,
+                                label=level.name,
+                                href=f"#sec-{identifier}",
+                                detail=(f"{level.kind.capitalize()} · "
+                                        f"{data.ok}/{data.items} OK"),
+                                ratio=data.coverage))
         for target in map(name_hash, level.traces):
             # Not a mistake; we want to show the tracing down, whereas
             # in the config file we indicate how we trace up.
-            graph += f'  n_{target} -> n_{source};\n'
-    graph += "}\n"
+            edges.append(PolicyEdge(source=target, target=identifier))
 
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        graph_name = os.path.join(tmp_dir, "graph.dot")
-        with open(graph_name, "w", encoding="UTF-8") as tmp_fd:
-            tmp_fd.write(graph)
-        svg = subprocess.run([dot if dot else "dot", "-Tsvg", graph_name],
-                             stdout=subprocess.PIPE,
-                             encoding="UTF-8",
-                             check=True)
-        assert svg.returncode == 0
-        image = svg.stdout[svg.stdout.index("<svg "):]
-
-    for line in image.splitlines():
+    for line in render_svg(nodes, edges).splitlines():
         doc.add_line(line)
+    doc.add_line(
+        '<p><strong>This tracing policy visualization is not qualified for '
+        'safety-related use.</strong></p>'
+    )
 
 
 def create_item_coverage(doc, report):
@@ -282,7 +269,7 @@ def write_html_to_file(html_content: str, output_path: str) -> None:
         fd.write("\n")
 
 
-def write_html(report, dot, high_contrast, render_md) -> str:
+def write_html(report, high_contrast, render_md) -> str:
     assert isinstance(report, Report)
 
     doc = htmldoc.Document(
@@ -421,15 +408,10 @@ def write_html(report, dot, high_contrast, render_md) -> str:
     doc.add_heading(3, "Coverage", html_identifier=True)
     create_item_coverage(doc, report)
     doc.add_line('</div>')
-    if is_dot_available(dot):
-        doc.add_line('<div class="column">')
-        doc.add_heading(3, "Tracing policy")
-        create_policy_diagram(doc, report, dot)
-        doc.add_line('</div>')
-    else:
-        print("warning: dot utility not found, report will not "
-              "include the tracing policy visualisation")
-        print("> please install Graphviz (https://graphviz.org)")
+    doc.add_line('<div class="column">')
+    doc.add_heading(3, "Tracing policy")
+    create_policy_diagram(doc, report)
+    doc.add_line('</div>')
     doc.add_line('</div>')
 
     ### Filtering
@@ -586,10 +568,6 @@ class HtmlReportTool(MetaDataToolBase):
                         default="report.lobster")
         ap.add_argument("--out",
                         default="lobster_report.html")
-        ap.add_argument("--dot",
-                        help="path to dot utility (https://graphviz.org), \
-                        by default expected in PATH",
-                        default=None)
         ap.add_argument("--high-contrast",
                         action="store_true",
                         help="Uses a color palette with a higher contrast.")
@@ -612,7 +590,6 @@ class HtmlReportTool(MetaDataToolBase):
 
         html_content = write_html(
             report = report,
-            dot = options.dot,
             high_contrast = options.high_contrast,
             render_md = options.render_md,
         )
@@ -625,7 +602,6 @@ class HtmlReportTool(MetaDataToolBase):
 def lobster_html_report(
     lobster_report_path: str,
     output_html_path: str,
-    dot_path: str = None,
     high_contrast: bool = False,
     render_md: bool = False,
     source_root: str = "",
@@ -636,7 +612,6 @@ def lobster_html_report(
     Args:
         lobster_report_path (str): Path to the input LOBSTER report file.
         output_html_path (str): Path to the output HTML file.
-        dot_path (str, optional): Path to the Graphviz 'dot' utility.
         high_contrast (bool, optional): Use high contrast colors.
         render_md (bool, optional): Render Markdown in descriptions.
         source_root (str, optional): Prefix to prepend to file reference links.
@@ -646,7 +621,6 @@ def lobster_html_report(
     report.source_root = source_root
     html_content = write_html(
         report=report,
-        dot=dot_path,
         high_contrast=high_contrast,
         render_md=render_md,
     )

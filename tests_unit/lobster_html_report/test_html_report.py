@@ -102,7 +102,7 @@ class LobsterHtmlReportTests(unittest.TestCase):
         item.tracing_status = Tracing_Status.OK
         report.items[item.tag.key()] = item
 
-        html = write_html(report, dot=None, high_contrast=False, render_md=False)
+        html = write_html(report, high_contrast=False, render_md=False)
 
         self.assertIn("Implementation details", html)
 

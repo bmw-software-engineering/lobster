@@ -39,14 +39,11 @@ Alternatively, use `pipx`:
 $ pipx install bmw-lobster --include-deps
 ```
 
-For the HTML Report `graphviz` is also used to generate the tracing policy diagram.
-
+The HTML report renders the tracing policy diagram without additional tools.
+The visualization is not qualified for safety-related use; see
+[QUALIFICATION.md](QUALIFICATION.md).
 More on tracing policies can be found in the user manual on
 [configuration files](documentation/config_files.md).
-
-```
-$ sudo apt-get install -y graphviz
-```
 
 The `lobster-cpp` converter tool needs a specific version of `clang-tidy`.
 Please see [here](documentation/user-manual.md#clang-tidy-file-generation) to create it.

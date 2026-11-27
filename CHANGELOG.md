@@ -2,11 +2,18 @@
 
 ## Changelog
 
+### 1.1.2-dev
+
+* `lobster-html-report`:
+  - Render the tracing policy diagram without Graphviz or other external tools,
+    using uniform white nodes with coloured accent stripes by level type.
+  - Remove the `--dot` option and `dot_path` API parameter.
+  - Clearly mark the tracing policy visualization as not qualified for safety-related use.
+
 ### 1.1.1
 
 * Documentation:
   - Fixed typos in the `lobster-tool-cpp` and `lobster-tool-python` package READMEs.
-
 
 ### 1.1.0
 

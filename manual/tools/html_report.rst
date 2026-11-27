@@ -13,24 +13,24 @@ API
   lobster_html_report(
      lobster_report_path: str,
      output_html_path: str,
-     dot_path: str = None,               # optional Graphviz 'dot' path
      high_contrast: bool = False,         # optional high contrast colors
      render_md: bool = False,             # optional Markdown rendering
+      source_root: str = "",              # optional source link prefix
   )
 
 Parameters
 ----------
 - ``lobster_report_path`` (str): Path to the input LOBSTER report file (e.g., ``report.lobster``). This file must already exist and be produced by your reporting pipeline.
 - ``output_html_path`` (str): Path for the output HTML file (e.g., ``lobster_report.html``).
-- ``dot_path`` (str, optional): Path to the Graphviz ``dot`` executable. If ``None``, the tool tries ``dot`` from PATH. If ``dot`` isn’t found, the HTML report is still generated, but the tracing policy diagram is omitted; a warning is printed.
 - ``high_contrast`` (bool, optional): If ``True``, uses higher-contrast colors to improve readability.
 - ``render_md`` (bool, optional): If ``True``, requirement text is rendered as Markdown (tables supported); if ``False``, text is escaped and shown as plain text.
+- ``source_root`` (str, optional): Prefix prepended to source links in the report.
 
 Stable API Function
 -------------------
 
-``lobster_html_report(lobster_report_path: str, output_html_path: str, dot_path: Optional[str] = None, high_contrast: bool = False, render_md: bool = False) -> None``
-  Loads a LOBSTER report file and generates a standalone HTML report with optional tracing policy diagram.
+``lobster_html_report(lobster_report_path: str, output_html_path: str, high_contrast: bool = False, render_md: bool = False, source_root: str = "") -> None``
+  Loads a LOBSTER report file and generates a standalone HTML report with a tracing policy diagram.
 
 Example (With Markdown and High Contrast)
 ------------------------------------------
@@ -42,7 +42,6 @@ Example (With Markdown and High Contrast)
   lobster_html_report(
      lobster_report_path="artifact/report.lobster",
      output_html_path="docs/tracing.html",
-     dot_path="/usr/local/bin/dot",
      high_contrast=True,
      render_md=True,
   )
@@ -50,7 +49,8 @@ Example (With Markdown and High Contrast)
 Behavioral Notes
 ----------------
 - Returns ``None``; writes HTML content to ``output_html_path`` as a side effect.
-- If Graphviz ``dot`` is unavailable, the report is generated without the tracing policy diagram.
+- The tracing policy diagram is always rendered without an external rendering utility.
+- The tracing policy visualization is not qualified for safety-related use.
 - Supports Markdown tables in requirement descriptions when ``render_md=True``.
 - The HTML output is self-contained and suitable for CI/CD pipelines.
 
@@ -63,4 +63,3 @@ Core Goals
 Error Conditions
 ----------------
 - Missing input report file → ``FileNotFoundError``.
-- Invalid ``dot_path`` when specified → warning logged, diagram omitted.
