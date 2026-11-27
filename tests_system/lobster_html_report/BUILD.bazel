@@ -103,12 +103,12 @@ py_test(
             "LOBSTER_TEST_CHROMEDRIVER": "$(rlocationpath @chromedriver_linux64//:chromedriver)",
         },
         ":macos_x64": {
-            "LOBSTER_TEST_CHROME": "$(rlocationpath @chrome_macos_x64//:chrome)",
-            "LOBSTER_TEST_CHROMEDRIVER": "$(rlocationpath @chromedriver_macos_x64//:chromedriver)",
+            "LOBSTER_TEST_CHROME": "chrome_macos_x64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+            "LOBSTER_TEST_CHROMEDRIVER": "chromedriver_macos_x64/chromedriver",
         },
         ":macos_arm64": {
-            "LOBSTER_TEST_CHROME": "$(rlocationpath @chrome_macos_arm64//:chrome)",
-            "LOBSTER_TEST_CHROMEDRIVER": "$(rlocationpath @chromedriver_macos_arm64//:chromedriver)",
+            "LOBSTER_TEST_CHROME": "chrome_macos_arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+            "LOBSTER_TEST_CHROMEDRIVER": "chromedriver_macos_arm64/chromedriver",
         },
         ":windows_x86_64": {
             "LOBSTER_TEST_CHROME": "$(rlocationpath @chrome_windows64//:chrome.exe)",
