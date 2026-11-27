@@ -63,6 +63,26 @@ This repo's own requirements/tests are tracked in TRLC and traced with LOBSTER i
   the TRLC Python API (`trlc.trlc.Source_Manager`, `iter_record_objects()`) or
   `trlc <path> --debug-api-dump`.
 - Write requirements in a precise and clear manner.
+- State the expected observable behavior, normally in the `THEN` clause: what the tool shall
+  produce, return, preserve, or report.
+  Prefer describing that outcome over making a negative
+  statement in the entire requirement.
+- Use a negative clause when absence itself is part of the contract (for example, no report file
+  after invalid input).
+  Where useful, pair it with the expected error, exit code, or other
+  observable result.
+  Do not apply a blanket ban on "not" or "without."
+- For a user-visible option or feature flag, specify the disabled behavior when it is
+  part of the feature contract or changes user-visible behavior.
+  Describe what the tool does in that state, such as the applicable fallback or preserved
+  behavior, not only that the new behavior does not occur.
+  Do not add a disabled-state requirement just for symmetry or to cover speculative legacy
+  behavior.
+- For legacy behavior, do not retrofit requirements across unrelated code merely because
+  coverage is incomplete.
+  When changing or adding behavior, capture the intended contract; use the
+  implementation to verify observable details, but do not assume every existing behavior
+  is intentional.
 - Use consistent terminology and formatting throughout the requirements.
 - Requirements need not be stylistically elegant; repetition is acceptable when it
   improves clarity and precision.
