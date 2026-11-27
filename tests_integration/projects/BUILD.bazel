@@ -1,1 +1,3 @@
 # Package marker for shared integration test Starlark helpers.
+
+exports_files(["run_integration_test.py"])

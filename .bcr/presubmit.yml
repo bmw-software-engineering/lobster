@@ -40,9 +40,8 @@ tasks:
       # BasketTest.ClearBasket case asserts an empty basket while the clearing code
       # is commented out, so it must be excluded from the presubmit test run.
       - "-@lobster//tests_integration/projects/cpp_focus:fruit_test"
-      # projects/basic:traceability renders an HTML report with lobster-html-report,
-      # which requires the Graphviz "dot" binary. Graphviz is not part of the BCR CI
-      # images, so this test fails with "please install Graphviz".
+      # projects/basic:traceability contains tracing errors on purpose, so
+      # lobster_test fails by design. Upstream only builds it.
       - "-@lobster//tests_integration/projects/basic:traceability"
       # projects/sphinx_rst_report:test_sphinx_build runs a full Sphinx build with
       # warnings-as-errors; the rst_report tool / sphinx.ext.graphviz also need the

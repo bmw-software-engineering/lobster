@@ -211,6 +211,30 @@ jobs:
           repository-cache: true
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - run: bazel test //tests_system/... //tests_unit/...
+  # The BCR presubmit also runs these tests on Windows and macOS.
+  bazel-integration-cross-platform:
+    name: Bazel Integration (${{ matrix.os }})
+    needs: [lint-code, lint-system-tests, lint-unit-tests, verify-test-entrypoints, trlc]
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: bazel-contrib/setup-bazel@104e3eea9447cdaa4b00d0fb46191a3985d26ab3 # 0.19.1
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}-${{ matrix.os }}
+          repository-cache: true
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - run: >-
+          bazel test
+          //tests_integration/projects/coverage:traceability
+          //tests_integration/projects/coverage_half:traceability
+          //tests_integration/projects/coverage_mix:traceability
+          //tests_integration/projects/coverage_zero:traceability
+      # Excluded on Windows in the BCR presubmit.
+      - if: runner.os == 'macOS'
+        run: bazel test //tests_system/lobster_html_report:test_html_report
   failure:
     name: Check all jobs
     permissions: {}
@@ -223,6 +247,7 @@ jobs:
       - test
       - integration-tests
       - bazel-integration
+      - bazel-integration-cross-platform
     if: ${{ failure() || cancelled() }}
     runs-on: ubuntu-24.04
     steps:
