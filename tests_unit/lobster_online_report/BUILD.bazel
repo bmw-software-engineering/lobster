@@ -12,3 +12,9 @@ py_test(
         "//lobster/tools/core/online_report",
     ],
 )
+
+py_test(
+    name = "test_path_to_url_converter",
+    srcs = ["test_path_to_url_converter.py"],
+    deps = ["//lobster/tools/core/online_report"],
+)
